@@ -24,7 +24,25 @@ export default function Index() {
     : 'متصل نیستید';
 
   return (
+
     <div className="verticalAlign">
+        <nav>
+            <div className="container">
+                <i className={classNames(
+                    'material-icons',
+                    'pull-right',
+                )}>&#xe8b8;</i>
+                <i className={classNames(
+                    'material-icons',
+                    'pull-right',
+                    'log',
+                )}>&#xe868;</i>
+                <i className={classNames(
+                    'material-icons',
+                    'pull-left',
+                )}>&#xe88e;</i>
+            </div>
+        </nav>
       <div className="container">
         <div className="homeScreen">
           <h1>OBLIVION</h1>

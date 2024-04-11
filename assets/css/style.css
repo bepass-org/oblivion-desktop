@@ -27,6 +27,31 @@ body:before {
   text-align: right;
 }
 
+nav {
+    float: right;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 25px 0;
+}
+nav i {
+    color: #676767;
+    font-size: 30px!important;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+nav i:hover {
+    color: #4f4f4f;
+}
+nav i.log {
+    color: #A1A1A1;
+    margin-right: 15px;
+}
+nav i.log:hover {
+    color: #E15959;
+}
+
 .verticalAlign {
     /*align-items: center;
     display: flex;
