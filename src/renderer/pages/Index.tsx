@@ -24,24 +24,37 @@ export default function Index() {
     : 'متصل نیستید';
 
   return (
-    <Container>
-      <Row>
-        <h1>OBLIVION</h1>
-      </Row>
-      <Row>
-        <p>بر پایه وارپ</p>
-      </Row>
-      <Row>
-        <Form>
-          <Form.Check
-            checked={isConnected && !isLoading}
-            onChange={onChange}
-            type="switch"
-            id="custom-switch"
-          />
-        </Form>
-      </Row>
-      <Row>{status}</Row>
-    </Container>
+    <>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <Container className=" d-flex justify-content-center flex-column align-items-center mt-10 gap-4 text-center">
+        <Row>
+          <h1>OBLIVION</h1>
+        </Row>
+        <Row>
+          <h5>بر پایه وارپ</h5>
+        </Row>
+        <Row>
+          <Form>
+            <Form.Check
+              className="display-6"
+              checked={isConnected && !isLoading}
+              onChange={onChange}
+              disabled={isLoading}
+              type="switch"
+              id="custom-switch"
+            />
+          </Form>
+        </Row>
+        <Row>{status}</Row>
+      </Container>
+    </>
   );
 }
