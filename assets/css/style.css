@@ -1,0 +1,131 @@
+body {
+  font: 300 17px shabnam;
+  background: #fff;
+    color: #4c4b4b;
+  line-height: 20px;
+  word-wrap: break-word;
+    position: relative;
+}
+body:before {
+    height: 40vh;
+    background: linear-gradient(#ffde06 0%, rgba(128, 128, 128, 0) 100%);
+    opacity: 0.2;
+    content: "";
+    float: right;
+    width: 100%;
+    position: absolute;
+}
+
+.dirleft,
+.dirLeft {
+  direction: ltr;
+  text-align: left;
+}
+.dirright,
+.dirRight {
+  direction: rtl;
+  text-align: right;
+}
+
+.verticalAlign {
+    /*align-items: center;
+    display: flex;
+    justify-content: center;*/
+}
+.homeScreen {
+    float: right;
+    width: 100%;
+    margin-top: 180px;
+}
+.homeScreen h1 {
+    float: right;
+    width: 100%;
+    color: #707070;
+    font-size: 50px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+.homeScreen h2 {
+    float: right;
+    width: 100%;
+    padding: 0 15%;
+    color: #FFA200;
+    font-size: 25px;
+    font-weight: 300;
+    text-align: center;
+    margin: 0;
+}
+
+.homeScreen .connector {
+    margin: auto;
+    width: 50%;
+}
+.homeScreen .connector .switch {
+    border-radius: 50px;
+    background: #D9D9D9;
+    width: 100%;
+    height: 75px;
+    margin: 100px 0 50px 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.11);
+    float: right;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.homeScreen .connector .switch.active {
+    background: #FFAD0A;
+}
+.homeScreen .connector .switch .circle {
+    width: 65px;
+    height: 65px;
+    background: #fff;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+}
+.homeScreen .connector .switch.active .circle {
+    left: calc(100% - 70px);
+}
+.homeScreen .connector .switch.isLoading .circle .spinner {
+    animation: spinner 0.8s linear infinite;
+    border: 4px solid #9B9B9B;
+    border-right-color: transparent;
+    border-radius: 100%;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    text-indent: -9999px;
+    vertical-align: middle;
+    margin: 5px;
+    width: 55px;
+    height: 55px;
+}
+@-webkit-keyframes spinner {
+    from {     transform: rotate(0deg);}
+    to { transform: rotate(1turn);}
+}
+.homeScreen .status {
+    width: 100%;
+    float: right;
+    text-align: center;
+    color: #4B4B4B;
+}
+.homeScreen .status.active {
+    color: #63BC0A;
+}
+.homeScreen .ip {
+    color: #AEAEAE;
+    margin: 10px 0 0 0;
+}
+.homeScreen .ip img,
+.homeScreen .ip svg {
+    width: 17px;
+    height: 12px;
+    border-radius: 3px;
+    margin: 0 0 0 7px;
+    object-fit: cover;
+}
+

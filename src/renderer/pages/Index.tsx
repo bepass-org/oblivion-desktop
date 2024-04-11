@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Form, Row } from 'react-bootstrap';
+import classNames from 'classnames';
 
 export default function Index() {
   const [isConnected, setIsConnected] = useState(false);
@@ -18,43 +18,51 @@ export default function Index() {
   };
 
   const status = isLoading
-    ? 'در حال اتصال...'
+    ? 'درحال اتصال ...'
     : isConnected
     ? 'اتصال برقرار شد'
     : 'متصل نیستید';
 
   return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <Container className=" d-flex justify-content-center flex-column align-items-center mt-10 gap-4 text-center">
-        <Row>
+    <div className="verticalAlign">
+      <div className="container">
+        <div className="homeScreen">
           <h1>OBLIVION</h1>
-        </Row>
-        <Row>
-          <h5>بر پایه وارپ</h5>
-        </Row>
-        <Row>
-          <Form>
-            <Form.Check
-              className="display-6"
-              checked={isConnected && !isLoading}
-              onChange={onChange}
-              disabled={isLoading}
-              type="switch"
-              id="custom-switch"
-            />
-          </Form>
-        </Row>
-        <Row>{status}</Row>
-      </Container>
-    </>
+          <h2>بر پایه وارپ</h2>
+          <form action="">
+            <div className="connector">
+              <div
+                className={classNames(
+                  'switch',
+                  isConnected && !isLoading ? 'active' : '',
+                  isLoading ? 'isLoading' : '',
+                )}
+                onClick={onChange}
+              >
+                <div className="circle">
+                  <div className="spinner" />
+                </div>
+              </div>
+            </div>
+          </form>
+          <div className={classNames('status', isConnected ? 'active' : '')}>
+            {/*<i
+              className={classNames(
+                'material-icons',
+                isConnected ? '' : 'hidden',
+              )}
+            >
+              &#xe876;
+            </i>*/}
+            {status}
+              <br />
+              <div className={classNames("ip", isConnected ? '' : 'hidden')}>
+                  <img src="/img/flags/us.svg" alt="flag" />
+                  127.0.0.1
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

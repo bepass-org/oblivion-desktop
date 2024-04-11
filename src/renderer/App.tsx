@@ -1,6 +1,10 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import './global.css';
-import 'bootstrap/dist/css/bootstrap.rtl.min.css';
+
+import 'assets/css/bootstrap.min.css';
+import 'assets/css/bootstrap-rtl.min.css';
+import 'assets/css/shabnam.css';
+import 'assets/css/materialIcons.css';
+import 'assets/css/style.css';
 
 import Index from './pages/Index';
 
