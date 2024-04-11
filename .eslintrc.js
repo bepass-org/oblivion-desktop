@@ -12,7 +12,9 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'no-nested-ternary': 'off',
+    'jsx-a11y/label-has-associated-control': 'warn',
   },
   parserOptions: {
     ecmaVersion: 2022,
