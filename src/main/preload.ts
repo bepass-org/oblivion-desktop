@@ -7,9 +7,11 @@ export type Channels = 'ipc-example';
 const electronHandler = {
   ipcRenderer: {
     sendMessage(channel: Channels, ...args: unknown[]) {
+      console.log('sendMessage:', channel, ...args);
       ipcRenderer.send(channel, ...args);
     },
     on(channel: Channels, func: (...args: unknown[]) => void) {
+      console.log('on:', channel, func);
       const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
         func(...args);
       ipcRenderer.on(channel, subscription);
@@ -18,9 +20,9 @@ const electronHandler = {
         ipcRenderer.removeListener(channel, subscription);
       };
     },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
-      ipcRenderer.once(channel, (_event, ...args) => func(...args));
-    },
+    // once(channel: Channels, func: (...args: unknown[]) => void) {
+    //   ipcRenderer.once(channel, (_event, ...args) => func(...args));
+    // },
   },
 };
 

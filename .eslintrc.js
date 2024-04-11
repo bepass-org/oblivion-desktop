@@ -15,6 +15,9 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-nested-ternary': 'off',
     'jsx-a11y/label-has-associated-control': 'warn',
+    'no-console': 'off',
+    'import/prefer-default-export': 'off',
+    'prefer-destructuring': 'off',
   },
   parserOptions: {
     ecmaVersion: 2022,
