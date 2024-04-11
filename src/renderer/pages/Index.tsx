@@ -24,25 +24,16 @@ export default function Index() {
     : 'متصل نیستید';
 
   return (
-
     <div className="verticalAlign">
-        <nav>
-            <div className="container">
-                <i className={classNames(
-                    'material-icons',
-                    'pull-right',
-                )}>&#xe8b8;</i>
-                <i className={classNames(
-                    'material-icons',
-                    'pull-right',
-                    'log',
-                )}>&#xe868;</i>
-                <i className={classNames(
-                    'material-icons',
-                    'pull-left',
-                )}>&#xe88e;</i>
-            </div>
-        </nav>
+      <nav>
+        <div className="container">
+          <i className={classNames('material-icons', 'pull-right')}>&#xe8b8;</i>
+          <i className={classNames('material-icons', 'pull-right', 'log')}>
+            &#xe868;
+          </i>
+          <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
+        </div>
+      </nav>
       <div className="container">
         <div className="homeScreen">
           <h1>OBLIVION</h1>
@@ -64,20 +55,20 @@ export default function Index() {
             </div>
           </form>
           <div className={classNames('status', isConnected ? 'active' : '')}>
-            {/*<i
+            {/* <i
               className={classNames(
                 'material-icons',
                 isConnected ? '' : 'hidden',
               )}
             >
               &#xe876;
-            </i>*/}
+            </i> */}
             {status}
-              <br />
-              <div className={classNames("ip", isConnected ? '' : 'hidden')}>
-                  <img src="/img/flags/us.svg" alt="flag" />
-                  127.0.0.1
-              </div>
+            <br />
+            <div className={classNames('ip', isConnected ? '' : 'hidden')}>
+              <img src="/assets/img/flags/us.svg" alt="flag" />
+              127.0.0.1
+            </div>
           </div>
         </div>
       </div>
