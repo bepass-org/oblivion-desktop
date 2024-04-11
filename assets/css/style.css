@@ -33,7 +33,7 @@ nav {
     position: fixed;
     top: 0;
     right: 0;
-    padding: 25px 0;
+    padding: 20px 0;
 }
 nav i {
     color: #676767;
@@ -60,7 +60,7 @@ nav i.log:hover {
 .homeScreen {
     float: right;
     width: 100%;
-    margin-top: 180px;
+    margin-top: 150px;
 }
 .homeScreen h1 {
     float: right;
