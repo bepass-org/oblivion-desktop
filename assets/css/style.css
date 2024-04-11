@@ -114,6 +114,9 @@ nav i.log:hover {
 .homeScreen .connector .switch.active .circle {
     left: calc(100% - 70px);
 }
+.homeScreen .connector .switch.isLoading {
+    cursor: wait;
+}
 .homeScreen .connector .switch.isLoading .circle .spinner {
     animation: spinner 0.8s linear infinite;
     border: 4px solid #9B9B9B;
