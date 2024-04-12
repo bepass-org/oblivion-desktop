@@ -3,5 +3,5 @@
 import { ipcMain } from 'electron';
 
 ipcMain.on('ipc-example', async (event, arg) => {
-  event.reply('ipc-example', 'pong', arg);
+    event.reply('ipc-example', 'pong', arg);
 });

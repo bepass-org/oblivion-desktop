@@ -1,10 +1,10 @@
 import Nav from '../components/Nav';
 
 export default function Debug() {
-  return (
-    <>
-      <Nav title="درباره برنامه" />
-      <p>{`
+    return (
+        <>
+            <Nav title='درباره برنامه' />
+            <p>{`
       time=2024-04-12T14:19:56.684+03:30 level=INFO msg="scanner mode enabled" max-rtt=1s
       time=2024-04-12T14:19:56.689+03:30 level=INFO msg="successfully generated wireguard configuration" subsystem=warp/account
       time=2024-04-12T14:19:56.691+03:30 level=INFO msg="successfully generated wireguard configuration" subsystem=warp/account
@@ -130,6 +130,6 @@ export default function Debug() {
       time=2024-04-12T14:30:52.572+03:30 level=INFO msg="handling connection" gool=inner subsystem=vtun protocol=tcp destination=mtalk.google.com:5228
       time=2024-04-12T14:31:34.036+03:30 level=INFO msg="handling connection" gool=inner subsystem=vtun protocol=tcp destination=yt3.ggpht.com:443
       `}</p>
-    </>
-  );
+        </>
+    );
 }

@@ -2,14 +2,14 @@ import Nav from '../components/Nav';
 import { toggleDarkMode } from '../lib/utils';
 
 export default function Settings() {
-  const isDarkMode =
-    document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    const isDarkMode =
+        document.documentElement.getAttribute('data-bs-theme') === 'dark';
 
-  return (
-    <>
-      <Nav title="تنظیمات" />
+    return (
+        <>
+            <Nav title='تنظیمات' />
 
-      {/* <div
+            {/* <div
         className="form-check form-switch"
         onClick={() => {
           toggleDarkMode();
@@ -26,6 +26,6 @@ export default function Settings() {
           checked={false}
         />
       </div> */}
-    </>
-  );
+        </>
+    );
 }
