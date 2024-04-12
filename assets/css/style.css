@@ -1,9 +1,9 @@
 body {
-  font: 300 17px shabnam;
-  background: #fff;
+    font: 300 17px shabnam;
+    background: #fff;
     color: #4c4b4b;
-  line-height: 20px;
-  word-wrap: break-word;
+    line-height: 20px;
+    word-wrap: break-word;
     position: relative;
 }
 body:before {
@@ -52,15 +52,27 @@ nav i.log:hover {
     color: #E15959;
 }
 
+.container {
+    max-width: 400px;
+}
+
 .verticalAlign {
-    /*align-items: center;
     display: flex;
-    justify-content: center;*/
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
 }
 .homeScreen {
     float: right;
     width: 100%;
     margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: right;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    align-content: center;
 }
 .homeScreen h1 {
     float: right;
@@ -70,26 +82,40 @@ nav i.log:hover {
     font-weight: 900;
     text-align: center;
     margin: 0;
+    padding: 0;
 }
 .homeScreen h2 {
     float: right;
     width: 100%;
-    padding: 0 15%;
+    padding: 0;
     color: #FFA200;
     font-size: 25px;
     font-weight: 300;
-    text-align: center;
+    text-align: right;
     margin: 0;
 }
-
-.homeScreen .connector {
-    margin: auto;
-    width: 50%;
+@media screen and (min-width: 600px) {
+    .homeScreen h2 {
+        text-align: center;
+    }
 }
-.homeScreen .connector .switch {
+
+.homeScreen form {
+    float: right;
+    width: 100%;
+}
+.homeScreen form .connector {
+    margin: auto;
+    float: right;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.homeScreen form .connector .switch {
     border-radius: 50px;
     background: #D9D9D9;
-    width: 100%;
+    width: 175px;
     height: 75px;
     margin: 100px 0 50px 0;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.11);
@@ -98,10 +124,10 @@ nav i.log:hover {
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-.homeScreen .connector .switch.active {
+.homeScreen form .connector .switch.active {
     background: #FFAD0A;
 }
-.homeScreen .connector .switch .circle {
+.homeScreen form .connector .switch .circle {
     width: 65px;
     height: 65px;
     background: #fff;
@@ -111,13 +137,13 @@ nav i.log:hover {
     border-radius: 50%;
     transition: all 0.2s ease-in-out;
 }
-.homeScreen .connector .switch.active .circle {
+.homeScreen form .connector .switch.active .circle {
     left: calc(100% - 70px);
 }
-.homeScreen .connector .switch.isLoading {
+.homeScreen form .connector .switch.isLoading {
     cursor: wait;
 }
-.homeScreen .connector .switch.isLoading .circle .spinner {
+.homeScreen form .connector .switch.isLoading .circle .spinner {
     animation: spinner 0.8s linear infinite;
     border: 4px solid #9B9B9B;
     border-right-color: transparent;
@@ -135,6 +161,7 @@ nav i.log:hover {
     from {     transform: rotate(0deg);}
     to { transform: rotate(1turn);}
 }
+
 .homeScreen .status {
     width: 100%;
     float: right;
