@@ -65,6 +65,9 @@ export default function Index() {
             </i> */}
             {status}
             <br />
+            {/* TODO:
+              get ip from : https://api.ipify.org/?format=json
+              get loc from https://api.iplocation.net/?ip=127.0.0.1 */}
             <div className={classNames('ip', isConnected ? '' : 'hidden')}>
               <img src="/assets/img/flags/us.svg" alt="flag" />
               127.0.0.1
