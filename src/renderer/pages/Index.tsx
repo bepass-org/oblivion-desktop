@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 export default function Index() {
   const [isConnected, setIsConnected] = useState(false);
@@ -27,11 +28,24 @@ export default function Index() {
     <div className="verticalAlign">
       <nav>
         <div className="container">
-          <i className={classNames('material-icons', 'pull-right')}>&#xe8b8;</i>
-          <i className={classNames('material-icons', 'pull-right', 'log')}>
-            &#xe868;
-          </i>
-          <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
+          {/* Settings icon */}
+          <Link to={'/settings'}>
+            <i className={classNames('material-icons', 'pull-right')}>
+              &#xe8b8;
+            </i>
+          </Link>
+          {/* Debug icon */}
+          <Link to={'/debug'}>
+            <i className={classNames('material-icons', 'pull-right', 'log')}>
+              &#xe868;
+            </i>
+          </Link>
+          {/* about icon */}
+          <Link to="/about">
+            <i className={classNames('material-icons', 'pull-left')}>
+              &#xe88e;
+            </i>
+          </Link>
         </div>
       </nav>
       <div className="container">

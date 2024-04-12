@@ -18,6 +18,12 @@ module.exports = {
     'no-console': 'off',
     'import/prefer-default-export': 'off',
     'prefer-destructuring': 'off',
+    'prettier/prettier': 'off',
+    'react/jsx-no-useless-fragment': 'off',
+    'react/jsx-curly-brace-presence': 'off',
+    'jsx-a11y/click-events-have-key-events': 'warn',
+    'jsx-a11y/no-static-element-interactions': 'warn',
+    'react/button-has-type': 'off',
   },
   parserOptions: {
     ecmaVersion: 2022,
