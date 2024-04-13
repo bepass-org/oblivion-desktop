@@ -60,8 +60,36 @@ export default function Settings() {
                         <div className="value">
                             <select>
                                 <option value="">Automatic</option>
-                                <option value="ES">Spain</option>
                                 <option value="AT">Austria</option>
+                                <option value="BE">Belgium</option>
+                                <option value="BG">Bulgaria</option>
+                                <option value="BR">Brazil</option>
+                                <option value="CA">Canada</option>
+                                <option value="CH">Switzerland</option>
+                                <option value="CZ">Czech Republic</option>
+                                <option value="DE">Germany</option>
+                                <option value="DK">Denmark</option>
+                                <option value="EE">Estonia</option>
+                                <option value="ES">Spain</option>
+                                <option value="FI">Finland</option>
+                                <option value="FR">France</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="HU">Hungary</option>
+                                <option value="IE">Ireland</option>
+                                <option value="IN">India</option>
+                                <option value="IT">Italy</option>
+                                <option value="JP">Japan</option>
+                                <option value="LV">Latvia</option>
+                                <option value="NL">Netherlands</option>
+                                <option value="NO">Norway</option>
+                                <option value="PL">Poland</option>
+                                <option value="RO">Romania</option>
+                                <option value="RS">Serbia</option>
+                                <option value="SE">Sweden</option>
+                                <option value="SG">Singapore</option>
+                                <option value="SK">Slovakia</option>
+                                <option value="UA">Ukraine</option>
+                                <option value="US">United States</option>
                             </select>
                         </div>
                         <div className="info">

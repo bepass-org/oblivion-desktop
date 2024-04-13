@@ -389,6 +389,8 @@ nav i.backBtn:hover {
     font-weight: 300;
     color: #FFA200;
     cursor: pointer;
+    appearance: none;
+    margin: 5px 0 0 0;
 }
 .settings .item .value select option {
     direction: ltr;
