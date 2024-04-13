@@ -1,5 +1,5 @@
-import Nav from '../components/Nav';
 import classNames from "classnames";
+import Nav from '../components/Nav';
 import packageJsonData from "../../../package.json";
 
 export default function Debug() {
@@ -8,10 +8,15 @@ export default function Debug() {
             <Nav title='لاگ برنامه' />
             <div className={classNames(
                 "myApp",
-                "normalPage"
+                "normalPage",
+                "logPage"
             )}>
                 <div className="container">
-                    <p className="dirLeft">{`
+                    <div className="logOptions">
+                        <i className="material-icons">&#xf0ff;</i>
+                        <i className="material-icons">&#xe14d;</i>
+                    </div>
+                    <p className="dirLeft logText">{`
       time=2024-04-12T14:19:56.684+03:30 level=INFO msg="scanner mode enabled" max-rtt=1s
       time=2024-04-12T14:19:56.689+03:30 level=INFO msg="successfully generated wireguard configuration" subsystem=warp/account
       time=2024-04-12T14:19:56.691+03:30 level=INFO msg="successfully generated wireguard configuration" subsystem=warp/account

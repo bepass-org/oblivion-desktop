@@ -272,3 +272,22 @@ nav i.backBtn:hover {
     object-fit: cover;
 }
 
+.logPage .logText {
+    font-size: 14px;
+    line-height: 24px;
+}
+.logPage .logOptions {
+    float: right;
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+.logPage .logOptions i {
+    float: right;
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.logPage .logOptions i:hover {
+    opacity: 0.7;
+}
