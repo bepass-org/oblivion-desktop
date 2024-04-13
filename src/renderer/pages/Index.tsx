@@ -25,7 +25,7 @@ export default function Index() {
           : 'متصل نیستید';
 
     return (
-        <div className='verticalAlign'>
+        <>
             <nav>
                 <div className='container'>
                     {/* Settings icon */}
@@ -64,57 +64,48 @@ export default function Index() {
                     </Link>
                 </div>
             </nav>
-            <div className='container'>
-                <div className='homeScreen'>
-                    <h1>OBLIVION</h1>
-                    <h2>بر پایه وارپ</h2>
-                    <form action=''>
-                        <div className='connector'>
-                            <div
-                                className={classNames(
-                                    'switch',
-                                    isConnected && !isLoading ? 'active' : '',
-                                    isLoading ? 'isLoading' : '',
-                                )}
-                                onClick={onChange}
-                            >
-                                <div className='circle'>
-                                    <div className='spinner' />
+            <div className='verticalAlign'>
+                <div className='container'>
+                    <div className='homeScreen'>
+                        <h1>OBLIVION</h1>
+                        <h2>بر پایه وارپ</h2>
+                        <form action=''>
+                            <div className='connector'>
+                                <div
+                                    className={classNames(
+                                        'switch',
+                                        isConnected && !isLoading ? 'active' : '',
+                                        isLoading ? 'isLoading' : '',
+                                    )}
+                                    onClick={onChange}
+                                >
+                                    <div className='circle'>
+                                        <div className='spinner' />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <div
-                        className={classNames(
-                            'status',
-                            isConnected ? 'active' : '',
-                        )}
-                    >
-                        {/* <i
-              className={classNames(
-                'material-icons',
-                isConnected ? '' : 'hidden',
-              )}
-            >
-              &#xe876;
-            </i> */}
-                        {status}
-                        <br />
-                        {/* TODO:
-              get ip from : https://api.ipify.org/?format=json
-              get loc from https://api.iplocation.net/?ip=127.0.0.1 */}
+                        </form>
                         <div
                             className={classNames(
-                                'ip',
-                                isConnected ? '' : 'hidden',
+                                'status',
+                                isConnected ? 'active' : '',
                             )}
                         >
-                            <img src='/assets/img/flags/us.svg' alt='flag' />
-                            127.0.0.1
+                            {status}
+                            <br />
+                            <div
+                                className={classNames(
+                                    'ip',
+                                    isConnected ? '' : 'hidden',
+                                )}
+                            >
+                                <img src='/assets/img/flags/us.svg' alt='flag' />
+                                127.0.0.1
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

@@ -51,6 +51,20 @@ nav i.log {
 nav i.log:hover {
     color: #E15959;
 }
+nav h3 {
+    font-size: 25px;
+    font-weight: 200;
+    color: #303030;
+    margin: 1px 0 0 0;
+    float: right;
+}
+nav i.backBtn {
+    font-size: 30px;
+    float: left;
+}
+nav i.backBtn:hover {
+    color: #1058FF;
+}
 
 .container {
     max-width: 400px;
@@ -62,6 +76,7 @@ nav i.log:hover {
     align-items: center;
     min-height: 80vh;
 }
+
 .homeScreen {
     float: right;
     width: 100%;
