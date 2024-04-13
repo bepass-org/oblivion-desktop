@@ -396,7 +396,8 @@ nav i.backBtn:hover {
     margin: 5px 0 0 0;
 }
 [data-bs-theme="dark"] .settings .item .info {
-    color: #C4C4C4;
+    color: #a0a0a0;
+    font-weight: 200;
 }
 
 .splashScreen {
