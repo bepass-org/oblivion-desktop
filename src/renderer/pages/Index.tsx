@@ -64,7 +64,10 @@ export default function Index() {
                     </Link>
                 </div>
             </nav>
-            <div className='verticalAlign'>
+            <div className={classNames(
+                "myApp",
+                "verticalAlign"
+            )}>
                 <div className='container'>
                     <div className='homeScreen'>
                         <h1>OBLIVION</h1>
@@ -99,7 +102,7 @@ export default function Index() {
                                     isConnected ? '' : 'hidden',
                                 )}
                             >
-                                <img src='/assets/img/flags/us.svg' alt='flag' />
+                                <img src='./assets/img/flags/us.svg' alt='flag' />
                                 127.0.0.1
                             </div>
                         </div>

@@ -1,5 +1,7 @@
 import Nav from '../components/Nav';
 import { toggleDarkMode } from '../lib/utils';
+import classNames from 'classnames';
+import packageJsonData from "../../../package.json";
 
 export default function Settings() {
     const isDarkMode =
@@ -8,8 +10,12 @@ export default function Settings() {
     return (
         <>
             <Nav title='تنظیمات' />
-
-            {/* <div
+            <div className={classNames(
+                "myApp",
+                "normalPage"
+            )}>
+                <div className="container">
+                    {/* <div
         className="form-check form-switch"
         onClick={() => {
           toggleDarkMode();
@@ -26,6 +32,8 @@ export default function Settings() {
           checked={false}
         />
       </div> */}
+                </div>
+            </div>
         </>
     );
 }
