@@ -134,6 +134,13 @@ nav i.backBtn:hover {
     z-index: 1;
     position: relative;
 }
+.myApp.normalPage p {
+    float: right;
+    width: 100%;
+    line-height: 26px;
+    font-weight: 300;
+    font-size: 15px;
+}
 
 .verticalAlign {
     display: flex;
@@ -428,4 +435,55 @@ nav i.backBtn:hover {
 }
 [data-bs-theme="dark"] .splashScreen .splashScreenImg {
     background-image: url("../img/splashScreen/dark.png");
+}
+
+.socialMedia {
+    float: left;
+    width: 100%;
+    margin: 25px 0 15px 0;
+}
+.socialMedia .item {
+    float: left;
+    width: 100%;
+    background: #f3f3f3;
+    border-radius: 25px;
+    padding: 10px;
+    margin-bottom: 7px;
+}
+[data-bs-theme="dark"] .socialMedia .item {
+    background: #252525;
+}
+.socialMedia a {
+    color: #4c4b4b;
+    transition: all 0.2s ease-in-out;
+}
+[data-bs-theme="dark"] .socialMedia a {
+    color: #DCDCDC;
+}
+.socialMedia a:hover {
+    color: #90610f;
+}
+[data-bs-theme="dark"] .socialMedia a:hover {
+    color: #FFA200;
+}
+.socialMedia .item .icon {
+    float: left;
+}
+.socialMedia .item .icon img {
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin: 0 0 0 5px;
+}
+.socialMedia .item .host {
+    float: left;
+    font-size: 16px;
+    padding: 4px 0 0 10px;
+    opacity: 0.7;
+}
+.socialMedia .item .name {
+    float: right;
+    padding: 3px 10px 0 0;
+    font-weight: 400;
+    font-size: 16px;
 }
