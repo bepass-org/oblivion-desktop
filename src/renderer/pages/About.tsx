@@ -48,7 +48,7 @@ export default function About() {
                                 <div className="icon">
                                     <img src="../../../assets/img/ircf.png" alt="ircf" />
                                 </div>
-                                <div className="host">IRCF</div>
+                                <div className="host">Website</div>
                                 <div className="name">ircf.space</div>
                             </div>
                         </a>
