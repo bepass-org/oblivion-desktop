@@ -437,6 +437,27 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .splashScreen .splashScreenImg {
     background-image: url("../img/splashScreen/dark.png");
 }
+.splashScreen .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+    float: right;
+    width: 100%;
+}
+.splashScreen .loading .spinner {
+    animation: spinner 0.8s linear infinite;
+    border: 2px solid #FFA200;
+    border-right-color: transparent;
+    border-radius: 100%;
+    display: inline-block;
+    overflow: hidden;
+    text-indent: -9999px;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+}
 
 .socialMedia {
     float: left;

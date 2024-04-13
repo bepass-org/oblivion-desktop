@@ -13,6 +13,9 @@ export default function SplashScreen() {
         <>
             <div className="splashScreen">
                 <div className="splashScreenImg" />
+                <div className="loading">
+                    <div className='spinner' />
+                </div>
             </div>
         </>
     );
