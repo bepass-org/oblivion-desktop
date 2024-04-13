@@ -43,6 +43,10 @@ nav {
     padding: 20px 0;
     transition: all 0.2s ease-in-out;
     z-index: 2;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 nav.isSticky {
     background: rgba(253, 248, 209, 0.9);
@@ -302,4 +306,88 @@ nav i.backBtn:hover {
 }
 .logPage .logOptions i:hover {
     opacity: 0.7;
+}
+
+.settings {
+    float: right;
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.settings .item {
+    float: right;
+    width: 100%;
+    border-bottom: 1px solid #dcdcdc;
+    transition: all 0.2s ease-in-out;
+    padding: 15px 20px 15px 20px;
+}
+[data-bs-theme="dark"] .settings .item {
+    border-color: #2B2E3B;
+}
+.settings .item:first-child {
+    padding-top: 0;
+}
+.settings .item:last-child {
+    border-bottom: none;
+}
+.settings .item .key {
+    float: right;
+    font-size: 22px;
+    font-weight: 300;
+    color: #303030;
+    margin: 5px 0 0 0;
+}
+[data-bs-theme="dark"] .settings .item .key {
+    color: #E8E8E8;
+}
+.settings .item .value {
+    float: left;
+    margin: 0;
+}
+[data-bs-theme="dark"] .settings .item .value {
+    color: #FFA200;
+}
+.settings .item .value .checkbox {
+    float: left;
+    border: 3px solid #A1A1A1;
+    background: transparent;
+    width: 27px;
+    height: 27px;
+    border-radius: 4px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+[data-bs-theme="dark"] .settings .item .value .checkbox {
+    border-color: #DCDCDC;
+}
+.settings .item .value .checkbox.checked {
+    background: #FFA200;
+    border-color: #FFA200;
+}
+.settings .item .value .checkbox i {
+    float: left;
+    color: #fff;
+    font-size: 27px;
+    margin: -3px 0 0 -3px;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    rotate: -25deg;
+}
+.settings .item .value .checkbox.checked i {
+    opacity: 1;
+    rotate: 0deg;
+}
+.settings .item .info {
+    float: right;
+    width: 100%;
+    color: #717171;
+    font-size: 14px;
+    margin: 5px 0 0 0;
+}
+[data-bs-theme="dark"] .settings .item .info {
+    color: #C4C4C4;
 }
