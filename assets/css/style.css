@@ -474,6 +474,7 @@ nav i.backBtn:hover {
     width: 25px;
     height: 25px;
     margin: 0 0 0 5px;
+    border-radius: 50%;
 }
 .socialMedia .item .host {
     float: left;
