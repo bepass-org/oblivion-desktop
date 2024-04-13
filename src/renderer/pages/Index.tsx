@@ -99,11 +99,10 @@ export default function Index() {
                             <div
                                 className={classNames(
                                     'ip',
-                                    isConnected ? '' : 'hidden',
                                 )}
                             >
-                                <img src='./assets/img/flags/us.svg' alt='flag' />
-                                127.0.0.1
+                                <img src='./assets/img/flags/us.svg' alt='flag' className={isConnected ? '' : 'hidden' } />
+                                <span className={isConnected ? 'connected' : '' }>1.1.1.1</span>
                             </div>
                         </div>
                     </div>

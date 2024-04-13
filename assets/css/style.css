@@ -160,6 +160,11 @@ nav i.backBtn:hover {
     justify-content: space-evenly;
     flex-wrap: nowrap;
     align-content: center;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .homeScreen h1 {
     float: right;
@@ -281,6 +286,13 @@ nav i.backBtn:hover {
     border-radius: 3px;
     margin: 0 0 0 7px;
     object-fit: cover;
+}
+.homeScreen .ip span {
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+.homeScreen .ip span.connected {
+    opacity: 1;
 }
 
 .logPage .logText {
