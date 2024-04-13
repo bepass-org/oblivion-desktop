@@ -1,5 +1,5 @@
-import Nav from '../components/Nav';
 import classNames from "classnames";
+import Nav from '../components/Nav';
 import packageJsonData from '../../../package.json';
 
 export default function About() {
@@ -11,9 +11,9 @@ export default function About() {
                 "normalPage"
             )}>
                 <div className="container">
-                    <span className="dirLeft">
+                    <p className="dirLeft">
                         version: {packageJsonData.version}
-                    </span>
+                    </p>
                 </div>
             </div>
         </>

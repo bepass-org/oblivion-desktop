@@ -5,6 +5,11 @@ body {
     line-height: 20px;
     word-wrap: break-word;
     position: relative;
+    transition: all 0.2s ease-in-out;
+}
+[data-bs-theme="dark"] body {
+    background: #0A0E24;
+    color: #DCDCDC;
 }
 body:before {
     height: 40vh;
@@ -14,14 +19,16 @@ body:before {
     float: right;
     width: 100%;
     position: absolute;
+    transition: all 0.2s ease-in-out;
+}
+[data-bs-theme="dark"] body:after {
+    background: linear-gradient(#ffde06 0%, rgba(128, 128, 128, 0) 100%);
 }
 
-.dirleft,
 .dirLeft {
   direction: ltr;
   text-align: left;
 }
-.dirright,
 .dirRight {
   direction: rtl;
   text-align: right;
@@ -35,12 +42,16 @@ nav {
     right: 0;
     padding: 20px 0;
     transition: all 0.2s ease-in-out;
+    z-index: 2;
 }
 nav.isSticky {
-    background: #FDF8D1;
+    background: rgba(253, 248, 209, 0.9);
     box-shadow: 0 10px 30px rgba(0,0,0,.1);
-    backdrop-filter: blur(10px);
-    --webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
+    --webkit-backdrop-filter: blur(5px);
+}
+[data-bs-theme="dark"] nav.isSticky {
+    background: rgba(53, 50, 33, 0.9);
 }
 nav i {
     color: #676767;
@@ -48,8 +59,14 @@ nav i {
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
+[data-bs-theme="dark"] nav i {
+    color: #DCDCDC;
+}
 nav i:hover {
     color: #4f4f4f;
+}
+[data-bs-theme="dark"] nav i:hover {
+    color: #eaeaea;
 }
 nav i.log {
     color: #A1A1A1;
@@ -58,12 +75,18 @@ nav i.log {
 nav i.log:hover {
     color: #E15959;
 }
+[data-bs-theme="dark"] nav i.log:hover {
+    color: #ed6a6a;
+}
 nav h3 {
     font-size: 25px;
     font-weight: 200;
     color: #303030;
     margin: 1px 0 0 0;
     float: right;
+}
+[data-bs-theme="dark"] nav h3 {
+    color: #DCDCDC;
 }
 nav i.backBtn {
     font-size: 30px;
@@ -79,19 +102,19 @@ nav i.backBtn:hover {
     height: 3px;
 }
 ::-webkit-scrollbar-thumb {
-    background: #ccc;
+    background: rgba(253, 248, 209, 0.9);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #b3b3b3;
+    background: rgb(236, 230, 184);
 }
-[data-theme="dark"]::-webkit-scrollbar {
+[data-bs-theme="dark"] ::-webkit-scrollbar {
     background: #212121;
 }
-[data-theme="dark"]::-webkit-scrollbar-thumb {
-    background: #484848;
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(53, 50, 33, 0.9);
 }
-[data-theme="dark"]::-webkit-scrollbar-thumb:hover {
-    background: #5a5a5a;
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: rgb(83, 78, 54);
 }
 
 .container {
@@ -104,6 +127,8 @@ nav i.backBtn:hover {
 }
 .myApp.normalPage {
     margin: 80px 0 0 0;
+    z-index: 1;
+    position: relative;
 }
 
 .verticalAlign {
@@ -135,6 +160,9 @@ nav i.backBtn:hover {
     margin: 0;
     padding: 0;
 }
+[data-bs-theme="dark"] .homeScreen h1 {
+    color: #c5c5c5;
+}
 .homeScreen h2 {
     float: right;
     width: 100%;
@@ -144,6 +172,9 @@ nav i.backBtn:hover {
     font-weight: 300;
     text-align: right;
     margin: 0;
+}
+[data-bs-theme="dark"] .homeScreen h2 {
+    color: #FFA200;
 }
 @media screen and (min-width: 600px) {
     .homeScreen h2 {
@@ -174,6 +205,9 @@ nav i.backBtn:hover {
     position: relative;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+}
+[data-bs-theme="dark"] .homeScreen form .connector .switch {
+    background: #333643;
 }
 .homeScreen form .connector .switch.active {
     background: #FFAD0A;
@@ -218,6 +252,9 @@ nav i.backBtn:hover {
     float: right;
     text-align: center;
     color: #4B4B4B;
+}
+[data-bs-theme="dark"] .homeScreen .status {
+    color: #DCDCDC;
 }
 .homeScreen .status.active {
     color: #63BC0A;

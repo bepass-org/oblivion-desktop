@@ -1,11 +1,10 @@
+import classNames from 'classnames';
 import Nav from '../components/Nav';
 import { toggleDarkMode } from '../lib/utils';
-import classNames from 'classnames';
 import packageJsonData from "../../../package.json";
 
 export default function Settings() {
-    const isDarkMode =
-        document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    const isDarkMode = document.documentElement.getAttribute('data-bs-theme') === 'dark';
 
     return (
         <>
@@ -15,13 +14,13 @@ export default function Settings() {
                 "normalPage"
             )}>
                 <div className="container">
-                    {/* <div
+                    <div
         className="form-check form-switch"
         onClick={() => {
           toggleDarkMode();
         }}
       >
-        <label className="form-check-label" for="flexSwitchCheckChecked">
+        <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
           دارک‌مود:
         </label>
         <input
@@ -31,7 +30,7 @@ export default function Settings() {
           id="flexSwitchCheckChecked"
           checked={false}
         />
-      </div> */}
+      </div>
                 </div>
             </div>
         </>
