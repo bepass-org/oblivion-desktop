@@ -130,7 +130,7 @@ nav i.backBtn:hover {
     width: 100%;
 }
 .myApp.normalPage {
-    margin: 80px 0 0 0;
+    margin: 80px 0 25px 0;
     z-index: 1;
     position: relative;
 }
@@ -364,9 +364,37 @@ nav i.backBtn:hover {
 .settings .item .value {
     float: left;
     margin: 0;
+    width: 60%;
 }
-[data-bs-theme="dark"] .settings .item .value {
+.settings .item .value span {
+    float: left;
     color: #FFA200;
+    margin: 5px 0 0 0;
+    font-size: 22px;
+    font-weight: 300;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    cursor: pointer;
+}
+.settings .item .value select {
+    float: left;
+    border: none;
+    padding: 0;
+    background: none;
+    outline: none;
+    direction: ltr;
+    font-size: 22px;
+    font-weight: 300;
+    color: #FFA200;
+    cursor: pointer;
+}
+.settings .item .value select option {
+    direction: ltr;
+    font-size: 18px;
+    font-weight: 300;
+    color: #666666;
 }
 .settings .item .value .checkbox {
     float: left;
