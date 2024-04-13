@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import {useState} from "react";
 import Nav from '../components/Nav';
+import Modal from '../components/Modal';
 import { toggleDarkMode } from '../lib/utils';
 
 export default function Settings() {
@@ -9,6 +10,7 @@ export default function Settings() {
     return (
         <>
             <Nav title='تنظیمات' />
+            {/*<Modal title='تغییر اندپوینت' />*/}
             <div className={classNames(
                 "myApp",
                 "normalPage"

@@ -369,7 +369,7 @@ nav i.backBtn:hover {
 .settings .item .value span {
     float: left;
     color: #FFA200;
-    margin: 5px 0 0 0;
+    margin: 6px 0 0 0;
     font-size: 22px;
     font-weight: 300;
     overflow: hidden;
@@ -377,11 +377,12 @@ nav i.backBtn:hover {
     text-overflow: ellipsis;
     width: 100%;
     cursor: pointer;
+    padding-top: 1px;
 }
 .settings .item .value select {
     float: left;
     border: none;
-    padding: 0;
+    padding: 2px 0 0 0;
     background: none;
     outline: none;
     direction: ltr;
@@ -390,7 +391,7 @@ nav i.backBtn:hover {
     color: #FFA200;
     cursor: pointer;
     appearance: none;
-    margin: 5px 0 0 0;
+    margin: 4px 0 0 0;
 }
 .settings .item .value select option {
     direction: ltr;
@@ -551,4 +552,106 @@ nav i.backBtn:hover {
     padding: 3px 10px 0 0;
     font-weight: 400;
     font-size: 16px;
+}
+
+.dialog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+.dialog .dialogBg {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(4px);
+    --webkit-backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 2;
+    top: 0;
+}
+[data-bs-theme="dark"] .dialog .dialogBg {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(3px);
+    --webkit-backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.dialog .dialogBox {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 3;
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.16);
+    padding: 10px 10px 15px 10px;
+}
+[data-bs-theme="dark"] .dialog .dialogBox {
+    background: #14172D;
+}
+.dialog .dialogBox h3 {
+    float: right;
+    width: 100%;
+    font-weight: 300;
+    font-size: 17px;
+    margin: 10px 0 15px 0;
+}
+[data-bs-theme="dark"] .dialog .dialogBox h3 {
+    color: #DCDCDC;
+}
+.dialog .dialogBox input {
+    float: right;
+    width: 100%;
+    padding: 15px;
+    height: auto;
+    direction: ltr;
+    font-weight: 400;
+    border-width: 2px;
+}
+[data-bs-theme="dark"] .dialog .dialogBox input {
+    background: #0A0E24;
+    border-color: #486097;
+    color: #FFFFFF;
+}
+[data-bs-theme="dark"] .dialog .dialogBox input:focus {
+    border-color: #5a78bc;
+}
+.dialog .dialogBox .btn {
+    float: left;
+    padding: 10px;
+    margin: 15px 0 0 0;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+.dialog .dialogBox .btn.btn-save {
+    background: #8d8c8c;
+    color: #fff;
+    font-weight: 300;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .btn.btn-save {
+    background: #050920;
+}
+.dialog .dialogBox .btn.btn-save:hover {
+    background: #7f7f7f;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .btn.btn-save:hover {
+    background: #010315;
+}
+.dialog .dialogBox .btn.btn-cancel {
+    border-color: #acacac;
+    margin-right: 10px;
+    font-weight: 300;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .btn.btn-cancel {
+    border-color: #303666;
+}
+.dialog .dialogBox .btn.btn-cancel:hover {
+    border-color: #979797;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .btn.btn-cancel:hover {
+    border-color: #464d8b;
+    color: #dadada;
 }
