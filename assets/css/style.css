@@ -34,6 +34,13 @@ nav {
     top: 0;
     right: 0;
     padding: 20px 0;
+    transition: all 0.2s ease-in-out;
+}
+nav.isSticky {
+    background: #FDF8D1;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+    backdrop-filter: blur(10px);
+    --webkit-backdrop-filter: blur(10px);
 }
 nav i {
     color: #676767;
@@ -66,8 +73,37 @@ nav i.backBtn:hover {
     color: #1058FF;
 }
 
+::-webkit-scrollbar {
+    background: #fff;
+    width: 7px;
+    height: 3px;
+}
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+}
+[data-theme="dark"]::-webkit-scrollbar {
+    background: #212121;
+}
+[data-theme="dark"]::-webkit-scrollbar-thumb {
+    background: #484848;
+}
+[data-theme="dark"]::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}
+
 .container {
     max-width: 400px;
+}
+
+.myApp {
+    float: right;
+    width: 100%;
+}
+.myApp.normalPage {
+    margin: 80px 0 0 0;
 }
 
 .verticalAlign {
