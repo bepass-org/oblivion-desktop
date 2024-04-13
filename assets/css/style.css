@@ -391,3 +391,41 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .settings .item .info {
     color: #C4C4C4;
 }
+
+.splashScreen {
+    float: left;
+    width: 100%;
+    background: #fff;
+    color: #4c4b4b;
+    z-index: 3;
+    position: absolute;
+    height: 100vh;
+}
+[data-bs-theme="dark"] .splashScreen {
+    background-color: #0A0E24;
+    color: #DCDCDC;
+}
+.splashScreen:before {
+    height: 40vh;
+    background: linear-gradient(#ffde06 0%, rgba(128, 128, 128, 0) 100%);
+    opacity: 0.2;
+    content: "";
+    float: right;
+    width: 100%;
+    position: absolute;
+    transition: all 0.2s ease-in-out;
+}
+[data-bs-theme="dark"] .splashScreen:after {
+    background: linear-gradient(#ffde06 0%, rgba(128, 128, 128, 0) 100%);
+}
+.splashScreen .splashScreenImg {
+    background: transparent url("../img/splashScreen/light.png") no-repeat center center;
+    background-size: 85%;
+    width: 100%;
+    height: 100vh;
+    z-index: 4;
+    position: absolute;
+}
+[data-bs-theme="dark"] .splashScreen .splashScreenImg {
+    background-image: url("../img/splashScreen/dark.png");
+}

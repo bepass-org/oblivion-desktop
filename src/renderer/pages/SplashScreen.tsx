@@ -9,5 +9,11 @@ export default function SplashScreen() {
     }, []);
 
     if (!show) return <></>;
-    return <div>SplashScreen</div>;
+    return (
+        <>
+            <div className="splashScreen">
+                <div className="splashScreenImg" />
+            </div>
+        </>
+    );
 }
