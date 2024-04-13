@@ -592,12 +592,25 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .dialog .dialogBox {
     background: #14172D;
 }
+.dialog .dialogBox .line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 5px 0;
+}
+.dialog .dialogBox .line .miniLine {
+    width: 62px;
+    height: 5px;
+    background: #a1a1a1;
+    opacity: 0.37;
+    border-radius: 25px;
+}
 .dialog .dialogBox h3 {
     float: right;
     width: 100%;
     font-weight: 300;
     font-size: 17px;
-    margin: 10px 0 15px 0;
+    margin: 10px 0 20px 0;
 }
 [data-bs-theme="dark"] .dialog .dialogBox h3 {
     color: #DCDCDC;
