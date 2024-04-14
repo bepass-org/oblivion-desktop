@@ -75,6 +75,7 @@ const createWindow = async () => {
             { label: 'خروج', type: 'normal' }
         ])
         contextMenu.items[1].checked = false
+        appIcon.setToolTip('Oblivion Desktop')
         appIcon.setContextMenu(contextMenu)
     })
 
