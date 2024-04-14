@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import flag from '../../../assets/img/flags/ir.svg';
 
 export default function Index() {
     const [isConnected, setIsConnected] = useState(false);
@@ -97,7 +98,7 @@ export default function Index() {
                             <br />
                             <div className={classNames('ip')}>
                                 <img
-                                    src='./assets/img/flags/us.svg'
+                                    src={flag}
                                     alt='flag'
                                     className={isConnected ? '' : 'hidden'}
                                 />

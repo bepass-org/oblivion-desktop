@@ -553,6 +553,9 @@ nav i.backBtn:hover {
     margin: 0 0 0 5px;
     border-radius: 50%;
 }
+[data-bs-theme="dark"] .socialMedia .item .icon img[alt="github"] {
+    filter: contrast(0%);
+}
 .socialMedia .item .icon i {
     float: left;
     font-size: 25px;
