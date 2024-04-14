@@ -3,9 +3,10 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ipcRenderer } from '../lib/utils';
 import flag from '../../../assets/img/flags/ir.svg';
+import { useStore } from '../store';
 
 export default function Index() {
-    const [isConnected, setIsConnected] = useState(false);
+    const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
 
     ipcRenderer.once('wp-start', (ok) => {
