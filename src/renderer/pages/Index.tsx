@@ -100,7 +100,7 @@ export default function Index() {
                                 <img
                                     src={flag}
                                     alt='flag'
-                                    className={isConnected ? '' : 'hidden'}
+                                    className={isConnected ? 'connected' : ''}
                                 />
                                 <span
                                     className={isConnected ? 'connected' : ''}

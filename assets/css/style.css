@@ -286,6 +286,12 @@ nav i.backBtn:hover {
     border-radius: 3px;
     margin: 0 0 0 7px;
     object-fit: cover;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+}
+.homeScreen .ip img.connected,
+.homeScreen .ip svg.connected {
+    opacity: 1;
 }
 .homeScreen .ip span {
     opacity: 0;
