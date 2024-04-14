@@ -4,11 +4,11 @@ export default function Modal({ title }: { title: string }) {
     return (
         <>
             <div className="dialog">
-                <div className="dialogBg"></div>
+                <div className="dialogBg" />
                 <div className="dialogBox">
                     <div className='container'>
                         <div className="line">
-                            <div className="miniLine"></div>
+                            <div className="miniLine" />
                         </div>
                         <h3>{title}</h3>
                         <input value="127.0.0.1" className="form-control" />
