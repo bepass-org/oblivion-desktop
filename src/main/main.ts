@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -65,6 +65,18 @@ const createWindow = async () => {
     const getAssetPath = (...paths: string[]): string => {
         return path.join(RESOURCES_PATH, ...paths);
     };
+
+    let appIcon = null
+    app?.whenReady().then(() => {
+        appIcon = new Tray(getAssetPath('oblivion.png'))
+        const contextMenu = Menu.buildFromTemplate([
+            { label: 'اتصال برقرار', type: 'radio' },
+            { label: 'قطع اتصال', type: 'radio' },
+            { label: 'خروج', type: 'normal' }
+        ])
+        contextMenu.items[1].checked = false
+        appIcon.setContextMenu(contextMenu)
+    })
 
     const windowWidth = 400;
     const windowHeight = 650;
