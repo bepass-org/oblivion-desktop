@@ -24,6 +24,7 @@ module.exports = {
         'jsx-a11y/click-events-have-key-events': 'warn',
         'jsx-a11y/no-static-element-interactions': 'warn',
         'react/button-has-type': 'off',
+        'prefer-template': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,

@@ -22,8 +22,8 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import './ipcListeners';
-import { isDev } from './lib/utils';
+import './ipc';
+import { isDev, removeFileIfExists } from './lib/utils';
 import { useCustomWindowXY } from './config';
 
 class AppUpdater {
@@ -40,6 +40,10 @@ if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
 }
+
+(async () => {
+    await removeFileIfExists('log.txt');
+})();
 
 const isDebug =
     process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';

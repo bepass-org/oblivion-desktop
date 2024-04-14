@@ -17,7 +17,7 @@ export default function App() {
     useEffect(() => {
         let keysDown: any = {};
         window.addEventListener('keydown', function (event) {
-            console.log('🚀 - event:', event);
+            // console.log('🚀 - event:', event);
             keysDown[event.keyCode] = true;
 
             // Check if Ctrl, Shift, and I keys are down at the same time

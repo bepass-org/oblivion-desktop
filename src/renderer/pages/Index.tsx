@@ -13,17 +13,20 @@ export default function Index() {
             setIsLoading(false);
             setIsConnected(true);
         }
-        console.log('🚀 - window.electron.ipcRenderer.once - args:', ok);
     });
 
     ipcRenderer.once('wp-end', (ok) => {
+        console.log('🚀 - ipcRenderer.once - ok:', ok);
         if (ok) {
             setIsConnected(false);
+            setIsLoading(false);
         }
     });
 
     const onChange = () => {
-        if (isConnected) {
+        if (isLoading) {
+            ipcRenderer.sendMessage('wp-end');
+        } else if (isConnected) {
             ipcRenderer.sendMessage('wp-end');
         } else {
             ipcRenderer.sendMessage('wp-start');
