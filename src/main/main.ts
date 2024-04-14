@@ -16,6 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import './ipcListeners';
 import { isDev } from './lib/utils';
+import { useCustomWindowXY } from '../config';
 
 class AppUpdater {
     constructor() {
@@ -88,8 +89,10 @@ const createWindow = async () => {
         const primaryDisplay = screen.getPrimaryDisplay();
         const displayWidth = primaryDisplay.workAreaSize.width;
         const displayHeight = primaryDisplay.workAreaSize.height;
-        config.x = displayWidth - windowWidth - 60;
-        config.y = displayHeight - windowHeight - 160;
+        if (useCustomWindowXY) {
+            config.x = displayWidth - windowWidth - 60;
+            config.y = displayHeight - windowHeight - 160;
+        }
         config.webPreferences.devTools = true;
         config.webPreferences.devToolsKeyCombination = true;
     }
