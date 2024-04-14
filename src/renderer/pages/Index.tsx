@@ -1,21 +1,33 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { ipcRenderer } from '../lib/utils';
 import flag from '../../../assets/img/flags/ir.svg';
 
 export default function Index() {
     const [isConnected, setIsConnected] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const onChange = (e: any) => {
-        if (isConnected) {
+    ipcRenderer.once('wp-start', (ok) => {
+        if (ok) {
+            setIsLoading(false);
+            setIsConnected(true);
+        }
+        console.log('🚀 - window.electron.ipcRenderer.once - args:', ok);
+    });
+
+    ipcRenderer.once('wp-end', (ok) => {
+        if (ok) {
             setIsConnected(false);
+        }
+    });
+
+    const onChange = () => {
+        if (isConnected) {
+            ipcRenderer.sendMessage('wp-end');
         } else {
+            ipcRenderer.sendMessage('wp-start');
             setIsLoading(true);
-            setTimeout(() => {
-                setIsLoading(false);
-                setIsConnected(true);
-            }, 500);
         }
     };
 
@@ -96,10 +108,12 @@ export default function Index() {
                         >
                             {status}
                             <br />
-                            <div className={classNames(
-                                'ip',
-                                (isConnected ? 'connected' : '')
-                            )}>
+                            <div
+                                className={classNames(
+                                    'ip',
+                                    isConnected ? 'connected' : '',
+                                )}
+                            >
                                 <img src={flag} alt='flag' />
                                 <span>1.1.1.1</span>
                             </div>

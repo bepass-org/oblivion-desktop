@@ -28,6 +28,7 @@
     "*.{css,sass,scss}.d.ts": true
   },
   "cSpell.words": [
+    "gool",
     "ircf"
   ]
 }

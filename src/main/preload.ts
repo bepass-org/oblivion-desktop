@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'open-devtools' | 'wp-start';
+export type Channels = 'ipc-example' | 'open-devtools' | 'wp-start' | 'wp-end';
 
 const electronHandler = {
     ipcRenderer: {

@@ -9,14 +9,22 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
+import {
+    app,
+    BrowserWindow,
+    ipcMain,
+    screen,
+    shell,
+    Menu,
+    Tray,
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import './ipcListeners';
 import { isDev } from './lib/utils';
-import { useCustomWindowXY } from '../config';
+import { useCustomWindowXY } from './config';
 
 class AppUpdater {
     constructor() {
@@ -66,18 +74,18 @@ const createWindow = async () => {
         return path.join(RESOURCES_PATH, ...paths);
     };
 
-    let appIcon = null
+    let appIcon = null;
     app?.whenReady().then(() => {
-        appIcon = new Tray(getAssetPath('oblivion.png'))
+        appIcon = new Tray(getAssetPath('oblivion.png'));
         const contextMenu = Menu.buildFromTemplate([
             { label: 'اتصال برقرار', type: 'radio' },
             { label: 'قطع اتصال', type: 'radio' },
-            { label: 'خروج', type: 'normal' }
-        ])
-        contextMenu.items[1].checked = false
-        appIcon.setToolTip('Oblivion Desktop')
-        appIcon.setContextMenu(contextMenu)
-    })
+            { label: 'خروج', type: 'normal' },
+        ]);
+        contextMenu.items[1].checked = false;
+        appIcon.setToolTip('Oblivion Desktop');
+        appIcon.setContextMenu(contextMenu);
+    });
 
     const windowWidth = 400;
     const windowHeight = 650;
