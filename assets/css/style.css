@@ -541,6 +541,11 @@ nav i.backBtn:hover {
     margin: 0 0 0 5px;
     border-radius: 50%;
 }
+.socialMedia .item .icon i {
+    float: left;
+    font-size: 25px;
+    margin: 0 0 0 5px;
+}
 .socialMedia .item .host {
     float: left;
     font-size: 16px;
@@ -552,6 +557,13 @@ nav i.backBtn:hover {
     padding: 3px 10px 0 0;
     font-weight: 400;
     font-size: 16px;
+}
+.socialMedia hr {
+    border-color: #dcdcdc;
+    margin-top: 0;
+}
+[data-bs-theme="dark"] .socialMedia hr {
+    border-color: #2B2E3B;
 }
 
 .dialog {

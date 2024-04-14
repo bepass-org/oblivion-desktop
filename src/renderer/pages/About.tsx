@@ -16,34 +16,16 @@ export default function About() {
                         برنامه Oblivion Desktop با الگو گرفتن از رابط کاربری نسخه اصلی که توسط یوسف قبادی برنامه‌نویسی شده بود، با هدف دسترسی آزاد به اینترنت تهیه گردیده و هرگونه تغییر نام یا استفاده تجاری از آن مجاز نمی‌باشد.</p>
                     <p><b>اینترنت برای همه، یا هیچ‌کس!</b></p>
                     <div className="socialMedia">
-                        <a href="https://github.com/bepass-org/oblivion" target="_blank" rel="noreferrer">
-                            <div className="item">
-                                <div className="icon">
-                                    <img src="../../../assets/img/github-mark.png" alt="github" />
-                                </div>
-                                <div className="host">Github</div>
-                                <div className="name">bepass-org/Oblivion</div>
-                            </div>
-                        </a>
-                        <a href="https://github.com/bepass-org/warp-plus" target="_blank" rel="noreferrer">
-                            <div className="item">
-                                <div className="icon">
-                                    <img src="../../../assets/img/github-mark.png" alt="github" />
-                                </div>
-                                <div className="host">Github</div>
-                                <div className="name">bepass-org/Warp-Plus</div>
-                            </div>
-                        </a>
                         <a href="https://github.com/kiomarzsss/oblivion-desktop" target="_blank" rel="noreferrer">
                             <div className="item">
                                 <div className="icon">
                                     <img src="../../../assets/img/github-mark.png" alt="github" />
                                 </div>
                                 <div className="host">Github</div>
-                                <div className="name">kiomarzsss/Oblivion-Desktop</div>
+                                <div className="name">Oblivion-Desktop</div>
                             </div>
                         </a>
-                        <a href="https://ircf.space" target="_blank" rel="noreferrer">
+                        <a href="https://ircf.space/contacts.php" target="_blank" rel="noreferrer">
                             <div className="item">
                                 <div className="icon">
                                     <img src="../../../assets/img/ircf.png" alt="ircf" />
@@ -52,10 +34,30 @@ export default function About() {
                                 <div className="name">ircf.space</div>
                             </div>
                         </a>
+                        <p className="text-center">
+                            <small>App Version: <b>{packageJsonData.version}</b></small>
+                        </p>
+                        <div className="clearfix" />
+                        <hr />
+                        <a href="https://github.com/bepass-org/warp-plus" target="_blank" rel="noreferrer">
+                            <div className="item">
+                                <div className="icon">
+                                    <i className="material-icons">&#xe86f;</i>
+                                </div>
+                                <div className="host">Core</div>
+                                <div className="name">bepass-org/Warp-Plus</div>
+                            </div>
+                        </a>
+                        <a href="https://github.com/bepass-org/oblivion" target="_blank" rel="noreferrer">
+                            <div className="item">
+                                <div className="icon">
+                                    <i className="material-icons">&#xe859;</i>
+                                </div>
+                                <div className="host">Android</div>
+                                <div className="name">bepass-org/Oblivion</div>
+                            </div>
+                        </a>
                     </div>
-                    <p className="text-center">
-                        <small>App Version: <b>{packageJsonData.version}</b></small>
-                    </p>
                 </div>
             </div>
         </>
