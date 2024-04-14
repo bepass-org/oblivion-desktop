@@ -96,17 +96,12 @@ export default function Index() {
                         >
                             {status}
                             <br />
-                            <div className={classNames('ip')}>
-                                <img
-                                    src={flag}
-                                    alt='flag'
-                                    className={isConnected ? 'connected' : ''}
-                                />
-                                <span
-                                    className={isConnected ? 'connected' : ''}
-                                >
-                                    1.1.1.1
-                                </span>
+                            <div className={classNames(
+                                'ip',
+                                (isConnected ? 'connected' : '')
+                            )}>
+                                <img src={flag} alt='flag' />
+                                <span>1.1.1.1</span>
                             </div>
                         </div>
                     </div>

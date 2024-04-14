@@ -289,15 +289,15 @@ nav i.backBtn:hover {
     transition: all 0.2s ease-in-out;
     opacity: 0;
 }
-.homeScreen .ip img.connected,
-.homeScreen .ip svg.connected {
+.homeScreen .ip.connected img,
+.homeScreen .ip.connected svg {
     opacity: 1;
 }
 .homeScreen .ip span {
     opacity: 0;
     transition: all 0.2s ease-in-out;
 }
-.homeScreen .ip span.connected {
+.homeScreen .ip.connected span {
     opacity: 1;
 }
 
