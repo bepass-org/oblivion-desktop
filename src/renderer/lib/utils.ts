@@ -11,3 +11,5 @@ export const toggleDarkMode = () => {
         document.documentElement.setAttribute('data-bs-theme', 'light');
     }
 };
+
+export const isDev = () => window.electron.nodeEnv === 'development';

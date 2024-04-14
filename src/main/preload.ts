@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example';
+export type Channels = 'ipc-example' | 'open-devtools' | 'wp-start';
 
 const electronHandler = {
     ipcRenderer: {
@@ -22,10 +22,11 @@ const electronHandler = {
                 ipcRenderer.removeListener(channel, subscription);
             };
         },
-        // once(channel: Channels, func: (...args: unknown[]) => void) {
-        //   ipcRenderer.once(channel, (_event, ...args) => func(...args));
-        // },
+        once(channel: Channels, func: (...args: unknown[]) => void) {
+            ipcRenderer.once(channel, (_event, ...args) => func(...args));
+        },
     },
+    nodeEnv: process.env.NODE_ENV,
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

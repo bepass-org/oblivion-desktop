@@ -1,4 +1,5 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import 'assets/css/bootstrap.min.css';
 import 'assets/css/bootstrap-rtl.min.css';
@@ -13,6 +14,26 @@ import About from './pages/About';
 import Debug from './pages/Debug';
 
 export default function App() {
+    useEffect(() => {
+        let keysDown: any = {};
+        window.addEventListener('keydown', function (event) {
+            console.log('🚀 - event:', event);
+            keysDown[event.keyCode] = true;
+
+            // Check if Ctrl, Shift, and I keys are down at the same time
+            if (keysDown[17] && keysDown[16] && keysDown[73]) {
+                window.electron.ipcRenderer.sendMessage('open-devtools');
+                // Clear the keysDown object after handling the desired keypress
+                setTimeout(() => {
+                    keysDown = {};
+                }, 0);
+            }
+        });
+
+        window.addEventListener('keyup', function (event) {
+            delete keysDown[event.keyCode];
+        });
+    });
     return (
         <>
             <SplashScreen />

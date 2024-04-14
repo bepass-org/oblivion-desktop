@@ -9,12 +9,13 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import './ipcListeners';
+import { isDev } from './lib/utils';
 
 class AppUpdater {
     constructor() {
@@ -35,7 +36,7 @@ const isDebug =
     process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDebug) {
-    require('electron-debug')();
+    // require('electron-debug')();
 }
 
 const installExtensions = async () => {
@@ -64,20 +65,36 @@ const createWindow = async () => {
         return path.join(RESOURCES_PATH, ...paths);
     };
 
-    mainWindow = new BrowserWindow({
+    const windowWidth = 400;
+    const windowHeight = 650;
+
+    const config: any = {
         show: false,
-        width: 400,
-        height: 650,
+        width: windowWidth,
+        height: windowHeight,
         autoHideMenuBar: true,
         resizable: false,
         icon: getAssetPath('oblivion.png'),
         webPreferences: {
             devTools: false,
+            devToolsKeyCombination: false,
             preload: app.isPackaged
                 ? path.join(__dirname, 'preload.js')
                 : path.join(__dirname, '../../.erb/dll/preload.js'),
         },
-    });
+    };
+
+    if (isDev()) {
+        const primaryDisplay = screen.getPrimaryDisplay();
+        const displayWidth = primaryDisplay.workAreaSize.width;
+        const displayHeight = primaryDisplay.workAreaSize.height;
+        config.x = displayWidth - windowWidth - 60;
+        config.y = displayHeight - windowHeight - 160;
+        config.webPreferences.devTools = true;
+        config.webPreferences.devToolsKeyCombination = true;
+    }
+
+    mainWindow = new BrowserWindow(config);
 
     mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -90,6 +107,12 @@ const createWindow = async () => {
         } else {
             mainWindow.show();
         }
+    });
+
+    ipcMain.on('open-devtools', async () => {
+        // TODO add toggle
+        mainWindow?.webContents.openDevTools();
+        // mainWindow.webContents.closeDevTools();
     });
 
     mainWindow.on('closed', () => {
