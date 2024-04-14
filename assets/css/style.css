@@ -357,6 +357,10 @@ nav i.backBtn:hover {
     font-weight: 300;
     color: #303030;
     margin: 5px 0 0 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 [data-bs-theme="dark"] .settings .item .key {
     color: #E8E8E8;
@@ -378,6 +382,10 @@ nav i.backBtn:hover {
     width: 100%;
     cursor: pointer;
     padding-top: 1px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .settings .item .value select {
     float: left;
@@ -437,6 +445,10 @@ nav i.backBtn:hover {
     color: #717171;
     font-size: 14px;
     margin: 5px 0 0 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 [data-bs-theme="dark"] .settings .item .info {
     color: #a0a0a0;
@@ -623,6 +635,10 @@ nav i.backBtn:hover {
     font-weight: 300;
     font-size: 17px;
     margin: 10px 0 20px 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 [data-bs-theme="dark"] .dialog .dialogBox h3 {
     color: #DCDCDC;
@@ -650,6 +666,10 @@ nav i.backBtn:hover {
     margin: 15px 0 0 0;
     border: 1px solid transparent;
     transition: all 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .dialog .dialogBox .btn.btn-save {
     background: #8d8c8c;

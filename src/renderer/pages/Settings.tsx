@@ -126,7 +126,13 @@ export default function Settings() {
                             فعالسازی Warp In Warp
                         </div>
                     </div>
-                    <div className="item">
+                    <div
+                        className="item"
+                        onClick={() => {
+                            toggleDarkMode();
+                            setDarkModeStatus(!darkModeStatus);
+                        }}
+                    >
                         <label className="key" htmlFor="flexSwitchCheckChecked">
                             حالت تیره
                         </label>
@@ -136,10 +142,6 @@ export default function Settings() {
                                     "checkbox",
                                     (darkModeStatus ? "checked" : ""),
                                 )}
-                                 onClick={() => {
-                                     toggleDarkMode();
-                                     setDarkModeStatus(!darkModeStatus);
-                                 }}
                             >
                                 <i className="material-icons">&#xe876;</i>
                             </div>
