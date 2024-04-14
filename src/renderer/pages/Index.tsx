@@ -64,10 +64,7 @@ export default function Index() {
                     </Link>
                 </div>
             </nav>
-            <div className={classNames(
-                "myApp",
-                "verticalAlign"
-            )}>
+            <div className={classNames('myApp', 'verticalAlign')}>
                 <div className='container'>
                     <div className='homeScreen'>
                         <h1>OBLIVION</h1>
@@ -77,7 +74,9 @@ export default function Index() {
                                 <div
                                     className={classNames(
                                         'switch',
-                                        isConnected && !isLoading ? 'active' : '',
+                                        isConnected && !isLoading
+                                            ? 'active'
+                                            : '',
                                         isLoading ? 'isLoading' : '',
                                     )}
                                     onClick={onChange}
@@ -96,13 +95,17 @@ export default function Index() {
                         >
                             {status}
                             <br />
-                            <div
-                                className={classNames(
-                                    'ip',
-                                )}
-                            >
-                                <img src='./assets/img/flags/us.svg' alt='flag' className={isConnected ? '' : 'hidden' } />
-                                <span className={isConnected ? 'connected' : '' }>1.1.1.1</span>
+                            <div className={classNames('ip')}>
+                                <img
+                                    src='./assets/img/flags/us.svg'
+                                    alt='flag'
+                                    className={isConnected ? '' : 'hidden'}
+                                />
+                                <span
+                                    className={isConnected ? 'connected' : ''}
+                                >
+                                    1.1.1.1
+                                </span>
                             </div>
                         </div>
                     </div>
