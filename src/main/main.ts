@@ -106,7 +106,7 @@ const createWindow = async () => {
         const displayHeight = primaryDisplay.workAreaSize.height;
         if (useCustomWindowXY) {
             config.x = displayWidth - windowWidth - 60;
-            config.y = displayHeight - windowHeight - 60;
+            config.y = displayHeight - windowHeight - 160;
         }
         config.webPreferences.devTools = true;
         config.webPreferences.devToolsKeyCombination = true;
@@ -138,10 +138,10 @@ const createWindow = async () => {
             mainWindow = null;
         });
 
-        mainWindow.on('minimize', (e:any) => {
-            e.preventDefault()
-            mainWindow?.hide()
-        })
+        mainWindow.on('minimize', (e: any) => {
+            e.preventDefault();
+            mainWindow?.hide();
+        });
 
         const menuBuilder = new MenuBuilder(mainWindow);
         menuBuilder.buildMenu();
@@ -151,7 +151,6 @@ const createWindow = async () => {
             shell.openExternal(edata.url);
             return { action: 'deny' };
         });
-
     }
 
     createMainWindow();
@@ -160,18 +159,25 @@ const createWindow = async () => {
     app?.whenReady().then(() => {
         appIcon = new Tray(getAssetPath('oblivion.png'));
         const contextMenu = Menu.buildFromTemplate([
-            { label: 'Oblivion', type: 'normal', click: () => {
-                if (!mainWindow) {
-                    createMainWindow();
-                } else {
-                    mainWindow.show();
-                }
-            }},
+            {
+                label: 'Oblivion',
+                type: 'normal',
+                click: () => {
+                    if (!mainWindow) {
+                        createMainWindow();
+                    } else {
+                        mainWindow.show();
+                    }
+                },
+            },
             { label: '', type: 'separator' },
-            { label: 'حالت پروکسی', submenu: [
-                { label: 'متصل است', type: 'radio' },
-                { label: 'عدم اتصال', type: 'radio' },
-            ]},
+            {
+                label: 'حالت پروکسی',
+                submenu: [
+                    { label: 'متصل است', type: 'radio' },
+                    { label: 'عدم اتصال', type: 'radio' },
+                ],
+            },
             { label: '', type: 'separator' },
             { label: 'خروج', role: 'close' },
         ]);

@@ -12,9 +12,11 @@ import SplashScreen from './pages/SplashScreen';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Debug from './pages/Debug';
+import { loadThemeMode } from './lib/utils';
 
 export default function App() {
     useEffect(() => {
+        // open devtools on dev enviroment by ctrl+shift+i
         let keysDown: any = {};
         window.addEventListener('keydown', function (event) {
             // console.log('🚀 - event:', event);
@@ -33,7 +35,10 @@ export default function App() {
         window.addEventListener('keyup', function (event) {
             delete keysDown[event.keyCode];
         });
-    });
+
+        loadThemeMode();
+    }, []);
+
     return (
         <>
             <SplashScreen />

@@ -1,14 +1,38 @@
 export const ipcRenderer = window.electron.ipcRenderer;
 
+export const setLightMode = () => {
+    localStorage.setItem('data-bs-theme', 'light');
+    document.documentElement.setAttribute('data-bs-theme', 'light');
+};
+
+export const setDarkMode = () => {
+    localStorage.setItem('data-bs-theme', 'dark');
+    document.documentElement.setAttribute('data-bs-theme', 'dark');
+};
+
 export const toggleDarkMode = () => {
     const theme = document.documentElement.getAttribute('data-bs-theme');
-    console.log('🚀 - toggleDarkMode - theme:', theme);
     if (theme === 'light') {
-        document.documentElement.setAttribute('data-bs-theme', 'dark');
+        setDarkMode();
     } else if (theme === 'dark') {
-        document.documentElement.setAttribute('data-bs-theme', 'light');
+        setLightMode();
     } else {
-        document.documentElement.setAttribute('data-bs-theme', 'light');
+        setLightMode();
+    }
+};
+
+export const loadThemeMode = () => {
+    const theme = localStorage.getItem('data-bs-theme');
+    if (!theme) {
+        localStorage.setItem('data-bs-theme', 'light');
+    } else {
+        if (theme === 'light') {
+            setLightMode();
+        } else if (theme === 'dark') {
+            setDarkMode();
+        } else {
+            setLightMode();
+        }
     }
 };
 

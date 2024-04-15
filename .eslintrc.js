@@ -25,6 +25,8 @@ module.exports = {
         'jsx-a11y/no-static-element-interactions': 'warn',
         'react/button-has-type': 'off',
         'prefer-template': 'off',
+        'no-param-reassign': 'off',
+        'no-lonely-if': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,
