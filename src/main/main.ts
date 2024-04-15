@@ -78,19 +78,6 @@ const createWindow = async () => {
         return path.join(RESOURCES_PATH, ...paths);
     };
 
-    let appIcon = null;
-    app?.whenReady().then(() => {
-        appIcon = new Tray(getAssetPath('oblivion.png'));
-        const contextMenu = Menu.buildFromTemplate([
-            { label: 'اتصال برقرار', type: 'radio' },
-            { label: 'قطع اتصال', type: 'radio' },
-            { label: 'خروج', type: 'normal' },
-        ]);
-        contextMenu.items[1].checked = false;
-        appIcon.setToolTip('Oblivion Desktop');
-        appIcon.setContextMenu(contextMenu);
-    });
-
     const windowWidth = 400;
     const windowHeight = 650;
 
@@ -99,6 +86,9 @@ const createWindow = async () => {
         width: windowWidth,
         height: windowHeight,
         autoHideMenuBar: true,
+        transparent: false,
+        center: true,
+        frame: true,
         resizable: false,
         icon: getAssetPath('oblivion.png'),
         webPreferences: {
@@ -116,44 +106,72 @@ const createWindow = async () => {
         const displayHeight = primaryDisplay.workAreaSize.height;
         if (useCustomWindowXY) {
             config.x = displayWidth - windowWidth - 60;
-            config.y = displayHeight - windowHeight - 160;
+            config.y = displayHeight - windowHeight - 60;
         }
         config.webPreferences.devTools = true;
         config.webPreferences.devToolsKeyCombination = true;
     }
 
-    mainWindow = new BrowserWindow(config);
+    function createMainWindow() {
+        mainWindow = new BrowserWindow(config);
 
-    mainWindow.loadURL(resolveHtmlPath('index.html'));
+        mainWindow.loadURL(resolveHtmlPath('index.html'));
 
-    mainWindow.on('ready-to-show', () => {
-        if (!mainWindow) {
-            throw new Error('"mainWindow" is not defined');
-        }
-        if (process.env.START_MINIMIZED) {
-            mainWindow.minimize();
-        } else {
-            mainWindow.show();
-        }
-    });
+        mainWindow.on('ready-to-show', () => {
+            if (!mainWindow) {
+                throw new Error('"mainWindow" is not defined');
+            }
+            if (process.env.START_MINIMIZED) {
+                mainWindow.minimize();
+            } else {
+                mainWindow.show();
+            }
+        });
 
-    ipcMain.on('open-devtools', async () => {
-        // TODO add toggle
-        mainWindow?.webContents.openDevTools();
-        // mainWindow.webContents.closeDevTools();
-    });
+        ipcMain.on('open-devtools', async () => {
+            // TODO add toggle
+            mainWindow?.webContents.openDevTools();
+            // mainWindow.webContents.closeDevTools();
+        });
 
-    mainWindow.on('closed', () => {
-        mainWindow = null;
-    });
+        mainWindow.on('closed', () => {
+            mainWindow = null;
+        });
 
-    const menuBuilder = new MenuBuilder(mainWindow);
-    menuBuilder.buildMenu();
+        const menuBuilder = new MenuBuilder(mainWindow);
+        menuBuilder.buildMenu();
 
-    // Open urls in the user's browser
-    mainWindow.webContents.setWindowOpenHandler((edata) => {
-        shell.openExternal(edata.url);
-        return { action: 'deny' };
+        // Open urls in the user's browser
+        mainWindow.webContents.setWindowOpenHandler((edata) => {
+            shell.openExternal(edata.url);
+            return { action: 'deny' };
+        });
+
+    }
+
+    createMainWindow();
+
+    let appIcon = null;
+    app?.whenReady().then(() => {
+        appIcon = new Tray(getAssetPath('oblivion.png'));
+        const contextMenu = Menu.buildFromTemplate([
+            { label: 'Oblivion', type: 'normal', click: () => {
+                if (!mainWindow) {
+                    createMainWindow();
+                } else {
+                    mainWindow.show();
+                }
+            }},
+            { label: 'حالت پروکسی', submenu: [
+                { label: 'متصل است', type: 'radio' },
+                { label: 'عدم اتصال', type: 'radio' },
+            ]},
+            { label: '', type: 'separator' },
+            { label: 'خروج', role: 'close' },
+        ]);
+        contextMenu.items[1].checked = false;
+        appIcon.setToolTip('Oblivion Desktop');
+        appIcon.setContextMenu(contextMenu);
     });
 
     // Remove this if your app does not use auto updates

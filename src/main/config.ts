@@ -1,1 +1,1 @@
-export const useCustomWindowXY = false;
+export const useCustomWindowXY = true;
