@@ -162,6 +162,7 @@ const createWindow = async () => {
                     mainWindow.show();
                 }
             }},
+            { label: '', type: 'separator' },
             { label: 'حالت پروکسی', submenu: [
                 { label: 'متصل است', type: 'radio' },
                 { label: 'عدم اتصال', type: 'radio' },
