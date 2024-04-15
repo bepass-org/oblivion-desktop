@@ -21,7 +21,10 @@ export default function Debug() {
             <Nav title='لاگ برنامه' />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
-                    <div className='logOptions'>
+                    <div className={classNames(
+                        "logOptions",
+                        (log === '' ? "hidden" : "")
+                    )}>
                         <i className='material-icons'>&#xf0ff;</i>
                         <i className='material-icons'>&#xe14d;</i>
                     </div>
@@ -32,7 +35,7 @@ export default function Debug() {
                         )}
                     >
                         {log === ''
-                            ? 'لاگ های برنامه درصورت موجود بودن در این قسمت نمایش داده خواهند شد...'
+                            ? 'درصورت ایجاد لاگ توسط برنامه، اینجا نمایش داده می‌شود.'
                             : log}
                     </p>
                 </div>
