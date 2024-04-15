@@ -126,6 +126,12 @@ export default function Settings() {
                             فعالسازی Warp In Warp
                         </div>
                     </div>
+                </div>
+                <div className="moreSettings">
+                    <i className="material-icons">&#xe313;</i>
+                    سایر تنظیمات
+                </div>
+                <div className="settings">
                     <div
                         className="item"
                         onClick={() => {
@@ -147,6 +153,24 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className="info" id="flexSwitchCheckChecked">مشخص‌کردن حالت نمایش برنامه</div>
+                    </div>
+                    <div
+                        className="item"
+                    >
+                        <label className="key">
+                            مخفی‌سازی
+                        </label>
+                        <div className="value">
+                            <div
+                                className={classNames(
+                                    "checkbox",
+                                    (darkModeStatus ? "checked" : ""),
+                                )}
+                            >
+                                <i className="material-icons">&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className="info">آیکون برنامه در تسک‌بار قرار نگیرد</div>
                     </div>
                 </div>
             </div>

@@ -138,6 +138,11 @@ const createWindow = async () => {
             mainWindow = null;
         });
 
+        mainWindow.on('minimize', (e:any) => {
+            e.preventDefault()
+            mainWindow?.hide()
+        })
+
         const menuBuilder = new MenuBuilder(mainWindow);
         menuBuilder.buildMenu();
 
