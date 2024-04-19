@@ -687,6 +687,14 @@ nav i.backBtn:hover {
     font-weight: 400;
     border-width: 2px;
 }
+.dialog .dialogBox input[type=number] {
+    -moz-appearance: textfield;
+}
+.dialog .dialogBox input::-webkit-outer-spin-button,
+.dialog .dialogBox input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 [data-bs-theme="dark"] .dialog .dialogBox input {
     background: #0A0E24;
     border-color: #486097;

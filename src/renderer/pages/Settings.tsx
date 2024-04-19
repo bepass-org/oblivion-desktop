@@ -1,20 +1,32 @@
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
-import Modal from '../components/Modal';
-// eslint-disable-next-line import/named
+import EndpointModal from '../components/Modal/Endpoint';
+import PortModal from '../components/Modal/Port';
 import { saveSettings, loadSettings } from '../lib/utils';
+import LicenseModal from "../components/Modal/License";
 
 export default function Settings() {
 
+    const endpointDefValue = 'engage.cloudflareclient.com';
+    const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
+    const [endpointModal, setEndpointModal] = useState(false);
+
+    const portDefValue = 8086;
+    const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || portDefValue);
+    const [portModal, setPortModal] = useState(false);
+
     const [psiphonMode, setPsiphonMode] = useState(loadSettings('OBLIVION_PSIPHON') || false);
+
+    const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || "");
+
+    const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || "");
+    const [licenseModal, setLicenseModal] = useState(false);
+
     const [goolMode, setGoolMode] = useState(loadSettings('OBLIVION_GOOL') || false);
 
     const [themeMode, setThemeMode] = useState(loadSettings('OBLIVION_THEME') || "light");
     const [systemTray, setSystemTray] = useState(loadSettings('OBLIVION_SYSTEMTRAY') || false);
-
-    // TODO : endPoint Modal
-    // TODO : Port Modal
 
     useEffect(() => {
         saveSettings('OBLIVION_PSIPHON', psiphonMode);
@@ -24,8 +36,9 @@ export default function Settings() {
         }
     }, [psiphonMode]);
 
-    // TODO : Location Modal
-    // TODO : License Modal
+    useEffect(() => {
+        saveSettings('OBLIVION_LOCATION', location);
+    }, [location]);
 
     useEffect(() => {
         saveSettings('OBLIVION_GOOL', goolMode);
@@ -47,26 +60,61 @@ export default function Settings() {
     return (
         <>
             <Nav title='تنظیمات' />
-            {/*<Modal title='تغییر اندپوینت' />*/}
+            <EndpointModal
+                title='اندپوینت'
+                isOpen={endpointModal}
+                onClose={() => {
+                    setEndpoint(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
+                    setEndpointModal(false);
+                }}
+                defValue={endpointDefValue}
+            />
+            <PortModal
+                title='پورت تانل'
+                isOpen={portModal}
+                onClose={() => {
+                    setPort(loadSettings('OBLIVION_PORT') || portDefValue);
+                    setPortModal(false);
+                }}
+                defValue={portDefValue}
+            />
+            <LicenseModal
+                title='لایسنس'
+                isOpen={licenseModal}
+                onClose={() => {
+                    setLicense(loadSettings('OBLIVION_LICENSE') || "");
+                    setLicenseModal(false);
+                }}
+            />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
-                    <div className='item'>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setEndpointModal(true);
+                        }}
+                    >
                         <label className='key'>اندپوینت</label>
                         <div className='value'>
                             <span className='dirLeft'>
-                                engage.cloudflareclient.com
+                                {endpoint}
                             </span>
                         </div>
                         <div className='info'>
                             ترکیبی از IP یا نام دامنه، به‌همراه پورت
                         </div>
                     </div>
-                    <div className='item'>
-                        <label className='key'>پورت تونل</label>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setPortModal(true);
+                        }}
+                    >
+                        <label className='key'>پورت تانل</label>
                         <div className='value'>
-                            <span className='dirLeft'>8086</span>
+                            <span className='dirLeft'>{port}</span>
                         </div>
-                        <div className='info'>تعیین پورت تونل برنامه</div>
+                        <div className='info'>تعیین پورت تانل برنامه</div>
                     </div>
                     <div
                         className='item'
@@ -95,7 +143,12 @@ export default function Settings() {
                     >
                         <label className='key'>انتخاب کشور</label>
                         <div className='value'>
-                            <select disabled={!psiphonMode}>
+                            <select
+                                onChange={(event) => {
+                                    setLocation(event.target.value);
+                                }}
+                                disabled={!psiphonMode}
+                            >
                                 <option value=''>Automatic</option>
                                 <option value='AT'>Austria</option>
                                 <option value='BE'>Belgium</option>
@@ -131,10 +184,15 @@ export default function Settings() {
                         </div>
                         <div className='info'>انتخاب آی‌پی کشور موردنظر</div>
                     </div>
-                    <div className='item'>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setLicenseModal(true);
+                        }}
+                    >
                         <label className='key'>لایسنس</label>
                         <div className='value'>
-                            <span className='dirLeft'>XXXX-XXXX</span>
+                            <span className='dirLeft'>{license ? license : "Free"}</span>
                         </div>
                         <div className='info'>
                             اگر لایسنس دارید (هر لایسنس 2x می‌شود)
