@@ -1,39 +1,26 @@
 export const ipcRenderer = window.electron.ipcRenderer;
 
-export const setLightMode = () => {
-    localStorage.setItem('data-bs-theme', 'light');
-    document.documentElement.setAttribute('data-bs-theme', 'light');
-};
-
-export const setDarkMode = () => {
-    localStorage.setItem('data-bs-theme', 'dark');
-    document.documentElement.setAttribute('data-bs-theme', 'dark');
-};
-
-export const toggleDarkMode = () => {
-    const theme = document.documentElement.getAttribute('data-bs-theme');
-    if (theme === 'light') {
-        setDarkMode();
-    } else if (theme === 'dark') {
-        setLightMode();
-    } else {
-        setLightMode();
+export const saveSettings = (key:string, value:any) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(key, JSON.stringify(value));
     }
+};
+
+export const loadSettings = (key:string) => {
+    if (typeof window !== 'undefined') {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+    }
+    return null;
 };
 
 export const loadThemeMode = () => {
-    const theme = localStorage.getItem('data-bs-theme');
+    let theme = loadSettings('OBLIVION_THEME');
     if (!theme) {
-        localStorage.setItem('data-bs-theme', 'light');
-    } else {
-        if (theme === 'light') {
-            setLightMode();
-        } else if (theme === 'dark') {
-            setDarkMode();
-        } else {
-            setLightMode();
-        }
+        theme = 'light';
+        saveSettings('OBLIVION_THEME', theme);
     }
+    document.documentElement.setAttribute('data-bs-theme', theme);
 };
 
 export const isDev = () => window.electron.nodeEnv === 'development';

@@ -351,6 +351,9 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .settings .item {
     border-color: #2B2E3B;
 }
+.settings .item.disabled {
+    opacity: 0.3;
+}
 .settings .item:first-child {
     padding-top: 0;
 }
@@ -393,6 +396,9 @@ nav i.backBtn:hover {
     -ms-user-select: none;
     user-select: none;
 }
+.settings .item.disabled .value span {
+    cursor: default;
+}
 .settings .item .value select {
     float: left;
     border: none;
@@ -406,6 +412,9 @@ nav i.backBtn:hover {
     cursor: pointer;
     appearance: none;
     margin: 4px 0 0 0;
+}
+.settings .item.disabled .value select {
+    cursor: default;
 }
 .settings .item .value select option {
     direction: ltr;
@@ -427,6 +436,9 @@ nav i.backBtn:hover {
 }
 [data-bs-theme="dark"] .settings .item .value .checkbox {
     border-color: #DCDCDC;
+}
+.settings .item.disabled .value .checkbox {
+    cursor: default;
 }
 .settings .item .value .checkbox.checked {
     background: #FFA200;
