@@ -9,9 +9,9 @@ export const saveSettings = (key:string, value:any) => {
 export const loadSettings = (key:string) => {
     if (typeof window !== 'undefined') {
         const value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : null;
+        return value ? JSON.parse(value) : false;
     }
-    return null;
+    return false;
 };
 
 export const loadThemeMode = () => {
