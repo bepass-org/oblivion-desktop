@@ -25,6 +25,7 @@ import { resolveHtmlPath } from './util';
 import './ipc';
 import { isDev, removeFileIfExists } from './lib/utils';
 import { useCustomWindowXY } from './config';
+import { disableProxy } from './lib/proxy';
 
 class AppUpdater {
     constructor() {
@@ -135,12 +136,14 @@ const createWindow = async () => {
         });
 
         mainWindow.on('closed', () => {
+            disableProxy();
             mainWindow = null;
         });
 
         mainWindow.on('minimize', (e: any) => {
             e.preventDefault();
-            mainWindow?.hide();
+            // TODO hide if is settings
+            // mainWindow?.hide();
         });
 
         const menuBuilder = new MenuBuilder(mainWindow);

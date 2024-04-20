@@ -1,7 +1,7 @@
 {
     "name": "oblivion-desktop",
     "description": "unofficial desktop version of oblivion",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "homepage": "https://github.com/kiomarzsss/oblivion-desktop#readme",
     "repository": {
         "type": "git",
@@ -84,6 +84,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.16.0",
+        "tree-kill": "^1.2.2",
         "zustand": "^4.5.2"
     },
     "devDependencies": {

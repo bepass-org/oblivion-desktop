@@ -1,6 +1,7 @@
 // warp-plus
 
 import { ipcMain } from 'electron';
+import treeKill from 'tree-kill';
 import { appendToLogFile, readLogFile, writeToLogFile } from '../lib/log';
 import { doesFileExist } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
@@ -50,15 +51,12 @@ ipcMain.on('wp-start', async (event, arg) => {
 
 ipcMain.on('wp-end', async (event, arg) => {
     try {
-        wp.stdin.pause();
-        wp.kill('SIGTERM');
-        // wp.kill('SIGKILL'); // force kill
+        treeKill(wp.pid);
     } catch (error) {
         event.reply('wp-end', false);
     }
 
     wp.on('exit', (code: any) => {
-        console.log('🚀 - wp.on - code:', code);
         if (code === 0 || code === 1) {
             event.reply('wp-end', true);
             disableProxy();
