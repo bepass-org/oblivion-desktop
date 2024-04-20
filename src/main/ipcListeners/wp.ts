@@ -11,10 +11,12 @@ const { spawn } = require('child_process');
 let wp: any;
 
 const platform = process.platform; // linux / win32 / darwin / else(not supported...)
-const arch = process.arch; // x64 / arm / arm64 or... / else(not supported...)
 
 ipcMain.on('wp-start', async (event, arg) => {
     console.log('🚀 - ipcMain.on - arg:', arg);
+
+    // in case user is using another proxy
+    disableProxy();
 
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
     if (platform === 'win32') {

@@ -22,15 +22,12 @@ export const disableProxy = () => {
 
 export const enableProxy = () => {
     if (platform === 'win32') {
-        windowsProxySettings(['ProxyEnable', '-value', '0']);
-        setTimeout(() => {
-            windowsProxySettings(['ProxyServer', '-value', '127.0.0.1:8086']);
-            windowsProxySettings([
-                'ProxyOverride',
-                '"localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>"',
-            ]);
-            windowsProxySettings(['ProxyEnable', '-value', '1']);
-        }, 500);
+        windowsProxySettings(['ProxyServer', '-value', '127.0.0.1:8086']);
+        windowsProxySettings([
+            'ProxyOverride',
+            '"localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>"',
+        ]);
+        windowsProxySettings(['ProxyEnable', '-value', '1']);
     } else {
         console.log('not supported yet');
     }
