@@ -10,6 +10,7 @@ export default function Index() {
     const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
     const [ipInfo, setIpInfo] = useState({countryCode: false, ip: '127.0.0.1' });
+    const [online, setOnline] = useState(true);
 
     useEffect(() => {
         ipcRenderer.on('wp-start', (ok) => {
@@ -27,6 +28,16 @@ export default function Index() {
             }
         });
 
+    }, []);
+
+    useEffect(() => {
+        setOnline(true);
+        window.addEventListener("online", () => setOnline(true));
+        window.addEventListener("offline", () => setOnline(false));
+        return () => {
+            window.removeEventListener("online", () => setOnline(true));
+            window.removeEventListener("offline", () => setOnline(false));
+        };
     }, []);
 
     const ipToast = () => {
@@ -85,22 +96,48 @@ export default function Index() {
         }
     }
 
+    const checkInternet = () => {
+        const themeMode:string = loadSettings('OBLIVION_THEME') || "light";
+        toast("شما به اینترنت متصل نیستید!",
+            {
+                id: "onlineStatus",
+                duration: Infinity,
+                style: {
+                    borderRadius: '10px',
+                    background: (themeMode === 'light' ? '#242424' : '#535353'),
+                    color: (themeMode === 'light' ? '#F4F5FB' : '#F4F5FB'),
+                },
+            }
+        );
+    }
+
     useEffect(() => {
         getIpLocation();
         if ( isLoading || !isConnected ) {
             toast.dismiss('ipChangedToIR')
         }
-    }, [isLoading, isConnected]);
+        if ( online ) {
+            toast.dismiss('onlineStatus')
+        }
+        else {
+            checkInternet();
+        }
+    }, [isLoading, isConnected, online]);
 
     const onChange = () => {
-        if (isLoading) {
-            ipcRenderer.sendMessage('wp-end');
-        } else if (isConnected) {
-            ipcRenderer.sendMessage('wp-end');
-            setIsLoading(true);
-        } else {
-            ipcRenderer.sendMessage('wp-start');
-            setIsLoading(true);
+        if ( ! online ) {
+            checkInternet();
+        }
+        else {
+            if (isLoading) {
+                ipcRenderer.sendMessage('wp-end');
+            } else if (isConnected) {
+                ipcRenderer.sendMessage('wp-end');
+                setIsLoading(true);
+            } else {
+                ipcRenderer.sendMessage('wp-start');
+                setIsLoading(true);
+            }
         }
     };
 
