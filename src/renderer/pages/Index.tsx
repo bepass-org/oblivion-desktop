@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import toast, { Toaster } from "react-hot-toast";
 import { Link } from 'react-router-dom';
-import { ipcRenderer } from '../lib/utils';
-import IpLocation from '../components/IpLocation';
+import {ipcRenderer, loadSettings} from '../lib/utils';
 import { useStore } from '../store';
+import defFlag from "../../../assets/img/flags/xx.svg";
 
 export default function Index() {
     const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
+    const [ipInfo, setIpInfo] = useState({countryCode: false, ip: '127.0.0.1' });
 
     useEffect(() => {
         ipcRenderer.on('wp-start', (ok) => {
@@ -24,7 +26,68 @@ export default function Index() {
                 setIsLoading(false);
             }
         });
+
     }, []);
+
+    const ipToast = () => {
+        const themeMode:string = loadSettings('OBLIVION_THEME') || "light";
+        toast(
+            (currentToast) => (
+                <>
+                    <div className="customToast">
+                        <p>
+                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
+                        </p>
+                        <button
+                            onClick={() => toast.dismiss(currentToast?.id)}
+                        >
+                            متوجه شدم
+                        </button>
+                    </div>
+                </>
+            ),
+            {
+                id: "ipChangedToIR",
+                duration: Infinity,
+                style: {
+                    borderRadius: '10px',
+                    background: (themeMode === 'light' ? '#242424' : '#535353'),
+                    color: (themeMode === 'light' ? '#F4F5FB' : '#F4F5FB'),
+                },
+            }
+        );
+    }
+
+    const getIpLocation = () => {
+        if ( isConnected && !isLoading ) {
+            fetch('https://api.ipify.org/?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const userIp = data?.ip;
+                    fetch(`https://api.iplocation.net/?ip=${userIp}`)
+                        .then(response => response.json())
+                        .then(locationData => {
+                            setIpInfo({
+                                countryCode: (locationData.country_code2).toLowerCase(),
+                                ip: locationData.ip
+                            });
+                            if ( locationData?.country_code2 === 'IR' ){
+                                ipToast();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching IP location:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Error fetching user IP:', error);
+                });
+        }
+    }
+
+    useEffect(() => {
+        getIpLocation();
+    }, [isLoading, isConnected]);
 
     const onChange = () => {
         if (isLoading) {
@@ -39,9 +102,13 @@ export default function Index() {
 
     const status = isLoading
         ? 'درحال اتصال ...'
-        : isConnected
-          ? 'اتصال برقرار شد'
-          : 'متصل نیستید';
+            : (isConnected
+                ? (
+                    !ipInfo?.countryCode
+                        ? 'اتصال برقرار شد'
+                        : 'دریافت اطلاعات ...'
+                )
+                : 'متصل نیستید' );
 
     return (
         <>
@@ -109,16 +176,34 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected ? 'active' : '',
+                                isConnected && ipInfo?.countryCode ? 'active' : '',
                             )}
                         >
                             {status}
                             <br />
-                            <IpLocation isConnected={isConnected} />
+                            <div
+                                className={classNames(
+                                    'ip',
+                                    isConnected && ipInfo?.countryCode ? 'connected' : '',
+                                )}
+                            >
+                                <img
+                                    src={ ipInfo.countryCode
+                                        ? '../../../assets/img/flags/'+ipInfo.countryCode+'.svg'
+                                        : defFlag
+                                    }
+                                    alt='flag'
+                                />
+                                <span>{ipInfo?.ip}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+            />
         </>
     );
 }
