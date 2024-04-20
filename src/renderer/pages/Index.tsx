@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ipcRenderer } from '../lib/utils';
-import flag from '../../../assets/img/flags/ir.svg';
+import IpLocation from '../components/IpLocation';
 import { useStore } from '../store';
 
 export default function Index() {
@@ -114,15 +114,7 @@ export default function Index() {
                         >
                             {status}
                             <br />
-                            <div
-                                className={classNames(
-                                    'ip',
-                                    isConnected ? 'connected' : '',
-                                )}
-                            >
-                                <img src={flag} alt='flag' />
-                                <span>1.1.1.1</span>
-                            </div>
+                            <IpLocation isConnected={isConnected} />
                         </div>
                     </div>
                 </div>
