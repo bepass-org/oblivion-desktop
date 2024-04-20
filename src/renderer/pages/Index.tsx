@@ -104,7 +104,7 @@ export default function Index() {
         ? 'درحال اتصال ...'
             : (isConnected
                 ? (
-                    !ipInfo?.countryCode
+                    ipInfo?.countryCode
                         ? 'اتصال برقرار شد'
                         : 'دریافت اطلاعات ...'
                 )
