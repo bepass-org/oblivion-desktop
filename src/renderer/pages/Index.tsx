@@ -94,21 +94,28 @@ export default function Index() {
             ipcRenderer.sendMessage('wp-end');
         } else if (isConnected) {
             ipcRenderer.sendMessage('wp-end');
+            setIsLoading(true);
         } else {
             ipcRenderer.sendMessage('wp-start');
             setIsLoading(true);
         }
     };
 
-    const status = isLoading
-        ? 'درحال اتصال ...'
-            : (isConnected
-                ? (
-                    ipInfo?.countryCode
-                        ? 'اتصال برقرار شد'
-                        : 'دریافت اطلاعات ...'
-                )
-                : 'متصل نیستید' );
+    let status = 'متصل نیستید';
+    if ( isConnected && isLoading ) {
+        status = 'قطع ارتباط ...';
+    }
+    else if ( !isConnected && isLoading ) {
+        status = 'درحال اتصال ...';
+    }
+    else if (isConnected && ipInfo?.countryCode) {
+        status = 'اتصال برقرار شد';
+    }
+    else if (isConnected && !ipInfo?.countryCode) {
+        status = 'دریافت اطلاعات ...';
+    } else {
+        status = 'متصل نیستید';
+    }
 
     return (
         <>
@@ -160,7 +167,7 @@ export default function Index() {
                                 <div
                                     className={classNames(
                                         'switch',
-                                        isConnected && !isLoading
+                                        isConnected
                                             ? 'active'
                                             : '',
                                         isLoading ? 'isLoading' : '',
@@ -176,7 +183,7 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected && ipInfo?.countryCode ? 'active' : '',
+                                isConnected && ipInfo?.countryCode && !isLoading ? 'active' : '',
                             )}
                         >
                             {status}
@@ -184,7 +191,7 @@ export default function Index() {
                             <div
                                 className={classNames(
                                     'ip',
-                                    isConnected && ipInfo?.countryCode ? 'connected' : '',
+                                    isConnected && ipInfo?.countryCode && !isLoading ? 'connected' : '',
                                 )}
                             >
                                 <img
