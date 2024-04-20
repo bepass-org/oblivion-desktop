@@ -5,7 +5,7 @@ import defFlag from "../../../assets/img/flags/xx.svg";
 export default function IpLocation({ isConnected }: {
     isConnected: boolean
 }) {
-    const [ipInfo, setIpInfo] = useState(false);
+    const [ipInfo, setIpInfo] = useState({countryCode: false, ip: '127.0.0.1' });
 
     useEffect(() => {
         fetch('https://api.ipify.org/?format=json')
@@ -15,7 +15,10 @@ export default function IpLocation({ isConnected }: {
                 fetch(`https://api.iplocation.net/?ip=${userIp}`)
                     .then(response => response.json())
                     .then(locationData => {
-                        setIpInfo(locationData);
+                        setIpInfo({
+                            countryCode: (locationData.country_code2).toLowerCase(),
+                            ip: locationData.ip
+                        });
                     })
                     .catch(error => {
                         console.error('Error fetching IP location:', error);
@@ -31,17 +34,17 @@ export default function IpLocation({ isConnected }: {
             <div
                 className={classNames(
                     'ip',
-                    isConnected && ipInfo ? 'connected' : '',
+                    isConnected && ipInfo?.countryCode ? 'connected' : '',
                 )}
             >
                 <img
-                    src={ ipInfo.country_code2
-                        ? '../../../assets/img/flags/'+ipInfo?.country_code2.toLowerCase()+'.svg'
+                    src={ ipInfo.countryCode
+                        ? '../../../assets/img/flags/'+ipInfo.countryCode+'.svg'
                         : defFlag
                     }
                     alt='flag'
                 />
-                <span>{ipInfo?.ip ? ipInfo?.ip : '127.0.0.1'}</span>
+                <span>{ipInfo?.ip}</span>
             </div>
         </>
     );
