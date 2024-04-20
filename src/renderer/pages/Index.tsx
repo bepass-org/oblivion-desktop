@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ipcRenderer } from '../lib/utils';
@@ -9,20 +9,22 @@ export default function Index() {
     const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
 
-    ipcRenderer.once('wp-start', (ok) => {
-        if (ok) {
-            setIsLoading(false);
-            setIsConnected(true);
-        }
-    });
+    useEffect(() => {
+        ipcRenderer.on('wp-start', (ok) => {
+            if (ok) {
+                setIsLoading(false);
+                setIsConnected(true);
+            }
+        });
 
-    ipcRenderer.once('wp-end', (ok) => {
-        console.log('🚀 - ipcRenderer.once - ok:', ok);
-        if (ok) {
-            setIsConnected(false);
-            setIsLoading(false);
-        }
-    });
+        ipcRenderer.on('wp-end', (ok) => {
+            console.log('🚀 - ipcRenderer.once - ok:', ok);
+            if (ok) {
+                setIsConnected(false);
+                setIsLoading(false);
+            }
+        });
+    }, []);
 
     const onChange = () => {
         if (isLoading) {

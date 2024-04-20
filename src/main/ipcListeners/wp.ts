@@ -27,7 +27,7 @@ ipcMain.on('wp-start', async (event, arg) => {
         'level=INFO msg="serving proxy" address=127.0.0.1:8086';
     wp.stdout.on('data', async (data: any) => {
         const strData = data.toString();
-        console.log('mmd', strData);
+        console.log(strData);
         if (strData.includes(successMessage)) {
             event.reply('wp-start', true);
             enableProxy();
@@ -41,7 +41,6 @@ ipcMain.on('wp-start', async (event, arg) => {
             appendToLogFile(strData);
             // append
         }
-        console.log('🚀 - wp.stdout.on - tmp:', tmp);
     });
 
     wp.stderr.on((err: any) => {
@@ -51,12 +50,10 @@ ipcMain.on('wp-start', async (event, arg) => {
 
 ipcMain.on('wp-end', async (event, arg) => {
     try {
-        await wp.kill('SIGTERM');
-
-        // Or
+        wp.stdin.pause();
+        wp.kill('SIGTERM');
         // wp.kill('SIGKILL'); // force kill
     } catch (error) {
-        disableProxy();
         event.reply('wp-end', false);
     }
 
@@ -64,6 +61,7 @@ ipcMain.on('wp-end', async (event, arg) => {
         console.log('🚀 - wp.on - code:', code);
         if (code === 0 || code === 1) {
             event.reply('wp-end', true);
+            disableProxy();
         } else {
             console.log('🚀 - wp.on - code:', code);
         }
