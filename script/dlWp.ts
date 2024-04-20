@@ -1,9 +1,77 @@
 // download warp-plus binary
 
-import fs from 'fs'; // import the built-in 'fs' module for writing files
+import fs from 'fs';
 import axios from 'axios';
 import decompress from 'decompress';
-import { doesFileExist } from '../src/main/lib/utils';
+import { doesDirectoryExist, doesFileExist } from '../src/main/lib/utils';
+
+async function downloadFile(uri: string, destPath: string) {
+    return axios
+        .get(uri, {
+            responseType: 'arraybuffer',
+            onDownloadProgress: (progressEvent) => {
+                // TODO improve DX
+                const percentCompleted = Math.round(
+                    // @ts-ignore
+                    (progressEvent.loaded * 100) / progressEvent.total,
+                );
+                process.stdout.clearLine(0);
+                process.stdout.cursorTo(0);
+                process.stdout.write(
+                    `Downloading ${uri}: ${percentCompleted}%`,
+                );
+            },
+        })
+        .then((response) => {
+            const arrayBufferView = new Uint8Array(response.data);
+            const buffer = Buffer.from(arrayBufferView);
+            fs.writeFileSync(destPath, buffer);
+            // console.log(`Downloaded ${uri} and saved it to ${destPath}`);
+            console.log();
+        })
+        .catch((error) => {
+            console.error(`Failed to download ${uri}:`, error.message);
+        });
+}
+
+// download, unzip and move(rename)
+const dlUnzipMove = async (url: string) => {
+    const binPath = './bin';
+
+    const isBinDirExist = await doesDirectoryExist(binPath);
+    if (!isBinDirExist) {
+        fs.mkdir(binPath, { recursive: true }, (err) => {
+            if (err) {
+                console.error(`Error creating directory ${binPath}:`, err);
+            }
+            //  else {
+            //     console.log(`Created directory ${binPath}`);
+            // }
+        });
+    }
+
+    const zipFilePath = './bin/warp-plus.zip';
+
+    const isZipFileExist = await doesFileExist(zipFilePath);
+
+    if (!isZipFileExist) {
+        await downloadFile(url, zipFilePath);
+    } else {
+        console.log(
+            '➡️ Skipping Download since warp-plus.zip is already exist in bin directory.',
+        );
+    }
+
+    decompress(zipFilePath, './bin')
+        .then((files) => {
+            // console.log(files);
+            // console.log('➡️ Extracted zip file.');
+            console.log('✅ warp-plus binary is ready to use.');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
 
 const links = {
     linux: {
@@ -23,67 +91,6 @@ const notSupported = () => {
     console.log('your platform/architecture is not supported.');
 };
 
-async function downloadFile(uri: string, destPath: string) {
-    return axios
-        .get(uri, {
-            responseType: 'arraybuffer',
-            onDownloadProgress: (progressEvent) => {
-                // TODO improve DX
-                const percentCompleted = Math.round(
-                    // @ts-ignore
-                    (progressEvent.loaded * 100) / progressEvent.total,
-                );
-                console.log(
-                    `Downloading ${uri}: ${percentCompleted}% complete`,
-                );
-            },
-        })
-        .then((response) => {
-            const arrayBufferView = new Uint8Array(response.data);
-            const buffer = Buffer.from(arrayBufferView);
-            fs.writeFileSync(destPath, buffer);
-            console.log(`Downloaded ${uri} and saved it to ${destPath}`);
-        })
-        .catch((error) => {
-            console.error(`Failed to download ${uri}:`, error.message);
-        });
-}
-
-// download, unzip and move(rename)
-const dlUnzipMove = async (url: string) => {
-    // TODO do not download if wp binary exist
-
-    const zipFilePath = './bin/wp.zip';
-
-    const isFileExist = await doesFileExist(zipFilePath);
-
-    if (!isFileExist) {
-        await downloadFile(url, zipFilePath);
-    } else {
-        console.log(
-            '➡️ Skipping Download since wp.zip is already exist in bin directory.',
-        );
-    }
-
-    decompress(zipFilePath, './bin')
-        .then((files) => {
-            // console.log(files);
-            console.log('➡️ Extracted zip file.');
-            if (platform === 'win32') {
-                fs.rename('./bin/warp-plus.exe', './bin/warp-plus', (err) => {
-                    if (err) throw err;
-                    console.log('✅ warp-plus binary is ready to use.');
-                });
-            } else {
-                console.log('✅ warp-plus binary is ready to use.');
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    // TODO rename to warp-plus based on os
-};
-
 switch (platform) {
     case 'linux':
         switch (arch) {
@@ -99,6 +106,15 @@ switch (platform) {
 
     // windows
     case 'win32':
+        switch (arch) {
+            case 'x64':
+                dlUnzipMove(links[platform][arch]);
+                break;
+
+            default:
+                notSupported();
+                break;
+        }
         break;
 
     default:

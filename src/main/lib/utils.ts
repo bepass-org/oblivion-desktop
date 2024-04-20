@@ -16,6 +16,9 @@ export function doesFileExist(filePath: string) {
     });
 }
 
+export const doesDirectoryExist = doesFileExist;
+export const doesFolderExist = doesFileExist;
+
 export function removeFileIfExists(filePath: string) {
     return new Promise((resolve, reject) => {
         fs.access(filePath, fs.constants.F_OK, (err: any) => {
