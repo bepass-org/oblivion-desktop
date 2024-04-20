@@ -87,6 +87,9 @@ export default function Index() {
 
     useEffect(() => {
         getIpLocation();
+        if ( isLoading || !isConnected ) {
+            toast.dismiss('ipChangedToIR')
+        }
     }, [isLoading, isConnected]);
 
     const onChange = () => {
