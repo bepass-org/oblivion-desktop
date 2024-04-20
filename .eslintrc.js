@@ -1,3 +1,5 @@
+const { off } = require('process');
+
 module.exports = {
     extends: 'erb',
     plugins: ['@typescript-eslint'],
@@ -27,6 +29,8 @@ module.exports = {
         'prefer-template': 'off',
         'no-param-reassign': 'off',
         'no-lonely-if': 'off',
+        'no-plusplus': 'off',
+        'promise/always-return': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,
