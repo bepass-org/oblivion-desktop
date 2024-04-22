@@ -480,6 +480,10 @@ nav i.backBtn:hover {
     font-size: 15px;
     opacity: 0.5;
     font-weight: 200;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .moreSettings i {
     float: right;

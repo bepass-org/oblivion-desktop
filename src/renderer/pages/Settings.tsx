@@ -8,7 +8,7 @@ import LicenseModal from "../components/Modal/License";
 
 export default function Settings() {
 
-    const endpointDefValue = 'engage.cloudflareclient.com';
+    const endpointDefValue = 'engage.cloudflareclient.com:2048';
     const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
     const [endpointModal, setEndpointModal] = useState(false);
 
