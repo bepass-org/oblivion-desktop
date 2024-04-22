@@ -11,7 +11,7 @@ import { defaultSettings } from '../../defaultSettings';
 export default function Settings() {
     const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || defaultSettings.endpoint);
     const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || defaultSettings.port);
-    const [psiphonMode, setPsiphonMode] = useState('');
+    const [psiphonMode, setPsiphonMode] = useState(false);
     const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || '');
     const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || '');
     const [goolMode, setGoolMode] = useState(loadSettings('OBLIVION_GOOL') || false);
@@ -52,7 +52,7 @@ export default function Settings() {
     }, [goolMode]);
 
     useEffect(() => {
-        if (psiphonMode === '') return;
+        if (!psiphonMode) return;
         (async () => {
             await settings.set('psiphon', psiphonMode);
         })();
