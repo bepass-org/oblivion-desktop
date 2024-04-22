@@ -11,23 +11,18 @@ import { defaultSettings } from '../../defaultSettings';
 export default function Settings() {
     const endpointDefValue = 'engage.cloudflareclient.com:2048';
     const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
-    const [endpointModal, setEndpointModal] = useState(false);
-
     const portDefValue = 8086;
     const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || portDefValue);
-    const [portModal, setPortModal] = useState(false);
-
     const [psiphonMode, setPsiphonMode] = useState(loadSettings('OBLIVION_PSIPHON') || false);
-
     const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || '');
-
     const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || '');
-    const [licenseModal, setLicenseModal] = useState(false);
-
     const [goolMode, setGoolMode] = useState(loadSettings('OBLIVION_GOOL') || false);
-
     const [theme, setTheme] = useState('');
     const [systemTray, setSystemTray] = useState(loadSettings('OBLIVION_SYSTEMTRAY') || false);
+    
+    const [portModal, setPortModal] = useState(false);
+    const [licenseModal, setLicenseModal] = useState(false);
+    const [endpointModal, setEndpointModal] = useState(false);
 
     useEffect(() => {
         saveSettings('OBLIVION_PSIPHON', psiphonMode);
