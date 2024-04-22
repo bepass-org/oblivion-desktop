@@ -11,14 +11,12 @@ export default function About() {
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
                     <p>
-                        این‌برنامه یک نسخه غیررسمی، اما قابل اطمینان از اپ
-                        Oblivion یا فراموشی است که برای ویندوز، لینوکس و مک
-                        ارائه گردیده است.
+                        این‌برنامه یک نسخه غیررسمی، اما قابل اطمینان از اپ Oblivion یا فراموشی است
+                        که برای ویندوز، لینوکس و مک ارائه گردیده است.
                         <br />
-                        برنامه Oblivion Desktop با الگو گرفتن از رابط کاربری
-                        نسخه اصلی که توسط یوسف قبادی برنامه‌نویسی شده بود، با
-                        هدف دسترسی آزاد به اینترنت تهیه گردیده و هرگونه تغییر
-                        نام یا استفاده تجاری از آن مجاز نمی‌باشد.
+                        برنامه Oblivion Desktop با الگو گرفتن از رابط کاربری نسخه اصلی که توسط یوسف
+                        قبادی برنامه‌نویسی شده بود، با هدف دسترسی آزاد به اینترنت تهیه گردیده و
+                        هرگونه تغییر نام یا استفاده تجاری از آن مجاز نمی‌باشد.
                     </p>
                     <p>
                         <b>اینترنت برای همه، یا هیچ‌کس!</b>
@@ -37,11 +35,7 @@ export default function About() {
                                 <div className='name'>Oblivion-Desktop</div>
                             </div>
                         </a>
-                        <a
-                            href='https://ircf.space/contacts.php'
-                            target='_blank'
-                            rel='noreferrer'
-                        >
+                        <a href='https://ircf.space/contacts.php' target='_blank' rel='noreferrer'>
                             <div className='item'>
                                 <div className='icon'>
                                     <img src={ircf} alt='ircf' />

@@ -21,19 +21,11 @@ export default function Debug() {
             <Nav title='لاگ برنامه' />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
-                    <div className={classNames(
-                        "logOptions",
-                        (log === '' ? "hidden" : "")
-                    )}>
+                    <div className={classNames('logOptions', log === '' ? 'hidden' : '')}>
                         <i className='material-icons'>&#xf0ff;</i>
                         <i className='material-icons'>&#xe14d;</i>
                     </div>
-                    <p
-                        className={classNames(
-                            log === '' ? 'dirRight' : 'dirLeft',
-                            'logText',
-                        )}
-                    >
+                    <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
                         {log === ''
                             ? 'درصورت ایجاد لاگ توسط برنامه، اینجا نمایش داده می‌شود.'
                             : log}

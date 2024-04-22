@@ -17,9 +17,7 @@ async function downloadFile(uri: string, destPath: string) {
                 );
                 process.stdout.clearLine(0);
                 process.stdout.cursorTo(0);
-                process.stdout.write(
-                    `Downloading ${uri}: ${percentCompleted}%`,
-                );
+                process.stdout.write(`Downloading ${uri}: ${percentCompleted}%`);
             },
         })
         .then((response) => {
@@ -57,9 +55,7 @@ const dlUnzipMove = async (url: string) => {
     if (!isZipFileExist) {
         await downloadFile(url, zipFilePath);
     } else {
-        console.log(
-            '➡️ Skipping Download since warp-plus.zip is already exist in bin directory.',
-        );
+        console.log('➡️ Skipping Download since warp-plus.zip is already exist in bin directory.');
     }
 
     decompress(zipFilePath, './bin')

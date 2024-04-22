@@ -2,13 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels =
-    | 'ipc-example'
-    | 'open-devtools'
-    | 'wp-start'
-    | 'wp-end'
-    | 'log'
-    | 'settings';
+export type Channels = 'ipc-example' | 'open-devtools' | 'wp-start' | 'wp-end' | 'log' | 'settings';
 
 const electronHandler = {
     ipcRenderer: {
@@ -18,10 +12,7 @@ const electronHandler = {
         },
         on(channel: Channels, func: (...args: unknown[]) => void) {
             console.log('on:', channel, func);
-            const subscription = (
-                _event: IpcRendererEvent,
-                ...args: unknown[]
-            ) => func(...args);
+            const subscription = (_event: IpcRendererEvent, ...args: unknown[]) => func(...args);
             ipcRenderer.on(channel, subscription);
 
             return () => {

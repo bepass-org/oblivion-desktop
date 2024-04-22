@@ -26,8 +26,7 @@ ipcMain.on('wp-start', async (event, arg) => {
     }
 
     // TODO better approach
-    const successMessage =
-        'level=INFO msg="serving proxy" address=127.0.0.1:8086';
+    const successMessage = 'level=INFO msg="serving proxy" address=127.0.0.1:8086';
     wp.stdout.on('data', async (data: any) => {
         const strData = data.toString();
         console.log(strData);

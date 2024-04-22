@@ -48,22 +48,17 @@ export default function Index() {
     }, []);
 
     const ipToast = async () => {
-        const theme: string =
-            (await settings.get('theme')) || defaultSettings.theme;
+        const theme: string = (await settings.get('theme')) || defaultSettings.theme;
         toast(
             (currentToast) => (
                 <>
                     <div className='customToast'>
                         <p>
-                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی
-                            اصلیته وصلت کرده، که باهاش میتونی فیلترینگ‌رو دور
-                            بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات
-                            میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر
-                            بدی.
+                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
+                            باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
+                            تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
                         </p>
-                        <button onClick={() => toast.dismiss(currentToast?.id)}>
-                            متوجه شدم
-                        </button>
+                        <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
                     </div>
                 </>
             ),
@@ -89,8 +84,7 @@ export default function Index() {
                         .then((response) => response.json())
                         .then((locationData) => {
                             setIpInfo({
-                                countryCode:
-                                    locationData.country_code2.toLowerCase(),
+                                countryCode: locationData.country_code2.toLowerCase(),
                                 ip: locationData.ip,
                             });
                             if (locationData?.country_code2 === 'IR') {
@@ -108,8 +102,7 @@ export default function Index() {
     };
 
     const checkInternet = async () => {
-        const theme: string =
-            (await settings.get('theme')) || defaultSettings.theme;
+        const theme: string = (await settings.get('theme')) || defaultSettings.theme;
         toast('شما به اینترنت متصل نیستید!', {
             id: 'onlineStatus',
             duration: Infinity,
@@ -168,37 +161,17 @@ export default function Index() {
                 <div className='container'>
                     {/* Settings icon */}
                     <Link to={'/settings'}>
-                        <i
-                            className={classNames(
-                                'material-icons',
-                                'pull-right',
-                            )}
-                        >
-                            &#xe8b8;
-                        </i>
+                        <i className={classNames('material-icons', 'pull-right')}>&#xe8b8;</i>
                     </Link>
                     {/* Debug icon */}
                     <Link to={'/debug'}>
-                        <i
-                            className={classNames(
-                                'material-icons',
-                                'pull-right',
-                                'log',
-                            )}
-                        >
+                        <i className={classNames('material-icons', 'pull-right', 'log')}>
                             &#xe868;
                         </i>
                     </Link>
                     {/* about icon */}
                     <Link to='/about'>
-                        <i
-                            className={classNames(
-                                'material-icons',
-                                'pull-left',
-                            )}
-                        >
-                            &#xe88e;
-                        </i>
+                        <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
                     </Link>
                 </div>
             </nav>
@@ -226,9 +199,7 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected && ipInfo?.countryCode && !isLoading
-                                    ? 'active'
-                                    : '',
+                                isConnected && ipInfo?.countryCode && !isLoading ? 'active' : '',
                             )}
                         >
                             {status}
@@ -236,9 +207,7 @@ export default function Index() {
                             <div
                                 className={classNames(
                                     'ip',
-                                    isConnected &&
-                                        ipInfo?.countryCode &&
-                                        !isLoading
+                                    isConnected && ipInfo?.countryCode && !isLoading
                                         ? 'connected'
                                         : '',
                                 )}
@@ -252,9 +221,7 @@ export default function Index() {
                                     ) : (
                                         <>
                                             <ReactCountryFlag
-                                                countryCode={String(
-                                                    ipInfo.countryCode,
-                                                )}
+                                                countryCode={String(ipInfo.countryCode)}
                                                 svg
                                                 style={{
                                                     width: '17px',

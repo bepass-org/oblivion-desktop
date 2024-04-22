@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react';
 import classNames from 'classnames';
-import {loadSettings, saveSettings} from "../../lib/utils";
+import { loadSettings, saveSettings } from '../../lib/utils';
 
-export default function LicenseModal({ title, isOpen, onClose }: {
-    title: string,
-    isOpen: boolean,
-    onClose: any
+export default function LicenseModal({
+    title,
+    isOpen,
+    onClose,
+}: {
+    title: string;
+    isOpen: boolean;
+    onClose: any;
 }) {
-
     const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE'));
     if (!isOpen) return null;
 
@@ -18,38 +21,33 @@ export default function LicenseModal({ title, isOpen, onClose }: {
 
     return (
         <>
-            <div className="dialog">
-                <div className="dialogBg" onClick={onClose} />
-                <div className="dialogBox">
+            <div className='dialog'>
+                <div className='dialogBg' onClick={onClose} />
+                <div className='dialogBox'>
                     <div className='container'>
-                        <div className="line">
-                            <div className="miniLine" />
+                        <div className='line'>
+                            <div className='miniLine' />
                         </div>
                         <h3>{title}</h3>
                         <input
-                            value={license ? license : ""}
-                            className="form-control"
+                            value={license ? license : ''}
+                            className='form-control'
                             onChange={(event) => {
                                 setLicense(event.target.value);
                             }}
                         />
-                        <div className="clearfix"/>
+                        <div className='clearfix' />
+                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                            انصراف
+                        </div>
                         <div
-                            className={classNames(
-                                "btn",
-                                "btn-cancel",
-                            )}
-                            onClick={onClose}
-                        >انصراف</div>
-                        <div
-                            className={classNames(
-                                "btn",
-                                "btn-save"
-                            )}
+                            className={classNames('btn', 'btn-save')}
                             onClick={() => {
-                                onSaveModal()
+                                onSaveModal();
                             }}
-                        >بروزرسانی</div>
+                        >
+                            بروزرسانی
+                        </div>
                     </div>
                 </div>
             </div>

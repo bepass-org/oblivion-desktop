@@ -1,10 +1,4 @@
-import {
-    app,
-    Menu,
-    shell,
-    BrowserWindow,
-    MenuItemConstructorOptions,
-} from 'electron';
+import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
     selector?: string;
@@ -19,10 +13,7 @@ export default class MenuBuilder {
     }
 
     buildMenu(): Menu {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG_PROD === 'true'
-        ) {
+        if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
             this.setupDevelopmentEnvironment();
         }
 
@@ -122,9 +113,7 @@ export default class MenuBuilder {
                     label: 'Toggle Full Screen',
                     accelerator: 'Ctrl+Command+F',
                     click: () => {
-                        this.mainWindow.setFullScreen(
-                            !this.mainWindow.isFullScreen(),
-                        );
+                        this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
                     },
                 },
                 {
@@ -143,9 +132,7 @@ export default class MenuBuilder {
                     label: 'Toggle Full Screen',
                     accelerator: 'Ctrl+Command+F',
                     click: () => {
-                        this.mainWindow.setFullScreen(
-                            !this.mainWindow.isFullScreen(),
-                        );
+                        this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
                     },
                 },
             ],
@@ -187,35 +174,24 @@ export default class MenuBuilder {
                 {
                     label: 'Community Discussions',
                     click() {
-                        shell.openExternal(
-                            'https://www.electronjs.org/community',
-                        );
+                        shell.openExternal('https://www.electronjs.org/community');
                     },
                 },
                 {
                     label: 'Search Issues',
                     click() {
-                        shell.openExternal(
-                            'https://github.com/electron/electron/issues',
-                        );
+                        shell.openExternal('https://github.com/electron/electron/issues');
                     },
                 },
             ],
         };
 
         const subMenuView =
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG_PROD === 'true'
+            process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
                 ? subMenuViewDev
                 : subMenuViewProd;
 
-        return [
-            subMenuAbout,
-            subMenuEdit,
-            subMenuView,
-            subMenuWindow,
-            subMenuHelp,
-        ];
+        return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
     }
 
     buildDefaultTemplate() {
@@ -239,8 +215,7 @@ export default class MenuBuilder {
             {
                 label: '&View',
                 submenu:
-                    process.env.NODE_ENV === 'development' ||
-                    process.env.DEBUG_PROD === 'true'
+                    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
                         ? [
                               {
                                   label: '&Reload',
@@ -298,17 +273,13 @@ export default class MenuBuilder {
                     {
                         label: 'Community Discussions',
                         click() {
-                            shell.openExternal(
-                                'https://www.electronjs.org/community',
-                            );
+                            shell.openExternal('https://www.electronjs.org/community');
                         },
                     },
                     {
                         label: 'Search Issues',
                         click() {
-                            shell.openExternal(
-                                'https://github.com/electron/electron/issues',
-                            );
+                            shell.openExternal('https://github.com/electron/electron/issues');
                         },
                     },
                 ],

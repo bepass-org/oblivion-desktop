@@ -2,15 +2,13 @@ import { useEffect } from 'react';
 import BackButton from './BackButton';
 
 export default function Nav({ title }: { title: string }) {
-
     const isSticky = () => {
         const header = document.querySelector('nav');
         const scrollTop = window?.scrollY;
-        if ( header ) {
-            if ( scrollTop >= 20 ) {
-                header.classList.add('isSticky')
-            }
-            else {
+        if (header) {
+            if (scrollTop >= 20) {
+                header.classList.add('isSticky');
+            } else {
                 header?.classList.remove('isSticky');
             }
         }

@@ -8,18 +8,11 @@ exports.default = async function notarizeMacos(context) {
     }
 
     if (process.env.CI !== 'true') {
-        console.warn(
-            'Skipping notarizing step. Packaging is not running in CI',
-        );
+        console.warn('Skipping notarizing step. Packaging is not running in CI');
         return;
     }
 
-    if (
-        !(
-            'APPLE_ID' in process.env &&
-            'APPLE_APP_SPECIFIC_PASSWORD' in process.env
-        )
-    ) {
+    if (!('APPLE_ID' in process.env && 'APPLE_APP_SPECIFIC_PASSWORD' in process.env)) {
         console.warn(
             'Skipping notarizing step. APPLE_ID and APPLE_APP_SPECIFIC_PASSWORD env variables must be set',
         );
