@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from 'react-router-dom';
+import ReactCountryFlag from "react-country-flag";
 import {ipcRenderer, loadSettings} from '../lib/utils';
 import { useStore } from '../store';
+
 import defFlag from "../../../assets/img/flags/xx.svg";
+import irFlag from "../../../assets/img/flags/ir.svg";
 
 export default function Index() {
     const { isConnected, setIsConnected } = useStore();
@@ -234,13 +237,30 @@ export default function Index() {
                                     isConnected && ipInfo?.countryCode && !isLoading ? 'connected' : '',
                                 )}
                             >
-                                <img
-                                    src={ ipInfo.countryCode
-                                        ? '../../../assets/img/flags/'+ipInfo.countryCode+'.svg'
-                                        : defFlag
-                                    }
-                                    alt='flag'
-                                />
+                                {ipInfo.countryCode ? (
+                                    // @ts-ignore
+                                    ipInfo.countryCode === "IR" ? (
+                                            <>
+                                                <img src={ irFlag } alt='flag' />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <ReactCountryFlag
+                                                    countryCode={String(ipInfo.countryCode)}
+                                                    svg
+                                                    style={{
+                                                        width: '17px',
+                                                        height: '12px',
+                                                    }}
+                                                />
+                                            </>
+                                        )
+
+                                ) : (
+                                    <>
+                                        <img src={ defFlag } alt='flag' />
+                                    </>
+                                )}
                                 <span>{ipInfo?.ip}</span>
                             </div>
                         </div>
