@@ -1,6 +1,6 @@
 import { ipcRenderer } from './utils';
 
-type keys = 'theme';
+type keys = string;
 
 export class settings {
     public static async get(key: keys): Promise<any> {
