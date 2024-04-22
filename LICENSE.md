@@ -3,6 +3,7 @@ Restrictive License - No Sale and Modification Limitation
 Copyright © 2024 Oblivion Desktop
 
 This software is provided under a specific license.
+
 by using this software or accessing its source code, you agree that:
 
 1. No Sale: You are prohibited from selling or distributing the software or modified versions of it.
@@ -14,9 +15,10 @@ Development of the software is only possible through project participation.
 
 لایسنس محدود - عدم امکان فروش و محدودیت تغییرات
 
-Copyright © 2024 Oblivion Desktop
+کپی‌رایت © ۱۴۰۳ Oblivion Desktop
 
 این نرم‌افزار طبق یک لایسنس خاص ارائه می‌شود. 
+
 با استفاده از این نرم‌افزار یا دسترسی به منابع آن، شما موافقت می‌کنید که:
 
 1. عدم امکان فروش: شما مجاز به فروش یا توزیع نرم‌افزار یا نسخه‌های تغییر یافته آن نیستید.
