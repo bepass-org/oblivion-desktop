@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import ReactCountryFlag from "react-country-flag";
-import {ipcRenderer, loadSettings} from '../lib/utils';
+import ReactCountryFlag from 'react-country-flag';
+import { ipcRenderer, loadSettings } from '../lib/utils';
 import { useStore } from '../store';
 
-import defFlag from "../../../assets/img/flags/xx.svg";
-import irFlag from "../../../assets/img/flags/ir.svg";
+import defFlag from '../../../assets/img/flags/xx.svg';
+import irFlag from '../../../assets/img/flags/ir.svg';
 
 export default function Index() {
     const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
-    const [ipInfo, setIpInfo] = useState({countryCode: false, ip: '127.0.0.1' });
+    const [ipInfo, setIpInfo] = useState({
+        countryCode: false,
+        ip: '127.0.0.1',
+    });
     const [online, setOnline] = useState(true);
 
     useEffect(() => {
@@ -30,108 +33,106 @@ export default function Index() {
                 setIsLoading(false);
             }
         });
-
     }, []);
 
     useEffect(() => {
         setOnline(true);
-        window.addEventListener("online", () => setOnline(true));
-        window.addEventListener("offline", () => setOnline(false));
+        window.addEventListener('online', () => setOnline(true));
+        window.addEventListener('offline', () => setOnline(false));
         return () => {
-            window.removeEventListener("online", () => setOnline(true));
-            window.removeEventListener("offline", () => setOnline(false));
+            window.removeEventListener('online', () => setOnline(true));
+            window.removeEventListener('offline', () => setOnline(false));
         };
     }, []);
 
     const ipToast = () => {
-        const themeMode:string = loadSettings('OBLIVION_THEME') || "light";
+        const themeMode: string = loadSettings('OBLIVION_THEME') || 'light';
         toast(
             (currentToast) => (
                 <>
-                    <div className="customToast">
+                    <div className='customToast'>
                         <p>
-                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
+                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی
+                            اصلیته وصلت کرده، که باهاش میتونی فیلترینگ‌رو دور
+                            بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات
+                            میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر
+                            بدی.
                         </p>
-                        <button
-                            onClick={() => toast.dismiss(currentToast?.id)}
-                        >
+                        <button onClick={() => toast.dismiss(currentToast?.id)}>
                             متوجه شدم
                         </button>
                     </div>
                 </>
             ),
             {
-                id: "ipChangedToIR",
+                id: 'ipChangedToIR',
                 duration: Infinity,
                 style: {
                     borderRadius: '10px',
-                    background: (themeMode === 'light' ? '#242424' : '#535353'),
-                    color: (themeMode === 'light' ? '#F4F5FB' : '#F4F5FB'),
+                    background: themeMode === 'light' ? '#242424' : '#535353',
+                    color: themeMode === 'light' ? '#F4F5FB' : '#F4F5FB',
                 },
-            }
+            },
         );
-    }
+    };
 
     const getIpLocation = () => {
-        if ( isConnected && !isLoading ) {
+        if (isConnected && !isLoading) {
             fetch('https://api.ipify.org/?format=json')
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     const userIp = data?.ip;
                     fetch(`https://api.iplocation.net/?ip=${userIp}`)
-                        .then(response => response.json())
-                        .then(locationData => {
+                        .then((response) => response.json())
+                        .then((locationData) => {
                             setIpInfo({
-                                countryCode: (locationData.country_code2).toLowerCase(),
-                                ip: locationData.ip
+                                countryCode:
+                                    locationData.country_code2.toLowerCase(),
+                                ip: locationData.ip,
                             });
-                            if ( locationData?.country_code2 === 'IR' ){
+                            if (locationData?.country_code2 === 'IR') {
                                 ipToast();
                             }
                         })
-                        .catch(error => {
+                        .catch((error) => {
                             console.error('Error fetching IP location:', error);
                         });
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error('Error fetching user IP:', error);
                 });
         }
-    }
+    };
 
     const checkInternet = () => {
-        const themeMode:string = loadSettings('OBLIVION_THEME') || "light";
-        toast("شما به اینترنت متصل نیستید!",
-            {
-                id: "onlineStatus",
-                duration: Infinity,
-                style: {
-                    borderRadius: '10px',
-                    background: (themeMode === 'light' ? '#242424' : '#535353'),
-                    color: (themeMode === 'light' ? '#F4F5FB' : '#F4F5FB'),
-                },
-            }
-        );
-    }
+        const themeMode: string = loadSettings('OBLIVION_THEME') || 'light';
+        toast('شما به اینترنت متصل نیستید!', {
+            id: 'onlineStatus',
+            duration: Infinity,
+            style: {
+                borderRadius: '10px',
+                background: themeMode === 'light' ? '#242424' : '#535353',
+                color: themeMode === 'light' ? '#F4F5FB' : '#F4F5FB',
+            },
+        });
+    };
 
     useEffect(() => {
         getIpLocation();
-        if ( isLoading || !isConnected ) {
-            toast.dismiss('ipChangedToIR')
+        if (isLoading || !isConnected) {
+            toast.dismiss('ipChangedToIR');
         }
-        if ( online ) {
-            toast.dismiss('onlineStatus')
-        }
-        else {
+        if (online) {
+            toast.dismiss('onlineStatus');
+        } else {
             checkInternet();
         }
     }, [isLoading, isConnected, online]);
 
     const onChange = () => {
-        if ( ! online ) {
+        if (!online) {
             checkInternet();
-        }
-        else {
+        } else {
             if (isLoading) {
                 ipcRenderer.sendMessage('wp-end');
             } else if (isConnected) {
@@ -145,16 +146,13 @@ export default function Index() {
     };
 
     let status = 'متصل نیستید';
-    if ( isConnected && isLoading ) {
+    if (isConnected && isLoading) {
         status = 'قطع ارتباط ...';
-    }
-    else if ( !isConnected && isLoading ) {
+    } else if (!isConnected && isLoading) {
         status = 'درحال اتصال ...';
-    }
-    else if (isConnected && ipInfo?.countryCode) {
+    } else if (isConnected && ipInfo?.countryCode) {
         status = 'اتصال برقرار شد';
-    }
-    else if (isConnected && !ipInfo?.countryCode) {
+    } else if (isConnected && !ipInfo?.countryCode) {
         status = 'دریافت اطلاعات ...';
     } else {
         status = 'متصل نیستید';
@@ -210,9 +208,7 @@ export default function Index() {
                                 <div
                                     className={classNames(
                                         'switch',
-                                        isConnected
-                                            ? 'active'
-                                            : '',
+                                        isConnected ? 'active' : '',
                                         isLoading ? 'isLoading' : '',
                                     )}
                                     onClick={onChange}
@@ -226,7 +222,9 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected && ipInfo?.countryCode && !isLoading ? 'active' : '',
+                                isConnected && ipInfo?.countryCode && !isLoading
+                                    ? 'active'
+                                    : '',
                             )}
                         >
                             {status}
@@ -234,31 +232,36 @@ export default function Index() {
                             <div
                                 className={classNames(
                                     'ip',
-                                    isConnected && ipInfo?.countryCode && !isLoading ? 'connected' : '',
+                                    isConnected &&
+                                        ipInfo?.countryCode &&
+                                        !isLoading
+                                        ? 'connected'
+                                        : '',
                                 )}
                             >
                                 {ipInfo.countryCode ? (
                                     // @ts-ignore
-                                    ipInfo.countryCode === "IR" ? (
-                                            <>
-                                                <img src={ irFlag } alt='flag' />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <ReactCountryFlag
-                                                    countryCode={String(ipInfo.countryCode)}
-                                                    svg
-                                                    style={{
-                                                        width: '17px',
-                                                        height: '12px',
-                                                    }}
-                                                />
-                                            </>
-                                        )
-
+                                    ipInfo.countryCode === 'IR' ? (
+                                        <>
+                                            <img src={irFlag} alt='flag' />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ReactCountryFlag
+                                                countryCode={String(
+                                                    ipInfo.countryCode,
+                                                )}
+                                                svg
+                                                style={{
+                                                    width: '17px',
+                                                    height: '12px',
+                                                }}
+                                            />
+                                        </>
+                                    )
                                 ) : (
                                     <>
-                                        <img src={ defFlag } alt='flag' />
+                                        <img src={defFlag} alt='flag' />
                                     </>
                                 )}
                                 <span>{ipInfo?.ip}</span>
@@ -267,10 +270,7 @@ export default function Index() {
                     </div>
                 </div>
             </div>
-            <Toaster
-                position="bottom-center"
-                reverseOrder={false}
-            />
+            <Toaster position='bottom-center' reverseOrder={false} />
         </>
     );
 }

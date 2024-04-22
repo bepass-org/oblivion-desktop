@@ -31,6 +31,8 @@ module.exports = {
         'no-lonely-if': 'off',
         'no-plusplus': 'off',
         'promise/always-return': 'off',
+        'class-methods-use-this': 'off',
+        'react-hooks/exhaustive-deps': 'warn',
     },
     parserOptions: {
         ecmaVersion: 2022,
