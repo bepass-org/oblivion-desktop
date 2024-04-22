@@ -91,6 +91,7 @@ const createWindow = async () => {
         center: true,
         frame: true,
         resizable: false,
+        fullscreenable: false,
         icon: getAssetPath('oblivion.png'),
         webPreferences: {
             devTools: false,
