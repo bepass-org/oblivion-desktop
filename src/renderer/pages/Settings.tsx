@@ -11,7 +11,7 @@ import { defaultSettings } from '../../defaultSettings';
 export default function Settings() {
     const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || defaultSettings.endpoint);
     const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || defaultSettings.port);
-    const [psiphonMode, setPsiphonMode] = useState(loadSettings('OBLIVION_PSIPHON') || false);
+    const [psiphonMode, setPsiphonMode] = useState('');
     const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || '');
     const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || '');
     const [goolMode, setGoolMode] = useState(loadSettings('OBLIVION_GOOL') || false);
@@ -34,6 +34,15 @@ export default function Settings() {
         saveSettings('OBLIVION_LOCATION', location);
     }, [location]);
 
+    // loading settings on component load
+    // TODO promise.all
+    useEffect(() => {
+        (async () => {
+            setPsiphonMode((await settings.get('psiphon')) || defaultSettings.psiphon);
+            setTheme((await settings.get('theme')) || defaultSettings.theme);
+        })();
+    }, []);
+
     useEffect(() => {
         saveSettings('OBLIVION_GOOL', goolMode);
         if (goolMode) {
@@ -42,15 +51,13 @@ export default function Settings() {
         }
     }, [goolMode]);
 
-    // loading settings on component load
-    // TODO promise.all
     useEffect(() => {
+        if (psiphonMode === '') return;
         (async () => {
-            setTheme((await settings.get('theme')) || defaultSettings.theme);
+            await settings.set('psiphon', psiphonMode);
         })();
-    }, []);
+    }, [psiphonMode]);
 
-    // syncing react state and User Settings(read DOCS.md for more)
     useEffect(() => {
         if (theme === '') return;
         (async () => {
