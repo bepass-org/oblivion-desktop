@@ -6,7 +6,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-Modification Limitation Clause:
+**Modification Limitation Clause:**
 
 No modification of the Software, including but not limited to changing the name or other details of the Software, is permitted unless done in collaboration with the original authors of the Software as part of a contribution to this project.
 
