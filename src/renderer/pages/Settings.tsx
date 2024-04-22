@@ -9,10 +9,8 @@ import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 
 export default function Settings() {
-    const endpointDefValue = 'engage.cloudflareclient.com:2048';
-    const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
-    const portDefValue = 8086;
-    const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || portDefValue);
+    const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || defaultSettings.endpoint);
+    const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || defaultSettings.port);
     const [psiphonMode, setPsiphonMode] = useState(loadSettings('OBLIVION_PSIPHON') || false);
     const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || '');
     const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || '');
@@ -74,19 +72,19 @@ export default function Settings() {
                 title='اندپوینت'
                 isOpen={endpointModal}
                 onClose={() => {
-                    setEndpoint(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
+                    setEndpoint(loadSettings('OBLIVION_ENDPOINT') || defaultSettings.endpoint);
                     setEndpointModal(false);
                 }}
-                defValue={endpointDefValue}
+                defValue={defaultSettings.endpoint}
             />
             <PortModal
                 title='پورت تانل'
                 isOpen={portModal}
                 onClose={() => {
-                    setPort(loadSettings('OBLIVION_PORT') || portDefValue);
+                    setPort(loadSettings('OBLIVION_PORT') || defaultSettings.port);
                     setPortModal(false);
                 }}
-                defValue={portDefValue}
+                defValue={defaultSettings.port}
             />
             <LicenseModal
                 title='لایسنس'
