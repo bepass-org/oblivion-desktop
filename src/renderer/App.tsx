@@ -13,6 +13,7 @@ import Settings from './pages/Settings';
 import About from './pages/About';
 import Debug from './pages/Debug';
 import { settings } from './lib/settings';
+import { defaultSettings } from '../defaultSettings';
 
 export default function App() {
     useEffect(() => {
