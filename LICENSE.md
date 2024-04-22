@@ -1,13 +1,17 @@
-The MIT License (MIT)
+Restrictive License - No Sale and Modification Limitation
 
-Copyright © 2024-present Oblivion Desktop Contributors
+Copyright © 2024 Oblivion Desktop
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+This software is provided under a specific license. By using this software or accessing its source code, you agree that:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+1. No Sale: You are prohibited from selling or distributing the software or modified versions of it.
+2. Modification Limitation: You may not alter the name, about page, copyright notice, logo, or other fundamental details of this software. Development of the software is only possible through project participation.
 
-**Modification Limitation Clause:**
+---
 
-No modification of the Software, including but not limited to changing the name or other details of the Software, is permitted unless done in collaboration with the original authors of the Software as part of a contribution to this project.
+محدودیت لایسنس - عدم امکان فروش و محدودیت تغییرات
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+این نرم‌افزار طبق یک لایسنس خاص ارائه می‌شود. با استفاده از این نرم‌افزار یا دسترسی به منابع آن، شما موافقت می‌کنید که:
+
+1. عدم امکان فروش: شما مجاز به فروش یا توزیع نرم‌افزار یا نسخه‌های تغییر یافته آن نیستید.
+2. محدودیت تغییرات: شما نمی‌توانید نام، صفحه درباره، اطلاعات کپی‌رایت، لوگو یا جزئیات بنیادین دیگر این نرم‌افزار را تغییر دهید. توسعه این نرم‌افزار تنها از طریق مشارکت در پروژه امکان‌پذیر است.
