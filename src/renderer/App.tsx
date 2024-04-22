@@ -12,7 +12,7 @@ import SplashScreen from './pages/SplashScreen';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Debug from './pages/Debug';
-import { loadThemeMode } from './lib/utils';
+import { settings } from './lib/settings';
 
 export default function App() {
     useEffect(() => {
@@ -36,7 +36,12 @@ export default function App() {
             delete keysDown[event.keyCode];
         });
 
-        loadThemeMode();
+        (async () => {
+            document.documentElement.setAttribute(
+                'data-bs-theme',
+                (await settings.get('theme')) || defaultSettings.theme,
+            );
+        })();
     }, []);
 
     return (

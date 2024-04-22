@@ -25,3 +25,15 @@ To package for the local platform:
 ```shell
 npm run package
 ```
+
+## IPC (sending data between main and renderer)
+
+as you may be familiar with electron already.  
+we need to use [IPC](https://www.electronjs.org/docs/latest/tutorial/ipc) in order to send and receive data between main and renderer.  
+checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example.
+
+## User Settings
+
+user settings is being handled by [electron-settings](https://github.com/nathanbuchar/electron-settings) but i did'nt enabled `enableRemoteModule` for security reasons. ([read more](https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31)).
+
+so for `main` just use `electron-settings` directly. and for `renderer` use settings.ts module(`src/renderer/lib/settings.ts`)(asynchronously!)

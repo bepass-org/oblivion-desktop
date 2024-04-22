@@ -4,10 +4,11 @@ import Nav from '../components/Nav';
 import EndpointModal from '../components/Modal/Endpoint';
 import PortModal from '../components/Modal/Port';
 import { saveSettings, loadSettings } from '../lib/utils';
-import LicenseModal from "../components/Modal/License";
+import LicenseModal from '../components/Modal/License';
+import { settings } from '../lib/settings';
+import { defaultSettings } from '../../defaultSettings';
 
 export default function Settings() {
-
     const endpointDefValue = 'engage.cloudflareclient.com:2048';
     const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || endpointDefValue);
     const [endpointModal, setEndpointModal] = useState(false);
@@ -18,19 +19,19 @@ export default function Settings() {
 
     const [psiphonMode, setPsiphonMode] = useState(loadSettings('OBLIVION_PSIPHON') || false);
 
-    const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || "");
+    const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || '');
 
-    const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || "");
+    const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || '');
     const [licenseModal, setLicenseModal] = useState(false);
 
     const [goolMode, setGoolMode] = useState(loadSettings('OBLIVION_GOOL') || false);
 
-    const [themeMode, setThemeMode] = useState(loadSettings('OBLIVION_THEME') || "light");
+    const [theme, setTheme] = useState('');
     const [systemTray, setSystemTray] = useState(loadSettings('OBLIVION_SYSTEMTRAY') || false);
 
     useEffect(() => {
         saveSettings('OBLIVION_PSIPHON', psiphonMode);
-        if ( psiphonMode ) {
+        if (psiphonMode) {
             setGoolMode(false);
             saveSettings('OBLIVION_GOOL', false);
         }
@@ -48,10 +49,24 @@ export default function Settings() {
         }
     }, [goolMode]);
 
+    // loading settings on component load
+    // TODO promise.all
     useEffect(() => {
-        saveSettings('OBLIVION_THEME', themeMode);
-        document.documentElement.setAttribute('data-bs-theme', themeMode);
-    }, [themeMode]);
+        (async () => {
+            setTheme((await settings.get('theme')) || defaultSettings.theme);
+        })();
+    }, []);
+
+    // syncing react state and User Settings(read DOCS.md for more)
+    useEffect(() => {
+        if (theme === '') return;
+        (async () => {
+            document.documentElement.setAttribute(
+                'data-bs-theme',
+                String(await settings.set('theme', theme)),
+            );
+        })();
+    }, [theme]);
 
     useEffect(() => {
         saveSettings('OBLIVION_SYSTEMTRAY', systemTray);
@@ -82,7 +97,7 @@ export default function Settings() {
                 title='لایسنس'
                 isOpen={licenseModal}
                 onClose={() => {
-                    setLicense(loadSettings('OBLIVION_LICENSE') || "");
+                    setLicense(loadSettings('OBLIVION_LICENSE') || '');
                     setLicenseModal(false);
                 }}
             />
@@ -96,13 +111,9 @@ export default function Settings() {
                     >
                         <label className='key'>اندپوینت</label>
                         <div className='value'>
-                            <span className='dirLeft'>
-                                {endpoint}
-                            </span>
+                            <span className='dirLeft'>{endpoint}</span>
                         </div>
-                        <div className='info'>
-                            ترکیبی از IP یا نام دامنه، به‌همراه پورت
-                        </div>
+                        <div className='info'>ترکیبی از IP یا نام دامنه، به‌همراه پورت</div>
                     </div>
                     <div
                         className='item'
@@ -124,23 +135,13 @@ export default function Settings() {
                     >
                         <label className='key'>سایفون</label>
                         <div className='value'>
-                            <div
-                                className={classNames(
-                                    'checkbox',
-                                    psiphonMode ? 'checked' : '',
-                                )}
-                            >
+                            <div className={classNames('checkbox', psiphonMode ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
                         <div className='info'>فعالسازی سایفون</div>
                     </div>
-                    <div
-                        className={classNames(
-                            'item',
-                            psiphonMode ? '' : 'disabled',
-                        )}
-                    >
+                    <div className={classNames('item', psiphonMode ? '' : 'disabled')}>
                         <label className='key'>انتخاب کشور</label>
                         <div className='value'>
                             <select
@@ -192,11 +193,9 @@ export default function Settings() {
                     >
                         <label className='key'>لایسنس</label>
                         <div className='value'>
-                            <span className='dirLeft'>{license ? license : "Free"}</span>
+                            <span className='dirLeft'>{license ? license : 'Free'}</span>
                         </div>
-                        <div className='info'>
-                            اگر لایسنس دارید (هر لایسنس 2x می‌شود)
-                        </div>
+                        <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
                     </div>
                     <div
                         className='item'
@@ -205,13 +204,8 @@ export default function Settings() {
                         }}
                     >
                         <label className='key'>گول</label>
-                        <div className='value' >
-                            <div
-                                className={classNames(
-                                    'checkbox',
-                                    goolMode ? 'checked' : '',
-                                )}
-                            >
+                        <div className='value'>
+                            <div className={classNames('checkbox', goolMode ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
@@ -226,7 +220,7 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setThemeMode(themeMode === "light" ? 'dark' : 'light');
+                            setTheme(theme === 'light' ? 'dark' : 'light');
                         }}
                     >
                         <label className='key' htmlFor='flexSwitchCheckChecked'>
@@ -236,7 +230,7 @@ export default function Settings() {
                             <div
                                 className={classNames(
                                     'checkbox',
-                                    themeMode === "dark" ? 'checked' : '',
+                                    theme === 'dark' ? 'checked' : '',
                                 )}
                             >
                                 <i className='material-icons'>&#xe876;</i>
@@ -254,18 +248,11 @@ export default function Settings() {
                     >
                         <label className='key'>مخفی‌سازی</label>
                         <div className='value'>
-                            <div
-                                className={classNames(
-                                    'checkbox',
-                                    systemTray ? 'checked' : '',
-                                )}
-                            >
+                            <div className={classNames('checkbox', systemTray ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>
-                            آیکون برنامه در تسک‌بار قرار نگیرد
-                        </div>
+                        <div className='info'>آیکون برنامه در تسک‌بار قرار نگیرد</div>
                     </div>
                 </div>
             </div>

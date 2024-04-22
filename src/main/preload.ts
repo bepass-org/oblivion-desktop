@@ -7,7 +7,8 @@ export type Channels =
     | 'open-devtools'
     | 'wp-start'
     | 'wp-end'
-    | 'log';
+    | 'log'
+    | 'settings';
 
 const electronHandler = {
     ipcRenderer: {

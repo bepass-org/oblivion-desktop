@@ -33,6 +33,8 @@ module.exports = {
         'promise/always-return': 'off',
         'class-methods-use-this': 'off',
         'react-hooks/exhaustive-deps': 'warn',
+        'object-shorthand': 'off',
+        'import/no-cycle': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,

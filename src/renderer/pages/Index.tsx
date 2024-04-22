@@ -8,6 +8,8 @@ import { useStore } from '../store';
 
 import defFlag from '../../../assets/img/flags/xx.svg';
 import irFlag from '../../../assets/img/flags/ir.svg';
+import { settings } from '../lib/settings';
+import { defaultSettings } from '../../defaultSettings';
 
 export default function Index() {
     const { isConnected, setIsConnected } = useStore();
@@ -45,8 +47,9 @@ export default function Index() {
         };
     }, []);
 
-    const ipToast = () => {
-        const themeMode: string = loadSettings('OBLIVION_THEME') || 'light';
+    const ipToast = async () => {
+        const theme: string =
+            (await settings.get('theme')) || defaultSettings.theme;
         toast(
             (currentToast) => (
                 <>
@@ -69,8 +72,8 @@ export default function Index() {
                 duration: Infinity,
                 style: {
                     borderRadius: '10px',
-                    background: themeMode === 'light' ? '#242424' : '#535353',
-                    color: themeMode === 'light' ? '#F4F5FB' : '#F4F5FB',
+                    background: theme === 'light' ? '#242424' : '#535353',
+                    color: theme === 'light' ? '#F4F5FB' : '#F4F5FB',
                 },
             },
         );
@@ -104,15 +107,16 @@ export default function Index() {
         }
     };
 
-    const checkInternet = () => {
-        const themeMode: string = loadSettings('OBLIVION_THEME') || 'light';
+    const checkInternet = async () => {
+        const theme: string =
+            (await settings.get('theme')) || defaultSettings.theme;
         toast('شما به اینترنت متصل نیستید!', {
             id: 'onlineStatus',
             duration: Infinity,
             style: {
                 borderRadius: '10px',
-                background: themeMode === 'light' ? '#242424' : '#535353',
-                color: themeMode === 'light' ? '#F4F5FB' : '#F4F5FB',
+                background: theme === 'light' ? '#242424' : '#535353',
+                color: theme === 'light' ? '#F4F5FB' : '#F4F5FB',
             },
         });
     };

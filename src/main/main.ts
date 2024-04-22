@@ -9,22 +9,14 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import {
-    app,
-    BrowserWindow,
-    ipcMain,
-    screen,
-    shell,
-    Menu,
-    Tray,
-} from 'electron';
+import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import './ipc';
 import { isDev, removeFileIfExists } from './lib/utils';
-import { useCustomWindowXY } from './config';
+import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
 
 class AppUpdater {
@@ -46,11 +38,10 @@ if (process.env.NODE_ENV === 'production') {
     await removeFileIfExists('log.txt');
 })();
 
-const isDebug =
-    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
-if (isDebug) {
-    // require('electron-debug')();
+if (isDebug && openDevToolsByDefault) {
+    require('electron-debug')();
 }
 
 const installExtensions = async () => {
