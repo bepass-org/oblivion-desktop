@@ -33,6 +33,7 @@ module.exports = {
         'react-hooks/exhaustive-deps': 'warn',
         'object-shorthand': 'off',
         'import/no-cycle': 'off',
+        'promise/catch-or-return': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,

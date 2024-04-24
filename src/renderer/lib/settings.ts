@@ -1,9 +1,8 @@
+import { settingsKeys } from '../../defaultSettings';
 import { ipcRenderer } from './utils';
 
-type keys = string;
-
 export class settings {
-    public static async get(key: keys): Promise<any> {
+    public static async get(key: settingsKeys): Promise<any> {
         ipcRenderer.sendMessage('settings', {
             mode: 'get',
             key: key,
@@ -25,7 +24,7 @@ export class settings {
         });
     }
 
-    public static async set(key: keys, value: any) {
+    public static async set(key: settingsKeys, value: any) {
         ipcRenderer.sendMessage('settings', {
             mode: 'set',
             key: key,

@@ -1,26 +1,27 @@
-import { useState } from 'react';
 import classNames from 'classnames';
-import { loadSettings, saveSettings } from '../../lib/utils';
+import { settings } from '../../lib/settings';
 
 export default function EndpointModal({
     title,
     isOpen,
     onClose,
     defValue,
+    endpoint,
+    setEndpoint,
 }: {
     title: string;
     isOpen: boolean;
     onClose: any;
     defValue: string;
+    endpoint: any;
+    setEndpoint: any;
 }) {
-    const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || defValue);
     if (!isOpen) return null;
 
     const onSaveModal = () => {
         if (endpoint.trim() === '') {
             setEndpoint(defValue);
         }
-        saveSettings('OBLIVION_ENDPOINT', endpoint);
         onClose();
     };
 
@@ -37,8 +38,9 @@ export default function EndpointModal({
                         <input
                             value={endpoint}
                             className='form-control'
-                            onChange={(event) => {
-                                setEndpoint(event.target.value);
+                            onChange={(e) => {
+                                setEndpoint(e.target.value);
+                                settings.set('endpoint', e.target.value);
                             }}
                         />
                         <div className='clearfix' />

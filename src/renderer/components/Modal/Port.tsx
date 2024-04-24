@@ -1,26 +1,27 @@
-import { useState } from 'react';
 import classNames from 'classnames';
-import { loadSettings, saveSettings } from '../../lib/utils';
+import { settings } from '../../lib/settings';
 
 export default function PortModal({
     title,
     isOpen,
     onClose,
     defValue,
+    port,
+    setPort,
 }: {
     title: string;
     isOpen: boolean;
     onClose: any;
     defValue: number;
+    port: any;
+    setPort: any;
 }) {
-    const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || defValue);
-    if (!isOpen) return null;
+    if (!isOpen) return <></>;
 
     const onSaveModal = () => {
         if (!port || port === '' || port < 1) {
             setPort(Number(defValue));
         }
-        saveSettings('OBLIVION_PORT', port);
         onClose();
     };
 
@@ -38,8 +39,9 @@ export default function PortModal({
                             type='number'
                             value={port}
                             className='form-control'
-                            onChange={(event) => {
-                                setPort(Number(event.target.value));
+                            onChange={(e) => {
+                                setPort(Number(e.target.value));
+                                settings.set('port', Number(e.target.value));
                             }}
                         />
                         <div className='clearfix' />

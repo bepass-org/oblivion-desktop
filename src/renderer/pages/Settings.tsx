@@ -3,102 +3,98 @@ import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import EndpointModal from '../components/Modal/Endpoint';
 import PortModal from '../components/Modal/Port';
-import { saveSettings, loadSettings } from '../lib/utils';
 import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 
 export default function Settings() {
-    const [endpoint, setEndpoint] = useState(loadSettings('OBLIVION_ENDPOINT') || defaultSettings.endpoint);
-    const [port, setPort] = useState(loadSettings('OBLIVION_PORT') || defaultSettings.port);
-    const [psiphonMode, setPsiphonMode] = useState(false);
-    const [location, setLocation] = useState(loadSettings('OBLIVION_LOCATION') || '');
-    const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE') || '');
-    const [goolMode, setGoolMode] = useState(loadSettings('OBLIVION_GOOL') || false);
-    const [theme, setTheme] = useState('');
-    const [systemTray, setSystemTray] = useState(loadSettings('OBLIVION_SYSTEMTRAY') || false);
-    
-    const [portModal, setPortModal] = useState(false);
-    const [licenseModal, setLicenseModal] = useState(false);
-    const [endpointModal, setEndpointModal] = useState(false);
+    const [psiphon, setPsiphon] = useState<undefined | boolean>();
+    const [location, setLocation] = useState<undefined | string>();
+    const [gool, setGool] = useState<undefined | boolean>();
+    const [theme, setTheme] = useState<undefined | string>();
+    const [systemTray, setSystemTray] = useState<undefined | boolean>();
 
-    useEffect(() => {
-        saveSettings('OBLIVION_PSIPHON', psiphonMode);
-        if (psiphonMode) {
-            setGoolMode(false);
-            saveSettings('OBLIVION_GOOL', false);
-        }
-    }, [psiphonMode]);
+    const [endpoint, setEndpoint] = useState();
+    const [showEndpointModal, setShowEndpointModal] = useState(false);
+    const [port, setPort] = useState();
+    const [showPortModal, setShowPortModal] = useState(false);
+    const [license, setLicense] = useState();
+    const [showLicenseModal, setShowLicenseModal] = useState(false);
 
+    // loading settings
     useEffect(() => {
-        saveSettings('OBLIVION_LOCATION', location);
-    }, [location]);
-
-    // loading settings on component load
-    // TODO promise.all
-    useEffect(() => {
-        (async () => {
-            setPsiphonMode((await settings.get('psiphon')) || defaultSettings.psiphon);
-            setTheme((await settings.get('theme')) || defaultSettings.theme);
-        })();
+        settings.get('endpoint').then((value) => {
+            setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
+        });
+        settings.get('port').then((value) => {
+            setPort(typeof value === 'undefined' ? defaultSettings.port : value);
+        });
+        settings.get('psiphon').then((value) => {
+            setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
+        });
+        settings.get('location').then((value) => {
+            setLocation(typeof value === 'undefined' ? defaultSettings.location : value);
+        });
+        settings.get('license').then((value) => {
+            setLicense(typeof value === 'undefined' ? defaultSettings.license : value);
+        });
+        settings.get('gool').then((value) => {
+            console.log('🚀 - settings.get - value:', typeof value === 'undefined');
+            setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });
+        settings.get('theme').then((value) => {
+            setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
+        });
+        settings.get('systemTray').then((value) => {
+            setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
+        });
     }, []);
 
-    useEffect(() => {
-        saveSettings('OBLIVION_GOOL', goolMode);
-        if (goolMode) {
-            setPsiphonMode(false);
-            saveSettings('OBLIVION_PSIPHON', false);
-        }
-    }, [goolMode]);
-
-    useEffect(() => {
-        if (!psiphonMode) return;
-        (async () => {
-            await settings.set('psiphon', psiphonMode);
-        })();
-    }, [psiphonMode]);
-
-    useEffect(() => {
-        if (theme === '') return;
-        (async () => {
-            document.documentElement.setAttribute(
-                'data-bs-theme',
-                String(await settings.set('theme', theme)),
-            );
-        })();
-    }, [theme]);
-
-    useEffect(() => {
-        saveSettings('OBLIVION_SYSTEMTRAY', systemTray);
-    }, [systemTray]);
+    if (
+        typeof psiphon === 'undefined' ||
+        typeof location === 'undefined' ||
+        typeof gool === 'undefined' ||
+        typeof theme === 'undefined' ||
+        typeof systemTray === 'undefined'
+    )
+        return <></>;
 
     return (
         <>
             <Nav title='تنظیمات' />
             <EndpointModal
+                {...{
+                    endpoint,
+                    setEndpoint,
+                }}
                 title='اندپوینت'
-                isOpen={endpointModal}
+                isOpen={showEndpointModal}
                 onClose={() => {
-                    setEndpoint(loadSettings('OBLIVION_ENDPOINT') || defaultSettings.endpoint);
-                    setEndpointModal(false);
+                    setShowEndpointModal(false);
                 }}
                 defValue={defaultSettings.endpoint}
             />
             <PortModal
+                {...{
+                    port,
+                    setPort,
+                }}
                 title='پورت تانل'
-                isOpen={portModal}
+                isOpen={showPortModal}
                 onClose={() => {
-                    setPort(loadSettings('OBLIVION_PORT') || defaultSettings.port);
-                    setPortModal(false);
+                    setShowPortModal(false);
                 }}
                 defValue={defaultSettings.port}
             />
             <LicenseModal
+                {...{
+                    license,
+                    setLicense,
+                }}
                 title='لایسنس'
-                isOpen={licenseModal}
+                isOpen={showLicenseModal}
                 onClose={() => {
-                    setLicense(loadSettings('OBLIVION_LICENSE') || '');
-                    setLicenseModal(false);
+                    setShowLicenseModal(false);
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -106,7 +102,7 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setEndpointModal(true);
+                            setShowEndpointModal(true);
                         }}
                     >
                         <label className='key'>اندپوینت</label>
@@ -118,7 +114,7 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setPortModal(true);
+                            setShowPortModal(true);
                         }}
                     >
                         <label className='key'>پورت تانل</label>
@@ -130,25 +126,33 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setPsiphonMode(psiphonMode !== true);
+                            setPsiphon(!psiphon);
+                            settings.set('psiphon', !psiphon);
+                            // psiphon and gool mode can't be enable at the same time
+                            // if (!psiphon) {
+                            //     setGool(false);
+                            //     settings.set('gool', false);
+                            // }
                         }}
                     >
                         <label className='key'>سایفون</label>
                         <div className='value'>
-                            <div className={classNames('checkbox', psiphonMode ? 'checked' : '')}>
+                            <div className={classNames('checkbox', psiphon ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
                         <div className='info'>فعالسازی سایفون</div>
                     </div>
-                    <div className={classNames('item', psiphonMode ? '' : 'disabled')}>
+                    <div className={classNames('item', psiphon ? '' : 'disabled')}>
                         <label className='key'>انتخاب کشور</label>
                         <div className='value'>
                             <select
-                                onChange={(event) => {
-                                    setLocation(event.target.value);
+                                onChange={(e) => {
+                                    setLocation(e.target.value);
+                                    settings.set('location', e.target.value);
                                 }}
-                                disabled={!psiphonMode}
+                                disabled={!psiphon}
+                                value={location}
                             >
                                 <option value=''>Automatic</option>
                                 <option value='AT'>Austria</option>
@@ -188,24 +192,30 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setLicenseModal(true);
+                            setShowLicenseModal(true);
                         }}
                     >
                         <label className='key'>لایسنس</label>
                         <div className='value'>
-                            <span className='dirLeft'>{license ? license : 'Free'}</span>
+                            <span className='dirLeft'>{license || 'Free'}</span>
                         </div>
                         <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
                     </div>
                     <div
                         className='item'
                         onClick={() => {
-                            setGoolMode(goolMode !== true);
+                            setGool(!gool);
+                            settings.set('gool', !gool);
+                            // psiphon and gool mode can't be enable at the same time
+                            // if (!gool) {
+                            //     setPsiphon(false);
+                            //     settings.set('psiphon', false);
+                            // }
                         }}
                     >
                         <label className='key'>گول</label>
                         <div className='value'>
-                            <div className={classNames('checkbox', goolMode ? 'checked' : '')}>
+                            <div className={classNames('checkbox', gool ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
@@ -220,7 +230,10 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setTheme(theme === 'light' ? 'dark' : 'light');
+                            const tmp = theme === 'light' ? 'dark' : 'light';
+                            setTheme(tmp);
+                            settings.set('theme', tmp);
+                            document.documentElement.setAttribute('data-bs-theme', tmp);
                         }}
                     >
                         <label className='key' htmlFor='flexSwitchCheckChecked'>
@@ -243,7 +256,8 @@ export default function Settings() {
                     <div
                         className='item'
                         onClick={() => {
-                            setSystemTray(systemTray !== true);
+                            setSystemTray(!systemTray);
+                            settings.set('systemTray', !systemTray);
                         }}
                     >
                         <label className='key'>مخفی‌سازی</label>

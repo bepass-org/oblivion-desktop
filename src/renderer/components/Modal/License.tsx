@@ -1,21 +1,23 @@
-import { useState } from 'react';
 import classNames from 'classnames';
-import { loadSettings, saveSettings } from '../../lib/utils';
+import { defaultSettings } from '../../../defaultSettings';
+import { settings } from '../../lib/settings';
 
 export default function LicenseModal({
     title,
     isOpen,
     onClose,
+    license,
+    setLicense,
 }: {
     title: string;
     isOpen: boolean;
     onClose: any;
+    license: any;
+    setLicense: any;
 }) {
-    const [license, setLicense] = useState(loadSettings('OBLIVION_LICENSE'));
     if (!isOpen) return null;
 
     const onSaveModal = () => {
-        saveSettings('OBLIVION_LICENSE', license);
         onClose();
     };
 
@@ -30,10 +32,11 @@ export default function LicenseModal({
                         </div>
                         <h3>{title}</h3>
                         <input
-                            value={license ? license : ''}
+                            value={license || defaultSettings.license}
                             className='form-control'
-                            onChange={(event) => {
-                                setLicense(event.target.value);
+                            onChange={(e) => {
+                                setLicense(e.target.value);
+                                settings.set('license', e.target.value);
                             }}
                         />
                         <div className='clearfix' />

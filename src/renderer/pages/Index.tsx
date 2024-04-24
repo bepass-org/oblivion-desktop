@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
-import { ipcRenderer, loadSettings } from '../lib/utils';
+import { ipcRenderer } from '../lib/utils';
 import { useStore } from '../store';
 
 import defFlag from '../../../assets/img/flags/xx.svg';
