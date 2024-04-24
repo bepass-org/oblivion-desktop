@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import { settings } from '../../lib/settings';
+import { useState } from 'react';
+import { defaultSettings } from '../../../defaultSettings';
 
 export default function PortModal({
     title,
@@ -16,12 +18,13 @@ export default function PortModal({
     port: any;
     setPort: any;
 }) {
+
     if (!isOpen) return <></>;
+    const [portInput, setPortInput] = useState(port);
 
     const onSaveModal = () => {
-        if (!port || port === '' || port < 1) {
-            setPort(Number(defValue));
-        }
+        setPort( Number(portInput) < 1 || portInput === "" ? defValue : portInput );
+        settings.set('port', portInput);
         onClose();
     };
 
@@ -36,12 +39,11 @@ export default function PortModal({
                         </div>
                         <h3>{title}</h3>
                         <input
-                            type='number'
-                            value={port}
+                            type='text'
+                            value={portInput}
                             className='form-control'
                             onChange={(e) => {
-                                setPort(Number(e.target.value));
-                                settings.set('port', Number(e.target.value));
+                                setPortInput(e.target.value);
                             }}
                         />
                         <div className='clearfix' />
