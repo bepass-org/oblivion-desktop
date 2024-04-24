@@ -37,7 +37,7 @@ export default function LicenseModal({
                         </div>
                         <h3>{title}</h3>
                         <input
-                            value={licenseInput || defaultSettings.license}
+                            value={licenseInput}
                             className='form-control'
                             onChange={(e) => {
                                 setLicenseInput(e.target.value);
