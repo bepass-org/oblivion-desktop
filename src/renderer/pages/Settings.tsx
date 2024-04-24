@@ -132,18 +132,22 @@ export default function Settings() {
                         <div className='info'>تعیین پورت تانل برنامه</div>
                     </div>
                     <div
-                        className='item'
+                        className={classNames(
+                            'item',
+                            gool ? 'disabled' : ''
+                        )}
                         onClick={() => {
-                            setPsiphon(!psiphon);
-                            settings.set('psiphon', !psiphon);
-                            // psiphon and gool mode can't be enable at the same time
-                            // if (!psiphon) {
-                            //     setGool(false);
-                            //     settings.set('gool', false);
-                            // }
+                            if ( !gool ) {
+                                setPsiphon(!psiphon);
+                                settings.set('psiphon', !psiphon);
+                            }
+                            /*if (gool && !psiphon) {
+                                setGool(false);
+                                settings.set('gool', false);
+                            }*/
                         }}
                     >
-                        <label className='key'>سایفون</label>
+                        <label className='key'>سایفون </label>
                         <div className='value'>
                             <div className={classNames('checkbox', psiphon ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
@@ -210,15 +214,19 @@ export default function Settings() {
                         <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
                     </div>
                     <div
-                        className='item'
+                        className={classNames(
+                            'item',
+                            psiphon ? 'disabled' : ''
+                        )}
                         onClick={() => {
-                            setGool(!gool);
-                            settings.set('gool', !gool);
-                            // psiphon and gool mode can't be enable at the same time
-                            // if (!gool) {
-                            //     setPsiphon(false);
-                            //     settings.set('psiphon', false);
-                            // }
+                            if ( !psiphon ) {
+                                setGool(!gool);
+                                settings.set('gool', !gool);
+                            }
+                            /*if (psiphon && !gool) {
+                                setPsiphon(false);
+                                settings.set('psiphon', false);
+                            }*/
                         }}
                     >
                         <label className='key'>گول</label>
