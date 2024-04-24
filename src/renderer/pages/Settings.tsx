@@ -6,6 +6,8 @@ import PortModal from '../components/Modal/Port';
 import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
+import Lottie from "lottie-react";
+import LottieFile from "../../../assets/json/1713988096625.json";
 
 export default function Settings() {
 
@@ -59,8 +61,8 @@ export default function Settings() {
     )
         return <>
             <div className='settings'>
-                <div className='loading'>
-                    <div className='spinner' />
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
             </div>
         </>;
