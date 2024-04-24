@@ -8,18 +8,18 @@ import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 
 export default function Settings() {
-    const [psiphon, setPsiphon] = useState<undefined | boolean>();
-    const [location, setLocation] = useState<undefined | string>();
-    const [gool, setGool] = useState<undefined | boolean>();
-    const [theme, setTheme] = useState<undefined | string>();
-    const [systemTray, setSystemTray] = useState<undefined | boolean>();
 
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
+    const [psiphon, setPsiphon] = useState<undefined | boolean>();
+    const [location, setLocation] = useState<undefined | string>();
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
+    const [gool, setGool] = useState<undefined | boolean>();
+    const [theme, setTheme] = useState<undefined | string>();
+    const [systemTray, setSystemTray] = useState<undefined | boolean>();
 
     // loading settings
     useEffect(() => {
@@ -57,7 +57,13 @@ export default function Settings() {
         typeof theme === 'undefined' ||
         typeof systemTray === 'undefined'
     )
-        return <></>;
+        return <>
+            <div className='settings'>
+                <div className='loading'>
+                    <div className='spinner' />
+                </div>
+            </div>
+        </>;
 
     return (
         <>

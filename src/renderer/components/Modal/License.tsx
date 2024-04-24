@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { defaultSettings } from '../../../defaultSettings';
 import { settings } from '../../lib/settings';
+import { useState } from 'react';
 
 export default function LicenseModal({
     title,
@@ -15,9 +16,13 @@ export default function LicenseModal({
     license: any;
     setLicense: any;
 }) {
+
     if (!isOpen) return null;
+    const [licenseInput, setLicenseInput] = useState(license);
 
     const onSaveModal = () => {
+        setLicense(licenseInput);
+        settings.set('license', licenseInput);
         onClose();
     };
 
@@ -32,11 +37,10 @@ export default function LicenseModal({
                         </div>
                         <h3>{title}</h3>
                         <input
-                            value={license || defaultSettings.license}
+                            value={licenseInput || defaultSettings.license}
                             className='form-control'
                             onChange={(e) => {
-                                setLicense(e.target.value);
-                                settings.set('license', e.target.value);
+                                setLicenseInput(e.target.value);
                             }}
                         />
                         <div className='clearfix' />

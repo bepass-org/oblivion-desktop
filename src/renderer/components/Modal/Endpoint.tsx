@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { settings } from '../../lib/settings';
+import { useState } from 'react';
 
 export default function EndpointModal({
     title,
@@ -16,12 +17,16 @@ export default function EndpointModal({
     endpoint: any;
     setEndpoint: any;
 }) {
+
     if (!isOpen) return null;
+    const [endpointInput, setEndpointInput] = useState(endpoint);
 
     const onSaveModal = () => {
-        if (endpoint.trim() === '') {
-            setEndpoint(defValue);
+        if (endpointInput.trim() === '') {
+            setEndpointInput(defValue);
         }
+        setEndpoint(endpointInput);
+        settings.set('endpoint', endpointInput);
         onClose();
     };
 
@@ -36,11 +41,10 @@ export default function EndpointModal({
                         </div>
                         <h3>{title}</h3>
                         <input
-                            value={endpoint}
+                            value={endpointInput}
                             className='form-control'
                             onChange={(e) => {
-                                setEndpoint(e.target.value);
-                                settings.set('endpoint', e.target.value);
+                                setEndpointInput(e.target.value);
                             }}
                         />
                         <div className='clearfix' />
