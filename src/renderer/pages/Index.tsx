@@ -8,6 +8,7 @@ import { useStore } from '../store';
 
 import defFlag from '../../../assets/img/flags/xx.svg';
 import irFlag from '../../../assets/img/flags/ir.svg';
+
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 
@@ -18,6 +19,7 @@ export default function Index() {
         countryCode: false,
         ip: '127.0.0.1',
     });
+    const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
 
     useEffect(() => {
@@ -48,30 +50,31 @@ export default function Index() {
     }, []);
 
     const ipToast = async () => {
-        const theme: string = (await settings.get('theme')) || defaultSettings.theme;
-        toast(
-            (currentToast) => (
-                <>
-                    <div className='customToast'>
-                        <p>
-                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
-                            باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
-                            تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
-                        </p>
-                        <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
-                    </div>
-                </>
-            ),
-            {
-                id: 'ipChangedToIR',
-                duration: Infinity,
-                style: {
-                    borderRadius: '10px',
-                    background: theme === 'light' ? '#242424' : '#535353',
-                    color: theme === 'light' ? '#F4F5FB' : '#F4F5FB',
+        settings.get('theme').then((value) => {
+            toast(
+                (currentToast) => (
+                    <>
+                        <div className='customToast'>
+                            <p>
+                                کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
+                                باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
+                                تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
+                            </p>
+                            <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
+                        </div>
+                    </>
+                ),
+                {
+                    id: 'ipChangedToIR',
+                    duration: Infinity,
+                    style: {
+                        borderRadius: '10px',
+                        background: value === 'dark' ? '#535353' : '#242424',
+                        color: '#F4F5FB',
+                    },
                 },
-            },
-        );
+            );
+        });
     };
 
     const getIpLocation = () => {
@@ -102,26 +105,35 @@ export default function Index() {
     };
 
     const checkInternet = async () => {
-        const theme: string = (await settings.get('theme')) || defaultSettings.theme;
-        toast('شما به اینترنت متصل نیستید!', {
-            id: 'onlineStatus',
-            duration: Infinity,
-            style: {
-                borderRadius: '10px',
-                background: theme === 'light' ? '#242424' : '#535353',
-                color: theme === 'light' ? '#F4F5FB' : '#F4F5FB',
-            },
+        settings.get('theme').then((value) => {
+            toast('شما به اینترنت متصل نیستید!', {
+                id: 'onlineStatus',
+                duration: Infinity,
+                style: {
+                    borderRadius: '10px',
+                    background: value === 'dark' ? '#535353' : '#242424',
+                    color: '#F4F5FB',
+                },
+            });
         });
     };
 
     useEffect(() => {
-        getIpLocation();
+        settings.get('ipData').then((value) => {
+            if ( typeof value === "undefined" || value ) {
+                getIpLocation();
+            }
+            else {
+                setShownIpData(false);
+            }
+        });
         if (isLoading || !isConnected) {
             toast.dismiss('ipChangedToIR');
         }
         if (online) {
             toast.dismiss('onlineStatus');
-        } else {
+        }
+        else {
             checkInternet();
         }
     }, [isLoading, isConnected, online]);
@@ -145,13 +157,20 @@ export default function Index() {
     let status = 'متصل نیستید';
     if (isConnected && isLoading) {
         status = 'قطع ارتباط ...';
-    } else if (!isConnected && isLoading) {
+    }
+    else if (!isConnected && isLoading) {
         status = 'درحال اتصال ...';
-    } else if (isConnected && ipInfo?.countryCode) {
+    }
+    else if (isConnected && ipInfo?.countryCode) {
         status = 'اتصال برقرار شد';
-    } else if (isConnected && !ipInfo?.countryCode) {
+    }
+    else if (isConnected && !ipInfo?.countryCode && shownIpData) {
         status = 'دریافت اطلاعات ...';
-    } else {
+    }
+    else if (isConnected && !shownIpData) {
+        status = 'اتصال برقرار شد';
+    }
+    else {
         status = 'متصل نیستید';
     }
 
