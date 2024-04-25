@@ -158,6 +158,13 @@ const createWindow = async () => {
     let appIcon = null;
     app?.whenReady().then(() => {
         appIcon = new Tray(getAssetPath('oblivion.png'));
+        appIcon.on('click', () => {
+            if (!mainWindow) {
+                createMainWindow();
+            } else {
+                mainWindow.show();
+            }
+        });
         const contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Oblivion Desktop',
