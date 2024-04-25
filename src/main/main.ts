@@ -18,6 +18,7 @@ import './ipc';
 import { isDev, removeFileIfExists } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
+import settings from 'electron-settings';
 
 class AppUpdater {
     constructor() {
@@ -77,6 +78,7 @@ const createWindow = async () => {
         show: false,
         width: windowWidth,
         height: windowHeight,
+        enableRemoteModule: true,
         autoHideMenuBar: true,
         transparent: false,
         center: true,
@@ -110,13 +112,15 @@ const createWindow = async () => {
 
         mainWindow.loadURL(resolveHtmlPath('index.html'));
 
-        mainWindow.on('ready-to-show', () => {
+        mainWindow.on('ready-to-show', async () => {
             if (!mainWindow) {
                 throw new Error('"mainWindow" is not defined');
             }
-            if (process.env.START_MINIMIZED) {
+            // process.env.START_MINIMIZED
+            if ( await settings.get('systemTray') ) {
                 mainWindow.minimize();
-            } else {
+            }
+            else {
                 mainWindow.show();
             }
         });
@@ -132,10 +136,11 @@ const createWindow = async () => {
             mainWindow = null;
         });
 
-        mainWindow.on('minimize', (e: any) => {
+        mainWindow.on('minimize', async (e: any) => {
             e.preventDefault();
-            // TODO hide if is settings
-            // mainWindow?.hide();
+            if (await settings.get('systemTray')) {
+                mainWindow?.hide();
+            }
         });
 
         const menuBuilder = new MenuBuilder(mainWindow);
@@ -155,7 +160,7 @@ const createWindow = async () => {
         appIcon = new Tray(getAssetPath('oblivion.png'));
         const contextMenu = Menu.buildFromTemplate([
             {
-                label: 'Oblivion',
+                label: 'Oblivion Desktop',
                 type: 'normal',
                 click: () => {
                     if (!mainWindow) {
@@ -165,14 +170,15 @@ const createWindow = async () => {
                     }
                 },
             },
-            { label: '', type: 'separator' },
+            // TODO
+            /*{ label: '', type: 'separator' },
             {
                 label: 'حالت پروکسی',
                 submenu: [
                     { label: 'متصل است', type: 'radio' },
                     { label: 'عدم اتصال', type: 'radio' },
                 ],
-            },
+            },*/
             { label: '', type: 'separator' },
             { label: 'خروج', role: 'close' },
         ]);
