@@ -20,8 +20,8 @@ export default function Settings() {
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     const [gool, setGool] = useState<undefined | boolean>();
-    const [ipData, setIpData] = useState<undefined | boolean>();
     const [theme, setTheme] = useState<undefined | string>();
+    const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
 
     // loading settings
@@ -45,11 +45,11 @@ export default function Settings() {
             console.log('🚀 - settings.get - value:', typeof value === 'undefined');
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
         });
-        settings.get('ipData').then((value) => {
-            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
-        });
         settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
+        });
+        settings.get('ipData').then((value) => {
+            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
         });
         settings.get('systemTray').then((value) => {
             setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
@@ -241,21 +241,6 @@ export default function Settings() {
                         </div>
                         <div className='info'>فعالسازی Warp In Warp</div>
                     </div>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            setIpData(!ipData);
-                            settings.set('ipData', !ipData);
-                        }}
-                    >
-                        <label className='key'>بررسی IP</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', ipData ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>نمایش آی‌پی و لوکیشن پس‌از اتصال</div>
-                    </div>
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
@@ -287,6 +272,21 @@ export default function Settings() {
                         <div className='info' id='flexSwitchCheckChecked'>
                             مشخص‌کردن حالت نمایش برنامه
                         </div>
+                    </div>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setIpData(!ipData);
+                            settings.set('ipData', !ipData);
+                        }}
+                    >
+                        <label className='key'>بررسی IP</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', ipData ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>نمایش آی‌پی و لوکیشن پس‌از اتصال</div>
                     </div>
                     <div
                         className='item'
