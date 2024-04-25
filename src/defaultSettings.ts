@@ -7,7 +7,8 @@ export type settingsKeys =
     | 'gool'
     | 'theme'
     | 'systemTray'
-    | 'flag';
+    | 'flag'
+    | 'ipData';
 
 export const defaultSettings = {
     endpoint: 'engage.cloudflareclient.com:2048',
@@ -19,4 +20,5 @@ export const defaultSettings = {
     theme: 'light',
     systemTray: false,
     flag: 'xx',
+    ipData: true,
 };

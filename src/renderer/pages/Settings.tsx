@@ -20,6 +20,7 @@ export default function Settings() {
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     const [gool, setGool] = useState<undefined | boolean>();
+    const [ipData, setIpData] = useState<undefined | boolean>();
     const [theme, setTheme] = useState<undefined | string>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
 
@@ -43,6 +44,9 @@ export default function Settings() {
         settings.get('gool').then((value) => {
             console.log('🚀 - settings.get - value:', typeof value === 'undefined');
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });
+        settings.get('ipData').then((value) => {
+            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
         });
         settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
@@ -236,6 +240,21 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className='info'>فعالسازی Warp In Warp</div>
+                    </div>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setIpData(!ipData);
+                            settings.set('ipData', !ipData);
+                        }}
+                    >
+                        <label className='key'>بررسی IP</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', ipData ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>نمایش آی‌پی و لوکیشن پس‌از اتصال</div>
                     </div>
                 </div>
                 <div className='moreSettings'>
