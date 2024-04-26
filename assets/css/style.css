@@ -29,6 +29,9 @@ body:before {
   direction: ltr;
   text-align: left;
 }
+.dirLeft[dir="rtl"] {
+  direction: rtl;
+}
 .dirRight {
   direction: rtl;
   text-align: right;
@@ -370,6 +373,10 @@ nav i.backBtn:hover {
 }
 .settings .item .key {
     float: right;
+    width: 40%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: 22px;
     font-weight: 300;
     color: #303030;

@@ -18,26 +18,28 @@ export default function RoutingRulesModal({
     if (!isOpen) return null;
     const [routingRulesInput, setRoutingRulesInput] = useState(routingRules);
 
-    const validateRules = (textareaContent:string) => {
+    const validateRules = (textareaContent: string) => {
         if (textareaContent === "") {
             return "";
         }
         const lines = textareaContent.split('\n');
-        const validEntriesSet = new Set(); // Use Set to store unique entries
+        const validEntriesSet = new Set();
         const entryRegex = /^(geoip|regexp|domain|geosite):(.+)$/;
+        const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
+        const ipRangeRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
         for (const line of lines) {
             const trimmedLine = line.trim();
             if (!trimmedLine) {
                 continue;
             }
-            const lineWithoutQuotes = trimmedLine.replace(/"/g, '');
+            const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '');
             const entry = lineWithoutQuotes.endsWith(',') ? lineWithoutQuotes.slice(0, -1) : lineWithoutQuotes;
             const cleanedEntry = entry.replace(/,+$/, '');
             const match = cleanedEntry.match(entryRegex);
-            if (match) {
+            const ipMatch = cleanedEntry.match(ipRegex);
+            const ipRangeMatch = cleanedEntry.match(ipRangeRegex);
+            if (match || ipMatch || ipRangeMatch) {
                 validEntriesSet.add(cleanedEntry);
-            } else {
-                return false;
             }
         }
         const validEntries = Array.from(validEntriesSet);
@@ -49,6 +51,10 @@ export default function RoutingRulesModal({
         if ( checkRules || checkRules === "") {
             setRoutingRules(checkRules);
             settings.set('routingRules', checkRules);
+        }
+        else {
+            setRoutingRules("");
+            settings.set('routingRules', "");
         }
         onClose();
     };

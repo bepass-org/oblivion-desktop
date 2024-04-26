@@ -9,6 +9,7 @@ import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
+import { toPersianNumber } from '../lib/toPersianNumber';
 
 export default function Settings() {
     const [endpoint, setEndpoint] = useState();
@@ -60,6 +61,14 @@ export default function Settings() {
             setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
         });
     }, []);
+
+    const countRoutingRules = (value:any) => {
+        if (value === "") {
+            return 'غیرفعال';
+        }
+        const lines = value.split('\n');
+        return lines?.length > 0 ? toPersianNumber(lines.length)+' قانون' : 'غیرفعال';
+    };
 
     if (
         typeof psiphon === 'undefined' ||
@@ -119,7 +128,7 @@ export default function Settings() {
                     routingRules,
                     setRoutingRules,
                 }}
-                title='مسیریابی'
+                title='قوانین مسیریابی'
                 isOpen={showRoutingRulesModal}
                 onClose={() => {
                     setShowRoutingRulesModal(false);
@@ -259,11 +268,11 @@ export default function Settings() {
                             setShowRoutingRulesModal(true);
                         }}
                     >
-                        <label className='key'>مسیریابی</label>
+                        <label className='key'>لیست سیاه</label>
                         <div className='value'>
-                            <span className='dirLeft'>{routingRules !== '' ? 'فعال' : 'غیرفعال'}</span>
+                            <span className='dirLeft' dir="rtl">{countRoutingRules(routingRules)}</span>
                         </div>
-                        <div className='info'>قوانین مسیریابی برای ترافیک مستقیم</div>
+                        <div className='info'>جلوگیری از عبور ترافیک از وارپ</div>
                     </div>
                 </div>
                 <div className='moreSettings'>
