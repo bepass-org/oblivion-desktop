@@ -7,10 +7,10 @@
         "type": "git",
         "url": "git+https://github.com/kiomarzsss/oblivion-desktop.git"
     },
-    "license": "MIT",
+    "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
-        "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
+        "build": "ts-node script/dlWp.ts && concurrently \"npm run build:main\" \"npm run build:renderer\"",
         "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
         "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
@@ -172,7 +172,7 @@
             "dist",
             "node_modules",
             "package.json",
-            "assets/"
+            "assets/bin"
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {

@@ -22,11 +22,12 @@ ipcMain.on('wp-start', async (event, arg) => {
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
     let binPath = '';
     if (platform === 'win32') {
-        binPath = path.join('assets', 'warp-plus.exe');
+        binPath = path.join('assets', 'bin', 'warp-plus.exe');
     } else {
-        binPath = path.join('assets', 'warp-plus');
+        binPath = path.join('assets', 'bin', 'warp-plus');
     }
     // TODO read flags from settings
+    console.log('🚀 - ipcMain.on - binPath:', binPath);
     wp = spawn(binPath);
 
     // TODO better approach
