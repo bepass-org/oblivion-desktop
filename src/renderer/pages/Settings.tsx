@@ -189,6 +189,7 @@ export default function Settings() {
                                 <option value='BG'>Bulgaria</option>
                                 <option value='BR'>Brazil</option>
                                 <option value='CA'>Canada</option>
+                                <option value='HR'>Croatia</option>
                                 <option value='CH'>Switzerland</option>
                                 <option value='CZ'>Czech Republic</option>
                                 <option value='DE'>Germany</option>
@@ -207,6 +208,7 @@ export default function Settings() {
                                 <option value='NL'>Netherlands</option>
                                 <option value='NO'>Norway</option>
                                 <option value='PL'>Poland</option>
+                                <option value='PT'>Portugal</option>
                                 <option value='RO'>Romania</option>
                                 <option value='RS'>Serbia</option>
                                 <option value='SE'>Sweden</option>
