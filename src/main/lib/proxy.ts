@@ -16,7 +16,7 @@ export const disableProxy = () => {
     if (platform === 'win32') {
         windowsProxySettings(['ProxyEnable', '-value', '0']);
     } else {
-        console.log('not supported yet');
+        console.log('changing proxy is not supported on your platform yet');
     }
 };
 
@@ -29,6 +29,6 @@ export const enableProxy = () => {
         ]);
         windowsProxySettings(['ProxyEnable', '-value', '1']);
     } else {
-        console.log('not supported yet');
+        console.log('changing proxy is not supported on your platform yet');
     }
 };

@@ -28,5 +28,6 @@ npm-debug.log.*
 *.sass.d.ts
 *.scss.d.ts
 
-bin
 log.txt
+warp-plus.zip
+assets/bin

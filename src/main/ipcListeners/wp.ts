@@ -2,7 +2,8 @@
 
 import { ipcMain } from 'electron';
 import treeKill from 'tree-kill';
-import { appendToLogFile, readLogFile, writeToLogFile } from '../lib/log';
+import path from 'path';
+import { appendToLogFile, writeToLogFile } from '../lib/log';
 import { doesFileExist } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 
@@ -19,11 +20,14 @@ ipcMain.on('wp-start', async (event, arg) => {
     disableProxy();
 
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
+    let binPath = '';
     if (platform === 'win32') {
-        wp = spawn('bin\\warp-plus.exe', ['--scan', '--gool']);
+        binPath = path.join('assets', 'warp-plus.exe');
     } else {
-        wp = spawn('./bin/warp-plus', ['--scan', '--gool']);
+        binPath = path.join('assets', 'warp-plus');
     }
+    // TODO read flags from settings
+    wp = spawn(binPath);
 
     // TODO better approach
     const successMessage = 'level=INFO msg="serving proxy" address=127.0.0.1:8086';

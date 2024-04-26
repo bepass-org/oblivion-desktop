@@ -16,7 +16,6 @@ export default function LicenseModal({
     license: any;
     setLicense: any;
 }) {
-
     if (!isOpen) return null;
     const [licenseInput, setLicenseInput] = useState(license);
 

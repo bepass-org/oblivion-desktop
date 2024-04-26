@@ -34,7 +34,7 @@ async function downloadFile(uri: string, destPath: string) {
 
 // download, unzip and move(rename)
 const dlUnzipMove = async (url: string) => {
-    const binPath = './bin';
+    const binPath = './assets/bin';
 
     const isBinDirExist = await doesDirectoryExist(binPath);
     if (!isBinDirExist) {
@@ -42,13 +42,10 @@ const dlUnzipMove = async (url: string) => {
             if (err) {
                 console.error(`Error creating directory ${binPath}:`, err);
             }
-            //  else {
-            //     console.log(`Created directory ${binPath}`);
-            // }
         });
     }
 
-    const zipFilePath = './bin/warp-plus.zip';
+    const zipFilePath = './warp-plus.zip';
 
     const isZipFileExist = await doesFileExist(zipFilePath);
 
@@ -59,9 +56,7 @@ const dlUnzipMove = async (url: string) => {
     }
 
     decompress(zipFilePath, './bin')
-        .then((files) => {
-            // console.log(files);
-            // console.log('➡️ Extracted zip file.');
+        .then(() => {
             console.log('✅ warp-plus binary is ready to use.');
         })
         .catch((error) => {

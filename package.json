@@ -1,7 +1,7 @@
 {
     "name": "oblivion-desktop",
     "description": "unofficial desktop version of oblivion",
-    "version": "0.1.0",
+    "version": "0.2.1",
     "homepage": "https://github.com/kiomarzsss/oblivion-desktop#readme",
     "repository": {
         "type": "git",
@@ -27,7 +27,8 @@
         "test": "jest",
         "format": "prettier --write . --config .prettierrc --ignore-path .prettierignore --cache",
         "format:check": "prettier . --check --cache --config .prettierrc --ignore-path .prettierignore",
-        "tsc": "tsc --noEmit --incremental"
+        "tsc": "tsc --noEmit --incremental",
+        "changeVersion": "ts-node ./script/changeVersion"
     },
     "browserslist": [],
     "prettier": {
@@ -163,14 +164,15 @@
         "webpack-merge": "^5.9.0"
     },
     "build": {
-        "productName": "ElectronReact",
-        "appId": "org.erb.ElectronReact",
+        "productName": "oblivion-desktop",
+        "appId": "org.desktop.oblivion",
         "asar": true,
         "asarUnpack": "**\\*.{node,dll}",
         "files": [
             "dist",
             "node_modules",
-            "package.json"
+            "package.json",
+            "assets/"
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {

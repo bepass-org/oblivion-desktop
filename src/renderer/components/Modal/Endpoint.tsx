@@ -17,7 +17,6 @@ export default function EndpointModal({
     endpoint: any;
     setEndpoint: any;
 }) {
-
     if (!isOpen) return null;
     const [endpointInput, setEndpointInput] = useState(endpoint);
 

@@ -18,12 +18,11 @@ export default function PortModal({
     port: any;
     setPort: any;
 }) {
-
     if (!isOpen) return <></>;
     const [portInput, setPortInput] = useState(port);
 
     const onSaveModal = () => {
-        setPort( Number(portInput) < 1 || portInput === "" ? defValue : portInput );
+        setPort(Number(portInput) < 1 || portInput === '' ? defValue : portInput);
         settings.set('port', portInput);
         onClose();
     };

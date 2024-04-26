@@ -34,6 +34,8 @@ module.exports = {
         'object-shorthand': 'off',
         'import/no-cycle': 'off',
         'promise/catch-or-return': 'off',
+        'import/order': 'warn',
+        'spaced-comment': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,

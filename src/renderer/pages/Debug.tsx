@@ -1,33 +1,38 @@
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
-import { ipcRenderer, } from '../lib/utils';
-import toast, { Toaster } from 'react-hot-toast';
+import { ipcRenderer } from '../lib/utils';
 
 export default function Debug() {
     const [log, setLog] = useState('');
 
-    ipcRenderer.on('log', (data) => {
-        console.count('mmd_log');
-        console.log('🚀 - ipcRenderer.on - data:', data);
-        setLog(String(data));
-    });
-
+    // asking for log every 1sec
     useEffect(() => {
         ipcRenderer.sendMessage('log');
+        const intervalId = setInterval(() => {
+            ipcRenderer.sendMessage('log');
+        }, 1000);
+
+        // Cleanup function to clear the interval
+        return () => clearInterval(intervalId);
     }, []);
+
+    ipcRenderer.on('log', (data) => {
+        setLog(String(data));
+    });
 
     const handleCopy = (e: { preventDefault: () => void }, value: any) => {
         e.preventDefault();
         navigator.clipboard.writeText(value);
-        toast("کپی شد!", {
+        toast('کپی شد!', {
             style: {
                 fontSize: '13px',
                 borderRadius: '10px',
                 background: '#333',
                 color: '#fff',
             },
-            duration: 2000
+            duration: 2000,
         });
     };
 
@@ -52,12 +57,11 @@ export default function Debug() {
                         <i
                             className='material-icons'
                             onClick={(e: any) => {
-                                handleCopy(
-                                    e,
-                                    log
-                                );
+                                handleCopy(e, log);
                             }}
-                        >&#xe14d;</i>
+                        >
+                            &#xe14d;
+                        </i>
                     </div>
                     <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
                         {log === ''
@@ -66,10 +70,7 @@ export default function Debug() {
                     </p>
                 </div>
             </div>
-            <Toaster
-                position='bottom-center'
-                reverseOrder={false}
-            />
+            <Toaster position='bottom-center' reverseOrder={false} />
         </>
     );
 }

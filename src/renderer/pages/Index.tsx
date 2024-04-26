@@ -56,11 +56,13 @@ export default function Index() {
                     <>
                         <div className='customToast'>
                             <p>
-                                کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
-                                باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
-                                تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
+                                کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده،
+                                که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش!
+                                در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
                             </p>
-                            <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
+                            <button onClick={() => toast.dismiss(currentToast?.id)}>
+                                متوجه شدم
+                            </button>
                         </div>
                     </>
                 ),
@@ -120,10 +122,9 @@ export default function Index() {
 
     useEffect(() => {
         settings.get('ipData').then((value) => {
-            if ( typeof value === "undefined" || value ) {
+            if (typeof value === 'undefined' || value) {
                 getIpLocation();
-            }
-            else {
+            } else {
                 setShownIpData(false);
             }
         });
@@ -132,8 +133,7 @@ export default function Index() {
         }
         if (online) {
             toast.dismiss('onlineStatus');
-        }
-        else {
+        } else {
             checkInternet();
         }
     }, [isLoading, isConnected, online]);
@@ -157,20 +157,15 @@ export default function Index() {
     let status = 'متصل نیستید';
     if (isConnected && isLoading) {
         status = 'قطع ارتباط ...';
-    }
-    else if (!isConnected && isLoading) {
+    } else if (!isConnected && isLoading) {
         status = 'درحال اتصال ...';
-    }
-    else if (isConnected && ipInfo?.countryCode) {
+    } else if (isConnected && ipInfo?.countryCode) {
         status = 'اتصال برقرار شد';
-    }
-    else if (isConnected && !ipInfo?.countryCode && shownIpData) {
+    } else if (isConnected && !ipInfo?.countryCode && shownIpData) {
         status = 'دریافت اطلاعات ...';
-    }
-    else if (isConnected && !shownIpData) {
+    } else if (isConnected && !shownIpData) {
         status = 'اتصال برقرار شد';
-    }
-    else {
+    } else {
         status = 'متصل نیستید';
     }
 

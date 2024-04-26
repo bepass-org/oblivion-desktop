@@ -117,10 +117,9 @@ const createWindow = async () => {
                 throw new Error('"mainWindow" is not defined');
             }
             // await settings.get('systemTray')
-            if ( process.env.START_MINIMIZED ) {
+            if (process.env.START_MINIMIZED) {
                 mainWindow.minimize();
-            }
-            else {
+            } else {
                 mainWindow.show();
             }
         });

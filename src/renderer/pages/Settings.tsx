@@ -6,11 +6,10 @@ import PortModal from '../components/Modal/Port';
 import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
-import Lottie from "lottie-react";
-import LottieFile from "../../../assets/json/1713988096625.json";
+import Lottie from 'lottie-react';
+import LottieFile from '../../../assets/json/1713988096625.json';
 
 export default function Settings() {
-
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     const [port, setPort] = useState();
@@ -63,13 +62,15 @@ export default function Settings() {
         typeof theme === 'undefined' ||
         typeof systemTray === 'undefined'
     )
-        return <>
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop={true} />
+        return (
+            <>
+                <div className='settings'>
+                    <div className='lottie'>
+                        <Lottie animationData={LottieFile} loop={true} />
+                    </div>
                 </div>
-            </div>
-        </>;
+            </>
+        );
 
     return (
         <>
@@ -136,12 +137,9 @@ export default function Settings() {
                         <div className='info'>تعیین پورت تانل برنامه</div>
                     </div>
                     <div
-                        className={classNames(
-                            'item',
-                            gool ? 'disabled' : ''
-                        )}
+                        className={classNames('item', gool ? 'disabled' : '')}
                         onClick={() => {
-                            if ( !gool ) {
+                            if (!gool) {
                                 setPsiphon(!psiphon);
                                 settings.set('psiphon', !psiphon);
                             }
@@ -218,12 +216,9 @@ export default function Settings() {
                         <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
                     </div>
                     <div
-                        className={classNames(
-                            'item',
-                            psiphon ? 'disabled' : ''
-                        )}
+                        className={classNames('item', psiphon ? 'disabled' : '')}
                         onClick={() => {
-                            if ( !psiphon ) {
+                            if (!psiphon) {
                                 setGool(!gool);
                                 settings.set('gool', !gool);
                             }
