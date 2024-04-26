@@ -1,31 +1,33 @@
 import classNames from 'classnames';
-import { settings } from '../../lib/settings';
 import { useState } from 'react';
+import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 
 export default function PortModal({
     title,
     isOpen,
     onClose,
-    defValue,
+    defValue = defaultSettings.port,
     port,
     setPort,
 }: {
     title: string;
     isOpen: boolean;
     onClose: any;
-    defValue: number;
+    defValue?: number;
     port: any;
     setPort: any;
 }) {
-    if (!isOpen) return <></>;
     const [portInput, setPortInput] = useState(port);
 
-    const onSaveModal = () => {
-        setPort(Number(portInput) < 1 || portInput === '' ? defValue : portInput);
-        settings.set('port', portInput);
+    const onSaveModal = async () => {
+        const tmp = portInput === '' ? defValue : portInput;
+        setPort(tmp);
+        await settings.set('port', tmp);
         onClose();
     };
+
+    if (!isOpen) return <></>;
 
     return (
         <>

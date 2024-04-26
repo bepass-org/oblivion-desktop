@@ -36,6 +36,8 @@ module.exports = {
         'promise/catch-or-return': 'off',
         'import/order': 'warn',
         'spaced-comment': 'off',
+        'react/jsx-boolean-value': 'off',
+        'react/require-default-props': 'off',
     },
     parserOptions: {
         ecmaVersion: 2022,

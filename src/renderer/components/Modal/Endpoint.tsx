@@ -1,23 +1,23 @@
 import classNames from 'classnames';
-import { settings } from '../../lib/settings';
 import { useState } from 'react';
+import { settings } from '../../lib/settings';
+import { defaultSettings } from '../../../defaultSettings';
 
 export default function EndpointModal({
     title,
     isOpen,
     onClose,
-    defValue,
+    defValue = defaultSettings.endpoint,
     endpoint,
     setEndpoint,
 }: {
     title: string;
     isOpen: boolean;
     onClose: any;
-    defValue: string;
+    defValue?: string;
     endpoint: any;
     setEndpoint: any;
 }) {
-    if (!isOpen) return null;
     const [endpointInput, setEndpointInput] = useState(endpoint);
 
     const onSaveModal = () => {
@@ -28,6 +28,8 @@ export default function EndpointModal({
         settings.set('endpoint', endpointInput);
         onClose();
     };
+
+    if (!isOpen) return <></>;
 
     return (
         <>

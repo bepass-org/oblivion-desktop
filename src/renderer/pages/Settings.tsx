@@ -85,7 +85,6 @@ export default function Settings() {
                 onClose={() => {
                     setShowEndpointModal(false);
                 }}
-                defValue={defaultSettings.endpoint}
             />
             <PortModal
                 {...{
@@ -97,7 +96,6 @@ export default function Settings() {
                 onClose={() => {
                     setShowPortModal(false);
                 }}
-                defValue={defaultSettings.port}
             />
             <LicenseModal
                 {...{

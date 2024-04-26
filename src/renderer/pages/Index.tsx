@@ -143,6 +143,7 @@ export default function Index() {
             checkInternet();
         } else {
             if (isLoading) {
+                console.log('🚀 - onChange - isLoading:', isLoading);
                 ipcRenderer.sendMessage('wp-end');
             } else if (isConnected) {
                 ipcRenderer.sendMessage('wp-end');
