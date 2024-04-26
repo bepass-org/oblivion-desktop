@@ -25,4 +25,4 @@ We're a community-driven project, aiming to make the internet accessible for all
 
 ## Restrictive License
 
-[License.md](LICENSE.md)
+[License.md](https://github.com/ircfofficial/oblivion-desktop?tab=License-1-ov-file)
