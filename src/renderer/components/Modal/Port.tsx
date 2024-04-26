@@ -41,6 +41,7 @@ export default function PortModal({
                         <h3>{title}</h3>
                         <input
                             type='text'
+                            spellCheck={false}
                             value={portInput}
                             className='form-control'
                             onChange={(e) => {

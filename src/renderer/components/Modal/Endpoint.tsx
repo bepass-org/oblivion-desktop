@@ -43,6 +43,7 @@ export default function EndpointModal({
                         <h3>{title}</h3>
                         <input
                             value={endpointInput}
+                            spellCheck={false}
                             className='form-control'
                             onChange={(e) => {
                                 setEndpointInput(e.target.value);

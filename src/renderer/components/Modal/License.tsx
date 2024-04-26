@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { defaultSettings } from '../../../defaultSettings';
 import { settings } from '../../lib/settings';
 import { useState } from 'react';
 
@@ -37,6 +36,7 @@ export default function LicenseModal({
                         <h3>{title}</h3>
                         <input
                             value={licenseInput}
+                            spellCheck={false}
                             className='form-control'
                             onChange={(e) => {
                                 setLicenseInput(e.target.value);
