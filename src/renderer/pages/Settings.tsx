@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import EndpointModal from '../components/Modal/Endpoint';
 import PortModal from '../components/Modal/Port';
 import LicenseModal from '../components/Modal/License';
+import RoutingRulesModal from '../components/Modal/RoutingRules';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 import Lottie from 'lottie-react';
@@ -19,6 +20,8 @@ export default function Settings() {
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     const [gool, setGool] = useState<undefined | boolean>();
+    const [routingRules, setRoutingRules] = useState();
+    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
     const [theme, setTheme] = useState<undefined | string>();
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
@@ -43,6 +46,9 @@ export default function Settings() {
         settings.get('gool').then((value) => {
             console.log('🚀 - settings.get - value:', typeof value === 'undefined');
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });
+        settings.get('routingRules').then((value) => {
+            setRoutingRules(typeof value === 'undefined' ? "" : value);
         });
         settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
@@ -106,6 +112,17 @@ export default function Settings() {
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);
+                }}
+            />
+            <RoutingRulesModal
+                {...{
+                    routingRules,
+                    setRoutingRules,
+                }}
+                title='مسیریابی'
+                isOpen={showRoutingRulesModal}
+                onClose={() => {
+                    setShowRoutingRulesModal(false);
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -233,6 +250,18 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className='info'>فعالسازی Warp In Warp</div>
+                    </div>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setShowRoutingRulesModal(true);
+                        }}
+                    >
+                        <label className='key'>مسیریابی</label>
+                        <div className='value'>
+                            <span className='dirLeft'>{routingRules !== '' ? 'فعال' : 'غیرفعال'}</span>
+                        </div>
+                        <div className='info'>قوانین مسیریابی برای ترافیک مستقیم</div>
                     </div>
                 </div>
                 <div className='moreSettings'>

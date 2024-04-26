@@ -690,7 +690,8 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .dialog .dialogBox h3 {
     color: #DCDCDC;
 }
-.dialog .dialogBox input {
+.dialog .dialogBox input,
+.dialog .dialogBox textarea {
     float: right;
     width: 100%;
     padding: 15px;
@@ -698,6 +699,12 @@ nav i.backBtn:hover {
     direction: ltr;
     font-weight: 400;
     border-width: 2px;
+}
+.dialog .dialogBox textarea {
+    min-height: 100px;
+    height: 150px;
+    max-height: 200px;
+    resize: vertical;
 }
 .dialog .dialogBox input[type=number] {
     -moz-appearance: textfield;
@@ -707,12 +714,14 @@ nav i.backBtn:hover {
     -webkit-appearance: none;
     margin: 0;
 }
-[data-bs-theme="dark"] .dialog .dialogBox input {
+[data-bs-theme="dark"] .dialog .dialogBox input,
+[data-bs-theme="dark"] .dialog .dialogBox textarea {
     background: #0A0E24;
     border-color: #486097;
     color: #FFFFFF;
 }
-[data-bs-theme="dark"] .dialog .dialogBox input:focus {
+[data-bs-theme="dark"] .dialog .dialogBox input:focus,
+[data-bs-theme="dark"] .dialog .dialogBox textarea:focus {
     border-color: #5a78bc;
 }
 .dialog .dialogBox .btn {

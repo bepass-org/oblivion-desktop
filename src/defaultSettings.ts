@@ -8,7 +8,8 @@ export type settingsKeys =
     | 'theme'
     | 'systemTray'
     | 'flag'
-    | 'ipData';
+    | 'ipData'
+    | 'routingRules';
 
 export const defaultSettings = {
     endpoint: 'engage.cloudflareclient.com:2048',
@@ -21,4 +22,5 @@ export const defaultSettings = {
     systemTray: false,
     flag: 'xx',
     ipData: true,
+    routingRules: '',
 };
