@@ -40,3 +40,4 @@ npm-debug.log.*
 !.erb
 
 bin
+README.md
