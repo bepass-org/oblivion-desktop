@@ -23,10 +23,10 @@ export default function Index() {
     const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
 
-    const [drawerIsOpen, setDrawerIsOpen] = useState(false)
+    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
-        setDrawerIsOpen((prevState) => !prevState)
-    }
+        setDrawerIsOpen((prevState) => !prevState);
+    };
 
     useEffect(() => {
         ipcRenderer.on('wp-start', (ok) => {
@@ -191,23 +191,21 @@ export default function Index() {
             >
                 <div className='list'>
                     <div className='appName'>
-                        <img src={appIco} alt="icon" />
-                        <h3>Oblivion <small>Desktop</small></h3>
+                        <img src={appIco} alt='icon' />
+                        <h3>
+                            Oblivion <small>Desktop</small>
+                        </h3>
                     </div>
                     <ul>
                         <li>
                             <Link to={'/settings'}>
-                                <i className={'material-icons'}>
-                                    &#xe429;
-                                </i>
+                                <i className={'material-icons'}>&#xe429;</i>
                                 <span>تنظیمات پروکسی</span>
                             </Link>
                         </li>
                         <li>
                             <Link to={'/routing'}>
-                                <i className={'material-icons'}>
-                                    &#xe90e;
-                                </i>
+                                <i className={'material-icons'}>&#xe90e;</i>
                                 <span>قوانین مسیریابی</span>
                             </Link>
                         </li>
@@ -220,9 +218,7 @@ export default function Index() {
                         </li>
                         <li>
                             <Link to={'/debug'}>
-                                <i className={'material-icons'}>
-                                    &#xe868;
-                                </i>
+                                <i className={'material-icons'}>&#xe868;</i>
                                 <span>لاگ برنامه</span>
                             </Link>
                         </li>

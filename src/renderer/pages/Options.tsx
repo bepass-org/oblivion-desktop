@@ -23,10 +23,7 @@ export default function Options() {
         });
     }, []);
 
-    if (
-        typeof theme === 'undefined' ||
-        typeof systemTray === 'undefined'
-    )
+    if (typeof theme === 'undefined' || typeof systemTray === 'undefined')
         return (
             <>
                 <div className='settings'>

@@ -19,7 +19,7 @@ export default function RoutingRulesModal({
     const [routingRulesInput, setRoutingRulesInput] = useState(routingRules);
 
     const validateRules = (textareaContent: string) => {
-        if (textareaContent === "") {
+        if (textareaContent === '') {
             return false;
         }
         const lines = textareaContent.split('\n');
@@ -33,7 +33,9 @@ export default function RoutingRulesModal({
                 continue;
             }
             const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '');
-            const entry = lineWithoutQuotes.endsWith(',') ? lineWithoutQuotes.slice(0, -1) : lineWithoutQuotes;
+            const entry = lineWithoutQuotes.endsWith(',')
+                ? lineWithoutQuotes.slice(0, -1)
+                : lineWithoutQuotes;
             const cleanedEntry = entry.replace(/,+$/, '');
             const match = cleanedEntry.match(entryRegex);
             const ipMatch = cleanedEntry.match(ipRegex);
@@ -44,17 +46,16 @@ export default function RoutingRulesModal({
         }
         const validEntries = Array.from(validEntriesSet);
         return validEntries.length > 0 ? validEntries.join(',\n') : validEntries;
-    }
+    };
 
     const onSaveModal = () => {
         const checkRules = validateRules(routingRulesInput);
-        if ( checkRules ) {
+        if (checkRules) {
             setRoutingRules(checkRules);
             settings.set('routingRules', checkRules);
-        }
-        else {
-            setRoutingRules("");
-            settings.set('routingRules', "");
+        } else {
+            setRoutingRules('');
+            settings.set('routingRules', '');
         }
         onClose();
     };
@@ -73,13 +74,15 @@ export default function RoutingRulesModal({
                             <div className='labels'>
                                 <div
                                     className={classNames(
-                                        "label",
-                                        "label-warning",
-                                        "pull-right",
-                                        (routingRulesInput === "" ? "" : "hidden"),
+                                        'label',
+                                        'label-warning',
+                                        'pull-right',
+                                        routingRulesInput === '' ? '' : 'hidden',
                                     )}
                                     onClick={(e) => {
-                                        setRoutingRulesInput(`regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`);
+                                        setRoutingRulesInput(
+                                            `regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`,
+                                        );
                                     }}
                                 >
                                     <i className='material-icons'>&#xe145;</i>
