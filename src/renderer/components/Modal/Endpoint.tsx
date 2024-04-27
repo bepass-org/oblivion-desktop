@@ -21,11 +21,11 @@ export default function EndpointModal({
     const [endpointInput, setEndpointInput] = useState(endpoint);
 
     const onSaveModal = () => {
-        if (endpointInput.trim() === '') {
-            setEndpointInput(defValue);
-        }
-        setEndpoint(endpointInput);
-        settings.set('endpoint', endpointInput);
+        const regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
+        const tmp = regex.test(endpointInput) ? endpointInput : defValue;
+        setEndpointInput(tmp);
+        setEndpoint(tmp);
+        settings.set('endpoint', tmp);
         onClose();
     };
 
