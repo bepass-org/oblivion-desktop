@@ -86,10 +86,10 @@ nav i.log:hover {
     color: #ed6a6a;
 }
 nav h3 {
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 200;
     color: #303030;
-    margin: 2px 5px 0 0;
+    margin: 4px 5px 0 0;
     float: right;
 }
 [data-bs-theme="dark"] nav h3 {
@@ -732,6 +732,23 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .dialog .dialogBox input:focus,
 [data-bs-theme="dark"] .dialog .dialogBox textarea:focus {
     border-color: #5a78bc;
+}
+.dialog .dialogBox .labels {
+    float: left;
+    margin: 0;
+}
+.dialog .dialogBox .labels .label {
+    float: right;
+    border-radius: 25px;
+    font-weight: 200;
+    padding: 3px 7px;
+    margin: 0;
+    cursor: pointer;
+}
+.dialog .dialogBox .labels .label i {
+    float: right;
+    font-size: 14px;
+    margin: -1px -2px 0 3px;
 }
 .dialog .dialogBox .btn {
     float: left;

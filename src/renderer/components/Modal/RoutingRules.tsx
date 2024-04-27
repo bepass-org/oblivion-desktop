@@ -20,7 +20,7 @@ export default function RoutingRulesModal({
 
     const validateRules = (textareaContent: string) => {
         if (textareaContent === "") {
-            return "";
+            return false;
         }
         const lines = textareaContent.split('\n');
         const validEntriesSet = new Set();
@@ -48,7 +48,7 @@ export default function RoutingRulesModal({
 
     const onSaveModal = () => {
         const checkRules = validateRules(routingRulesInput);
-        if ( checkRules || checkRules === "") {
+        if ( checkRules ) {
             setRoutingRules(checkRules);
             settings.set('routingRules', checkRules);
         }
@@ -68,7 +68,25 @@ export default function RoutingRulesModal({
                         <div className='line'>
                             <div className='miniLine' />
                         </div>
-                        <h3>{title}</h3>
+                        <h3>
+                            {title}
+                            <div className='labels'>
+                                <div
+                                    className={classNames(
+                                        "label",
+                                        "label-warning",
+                                        "pull-right",
+                                        (routingRulesInput === "" ? "" : "hidden"),
+                                    )}
+                                    onClick={(e) => {
+                                        setRoutingRulesInput(`regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`);
+                                    }}
+                                >
+                                    <i className='material-icons'>&#xe145;</i>
+                                    نمونه
+                                </div>
+                            </div>
+                        </h3>
                         <textarea
                             value={routingRulesInput}
                             spellCheck={false}
@@ -76,7 +94,6 @@ export default function RoutingRulesModal({
                             onChange={(e) => {
                                 setRoutingRulesInput(e.target.value);
                             }}
-                            placeholder={`regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`}
                         />
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
