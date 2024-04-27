@@ -4,12 +4,10 @@ import Nav from '../components/Nav';
 import EndpointModal from '../components/Modal/Endpoint';
 import PortModal from '../components/Modal/Port';
 import LicenseModal from '../components/Modal/License';
-import RoutingRulesModal from '../components/Modal/RoutingRules';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
-import { toPersianNumber } from '../lib/toPersianNumber';
 
 export default function Settings() {
     const [endpoint, setEndpoint] = useState();
@@ -21,11 +19,6 @@ export default function Settings() {
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     const [gool, setGool] = useState<undefined | boolean>();
-    const [routingRules, setRoutingRules] = useState();
-    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
-    const [theme, setTheme] = useState<undefined | string>();
-    const [ipData, setIpData] = useState<undefined | boolean>();
-    const [systemTray, setSystemTray] = useState<undefined | boolean>();
 
     // loading settings
     useEffect(() => {
@@ -48,34 +41,12 @@ export default function Settings() {
             console.log('🚀 - settings.get - value:', typeof value === 'undefined');
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
         });
-        settings.get('routingRules').then((value) => {
-            setRoutingRules(typeof value === 'undefined' ? "" : value);
-        });
-        settings.get('theme').then((value) => {
-            setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
-        });
-        settings.get('ipData').then((value) => {
-            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
-        });
-        settings.get('systemTray').then((value) => {
-            setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
-        });
     }, []);
-
-    const countRoutingRules = (value:any) => {
-        if (value === "") {
-            return 'غیرفعال';
-        }
-        const lines = value.split('\n');
-        return lines?.length > 0 ? toPersianNumber(lines.length)+' قانون' : 'غیرفعال';
-    };
 
     if (
         typeof psiphon === 'undefined' ||
         typeof location === 'undefined' ||
-        typeof gool === 'undefined' ||
-        typeof theme === 'undefined' ||
-        typeof systemTray === 'undefined'
+        typeof gool === 'undefined'
     )
         return (
             <>
@@ -89,7 +60,7 @@ export default function Settings() {
 
     return (
         <>
-            <Nav title='تنظیمات' />
+            <Nav title='تنظیمات پروکسی' />
             <EndpointModal
                 {...{
                     endpoint,
@@ -121,17 +92,6 @@ export default function Settings() {
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);
-                }}
-            />
-            <RoutingRulesModal
-                {...{
-                    routingRules,
-                    setRoutingRules,
-                }}
-                title='قوانین مسیریابی'
-                isOpen={showRoutingRulesModal}
-                onClose={() => {
-                    setShowRoutingRulesModal(false);
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -261,80 +221,6 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className='info'>فعالسازی Warp In Warp</div>
-                    </div>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            setShowRoutingRulesModal(true);
-                        }}
-                    >
-                        <label className='key'>لیست سیاه</label>
-                        <div className='value'>
-                            <span className='dirLeft' dir="rtl">{countRoutingRules(routingRules)}</span>
-                        </div>
-                        <div className='info'>جلوگیری از عبور ترافیک از وارپ</div>
-                    </div>
-                </div>
-                <div className='moreSettings'>
-                    <i className='material-icons'>&#xe313;</i>
-                    سایر تنظیمات
-                </div>
-                <div className='settings'>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            const tmp = theme === 'light' ? 'dark' : 'light';
-                            setTheme(tmp);
-                            settings.set('theme', tmp);
-                            document.documentElement.setAttribute('data-bs-theme', tmp);
-                        }}
-                    >
-                        <label className='key' htmlFor='flexSwitchCheckChecked'>
-                            حالت تیره
-                        </label>
-                        <div className='value'>
-                            <div
-                                className={classNames(
-                                    'checkbox',
-                                    theme === 'dark' ? 'checked' : '',
-                                )}
-                            >
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info' id='flexSwitchCheckChecked'>
-                            مشخص‌کردن حالت نمایش برنامه
-                        </div>
-                    </div>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            setIpData(!ipData);
-                            settings.set('ipData', !ipData);
-                        }}
-                    >
-                        <label className='key'>بررسی IP</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', ipData ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>نمایش آی‌پی و لوکیشن پس‌از اتصال</div>
-                    </div>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            setSystemTray(!systemTray);
-                            settings.set('systemTray', !systemTray);
-                        }}
-                    >
-                        <label className='key'>مخفی‌سازی</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', systemTray ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>آیکون برنامه در تسک‌بار قرار نگیرد</div>
                     </div>
                 </div>
             </div>

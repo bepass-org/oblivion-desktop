@@ -86,10 +86,10 @@ nav i.log:hover {
     color: #ed6a6a;
 }
 nav h3 {
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 200;
     color: #303030;
-    margin: 1px 0 0 0;
+    margin: 2px 5px 0 0;
     float: right;
 }
 [data-bs-theme="dark"] nav h3 {
@@ -357,7 +357,7 @@ nav i.backBtn:hover {
     width: 100%;
     border-bottom: 1px solid #dcdcdc;
     transition: all 0.2s ease-in-out;
-    padding: 15px 20px 15px 20px;
+    padding: 14px 20px 15px 20px;
 }
 [data-bs-theme="dark"] .settings .item {
     border-color: #2B2E3B;
@@ -381,6 +381,7 @@ nav i.backBtn:hover {
     font-weight: 300;
     color: #303030;
     margin: 5px 0 0 0;
+    padding: 1px 0 0 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -393,6 +394,7 @@ nav i.backBtn:hover {
     float: left;
     margin: 0;
     width: 60%;
+    padding-top: 1px;
 }
 .settings .item .value span {
     float: left;
@@ -445,7 +447,7 @@ nav i.backBtn:hover {
     height: 27px;
     border-radius: 4px;
     padding: 0;
-    margin: 0;
+    margin: 2px 0 -1px 0;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
@@ -796,4 +798,126 @@ nav i.backBtn:hover {
 }
 .customToast button:hover {
     opacity: 1;
+}
+
+.drawer {
+    padding: 15px 0;
+    margin: 0;
+}
+[data-bs-theme="dark"] .drawer {
+    background: #0A0E24!important;
+}
+.drawerOverlay {
+    backdrop-filter: blur(4px);
+    --webkit-backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.25) !important;
+}
+[data-bs-theme="dark"] .drawerOverlay {
+    backdrop-filter: blur(3px);
+    --webkit-backdrop-filter: blur(3px);
+}
+.drawer .list {
+    float: right;
+    width: 100%;
+}
+.drawer .list .appName {
+    float: right;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0 20px 15px 0;
+}
+.drawer .list .appName img {
+    float: right;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin: 0 -5px 8px 0;
+}
+.drawer .list .appName h3 {
+    float: right;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+    font-weight: 400;
+    color: #FFA200;
+}
+.drawer .list .appName h3 small {
+    font-weight: 200;
+    font-size: 80%;
+}
+[data-bs-theme="dark"] .drawer .list .appName h3 small {
+    color: #b0aeae;
+}
+.drawer .list ul {
+    float: right;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.drawer .list ul li {
+    float: right;
+    width: 100%;
+    list-style: none;
+    padding: 10px 20px;
+    transition: all 0.2s ease-in-out;
+}
+.drawer .list ul li:hover {
+    background: #ededed;
+}
+[data-bs-theme="dark"] .drawer .list ul li:hover {
+    background: #161c3e;
+}
+.drawer .list ul li.divider {
+    border-bottom: 1px solid #f3f3f3;
+    padding: 0;
+    margin: 10px 0;
+}
+[data-bs-theme="dark"] .drawer .list ul li.divider {
+    border-color: #2B2E3B;
+}
+.drawer .list ul li.divider:hover {
+    background: transparent;
+}
+.drawer .list ul li a {
+    float: right;
+    width: 100%;
+}
+.drawer .list ul li i {
+    float: right;
+    color: #b0b0b0;
+    font-size: 22px!important;
+    padding-left: 20px;
+}
+.drawer .list ul li:hover i {
+    color: #8d8d8d;
+}
+[data-bs-theme="dark"] .drawer .list ul li:hover i {
+    color: #d0d0d0;
+}
+.drawer .list ul li span {
+    float: right;
+    color: #4d4d4d;
+    padding: 1px 0 0 0;
+    font-weight: 300;
+    font-size: 16px;
+}
+[data-bs-theme="dark"] .drawer .list ul li span {
+    color: #e1e1e1;
+    font-weight: 200;
+}
+.drawer .appVersion {
+    float: right;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #c0c0c0;
+}
+.drawer .appVersion b {
+    font-size: 13px;
 }

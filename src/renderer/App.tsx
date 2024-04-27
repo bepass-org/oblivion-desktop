@@ -10,6 +10,8 @@ import 'assets/css/style.css';
 import Index from './pages/Index';
 import SplashScreen from './pages/SplashScreen';
 import Settings from './pages/Settings';
+import Options from './pages/Options';
+import Routing from './pages/Routing';
 import About from './pages/About';
 import Debug from './pages/Debug';
 import { settings } from './lib/settings';
@@ -52,6 +54,8 @@ export default function App() {
                 <Routes>
                     <Route path='/' element={<Index />} />
                     <Route path='/settings' element={<Settings />} />
+                    <Route path='/options' element={<Options />} />
+                    <Route path='/routing' element={<Routing />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/debug' element={<Debug />} />
                 </Routes>

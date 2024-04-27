@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
 import { ipcRenderer } from '../lib/utils';
 import { useStore } from '../store';
-
+import appIco from '../../../assets/oblivion.png';
 import defFlag from '../../../assets/img/flags/xx.svg';
 import irFlag from '../../../assets/img/flags/ir.svg';
-
 import { settings } from '../lib/settings';
-import { defaultSettings } from '../../defaultSettings';
+import Drawer from 'react-modern-drawer';
+import 'react-modern-drawer/dist/index.css';
+import packageJsonData from '../../../package.json';
 
 export default function Index() {
     const { isConnected, setIsConnected } = useStore();
@@ -21,6 +22,11 @@ export default function Index() {
     });
     const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
+
+    const [drawerIsOpen, setDrawerIsOpen] = useState(false)
+    const toggleDrawer = () => {
+        setDrawerIsOpen((prevState) => !prevState)
+    }
 
     useEffect(() => {
         ipcRenderer.on('wp-start', (ok) => {
@@ -172,19 +178,77 @@ export default function Index() {
 
     return (
         <>
+            <Drawer
+                open={drawerIsOpen}
+                onClose={toggleDrawer}
+                lockBackgroundScroll={false}
+                overlayOpacity={1}
+                duration={250}
+                direction='right'
+                className='drawer'
+                overlayClassName='drawerOverlay'
+                size='80vw'
+            >
+                <div className='list'>
+                    <div className='appName'>
+                        <img src={appIco} alt="icon" />
+                        <h3>Oblivion <small>Desktop</small></h3>
+                    </div>
+                    <ul>
+                        <li>
+                            <Link to={'/settings'}>
+                                <i className={'material-icons'}>
+                                    &#xe429;
+                                </i>
+                                <span>تنظیمات پروکسی</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/routing'}>
+                                <i className={'material-icons'}>
+                                    &#xe90e;
+                                </i>
+                                <span>قوانین مسیریابی</span>
+                            </Link>
+                        </li>
+                        <li className='divider'></li>
+                        <li>
+                            <Link to={'/options'}>
+                                <i className={'material-icons'}>&#xe8b8;</i>
+                                <span>تنظیمات برنامه</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/debug'}>
+                                <i className={'material-icons'}>
+                                    &#xe868;
+                                </i>
+                                <span>لاگ برنامه</span>
+                            </Link>
+                        </li>
+                        <li className='divider'></li>
+                        <li>
+                            <Link to='/about'>
+                                <i className={'material-icons'}>&#xe88e;</i>
+                                <span>درباره برنامه</span>
+                            </Link>
+                        </li>
+                    </ul>
+                    <div className='appVersion'>
+                        App Version: <b>{packageJsonData.version}</b>
+                    </div>
+                </div>
+            </Drawer>
             <nav>
                 <div className='container'>
-                    {/* Settings icon */}
-                    <Link to={'/settings'}>
-                        <i className={classNames('material-icons', 'pull-right')}>&#xe8b8;</i>
-                    </Link>
-                    {/* Debug icon */}
-                    <Link to={'/debug'}>
+                    <a onClick={toggleDrawer}>
+                        <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
+                    </a>
+                    {/*<Link to={'/debug'}>
                         <i className={classNames('material-icons', 'pull-right', 'log')}>
                             &#xe868;
                         </i>
-                    </Link>
-                    {/* about icon */}
+                    </Link>*/}
                     <Link to='/about'>
                         <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
                     </Link>
