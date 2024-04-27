@@ -12,6 +12,7 @@ import LottieFile from '../../../assets/json/1713988096625.json';
 export default function Settings() {
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
+    const [ipType, setIpType] = useState<undefined | string>();
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
     const [psiphon, setPsiphon] = useState<undefined | boolean>();
@@ -24,6 +25,9 @@ export default function Settings() {
     useEffect(() => {
         settings.get('endpoint').then((value) => {
             setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
+        });
+        settings.get('ipType').then((value) => {
+            setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
         });
         settings.get('port').then((value) => {
             setPort(typeof value === 'undefined' ? defaultSettings.port : value);
@@ -110,6 +114,25 @@ export default function Settings() {
                     </div>
                     <div
                         className='item'
+                    >
+                        <label className='key'>نوع IP</label>
+                        <div className='value'>
+                            <select
+                                onChange={(e) => {
+                                    setIpType(e.target.value);
+                                    settings.set('ipType', e.target.value);
+                                }}
+                                value={ipType}
+                            >
+                                <option value=''>Automatic</option>
+                                <option value='-4'>IPv4</option>
+                                <option value='-6'>IPv6</option>
+                            </select>
+                        </div>
+                        <div className='info'>برای اندپوینت تصادفی</div>
+                    </div>
+                    <div
+                        className='item'
                         onClick={() => {
                             setShowPortModal(true);
                         }}
@@ -139,7 +162,7 @@ export default function Settings() {
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>فعالسازی سایفون</div>
+                        <div className='info'>فعالسازی Psiphon</div>
                     </div>
                     <div className={classNames('item', psiphon ? '' : 'disabled')}>
                         <label className='key'>انتخاب کشور</label>

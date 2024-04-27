@@ -1,5 +1,6 @@
 export type settingsKeys =
     | 'endpoint'
+    | 'ipType'
     | 'port'
     | 'psiphon'
     | 'location'
@@ -13,6 +14,7 @@ export type settingsKeys =
 
 export const defaultSettings = {
     endpoint: 'engage.cloudflareclient.com:2048',
+    ipType: '',
     port: 8086,
     psiphon: false,
     location: '',

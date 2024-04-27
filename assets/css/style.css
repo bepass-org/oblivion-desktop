@@ -880,7 +880,6 @@ nav i.backBtn:hover {
     float: right;
     width: 100%;
     list-style: none;
-    padding: 10px 20px;
     transition: all 0.2s ease-in-out;
 }
 .drawer .list ul li:hover {
@@ -903,6 +902,7 @@ nav i.backBtn:hover {
 .drawer .list ul li a {
     float: right;
     width: 100%;
+    padding: 10px 20px;
 }
 .drawer .list ul li i {
     float: right;
