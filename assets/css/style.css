@@ -745,6 +745,9 @@ nav i.backBtn:hover {
     margin: 0;
     cursor: pointer;
 }
+[data-bs-theme="dark"] .dialog .dialogBox .labels .label {
+    background-color: #8b5100;
+}
 .dialog .dialogBox .labels .label i {
     float: right;
     font-size: 14px;
@@ -782,6 +785,7 @@ nav i.backBtn:hover {
 }
 [data-bs-theme="dark"] .dialog .dialogBox .btn.btn-cancel {
     border-color: #303666;
+    font-weight: 200;
 }
 .dialog .dialogBox .btn.btn-cancel:hover {
     border-color: #979797;
