@@ -14,21 +14,19 @@ export default function Routing() {
     // loading settings
     useEffect(() => {
         settings.get('routingRules').then((value) => {
-            setRoutingRules(typeof value === 'undefined' ? "" : value);
+            setRoutingRules(typeof value === 'undefined' ? '' : value);
         });
     }, []);
 
-    const countRoutingRules = (value:any) => {
-        if (value === "") {
+    const countRoutingRules = (value: any) => {
+        if (value === '') {
             return 'غیرفعال';
         }
         const lines = value.split('\n');
-        return lines?.length > 0 ? toPersianNumber(lines.length)+' مورد' : 'غیرفعال';
+        return lines?.length > 0 ? toPersianNumber(lines.length) + ' مورد' : 'غیرفعال';
     };
 
-    if (
-        typeof routingRules === 'undefined'
-    )
+    if (typeof routingRules === 'undefined')
         return (
             <>
                 <div className='settings'>
@@ -63,7 +61,9 @@ export default function Routing() {
                     >
                         <label className='key'>لیست سیاه</label>
                         <div className='value'>
-                            <span className='dirLeft' dir="rtl">{countRoutingRules(routingRules)}</span>
+                            <span className='dirLeft' dir='rtl'>
+                                {countRoutingRules(routingRules)}
+                            </span>
                         </div>
                         <div className='info'>جلوگیری از عبور ترافیک از وارپ</div>
                     </div>
