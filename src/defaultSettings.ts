@@ -21,11 +21,11 @@ export const defaultSettings = {
     psiphon: false,
     location: '',
     license: '',
-    gool: false,
+    gool: true,
     theme: 'light',
     systemTray: false,
     flag: 'xx',
-    ipData: true,
+    ipData: false,
     routingRules: '',
 };
 

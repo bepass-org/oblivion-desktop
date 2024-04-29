@@ -172,6 +172,27 @@ export default function Settings() {
                         <div className='info'>تعیین پورت تانل برنامه</div>
                     </div>
                     <div
+                        className={classNames('item', psiphon ? 'disabled' : '')}
+                        onClick={() => {
+                            if (!psiphon) {
+                                setGool(!gool);
+                                settings.set('gool', !gool);
+                            }
+                            /*if (psiphon && !gool) {
+                                setPsiphon(false);
+                                settings.set('psiphon', false);
+                            }*/
+                        }}
+                    >
+                        <label className='key'>گول</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', gool ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>فعالسازی WarpInWarp</div>
+                    </div>
+                    <div
                         className={classNames('item', gool ? 'disabled' : '')}
                         onClick={() => {
                             if (!gool) {
@@ -224,27 +245,6 @@ export default function Settings() {
                             <span className='dirLeft'>{license || 'Free'}</span>
                         </div>
                         <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
-                    </div>
-                    <div
-                        className={classNames('item', psiphon ? 'disabled' : '')}
-                        onClick={() => {
-                            if (!psiphon) {
-                                setGool(!gool);
-                                settings.set('gool', !gool);
-                            }
-                            /*if (psiphon && !gool) {
-                                setPsiphon(false);
-                                settings.set('psiphon', false);
-                            }*/
-                        }}
-                    >
-                        <label className='key'>گول</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', gool ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>فعالسازی Warp In Warp</div>
                     </div>
                 </div>
             </div>
