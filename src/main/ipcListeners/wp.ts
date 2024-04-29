@@ -5,7 +5,7 @@ import { ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
-import { countries } from '../../defaultSettings';
+import { countries, defaultSettings } from '../../defaultSettings';
 import { appendToLogFile, writeToLogFile } from '../lib/log';
 import { doesFileExist } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
@@ -29,6 +29,7 @@ ipcMain.on('wp-start', async (event, arg) => {
 
     // reading user settings for warp
     const args = [];
+    const scan = await settings.get('scan');
     const endpoint = await settings.get('endpoint');
     const ipType = await settings.get('ipType');
     const port = await settings.get('port');
@@ -65,6 +66,11 @@ ipcMain.on('wp-start', async (event, arg) => {
         }
         else {
             args.push(`${randomCountry()}`);
+        }
+    }
+    if (typeof scan === 'boolean' && scan) {
+        if (typeof endpoint === 'string' && (endpoint === '' || endpoint === defaultSettings.endpoint) ) {
+            args.push(`--scan`);
         }
     }
     console.log('args:', args);

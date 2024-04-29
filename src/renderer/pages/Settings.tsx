@@ -10,6 +10,7 @@ import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
 
 export default function Settings() {
+    const [scan, setScan] = useState(true);
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     const [ipType, setIpType] = useState<undefined | string>();
@@ -23,6 +24,9 @@ export default function Settings() {
 
     // loading settings
     useEffect(() => {
+        settings.get('scan').then((value) => {
+            setScan(typeof value === 'undefined' ? defaultSettings.scan : value);
+        });
         settings.get('endpoint').then((value) => {
             setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
         });
@@ -46,6 +50,12 @@ export default function Settings() {
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
         });
     }, []);
+
+    useEffect(() => {
+        if ( endpoint === '' || endpoint === defaultSettings.endpoint ) {
+            setScan(true);
+        }
+    }, [endpoint]);
 
     if (
         typeof psiphon === 'undefined' ||
@@ -101,7 +111,25 @@ export default function Settings() {
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
                     <div
-                        className='item'
+                        className={'item'}
+                        onClick={() => {
+                            setScan(!scan);
+                            settings.set('scan', !scan);
+                        }}
+                    >
+                        <label className='key'>اسکنر</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', scan ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>جستجو در IP و پورت‌های وارپ</div>
+                    </div>
+                    <div
+                        className={classNames(
+                            'item',
+                            (scan ? 'disabled' : '')
+                        )}
                         onClick={() => {
                             setShowEndpointModal(true);
                         }}

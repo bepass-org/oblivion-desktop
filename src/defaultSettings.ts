@@ -1,4 +1,5 @@
 export type settingsKeys =
+    | 'scan'
     | 'endpoint'
     | 'ipType'
     | 'port'
@@ -13,6 +14,7 @@ export type settingsKeys =
     | 'routingRules';
 
 export const defaultSettings = {
+    scan: true,
     endpoint: 'engage.cloudflareclient.com:2048',
     ipType: '',
     port: 8086,
