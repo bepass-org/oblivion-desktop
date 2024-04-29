@@ -130,6 +130,11 @@ const createWindow = async () => {
             // mainWindow.webContents.closeDevTools();
         });
 
+        mainWindow.on('close', (event) => {
+            event.preventDefault();
+            mainWindow?.hide();
+        });
+
         mainWindow.on('closed', () => {
             disableProxy();
             mainWindow = null;
@@ -186,7 +191,14 @@ const createWindow = async () => {
                 ],
             },*/
             { label: '', type: 'separator' },
-            { label: 'خروج', role: 'close' },
+            {
+                label: 'خروج',
+                type: 'normal',
+                click: () => {
+                    app.quit();
+                }
+            },
+            /*{ label: 'خروج', role: 'close' },*/
         ]);
         contextMenu.items[1].checked = false;
         appIcon.setToolTip('Oblivion Desktop');
