@@ -58,6 +58,9 @@ export default function Settings() {
     }, [endpoint]);
 
     if (
+        typeof endpoint === 'undefined' ||
+        typeof scan === 'undefined' ||
+        typeof ipType === 'undefined' ||
         typeof psiphon === 'undefined' ||
         typeof location === 'undefined' ||
         typeof gool === 'undefined'
