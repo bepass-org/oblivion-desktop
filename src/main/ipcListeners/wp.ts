@@ -5,6 +5,7 @@ import { ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
+import { countries } from '../../defaultSettings';
 import { appendToLogFile, writeToLogFile } from '../lib/log';
 import { doesFileExist } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
@@ -15,6 +16,11 @@ let child: any;
 
 const platform = process.platform; // linux / win32 / darwin / else(not supported...)
 
+const randomCountry = () => {
+    const randomIndex = Math.floor(Math.random() * countries.length);
+    return countries[randomIndex]?.value;
+};
+
 ipcMain.on('wp-start', async (event, arg) => {
     console.log('🚀 - ipcMain.on - arg:', arg);
 
@@ -24,6 +30,7 @@ ipcMain.on('wp-start', async (event, arg) => {
     // reading user settings for warp
     const args = [];
     const endpoint = await settings.get('endpoint');
+    const ipType = await settings.get('ipType');
     const port = await settings.get('port');
     console.log('🚀 - ipcMain.on - port:', port);
     const psiphon = await settings.get('psiphon');
@@ -32,6 +39,9 @@ ipcMain.on('wp-start', async (event, arg) => {
     const gool = await settings.get('gool');
 
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
+    if (typeof ipType === 'string' && ipType.length > 0) {
+        args.push(ipType);
+    }
     if (typeof port === 'string' || typeof port === 'number') {
         args.push(`--bind`);
         args.push(`127.0.0.1:${port}`);
@@ -40,24 +50,22 @@ ipcMain.on('wp-start', async (event, arg) => {
         args.push(`--endpoint`);
         args.push(`${endpoint}`);
     }
-    if (typeof license === 'string') {
+    if (typeof license === 'string' && license !== '') {
         args.push(`--key`);
         args.push(`${license}`);
     }
-    if (typeof gool === 'boolean' && gool === true) {
+    if (typeof gool === 'boolean' && gool) {
         args.push('--gool');
     }
-    if (
-        typeof psiphon === 'boolean' &&
-        psiphon === true &&
-        typeof location === 'string' &&
-        location !== '' &&
-        typeof gool === 'boolean' &&
-        gool === false
-    ) {
+    else if (typeof psiphon === 'boolean' && psiphon) {
         args.push(`--cfon`);
         args.push(`--country`);
-        args.push(`${location}`);
+        if (typeof location === 'string' && location !== '') {
+            args.push(`${location}`);
+        }
+        else {
+            args.push(`${randomCountry()}`);
+        }
     }
     console.log('args:', args);
 
