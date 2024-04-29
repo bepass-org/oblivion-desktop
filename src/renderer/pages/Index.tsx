@@ -13,6 +13,8 @@ import Drawer from 'react-modern-drawer';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 
+let connectedToIrIPOnceDisplayed = false;
+
 export default function Index() {
     const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +58,9 @@ export default function Index() {
     }, []);
 
     const ipToast = async () => {
+        if ( connectedToIrIPOnceDisplayed ) {
+            return false;
+        }
         settings.get('theme').then((value) => {
             toast(
                 (currentToast) => (
@@ -82,6 +87,7 @@ export default function Index() {
                     },
                 },
             );
+            connectedToIrIPOnceDisplayed = true;
         });
     };
 
