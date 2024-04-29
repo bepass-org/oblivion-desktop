@@ -23,7 +23,7 @@ export default function About() {
                     </p>
                     <div className='socialMedia'>
                         <a
-                            href='https://github.com/kiomarzsss/oblivion-desktop'
+                            href='https://github.com/ircfofficial/oblivion-desktop'
                             target='_blank'
                             rel='noreferrer'
                         >
