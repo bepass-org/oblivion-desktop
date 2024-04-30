@@ -16,9 +16,13 @@ import packageJsonData from '../../../package.json';
 let connectedToIrIPOnceDisplayed = false;
 
 export default function Index() {
+    const [status, setStatus] = useState<string>('متصل نیستید');
     const { isConnected, setIsConnected } = useStore();
     const [isLoading, setIsLoading] = useState(false);
-    const [ipInfo, setIpInfo] = useState({
+    const [ipInfo, setIpInfo] = useState<{
+        countryCode: string | boolean;
+        ip: string;
+    }>({
         countryCode: false,
         ip: '127.0.0.1',
     });
@@ -37,7 +41,6 @@ export default function Index() {
                 setIsConnected(true);
             }
         });
-
         ipcRenderer.on('wp-end', (ok) => {
             console.log('🚀 - ipcRenderer.once - ok:', ok);
             if (ok) {
@@ -45,9 +48,7 @@ export default function Index() {
                 setIsLoading(false);
             }
         });
-    }, []);
 
-    useEffect(() => {
         setOnline(true);
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
@@ -92,28 +93,28 @@ export default function Index() {
     };
 
     const getIpLocation = () => {
+        const controller = new AbortController();
+        const signal = controller.signal;
         if (isConnected && !isLoading) {
-            fetch('https://api.ipify.org/?format=json')
-                .then((response) => response.json())
+            fetch('https://cloudflare.com/cdn-cgi/trace', { signal })
+                .then((response) => response.text())
                 .then((data) => {
-                    const userIp = data?.ip;
-                    fetch(`https://api.iplocation.net/?ip=${userIp}`)
-                        .then((response) => response.json())
-                        .then((locationData) => {
-                            setIpInfo({
-                                countryCode: locationData.country_code2.toLowerCase(),
-                                ip: locationData.ip,
-                            });
-                            if (locationData?.country_code2 === 'IR') {
-                                ipToast();
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error fetching IP location:', error);
-                        });
+                    const lines = data.split('\n');
+                    const ipLine = lines.find(line => line.startsWith('ip='));
+                    const locationLine = lines.find(line => line.startsWith('loc='));
+                    const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
+                    const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
+                    setIpInfo({
+                        countryCode: getLoc,
+                        ip: getIp,
+                    });
                 })
                 .catch((error) => {
-                    console.error('Error fetching user IP:', error);
+                    if (error.name === 'AbortError') {
+                        console.log('Fetching aborted due to page change.');
+                    } else {
+                        console.error('Error fetching user IP:', error);
+                    }
                 });
         }
     };
@@ -136,6 +137,11 @@ export default function Index() {
         settings.get('ipData').then((value) => {
             if (typeof value === 'undefined' || value) {
                 getIpLocation();
+                setTimeout(function() {
+                    if (ipInfo?.countryCode === 'IR') {
+                        ipToast().then();
+                    }
+                }, 3000);
             } else {
                 setShownIpData(false);
             }
@@ -146,13 +152,27 @@ export default function Index() {
         if (online) {
             toast.dismiss('onlineStatus');
         } else {
-            checkInternet();
+            checkInternet().then();
         }
-    }, [isLoading, isConnected, online]);
+
+        if (isConnected && isLoading) {
+            setStatus('قطع ارتباط ...');
+        } else if (!isConnected && isLoading) {
+            setStatus('درحال اتصال ...');
+        } else if (isConnected && ipInfo?.countryCode) {
+            setStatus('متصل هستید');
+        } else if (isConnected && !ipInfo?.countryCode && shownIpData) {
+            setStatus('دریافت اطلاعات ...');
+        } else if (isConnected && !shownIpData) {
+            setStatus('اتصال برقرار شد');
+        } else {
+            setStatus('متصل نیستید');
+        }
+    }, [isLoading, isConnected, online, shownIpData, ipInfo]);
 
     const onChange = () => {
         if (!online) {
-            checkInternet();
+            checkInternet().then();
         } else {
             if (isLoading) {
                 console.log('🚀 - onChange - isLoading:', isLoading);
@@ -166,21 +186,6 @@ export default function Index() {
             }
         }
     };
-
-    let status = '';
-    if (isConnected && isLoading) {
-        status = 'قطع ارتباط ...';
-    } else if (!isConnected && isLoading) {
-        status = 'درحال اتصال ...';
-    } else if (isConnected && ipInfo?.countryCode) {
-        status = 'اتصال برقرار شد';
-    } else if (isConnected && !ipInfo?.countryCode && shownIpData) {
-        status = 'دریافت اطلاعات ...';
-    } else if (isConnected && !shownIpData) {
-        status = 'اتصال برقرار شد';
-    } else {
-        status = 'متصل نیستید';
-    }
 
     return (
         <>
