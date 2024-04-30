@@ -102,6 +102,25 @@ nav i.backBtn {
 nav i.backBtn:hover {
     color: #1058FF;
 }
+nav .navMenu {
+    position: relative;
+    float: right;
+}
+nav .navMenu .indicator {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FFA200;
+    top: 1px;
+    left: -3px;
+    animation: indicator 1s linear infinite;
+}
+@-webkit-keyframes indicator {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
 
 ::-webkit-scrollbar {
     background: #fff;
@@ -927,6 +946,15 @@ nav i.backBtn:hover {
 [data-bs-theme="dark"] .drawer .list ul li span {
     color: #e1e1e1;
     font-weight: 200;
+}
+.drawer .list ul li .label {
+    float: left;
+    font-weight: 200;
+    border-radius: 25px;
+    padding: 3px 5px;
+    font-size: 12px;
+    margin: 2px 0 0 0;
+    background: #FFA200;
 }
 .drawer .appVersion {
     float: right;

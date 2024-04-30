@@ -28,6 +28,7 @@ export default function Index() {
     });
     const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
+    const [hasNewUpdate, setHasNewUpdate] = useState(false);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
@@ -233,6 +234,15 @@ export default function Index() {
                                 <span>لاگ برنامه</span>
                             </Link>
                         </li>
+                        <li className={hasNewUpdate ? '' : 'hidden'}>
+                            <a>
+                                <i className={'material-icons'}>&#xe923;</i>
+                                <span>
+                                    بروزرسانی
+                                </span>
+                                <div className='label label-warning label-xs'>نسخه جدید</div>
+                            </a>
+                        </li>
                         <li className='divider'></li>
                         <li>
                             <Link to='/about'>
@@ -248,8 +258,9 @@ export default function Index() {
             </Drawer>
             <nav>
                 <div className='container'>
-                    <a onClick={toggleDrawer}>
+                    <a onClick={toggleDrawer} className='navMenu'>
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
+                        <div className={classNames('indicator', (hasNewUpdate ? '' : 'hidden'))}></div>
                     </a>
                     {/*<Link to={'/debug'}>
                         <i className={classNames('material-icons', 'pull-right', 'log')}>
