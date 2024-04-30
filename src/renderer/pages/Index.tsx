@@ -297,6 +297,15 @@ export default function Index() {
                                         ? 'connected'
                                         : '',
                                 )}
+                                onClick={() => {
+                                    setIpInfo({
+                                        countryCode: false,
+                                        ip: '127.0.0.1',
+                                    });
+                                    setTimeout(function() {
+                                        getIpLocation();
+                                    }, 5000);
+                                }}
                             >
                                 {ipInfo.countryCode ? (
                                     // @ts-ignore

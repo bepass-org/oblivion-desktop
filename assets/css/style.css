@@ -281,6 +281,7 @@ nav i.backBtn:hover {
 .homeScreen .ip {
     color: #AEAEAE;
     margin: 10px 0 0 0;
+    cursor: pointer;
 }
 .homeScreen .ip img,
 .homeScreen .ip svg {
