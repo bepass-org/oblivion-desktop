@@ -94,7 +94,7 @@ export default function Settings() {
                     port,
                     setPort,
                 }}
-                title='پورت تانل'
+                title='پورت پروکسی'
                 isOpen={showPortModal}
                 onClose={() => {
                     setShowPortModal(false);

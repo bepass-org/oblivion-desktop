@@ -52,7 +52,7 @@ const dlUnzipMove = async (url: string) => {
     if (!isZipFileExist) {
         await downloadFile(url, zipFilePath);
     } else {
-        console.log('➡️ Skipping Download since warp-plus.zip is already exist in bin directory.');
+        console.log('➡️ Skipping Download since warp-plus.zip is already been downloaded.');
     }
 
     decompress(zipFilePath, binPath)
