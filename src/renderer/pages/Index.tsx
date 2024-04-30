@@ -167,7 +167,7 @@ export default function Index() {
         }
     };
 
-    let status = 'متصل نیستید';
+    let status = '';
     if (isConnected && isLoading) {
         status = 'قطع ارتباط ...';
     } else if (!isConnected && isLoading) {
@@ -237,7 +237,7 @@ export default function Index() {
                         </li>
                     </ul>
                     <div className='appVersion'>
-                        App Version: <b>{packageJsonData.version}</b>
+                        v<b>{packageJsonData.version}</b>
                     </div>
                 </div>
             </Drawer>
