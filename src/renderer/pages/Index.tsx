@@ -58,7 +58,7 @@ export default function Index() {
     }, []);
 
     const ipToast = async () => {
-        if ( connectedToIrIPOnceDisplayed ) {
+        if (connectedToIrIPOnceDisplayed) {
             return false;
         }
         settings.get('theme').then((value) => {

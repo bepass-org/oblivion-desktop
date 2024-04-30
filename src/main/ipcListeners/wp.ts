@@ -57,19 +57,20 @@ ipcMain.on('wp-start', async (event, arg) => {
     }
     if (typeof gool === 'boolean' && gool) {
         args.push('--gool');
-    }
-    else if (typeof psiphon === 'boolean' && psiphon) {
+    } else if (typeof psiphon === 'boolean' && psiphon) {
         args.push(`--cfon`);
         args.push(`--country`);
         if (typeof location === 'string' && location !== '') {
             args.push(`${location}`);
-        }
-        else {
+        } else {
             args.push(`${randomCountry()}`);
         }
     }
     if (typeof scan === 'boolean' && scan) {
-        if (typeof endpoint === 'string' && (endpoint === '' || endpoint === defaultSettings.endpoint) ) {
+        if (
+            typeof endpoint === 'string' &&
+            (endpoint === '' || endpoint === defaultSettings.endpoint)
+        ) {
             args.push(`--scan`);
         }
     }

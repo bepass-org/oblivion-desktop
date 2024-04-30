@@ -52,7 +52,7 @@ export default function Settings() {
     }, []);
 
     useEffect(() => {
-        if ( endpoint === '' || endpoint === defaultSettings.endpoint ) {
+        if (endpoint === '' || endpoint === defaultSettings.endpoint) {
             setScan(true);
         }
     }, [endpoint]);
@@ -129,10 +129,7 @@ export default function Settings() {
                         <div className='info'>جستجو در IP و پورت‌های وارپ</div>
                     </div>
                     <div
-                        className={classNames(
-                            'item',
-                            (scan ? 'disabled' : '')
-                        )}
+                        className={classNames('item', scan ? 'disabled' : '')}
                         onClick={() => {
                             setShowEndpointModal(true);
                         }}
@@ -143,9 +140,7 @@ export default function Settings() {
                         </div>
                         <div className='info'>ترکیبی از IP یا نام دامنه، به‌همراه پورت</div>
                     </div>
-                    <div
-                        className='item'
-                    >
+                    <div className='item'>
                         <label className='key'>نوع IP</label>
                         <div className='value'>
                             <select
@@ -228,7 +223,7 @@ export default function Settings() {
                                 value={location}
                             >
                                 <option value=''>Automatic</option>
-                                {countries.map((country: { value: string, label: string }) => (
+                                {countries.map((country: { value: string; label: string }) => (
                                     <option key={country.value} value={country.value}>
                                         {country.label}
                                     </option>

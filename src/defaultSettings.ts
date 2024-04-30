@@ -29,7 +29,7 @@ export const defaultSettings = {
     routingRules: '',
 };
 
-export const countries: { value: string, label: string }[] = [
+export const countries: { value: string; label: string }[] = [
     { value: 'AT', label: 'Austria' },
     { value: 'BE', label: 'Belgium' },
     { value: 'BG', label: 'Bulgaria' },
@@ -61,5 +61,5 @@ export const countries: { value: string, label: string }[] = [
     { value: 'SG', label: 'Singapore' },
     { value: 'SK', label: 'Slovakia' },
     { value: 'UA', label: 'Ukraine' },
-    { value: 'US', label: 'United States' }
+    { value: 'US', label: 'United States' },
 ];

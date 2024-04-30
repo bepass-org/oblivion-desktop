@@ -10,23 +10,13 @@
  */
 import path from 'path';
 import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
+import settings from 'electron-settings';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import './ipc';
 import { isDev, removeFileIfExists } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
-import settings from 'electron-settings';
-
-class AppUpdater {
-    constructor() {
-        log.transports.file.level = 'info';
-        autoUpdater.logger = log;
-        autoUpdater.checkForUpdatesAndNotify();
-    }
-}
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -130,11 +120,6 @@ const createWindow = async () => {
             // mainWindow.webContents.closeDevTools();
         });
 
-        mainWindow.on('close', (event) => {
-            event.preventDefault();
-            mainWindow?.hide();
-        });
-
         mainWindow.on('closed', () => {
             disableProxy();
             mainWindow = null;
@@ -196,7 +181,7 @@ const createWindow = async () => {
                 type: 'normal',
                 click: () => {
                     app.quit();
-                }
+                },
             },
             /*{ label: 'خروج', role: 'close' },*/
         ]);
@@ -207,7 +192,7 @@ const createWindow = async () => {
 
     // Remove this if your app does not use auto updates
     // eslint-disable-next-line
-    new AppUpdater();
+    // new AppUpdater();
 };
 
 /**
@@ -219,11 +204,7 @@ app.on('will-quit', () => {
 });
 
 app.on('window-all-closed', () => {
-    // Respect the OSX convention of having the application in memory even
-    // after all windows have been closed
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    app.quit();
 });
 
 app.whenReady()
