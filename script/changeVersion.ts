@@ -26,10 +26,25 @@ function changeJson(filePath: string, key: string, value: string, callback: Func
 }
 
 changeJson(path.resolve(__dirname, '../package.json'), 'version', v, () => {
-    changeJson(path.resolve(__dirname, '../release/app/package.json'), 'version', v, () => {
-        exec('npm run format');
-        exec('git tag v' + v);
-        exec(`git commit --allow-empty -m "chore: release ${v}" -m "Release-As: ${v}"`);
-        exec(`git push; git push --tags`);
+    changeJson(path.resolve(__dirname, '../release/app/package.json'), 'version', v, async () => {
+        await exec('git tag v' + v, (err, stdout) => {
+            console.error(err);
+            console.log(stdout);
+        });
+        await exec('npm run format', (err) => {
+            console.error(err);
+        });
+        await exec('git add package.json release/app/package.json', (err, stdout) => {
+            console.error(err);
+            console.log(stdout);
+        });
+        await exec(`git commit -m "🔖 ${v}"`, (err, stdout) => {
+            console.error(err);
+            console.log(stdout);
+        });
+        await exec(`git push; git push --tags`, (err, stdout) => {
+            console.error(err);
+            console.log(stdout);
+        });
     });
 });
