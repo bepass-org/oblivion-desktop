@@ -2,7 +2,6 @@
 .vscode
 assets
 node_modules
-release
 .git
 
 # Logs
