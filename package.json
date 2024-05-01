@@ -226,7 +226,7 @@
         "publish": {
             "provider": "github",
             "owner": "ircfofficial",
-            "repo": "ircfofficial"
+            "repo": "oblivion-desktop"
         }
     },
     "devEngines": {
