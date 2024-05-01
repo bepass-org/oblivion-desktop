@@ -101,8 +101,8 @@ export default function Index() {
                 .then((response) => response.text())
                 .then((data) => {
                     const lines = data.split('\n');
-                    const ipLine = lines.find(line => line.startsWith('ip='));
-                    const locationLine = lines.find(line => line.startsWith('loc='));
+                    const ipLine = lines.find((line) => line.startsWith('ip='));
+                    const locationLine = lines.find((line) => line.startsWith('loc='));
                     const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     setIpInfo({
@@ -138,7 +138,7 @@ export default function Index() {
         settings.get('ipData').then((value) => {
             if (typeof value === 'undefined' || value) {
                 getIpLocation();
-                setTimeout(function() {
+                setTimeout(function () {
                     if (ipInfo?.countryCode === 'IR') {
                         ipToast().then();
                     }
@@ -237,9 +237,7 @@ export default function Index() {
                         <li className={hasNewUpdate ? '' : 'hidden'}>
                             <a>
                                 <i className={'material-icons'}>&#xe923;</i>
-                                <span>
-                                    بروزرسانی
-                                </span>
+                                <span>بروزرسانی</span>
                                 <div className='label label-warning label-xs'>نسخه جدید</div>
                             </a>
                         </li>
@@ -260,7 +258,9 @@ export default function Index() {
                 <div className='container'>
                     <a onClick={toggleDrawer} className='navMenu'>
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
-                        <div className={classNames('indicator', (hasNewUpdate ? '' : 'hidden'))}></div>
+                        <div
+                            className={classNames('indicator', hasNewUpdate ? '' : 'hidden')}
+                        ></div>
                     </a>
                     {/*<Link to={'/debug'}>
                         <i className={classNames('material-icons', 'pull-right', 'log')}>
@@ -313,7 +313,7 @@ export default function Index() {
                                         countryCode: false,
                                         ip: '127.0.0.1',
                                     });
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         getIpLocation();
                                     }, 5000);
                                 }}
