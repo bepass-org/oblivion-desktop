@@ -178,7 +178,10 @@
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
             "target": {
-                "target": "default",
+                "target": [
+                    "dmg",
+                    "pkg"
+                ],
                 "arch": [
                     "arm64",
                     "x64"
@@ -206,12 +209,17 @@
         },
         "win": {
             "target": [
-                "nsis"
+                "nsis",
+                "portable",
+                "zip"
             ]
         },
         "linux": {
             "target": [
-                "AppImage"
+                "AppImage",
+                "deb",
+                "rpm",
+                "tar.gz"
             ],
             "category": "Development"
         },

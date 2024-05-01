@@ -52,7 +52,7 @@ const dlUnzipMove = async (url: string) => {
     if (!isZipFileExist) {
         await downloadFile(url, zipFilePath);
     } else {
-        console.log('➡️ Skipping Download since warp-plus.zip is already been downloaded.');
+        console.log('➡️ Skipping Download since warp-plus.zip is already has been downloaded.');
     }
 
     decompress(zipFilePath, binPath)
@@ -64,12 +64,21 @@ const dlUnzipMove = async (url: string) => {
         });
 };
 
-const links = {
+const wpVersion = 'v1.1.3';
+const baseUrl = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}`;
+
+const urls = {
     linux: {
-        x64: 'https://github.com/bepass-org/warp-plus/releases/download/v1.1.3/warp-plus_linux-amd64.zip',
+        x64: baseUrl + '/warp-plus_linux-amd64.zip',
+        arm64: baseUrl + '/warp-plus_linux-arm64.zip',
     },
     win32: {
-        x64: 'https://github.com/bepass-org/warp-plus/releases/download/v1.1.3/warp-plus_windows-amd64.zip',
+        x64: baseUrl + '/warp-plus_windows-amd64.zip',
+        arm64: baseUrl + '/warp-plus_windows-arm64.zip',
+    },
+    darwin: {
+        x64: baseUrl + '/warp-plus_darwin-amd64.zip',
+        arm64: baseUrl + '/warp-plus_darwin-arm64.zip',
     },
 };
 
@@ -83,23 +92,10 @@ const notSupported = () => {
 };
 
 switch (platform) {
-    case 'linux':
+    case 'linux' || 'win32' || 'darwin':
         switch (arch) {
-            case 'x64':
-                dlUnzipMove(links[platform][arch]);
-                break;
-
-            default:
-                notSupported();
-                break;
-        }
-        break;
-
-    // windows
-    case 'win32':
-        switch (arch) {
-            case 'x64':
-                dlUnzipMove(links[platform][arch]);
+            case 'x64' || 'arm64':
+                dlUnzipMove(urls[platform][arch]);
                 break;
 
             default:
