@@ -7,6 +7,10 @@
         "type": "git",
         "url": "git+https://github.com/kiomarzsss/oblivion-desktop.git"
     },
+    "bugs": {
+        "url": "https://github.com/ircfofficial/oblivion-desktop/issues",
+        "email": "ircfspace@gmail.com"
+    },
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
@@ -167,6 +171,7 @@
     "build": {
         "productName": "oblivion-desktop",
         "appId": "org.desktop.oblivion",
+        "artifactName": "oblivion-desktop-${version}-${os}-${arch}.${ext}",
         "asar": true,
         "asarUnpack": "**\\*.{node,dll}",
         "files": [
