@@ -8,7 +8,8 @@
 
 Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
 
-Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp technology
+Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
+technology
 
 ## Features
 
@@ -17,7 +18,11 @@ Oblivion provides secure, optimized internet access through a user-friendly Wind
 
 ## Get Involved
 
-We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code, suggest features, or need some help, we'd love to hear from you! Check out our [GitHub Issues](https://github.com/ircfofficial/oblivion-desktop/issues) or submit a pull request.
+We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
+suggest features, or need some help, we'd love to hear from you! Check out
+our [GitHub Issues](https://github.com/ircfofficial/oblivion-desktop/issues) or submit a pull request.
+
+![Star History Chart](https://api.star-history.com/svg?repos=ircfofficial/oblivion-desktop&type=Date)
 
 ## Dev Docs
 
