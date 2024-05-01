@@ -177,16 +177,29 @@
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
-            "target": {
-                "target": [
-                    "dmg",
-                    "pkg"
-                ],
-                "arch": [
-                    "arm64",
-                    "x64"
-                ]
-            },
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "pkg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
+            ],
             "type": "distribution",
             "hardenedRuntime": true,
             "entitlements": "assets/entitlements.mac.plist",
@@ -209,17 +222,59 @@
         },
         "win": {
             "target": [
-                "nsis",
-                "portable",
-                "zip"
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "portable",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
             ]
         },
         "linux": {
             "target": [
-                "AppImage",
-                "deb",
-                "rpm",
-                "tar.gz"
+                {
+                    "target": "AppImage",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "deb",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "rpm",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "tar.gz",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
             ],
             "category": "Development"
         },
