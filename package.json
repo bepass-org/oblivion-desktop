@@ -89,7 +89,6 @@
         "electron-debug": "^3.2.0",
         "electron-log": "^4.4.8",
         "electron-settings": "^4.0.3",
-        "electron-updater": "^6.1.4",
         "lottie-react": "^2.4.0",
         "react": "^18.2.0",
         "react-country-flag": "^3.1.0",
@@ -190,6 +189,13 @@
                         "arm64",
                         "x64"
                     ]
+                },
+                {
+                    "target": "pkg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
                 }
             ],
             "type": "distribution",
@@ -214,15 +220,34 @@
         },
         "win": {
             "target": [
-                "nsis",
-                "portable"
+                {
+                    "target": "nsis",
+                    "arch": "x64"
+                },
+                {
+                    "target": "msi",
+                    "arch": "x64"
+                },
+                {
+                    "target": "portable",
+                    "arch": "x64"
+                }
             ]
         },
         "linux": {
             "target": [
-                "AppImage",
-                "deb",
-                "rpm"
+                {
+                    "target": "deb",
+                    "arch": "x64"
+                },
+                {
+                    "target": "rpm",
+                    "arch": "x64"
+                },
+                {
+                    "target": "AppImage",
+                    "arch": "x64"
+                }
             ],
             "category": "Development"
         },
