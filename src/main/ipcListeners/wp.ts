@@ -7,7 +7,7 @@ import path from 'path';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { appendToLogFile, writeToLogFile } from '../lib/log';
-import { doesFileExist } from '../lib/utils';
+import { doesFileExist, isDev } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 
 const { spawn } = require('child_process');
@@ -78,9 +78,17 @@ ipcMain.on('wp-start', async (event, arg) => {
 
     let command = '';
     if (platform === 'win32') {
-        command = path.join('assets', 'bin', 'warp-plus.exe');
+        if (isDev()) {
+            command = path.join('assets', 'bin', 'warp-plus.exe');
+        } else {
+            command = path.join('resources', 'assets', 'bin', 'warp-plus.exe');
+        }
     } else {
-        command = path.join('assets', 'bin', 'warp-plus');
+        if (isDev()) {
+            command = path.join('assets', 'bin', 'warp-plus');
+        } else {
+            command = path.join('resources', 'assets', 'bin', 'warp-plus');
+        }
     }
     child = spawn(command, args);
 
