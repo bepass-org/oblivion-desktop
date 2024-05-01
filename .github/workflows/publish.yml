@@ -31,6 +31,7 @@ jobs:
 
             - name: Install and build
               run: |
+                  brew install rpm
                   npm install
                   npm run postinstall
                   npm run build
