@@ -222,15 +222,21 @@
             "target": [
                 {
                     "target": "nsis",
-                    "arch": "x64"
+                    "arch": [
+                        "x64"
+                    ]
                 },
                 {
                     "target": "msi",
-                    "arch": "x64"
+                    "arch": [
+                        "x64"
+                    ]
                 },
                 {
                     "target": "portable",
-                    "arch": "x64"
+                    "arch": [
+                        "x64"
+                    ]
                 }
             ]
         },
@@ -238,15 +244,21 @@
             "target": [
                 {
                     "target": "deb",
-                    "arch": "x64"
+                    "arch": [
+                        "x64"
+                    ]
                 },
                 {
                     "target": "rpm",
-                    "arch": "x64"
+                    "arch": [
+                        "x64"
+                    ]
                 },
                 {
                     "target": "AppImage",
-                    "arch": "x64"
+                    "arch": [
+                        "x64"
+                    ]
                 }
             ],
             "category": "Development"
