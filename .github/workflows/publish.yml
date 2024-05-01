@@ -1,5 +1,7 @@
 name: Publish
 
+permissions: write-all
+
 on: workflow_dispatch
 
 jobs:
