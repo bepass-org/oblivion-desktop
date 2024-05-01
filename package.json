@@ -1,7 +1,7 @@
 {
     "name": "oblivion-desktop",
     "description": "unofficial desktop version of oblivion",
-    "version": "0.2.2-beta",
+    "version": "0.2.3-beta",
     "homepage": "https://github.com/ircfofficial/oblivion-desktop#readme",
     "repository": {
         "type": "git",

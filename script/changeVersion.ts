@@ -27,27 +27,27 @@ function changeJson(filePath: string, key: string, value: string, callback: Func
 
 changeJson(path.resolve(__dirname, '../package.json'), 'version', v, () => {
     changeJson(path.resolve(__dirname, '../release/app/package.json'), 'version', v, () => {
-        console.log('git tag v');
-        exec('git tag v' + v, (err) => {
+        console.log('npm run format');
+        exec('npm run format', (err) => {
             console.error(err);
             if (err) return;
 
-            console.log('npm run format');
-            exec('npm run format', (err2) => {
+            console.log('git add package.json release/app/package.json');
+            exec('git add package.json release/app/package.json', (err2, stdout) => {
                 console.error(err2);
-                if (err) return;
+                console.log(stdout);
+                if (err2) return;
 
-                console.log('git add package.json release/app/package.json');
-                exec('git add package.json release/app/package.json', (err3, stdout) => {
+                console.log(`git commit -m "🔖 ${v}"`);
+                exec(`git commit -m "🔖 ${v}"`, (err3, stdout2) => {
                     console.error(err3);
-                    console.log(stdout);
-                    if (err) return;
+                    console.log(stdout2);
+                    if (err3) return;
 
-                    console.log(`git commit -m "🔖 ${v}"`);
-                    exec(`git commit -m "🔖 ${v}"`, (err4, stdout2) => {
+                    console.log('git tag v');
+                    exec('git tag v' + v, (err4) => {
                         console.error(err4);
-                        console.log(stdout2);
-                        if (err) return;
+                        if (err4) return;
 
                         console.log(`git push; git push --tags`);
                         exec(`git push; git push --tags`, (err5, stdout3) => {
