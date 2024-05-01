@@ -11,7 +11,7 @@
         "url": "https://github.com/ircfofficial/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "0.2.16-beta",
+    "version": "0.2.17-beta",
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
@@ -182,13 +182,15 @@
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
-            "target": {
-                "target": "default",
-                "arch": [
-                    "arm64",
-                    "x64"
-                ]
-            },
+            "target": [
+                {
+                    "target": "default",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
+            ],
             "type": "distribution",
             "hardenedRuntime": true,
             "entitlements": "assets/entitlements.mac.plist",
@@ -211,14 +213,26 @@
         },
         "win": {
             "target": [
-                "nsis",
-                "portable"
+                {
+                    "target": "nsis",
+                    "arch": "x64"
+                },
+                {
+                    "target": "portable",
+                    "arch": "x64"
+                }
             ]
         },
         "linux": {
             "target": [
-                "deb",
-                "AppImage"
+                {
+                    "target": "deb",
+                    "arch": "x64"
+                },
+                {
+                    "target": "AppImage",
+                    "arch": "x64"
+                }
             ],
             "category": "Development"
         },
