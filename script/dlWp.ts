@@ -92,9 +92,12 @@ const notSupported = () => {
 };
 
 switch (platform) {
-    case 'linux' || 'win32' || 'darwin':
+    case 'linux':
+    case 'win32':
+    case 'darwin':
         switch (arch) {
-            case 'x64' || 'arm64':
+            case 'x64':
+            case 'arm64':
                 dlUnzipMove(urls[platform][arch]);
                 break;
 
