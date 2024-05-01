@@ -29,29 +29,39 @@ changeJson(path.resolve(__dirname, '../package.json'), 'version', v, () => {
     changeJson(path.resolve(__dirname, '../release/app/package.json'), 'version', v, () => {
         console.log('npm run format');
         exec('npm run format', (err) => {
-            console.error(err);
-            if (err) return;
+            if (err) {
+                console.error(err);
+                return;
+            }
 
             console.log('git add package.json release/app/package.json');
-            exec('git add package.json release/app/package.json', (err2, stdout) => {
-                console.error(err2);
-                console.log(stdout);
-                if (err2) return;
+            exec('git add package.json release/app/package.json', (err2) => {
+                if (err2) {
+                    console.error(err2);
+                    return;
+                }
 
                 console.log(`git commit -m "🔖 ${v}"`);
                 exec(`git commit -m "🔖 ${v}"`, (err3, stdout2) => {
-                    console.error(err3);
+                    if (err3) {
+                        console.error(err3);
+                        return;
+                    }
                     console.log(stdout2);
-                    if (err3) return;
 
                     console.log('git tag v');
                     exec('git tag v' + v, (err4) => {
-                        console.error(err4);
-                        if (err4) return;
+                        if (err4) {
+                            console.error(err4);
+                            return;
+                        }
 
                         console.log(`git push; git push --tags`);
                         exec(`git push; git push --tags`, (err5, stdout3) => {
-                            console.error(err5);
+                            if (err5) {
+                                console.error(err5);
+                                return;
+                            }
                             console.log(stdout3);
                         });
                     });
