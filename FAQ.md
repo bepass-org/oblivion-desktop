@@ -11,14 +11,14 @@
 
 # Frequently Asked Questions
 
-- [What is the purpose of the Oblivion Desktop app?](#what-is-the-purpose-of-the-oblivion-desktop-app)
-- [How does this application work?](#how-does-this-application-work)
-- [Why does my IP sometimes show as Iranian?](#why-does-my-ip-sometimes-show-as-iranian)
-- [How can I change my Warp IP?](#how-can-i-change-my-warp-ip)
-- [Where is the original creator of WarpInWarp?](#where-is-the-original-creator-of-warpinwarp)
-- [Is Oblivion secure?](#is-oblivion-secure)
-- [Is the Warp Cloudflare service secure?](#is-the-warp-cloudflare-service-secure)
-- [What is the aim of this free service?](#what-is-the-aim-of-this-free-service)
+-   [What is the purpose of the Oblivion Desktop app?](#what-is-the-purpose-of-the-oblivion-desktop-app)
+-   [How does this application work?](#how-does-this-application-work)
+-   [Why does my IP sometimes show as Iranian?](#why-does-my-ip-sometimes-show-as-iranian)
+-   [How can I change my Warp IP?](#how-can-i-change-my-warp-ip)
+-   [Where is the original creator of WarpInWarp?](#where-is-the-original-creator-of-warpinwarp)
+-   [Is Oblivion secure?](#is-oblivion-secure)
+-   [Is the Warp Cloudflare service secure?](#is-the-warp-cloudflare-service-secure)
+-   [What is the aim of this free service?](#what-is-the-aim-of-this-free-service)
 
 ## کاربرد اپ Oblivion Desktop چیه؟
 
@@ -99,8 +99,3 @@ Warp encrypts a larger amount of outgoing traffic from your device, preventing a
 
 To realize the slogan of "Internet for all or for none," as well as to provide free access to the internet, especially
 for underserved populations.
-
-
-
-
-
