@@ -11,7 +11,7 @@
         "url": "https://github.com/ircfofficial/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "0.2.19-beta",
+    "version": "0.2.20-beta",
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
@@ -183,13 +183,8 @@
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
             "target": [
-                {
-                    "target": "default",
-                    "arch": [
-                        "arm64",
-                        "x64"
-                    ]
-                }
+                "dmg",
+                "pkg"
             ],
             "type": "distribution",
             "hardenedRuntime": true,
@@ -213,28 +208,17 @@
         },
         "win": {
             "target": [
-                {
-                    "target": "nsis",
-                    "arch": "x64"
-                },
-                {
-                    "target": "zip",
-                    "arch": "x64"
-                }
+                "nsis",
+                "zip"
             ]
         },
         "linux": {
             "target": [
-                {
-                    "target": "deb",
-                    "arch": "x64"
-                },
-                {
-                    "target": "AppImage",
-                    "arch": "x64"
-                }
+                "deb",
+                "rpm",
+                "tar.xz"
             ],
-            "category": "Development"
+            "category": "Network"
         },
         "directories": {
             "app": "release/app",
@@ -247,7 +231,8 @@
         "publish": {
             "provider": "github",
             "owner": "ircfofficial",
-            "repo": "oblivion-desktop"
+            "repo": "oblivion-desktop",
+            "publishAutoUpdate": false
         }
     },
     "devEngines": {
