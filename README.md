@@ -81,6 +81,17 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or su
 
 ![Star History Chart](https://api.star-history.com/svg?repos=bepass-org/oblivion-desktop&type=Date)
 
+## Acknowledgements
+
+This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration provided by the following repositories:
+
+- [warp-plus](https://github.com/bepass-org/warp-plus/)
+- [oblivion](https://github.com/bepass-org/oblivion)
+- [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+- [sing-box](https://github.com/SagerNet/sing-box)
+- [hiddify-next](https://github.com/hiddify/hiddify-next)
+- [and others 🧡](package.json)
+
 ## Dev Docs
 
 [DOCS.md](DOCS.md)
