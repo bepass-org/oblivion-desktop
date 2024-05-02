@@ -169,9 +169,9 @@
         "webpack-merge": "^5.9.0"
     },
     "build": {
-        "productName": "oblivion-desktop",
+        "productName": "Oblivion Desktop",
         "appId": "org.desktop.oblivion",
-        "artifactName": "oblivion-desktop-${os}-${version}-${arch}.${ext}",
+        "artifactName": "oblivion-desktop-${os}-${arch}.${ext}",
         "asar": true,
         "asarUnpack": "**\\*.{node,dll}",
         "files": [
