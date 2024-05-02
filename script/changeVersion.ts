@@ -26,8 +26,11 @@ function changeJson(filePath: string, key: string, value: string, callback: Func
 }
 
 changeJson(path.resolve(__dirname, '../package.json'), 'version', v, () => {
+    console.log('edited package.json');
+
     changeJson(path.resolve(__dirname, '../release/app/package.json'), 'version', v, () => {
-        console.log('npm run format');
+        console.log('edited release/app/package.json');
+        console.log('npm run format...');
         exec('npm run format', (err) => {
             if (err) {
                 console.error(err);
@@ -49,7 +52,7 @@ changeJson(path.resolve(__dirname, '../package.json'), 'version', v, () => {
                     }
                     console.log(stdout2);
 
-                    console.log('git tag v');
+                    console.log('git tag v' + v);
                     exec('git tag v' + v, (err4) => {
                         if (err4) {
                             console.error(err4);

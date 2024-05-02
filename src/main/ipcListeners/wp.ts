@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 // warp-plus
 
-import { ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
@@ -76,20 +76,40 @@ ipcMain.on('wp-start', async (event, arg) => {
     }
     console.log('args:', args);
 
+    console.log(1, path.join(__dirname, 'resources', 'assets', 'bin', 'warp-plus'));
+    console.log(2, path.join('assets', 'bin', 'warp-plus'));
+    console.log(3, app.getPath('appData'));
+    console.log(4, app.getPath('logs'));
+    console.log(5, app.getPath('userData'));
+    console.log(6, app.getPath('exe'));
+    console.log(7, app.getAppPath());
+
     let command = '';
     if (platform === 'win32') {
         if (isDev()) {
             command = path.join('assets', 'bin', 'warp-plus.exe');
         } else {
-            command = path.join('resources', 'assets', 'bin', 'warp-plus.exe');
+            command = path.join(
+                app.getAppPath().replace('/app.asar', ''),
+                'assets',
+                'bin',
+                'warp-plus.exe',
+            );
         }
     } else {
         if (isDev()) {
             command = path.join('assets', 'bin', 'warp-plus');
         } else {
-            command = path.join('resources', 'assets', 'bin', 'warp-plus');
+            command = path.join(
+                app.getAppPath().replace('/app.asar', ''),
+                'assets',
+                'bin',
+                'warp-plus',
+            );
         }
     }
+    console.log('command', command);
+
     child = spawn(command, args);
 
     // TODO better approach
