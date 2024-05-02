@@ -17,6 +17,7 @@ import './ipc';
 import { isDev, removeFileIfExists } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
+import { wpLogPath } from './lib/log';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -25,9 +26,7 @@ if (process.env.NODE_ENV === 'production') {
     sourceMapSupport.install();
 }
 
-(async () => {
-    await removeFileIfExists('log.txt');
-})();
+removeFileIfExists(wpLogPath);
 
 const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 

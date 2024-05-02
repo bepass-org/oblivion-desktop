@@ -24,7 +24,7 @@ export default function Index() {
         ip: string;
     }>({
         countryCode: false,
-        ip: '127.0.0.1'
+        ip: '127.0.0.1',
     });
     const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
@@ -85,9 +85,9 @@ export default function Index() {
                     style: {
                         borderRadius: '10px',
                         background: value === 'dark' ? '#535353' : '#242424',
-                        color: '#F4F5FB'
-                    }
-                }
+                        color: '#F4F5FB',
+                    },
+                },
             );
             connectedToIrIPOnceDisplayed = true;
         });
@@ -107,7 +107,7 @@ export default function Index() {
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     setIpInfo({
                         countryCode: getLoc,
-                        ip: getIp
+                        ip: getIp,
                     });
                 })
                 .catch((error) => {
@@ -128,8 +128,8 @@ export default function Index() {
                 style: {
                     borderRadius: '10px',
                     background: value === 'dark' ? '#535353' : '#242424',
-                    color: '#F4F5FB'
-                }
+                    color: '#F4F5FB',
+                },
             });
         });
     };
@@ -138,7 +138,7 @@ export default function Index() {
         settings.get('ipData').then((value) => {
             if (typeof value === 'undefined' || value) {
                 getIpLocation();
-                setTimeout(function() {
+                setTimeout(function () {
                     if (ipInfo?.countryCode === 'ir') {
                         ipToast().then();
                     }
@@ -283,7 +283,7 @@ export default function Index() {
                                     className={classNames(
                                         'switch',
                                         isConnected ? 'active' : '',
-                                        isLoading ? 'isLoading' : ''
+                                        isLoading ? 'isLoading' : '',
                                     )}
                                     onClick={onChange}
                                 >
@@ -296,7 +296,7 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected && ipInfo?.countryCode && !isLoading ? 'active' : ''
+                                isConnected && ipInfo?.countryCode && !isLoading ? 'active' : '',
                             )}
                         >
                             {status}
@@ -306,14 +306,14 @@ export default function Index() {
                                     'ip',
                                     isConnected && ipInfo?.countryCode && !isLoading
                                         ? 'connected'
-                                        : ''
+                                        : '',
                                 )}
                                 onClick={() => {
                                     setIpInfo({
                                         countryCode: false,
-                                        ip: '127.0.0.1'
+                                        ip: '127.0.0.1',
                                     });
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         getIpLocation();
                                     }, 5000);
                                 }}
@@ -331,7 +331,7 @@ export default function Index() {
                                                 svg
                                                 style={{
                                                     width: '17px',
-                                                    height: '12px'
+                                                    height: '12px',
                                                 }}
                                             />
                                         </>

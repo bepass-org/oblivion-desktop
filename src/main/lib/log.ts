@@ -1,8 +1,12 @@
-const fs = require('fs');
+import { app } from 'electron';
+import path from 'path';
+import fs from 'fs';
+
+export const wpLogPath = path.join(app.getPath('logs'), 'warp-plus.log');
 
 export function readLogFile() {
     return new Promise((resolve, reject) => {
-        fs.readFile('log.txt', 'utf8', (err: any, data: any) => {
+        fs.readFile(wpLogPath, 'utf8', (err: any, data: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -14,7 +18,7 @@ export function readLogFile() {
 
 export function writeToLogFile(message: string) {
     return new Promise((resolve, reject) => {
-        fs.writeFile('log.txt', message + '\n', (err: any) => {
+        fs.writeFile(wpLogPath, message + '\n', (err: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -26,7 +30,7 @@ export function writeToLogFile(message: string) {
 
 export function appendToLogFile(message: string) {
     return new Promise((resolve, reject) => {
-        fs.appendFile('log.txt', message + '\n', (err: any) => {
+        fs.appendFile(wpLogPath, message + '\n', (err: any) => {
             if (err) {
                 reject(err);
             } else {

@@ -6,7 +6,7 @@ import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
-import { appendToLogFile, writeToLogFile } from '../lib/log';
+import { appendToLogFile, wpLogPath, writeToLogFile } from '../lib/log';
 import { doesFileExist, isDev } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 
@@ -122,7 +122,7 @@ ipcMain.on('wp-start', async (event, arg) => {
             enableProxy();
         }
         // write to log file
-        const tmp = await doesFileExist('log.txt');
+        const tmp = await doesFileExist(wpLogPath);
         if (!tmp) {
             writeToLogFile(strData);
         } else {
