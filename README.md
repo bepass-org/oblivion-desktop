@@ -18,6 +18,8 @@ technology
 
 ## Download
 
+![Download](https://img.shields.io/github/downloads/ircfofficial/oblivion-desktop/total)
+
 <div align=left>
 <table>
     <thead align=left>
