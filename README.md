@@ -2,7 +2,7 @@
 
 "Internet, for all or none!"
 
-![oblivion.png](oblivion.png)
+![oblivion.png](screenshot/oblivion.png)
 
 ---
 
@@ -11,10 +11,14 @@ Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
 
+![virustotal.png](screenshot/virustotal.png)
+
 ## Features
 
 - **Secure VPN**: Custom WireGuard implementation in Go.
 - **User-Friendly**: Simple, intuitive interface.
+
+![oblivion.jpg](screenshot/oblivion.jpg)
 
 ## Download
 
