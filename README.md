@@ -22,7 +22,7 @@ technology
 
 ## Download
 
-![Download](https://img.shields.io/github/downloads/ircfofficial/oblivion-desktop/total)
+![Download](https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total)
 
 <div align=left>
 <table>
@@ -36,23 +36,23 @@ technology
         <tr>
             <td>Windows</td>
             <td>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
             </td>
         </tr>
         <tr>
             <td>macOS</td>
             <td>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-desktop"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
             </td>
         </tr>
         <tr>
             <td>Linux</td>
             <td>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a><br>
-                <a href="https://github.com/ircfofficial/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-deskto"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a>
             </td>
         </tr>
         <tr>
@@ -77,9 +77,9 @@ technology
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
 suggest features, or need some help, we'd love to hear from you! Check out
-our [GitHub Issues](https://github.com/ircfofficial/oblivion-desktop/issues) or submit a pull request.
+our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or submit a pull request.
 
-![Star History Chart](https://api.star-history.com/svg?repos=ircfofficial/oblivion-desktop&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=bepass-org/oblivion-desktop&type=Date)
 
 ## Dev Docs
 
