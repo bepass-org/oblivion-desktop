@@ -171,7 +171,7 @@
     "build": {
         "productName": "oblivion-desktop",
         "appId": "org.desktop.oblivion",
-        "artifactName": "oblivion-desktop-${version}-${os}-${arch}.${ext}",
+        "artifactName": "oblivion-desktop-${os}-${version}-${arch}.${ext}",
         "asar": true,
         "asarUnpack": "**\\*.{node,dll}",
         "files": [
@@ -218,7 +218,7 @@
                     "arch": "x64"
                 },
                 {
-                    "target": "portable",
+                    "target": "zip",
                     "arch": "x64"
                 }
             ]
