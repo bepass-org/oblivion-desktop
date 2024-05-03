@@ -141,7 +141,11 @@ const createWindow = async () => {
         });
     }
 
-    createMainWindow();
+    if (!mainWindow) {
+        createMainWindow();
+    } else {
+        mainWindow.show();
+    }
 
     let appIcon = null;
     app?.whenReady().then(() => {
