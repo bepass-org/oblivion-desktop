@@ -18,6 +18,8 @@ let cachedIpInfo: any = null;
 let lastFetchTime = 0;
 const cacheDuration = 30 * 1000;
 let connectedToIrIPOnceDisplayed = false;
+let canCheckNewVer = true;
+let hasNewUpdate = false;
 
 export default function Index() {
     const [status, setStatus] = useState<string>('متصل نیستید');
@@ -32,7 +34,6 @@ export default function Index() {
     });
     const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
-    const [hasNewUpdate, setHasNewUpdate] = useState(false);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
@@ -43,6 +44,25 @@ export default function Index() {
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [psiphon, setPsiphon] = useState<undefined | boolean>();
     const [gool, setGool] = useState<undefined | boolean>();
+
+    const fetchReleaseVersion = async () => {
+        const versionRegex = /\d+(\.\d+)+/;
+        try {
+            const response = await fetch('https://api.github.com/repos/ircfspace/fragment/releases/latest');
+            if (response.ok) {
+                const data = await response.json();
+                const latestVersion = String(data?.tag_name);
+                const appVersion = String(packageJsonData?.version);
+                if (latestVersion !== appVersion) {
+                    hasNewUpdate = true;
+                }
+            } else {
+                console.error('Failed to fetch release version:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Failed to fetch release version:', error);
+        }
+    };
 
     useEffect(() => {
         settings.get('theme').then((value) => {
@@ -57,7 +77,12 @@ export default function Index() {
         settings.get('gool').then((value) => {
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
         });
+
         cachedIpInfo = null;
+        if (canCheckNewVer) {
+            fetchReleaseVersion().then();
+            canCheckNewVer = false;
+        }
 
         ipcRenderer.on('wp-start', (ok) => {
             if (ok) {
@@ -278,7 +303,7 @@ export default function Index() {
                             </Link>
                         </li>
                         <li className={hasNewUpdate ? '' : 'hidden'}>
-                            <a>
+                            <a href='https://github.com/bepass-org/oblivion-desktop/releases/latest' target='_blank'>
                                 <i className={'material-icons'}>&#xe923;</i>
                                 <span>بروزرسانی</span>
                                 <div className='label label-warning label-xs'>نسخه جدید</div>
