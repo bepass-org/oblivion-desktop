@@ -12,7 +12,11 @@ import { settings } from '../lib/settings';
 import Drawer from 'react-modern-drawer';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
+import { defaultSettings } from '../../defaultSettings';
 
+let cachedIpInfo: any = null;
+let lastFetchTime = 0;
+const cacheDuration = 30 * 1000;
 let connectedToIrIPOnceDisplayed = false;
 
 export default function Index() {
@@ -24,7 +28,7 @@ export default function Index() {
         ip: string;
     }>({
         countryCode: false,
-        ip: '127.0.0.1'
+        ip: '1.1.1.1'
     });
     const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
@@ -35,7 +39,26 @@ export default function Index() {
         setDrawerIsOpen((prevState) => !prevState);
     };
 
+    const [theme, setTheme] = useState<undefined | string>();
+    const [ipData, setIpData] = useState<undefined | boolean>();
+    const [psiphon, setPsiphon] = useState<undefined | boolean>();
+    const [gool, setGool] = useState<undefined | boolean>();
+
     useEffect(() => {
+        settings.get('theme').then((value) => {
+            setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
+        });
+        settings.get('ipData').then((value) => {
+            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
+        });
+        settings.get('psiphon').then((value) => {
+            setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
+        });
+        settings.get('gool').then((value) => {
+            setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });
+        cachedIpInfo = null;
+
         ipcRenderer.on('wp-start', (ok) => {
             if (ok) {
                 setIsLoading(false);
@@ -63,93 +86,109 @@ export default function Index() {
         if (connectedToIrIPOnceDisplayed) {
             return false;
         }
-        settings.get('theme').then((value) => {
-            toast(
-                (currentToast) => (
-                    <>
-                        <div className='customToast'>
-                            <p>
-                                کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده،
-                                که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش!
-                                در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
-                            </p>
-                            <button onClick={() => toast.dismiss(currentToast?.id)}>
-                                متوجه شدم
-                            </button>
-                        </div>
-                    </>
-                ),
-                {
-                    id: 'ipChangedToIR',
-                    duration: Infinity,
-                    style: {
-                        borderRadius: '10px',
-                        background: value === 'dark' ? '#535353' : '#242424',
-                        color: '#F4F5FB'
-                    }
+        toast(
+            (currentToast) => (
+                <>
+                    <div className='customToast'>
+                        <p>
+                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده،
+                            که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش!
+                            در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
+                        </p>
+                        <button onClick={() => toast.dismiss(currentToast?.id)}>
+                            متوجه شدم
+                        </button>
+                    </div>
+                </>
+            ),
+            {
+                id: 'ipChangedToIR',
+                duration: Infinity,
+                style: {
+                    borderRadius: '10px',
+                    background: theme === 'dark' ? '#535353' : '#242424',
+                    color: '#F4F5FB'
                 }
-            );
-            connectedToIrIPOnceDisplayed = true;
-        });
+            }
+        );
+        connectedToIrIPOnceDisplayed = true;
     };
 
-    const getIpLocation = () => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        if (isConnected && !isLoading) {
-            fetch('https://cloudflare.com/cdn-cgi/trace', { signal })
-                .then((response) => response.text())
-                .then((data) => {
+    const getIpLocation = async () => {
+        try {
+            const currentTime = new Date().getTime();
+            if (cachedIpInfo && (currentTime - lastFetchTime) < cacheDuration) {
+                setIpInfo(cachedIpInfo);
+            } else {
+                if (isConnected && !isLoading) {
+                    const controller = new AbortController();
+                    const signal = controller.signal;
+                    const timeoutId = setTimeout(() => {
+                        controller.abort();
+                        console.log('Fetching aborted due to timeout.');
+                    }, 5000);
+                    const response = await fetch('https://cloudflare.com/cdn-cgi/trace', { signal });
+                    const data = await response.text();
                     const lines = data.split('\n');
                     const ipLine = lines.find((line) => line.startsWith('ip='));
                     const locationLine = lines.find((line) => line.startsWith('loc='));
                     const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
-                    setIpInfo({
-                        countryCode: getLoc,
+                    const ipInfo = {
+                        countryCode: ((psiphon || gool) && getLoc === 'ir' ? 'xx' : getLoc),
                         ip: getIp
-                    });
-                })
-                .catch((error) => {
-                    if (error.name === 'AbortError') {
-                        console.log('Fetching aborted due to page change.');
-                    } else {
-                        console.error('Error fetching user IP:', error);
-                    }
-                });
+                    };
+                    cachedIpInfo = ipInfo;
+                    lastFetchTime = currentTime;
+                    setIpInfo(ipInfo);
+                    clearTimeout(timeoutId);
+                    toast.dismiss('ipLocationStatus');
+                }
+            }
+        } catch (error) {
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
         }
     };
 
+    useEffect(() => {
+        if (ipInfo?.countryCode) {
+            if ((psiphon || gool) && ipInfo?.countryCode === 'ir') {
+                ipToast().then();
+            } else {
+                toast.dismiss('ipChangedToIR');
+            }
+        }
+    }, [ipInfo]);
+
     const checkInternet = async () => {
-        settings.get('theme').then((value) => {
-            toast('شما به اینترنت متصل نیستید!', {
-                id: 'onlineStatus',
-                duration: Infinity,
-                style: {
-                    borderRadius: '10px',
-                    background: value === 'dark' ? '#535353' : '#242424',
-                    color: '#F4F5FB'
-                }
-            });
+        toast('شما به اینترنت متصل نیستید!', {
+            id: 'onlineStatus',
+            duration: Infinity,
+            style: {
+                fontSize: '13px',
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff'
+            }
         });
     };
 
     useEffect(() => {
-        settings.get('ipData').then((value) => {
-            if (typeof value === 'undefined' || value) {
-                getIpLocation();
-                setTimeout(function() {
-                    if (ipInfo?.countryCode === 'ir') {
-                        ipToast().then();
-                    }
-                }, 3000);
-            } else {
-                setShownIpData(false);
-            }
-        });
+
+        if (typeof ipData === 'undefined' || ipData) {
+            getIpLocation().then();
+        } else {
+            setShownIpData(false);
+        }
+
         if (isLoading || !isConnected) {
             toast.dismiss('ipChangedToIR');
+            toast.dismiss('ipLocationStatus');
         }
+
         if (online) {
             toast.dismiss('onlineStatus');
         } else {
@@ -182,6 +221,10 @@ export default function Index() {
                 ipcRenderer.sendMessage('wp-end');
                 setIsLoading(true);
             } else {
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
             }
@@ -311,16 +354,27 @@ export default function Index() {
                                 onClick={() => {
                                     setIpInfo({
                                         countryCode: false,
-                                        ip: '127.0.0.1'
+                                        ip: ''
                                     });
-                                    setTimeout(function() {
-                                        getIpLocation();
-                                    }, 5000);
+                                    const getTime = new Date().getTime();
+                                    if (cachedIpInfo && (getTime - lastFetchTime) < cacheDuration) {
+                                        toast('برای بررسی مجدد چندثانیه دیگر تلاش کنید!', {
+                                            id: 'ipLocationStatus',
+                                            duration: 2000,
+                                            style: {
+                                                fontSize: '13px',
+                                                borderRadius: '10px',
+                                                background: '#333',
+                                                color: '#fff'
+                                            }
+                                        });
+                                    } else {
+                                        getIpLocation().then();
+                                    }
                                 }}
                             >
                                 {ipInfo.countryCode ? (
-                                    // @ts-ignore
-                                    ipInfo.countryCode === 'ir' ? (
+                                    ipInfo?.countryCode === 'ir' ? (
                                         <>
                                             <img src={irFlag} alt='flag' />
                                         </>
