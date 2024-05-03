@@ -26,7 +26,7 @@ export const defaultSettings = {
     systemTray: false,
     flag: 'xx',
     ipData: false,
-    routingRules: '',
+    routingRules: ''
 };
 
 export const countries: { value: string; label: string }[] = [
@@ -61,5 +61,5 @@ export const countries: { value: string; label: string }[] = [
     { value: 'SG', label: 'Singapore' },
     { value: 'SK', label: 'Slovakia' },
     { value: 'UA', label: 'Ukraine' },
-    { value: 'US', label: 'United States' },
+    { value: 'US', label: 'United States' }
 ];

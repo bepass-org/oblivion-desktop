@@ -42,7 +42,7 @@ const installExtensions = async () => {
     return installer
         .default(
             extensions.map((name) => installer[name]),
-            forceDownload,
+            forceDownload
         )
         .catch(console.log);
 };
@@ -80,8 +80,8 @@ const createWindow = async () => {
             devToolsKeyCombination: false,
             preload: app.isPackaged
                 ? path.join(__dirname, 'preload.js')
-                : path.join(__dirname, '../../.erb/dll/preload.js'),
-        },
+                : path.join(__dirname, '../../.erb/dll/preload.js')
+        }
     };
 
     if (isDev()) {
@@ -163,7 +163,7 @@ const createWindow = async () => {
                     } else {
                         mainWindow.show();
                     }
-                },
+                }
             },
             // TODO
             /*{ label: '', type: 'separator' },
@@ -180,8 +180,8 @@ const createWindow = async () => {
                 type: 'normal',
                 click: () => {
                     app.quit();
-                },
-            },
+                }
+            }
             /*{ label: 'خروج', role: 'close' },*/
         ]);
         contextMenu.items[1].checked = false;

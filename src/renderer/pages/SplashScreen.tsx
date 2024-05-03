@@ -8,7 +8,7 @@ export default function SplashScreen() {
             () => {
                 setShow(false);
             },
-            isDev() ? 0 : 5000,
+            isDev() ? 0 : 5000
         );
     }, []);
 

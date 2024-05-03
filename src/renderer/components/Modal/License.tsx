@@ -7,7 +7,7 @@ export default function LicenseModal({
     isOpen,
     onClose,
     license,
-    setLicense,
+    setLicense
 }: {
     title: string;
     isOpen: boolean;

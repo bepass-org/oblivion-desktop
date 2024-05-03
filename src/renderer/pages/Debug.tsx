@@ -30,9 +30,9 @@ export default function Debug() {
                 fontSize: '13px',
                 borderRadius: '10px',
                 background: '#333',
-                color: '#fff',
+                color: '#fff'
             },
-            duration: 2000,
+            duration: 2000
         });
     };
 

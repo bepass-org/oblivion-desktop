@@ -9,7 +9,7 @@ export default function EndpointModal({
     onClose,
     defValue = defaultSettings.endpoint,
     endpoint,
-    setEndpoint,
+    setEndpoint
 }: {
     title: string;
     isOpen: boolean;

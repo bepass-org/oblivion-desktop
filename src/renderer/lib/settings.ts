@@ -5,7 +5,7 @@ export class settings {
     public static async get(key: settingsKeys): Promise<any> {
         ipcRenderer.sendMessage('settings', {
             mode: 'get',
-            key: key,
+            key: key
         });
 
         return new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ export class settings {
         ipcRenderer.sendMessage('settings', {
             mode: 'set',
             key: key,
-            value: value,
+            value: value
         });
 
         return new Promise((resolve, reject) => {

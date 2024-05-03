@@ -43,7 +43,7 @@ export default function Routing() {
             <RoutingRulesModal
                 {...{
                     routingRules,
-                    setRoutingRules,
+                    setRoutingRules
                 }}
                 title='لیست سیاه'
                 isOpen={showRoutingRulesModal}

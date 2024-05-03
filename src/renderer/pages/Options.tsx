@@ -76,7 +76,7 @@ export default function Options() {
                             <div
                                 className={classNames(
                                     'checkbox',
-                                    theme === 'dark' ? 'checked' : '',
+                                    theme === 'dark' ? 'checked' : ''
                                 )}
                             >
                                 <i className='material-icons'>&#xe876;</i>

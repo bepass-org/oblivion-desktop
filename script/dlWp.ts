@@ -13,7 +13,7 @@ async function downloadFile(uri: string, destPath: string) {
                 // TODO improve DX
                 const percentCompleted = Math.round(
                     // @ts-ignore
-                    (progressEvent.loaded * 100) / progressEvent.total,
+                    (progressEvent.loaded * 100) / progressEvent.total
                 );
                 try {
                     process?.stdout?.clearLine(0);
@@ -22,7 +22,7 @@ async function downloadFile(uri: string, destPath: string) {
                 } catch (error) {
                     console.error(error);
                 }
-            },
+            }
         })
         .then((response) => {
             const arrayBufferView = new Uint8Array(response.data);
@@ -74,16 +74,16 @@ const baseUrl = `https://github.com/bepass-org/warp-plus/releases/download/${wpV
 const urls = {
     linux: {
         x64: baseUrl + '/warp-plus_linux-amd64.zip',
-        arm64: baseUrl + '/warp-plus_linux-arm64.zip',
+        arm64: baseUrl + '/warp-plus_linux-arm64.zip'
     },
     win32: {
         x64: baseUrl + '/warp-plus_windows-amd64.zip',
-        arm64: baseUrl + '/warp-plus_windows-arm64.zip',
+        arm64: baseUrl + '/warp-plus_windows-arm64.zip'
     },
     darwin: {
         x64: baseUrl + '/warp-plus_darwin-amd64.zip',
-        arm64: baseUrl + '/warp-plus_darwin-arm64.zip',
-    },
+        arm64: baseUrl + '/warp-plus_darwin-arm64.zip'
+    }
 };
 
 const platform = process.platform; // linux / win32 / darwin / else(not supported...)

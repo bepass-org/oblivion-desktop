@@ -9,7 +9,7 @@ export default function PortModal({
     onClose,
     defValue = defaultSettings.port,
     port,
-    setPort,
+    setPort
 }: {
     title: string;
     isOpen: boolean;

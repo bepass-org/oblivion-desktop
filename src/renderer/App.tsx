@@ -42,7 +42,7 @@ export default function App() {
         (async () => {
             document.documentElement.setAttribute(
                 'data-bs-theme',
-                (await settings.get('theme')) || defaultSettings.theme,
+                (await settings.get('theme')) || defaultSettings.theme
             );
         })();
     }, []);

@@ -8,13 +8,13 @@ ipcMain.on('settings', async (event, arg) => {
         console.log('🚀 - ipcMain.on - res:', res);
         event.reply('settings', {
             key: arg.key,
-            value: res,
+            value: res
         });
     } else if (arg.mode === 'set') {
         await settings.set(arg.key, arg.value);
         event.reply('settings', {
             key: arg.key,
-            value: arg.value,
+            value: arg.value
         });
     }
 });

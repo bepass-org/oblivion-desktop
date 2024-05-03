@@ -48,7 +48,9 @@ export default function Index() {
     const fetchReleaseVersion = async () => {
         const versionRegex = /\d+(\.\d+)+/;
         try {
-            const response = await fetch('https://api.github.com/repos/ircfspace/fragment/releases/latest');
+            const response = await fetch(
+                'https://api.github.com/repos/ircfspace/fragment/releases/latest'
+            );
             if (response.ok) {
                 const data = await response.json();
                 const latestVersion = String(data?.tag_name);
@@ -116,13 +118,11 @@ export default function Index() {
                 <>
                     <div className='customToast'>
                         <p>
-                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده،
-                            که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش!
-                            در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
+                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
+                            باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
+                            تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
                         </p>
-                        <button onClick={() => toast.dismiss(currentToast?.id)}>
-                            متوجه شدم
-                        </button>
+                        <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
                     </div>
                 </>
             ),
@@ -142,7 +142,7 @@ export default function Index() {
     const getIpLocation = async () => {
         try {
             const currentTime = new Date().getTime();
-            if (cachedIpInfo && (currentTime - lastFetchTime) < cacheDuration) {
+            if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
                 setIpInfo(cachedIpInfo);
             } else {
                 if (isConnected && !isLoading) {
@@ -152,7 +152,9 @@ export default function Index() {
                         controller.abort();
                         console.log('Fetching aborted due to timeout.');
                     }, 5000);
-                    const response = await fetch('https://cloudflare.com/cdn-cgi/trace', { signal });
+                    const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                        signal
+                    });
                     const data = await response.text();
                     const lines = data.split('\n');
                     const ipLine = lines.find((line) => line.startsWith('ip='));
@@ -160,7 +162,7 @@ export default function Index() {
                     const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     const ipInfo = {
-                        countryCode: ((psiphon || gool) && getLoc === 'ir' ? 'xx' : getLoc),
+                        countryCode: (psiphon || gool) && getLoc === 'ir' ? 'xx' : getLoc,
                         ip: getIp
                     };
                     cachedIpInfo = ipInfo;
@@ -202,7 +204,6 @@ export default function Index() {
     };
 
     useEffect(() => {
-
         if (typeof ipData === 'undefined' || ipData) {
             getIpLocation().then();
         } else {
@@ -303,7 +304,10 @@ export default function Index() {
                             </Link>
                         </li>
                         <li className={hasNewUpdate ? '' : 'hidden'}>
-                            <a href='https://github.com/bepass-org/oblivion-desktop/releases/latest' target='_blank'>
+                            <a
+                                href='https://github.com/bepass-org/oblivion-desktop/releases/latest'
+                                target='_blank'
+                            >
                                 <i className={'material-icons'}>&#xe923;</i>
                                 <span>بروزرسانی</span>
                                 <div className='label label-warning label-xs'>نسخه جدید</div>
@@ -382,7 +386,7 @@ export default function Index() {
                                         ip: ''
                                     });
                                     const getTime = new Date().getTime();
-                                    if (cachedIpInfo && (getTime - lastFetchTime) < cacheDuration) {
+                                    if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
                                         toast('برای بررسی مجدد چندثانیه دیگر تلاش کنید!', {
                                             id: 'ipLocationStatus',
                                             duration: 2000,

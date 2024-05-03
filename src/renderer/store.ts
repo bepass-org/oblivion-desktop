@@ -7,5 +7,5 @@ export interface IStore {
 
 export const useStore = create<IStore>((set) => ({
     isConnected: false,
-    setIsConnected: (bool: boolean) => set(() => ({ isConnected: bool })),
+    setIsConnected: (bool: boolean) => set(() => ({ isConnected: bool }))
 }));

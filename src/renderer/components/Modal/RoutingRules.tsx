@@ -7,7 +7,7 @@ export default function RoutingRulesModal({
     isOpen,
     onClose,
     routingRules,
-    setRoutingRules,
+    setRoutingRules
 }: {
     title: string;
     isOpen: boolean;
@@ -77,11 +77,11 @@ export default function RoutingRulesModal({
                                         'label',
                                         'label-warning',
                                         'pull-right',
-                                        routingRulesInput === '' ? '' : 'hidden',
+                                        routingRulesInput === '' ? '' : 'hidden'
                                     )}
                                     onClick={(e) => {
                                         setRoutingRulesInput(
-                                            `regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`,
+                                            `regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`
                                         );
                                     }}
                                 >

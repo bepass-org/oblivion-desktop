@@ -21,9 +21,9 @@ const electronHandler = {
         },
         once(channel: Channels, func: (...args: unknown[]) => void) {
             ipcRenderer.once(channel, (_event, ...args) => func(...args));
-        },
+        }
     },
-    nodeEnv: process.env.NODE_ENV,
+    nodeEnv: process.env.NODE_ENV
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

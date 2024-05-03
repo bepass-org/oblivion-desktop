@@ -7,7 +7,7 @@ const root = createRoot(container);
 root.render(
     <div dir='rtl'>
         <App />
-    </div>,
+    </div>
 );
 
 // calling IPC exposed from preload script

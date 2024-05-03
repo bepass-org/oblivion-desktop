@@ -24,29 +24,29 @@ const configuration: webpack.Configuration = {
 
     entry: {
         main: path.join(webpackPaths.srcMainPath, 'main.ts'),
-        preload: path.join(webpackPaths.srcMainPath, 'preload.ts'),
+        preload: path.join(webpackPaths.srcMainPath, 'preload.ts')
     },
 
     output: {
         path: webpackPaths.distMainPath,
         filename: '[name].js',
         library: {
-            type: 'umd',
-        },
+            type: 'umd'
+        }
     },
 
     optimization: {
         minimizer: [
             new TerserPlugin({
-                parallel: true,
-            }),
-        ],
+                parallel: true
+            })
+        ]
     },
 
     plugins: [
         new BundleAnalyzerPlugin({
             analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
-            analyzerPort: 8888,
+            analyzerPort: 8888
         }),
 
         /**
@@ -61,12 +61,12 @@ const configuration: webpack.Configuration = {
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'production',
             DEBUG_PROD: false,
-            START_MINIMIZED: false,
+            START_MINIMIZED: false
         }),
 
         new webpack.DefinePlugin({
-            'process.type': '"browser"',
-        }),
+            'process.type': '"browser"'
+        })
     ],
 
     /**
@@ -76,8 +76,8 @@ const configuration: webpack.Configuration = {
      */
     node: {
         __dirname: false,
-        __filename: false,
-    },
+        __filename: false
+    }
 };
 
 export default merge(baseConfig, configuration);

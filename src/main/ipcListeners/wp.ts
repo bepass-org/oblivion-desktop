@@ -93,7 +93,7 @@ ipcMain.on('wp-start', async (event, arg) => {
                 app.getAppPath().replace('/app.asar', ''),
                 'assets',
                 'bin',
-                'warp-plus.exe',
+                'warp-plus.exe'
             );
         }
     } else {
@@ -104,7 +104,7 @@ ipcMain.on('wp-start', async (event, arg) => {
                 app.getAppPath().replace('/app.asar', ''),
                 'assets',
                 'bin',
-                'warp-plus',
+                'warp-plus'
             );
         }
     }
