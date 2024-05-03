@@ -49,13 +49,13 @@ export default function Index() {
         const versionRegex = /\d+(\.\d+)+/;
         try {
             const response = await fetch(
-                'https://api.github.com/repos/ircfspace/fragment/releases/latest'
+                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
             );
             if (response.ok) {
                 const data = await response.json();
                 const latestVersion = String(data?.tag_name);
                 const appVersion = String(packageJsonData?.version);
-                if (latestVersion !== appVersion) {
+                if (latestVersion && latestVersion !== appVersion) {
                     hasNewUpdate = true;
                 }
             } else {
