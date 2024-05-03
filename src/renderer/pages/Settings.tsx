@@ -81,7 +81,7 @@ export default function Settings() {
             <EndpointModal
                 {...{
                     endpoint,
-                    setEndpoint,
+                    setEndpoint
                 }}
                 title='اندپوینت'
                 isOpen={showEndpointModal}
@@ -92,7 +92,7 @@ export default function Settings() {
             <PortModal
                 {...{
                     port,
-                    setPort,
+                    setPort
                 }}
                 title='پورت پروکسی'
                 isOpen={showPortModal}
@@ -103,7 +103,7 @@ export default function Settings() {
             <LicenseModal
                 {...{
                     license,
-                    setLicense,
+                    setLicense
                 }}
                 title='لایسنس'
                 isOpen={showLicenseModal}
@@ -163,11 +163,11 @@ export default function Settings() {
                             setShowPortModal(true);
                         }}
                     >
-                        <label className='key'>پورت تانل</label>
+                        <label className='key'>پورت پروکسی</label>
                         <div className='value'>
                             <span className='dirLeft'>{port}</span>
                         </div>
-                        <div className='info'>تعیین پورت تانل برنامه</div>
+                        <div className='info'>تعیین پورت پروکسی برنامه</div>
                     </div>
                     <div
                         className={classNames('item', psiphon ? 'disabled' : '')}
