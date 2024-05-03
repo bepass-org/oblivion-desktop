@@ -1,11 +1,11 @@
 name: Feature Request
 description: Request a new feature
-title: '[FR] '
+title: ''
 body:
   - type: markdown
     attributes:
       value: |
-        test
+        Here is a template you can use to share your idea.
   - type: textarea
     attributes:
       label: Feature description
