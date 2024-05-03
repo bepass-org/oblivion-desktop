@@ -59,13 +59,22 @@ changeJson(path.resolve(__dirname, '../package.json'), 'version', v, () => {
                             return;
                         }
 
-                        console.log(`git push; git push --tags`);
-                        exec(`git push; git push --tags`, (err5, stdout3) => {
+                        console.log(`git push`);
+                        exec(`git push`, (err5, stdout3) => {
                             if (err5) {
                                 console.error(err5);
                                 return;
                             }
                             console.log(stdout3);
+
+                            console.log('git push --tags');
+                            exec('git push --tags', (err6, stdout4) => {
+                                if (err6) {
+                                    console.error(err6);
+                                    return;
+                                }
+                                console.log(stdout4);
+                            });
                         });
                     });
                 });
