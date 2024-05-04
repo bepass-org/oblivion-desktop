@@ -110,6 +110,14 @@ export default function Index() {
         };
     }, []);
 
+    useEffect(() => {
+        if (online) {
+            toast.dismiss('onlineStatus');
+        } else {
+            checkInternet().then();
+        }
+    }, [online]);
+
     const ipToast = async () => {
         if (connectedToIrIPOnceDisplayed) {
             return false;
@@ -160,15 +168,21 @@ export default function Index() {
                     const lines = data.split('\n');
                     const ipLine = lines.find((line) => line.startsWith('ip='));
                     const locationLine = lines.find((line) => line.startsWith('loc='));
+                    const warpLine = lines.find((warp) => warp.startsWith('warp='));
                     const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
-                    const ipInfo = {
-                        countryCode: (psiphon || gool) && getLoc === 'ir' ? 'xx' : getLoc,
-                        ip: getIp
-                    };
-                    cachedIpInfo = ipInfo;
-                    lastFetchTime = currentTime;
-                    setIpInfo(ipInfo);
+                    const checkWarp = warpLine ? warpLine.split('=')[1] : 'off';
+                    if (checkWarp === 'on') {
+                        const ipInfo = {
+                            countryCode: (psiphon || gool) && getLoc === 'ir' ? 'xx' : getLoc,
+                            ip: getIp
+                        };
+                        cachedIpInfo = ipInfo;
+                        lastFetchTime = currentTime;
+                        setIpInfo(ipInfo);
+                    } else {
+                        setTimeout(getIpLocation, 7000);
+                    }
                     clearTimeout(timeoutId);
                     toast.dismiss('ipLocationStatus');
                 }
@@ -216,12 +230,6 @@ export default function Index() {
             toast.dismiss('ipLocationStatus');
         }
 
-        if (online) {
-            toast.dismiss('onlineStatus');
-        } else {
-            checkInternet().then();
-        }
-
         if (isConnected && isLoading) {
             setStatus('قطع ارتباط ...');
         } else if (!isConnected && isLoading) {
@@ -235,7 +243,8 @@ export default function Index() {
         } else {
             setStatus('متصل نیستید');
         }
-    }, [isLoading, isConnected, online, shownIpData, ipInfo]);
+    }, [isLoading, isConnected, ipInfo]);
+
 
     const onChange = () => {
         if (!online) {
@@ -351,8 +360,10 @@ export default function Index() {
             <div className={classNames('myApp', 'verticalAlign')}>
                 <div className='container'>
                     <div className='homeScreen'>
-                        <h1>OBLIVION</h1>
-                        <h2>بر پایه وارپ</h2>
+                        <div className='title'>
+                            <h1>OBLIVION</h1>
+                            <h2>بر پایه وارپ</h2>
+                        </div>
                         <form action=''>
                             <div className='connector'>
                                 <div
