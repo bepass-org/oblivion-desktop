@@ -330,10 +330,8 @@ export default function Index() {
                 <div className='container'>
                     <a
                         onClick={toggleDrawer}
-                        className={classNames(
-                            'navMenu',
-                            isLoading ? 'disabled' : ''
-                        )}>
+                        className={classNames('navMenu', isLoading ? 'disabled' : '')}
+                    >
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div
                             className={classNames('indicator', hasNewUpdate ? '' : 'hidden')}

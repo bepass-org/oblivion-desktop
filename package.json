@@ -212,13 +212,17 @@
                 "zip"
             ]
         },
+        "nsis": {
+            "allowToChangeInstallationDirectory": true,
+            "deleteAppDataOnUninstall": true
+        },
         "linux": {
             "target": [
                 "deb",
                 "rpm",
                 "tar.xz"
             ],
-            "category": "Network"
+            "category": "Utility"
         },
         "directories": {
             "app": "release/app",
