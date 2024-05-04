@@ -7,7 +7,7 @@ import path from 'path';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { appendToLogFile, wpLogPath, writeToLogFile } from '../lib/log';
-import { doesFileExist, isDev } from '../lib/utils';
+import { doesFileExist } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 
 const { spawn } = require('child_process');
@@ -121,21 +121,18 @@ ipcMain.on('wp-start', async (event, arg) => {
     child.stderr.on('data', (err: any) => {
         console.log('err', err.toString());
     });
+
+    child.on('exit', () => {
+        event.reply('wp-end', true);
+        disableProxy();
+    });
 });
 
-ipcMain.on('wp-end', async (event, arg) => {
+ipcMain.on('wp-end', async (event) => {
     try {
-        treeKill(child.pid);
+        treeKill(child.pid, 'SIGKILL');
     } catch (error) {
+        console.error(error);
         event.reply('wp-end', false);
     }
-
-    child.on('exit', (code: any) => {
-        if (code === 0 || code === 1) {
-            event.reply('wp-end', true);
-            disableProxy();
-        } else {
-            console.log('🚀 - wp.on - code:', code);
-        }
-    });
 });

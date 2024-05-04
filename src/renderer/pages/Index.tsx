@@ -92,6 +92,7 @@ export default function Index() {
                 setIsConnected(true);
             }
         });
+
         ipcRenderer.on('wp-end', (ok) => {
             console.log('🚀 - ipcRenderer.once - ok:', ok);
             if (ok) {
@@ -238,7 +239,7 @@ export default function Index() {
 
     const onChange = () => {
         if (!online) {
-            checkInternet().then();
+            checkInternet();
         } else {
             if (isLoading) {
                 console.log('🚀 - onChange - isLoading:', isLoading);
