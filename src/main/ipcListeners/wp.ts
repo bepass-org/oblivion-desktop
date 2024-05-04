@@ -63,10 +63,7 @@ ipcMain.on('wp-start', async (event, arg) => {
         args.push(license);
     }
     // gool or psiphon
-    if (
-        (typeof gool === 'boolean' && gool) ||
-        (typeof gool === 'undefined' && typeof psiphon === 'undefined')
-    ) {
+    if (typeof gool === 'boolean' && gool) {
         args.push('--gool');
     } else if (typeof psiphon === 'boolean' && psiphon) {
         args.push(`--cfon`);
@@ -79,14 +76,12 @@ ipcMain.on('wp-start', async (event, arg) => {
         }
     }
     // scan
-    if ((typeof scan === 'boolean' && scan) || typeof scan === 'undefined') {
-        if (
-            (typeof endpoint === 'string' &&
-                (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
-            typeof endpoint === 'undefined'
-        ) {
-            args.push(`--scan`);
-        }
+    if (
+        (typeof scan === 'boolean' && scan) ||
+        (typeof endpoint === 'string' && (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
+        typeof endpoint === 'undefined'
+    ) {
+        args.push(`--scan`);
     }
 
     const wpFileName = `warp-plus${platform === 'win32' ? '.exe' : ''}`;
