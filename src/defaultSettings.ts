@@ -21,7 +21,7 @@ export const defaultSettings = {
     psiphon: false,
     location: '',
     license: '',
-    gool: true,
+    gool: false,
     theme: 'light',
     systemTray: false,
     flag: 'xx',
