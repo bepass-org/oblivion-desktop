@@ -65,7 +65,7 @@ technology
         <tr>
         <td>iOS</td>
             <td>
-                <small>Coming Soong ...</small>
+                <small>Coming Soon ...</small>
             </td>
         </tr>
     </tbody>
