@@ -12,7 +12,6 @@ import path from 'path';
 import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
 import settings from 'electron-settings';
 import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
 import './ipc';
 import { isDev, removeFileIfExists } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -24,6 +23,16 @@ let mainWindow: BrowserWindow | null = null;
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
+}
+
+function resolveHtmlPath(htmlFileName: string) {
+    if (process.env.NODE_ENV === 'development') {
+        const port = process.env.PORT || 1212;
+        const url = new URL(`http://localhost:${port}`);
+        url.pathname = htmlFileName;
+        return url.href;
+    }
+    return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
 }
 
 removeFileIfExists(wpLogPath);

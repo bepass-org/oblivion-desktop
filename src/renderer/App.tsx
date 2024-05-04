@@ -16,19 +16,17 @@ import About from './pages/About';
 import Debug from './pages/Debug';
 import { settings } from './lib/settings';
 import { defaultSettings } from '../defaultSettings';
+import { ipcRenderer } from './lib/utils';
 
 export default function App() {
     useEffect(() => {
         // open devtools on dev enviroment by ctrl+shift+i
         let keysDown: any = {};
         window.addEventListener('keydown', function (event) {
-            // console.log('🚀 - event:', event);
             keysDown[event.keyCode] = true;
-
             // Check if Ctrl, Shift, and I keys are down at the same time
             if (keysDown[17] && keysDown[16] && keysDown[73]) {
-                window.electron.ipcRenderer.sendMessage('open-devtools');
-                // Clear the keysDown object after handling the desired keypress
+                ipcRenderer.sendMessage('open-devtools');
                 setTimeout(() => {
                     keysDown = {};
                 }, 0);

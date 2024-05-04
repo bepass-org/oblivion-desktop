@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
+import Lottie from 'lottie-react';
 import Nav from '../components/Nav';
 import RoutingRulesModal from '../components/Modal/RoutingRules';
 import { settings } from '../lib/settings';
-import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import { toPersianNumber } from '../lib/toPersianNumber';
 
