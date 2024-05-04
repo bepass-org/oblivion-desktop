@@ -39,26 +39,28 @@ ipcMain.on('wp-start', async (event, arg) => {
     const license = await settings.get('license');
     const gool = await settings.get('gool');
 
+    // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
     // ipType
     if (typeof ipType === 'string' && ipType !== '') {
         args.push(ipType);
     }
     // port
+    args.push('--bind');
     args.push(
         typeof port === 'string' || typeof port === 'number'
-            ? `--bind 127.0.0.1:${port}`
-            : `--bind 127.0.0.1:${defaultSettings.port}`
+            ? `127.0.0.1:${port}`
+            : `127.0.0.1:${defaultSettings.port}`
     );
     // endpoint
+    args.push('--endpoint');
     args.push(
-        typeof endpoint === 'string' && endpoint.length > 0
-            ? `--endpoint ${endpoint}`
-            : `--endpoint ${defaultSettings.endpoint}`
+        typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : defaultSettings.endpoint
     );
     // license
     if (typeof license === 'string' && license !== '') {
-        args.push(`--key ${license}`);
+        args.push('--key');
+        args.push(license);
     }
     // gool or psiphon
     if (
@@ -69,9 +71,11 @@ ipcMain.on('wp-start', async (event, arg) => {
     } else if (typeof psiphon === 'boolean' && psiphon) {
         args.push(`--cfon`);
         if (typeof location === 'string' && location !== '') {
-            args.push(`--country ${location}`);
+            args.push('--country');
+            args.push(location);
         } else {
-            args.push(`--country ${randomCountry()}`);
+            args.push('--country');
+            args.push(randomCountry());
         }
     }
     // scan
@@ -84,15 +88,6 @@ ipcMain.on('wp-start', async (event, arg) => {
             args.push(`--scan`);
         }
     }
-    console.log('args:', args);
-
-    console.log(1, path.join(__dirname, 'resources', 'assets', 'bin', 'warp-plus'));
-    console.log(2, path.join('assets', 'bin', 'warp-plus'));
-    console.log(3, app.getPath('appData'));
-    console.log(4, app.getPath('logs'));
-    console.log(5, app.getPath('userData'));
-    console.log(6, app.getPath('exe'));
-    console.log(7, app.getAppPath());
 
     const wpFileName = `warp-plus${platform === 'win32' ? '.exe' : ''}`;
     const command = path.join(
@@ -101,7 +96,7 @@ ipcMain.on('wp-start', async (event, arg) => {
         'bin',
         wpFileName
     );
-    console.log('command', command);
+    console.log('💻 command: ', command, args);
 
     child = spawn(command, args);
 
