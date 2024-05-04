@@ -172,16 +172,16 @@ export default function Index() {
                     const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     const checkWarp = warpLine ? warpLine.split('=')[1] : 'off';
-                    if (checkWarp === 'on') {
+                    if (checkWarp !== 'on' || ((psiphon || gool) && getLoc === 'ir')) {
+                        setTimeout(getIpLocation, 7500);
+                    } else {
                         const ipInfo = {
-                            countryCode: (psiphon || gool) && getLoc === 'ir' ? 'xx' : getLoc,
+                            countryCode: getLoc,
                             ip: getIp
                         };
                         cachedIpInfo = ipInfo;
                         lastFetchTime = currentTime;
                         setIpInfo(ipInfo);
-                    } else {
-                        setTimeout(getIpLocation, 7000);
                     }
                     clearTimeout(timeoutId);
                     toast.dismiss('ipLocationStatus');
