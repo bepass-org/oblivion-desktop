@@ -51,11 +51,11 @@ export default function Settings() {
         });
     }, []);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (endpoint === '' || endpoint === defaultSettings.endpoint) {
             setScan(true);
         }
-    }, [endpoint]);
+    }, [endpoint]);*/
 
     if (
         typeof endpoint === 'undefined' ||
