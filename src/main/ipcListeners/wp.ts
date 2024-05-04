@@ -18,7 +18,7 @@ const platform = process.platform; // linux / win32 / darwin / else(not supporte
 
 const randomCountry = () => {
     const randomIndex = Math.floor(Math.random() * countries.length);
-    return countries[randomIndex]?.value;
+    return countries[randomIndex]?.value ? countries[randomIndex]?.value : 'DE';
 };
 
 ipcMain.on('wp-start', async (event, arg) => {
@@ -90,7 +90,7 @@ ipcMain.on('wp-start', async (event, arg) => {
             command = path.join('assets', 'bin', 'warp-plus.exe');
         } else {
             command = path.join(
-                app.getAppPath().replace('/app.asar', ''),
+                String(app.getAppPath()).replace('/app.asar', ''),
                 'assets',
                 'bin',
                 'warp-plus.exe'
@@ -101,7 +101,7 @@ ipcMain.on('wp-start', async (event, arg) => {
             command = path.join('assets', 'bin', 'warp-plus');
         } else {
             command = path.join(
-                app.getAppPath().replace('/app.asar', ''),
+                String(app.getAppPath()).replace('/app.asar', ''),
                 'assets',
                 'bin',
                 'warp-plus'
