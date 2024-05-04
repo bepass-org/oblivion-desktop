@@ -87,7 +87,8 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or su
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
 provided by the following repositories:
 
-- [warp-plus](https://github.com/bepass-org/warp-plus/)
+- Cloudflare Warp
+- [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
 - [oblivion](https://github.com/bepass-org/oblivion)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [sing-box](https://github.com/SagerNet/sing-box)
