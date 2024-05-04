@@ -93,7 +93,7 @@ ipcMain.on('wp-start', async (event, arg) => {
             command = path.join('assets', 'bin', 'warp-plus.exe');
         } else {
             command = String(
-                path.join(__dirname, 'resources', 'assets', 'bin', 'warp-plus.exe')
+                path.join(app.getAppPath(), 'resources', 'assets', 'bin', 'warp-plus.exe')
             ).replace('/app.asar', '');
         }
     } else {
@@ -101,7 +101,7 @@ ipcMain.on('wp-start', async (event, arg) => {
             command = path.join('assets', 'bin', 'warp-plus');
         } else {
             command = String(
-                path.join(__dirname, 'resources', 'assets', 'bin', 'warp-plus')
+                path.join(app.getAppPath(), 'resources', 'assets', 'bin', 'warp-plus')
             ).replace('/app.asar', '');
         }
     }

@@ -76,6 +76,7 @@ const createWindow = async () => {
         fullscreenable: false,
         icon: getAssetPath('oblivion.png'),
         webPreferences: {
+            nativeWindowOpen: false,
             devTools: false,
             devToolsKeyCombination: false,
             preload: app.isPackaged
@@ -97,55 +98,55 @@ const createWindow = async () => {
     }
 
     function createMainWindow() {
-        mainWindow = new BrowserWindow(config);
+        if (!mainWindow) {
+            mainWindow = new BrowserWindow(config);
 
-        mainWindow.loadURL(resolveHtmlPath('index.html'));
+            mainWindow.loadURL(resolveHtmlPath('index.html'));
 
-        mainWindow.on('ready-to-show', async () => {
-            if (!mainWindow) {
-                throw new Error('"mainWindow" is not defined');
-            }
-            // await settings.get('systemTray')
-            if (process.env.START_MINIMIZED) {
-                mainWindow.minimize();
-            } else {
-                mainWindow.show();
-            }
-        });
+            mainWindow.on('ready-to-show', async () => {
+                if (!mainWindow) {
+                    throw new Error('"mainWindow" is not defined');
+                }
+                // await settings.get('systemTray')
+                if (process.env.START_MINIMIZED) {
+                    mainWindow.minimize();
+                } else {
+                    mainWindow.show();
+                }
+            });
 
-        ipcMain.on('open-devtools', async () => {
-            // TODO add toggle
-            mainWindow?.webContents.openDevTools();
-            // mainWindow.webContents.closeDevTools();
-        });
+            ipcMain.on('open-devtools', async () => {
+                // TODO add toggle
+                mainWindow?.webContents.openDevTools();
+                // mainWindow.webContents.closeDevTools();
+            });
 
-        mainWindow.on('closed', () => {
-            disableProxy();
-            mainWindow = null;
-        });
+            mainWindow.on('closed', () => {
+                disableProxy();
+                mainWindow = null;
+            });
 
-        mainWindow.on('minimize', async (e: any) => {
-            e.preventDefault();
-            if (await settings.get('systemTray')) {
-                mainWindow?.hide();
-            }
-        });
+            mainWindow.on('minimize', async (e: any) => {
+                e.preventDefault();
+                if (await settings.get('systemTray')) {
+                    mainWindow?.hide();
+                }
+            });
 
-        const menuBuilder = new MenuBuilder(mainWindow);
-        menuBuilder.buildMenu();
+            const menuBuilder = new MenuBuilder(mainWindow);
+            menuBuilder.buildMenu();
 
-        // Open urls in the user's browser
-        mainWindow.webContents.setWindowOpenHandler((edata) => {
-            shell.openExternal(edata.url);
-            return { action: 'deny' };
-        });
+            // Open urls in the user's browser
+            mainWindow.webContents.setWindowOpenHandler((edata) => {
+                shell.openExternal(edata.url);
+                return { action: 'deny' };
+            });
+        } else {
+            mainWindow.show();
+        }
     }
 
-    if (!mainWindow) {
-        createMainWindow();
-    } else {
-        mainWindow.show();
-    }
+    createMainWindow();
 
     let appIcon = null;
     app?.whenReady().then(() => {
