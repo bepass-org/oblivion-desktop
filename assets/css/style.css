@@ -215,8 +215,7 @@ nav .navMenu .indicator {
     margin-top: 150px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: right;
+    align-items: center;
     justify-content: space-evenly;
     flex-wrap: nowrap;
     align-content: center;
@@ -227,7 +226,12 @@ nav .navMenu .indicator {
     user-select: none;
 }
 
-.homeScreen h1 {
+.homeScreen .title {
+    float: right;
+    width: 227px;
+}
+
+.homeScreen .title h1 {
     float: right;
     width: 100%;
     color: #707070;
@@ -238,11 +242,11 @@ nav .navMenu .indicator {
     padding: 0;
 }
 
-[data-bs-theme="dark"] .homeScreen h1 {
+[data-bs-theme="dark"] .homeScreen .title h1 {
     color: #c5c5c5;
 }
 
-.homeScreen h2 {
+.homeScreen .title h2 {
     float: right;
     width: 100%;
     padding: 0;
@@ -253,12 +257,12 @@ nav .navMenu .indicator {
     margin: 0;
 }
 
-[data-bs-theme="dark"] .homeScreen h2 {
+[data-bs-theme="dark"] .homeScreen .title h2 {
     color: #FFA200;
 }
 
 @media screen and (min-width: 600px) {
-    .homeScreen h2 {
+    .homeScreen .title h2 {
         text-align: center;
     }
 }
