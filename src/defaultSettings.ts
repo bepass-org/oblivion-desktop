@@ -25,7 +25,7 @@ export const defaultSettings = {
     theme: 'light',
     systemTray: false,
     flag: 'xx',
-    ipData: false,
+    ipData: true,
     routingRules: ''
 };
 
