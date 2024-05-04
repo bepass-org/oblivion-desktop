@@ -131,7 +131,9 @@ export default function Settings() {
                     <div
                         className={classNames('item', scan ? 'disabled' : '')}
                         onClick={() => {
-                            setShowEndpointModal(true);
+                            if (!scan) {
+                                setShowEndpointModal(true);
+                            }
                         }}
                     >
                         <label className='key'>اندپوینت</label>
