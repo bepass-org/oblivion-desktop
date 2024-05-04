@@ -20,6 +20,12 @@ import { wpLogPath } from './lib/log';
 
 let mainWindow: BrowserWindow | null = null;
 
+// console.log(3, app.getPath('appData'));
+// console.log(4, app.getPath('logs'));
+// console.log(5, app.getPath('userData'));
+// console.log(6, app.getPath('exe'));
+// console.log(7, app.getAppPath());
+
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
