@@ -1,6 +1,5 @@
 name: Bug Report
 description: Report a bug encountered while using Oblivion Desktop
-labels: ['bug']
 body:
     - type: markdown
       attributes:
