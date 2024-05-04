@@ -359,7 +359,6 @@ nav .navMenu .indicator {
 .homeScreen .ip {
     color: #AEAEAE;
     margin: 10px 0 0 0;
-    cursor: pointer;
 }
 
 .homeScreen .ip img,
@@ -381,6 +380,10 @@ nav .navMenu .indicator {
 .homeScreen .ip span {
     opacity: 0;
     transition: all 0.2s ease-in-out;
+}
+
+.homeScreen .ip span:not(:empty) {
+    cursor: pointer;
 }
 
 .homeScreen .ip.connected span {
