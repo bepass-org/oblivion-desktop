@@ -16,7 +16,7 @@ import { defaultSettings } from '../../defaultSettings';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
-const cacheDuration = 30 * 1000;
+const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
 let canCheckNewVer = true;
 let hasNewUpdate = false;
