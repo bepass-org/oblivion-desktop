@@ -44,26 +44,22 @@ ipcMain.on('wp-start', async (event, arg) => {
         args.push(ipType);
     }
     if (typeof port === 'string' || typeof port === 'number') {
-        args.push(`--bind`);
-        args.push(`127.0.0.1:${port}`);
+        args.push(`--bind 127.0.0.1:${port}`);
     }
     if (typeof endpoint === 'string' && endpoint.length > 0) {
-        args.push(`--endpoint`);
-        args.push(`${endpoint}`);
+        args.push(`--endpoint ${endpoint}`);
     }
     if (typeof license === 'string' && license !== '') {
-        args.push(`--key`);
-        args.push(`${license}`);
+        args.push(`--key ${license}`);
     }
     if (typeof gool === 'boolean' && gool) {
         args.push('--gool');
     } else if (typeof psiphon === 'boolean' && psiphon) {
         args.push(`--cfon`);
-        args.push(`--country`);
         if (typeof location === 'string' && location !== '') {
-            args.push(`${location}`);
+            args.push(`--country ${location}`);
         } else {
-            args.push(`${randomCountry()}`);
+            args.push(`--country ${randomCountry()}`);
         }
     }
     if (typeof scan === 'boolean' && scan) {
@@ -83,29 +79,36 @@ ipcMain.on('wp-start', async (event, arg) => {
     console.log(5, app.getPath('userData'));
     console.log(6, app.getPath('exe'));
     console.log(7, app.getAppPath());
+    console.log(8, app.getAppPath().replace('/app.asar', ''));
+    console.log(9, String(path.join(
+        app.getAppPath().replace('/app.asar', ''),
+        'assets',
+        'bin',
+        'warp-plus'
+    )).replace('/app.asar', ''));
 
     let command = '';
     if (platform === 'win32') {
         if (isDev()) {
             command = path.join('assets', 'bin', 'warp-plus.exe');
         } else {
-            command = path.join(
-                String(app.getAppPath()).replace('/app.asar', ''),
+            command = String(path.join(
+                app.getAppPath().replace('/app.asar', ''),
                 'assets',
                 'bin',
                 'warp-plus.exe'
-            );
+            )).replace('/app.asar', '');
         }
     } else {
         if (isDev()) {
             command = path.join('assets', 'bin', 'warp-plus');
         } else {
-            command = path.join(
-                String(app.getAppPath()).replace('/app.asar', ''),
+            command = String(path.join(
+                app.getAppPath().replace('/app.asar', ''),
                 'assets',
                 'bin',
                 'warp-plus'
-            );
+            )).replace('/app.asar', '');
         }
     }
     console.log('command', command);
