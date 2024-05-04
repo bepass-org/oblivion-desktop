@@ -123,9 +123,9 @@ ipcMain.on('wp-start', async (event, arg) => {
         }
     });
 
-    // child.stderr.on((err: any) => {
-    //     console.log('err', err.toString());
-    // });
+    child.stderr.on('data', (err: any) => {
+        console.log('err', err.toString());
+    });
 });
 
 ipcMain.on('wp-end', async (event, arg) => {
