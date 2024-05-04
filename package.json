@@ -213,6 +213,7 @@
             ]
         },
         "nsis": {
+            "onClick": false,
             "allowToChangeInstallationDirectory": true,
             "deleteAppDataOnUninstall": true
         },
