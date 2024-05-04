@@ -79,16 +79,10 @@ ipcMain.on('wp-start', async (event, arg) => {
     console.log(5, app.getPath('userData'));
     console.log(6, app.getPath('exe'));
     console.log(7, app.getAppPath());
-    console.log(8, app.getAppPath().replace('/app.asar', ''));
-    console.log(
-        9,
-        String(path.join(app.getAppPath().replace('/app.asar', ''), 'assets', 'bin', 'warp-plus'))
-    );
-    console.log(10, path.join(app.getAppPath().replace('/app.asar', ''), 'assets', 'bin'));
 
     const wpFileName = `warp-plus${platform === 'win32' ? '.exe' : ''}`;
     const command = path.join(
-        app.getAppPath().replace('/app.asar', ''),
+        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
         'assets',
         'bin',
         wpFileName
