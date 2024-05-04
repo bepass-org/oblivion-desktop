@@ -45,21 +45,26 @@ ipcMain.on('wp-start', async (event, arg) => {
         args.push(ipType);
     }
     // port
-    args.push((
-        typeof port === 'string' || typeof port === 'number')
-        ? `--bind 127.0.0.1:${port}`
-        : `--bind 127.0.0.1:${defaultSettings.port}`);
+    args.push(
+        typeof port === 'string' || typeof port === 'number'
+            ? `--bind 127.0.0.1:${port}`
+            : `--bind 127.0.0.1:${defaultSettings.port}`
+    );
     // endpoint
-    args.push((
-        typeof endpoint === 'string' && endpoint.length > 0)
-        ? `--endpoint ${endpoint}`
-        : `--endpoint ${defaultSettings.endpoint}`);
+    args.push(
+        typeof endpoint === 'string' && endpoint.length > 0
+            ? `--endpoint ${endpoint}`
+            : `--endpoint ${defaultSettings.endpoint}`
+    );
     // license
     if (typeof license === 'string' && license !== '') {
         args.push(`--key ${license}`);
     }
     // gool or psiphon
-    if (typeof gool === 'boolean' && gool || (typeof gool === 'undefined' && typeof psiphon === 'undefined')) {
+    if (
+        (typeof gool === 'boolean' && gool) ||
+        (typeof gool === 'undefined' && typeof psiphon === 'undefined')
+    ) {
         args.push('--gool');
     } else if (typeof psiphon === 'boolean' && psiphon) {
         args.push(`--cfon`);
@@ -70,10 +75,11 @@ ipcMain.on('wp-start', async (event, arg) => {
         }
     }
     // scan
-    if (typeof scan === 'boolean' && scan || typeof scan === 'undefined') {
+    if ((typeof scan === 'boolean' && scan) || typeof scan === 'undefined') {
         if (
             (typeof endpoint === 'string' &&
-                (endpoint === '' || endpoint === defaultSettings.endpoint) || typeof endpoint === 'undefined')
+                (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
+            typeof endpoint === 'undefined'
         ) {
             args.push(`--scan`);
         }
