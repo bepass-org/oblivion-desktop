@@ -82,29 +82,17 @@ ipcMain.on('wp-start', async (event, arg) => {
     console.log(8, app.getAppPath().replace('/app.asar', ''));
     console.log(
         9,
-        String(
-            path.join(app.getAppPath(), 'assets', 'bin', 'warp-plus')
-        ).replace('/app.asar', '')
+        String(path.join(app.getAppPath().replace('/app.asar', ''), 'assets', 'bin', 'warp-plus'))
     );
+    console.log(10, path.join(app.getAppPath().replace('/app.asar', ''), 'assets', 'bin'));
 
-    let command = '';
-    if (platform === 'win32') {
-        if (isDev()) {
-            command = path.join('assets', 'bin', 'warp-plus.exe');
-        } else {
-            command = String(
-                path.join(app.getAppPath(), 'resources', 'assets', 'bin', 'warp-plus.exe')
-            ).replace('/app.asar', '');
-        }
-    } else {
-        if (isDev()) {
-            command = path.join('assets', 'bin', 'warp-plus');
-        } else {
-            command = String(
-                path.join(app.getAppPath(), 'resources', 'assets', 'bin', 'warp-plus')
-            ).replace('/app.asar', '');
-        }
-    }
+    const wpFileName = `warp-plus${platform === 'win32' ? '.exe' : ''}`;
+    const command = path.join(
+        app.getAppPath().replace('/app.asar', ''),
+        'assets',
+        'bin',
+        wpFileName
+    );
     console.log('command', command);
 
     child = spawn(command, args);
