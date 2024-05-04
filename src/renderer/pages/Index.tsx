@@ -37,7 +37,7 @@ export default function Index() {
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
-        setDrawerIsOpen((prevState) => !prevState);
+        if (!isLoading) setDrawerIsOpen((prevState) => !prevState);
     };
 
     const [theme, setTheme] = useState<undefined | string>();
@@ -328,7 +328,12 @@ export default function Index() {
             </Drawer>
             <nav>
                 <div className='container'>
-                    <a onClick={toggleDrawer} className='navMenu'>
+                    <a
+                        onClick={toggleDrawer}
+                        className={classNames(
+                            'navMenu',
+                            isLoading ? 'disabled' : ''
+                        )}>
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div
                             className={classNames('indicator', hasNewUpdate ? '' : 'hidden')}
@@ -339,7 +344,7 @@ export default function Index() {
                             &#xe868;
                         </i>
                     </Link>*/}
-                    <Link to='/about'>
+                    <Link to='/about' className={isLoading ? 'disabled' : ''}>
                         <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
                     </Link>
                 </div>
