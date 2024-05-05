@@ -98,6 +98,10 @@ export default function Index() {
             if (ok) {
                 setIsConnected(false);
                 setIsLoading(false);
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
             }
         });
 
@@ -221,9 +225,6 @@ export default function Index() {
     };
 
     useEffect(() => {
-        console.log('isConnected ' + isConnected);
-        console.log('ipInfo ' + ipInfo?.countryCode);
-        console.log('psiphon ' + psiphon);
         if (typeof ipData === 'undefined' || ipData) {
             getIpLocation().then();
         } else {
