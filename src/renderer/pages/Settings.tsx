@@ -168,7 +168,7 @@ export default function Settings() {
                         </div>
                         <div className='info'>ترکیبی از IP یا نام دامنه، به‌همراه پورت</div>
                     </div>
-                    <div className='item'>
+                    <div className='item hidden'>
                         <label className='key'>نوع IP</label>
                         <div className='value'>
                             <select
