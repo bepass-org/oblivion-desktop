@@ -57,6 +57,32 @@ export default function Settings() {
         }
     }, [endpoint]);*/
 
+    /*useEffect(() => {
+        if ( connected && canOpenToast) {
+            toast(
+                (currentToast) => (
+                    <>
+                        <div className='customToast'>
+                            <p>
+                                اعمال تنظیمات نیازمند اتصال مجدد می‌باشد.
+                            </p>
+                            <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
+                        </div>
+                    </>
+                ),
+                {
+                    id: 'settingsChanged',
+                    duration: Infinity,
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff'
+                    }
+                });
+            setChangesToast(false);
+        }
+    }, [connected, endpoint, ipType, port, psiphon, location, license, gool]);*/
+
     if (
         typeof endpoint === 'undefined' ||
         typeof scan === 'undefined' ||
