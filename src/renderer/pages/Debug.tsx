@@ -26,6 +26,7 @@ export default function Debug() {
         e.preventDefault();
         navigator.clipboard.writeText(value);
         toast('کپی شد!', {
+            id: 'copied',
             style: {
                 fontSize: '13px',
                 borderRadius: '10px',
