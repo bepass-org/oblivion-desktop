@@ -52,11 +52,6 @@ ipcMain.on('wp-start', async (event, arg) => {
             ? `127.0.0.1:${port}`
             : `127.0.0.1:${defaultSettings.port}`
     );
-    // endpoint
-    args.push('--endpoint');
-    args.push(
-        typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : defaultSettings.endpoint
-    );
     // license
     if (typeof license === 'string' && license !== '') {
         args.push('--key');
@@ -82,6 +77,12 @@ ipcMain.on('wp-start', async (event, arg) => {
         typeof endpoint === 'undefined'
     ) {
         args.push(`--scan`);
+    } else {
+        // endpoint
+        args.push('--endpoint');
+        args.push(
+            typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : defaultSettings.endpoint
+        );
     }
 
     const wpFileName = `warp-plus${platform === 'win32' ? '.exe' : ''}`;
