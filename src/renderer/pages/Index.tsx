@@ -90,6 +90,7 @@ export default function Index() {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
+                localStorage.setItem('OBLIVION_STATUS', 'CONNECTED');
             }
         });
 
@@ -102,6 +103,7 @@ export default function Index() {
                     countryCode: false,
                     ip: ''
                 });
+                localStorage.setItem('OBLIVION_STATUS', '');
             }
         });
 
@@ -274,6 +276,7 @@ export default function Index() {
                     countryCode: false,
                     ip: ''
                 });
+                localStorage.setItem('OBLIVION_STATUS', '');
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
             }
