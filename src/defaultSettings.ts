@@ -11,7 +11,10 @@ export type settingsKeys =
     | 'systemTray'
     | 'flag'
     | 'ipData'
-    | 'routingRules';
+    | 'routingRules'
+    | 'autoSetProxy'
+    | 'shareVPN'
+    | 'hostIP';
 
 export const defaultSettings = {
     scan: true,
@@ -26,7 +29,10 @@ export const defaultSettings = {
     systemTray: false,
     flag: 'xx',
     ipData: true,
-    routingRules: ''
+    routingRules: '',
+    autoSetProxy: true,
+    shareVPN: false,
+    hostIP: '127.0.0.1'
 };
 
 export const countries: { value: string; label: string }[] = [

@@ -38,6 +38,8 @@ ipcMain.on('wp-start', async (event, arg) => {
     const location = await settings.get('location');
     const license = await settings.get('license');
     const gool = await settings.get('gool');
+    const autoSetProxy = await settings.get('autoSetProxy');
+    const hostIP = await settings.get('hostIP');
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
@@ -45,12 +47,12 @@ ipcMain.on('wp-start', async (event, arg) => {
     if (typeof ipType === 'string' && ipType !== '') {
         args.push(ipType);
     }
-    // port
+    // port, hostIP
     args.push('--bind');
     args.push(
         typeof port === 'string' || typeof port === 'number'
-            ? `127.0.0.1:${port}`
-            : `127.0.0.1:${defaultSettings.port}`
+            ? `${(hostIP ? hostIP : defaultSettings.hostIP)}:${port}`
+            : `${hostIP ? hostIP : defaultSettings.hostIP}:${defaultSettings.port}`
     );
     // license
     if (typeof license === 'string' && license !== '') {
@@ -73,7 +75,8 @@ ipcMain.on('wp-start', async (event, arg) => {
     // scan
     if (
         (typeof scan === 'boolean' && scan) ||
-        (typeof endpoint === 'string' && (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
+        (typeof endpoint === 'string' &&
+            (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
         typeof endpoint === 'undefined'
     ) {
         args.push(`--scan`);
@@ -81,7 +84,9 @@ ipcMain.on('wp-start', async (event, arg) => {
         // endpoint
         args.push('--endpoint');
         args.push(
-            typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : defaultSettings.endpoint
+            typeof endpoint === 'string' && endpoint.length > 0
+                ? endpoint
+                : defaultSettings.endpoint
         );
     }
 
@@ -97,13 +102,15 @@ ipcMain.on('wp-start', async (event, arg) => {
     child = spawn(command, args);
 
     // TODO better approach
-    const successMessage = 'level=INFO msg="serving proxy" address=127.0.0.1';
+    const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
     child.stdout.on('data', async (data: any) => {
         const strData = data.toString();
         console.log(strData);
         if (strData.includes(successMessage)) {
             event.reply('wp-start', true);
-            enableProxy();
+            if ((typeof autoSetProxy === 'boolean' && autoSetProxy) || typeof autoSetProxy === 'undefined') {
+                enableProxy();
+            }
         }
         // write to log file
         const tmp = await doesFileExist(wpLogPath);
