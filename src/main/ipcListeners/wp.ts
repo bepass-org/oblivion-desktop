@@ -51,8 +51,8 @@ ipcMain.on('wp-start', async (event, arg) => {
     args.push('--bind');
     args.push(
         typeof port === 'string' || typeof port === 'number'
-            ? `${hostIP}:${port}`
-            : `${hostIP}:${defaultSettings.port}`
+            ? `${(hostIP ? hostIP : defaultSettings.hostIP)}:${port}`
+            : `${hostIP ? hostIP : defaultSettings.hostIP}:${defaultSettings.port}`
     );
     // license
     if (typeof license === 'string' && license !== '') {
@@ -108,7 +108,7 @@ ipcMain.on('wp-start', async (event, arg) => {
         console.log(strData);
         if (strData.includes(successMessage)) {
             event.reply('wp-start', true);
-            if (autoSetProxy) {
+            if ((typeof autoSetProxy === 'boolean' && autoSetProxy) || typeof autoSetProxy === 'undefined') {
                 enableProxy();
             }
         }
