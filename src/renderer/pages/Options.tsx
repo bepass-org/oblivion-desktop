@@ -9,8 +9,11 @@ import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
 import { settingsHaveChanged } from '../lib/settingsHaveChanged';
+import { useStore } from '../store';
 
 export default function Options() {
+    const { isConnected, isLoading } = useStore();
+
     const [theme, setTheme] = useState<undefined | string>();
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
@@ -71,7 +74,7 @@ export default function Options() {
                 isOpen={showPortModal}
                 onClose={() => {
                     setShowPortModal(false);
-                    settingsHaveChanged();
+                    settingsHaveChanged({ ...{ isConnected, isLoading } });
                 }}
             />
             <RestoreModal
@@ -96,7 +99,8 @@ export default function Options() {
                         onClick={() => {
                             setAutoSetProxy(!autoSetProxy);
                             settings.set('autoSetProxy', !autoSetProxy);
-                            settingsHaveChanged();
+                            settingsHaveChanged({ ...{ isConnected, isLoading } });
+
                             if (autoSetProxy) {
                                 setIpData(false);
                                 settings.set('ipData', false);
@@ -129,7 +133,7 @@ export default function Options() {
                             setShareVPN(!shareVPN);
                             settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             settings.set('shareVPN', !shareVPN);
-                            settingsHaveChanged();
+                            settingsHaveChanged({ ...{ isConnected, isLoading } });
                         }}
                     >
                         <label className='key'>اتصال از LAN</label>
