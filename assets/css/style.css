@@ -449,6 +449,21 @@ nav .navMenu .indicator {
     height: 100vh;
 }
 
+.settings .grouped {
+    float: right;
+    width: 100%;
+}
+
+.settings .grouped .item {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.settings .grouped .item:last-child {
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 15px;
+}
+
 .settings .item {
     float: right;
     width: 100%;
@@ -549,6 +564,13 @@ nav .navMenu .indicator {
     color: #666666;
 }
 
+.settings .item .value i {
+    float: left;
+    font-size: 28px;
+    cursor: pointer;
+    color: #FFA200;
+}
+
 .settings .item .value .checkbox {
     float: left;
     border: 3px solid #A1A1A1;
@@ -566,7 +588,8 @@ nav .navMenu .indicator {
     border-color: #DCDCDC;
 }
 
-.settings .item.disabled .value .checkbox {
+.settings .item.disabled .value .checkbox,
+.settings .item.disabled .value .checkbox i {
     cursor: default;
 }
 
@@ -590,11 +613,37 @@ nav .navMenu .indicator {
     rotate: 0deg;
 }
 
-.settings .item .value i {
+.settings .item .value .switch {
     float: left;
-    font-size: 28px;
+    border: 3px solid #A1A1A1;
+    background: transparent;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    padding: 0;
+    margin: 2px 0 -1px 0;
     cursor: pointer;
-    color: #FFA200;
+    transition: all 0.2s ease-in-out;
+}
+
+[data-bs-theme="dark"] .settings .item .value .switch {
+    border-color: #DCDCDC;
+}
+
+.settings .item .value .switch.checked {
+    position: relative;
+    border-color: #FFA200;
+}
+
+.settings .item .value .switch.checked:after {
+    position: absolute;
+    content: "";
+    top: 5px;
+    right: 5px;
+    width: 11px;
+    height: 11px;
+    background: #FFA200;
+    border-radius: 50%;
 }
 
 .settings .item .info {
