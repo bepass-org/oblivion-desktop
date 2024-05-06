@@ -590,6 +590,13 @@ nav .navMenu .indicator {
     rotate: 0deg;
 }
 
+.settings .item .value i {
+    float: left;
+    font-size: 28px;
+    cursor: pointer;
+    color: #FFA200;
+}
+
 .settings .item .info {
     float: right;
     width: 100%;
@@ -846,6 +853,14 @@ nav .navMenu .indicator {
 
 [data-bs-theme="dark"] .dialog .dialogBox h3 {
     color: #DCDCDC;
+}
+
+.dialog .dialogBox p {
+    float: right;
+    width: 100%;
+    margin: 0;
+    font-size: 15px;
+    line-height: 26px;
 }
 
 .dialog .dialogBox input,

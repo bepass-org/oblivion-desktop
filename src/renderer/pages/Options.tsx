@@ -5,11 +5,13 @@ import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
+import RestoreModal from '../components/Modal/Restore';
 
 export default function Options() {
     const [theme, setTheme] = useState<undefined | string>();
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
+    const [showRestoreModal, setShowRestoreModal] = useState(false);
 
     useEffect(() => {
         settings.get('theme').then((value) => {
@@ -37,6 +39,21 @@ export default function Options() {
     return (
         <>
             <Nav title='تنظیمات برنامه' />
+            <RestoreModal
+                {...{
+                    theme,
+                    setTheme,
+                    ipData,
+                    setIpData,
+                    systemTray,
+                    setSystemTray
+                }}
+                title='بازگردانی تغییرات'
+                isOpen={showRestoreModal}
+                onClose={() => {
+                    setShowRestoreModal(false);
+                }}
+            />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
                     <div
@@ -99,7 +116,19 @@ export default function Options() {
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>آیکون برنامه در تسک‌بار قرار نگیرد</div>
+                        <div className='info'>قرار نگرفتن آیکون برنامه در تسک‌بار</div>
+                    </div>
+                    <div
+                        className={'item'}
+                        onClick={() => {
+                            setShowRestoreModal(true);
+                        }}
+                    >
+                        <label className='key'>بازگردانی</label>
+                        <div className='value'>
+                            <i className='material-icons'>&#xe8ba;</i>
+                        </div>
+                        <div className='info'>اعمال تنظیمات پیشفرض برنامه</div>
                     </div>
                 </div>
             </div>
