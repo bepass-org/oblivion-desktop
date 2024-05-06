@@ -1,6 +1,7 @@
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import classNames from 'classnames';
+import { ipcRenderer } from '../../lib/utils';
 
 export default function RestoreModal({
                                          title,
@@ -46,6 +47,8 @@ export default function RestoreModal({
         await settings.set('autoSetProxy', defaultSettings.autoSetProxy).then();
         await settings.set('shareVPN', defaultSettings.shareVPN).then();
         await settings.set('hostIP', defaultSettings.hostIP).then();
+        //
+        ipcRenderer.sendMessage('wp-end');
     };
 
     return (
@@ -58,7 +61,8 @@ export default function RestoreModal({
                             <div className='miniLine' />
                         </div>
                         <h3>{title}</h3>
-                        <p>با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به‌حالت پیشفرض باز می‌گردد.</p>
+                        <p>با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به‌حالت پیشفرض باز گشته و اتصال شما
+                            قطع می‌گردد.</p>
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
                             انصراف
