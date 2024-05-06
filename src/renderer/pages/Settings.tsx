@@ -21,6 +21,8 @@ export default function Settings() {
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     const [gool, setGool] = useState<undefined | boolean>();
+    const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
+    const [shareVPN, setShareVPN] = useState<undefined | boolean>();
 
     // loading settings
     useEffect(() => {
@@ -48,6 +50,12 @@ export default function Settings() {
         settings.get('gool').then((value) => {
             console.log('🚀 - settings.get - value:', typeof value === 'undefined');
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });
+        settings.get('autoSetProxy').then((value) => {
+            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
+        });
+        settings.get('shareVPN').then((value) => {
+            setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
     }, []);
 
@@ -186,18 +194,6 @@ export default function Settings() {
                         <div className='info'>برای اندپوینت تصادفی</div>
                     </div>
                     <div
-                        className='item'
-                        onClick={() => {
-                            setShowPortModal(true);
-                        }}
-                    >
-                        <label className='key'>پورت پروکسی</label>
-                        <div className='value'>
-                            <span className='dirLeft'>{port}</span>
-                        </div>
-                        <div className='info'>تعیین پورت پروکسی برنامه</div>
-                    </div>
-                    <div
                         className={classNames('item', psiphon ? 'disabled' : '')}
                         onClick={() => {
                             if (!psiphon) {
@@ -226,9 +222,9 @@ export default function Settings() {
                                 settings.set('psiphon', !psiphon);
                             }
                             /*if (gool && !psiphon) {
-                                setGool(false);
-                                settings.set('gool', false);
-                            }*/
+                              setGool(false);
+                              settings.set('gool', false);
+                          }*/
                         }}
                     >
                         <label className='key'>سایفون </label>
@@ -271,6 +267,55 @@ export default function Settings() {
                             <span className='dirLeft'>{license || 'Free'}</span>
                         </div>
                         <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
+                    </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    سایر تنظیمات
+                </div>
+                <div className='settings'>
+                    <div
+                        className={classNames('item', autoSetProxy ? 'checked' : '')}
+                        onClick={() => {
+                            setAutoSetProxy(!autoSetProxy);
+                            settings.set('autoSetProxy', !autoSetProxy);
+                        }}
+                    >
+                        <label className='key'>تنظیم پروکسی</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', autoSetProxy ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>تنظیم خودکار روی سیستم‌عامل</div>
+                    </div>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setShowPortModal(true);
+                        }}
+                    >
+                        <label className='key'>پورت پروکسی</label>
+                        <div className='value'>
+                            <span className='dirLeft'>{port}</span>
+                        </div>
+                        <div className='info'>تعیین پورت پروکسی برنامه</div>
+                    </div>
+                    <div
+                        className={classNames('item', shareVPN ? 'checked' : '')}
+                        onClick={() => {
+                            setShareVPN(!shareVPN);
+                            settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
+                            settings.set('shareVPN', !shareVPN);
+                        }}
+                    >
+                        <label className='key'>اتصال از LAN</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', shareVPN ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>اشتراک‌گذاری پروکسی روی شبکه</div>
                     </div>
                 </div>
             </div>

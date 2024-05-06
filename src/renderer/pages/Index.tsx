@@ -251,7 +251,6 @@ export default function Index() {
         }
     }, [isLoading, isConnected, ipInfo]);
 
-
     const onChange = () => {
         if (!online) {
             checkInternet();
