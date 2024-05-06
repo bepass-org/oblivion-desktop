@@ -1,30 +1,25 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import EndpointModal from '../components/Modal/Endpoint';
-import PortModal from '../components/Modal/Port';
 import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
-import toast, { Toaster } from 'react-hot-toast';
+import { settingsHaveChanged } from '../lib/settingsHaveChanged';
+import { Toaster } from 'react-hot-toast';
 
 export default function Settings() {
     //const [scan, setScan] = useState(true);
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
-    const [ipType, setIpType] = useState<undefined | string>();
-    const [port, setPort] = useState();
-    const [showPortModal, setShowPortModal] = useState(false);
+    //const [ipType, setIpType] = useState<undefined | string>();
     const [psiphon, setPsiphon] = useState<undefined | boolean>();
     const [location, setLocation] = useState<undefined | string>();
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     const [gool, setGool] = useState<undefined | boolean>();
-    const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
-    const [shareVPN, setShareVPN] = useState<undefined | boolean>();
-    const connected = useState(localStorage.getItem('OBLIVION_STATUS') === 'connected');
 
     /*useEffect(() => {
         if (endpoint === '' || endpoint === defaultSettings.endpoint) {
@@ -39,12 +34,9 @@ export default function Settings() {
         settings.get('endpoint').then((value) => {
             setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
         });
-        settings.get('ipType').then((value) => {
+        /*settings.get('ipType').then((value) => {
             setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
-        });
-        settings.get('port').then((value) => {
-            setPort(typeof value === 'undefined' ? defaultSettings.port : value);
-        });
+        });*/
         settings.get('psiphon').then((value) => {
             setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
         });
@@ -55,49 +47,15 @@ export default function Settings() {
             setLicense(typeof value === 'undefined' ? defaultSettings.license : value);
         });
         settings.get('gool').then((value) => {
-            console.log('🚀 - settings.get - value:', typeof value === 'undefined');
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
-        });
-        settings.get('autoSetProxy').then((value) => {
-            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
-        });
-        settings.get('shareVPN').then((value) => {
-            setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
     }, []);
 
-    const hasChangesToast = async () => {
-        const changesToast = localStorage.getItem('OBLIVION_CHANGES');
-        if (connected && !changesToast) {
-            toast(
-                (currentToast) => (
-                    <>
-                        <div className='customToast'>
-                            <p>
-                                اعمال تنظیمات نیازمند اتصال مجدد می‌باشد.
-                            </p>
-                            <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
-                        </div>
-                    </>
-                ),
-                {
-                    id: 'settingsChanged',
-                    duration: 10000,
-                    style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff'
-                    }
-                });
-            localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
-        }
-    };
-
     if (
         typeof endpoint === 'undefined' ||
-        typeof ipType === 'undefined' ||
         typeof psiphon === 'undefined' ||
         typeof location === 'undefined' ||
+        typeof license === 'undefined' ||
         typeof gool === 'undefined'
     )
         return (
@@ -112,7 +70,7 @@ export default function Settings() {
 
     return (
         <>
-            <Nav title='تنظیمات پروکسی' />
+            <Nav title='تنظیمات وارپ' />
             <EndpointModal
                 {...{
                     endpoint,
@@ -122,19 +80,7 @@ export default function Settings() {
                 isOpen={showEndpointModal}
                 onClose={() => {
                     setShowEndpointModal(false);
-                    hasChangesToast();
-                }}
-            />
-            <PortModal
-                {...{
-                    port,
-                    setPort
-                }}
-                title='پورت پروکسی'
-                isOpen={showPortModal}
-                onClose={() => {
-                    setShowPortModal(false);
-                    hasChangesToast();
+                    settingsHaveChanged();
                 }}
             />
             <LicenseModal
@@ -146,7 +92,7 @@ export default function Settings() {
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);
-                    hasChangesToast();
+                    settingsHaveChanged();
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -156,7 +102,7 @@ export default function Settings() {
                         onClick={() => {
                             setScan(!scan);
                             settings.set('scan', !scan);
-                            hasChangesToast();
+                            settingsHaveChanged();
                         }}
                     >
                         <label className='key'>اسکنر</label>
@@ -166,21 +112,6 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className='info'>جستجو در IP و پورت‌های وارپ</div>
-                    </div>*/}
-                    <div
-                        className={classNames('item'/*, scan ? 'disabled' : ''*/)}
-                        onClick={() => {
-                            /*if (!scan) {
-                                setShowEndpointModal(true);
-                            }*/
-                            setShowEndpointModal(true);
-                        }}
-                    >
-                        <label className='key'>اندپوینت</label>
-                        <div className='value'>
-                            <span className='dirLeft'>{endpoint}</span>
-                        </div>
-                        <div className='info'>ترکیبی از IP یا نام دامنه، به‌همراه پورت</div>
                     </div>
                     <div className='item hidden'>
                         <label className='key'>نوع IP</label>
@@ -189,7 +120,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                     setIpType(e.target.value);
                                     settings.set('ipType', e.target.value);
-                                    hasChangesToast();
+                                    settingsHaveChanged();
                                 }}
                                 value={ipType}
                             >
@@ -199,14 +130,14 @@ export default function Settings() {
                             </select>
                         </div>
                         <div className='info'>برای اندپوینت تصادفی</div>
-                    </div>
+                    </div>*/}
                     <div
                         className={classNames('item', psiphon ? 'disabled' : '')}
                         onClick={() => {
                             if (!psiphon) {
                                 setGool(!gool);
                                 settings.set('gool', !gool);
-                                hasChangesToast();
+                                settingsHaveChanged();
                             }
                             /*if (psiphon && !gool) {
                                 setPsiphon(false);
@@ -228,7 +159,7 @@ export default function Settings() {
                             if (!gool) {
                                 setPsiphon(!psiphon);
                                 settings.set('psiphon', !psiphon);
-                                hasChangesToast();
+                                settingsHaveChanged();
                             }
                             /*if (gool && !psiphon) {
                               setGool(false);
@@ -251,7 +182,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                     setLocation(e.target.value);
                                     settings.set('location', e.target.value);
-                                    hasChangesToast();
+                                    settingsHaveChanged();
                                 }}
                                 disabled={!psiphon}
                                 value={location}
@@ -266,6 +197,27 @@ export default function Settings() {
                         </div>
                         <div className='info'>انتخاب آی‌پی کشور موردنظر</div>
                     </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    سایر تنظیمات
+                </div>
+                <div className='settings'>
+                    <div
+                        className={classNames('item'/*, scan ? 'disabled' : ''*/)}
+                        onClick={() => {
+                            /*if (!scan) {
+                                setShowEndpointModal(true);
+                            }*/
+                            setShowEndpointModal(true);
+                        }}
+                    >
+                        <label className='key'>اندپوینت</label>
+                        <div className='value'>
+                            <span className='dirLeft'>{endpoint}</span>
+                        </div>
+                        <div className='info'>ترکیبی از IP یا نام دامنه، به‌همراه پورت</div>
+                    </div>
                     <div
                         className='item'
                         onClick={() => {
@@ -277,57 +229,6 @@ export default function Settings() {
                             <span className='dirLeft'>{license || 'Free'}</span>
                         </div>
                         <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
-                    </div>
-                </div>
-                <div className='moreSettings'>
-                    <i className='material-icons'>&#xe313;</i>
-                    سایر تنظیمات
-                </div>
-                <div className='settings'>
-                    <div
-                        className={classNames('item', autoSetProxy ? 'checked' : '')}
-                        onClick={() => {
-                            setAutoSetProxy(!autoSetProxy);
-                            settings.set('autoSetProxy', !autoSetProxy);
-                            hasChangesToast();
-                        }}
-                    >
-                        <label className='key'>تنظیم پروکسی</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', autoSetProxy ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>تنظیم خودکار روی سیستم‌عامل</div>
-                    </div>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            setShowPortModal(true);
-                        }}
-                    >
-                        <label className='key'>پورت پروکسی</label>
-                        <div className='value'>
-                            <span className='dirLeft'>{port}</span>
-                        </div>
-                        <div className='info'>تعیین پورت پروکسی برنامه</div>
-                    </div>
-                    <div
-                        className={classNames('item', shareVPN ? 'checked' : '')}
-                        onClick={() => {
-                            setShareVPN(!shareVPN);
-                            settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
-                            settings.set('shareVPN', !shareVPN);
-                            hasChangesToast();
-                        }}
-                    >
-                        <label className='key'>اتصال از LAN</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', shareVPN ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>اشتراک‌گذاری پروکسی روی شبکه</div>
                     </div>
                 </div>
             </div>

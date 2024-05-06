@@ -7,22 +7,22 @@ export default function RestoreModal({
                                          title,
                                          isOpen,
                                          onClose,
-                                         theme,
                                          setTheme,
-                                         ipData,
                                          setIpData,
-                                         systemTray,
-                                         setSystemTray
+                                         setSystemTray,
+                                         setPort,
+                                         setAutoSetProxy,
+                                         setShareVPN
                                      }: {
     title: string;
     isOpen: boolean;
     onClose: any;
-    theme: any;
     setTheme: any;
-    ipData: any;
     setIpData: any;
-    systemTray: any;
     setSystemTray: any;
+    setPort: any;
+    setAutoSetProxy: any;
+    setShareVPN: any;
 }) {
     if (!isOpen) return null;
 
@@ -31,21 +31,24 @@ export default function RestoreModal({
         setTheme(defaultSettings.theme);
         setIpData(defaultSettings.ipData);
         setSystemTray(defaultSettings.systemTray);
+        setPort(defaultSettings.port);
+        setAutoSetProxy(defaultSettings.autoSetProxy);
+        setShareVPN(defaultSettings.shareVPN);
         await settings.set('theme', defaultSettings.theme).then();
         await settings.set('ipData', defaultSettings.ipData).then();
         await settings.set('systemTray', defaultSettings.systemTray).then();
+        await settings.set('port', defaultSettings.port).then();
+        await settings.set('autoSetProxy', defaultSettings.autoSetProxy).then();
+        await settings.set('shareVPN', defaultSettings.shareVPN).then();
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
         // other settings
         //await settings.set('scan', defaultSettings.scan).then();
         await settings.set('endpoint', defaultSettings.endpoint).then();
-        await settings.set('port', defaultSettings.port).then();
         await settings.set('psiphon', defaultSettings.psiphon).then();
         await settings.set('location', defaultSettings.location).then();
         await settings.set('license', defaultSettings.license).then();
         await settings.set('gool', defaultSettings.gool).then();
-        await settings.set('autoSetProxy', defaultSettings.autoSetProxy).then();
-        await settings.set('shareVPN', defaultSettings.shareVPN).then();
         await settings.set('hostIP', defaultSettings.hostIP).then();
         //
         ipcRenderer.sendMessage('wp-end');
