@@ -4,16 +4,16 @@ import classNames from 'classnames';
 import { ipcRenderer } from '../../lib/utils';
 
 export default function RestoreModal({
-                                         title,
-                                         isOpen,
-                                         onClose,
-                                         setTheme,
-                                         setIpData,
-                                         setSystemTray,
-                                         setPort,
-                                         setAutoSetProxy,
-                                         setShareVPN
-                                     }: {
+    title,
+    isOpen,
+    onClose,
+    setTheme,
+    setIpData,
+    setSystemTray,
+    setPort,
+    setAutoSetProxy,
+    setShareVPN
+}: {
     title: string;
     isOpen: boolean;
     onClose: any;
@@ -65,8 +65,10 @@ export default function RestoreModal({
                             <div className='miniLine' />
                         </div>
                         <h3>{title}</h3>
-                        <p>با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به‌حالت پیشفرض باز گشته و اتصال شما
-                            قطع می‌گردد.</p>
+                        <p>
+                            با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به‌حالت پیشفرض
+                            باز گشته و اتصال شما قطع می‌گردد.
+                        </p>
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
                             انصراف
