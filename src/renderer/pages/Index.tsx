@@ -42,8 +42,10 @@ export default function Index() {
 
     const [theme, setTheme] = useState<undefined | string>();
     const [ipData, setIpData] = useState<undefined | boolean>();
-    const [psiphon, setPsiphon] = useState<undefined | boolean>();
-    const [gool, setGool] = useState<undefined | boolean>();
+    //const [psiphon, setPsiphon] = useState<undefined | boolean>();
+    //const [gool, setGool] = useState<undefined | boolean>();
+    const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
+    const [method, setMethod] = useState<undefined | string>('');
 
     const fetchReleaseVersion = async () => {
         const versionRegex = /\d+(\.\d+)+/;
@@ -73,11 +75,17 @@ export default function Index() {
         settings.get('ipData').then((value) => {
             setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
         });
-        settings.get('psiphon').then((value) => {
+        /*settings.get('psiphon').then((value) => {
             setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
         });
         settings.get('gool').then((value) => {
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });*/
+        settings.get('autoSetProxy').then((value) => {
+            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
+        });
+        settings.get('method').then((value) => {
+            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
         });
 
         cachedIpInfo = null;
@@ -180,12 +188,11 @@ export default function Index() {
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     const checkWarp = warpLine ? warpLine.split('=')[1] : '';
                     const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
-                    if (getLoc) {
-                        if ((psiphon || gool) && getLoc === 'ir') {
-                            setTimeout(getIpLocation, 7500);
-                        } else if (cfHost !== 'cloudflare.com' && checkWarp !== 'on') {
-                            setTimeout(getIpLocation, 7500);
-                        } else {
+                    if (getLoc && cfHost === 'cloudflare.com') {
+                        if (
+                            (method === 'psiphon' && checkWarp !== 'on' && getLoc !== 'ir') ||
+                            checkWarp === 'on'
+                        ) {
                             const ipInfo = {
                                 countryCode: getLoc,
                                 ip: getIp
@@ -193,6 +200,8 @@ export default function Index() {
                             cachedIpInfo = ipInfo;
                             lastFetchTime = currentTime;
                             setIpInfo(ipInfo);
+                        } else {
+                            setTimeout(getIpLocation, 7500);
                         }
                     } else {
                         setTimeout(getIpLocation, 7500);
@@ -213,7 +222,7 @@ export default function Index() {
 
     useEffect(() => {
         if (ipInfo?.countryCode) {
-            if ((psiphon || gool) && ipInfo?.countryCode === 'ir') {
+            if (method === '' && ipInfo?.countryCode === 'ir') {
                 ipToast().then();
             } else {
                 toast.dismiss('ipChangedToIR');
