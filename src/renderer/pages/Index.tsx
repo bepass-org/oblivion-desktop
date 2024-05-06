@@ -316,7 +316,7 @@ export default function Index() {
                         <li>
                             <Link to={'/settings'}>
                                 <i className={'material-icons'}>&#xe429;</i>
-                                <span>تنظیمات پروکسی</span>
+                                <span>تنظیمات وارپ</span>
                             </Link>
                         </li>
                         {/*<li>
@@ -325,7 +325,7 @@ export default function Index() {
                                 <span>قوانین مسیریابی</span>
                             </Link>
                         </li>*/}
-                        <li className='divider'></li>
+                        {/*<li className='divider'></li>*/}
                         <li>
                             <Link to={'/options'}>
                                 <i className={'material-icons'}>&#xe8b8;</i>
