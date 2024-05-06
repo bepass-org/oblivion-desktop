@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import classNames from 'classnames';
 import { ipcRenderer } from '../../lib/utils';
 
 export default function RestoreModal({
@@ -34,23 +34,23 @@ export default function RestoreModal({
         setPort(defaultSettings.port);
         setAutoSetProxy(defaultSettings.autoSetProxy);
         setShareVPN(defaultSettings.shareVPN);
-        await settings.set('theme', defaultSettings.theme).then();
-        await settings.set('ipData', defaultSettings.ipData).then();
-        await settings.set('systemTray', defaultSettings.systemTray).then();
-        await settings.set('port', defaultSettings.port).then();
-        await settings.set('autoSetProxy', defaultSettings.autoSetProxy).then();
-        await settings.set('shareVPN', defaultSettings.shareVPN).then();
+        await settings.set('theme', defaultSettings.theme);
+        await settings.set('ipData', defaultSettings.ipData);
+        await settings.set('systemTray', defaultSettings.systemTray);
+        await settings.set('port', defaultSettings.port);
+        await settings.set('autoSetProxy', defaultSettings.autoSetProxy);
+        await settings.set('shareVPN', defaultSettings.shareVPN);
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
         // other settings
         //await settings.set('scan', defaultSettings.scan).then();
-        await settings.set('endpoint', defaultSettings.endpoint).then();
+        await settings.set('endpoint', defaultSettings.endpoint);
         //await settings.set('psiphon', defaultSettings.psiphon).then();
-        await settings.set('location', defaultSettings.location).then();
-        await settings.set('license', defaultSettings.license).then();
+        await settings.set('location', defaultSettings.location);
+        await settings.set('license', defaultSettings.license);
         //await settings.set('gool', defaultSettings.gool).then();
-        await settings.set('method', defaultSettings.method).then();
-        await settings.set('hostIP', defaultSettings.hostIP).then();
+        await settings.set('method', defaultSettings.method);
+        await settings.set('hostIP', defaultSettings.hostIP);
         //
         ipcRenderer.sendMessage('wp-end');
     };

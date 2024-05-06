@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
+import Lottie from 'lottie-react';
+import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
-import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
-import { Toaster } from 'react-hot-toast';
 import { settingsHaveChanged } from '../lib/settingsHaveChanged';
 
 export default function Options() {
