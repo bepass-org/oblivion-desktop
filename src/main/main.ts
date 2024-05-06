@@ -9,6 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
+import fs from 'fs';
 import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
 import settings from 'electron-settings';
 import MenuBuilder from './menu';
@@ -25,6 +26,22 @@ let mainWindow: BrowserWindow | null = null;
 // console.log(5, app.getPath('userData'));
 // console.log(6, app.getPath('exe'));
 // console.log(7, app.getAppPath());
+
+// copieng wp binary to tmp on production so it can run withoud sudo/administrator privilage
+if (!isDev()) {
+    const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
+    const source = path.join(
+        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+        'assets',
+        'bin',
+        wpFileName
+    );
+    const destination = path.join(app.getPath('temp'), wpFileName);
+    fs.copyFile(source, destination, (err) => {
+        if (err) throw err;
+        console.log('wp binary was copied to tmp directory.');
+    });
+}
 
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');

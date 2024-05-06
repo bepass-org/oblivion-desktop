@@ -7,14 +7,12 @@ import path from 'path';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { appendToLogFile, wpLogPath, writeToLogFile } from '../lib/log';
-import { doesFileExist } from '../lib/utils';
+import { doesFileExist, isDev } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 
 const { spawn } = require('child_process');
 
 let child: any;
-
-const platform = process.platform; // linux / win32 / darwin / else(not supported...)
 
 const randomCountry = () => {
     const randomIndex = Math.floor(Math.random() * countries.length);
@@ -91,13 +89,16 @@ ipcMain.on('wp-start', async (event, arg) => {
         );
     }
 
-    const wpFileName = `warp-plus${platform === 'win32' ? '.exe' : ''}`;
-    const command = path.join(
-        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-        'assets',
-        'bin',
-        wpFileName
-    );
+    const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
+    const command = isDev()
+        ? path.join(
+              app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+              'assets',
+              'bin',
+              wpFileName
+          )
+        : path.join(app.getPath('temp'), wpFileName);
+
     console.log('💻 command: ', command, args);
 
     child = spawn(command, args);

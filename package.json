@@ -214,8 +214,10 @@
         },
         "nsis": {
             "oneClick": false,
+            "perMachine": true,
+            "selectPerMachineByDefault": true,
             "allowToChangeInstallationDirectory": true,
-            "deleteAppDataOnUninstall": true
+            "runAfterFinish": false
         },
         "linux": {
             "target": [
