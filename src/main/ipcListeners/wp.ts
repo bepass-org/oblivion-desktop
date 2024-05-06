@@ -138,7 +138,9 @@ ipcMain.on('wp-start', async (event, arg) => {
 
 ipcMain.on('wp-end', async (event) => {
     try {
-        treeKill(child.pid, 'SIGKILL');
+        if (typeof child?.pid !== 'undefined') {
+            treeKill(child.pid, 'SIGKILL');
+        }
     } catch (error) {
         console.error(error);
         event.reply('wp-end', false);
