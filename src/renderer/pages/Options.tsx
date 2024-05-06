@@ -141,10 +141,7 @@ export default function Options() {
                         <div className='info'>اشتراک‌گذاری پروکسی بر روی شبکه</div>
                     </div>
                     <div
-                        className={classNames(
-                            'item',
-                            autoSetProxy ? '' : 'disabled'
-                        )}
+                        className={classNames('item', autoSetProxy ? '' : 'disabled')}
                         onClick={() => {
                             if (autoSetProxy) {
                                 setIpData(!ipData);

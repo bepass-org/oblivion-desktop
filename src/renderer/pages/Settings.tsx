@@ -136,9 +136,7 @@ export default function Settings() {
                     </div>*/}
                     <div className='grouped'>
                         <div
-                            className={classNames(
-                                'item'
-                            )}
+                            className={classNames('item')}
                             onClick={() => {
                                 setMethod('');
                                 settings.set('method', '');
@@ -147,7 +145,9 @@ export default function Settings() {
                         >
                             <label className='key'>وارپ</label>
                             <div className='value'>
-                                <div className={classNames('switch', method === '' ? 'checked' : '')} />
+                                <div
+                                    className={classNames('switch', method === '' ? 'checked' : '')}
+                                />
                             </div>
                             <div className='info'>فعالسازی Warp</div>
                         </div>
@@ -170,7 +170,12 @@ export default function Settings() {
                         >
                             <label className='key'>گول</label>
                             <div className='value'>
-                                <div className={classNames('switch', method === 'gool' ? 'checked' : '')} />
+                                <div
+                                    className={classNames(
+                                        'switch',
+                                        method === 'gool' ? 'checked' : ''
+                                    )}
+                                />
                             </div>
                             <div className='info'>فعالسازی WarpInWarp</div>
                         </div>
@@ -193,7 +198,12 @@ export default function Settings() {
                         >
                             <label className='key'>سایفون </label>
                             <div className='value'>
-                                <div className={classNames('switch', method === 'psiphon' ? 'checked' : '')} />
+                                <div
+                                    className={classNames(
+                                        'switch',
+                                        method === 'psiphon' ? 'checked' : ''
+                                    )}
+                                />
                             </div>
                             <div className='info'>فعالسازی Psiphon</div>
                         </div>
@@ -227,7 +237,7 @@ export default function Settings() {
                 </div>
                 <div className='settings'>
                     <div
-                        className={classNames('item'/*, scan ? 'disabled' : ''*/)}
+                        className={classNames('item' /*, scan ? 'disabled' : ''*/)}
                         onClick={() => {
                             /*if (!scan) {
                                 setShowEndpointModal(true);

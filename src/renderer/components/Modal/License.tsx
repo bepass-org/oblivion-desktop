@@ -3,12 +3,12 @@ import { settings } from '../../lib/settings';
 import { useState } from 'react';
 
 export default function LicenseModal({
-                                         title,
-                                         isOpen,
-                                         onClose,
-                                         license,
-                                         setLicense
-                                     }: {
+    title,
+    isOpen,
+    onClose,
+    license,
+    setLicense
+}: {
     title: string;
     isOpen: boolean;
     onClose: any;

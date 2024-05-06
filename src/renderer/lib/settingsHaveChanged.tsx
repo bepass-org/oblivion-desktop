@@ -5,12 +5,11 @@ export const settingsHaveChanged = () => {
     const changesToast = localStorage.getItem('OBLIVION_CHANGES');
 
     if (connected === 'CONNECTED' && !changesToast) {
-        toast((currentToast) => (
+        toast(
+            (currentToast) => (
                 <>
                     <div className='customToast'>
-                        <p>
-                            اعمال تنظیمات نیازمند اتصال مجدد می‌باشد.
-                        </p>
+                        <p>اعمال تنظیمات نیازمند اتصال مجدد می‌باشد.</p>
                         <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
                     </div>
                 </>
@@ -23,7 +22,8 @@ export const settingsHaveChanged = () => {
                     background: '#333',
                     color: '#fff'
                 }
-            });
+            }
+        );
         localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
     }
 };
