@@ -11,7 +11,7 @@ import LottieFile from '../../../assets/json/1713988096625.json';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function Settings() {
-    const [scan, setScan] = useState(true);
+    //const [scan, setScan] = useState(true);
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     const [ipType, setIpType] = useState<undefined | string>();
@@ -33,9 +33,9 @@ export default function Settings() {
     }, [endpoint]);*/
 
     useEffect(() => {
-        settings.get('scan').then((value) => {
+        /*settings.get('scan').then((value) => {
             setScan(typeof value === 'undefined' ? defaultSettings.scan : value);
-        });
+        });*/
         settings.get('endpoint').then((value) => {
             setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
         });
@@ -95,7 +95,6 @@ export default function Settings() {
 
     if (
         typeof endpoint === 'undefined' ||
-        typeof scan === 'undefined' ||
         typeof ipType === 'undefined' ||
         typeof psiphon === 'undefined' ||
         typeof location === 'undefined' ||
@@ -152,7 +151,7 @@ export default function Settings() {
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
-                    <div
+                    {/*<div
                         className={'item'}
                         onClick={() => {
                             setScan(!scan);
@@ -167,13 +166,14 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className='info'>جستجو در IP و پورت‌های وارپ</div>
-                    </div>
+                    </div>*/}
                     <div
-                        className={classNames('item', scan ? 'disabled' : '')}
+                        className={classNames('item'/*, scan ? 'disabled' : ''*/)}
                         onClick={() => {
-                            if (!scan) {
+                            /*if (!scan) {
                                 setShowEndpointModal(true);
-                            }
+                            }*/
+                            setShowEndpointModal(true);
                         }}
                     >
                         <label className='key'>اندپوینت</label>

@@ -37,7 +37,7 @@ export default function RestoreModal({
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
         // other settings
-        await settings.set('scan', defaultSettings.scan).then();
+        //await settings.set('scan', defaultSettings.scan).then();
         await settings.set('endpoint', defaultSettings.endpoint).then();
         await settings.set('port', defaultSettings.port).then();
         await settings.set('psiphon', defaultSettings.psiphon).then();
