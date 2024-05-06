@@ -3,16 +3,16 @@ import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
-import { ipcRenderer } from '../lib/utils';
+import Drawer from 'react-modern-drawer';
 import { useStore } from '../store';
 import appIco from '../../../assets/oblivion.png';
 import defFlag from '../../../assets/img/flags/xx.svg';
 import irFlag from '../../../assets/img/flags/ir.svg';
 import { settings } from '../lib/settings';
-import Drawer from 'react-modern-drawer';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
+import { ipcRenderer, checkInternet } from '../lib/utils';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -22,9 +22,8 @@ let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 export default function Index() {
-    const [status, setStatus] = useState<string>('متصل نیستید');
-    const { isConnected, setIsConnected } = useStore();
-    const [isLoading, setIsLoading] = useState(false);
+    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } =
+        useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
         ip: string;
@@ -36,7 +35,7 @@ export default function Index() {
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
-        if (!isLoading) setDrawerIsOpen((prevState) => !prevState);
+        setDrawerIsOpen((prevState) => !prevState);
     };
 
     const [theme, setTheme] = useState<undefined | string>();
@@ -85,7 +84,7 @@ export default function Index() {
 
         cachedIpInfo = null;
         if (canCheckNewVer) {
-            fetchReleaseVersion().then();
+            fetchReleaseVersion();
             canCheckNewVer = false;
         }
 
@@ -93,7 +92,6 @@ export default function Index() {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
-                localStorage.setItem('OBLIVION_STATUS', 'CONNECTED');
             }
         });
 
@@ -106,7 +104,6 @@ export default function Index() {
                     countryCode: false,
                     ip: ''
                 });
-                localStorage.setItem('OBLIVION_STATUS', '');
             }
         });
 
@@ -123,7 +120,7 @@ export default function Index() {
         if (online) {
             toast.dismiss('onlineStatus');
         } else {
-            checkInternet().then();
+            checkInternet();
         }
     }, [online]);
 
@@ -188,13 +185,13 @@ export default function Index() {
                             (method === 'psiphon' && checkWarp !== 'on' && getLoc !== 'ir') ||
                             checkWarp === 'on'
                         ) {
-                            const ipInfo = {
+                            const ipInfo2 = {
                                 countryCode: getLoc,
                                 ip: getIp
                             };
-                            cachedIpInfo = ipInfo;
+                            cachedIpInfo = ipInfo2;
                             lastFetchTime = currentTime;
-                            setIpInfo(ipInfo);
+                            setIpInfo(ipInfo2);
                         } else {
                             setTimeout(getIpLocation, 7500);
                         }
@@ -218,29 +215,16 @@ export default function Index() {
     useEffect(() => {
         if (ipInfo?.countryCode) {
             if (method === '' && ipInfo?.countryCode === 'ir') {
-                ipToast().then();
+                ipToast();
             } else {
                 toast.dismiss('ipChangedToIR');
             }
         }
     }, [ipInfo]);
 
-    const checkInternet = async () => {
-        toast('شما به اینترنت متصل نیستید!', {
-            id: 'onlineStatus',
-            duration: Infinity,
-            style: {
-                fontSize: '13px',
-                borderRadius: '10px',
-                background: '#333',
-                color: '#fff'
-            }
-        });
-    };
-
     useEffect(() => {
         if (ipData) {
-            getIpLocation().then();
+            getIpLocation();
         }
 
         if (isLoading || !isConnected) {
@@ -249,17 +233,17 @@ export default function Index() {
         }
 
         if (isConnected && isLoading) {
-            setStatus('قطع ارتباط ...');
+            setStatusText('قطع ارتباط ...');
         } else if (!isConnected && isLoading) {
-            setStatus('درحال اتصال ...');
+            setStatusText('درحال اتصال ...');
         } else if (isConnected && ipInfo?.countryCode) {
-            setStatus('متصل هستید');
+            setStatusText('متصل هستید');
         } else if (isConnected && !ipInfo?.countryCode && ipData) {
-            setStatus('دریافت اطلاعات ...');
+            setStatusText('دریافت اطلاعات ...');
         } else if (isConnected && !ipData) {
-            setStatus('اتصال برقرار شد');
+            setStatusText('اتصال برقرار شد');
         } else {
-            setStatus('متصل نیستید');
+            setStatusText('متصل نیستید');
         }
     }, [isLoading, isConnected, ipInfo, ipData]);
 
@@ -278,7 +262,6 @@ export default function Index() {
                     countryCode: false,
                     ip: ''
                 });
-                localStorage.setItem('OBLIVION_STATUS', '');
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
             }
@@ -342,7 +325,7 @@ export default function Index() {
                                 <div className='label label-warning label-xs'>نسخه جدید</div>
                             </a>
                         </li>
-                        <li className='divider'></li>
+                        <li className='divider' />
                         <li>
                             <Link to='/about'>
                                 <i className={'material-icons'}>&#xe88e;</i>
@@ -357,10 +340,8 @@ export default function Index() {
             </Drawer>
             <nav>
                 <div className='container'>
-                    <a
-                        onClick={toggleDrawer}
-                        className={classNames('navMenu', isLoading ? 'disabled' : '')}
-                    >
+                    {/* TODO use button */}
+                    <a onClick={toggleDrawer} className={classNames('navMenu')}>
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div
                             className={classNames('indicator', hasNewUpdate ? '' : 'hidden')}
@@ -371,7 +352,7 @@ export default function Index() {
                             &#xe868;
                         </i>
                     </Link>*/}
-                    <Link to='/about' className={isLoading ? 'disabled' : ''}>
+                    <Link to='/about'>
                         <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
                     </Link>
                 </div>
@@ -405,7 +386,7 @@ export default function Index() {
                                 isConnected && ipInfo?.countryCode && !isLoading ? 'active' : ''
                             )}
                         >
-                            {status}
+                            {statusText}
                             <br />
                             <div
                                 className={classNames(
@@ -432,7 +413,7 @@ export default function Index() {
                                             }
                                         });
                                     } else {
-                                        getIpLocation().then();
+                                        getIpLocation();
                                     }
                                 }}
                             >

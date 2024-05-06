@@ -38,7 +38,8 @@ module.exports = {
         'spaced-comment': 'off',
         'react/jsx-boolean-value': 'off',
         'react/require-default-props': 'off',
-        'no-unneeded-ternary': 'off'
+        'no-unneeded-ternary': 'off',
+        'consistent-return': 'off'
     },
     parserOptions: {
         ecmaVersion: 2022,

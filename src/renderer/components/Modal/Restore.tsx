@@ -43,12 +43,12 @@ export default function RestoreModal({
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
         // other settings
-        //await settings.set('scan', defaultSettings.scan).then();
+        //await settings.set('scan', defaultSettings.scan);
         await settings.set('endpoint', defaultSettings.endpoint);
-        //await settings.set('psiphon', defaultSettings.psiphon).then();
+        //await settings.set('psiphon', defaultSettings.psiphon);
         await settings.set('location', defaultSettings.location);
         await settings.set('license', defaultSettings.license);
-        //await settings.set('gool', defaultSettings.gool).then();
+        //await settings.set('gool', defaultSettings.gool);
         await settings.set('method', defaultSettings.method);
         await settings.set('hostIP', defaultSettings.hostIP);
         //

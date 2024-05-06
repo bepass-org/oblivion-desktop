@@ -1,10 +1,14 @@
 import toast from 'react-hot-toast';
 
-export const settingsHaveChanged = () => {
-    const connected = localStorage.getItem('OBLIVION_STATUS');
-    const changesToast = localStorage.getItem('OBLIVION_CHANGES');
-
-    if (connected === 'CONNECTED' && !changesToast) {
+export const settingsHaveChanged = ({
+    isConnected,
+    isLoading
+}: {
+    isConnected: boolean;
+    isLoading: boolean;
+}) => {
+    if (localStorage.getItem('OBLIVION_CHANGES') === 'TOASTED') return;
+    if (isConnected || isLoading) {
         toast(
             (currentToast) => (
                 <>
@@ -24,6 +28,7 @@ export const settingsHaveChanged = () => {
                 }
             }
         );
+
         localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
     }
 };
