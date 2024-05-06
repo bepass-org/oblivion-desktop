@@ -26,7 +26,6 @@ export default function RestoreModal({
     if (!isOpen) return null;
 
     const onSaveModal = async () => {
-        onClose();
         // in this page
         setTheme(defaultSettings.theme);
         setIpData(defaultSettings.ipData);
@@ -35,6 +34,7 @@ export default function RestoreModal({
         await settings.set('ipData', defaultSettings.ipData).then();
         await settings.set('systemTray', defaultSettings.systemTray).then();
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
+        onClose();
         // other settings
         await settings.set('scan', defaultSettings.scan).then();
         await settings.set('endpoint', defaultSettings.endpoint).then();
@@ -46,7 +46,6 @@ export default function RestoreModal({
         await settings.set('autoSetProxy', defaultSettings.autoSetProxy).then();
         await settings.set('shareVPN', defaultSettings.shareVPN).then();
         await settings.set('hostIP', defaultSettings.hostIP).then();
-        // TODO: remove Stuff
     };
 
     return (
