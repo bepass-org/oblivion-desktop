@@ -90,18 +90,19 @@ ipcMain.on('wp-start', async (event, arg) => {
     }
 
     const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
-    const command = isDev()
+    const wpDirPath = isDev()
         ? path.join(
               app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
               'assets',
-              'bin',
-              wpFileName
+              'bin'
           )
-        : path.join(app.getPath('temp'), wpFileName);
+        : path.join(app.getPath('temp'));
 
-    console.log('💻 command: ', command, args);
+    const command = path.join(wpDirPath, wpFileName);
 
-    child = spawn(command, args);
+    console.log('command: ', command, args);
+
+    child = spawn(command, args, { cwd: wpDirPath });
 
     // TODO better approach
     const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
