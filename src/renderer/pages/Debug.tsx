@@ -43,7 +43,7 @@ export default function Debug() {
 
     return (
         <>
-            <Nav title='لاگ برنامه' />
+            <Nav title='لاگ وارپ' />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
                     <div className={classNames('logOptions', log === '' ? 'hidden' : '')}>

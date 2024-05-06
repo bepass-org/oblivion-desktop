@@ -328,13 +328,14 @@ export default function Index() {
                         <li>
                             <Link to={'/debug'}>
                                 <i className={'material-icons'}>&#xe868;</i>
-                                <span>لاگ برنامه</span>
+                                <span>لاگ وارپ</span>
                             </Link>
                         </li>
                         <li className={hasNewUpdate ? '' : 'hidden'}>
                             <a
                                 href='https://github.com/bepass-org/oblivion-desktop/releases/latest'
                                 target='_blank'
+                                rel='noreferrer'
                             >
                                 <i className={'material-icons'}>&#xe923;</i>
                                 <span>بروزرسانی</span>
