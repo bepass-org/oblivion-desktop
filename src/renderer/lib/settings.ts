@@ -37,7 +37,7 @@ export class settings {
                     if (res.key === key) {
                         resolve(res.value);
                     } else {
-                        console.error('unmatched key event!', res.key, key);
+                        //console.error('unmatched key event!', res.key, key);
                     }
                 } catch (error) {
                     console.error('settings - ipcRenderer.on - error:', error);

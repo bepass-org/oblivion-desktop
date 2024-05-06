@@ -45,10 +45,11 @@ export default function RestoreModal({
         // other settings
         //await settings.set('scan', defaultSettings.scan).then();
         await settings.set('endpoint', defaultSettings.endpoint).then();
-        await settings.set('psiphon', defaultSettings.psiphon).then();
+        //await settings.set('psiphon', defaultSettings.psiphon).then();
         await settings.set('location', defaultSettings.location).then();
         await settings.set('license', defaultSettings.license).then();
-        await settings.set('gool', defaultSettings.gool).then();
+        //await settings.set('gool', defaultSettings.gool).then();
+        await settings.set('method', defaultSettings.method).then();
         await settings.set('hostIP', defaultSettings.hostIP).then();
         //
         ipcRenderer.sendMessage('wp-end');

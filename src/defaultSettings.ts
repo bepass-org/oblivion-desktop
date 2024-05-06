@@ -3,10 +3,8 @@ export type settingsKeys =
     | 'endpoint'
     | 'ipType'
     | 'port'
-    | 'psiphon'
     | 'location'
     | 'license'
-    | 'gool'
     | 'theme'
     | 'systemTray'
     | 'flag'
@@ -14,17 +12,16 @@ export type settingsKeys =
     | 'routingRules'
     | 'autoSetProxy'
     | 'shareVPN'
-    | 'hostIP';
+    | 'hostIP'
+    | 'method';
 
 export const defaultSettings = {
     scan: true,
     endpoint: 'engage.cloudflareclient.com:2048',
     ipType: '',
     port: 8086,
-    psiphon: false,
     location: '',
     license: '',
-    gool: false,
     theme: 'light',
     systemTray: false,
     flag: 'xx',
@@ -32,7 +29,8 @@ export const defaultSettings = {
     routingRules: '',
     autoSetProxy: true,
     shareVPN: false,
-    hostIP: '127.0.0.1'
+    hostIP: '127.0.0.1',
+    method: 'gool'
 };
 
 export const countries: { value: string; label: string }[] = [

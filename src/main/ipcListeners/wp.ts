@@ -33,11 +33,11 @@ ipcMain.on('wp-start', async (event, arg) => {
     const endpoint = await settings.get('endpoint');
     const ipType = await settings.get('ipType');
     const port = await settings.get('port');
-    console.log('🚀 - ipcMain.on - port:', port);
-    const psiphon = await settings.get('psiphon');
+    //const psiphon = await settings.get('psiphon');
     const location = await settings.get('location');
     const license = await settings.get('license');
-    const gool = await settings.get('gool');
+    //const gool = await settings.get('gool');
+    const method = await settings.get('method');
     const autoSetProxy = await settings.get('autoSetProxy');
     const hostIP = await settings.get('hostIP');
 
@@ -60,16 +60,18 @@ ipcMain.on('wp-start', async (event, arg) => {
         args.push(license);
     }
     // gool or psiphon
-    if (typeof gool === 'boolean' && gool) {
-        args.push('--gool');
-    } else if (typeof psiphon === 'boolean' && psiphon) {
-        args.push(`--cfon`);
-        if (typeof location === 'string' && location !== '') {
-            args.push('--country');
-            args.push(location);
-        } else {
-            args.push('--country');
-            args.push(randomCountry());
+    if (typeof method === 'string') {
+        if (method === 'gool') {
+            args.push('--gool');
+        } else if (method === 'psiphon') {
+            args.push(`--cfon`);
+            if (typeof location === 'string' && location !== '') {
+                args.push('--country');
+                args.push(location);
+            } else {
+                args.push('--country');
+                args.push(randomCountry());
+            }
         }
     }
     // scan

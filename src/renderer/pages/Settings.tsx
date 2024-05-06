@@ -15,11 +15,12 @@ export default function Settings() {
     const [endpoint, setEndpoint] = useState();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     //const [ipType, setIpType] = useState<undefined | string>();
-    const [psiphon, setPsiphon] = useState<undefined | boolean>();
+    //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     const [location, setLocation] = useState<undefined | string>();
     const [license, setLicense] = useState();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
-    const [gool, setGool] = useState<undefined | boolean>();
+    //const [gool, setGool] = useState<undefined | boolean>();
+    const [method, setMethod] = useState<undefined | string>('');
 
     /*useEffect(() => {
         if (endpoint === '' || endpoint === defaultSettings.endpoint) {
@@ -37,26 +38,28 @@ export default function Settings() {
         /*settings.get('ipType').then((value) => {
             setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
         });*/
-        settings.get('psiphon').then((value) => {
+        /*settings.get('psiphon').then((value) => {
             setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
-        });
+        });*/
         settings.get('location').then((value) => {
             setLocation(typeof value === 'undefined' ? defaultSettings.location : value);
         });
         settings.get('license').then((value) => {
             setLicense(typeof value === 'undefined' ? defaultSettings.license : value);
         });
-        settings.get('gool').then((value) => {
+        /*settings.get('gool').then((value) => {
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
+        });*/
+        settings.get('method').then((value) => {
+            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
         });
     }, []);
 
     if (
         typeof endpoint === 'undefined' ||
-        typeof psiphon === 'undefined' ||
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
-        typeof gool === 'undefined'
+        typeof method === 'undefined'
     )
         return (
             <>
@@ -131,51 +134,71 @@ export default function Settings() {
                         </div>
                         <div className='info'>برای اندپوینت تصادفی</div>
                     </div>*/}
-                    <div
-                        className={classNames('item', psiphon ? 'disabled' : '')}
-                        onClick={() => {
-                            if (!psiphon) {
-                                setGool(!gool);
-                                settings.set('gool', !gool);
+                    <div className='grouped'>
+                        <div
+                            className={classNames(
+                                'item'
+                            )}
+                            onClick={() => {
+                                setMethod('');
+                                settings.set('method', '');
                                 settingsHaveChanged();
-                            }
-                            /*if (psiphon && !gool) {
-                                setPsiphon(false);
-                                settings.set('psiphon', false);
-                            }*/
-                        }}
-                    >
-                        <label className='key'>گول</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', gool ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
+                            }}
+                        >
+                            <label className='key'>وارپ</label>
+                            <div className='value'>
+                                <div className={classNames('switch', method === '' ? 'checked' : '')} />
                             </div>
+                            <div className='info'>فعالسازی Warp</div>
                         </div>
-                        <div className='info'>فعالسازی WarpInWarp</div>
-                    </div>
-                    <div
-                        className={classNames('item', gool ? 'disabled' : '')}
-                        onClick={() => {
-                            if (!gool) {
-                                setPsiphon(!psiphon);
-                                settings.set('psiphon', !psiphon);
+                        <div
+                            className={classNames('item')}
+                            onClick={() => {
+                                setMethod('gool');
+                                settings.set('method', 'gool');
                                 settingsHaveChanged();
-                            }
-                            /*if (gool && !psiphon) {
-                              setGool(false);
-                              settings.set('gool', false);
-                          }*/
-                        }}
-                    >
-                        <label className='key'>سایفون </label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', psiphon ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
+                                /*if (!psiphon) {
+                                    setGool(!gool);
+                                    settings.set('gool', !gool);
+                                    settingsHaveChanged();
+                                }*/
+                                /*if (psiphon && !gool) {
+                                    setPsiphon(false);
+                                    settings.set('psiphon', false);
+                                }*/
+                            }}
+                        >
+                            <label className='key'>گول</label>
+                            <div className='value'>
+                                <div className={classNames('switch', method === 'gool' ? 'checked' : '')} />
                             </div>
+                            <div className='info'>فعالسازی WarpInWarp</div>
                         </div>
-                        <div className='info'>فعالسازی Psiphon</div>
+                        <div
+                            className={classNames('item')}
+                            onClick={() => {
+                                setMethod('psiphon');
+                                settings.set('method', 'psiphon');
+                                settingsHaveChanged();
+                                /*if (!gool) {
+                                    setPsiphon(!psiphon);
+                                    settings.set('psiphon', !psiphon);
+                                    settingsHaveChanged();
+                                }*/
+                                /*if (gool && !psiphon) {
+                                  setGool(false);
+                                  settings.set('gool', false);
+                              }*/
+                            }}
+                        >
+                            <label className='key'>سایفون </label>
+                            <div className='value'>
+                                <div className={classNames('switch', method === 'psiphon' ? 'checked' : '')} />
+                            </div>
+                            <div className='info'>فعالسازی Psiphon</div>
+                        </div>
                     </div>
-                    <div className={classNames('item', psiphon ? '' : 'disabled')}>
+                    <div className={classNames('item', method === 'psiphon' ? '' : 'disabled')}>
                         <label className='key'>انتخاب کشور</label>
                         <div className='value'>
                             <select
@@ -184,7 +207,7 @@ export default function Settings() {
                                     settings.set('location', e.target.value);
                                     settingsHaveChanged();
                                 }}
-                                disabled={!psiphon}
+                                disabled={method !== 'psiphon'}
                                 value={location}
                             >
                                 <option value=''>Automatic</option>
