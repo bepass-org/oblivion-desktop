@@ -39,7 +39,7 @@ ipcMain.on('wp-start', async (event, arg) => {
     //const gool = await settings.get('gool');
     const method = await settings.get('method');
     const autoSetProxy = await settings.get('autoSetProxy');
-    const hostIP = await settings.get('hostIP');
+    const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
@@ -51,8 +51,8 @@ ipcMain.on('wp-start', async (event, arg) => {
     args.push('--bind');
     args.push(
         typeof port === 'string' || typeof port === 'number'
-            ? `${hostIP || defaultSettings.hostIP}:${port}`
-            : `${hostIP || defaultSettings.hostIP}:${defaultSettings.port}`
+            ? `${hostIP}:${port}`
+            : `${hostIP}:${defaultSettings.port}`
     );
     // license
     if (typeof license === 'string' && license !== '') {
@@ -101,12 +101,9 @@ ipcMain.on('wp-start', async (event, arg) => {
     console.log('💻 command: ', command, args);
 
     child = spawn(command, args);
-    console.log('🚀 - hostIP:', hostIP);
 
     // TODO better approach
     const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-    console.log('🚀 - successMessage:', successMessage);
-    const successMessage2 = `level=INFO msg="serving proxy" address=127.0.0.1:8086`;
 
     child.stdout.on('data', async (data: any) => {
         const strData = data.toString();
