@@ -29,7 +29,7 @@ ipcMain.on('wp-start', async (event, arg) => {
 
     // reading user settings for warp
     const args = [];
-    const scan = await settings.get('scan');
+    //const scan = await settings.get('scan');
     const endpoint = await settings.get('endpoint');
     const ipType = await settings.get('ipType');
     const port = await settings.get('port');
@@ -74,7 +74,6 @@ ipcMain.on('wp-start', async (event, arg) => {
     }
     // scan
     if (
-        (typeof scan === 'boolean' && scan) ||
         (typeof endpoint === 'string' &&
             (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
         typeof endpoint === 'undefined'
