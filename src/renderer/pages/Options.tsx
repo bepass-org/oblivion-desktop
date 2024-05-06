@@ -94,13 +94,13 @@ export default function Options() {
                     <div
                         className={classNames('item', autoSetProxy ? 'checked' : '')}
                         onClick={() => {
+                            setAutoSetProxy(!autoSetProxy);
+                            settings.set('autoSetProxy', !autoSetProxy);
+                            settingsHaveChanged();
                             if (autoSetProxy) {
                                 setIpData(false);
                                 settings.set('ipData', false);
                             }
-                            setAutoSetProxy(!autoSetProxy);
-                            settings.set('autoSetProxy', !autoSetProxy);
-                            settingsHaveChanged();
                         }}
                     >
                         <label className='key'>پیکربندی شبکه</label>

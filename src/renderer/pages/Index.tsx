@@ -32,7 +32,6 @@ export default function Index() {
         countryCode: false,
         ip: ''
     });
-    const [shownIpData, setShownIpData] = useState(true);
     const [online, setOnline] = useState(true);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -44,7 +43,6 @@ export default function Index() {
     const [ipData, setIpData] = useState<undefined | boolean>();
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
-    const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
 
     const fetchReleaseVersion = async () => {
@@ -81,9 +79,6 @@ export default function Index() {
         settings.get('gool').then((value) => {
             setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
         });*/
-        settings.get('autoSetProxy').then((value) => {
-            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
-        });
         settings.get('method').then((value) => {
             setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
         });
@@ -244,10 +239,8 @@ export default function Index() {
     };
 
     useEffect(() => {
-        if (typeof ipData === 'undefined' || ipData) {
+        if (ipData) {
             getIpLocation().then();
-        } else {
-            setShownIpData(false);
         }
 
         if (isLoading || !isConnected) {
@@ -261,14 +254,14 @@ export default function Index() {
             setStatus('درحال اتصال ...');
         } else if (isConnected && ipInfo?.countryCode) {
             setStatus('متصل هستید');
-        } else if (isConnected && !ipInfo?.countryCode && shownIpData) {
+        } else if (isConnected && !ipInfo?.countryCode && ipData) {
             setStatus('دریافت اطلاعات ...');
-        } else if (isConnected && !shownIpData) {
+        } else if (isConnected && !ipData) {
             setStatus('اتصال برقرار شد');
         } else {
             setStatus('متصل نیستید');
         }
-    }, [isLoading, isConnected, ipInfo]);
+    }, [isLoading, isConnected, ipInfo, ipData]);
 
     const onChange = () => {
         if (!online) {
