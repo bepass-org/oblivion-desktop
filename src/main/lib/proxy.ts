@@ -24,11 +24,12 @@ export const disableProxy = () => {
 };
 
 export const enableProxy = async () => {
+    const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
 
     if (platform === 'win32') {
-        windowsProxySettings(['ProxyServer', '-value', `${hostIP}:${port}`]);
+        windowsProxySettings(['ProxyServer', '-value', `${psiphon ? 'socks=' : ''}${hostIP}:${port}`]);
         windowsProxySettings([
             'ProxyOverride',
             '"localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>"'

@@ -173,19 +173,27 @@ export default function Index() {
                     const ipLine = lines.find((line) => line.startsWith('ip='));
                     const locationLine = lines.find((line) => line.startsWith('loc='));
                     const warpLine = lines.find((warp) => warp.startsWith('warp='));
+                    const cfLine = lines.find((warp) => warp.startsWith('h='));
                     const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
-                    const checkWarp = warpLine ? warpLine.split('=')[1] : 'off';
-                    if (!getLoc || checkWarp !== 'on' || ((psiphon || gool) && getLoc === 'ir')) {
-                        setTimeout(getIpLocation, 7500);
+                    const checkWarp = warpLine ? warpLine.split('=')[1] : '';
+                    const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
+                    if (getLoc) {
+                        if ((psiphon || gool) && getLoc === 'ir') {
+                            setTimeout(getIpLocation, 7500);
+                        } else if (cfHost !== 'cloudflare.com' && checkWarp !== 'on') {
+                            setTimeout(getIpLocation, 7500);
+                        } else {
+                            const ipInfo = {
+                                countryCode: getLoc,
+                                ip: getIp
+                            };
+                            cachedIpInfo = ipInfo;
+                            lastFetchTime = currentTime;
+                            setIpInfo(ipInfo);
+                        }
                     } else {
-                        const ipInfo = {
-                            countryCode: getLoc,
-                            ip: getIp
-                        };
-                        cachedIpInfo = ipInfo;
-                        lastFetchTime = currentTime;
-                        setIpInfo(ipInfo);
+                        setTimeout(getIpLocation, 7500);
                     }
                     clearTimeout(timeoutId);
                     toast.dismiss('ipLocationStatus');
