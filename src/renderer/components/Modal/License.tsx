@@ -3,12 +3,12 @@ import { settings } from '../../lib/settings';
 import { useState } from 'react';
 
 export default function LicenseModal({
-    title,
-    isOpen,
-    onClose,
-    license,
-    setLicense
-}: {
+                                         title,
+                                         isOpen,
+                                         onClose,
+                                         license,
+                                         setLicense
+                                     }: {
     title: string;
     isOpen: boolean;
     onClose: any;
@@ -19,8 +19,11 @@ export default function LicenseModal({
     const [licenseInput, setLicenseInput] = useState(license);
 
     const onSaveModal = () => {
-        setLicense(licenseInput);
-        settings.set('license', licenseInput);
+        const regex = /^[a-zA-Z0-9-]*$/;
+        const tmp = regex.test(licenseInput) ? licenseInput : '';
+        setLicenseInput(tmp);
+        setLicense(tmp);
+        settings.set('license', tmp);
         onClose();
     };
 
