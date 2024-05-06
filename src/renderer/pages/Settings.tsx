@@ -8,6 +8,7 @@ import { settings } from '../lib/settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import Lottie from 'lottie-react';
 import LottieFile from '../../../assets/json/1713988096625.json';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Settings() {
     const [scan, setScan] = useState(true);
@@ -23,8 +24,14 @@ export default function Settings() {
     const [gool, setGool] = useState<undefined | boolean>();
     const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
+    const connected = useState(localStorage.getItem('OBLIVION_STATUS') === 'connected');
 
-    // loading settings
+    /*useEffect(() => {
+        if (endpoint === '' || endpoint === defaultSettings.endpoint) {
+            setScan(true);
+        }
+    }, [endpoint]);*/
+
     useEffect(() => {
         settings.get('scan').then((value) => {
             setScan(typeof value === 'undefined' ? defaultSettings.scan : value);
@@ -59,14 +66,9 @@ export default function Settings() {
         });
     }, []);
 
-    /*useEffect(() => {
-        if (endpoint === '' || endpoint === defaultSettings.endpoint) {
-            setScan(true);
-        }
-    }, [endpoint]);*/
-
-    /*useEffect(() => {
-        if ( connected && canOpenToast) {
+    const hasChangesToast = async () => {
+        const changesToast = localStorage.getItem('OBLIVION_CHANGES');
+        if (connected && !changesToast) {
             toast(
                 (currentToast) => (
                     <>
@@ -80,16 +82,16 @@ export default function Settings() {
                 ),
                 {
                     id: 'settingsChanged',
-                    duration: Infinity,
+                    duration: 10000,
                     style: {
                         borderRadius: '10px',
                         background: '#333',
                         color: '#fff'
                     }
                 });
-            setChangesToast(false);
+            localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
         }
-    }, [connected, endpoint, ipType, port, psiphon, location, license, gool]);*/
+    };
 
     if (
         typeof endpoint === 'undefined' ||
@@ -121,6 +123,7 @@ export default function Settings() {
                 isOpen={showEndpointModal}
                 onClose={() => {
                     setShowEndpointModal(false);
+                    hasChangesToast();
                 }}
             />
             <PortModal
@@ -132,6 +135,7 @@ export default function Settings() {
                 isOpen={showPortModal}
                 onClose={() => {
                     setShowPortModal(false);
+                    hasChangesToast();
                 }}
             />
             <LicenseModal
@@ -143,6 +147,7 @@ export default function Settings() {
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);
+                    hasChangesToast();
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -152,6 +157,7 @@ export default function Settings() {
                         onClick={() => {
                             setScan(!scan);
                             settings.set('scan', !scan);
+                            hasChangesToast();
                         }}
                     >
                         <label className='key'>اسکنر</label>
@@ -183,6 +189,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                     setIpType(e.target.value);
                                     settings.set('ipType', e.target.value);
+                                    hasChangesToast();
                                 }}
                                 value={ipType}
                             >
@@ -199,6 +206,7 @@ export default function Settings() {
                             if (!psiphon) {
                                 setGool(!gool);
                                 settings.set('gool', !gool);
+                                hasChangesToast();
                             }
                             /*if (psiphon && !gool) {
                                 setPsiphon(false);
@@ -220,6 +228,7 @@ export default function Settings() {
                             if (!gool) {
                                 setPsiphon(!psiphon);
                                 settings.set('psiphon', !psiphon);
+                                hasChangesToast();
                             }
                             /*if (gool && !psiphon) {
                               setGool(false);
@@ -242,6 +251,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                     setLocation(e.target.value);
                                     settings.set('location', e.target.value);
+                                    hasChangesToast();
                                 }}
                                 disabled={!psiphon}
                                 value={location}
@@ -279,6 +289,7 @@ export default function Settings() {
                         onClick={() => {
                             setAutoSetProxy(!autoSetProxy);
                             settings.set('autoSetProxy', !autoSetProxy);
+                            hasChangesToast();
                         }}
                     >
                         <label className='key'>تنظیم پروکسی</label>
@@ -307,6 +318,7 @@ export default function Settings() {
                             setShareVPN(!shareVPN);
                             settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             settings.set('shareVPN', !shareVPN);
+                            hasChangesToast();
                         }}
                     >
                         <label className='key'>اتصال از LAN</label>
@@ -319,6 +331,7 @@ export default function Settings() {
                     </div>
                 </div>
             </div>
+            <Toaster position='bottom-center' reverseOrder={false} />
         </>
     );
 }
