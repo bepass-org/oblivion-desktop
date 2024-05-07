@@ -19,6 +19,13 @@ const randomCountry = () => {
     return countries[randomIndex]?.value ? countries[randomIndex]?.value : 'DE';
 };
 
+// ! make sure you get the args like ({ port = '' })
+const wpErrorTranslation: any = {
+    'bind: address already in use': ({ port = '' }) => {
+        return `پورت ${port} در حال حاضر در حال استفاده است! لطفا پورت دیگری را از تنظیمات انتخاب کنید`;
+    }
+};
+
 ipcMain.on('wp-start', async (event, arg) => {
     // in case user is using another proxy
     // await disableProxy();
@@ -109,7 +116,6 @@ ipcMain.on('wp-start', async (event, arg) => {
 
     child = spawn(command, args, { cwd: wpDirPath });
 
-    // TODO better approach
     const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
 
     child.stdout.on('data', async (data: any) => {
@@ -124,9 +130,22 @@ ipcMain.on('wp-start', async (event, arg) => {
                 await enableProxy();
             }*/
         }
-        // write to log file
-        const tmp = await doesFileExist(wpLogPath);
-        if (!tmp) {
+
+        Object.keys(wpErrorTranslation).forEach((errorMsg: string) => {
+            if (strData.includes(errorMsg)) {
+                event.reply(
+                    'guide-toast',
+                    wpErrorTranslation[errorMsg]({
+                        port: port,
+                        // keys will only use the value they need and ignore reset so pass any arg you want here
+                        thisWillGetPassedButWillNotCauseError: 'some value'
+                    })
+                );
+            }
+        });
+
+        const isWpLogFileExist = await doesFileExist(wpLogPath);
+        if (!isWpLogFileExist) {
             writeToLogFile(strData);
         } else {
             appendToLogFile(strData);

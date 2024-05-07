@@ -1,8 +1,13 @@
-// Disable no-unused-vars, broken for spread args
-/* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'open-devtools' | 'wp-start' | 'wp-end' | 'log' | 'settings';
+export type Channels =
+    | 'ipc-example'
+    | 'open-devtools'
+    | 'wp-start'
+    | 'wp-end'
+    | 'log'
+    | 'settings'
+    | 'guide-toast';
 
 const electronHandler = {
     ipcRenderer: {
