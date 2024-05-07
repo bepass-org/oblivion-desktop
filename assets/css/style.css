@@ -128,6 +128,7 @@ nav i.backBtn:hover {
 nav .navMenu {
     position: relative;
     float: right;
+    transition: all 0.2s ease-in-out;
 }
 
 nav .navMenu .indicator {

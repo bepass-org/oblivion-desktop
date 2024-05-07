@@ -96,6 +96,7 @@
         "react-hot-toast": "^2.4.1",
         "react-modern-drawer": "^1.2.2",
         "react-router-dom": "^6.16.0",
+        "react-swipe-component": "^3.0.0",
         "tree-kill": "^1.2.2",
         "zustand": "^4.5.2"
     },
