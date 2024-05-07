@@ -16,7 +16,7 @@ import MenuBuilder from './menu';
 import './ipc';
 import { isDev, removeDirIfExists, removeFileIfExists, stuffPath } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
-import { disableProxy } from './lib/proxy';
+import { disableProxy, enableProxy } from './lib/proxy';
 import { wpLogPath } from './lib/log';
 
 let mainWindow: BrowserWindow | null = null;
@@ -217,18 +217,37 @@ const createWindow = async () => {
                 label: 'حالت پروکسی',
                 submenu: [
                     { label: 'متصل است', type: 'radio' },
-                    { label: 'عدم اتصال', type: 'radio' },
-                ],
+                    { label: 'عدم اتصال', type: 'radio' }
+                ]
+            },
+            { label: '', type: 'separator' },
+            {
+                label: 'Proxy Mode',
+                submenu: [
+                    {
+                        label: 'Set System Proxy',
+                        type: 'normal',
+                        click: async () => {
+                            await enableProxy();
+                        }
+                    },
+                    {
+                        label: 'Disable',
+                        type: 'normal',
+                        click: async () => {
+                            await disableProxy();
+                        }
+                    }
+                ]
             },*/
             { label: '', type: 'separator' },
             {
-                label: 'خروج',
+                label: 'Exit',
                 type: 'normal',
                 click: () => {
                     app.quit();
                 }
             }
-            /*{ label: 'خروج', role: 'close' },*/
         ]);
         contextMenu.items[1].checked = false;
         appIcon.setToolTip('Oblivion Desktop');
