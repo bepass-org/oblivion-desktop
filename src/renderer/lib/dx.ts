@@ -3,7 +3,7 @@
 import { ipcRenderer } from './utils';
 
 export const openDevtoolsOnCtrlShiftI = () => {
-    // open devtools on dev enviroment by ctrl+shift+i
+    // open devtools on dev environment by ctrl+shift+i
     let keysDown: any = {};
     window.addEventListener('keydown', function (event) {
         keysDown[event.keyCode] = true;
