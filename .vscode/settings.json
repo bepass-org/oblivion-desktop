@@ -28,10 +28,20 @@
     "*.{css,sass,scss}.d.ts": true
   },
   "cSpell.words": [
+    "asar",
+    "cfon",
+    "fullscreenable",
     "gool",
     "ircf",
     "plusplus",
     "psiphon",
-    "zustand"
+    "zustand",
+    "اتصال",
+    "پروکسی",
+    "پورت",
+    "حاضر",
+    "حالت",
+    "دیگری",
+    "متصل"
   ]
 }
