@@ -16,11 +16,13 @@ import About from './pages/About';
 import Debug from './pages/Debug';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadTheme } from './lib/loaders';
+import { quitOnCtrlW } from './lib/utils';
 
 export default function App() {
     useEffect(() => {
         openDevtoolsOnCtrlShiftI();
         loadTheme();
+        quitOnCtrlW();
     }, []);
 
     return (

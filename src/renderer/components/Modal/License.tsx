@@ -15,8 +15,9 @@ export default function LicenseModal({
     license: any;
     setLicense: any;
 }) {
-    if (!isOpen) return null;
     const [licenseInput, setLicenseInput] = useState(license);
+
+    if (!isOpen) return <></>;
 
     const onSaveModal = () => {
         const regex = /^[a-zA-Z0-9-]*$/;

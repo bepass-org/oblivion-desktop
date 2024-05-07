@@ -44,3 +44,23 @@ export const defaultToastWithSubmitButton = (
 export const checkInternetToast = () => {
     defaultToast('شما به اینترنت متصل نیستید!', 'ONLINE_STATUS', Infinity);
 };
+
+export const settingsHaveChangedToast = ({
+    isConnected,
+    isLoading
+}: {
+    isConnected: boolean;
+    isLoading: boolean;
+}) => {
+    if (localStorage.getItem('OBLIVION_CHANGES') === 'TOASTED') return;
+    if (isConnected || isLoading) {
+        defaultToastWithSubmitButton(
+            'اعمال تنظیمات نیازمند اتصال مجدد می‌باشد.',
+            'متوجه شدم',
+            'SETTINGS_CHANGED',
+            10000
+        );
+
+        localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
+    }
+};

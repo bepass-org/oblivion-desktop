@@ -20,8 +20,8 @@ export default function PortModal({
 }) {
     const [portInput, setPortInput] = useState(port);
 
-    const isValidPort = (port: any) => {
-        return /^\d{1,5}$/.test(port) && parseInt(port, 10) >= 20 && parseInt(port, 10) <= 65535;
+    const isValidPort = (port2: any) => {
+        return /^\d{1,5}$/.test(port2) && parseInt(port2, 10) >= 20 && parseInt(port2, 10) <= 65535;
     };
 
     const onSaveModal = () => {

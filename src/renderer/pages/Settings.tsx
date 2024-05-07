@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -8,7 +8,7 @@ import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
-import { settingsHaveChanged } from '../lib/settingsHaveChanged';
+import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 
 export default function Settings() {
@@ -86,7 +86,7 @@ export default function Settings() {
                 isOpen={showEndpointModal}
                 onClose={() => {
                     setShowEndpointModal(false);
-                    settingsHaveChanged({ ...{ isConnected, isLoading } });
+                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                 }}
             />
             <LicenseModal
@@ -98,7 +98,7 @@ export default function Settings() {
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);
-                    settingsHaveChanged({ ...{ isConnected, isLoading } });
+                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -143,7 +143,7 @@ export default function Settings() {
                             onClick={() => {
                                 setMethod('');
                                 settings.set('method', '');
-                                settingsHaveChanged({ ...{ isConnected, isLoading } });
+                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                             }}
                         >
                             <label className='key'>وارپ</label>
@@ -159,7 +159,7 @@ export default function Settings() {
                             onClick={() => {
                                 setMethod('gool');
                                 settings.set('method', 'gool');
-                                settingsHaveChanged({ ...{ isConnected, isLoading } });
+                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
 
                                 /*if (!psiphon) {
                                     setGool(!gool);
@@ -188,7 +188,7 @@ export default function Settings() {
                             onClick={() => {
                                 setMethod('psiphon');
                                 settings.set('method', 'psiphon');
-                                settingsHaveChanged({ ...{ isConnected, isLoading } });
+                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
 
                                 /*if (!gool) {
                                     setPsiphon(!psiphon);
@@ -220,7 +220,7 @@ export default function Settings() {
                                 onChange={(e) => {
                                     setLocation(e.target.value);
                                     settings.set('location', e.target.value);
-                                    settingsHaveChanged({ ...{ isConnected, isLoading } });
+                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                                 }}
                                 disabled={method !== 'psiphon'}
                                 value={location}

@@ -14,15 +14,12 @@ import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron
 import settings from 'electron-settings';
 import MenuBuilder from './menu';
 import './ipc';
-import { isDev, removeDirIfExists, removeFileIfExists } from './lib/utils';
+import { isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
-import { wpLogPath } from './lib/log';
-import { wpDirPath, wpFileName } from './ipcListeners/wp';
+import { wpFileName } from './ipcListeners/wp';
 
 let mainWindow: BrowserWindow | null = null;
-
-export const stuffPath = path.join(wpDirPath, 'stuff');
 
 // console.log(1, app.getPath('appData'));
 // console.log(2, app.getPath('logs'));
@@ -59,9 +56,6 @@ function resolveHtmlPath(htmlFileName: string) {
     }
     return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
 }
-
-removeFileIfExists(wpLogPath);
-removeDirIfExists(stuffPath);
 
 const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 

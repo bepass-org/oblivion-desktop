@@ -8,7 +8,7 @@ import { defaultSettings } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
-import { settingsHaveChanged } from '../lib/settingsHaveChanged';
+import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 
 export default function Options() {
@@ -74,7 +74,7 @@ export default function Options() {
                 isOpen={showPortModal}
                 onClose={() => {
                     setShowPortModal(false);
-                    settingsHaveChanged({ ...{ isConnected, isLoading } });
+                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                 }}
             />
             <RestoreModal
@@ -99,7 +99,7 @@ export default function Options() {
                         onClick={() => {
                             setAutoSetProxy(!autoSetProxy);
                             settings.set('autoSetProxy', !autoSetProxy);
-                            settingsHaveChanged({ ...{ isConnected, isLoading } });
+                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
 
                             if (autoSetProxy) {
                                 setIpData(false);
@@ -133,7 +133,7 @@ export default function Options() {
                             setShareVPN(!shareVPN);
                             settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             settings.set('shareVPN', !shareVPN);
-                            settingsHaveChanged({ ...{ isConnected, isLoading } });
+                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                         }}
                     >
                         <label className='key'>اتصال از LAN</label>

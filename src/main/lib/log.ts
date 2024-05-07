@@ -1,8 +1,5 @@
-import { app } from 'electron';
-import path from 'path';
 import fs from 'fs';
-
-export const wpLogPath = path.join(app.getPath('logs'), 'warp-plus.log');
+import { wpLogPath } from '../ipcListeners/log';
 
 export function readLogFile() {
     return new Promise((resolve, reject) => {
