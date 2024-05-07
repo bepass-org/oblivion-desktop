@@ -22,6 +22,30 @@ const randomCountry = () => {
 const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ پورت دیگری را از تنظیمات برنامه انتخاب کنید.`;
+    },
+    'Invalid license': () => {
+        return `لایسنس وارد شده معتبر نیست.`;
+    },
+    'many connected devices': () => {
+        return `سقف استفاده از لایسنس پر است.`;
+    },
+    'permission denied': () => {
+        return `برنامه لازم است به‌صورت Run as Administrator اجرا شود.`;
+    },
+    'failed to set endpoint': () => {
+        return `تنظیم‌کردن اندپوینت با خطا مواجه شد؛ از اندپوینت پیشفرض استفاده کنید.`;
+    },
+    'system cannot find the file specified': () => {
+        return `فایل stuff یافت نشد؛ برنامه را به‌صورت Run as Administrator اجرا کنید.`;
+    },
+    'load primary warp identity': () => {
+        return `هویت‌سنجی در کلودفلر با خطا مواجه شد.`;
+    },
+    'script failed to run': () => {
+        return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
+    },
+    'object null is not iterable': () => {
+        return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
     }
 };
 
