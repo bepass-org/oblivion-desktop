@@ -1,13 +1,12 @@
-/* eslint-disable no-unused-expressions */
 // warp-plus
 
-import { app, ipcMain } from 'electron';
+import { ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { appendToLogFile, wpLogPath, writeToLogFile } from '../lib/log';
-import { doesFileExist, isDev } from '../lib/utils';
+import { doesFileExist, wpDirPath, wpFileName } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 
 const { spawn } = require('child_process');
@@ -100,15 +99,6 @@ ipcMain.on('wp-start', async (event, arg) => {
     ) {
         await enableProxy();
     }
-
-    const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
-    const wpDirPath = isDev()
-        ? path.join(
-            app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-            'assets',
-            'bin'
-        )
-        : path.join(app.getPath('temp'));
 
     const command = path.join(wpDirPath, wpFileName);
 
