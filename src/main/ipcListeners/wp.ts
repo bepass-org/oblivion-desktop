@@ -6,9 +6,10 @@ import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
-import { appendToLogFile, wpLogPath, writeToLogFile } from '../lib/log';
-import { doesFileExist, isDev } from '../lib/utils';
+import { appendToLogFile, writeToLogFile } from '../lib/log';
+import { doesFileExist, isDev, removeDirIfExists, removeFileIfExists } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
+import { wpLogPath } from './log';
 
 const { spawn } = require('child_process');
 
@@ -27,6 +28,7 @@ export const wpDirPath = isDev()
           'bin'
       )
     : path.join(app.getPath('temp'));
+export const stuffPath = path.join(wpDirPath, 'stuff');
 
 // ! make sure you get the args like ({ port = '' })
 const wpErrorTranslation: any = {
@@ -59,7 +61,9 @@ const wpErrorTranslation: any = {
     }
 };
 
-ipcMain.on('wp-start', async (event, arg) => {
+ipcMain.on('wp-start', async (event) => {
+    removeFileIfExists(wpLogPath);
+
     // in case user is using another proxy
     // await disableProxy();
 
@@ -183,6 +187,7 @@ ipcMain.on('wp-start', async (event, arg) => {
     child.on('exit', async () => {
         await disableProxy();
         event.reply('wp-end', true);
+        removeDirIfExists(stuffPath);
     });
 });
 

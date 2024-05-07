@@ -15,8 +15,9 @@ export default function RoutingRulesModal({
     routingRules: any;
     setRoutingRules: any;
 }) {
-    if (!isOpen) return null;
     const [routingRulesInput, setRoutingRulesInput] = useState(routingRules);
+
+    if (!isOpen) return <></>;
 
     const validateRules = (textareaContent: string) => {
         if (textareaContent === '') {
