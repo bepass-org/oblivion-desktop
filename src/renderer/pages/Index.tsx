@@ -12,7 +12,8 @@ import { settings } from '../lib/settings';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
-import { ipcRenderer, checkInternet } from '../lib/utils';
+import { ipcRenderer } from '../lib/utils';
+import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -108,17 +109,7 @@ export default function Index() {
         });
 
         ipcRenderer.on('guide-toast', (message: any) => {
-            // TODO refactor
-            toast(message, {
-                id: 'GUIDE',
-                style: {
-                    fontSize: '13px',
-                    borderRadius: '10px',
-                    background: '#333',
-                    color: '#fff'
-                },
-                duration: 7000
-            });
+            defaultToast(message, 'GUIDE', 7000);
         });
 
         setOnline(true);
@@ -134,7 +125,7 @@ export default function Index() {
         if (online) {
             toast.dismiss('onlineStatus');
         } else {
-            checkInternet();
+            checkInternetToast();
         }
     }, [online]);
 
@@ -142,29 +133,16 @@ export default function Index() {
         if (connectedToIrIPOnceDisplayed) {
             return false;
         }
-        toast(
-            (currentToast) => (
-                <>
-                    <div className='customToast'>
-                        <p>
-                            کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
-                            باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
-                            تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.
-                        </p>
-                        <button onClick={() => toast.dismiss(currentToast?.id)}>متوجه شدم</button>
-                    </div>
-                </>
-            ),
-            {
-                id: 'ipChangedToIR',
-                duration: Infinity,
-                style: {
-                    borderRadius: '10px',
-                    background: theme === 'dark' ? '#535353' : '#242424',
-                    color: '#F4F5FB'
-                }
-            }
+
+        defaultToastWithSubmitButton(
+            `کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده، که
+        باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در
+        تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.`,
+            'متوجه شدم',
+            'IRAN_IP',
+            Infinity
         );
+
         connectedToIrIPOnceDisplayed = true;
     };
 
@@ -263,7 +241,7 @@ export default function Index() {
 
     const onChange = () => {
         if (!online) {
-            checkInternet();
+            checkInternetToast();
         } else {
             if (isLoading) {
                 console.log('🚀 - onChange - isLoading:', isLoading);
@@ -416,16 +394,11 @@ export default function Index() {
                                     });
                                     const getTime = new Date().getTime();
                                     if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
-                                        toast('برای بررسی مجدد چندثانیه دیگر تلاش کنید!', {
-                                            id: 'ipLocationStatus',
-                                            duration: 2000,
-                                            style: {
-                                                fontSize: '13px',
-                                                borderRadius: '10px',
-                                                background: '#333',
-                                                color: '#fff'
-                                            }
-                                        });
+                                        defaultToast(
+                                            'برای بررسی مجدد چندثانیه دیگر تلاش کنید!',
+                                            'IP_LOCATION_STATUS',
+                                            2000
+                                        );
                                     } else {
                                         getIpLocation();
                                     }
