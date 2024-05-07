@@ -129,6 +129,8 @@ const createWindow = async () => {
         config.webPreferences.devToolsKeyCombination = true;
     }
 
+    let canOpenFromSystem = true;
+
     function createMainWindow() {
         if (!mainWindow) {
             mainWindow = new BrowserWindow(config);
@@ -153,8 +155,12 @@ const createWindow = async () => {
                 // mainWindow.webContents.closeDevTools();
             });
 
-            mainWindow.on('closed', async () => {
-                await disableProxy();
+            mainWindow.on('close', () => {
+                canOpenFromSystem = false;
+            });
+
+            mainWindow.on('closed', () => {
+                //await disableProxy();
                 mainWindow = null;
             });
 
@@ -184,10 +190,12 @@ const createWindow = async () => {
     app?.whenReady().then(() => {
         appIcon = new Tray(getAssetPath('oblivion.png'));
         appIcon.on('click', () => {
-            if (!mainWindow) {
-                createMainWindow();
-            } else {
-                mainWindow.show();
+            if (canOpenFromSystem) {
+                if (!mainWindow) {
+                    createMainWindow();
+                } else {
+                    mainWindow.show();
+                }
             }
         });
         const contextMenu = Menu.buildFromTemplate([
