@@ -41,7 +41,7 @@ ipcMain.on('wp-start', async (event) => {
         (typeof autoSetProxy === 'boolean' && autoSetProxy) ||
         typeof autoSetProxy === 'undefined'
     ) {
-        await enableProxy();
+        await enableProxy(event);
     }
 
     const command = path.join(wpDirPath, wpFileName);
@@ -80,7 +80,7 @@ ipcMain.on('wp-start', async (event) => {
     });
 
     child.on('exit', async () => {
-        await disableProxy();
+        await disableProxy(event);
         event.reply('wp-end', true);
         removeDirIfExists(stuffPath);
     });
