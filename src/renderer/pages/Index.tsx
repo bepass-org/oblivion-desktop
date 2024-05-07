@@ -107,6 +107,20 @@ export default function Index() {
             }
         });
 
+        ipcRenderer.on('guide-toast', (message: any) => {
+            // TODO refactor
+            toast(message, {
+                id: 'GUIDE',
+                style: {
+                    fontSize: '13px',
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff'
+                },
+                duration: 7000
+            });
+        });
+
         setOnline(true);
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
