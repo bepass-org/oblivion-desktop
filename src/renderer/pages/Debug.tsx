@@ -3,6 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
 import { ipcRenderer } from '../lib/utils';
+import { defaultToast } from '../lib/toasts';
 
 export default function Debug() {
     const [log, setLog] = useState('');
@@ -25,16 +26,8 @@ export default function Debug() {
     const handleCopy = (e: { preventDefault: () => void }, value: any) => {
         e.preventDefault();
         navigator.clipboard.writeText(value);
-        toast('کپی شد!', {
-            id: 'copied',
-            style: {
-                fontSize: '13px',
-                borderRadius: '10px',
-                background: '#333',
-                color: '#fff'
-            },
-            duration: 2000
-        });
+
+        defaultToast('کپی شد!', 'COPIED', 2000);
     };
 
     const handleClearLog = (e: { preventDefault: () => void }) => {
