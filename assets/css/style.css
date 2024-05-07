@@ -913,6 +913,14 @@ nav .navMenu .indicator {
     line-height: 26px;
 }
 
+.dialog .dialogBox p.withMargin {
+    margin-bottom: 20px;
+}
+
+.dialog .dialogBox p a {
+    color: #FFA200;
+}
+
 .dialog .dialogBox input,
 .dialog .dialogBox textarea {
     float: right;
