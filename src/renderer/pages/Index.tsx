@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
 import Drawer from 'react-modern-drawer';
+import { Swipe } from 'react-swipe-component';
 import { useStore } from '../store';
 import appIco from '../../../assets/oblivion.png';
 import defFlag from '../../../assets/img/flags/xx.svg';
@@ -39,14 +40,14 @@ export default function Index() {
         setDrawerIsOpen((prevState) => !prevState);
     };
 
-    const [theme, setTheme] = useState<undefined | string>();
+    //const [theme, setTheme] = useState<undefined | string>();
     const [ipData, setIpData] = useState<undefined | boolean>();
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
 
     const fetchReleaseVersion = async () => {
-        const versionRegex = /\d+(\.\d+)+/;
+        //const versionRegex = /\d+(\.\d+)+/;
         try {
             const response = await fetch(
                 'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
@@ -67,9 +68,9 @@ export default function Index() {
     };
 
     useEffect(() => {
-        settings.get('theme').then((value) => {
+        /*settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
-        });
+        });*/
         settings.get('ipData').then((value) => {
             setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
         });
@@ -332,13 +333,12 @@ export default function Index() {
             </Drawer>
             <nav>
                 <div className='container'>
-                    {/* TODO use button */}
-                    <a onClick={toggleDrawer} className={classNames('navMenu')}>
+                    <div onClick={toggleDrawer} className={classNames('navMenu')}>
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div
                             className={classNames('indicator', hasNewUpdate ? '' : 'hidden')}
-                        ></div>
-                    </a>
+                        />
+                    </div>
                     {/*<Link to={'/debug'}>
                         <i className={classNames('material-icons', 'pull-right', 'log')}>
                             &#xe868;
@@ -358,18 +358,32 @@ export default function Index() {
                         </div>
                         <form action=''>
                             <div className='connector'>
-                                <div
-                                    className={classNames(
-                                        'switch',
-                                        isConnected ? 'active' : '',
-                                        isLoading ? 'isLoading' : ''
-                                    )}
-                                    onClick={onChange}
+                                <Swipe
+                                    nodeName='div'
+                                    onSwipedLeft={() => {
+                                        if (isConnected && !isLoading) {
+                                            onChange();
+                                        }
+                                    }}
+                                    onSwipedRight={() => {
+                                        if (!isConnected && !isLoading) {
+                                            onChange();
+                                        }
+                                    }}
                                 >
-                                    <div className='circle'>
-                                        <div className='spinner' />
+                                    <div
+                                        onClick={onChange}
+                                        className={classNames(
+                                            'switch',
+                                            isConnected ? 'active' : '',
+                                            isLoading ? 'isLoading' : ''
+                                        )}
+                                    >
+                                        <div className='circle'>
+                                            <div className='spinner' />
+                                        </div>
                                     </div>
-                                </div>
+                                </Swipe>
                             </div>
                         </form>
                         <div
