@@ -153,8 +153,8 @@ const createWindow = async () => {
                 // mainWindow.webContents.closeDevTools();
             });
 
-            mainWindow.on('closed', () => {
-                disableProxy();
+            mainWindow.on('closed', async () => {
+                await disableProxy();
                 mainWindow = null;
             });
 
@@ -235,11 +235,8 @@ const createWindow = async () => {
  * Add event listeners...
  */
 
-app.on('will-quit', () => {
-    disableProxy();
-});
-
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
+    await disableProxy();
     app.quit();
 });
 
