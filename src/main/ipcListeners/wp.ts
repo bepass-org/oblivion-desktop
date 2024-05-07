@@ -104,10 +104,10 @@ ipcMain.on('wp-start', async (event, arg) => {
     const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
     const wpDirPath = isDev()
         ? path.join(
-              app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-              'assets',
-              'bin'
-          )
+            app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+            'assets',
+            'bin'
+        )
         : path.join(app.getPath('temp'));
 
     const command = path.join(wpDirPath, wpFileName);
@@ -157,8 +157,8 @@ ipcMain.on('wp-start', async (event, arg) => {
     });
 
     child.on('exit', async () => {
-        event.reply('wp-end', true);
         await disableProxy();
+        event.reply('wp-end', true);
     });
 });
 
