@@ -153,8 +153,8 @@ const createWindow = async () => {
                 // mainWindow.webContents.closeDevTools();
             });
 
-            mainWindow.on('closed', async () => {
-                await disableProxy();
+            mainWindow.on('closed', () => {
+                //await disableProxy();
                 mainWindow = null;
             });
 
