@@ -1,6 +1,3 @@
-import { app } from 'electron';
-import path from 'path';
-
 const fs = require('fs');
 
 export const isDev = () => process.env.NODE_ENV === 'development';
@@ -49,14 +46,3 @@ export function removeDirIfExists(dirPath: string) {
         }
     });
 }
-
-export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
-export const wpDirPath = isDev()
-    ? path.join(
-          app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-          'assets',
-          'bin'
-      )
-    : path.join(app.getPath('temp'));
-
-export const stuffPath = path.join(wpDirPath, 'stuff');
