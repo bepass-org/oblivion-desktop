@@ -1,14 +1,14 @@
 import classNames from 'classnames';
-import { settings } from '../../lib/settings';
 import { useState } from 'react';
+import { settings } from '../../lib/settings';
 
 export default function LicenseModal({
-    title,
-    isOpen,
-    onClose,
-    license,
-    setLicense
-}: {
+                                         title,
+                                         isOpen,
+                                         onClose,
+                                         license,
+                                         setLicense
+                                     }: {
     title: string;
     isOpen: boolean;
     onClose: any;
@@ -38,6 +38,13 @@ export default function LicenseModal({
                             <div className='miniLine' />
                         </div>
                         <h3>{title}</h3>
+                        <p className='withMargin'>
+                            برنامه برای اجرا لزوماً به لایسنس وارپ نیاز ندارد، اما درصورت نیاز می‌توانید <a
+                            href='https://ircfspace.github.io/warpplus/'
+                            target='_blank' rel='noreferrer'>از
+                            اینجا</a> دریافت کنید.
+                        </p>
+                        <div className='clearfix' />
                         <input
                             value={licenseInput}
                             spellCheck={false}
