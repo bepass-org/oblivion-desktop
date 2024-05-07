@@ -472,7 +472,8 @@ nav .navMenu .indicator {
     padding: 14px 20px 15px 20px;
 }
 
-[data-bs-theme="dark"] .settings .item {
+[data-bs-theme="dark"] .settings .item,
+[data-bs-theme="dark"] .settings .grouped .item:last-child {
     border-color: #2B2E3B;
 }
 
