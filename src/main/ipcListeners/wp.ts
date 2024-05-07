@@ -26,17 +26,14 @@ const wpErrorTranslation: any = {
     'Invalid license': () => {
         return `لایسنس وارد شده معتبر نیست.`;
     },
-    'many connected devices': () => {
-        return `سقف استفاده از لایسنس پر است.`;
+    'Too many connected devices': () => {
+        return `سقف استفاده از لایسنس پر شده است.`;
     },
-    'permission denied': () => {
-        return `برنامه لازم است به‌صورت Run as Administrator اجرا شود.`;
+    'Access is denied': () => {
+        return `مسیر stuff یافت نشد؛ برنامه را به‌صورت Run as Administrator اجرا کنید.`;
     },
     'failed to set endpoint': () => {
         return `تنظیم‌کردن اندپوینت با خطا مواجه شد؛ از اندپوینت پیشفرض استفاده کنید.`;
-    },
-    'system cannot find the file specified': () => {
-        return `فایل stuff یافت نشد؛ برنامه را به‌صورت Run as Administrator اجرا کنید.`;
     },
     'load primary warp identity': () => {
         return `هویت‌سنجی در کلودفلر با خطا مواجه شد.`;
