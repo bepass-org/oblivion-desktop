@@ -46,6 +46,9 @@ const wpErrorTranslation: any = {
     },
     'object null is not iterable': () => {
         return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
+    },
+    'powershell': () => {
+        return `برنامه برای اجرا به نصب نرم‌افزار Powershell نیاز دارد.`;
     }
 };
 
