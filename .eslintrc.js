@@ -39,7 +39,9 @@ module.exports = {
         'react/jsx-boolean-value': 'off',
         'react/require-default-props': 'off',
         'no-unneeded-ternary': 'off',
-        'consistent-return': 'off'
+        'consistent-return': 'off',
+        'no-async-promise-executor': 'off',
+        'no-else-return': 'off'
     },
     parserOptions: {
         ecmaVersion: 2022,

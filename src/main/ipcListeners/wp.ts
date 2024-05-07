@@ -20,10 +20,8 @@ const randomCountry = () => {
 };
 
 ipcMain.on('wp-start', async (event, arg) => {
-    console.log('🚀 - ipcMain.on - arg:', arg);
-
     // in case user is using another proxy
-    // disableProxy();
+    // await disableProxy();
 
     // reading user settings for warp
     const args = [];
@@ -99,10 +97,10 @@ ipcMain.on('wp-start', async (event, arg) => {
     const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
     const wpDirPath = isDev()
         ? path.join(
-            app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-            'assets',
-            'bin'
-        )
+              app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+              'assets',
+              'bin'
+          )
         : path.join(app.getPath('temp'));
 
     const command = path.join(wpDirPath, wpFileName);
@@ -123,7 +121,7 @@ ipcMain.on('wp-start', async (event, arg) => {
                 (typeof autoSetProxy === 'boolean' && autoSetProxy) ||
                 typeof autoSetProxy === 'undefined'
             ) {
-                enableProxy();
+                await enableProxy();
             }*/
         }
         // write to log file
@@ -139,9 +137,9 @@ ipcMain.on('wp-start', async (event, arg) => {
         console.log('err', err.toString());
     });
 
-    child.on('exit', () => {
+    child.on('exit', async () => {
         event.reply('wp-end', true);
-        disableProxy();
+        await disableProxy();
     });
 });
 
