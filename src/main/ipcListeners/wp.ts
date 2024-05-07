@@ -21,7 +21,7 @@ const randomCountry = () => {
 // ! make sure you get the args like ({ port = '' })
 const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
-        return `پورت ${port} در حال حاضر در حال استفاده است! لطفا پورت دیگری را از تنظیمات انتخاب کنید`;
+        return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ پورت دیگری را از تنظیمات برنامه انتخاب کنید.`;
     }
 };
 
