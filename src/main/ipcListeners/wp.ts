@@ -25,7 +25,7 @@ const wpErrorTranslation: any = {
     }
 };
 
-ipcMain.on('wp-start', async (event, arg) => {
+ipcMain.on('wp-start', async (event) => {
     // in case user is using another proxy
     // await disableProxy();
 

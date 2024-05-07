@@ -14,20 +14,20 @@ import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron
 import settings from 'electron-settings';
 import MenuBuilder from './menu';
 import './ipc';
-import { isDev, removeDirIfExists, removeFileIfExists, stuffPath } from './lib/utils';
+import { isDev, removeFileIfExists } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
-import { disableProxy, enableProxy } from './lib/proxy';
+import { disableProxy } from './lib/proxy';
 import { wpLogPath } from './lib/log';
 
 let mainWindow: BrowserWindow | null = null;
 
-// console.log(3, app.getPath('appData'));
-// console.log(4, app.getPath('logs'));
-// console.log(5, app.getPath('userData'));
-// console.log(6, app.getPath('exe'));
-// console.log(7, app.getAppPath());
+// console.log(1, app.getPath('appData'));
+// console.log(2, app.getPath('logs'));
+// console.log(3, app.getPath('userData'));
+// console.log(4, app.getPath('exe'));
+// console.log(5, app.getAppPath());
 
-// copieng wp binary to tmp on production so it can run withoud sudo/administrator privilage
+// coping wp binary to tmp on production so it can run without sudo/administrator privilege
 if (!isDev()) {
     const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
     const source = path.join(
@@ -59,7 +59,6 @@ function resolveHtmlPath(htmlFileName: string) {
 }
 
 removeFileIfExists(wpLogPath);
-removeDirIfExists(stuffPath);
 
 const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
@@ -176,8 +175,8 @@ const createWindow = async () => {
             menuBuilder.buildMenu();
 
             // Open urls in the user's browser
-            mainWindow.webContents.setWindowOpenHandler((edata) => {
-                shell.openExternal(edata.url);
+            mainWindow.webContents.setWindowOpenHandler((e) => {
+                shell.openExternal(e.url);
                 return { action: 'deny' };
             });
         } else {
