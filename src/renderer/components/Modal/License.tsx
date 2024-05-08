@@ -40,7 +40,7 @@ export default function LicenseModal({
                         <h3>{title}</h3>
                         <p className='withMargin'>
                             برنامه برای اجرا لزوماً به لایسنس وارپ نیاز نداشته، اما درصورت تمایل
-                            می‌توانید کد لایسنس خود را اینجا وارد کنید.
+                            می‌توانید لایسنس خود را اینجا وارد کنید.
                         </p>
                         <div className='clearfix' />
                         <input
