@@ -2,6 +2,10 @@
 
 "Internet, for all or none!"
 
+![Version](https://img.shields.io/github/package-json/v/bepass-org/oblivion-desktop?label=Version)
+[![Download](https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total?label=Downloads)](https://github.com/bepass-org/oblivion-desktop/releases/latest)
+[![Stars](https://img.shields.io/github/stars/bepass-org/oblivion-desktop?style=flat&label=Stars)](https://github.com/bepass-org/oblivion-desktop)
+
 ![oblivion.png](screenshot/oblivion.png)
 
 ---
@@ -21,8 +25,6 @@ technology
 ![oblivion.jpg](screenshot/oblivion.jpg)
 
 ## Download
-
-![Download](https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total)
 
 <div align=left>
 <table>
