@@ -14,6 +14,7 @@ import Options from './pages/Options';
 import Routing from './pages/Routing';
 import About from './pages/About';
 import Debug from './pages/Debug';
+import SpeedTest from './pages/SpeedTest';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadTheme } from './lib/loaders';
 import { quitOnCtrlW } from './lib/utils';
@@ -36,6 +37,7 @@ export default function App() {
                     <Route path='/routing' element={<Routing />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/debug' element={<Debug />} />
+                    <Route path='/speed' element={<SpeedTest />} />
                 </Routes>
             </Router>
         </>

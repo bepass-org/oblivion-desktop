@@ -318,6 +318,12 @@ export default function Index() {
                         </li>
                         <li className='divider' />
                         <li>
+                            <Link to='/speed'>
+                                <i className={'material-icons'}>&#xe9e4;</i>
+                                <span>تست سرعت</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to='/about'>
                                 <i className={'material-icons'}>&#xe88e;</i>
                                 <span>درباره برنامه</span>
