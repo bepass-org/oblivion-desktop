@@ -39,16 +39,8 @@ export default function LicenseModal({
                         </div>
                         <h3>{title}</h3>
                         <p className='withMargin'>
-                            برنامه برای اجرا لزوماً به لایسنس وارپ نیاز ندارد، اما درصورت نیاز
-                            می‌توانید{' '}
-                            <a
-                                href='https://ircfspace.github.io/warpplus/'
-                                target='_blank'
-                                rel='noreferrer'
-                            >
-                                از اینجا
-                            </a>{' '}
-                            دریافت کنید.
+                            برنامه برای اجرا لزوماً به لایسنس وارپ نیاز نداشته، اما درصورت تمایل می‌توانید کد لایسنس خود
+                            را اینجا وارد کنید.
                         </p>
                         <div className='clearfix' />
                         <input
