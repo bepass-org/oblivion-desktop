@@ -100,11 +100,12 @@ export default function Options() {
                             setAutoSetProxy(!autoSetProxy);
                             settings.set('autoSetProxy', !autoSetProxy);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-
-                            if (autoSetProxy) {
-                                setIpData(false);
-                                settings.set('ipData', false);
-                            }
+                            setTimeout(function() {
+                                if (autoSetProxy) {
+                                    setIpData(false);
+                                    settings.set('ipData', false);
+                                }
+                            }, 1000);
                         }}
                     >
                         <label className='key'>پیکربندی شبکه</label>
