@@ -210,6 +210,36 @@ nav .navMenu .indicator {
     min-height: 80vh;
 }
 
+.myApp .iframe {
+    float: right;
+    width: 100%;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.myApp .iframe:after {
+    float: right;
+    width: 100%;
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    height: 300px;
+    background: transparent;
+    z-index: 1;
+}
+
+.myApp .iframe iframe {
+    float: right;
+    width: 100%;
+    height: calc(100vh - 200px);
+    border: none;
+    border-radius: 250px 250px 25px 25px;
+}
+
 .homeScreen {
     float: right;
     width: 100%;
