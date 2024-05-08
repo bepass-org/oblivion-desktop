@@ -11,7 +11,7 @@ Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
 
-![virustotal.png](screenshot/virustotal.png)
+![virustotal.jpg](screenshot/virustotal.jpg)
 
 ## Features
 
