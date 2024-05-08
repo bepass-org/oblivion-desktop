@@ -46,8 +46,18 @@ export default function About() {
                         </a>
                         <p className='text-center'>
                             <small>
-                                App Version: <b>{packageJsonData.version}</b>
+                                v<b>{packageJsonData.version}</b>
                             </small>
+                            <a
+                                href='https://github.com/ircfofficial/oblivion-desktop'
+                                target='_blank'
+                                rel='noreferrer'
+                            >
+                                <img
+                                    className='starBadge'
+                                    src='https://img.shields.io/github/stars/bepass-org/oblivion-desktop?style=flat&label=Stars&color=tomato'
+                                    alt='stars' />
+                            </a>
                         </p>
                         <div className='clearfix' />
                         <hr />

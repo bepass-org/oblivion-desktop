@@ -858,6 +858,12 @@ nav .navMenu .indicator {
     margin-top: 0;
 }
 
+.socialMedia .starBadge {
+    margin-right: 10px;
+    width: 70px;
+    height: 20px;
+}
+
 [data-bs-theme="dark"] .socialMedia hr {
     border-color: #2B2E3B;
 }
