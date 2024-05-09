@@ -69,3 +69,8 @@ export const countries: { value: string; label: string }[] = [
     { value: 'UA', label: 'Ukraine' },
     { value: 'US', label: 'United States' }
 ];
+
+export const languages: { value: string; label: string }[] = [
+    { value: 'fa', label: 'فارسی' },
+    { value: 'en', label: 'English' }
+];

@@ -4,7 +4,7 @@ import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
-import { defaultSettings } from '../../defaultSettings';
+import { defaultSettings, languages } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
@@ -24,6 +24,8 @@ export default function Options() {
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
+
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
 
     useEffect(() => {
         settings.get('theme').then((value) => {
@@ -52,7 +54,7 @@ export default function Options() {
     useEffect(() => {
         setTimeout(function() {
             loadLang();
-        }, 500);
+        }, 1000);
     }, [lang]);
 
     if (
@@ -76,13 +78,13 @@ export default function Options() {
 
     return (
         <>
-            <Nav title='تنظیمات برنامه' />
+            <Nav title={appLang?.settings?.option} />
             <PortModal
                 {...{
                     port,
                     setPort
                 }}
-                title='پورت پروکسی'
+                title={appLang?.modal?.port_title}
                 isOpen={showPortModal}
                 onClose={() => {
                     setShowPortModal(false);
@@ -98,7 +100,7 @@ export default function Options() {
                     setAutoSetProxy,
                     setShareVPN
                 }}
-                title='بازگردانی تغییرات'
+                title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
@@ -120,13 +122,13 @@ export default function Options() {
                             }, 1000);
                         }}
                     >
-                        <label className='key'>پیکربندی شبکه</label>
+                        <label className='key'>{appLang?.settings?.auto_set_proxy}</label>
                         <div className='value'>
                             <div className={classNames('checkbox', autoSetProxy ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>تنظیم پروکسی بر روی سیستم‌عامل</div>
+                        <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
                     </div>
                     <div
                         className='item'
@@ -134,11 +136,11 @@ export default function Options() {
                             setShowPortModal(true);
                         }}
                     >
-                        <label className='key'>پورت پروکسی</label>
+                        <label className='key'>{appLang?.settings?.port}</label>
                         <div className='value'>
                             <span className='dirLeft'>{port}</span>
                         </div>
-                        <div className='info'>تعیین پورت پروکسی برنامه</div>
+                        <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
                     <div
                         className={classNames('item', shareVPN ? 'checked' : '')}
@@ -149,13 +151,13 @@ export default function Options() {
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                         }}
                     >
-                        <label className='key'>اتصال از LAN</label>
+                        <label className='key'>{appLang?.settings?.share_vpn}</label>
                         <div className='value'>
                             <div className={classNames('checkbox', shareVPN ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>اشتراک‌گذاری پروکسی بر روی شبکه</div>
+                        <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                     </div>
                     <div
                         className={classNames('item', autoSetProxy ? '' : 'disabled')}
@@ -166,18 +168,18 @@ export default function Options() {
                             }
                         }}
                     >
-                        <label className='key'>بررسی IP</label>
+                        <label className='key'>{appLang?.settings?.ip_data}</label>
                         <div className='value'>
                             <div className={classNames('checkbox', ipData ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>نمایش آی‌پی و لوکیشن پس‌از اتصال</div>
+                        <div className='info'>{appLang?.settings?.ip_data_desc}</div>
                     </div>
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
-                    سایر تنظیمات
+                    {appLang?.settings?.more}
                 </div>
                 <div className='settings'>
                     <div
@@ -190,7 +192,7 @@ export default function Options() {
                         }}
                     >
                         <label className='key' htmlFor='flexSwitchCheckChecked'>
-                            حالت تیره
+                            {appLang?.settings?.dark_mode}
                         </label>
                         <div className='value'>
                             <div
@@ -203,11 +205,11 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info' id='flexSwitchCheckChecked'>
-                            مشخص‌کردن حالت نمایش برنامه
+                            {appLang?.settings?.dark_mode_desc}
                         </div>
                     </div>
                     <div className={classNames('item')}>
-                        <label className='key'>زبان برنامه</label>
+                        <label className='key'>{appLang?.settings?.lang}</label>
                         <div className='value'>
                             <select
                                 onChange={(e) => {
@@ -216,11 +218,14 @@ export default function Options() {
                                 }}
                                 value={lang}
                             >
-                                <option value='fa'>فارسی</option>
-                                <option value='en'>English</option>
+                                {languages.map((lng: { value: string; label: string }) => (
+                                    <option key={lng.value} value={lng.value}>
+                                        {lng.label}
+                                    </option>
+                                ))}
                             </select>
                         </div>
-                        <div className='info'>تغییر زبان رابط کاربری برنامه</div>
+                        <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
                     <div
                         className='item'
@@ -229,13 +234,13 @@ export default function Options() {
                             settings.set('systemTray', !systemTray);
                         }}
                     >
-                        <label className='key'>مخفی‌سازی</label>
+                        <label className='key'>{appLang?.settings?.system_tray}</label>
                         <div className='value'>
                             <div className={classNames('checkbox', systemTray ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>قرار نگرفتن آیکون برنامه در تسک‌بار</div>
+                        <div className='info'>{appLang?.settings?.system_tray_desc}</div>
                     </div>
                     <div
                         className={'item'}
@@ -243,11 +248,11 @@ export default function Options() {
                             setShowRestoreModal(true);
                         }}
                     >
-                        <label className='key'>بازگردانی</label>
+                        <label className='key'>{appLang?.settings?.restore}</label>
                         <div className='value'>
                             <i className='material-icons'>&#xe8ba;</i>
                         </div>
-                        <div className='info'>اعمال تنظیمات پیشفرض برنامه</div>
+                        <div className='info'>{appLang?.settings?.restore_desc}</div>
                     </div>
                 </div>
             </div>
