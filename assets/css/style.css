@@ -439,6 +439,11 @@ nav.header .navMenu .indicator {
     line-height: 24px;
 }
 
+[dir="ltr"] .logPage .logText {
+    direction: ltr;
+    text-align: left;
+}
+
 .logPage .logOptions {
     float: left;
     margin: 0;
@@ -916,6 +921,11 @@ nav.header .navMenu .indicator {
     height: 20px;
 }
 
+[dir="ltr"] .socialMedia .starBadge {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
 [data-bs-theme="dark"] .socialMedia hr {
     border-color: #2B2E3B;
 }
@@ -1086,6 +1096,10 @@ nav.header .navMenu .indicator {
     user-select: none;
 }
 
+[dir="ltr"] .dialog .dialogBox .btn {
+    float: right;
+}
+
 .dialog .dialogBox .btn.btn-save {
     background: #8d8c8c;
     color: #fff;
@@ -1108,6 +1122,11 @@ nav.header .navMenu .indicator {
     border-color: #acacac;
     margin-right: 10px;
     font-weight: 300;
+}
+
+[dir="ltr"] .dialog .dialogBox .btn.btn-cancel {
+    margin-right: 0;
+    margin-left: 10px;
 }
 
 [data-bs-theme="dark"] .dialog .dialogBox .btn.btn-cancel {

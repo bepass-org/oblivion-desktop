@@ -19,6 +19,7 @@ export default function EndpointModal({
     setEndpoint: any;
 }) {
     const [endpointInput, setEndpointInput] = useState(endpoint);
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
 
     const onSaveModal = () => {
         const regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
@@ -51,7 +52,7 @@ export default function EndpointModal({
                         />
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
-                            انصراف
+                            {appLang?.modal?.cancel}
                         </div>
                         <div
                             className={classNames('btn', 'btn-save')}
@@ -59,7 +60,7 @@ export default function EndpointModal({
                                 onSaveModal();
                             }}
                         >
-                            بروزرسانی
+                            {appLang?.modal?.update}
                         </div>
                     </div>
                 </div>

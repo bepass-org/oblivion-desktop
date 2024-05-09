@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { settings } from '../../lib/settings';
 import { useState } from 'react';
+import { settings } from '../../lib/settings';
 
 export default function RoutingRulesModal({
     title,
@@ -16,6 +16,7 @@ export default function RoutingRulesModal({
     setRoutingRules: any;
 }) {
     const [routingRulesInput, setRoutingRulesInput] = useState(routingRules);
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
 
     if (!isOpen) return <></>;
 
@@ -87,7 +88,7 @@ export default function RoutingRulesModal({
                                     }}
                                 >
                                     <i className='material-icons'>&#xe145;</i>
-                                    نمونه
+                                    {appLang?.modal?.routing_rules_sample}
                                 </div>
                             </div>
                         </h3>
@@ -101,7 +102,7 @@ export default function RoutingRulesModal({
                         />
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
-                            انصراف
+                            {appLang?.modal?.cancel}
                         </div>
                         <div
                             className={classNames('btn', 'btn-save')}
@@ -109,7 +110,7 @@ export default function RoutingRulesModal({
                                 onSaveModal();
                             }}
                         >
-                            بروزرسانی
+                            {appLang?.modal?.update}
                         </div>
                     </div>
                 </div>

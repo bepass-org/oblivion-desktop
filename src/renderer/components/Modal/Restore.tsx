@@ -26,6 +26,8 @@ export default function RestoreModal({
 }) {
     if (!isOpen) return null;
 
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+
     const onSaveModal = async () => {
         // in this page
         setTheme(defaultSettings.theme);
@@ -66,12 +68,11 @@ export default function RestoreModal({
                         </div>
                         <h3>{title}</h3>
                         <p>
-                            با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به‌حالت پیشفرض
-                            باز گشته و اتصال شما قطع می‌گردد.
+                            {appLang?.modal?.restore_desc}
                         </p>
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
-                            انصراف
+                            {appLang?.modal?.cancel}
                         </div>
                         <div
                             className={classNames('btn', 'btn-save')}
@@ -79,7 +80,7 @@ export default function RestoreModal({
                                 onSaveModal();
                             }}
                         >
-                            تایید می‌کنم
+                            {appLang?.modal?.confirm}
                         </div>
                     </div>
                 </div>

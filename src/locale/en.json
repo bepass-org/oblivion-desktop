@@ -61,7 +61,22 @@
     "modal": {
         "endpoint_title": "Endpoint",
         "license_title": "License",
+        "license_desc": "The program does not necessarily need a Warp license to run, but if you wish, you can enter your license here.",
         "port_title": "Proxy Port",
-        "restore_title": "Restore Changes"
+        "restore_title": "Restore Changes",
+        "restore_desc": "By confirming the operation of restoring the changes, all program settings will return to the default state and your connection will be disconnected.",
+        "routing_rules_sample": "Sample",
+        "confirm": "I confirm",
+        "Update": "Update",
+        "cancel": "Cancel"
+    },
+    "log": {
+        "title": "Warp Log",
+        "desc": "If a log is created by the program, it will be displayed here."
+    },
+    "about": {
+        "title": "About the app",
+        "desc": "This program is an unofficial, but reliable version of the Oblivion app for Windows, Linux, and Mac.\nThe Oblivion Desktop program is modeled after the user interface of the original version developed by Youssef Ghobadi. It was written, it was prepared for the purpose of free access to the Internet, and any name change or commercial use of it is not allowed.",
+        "slogan": "Internet, for all or none!"
     }
 }

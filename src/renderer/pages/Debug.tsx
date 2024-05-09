@@ -8,6 +8,8 @@ import { defaultToast } from '../lib/toasts';
 export default function Debug() {
     const [log, setLog] = useState('');
 
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+
     // asking for log every 1sec
     useEffect(() => {
         ipcRenderer.sendMessage('log');
@@ -27,7 +29,7 @@ export default function Debug() {
         e.preventDefault();
         navigator.clipboard.writeText(value);
 
-        defaultToast('کپی شد!', 'COPIED', 2000);
+        defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
     };
 
     const handleClearLog = (e: { preventDefault: () => void }) => {
@@ -36,7 +38,7 @@ export default function Debug() {
 
     return (
         <>
-            <Nav title='لاگ وارپ' />
+            <Nav title={appLang?.log?.title} />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
                     <div className={classNames('logOptions', log === '' ? 'hidden' : '')}>
@@ -59,7 +61,7 @@ export default function Debug() {
                     </div>
                     <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
                         {log === ''
-                            ? 'درصورت ایجاد لاگ توسط برنامه، اینجا نمایش داده می‌شود.'
+                            ? appLang?.log?.desc
                             : log}
                     </p>
                 </div>

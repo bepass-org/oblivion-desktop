@@ -5,21 +5,18 @@ import gitHubMark from '../../../assets/img/github-mark.png';
 import ircf from '../../../assets/img/ircf.png';
 
 export default function About() {
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    
     return (
         <>
-            <Nav title='درباره برنامه' />
+            <Nav title={appLang?.about?.title} />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
-                    <p>
-                        این‌برنامه یک نسخه غیررسمی، اما قابل اطمینان از اپ Oblivion یا فراموشی است
-                        که برای ویندوز، لینوکس و مک ارائه گردیده است.
-                        <br />
-                        برنامه Oblivion Desktop با الگو گرفتن از رابط کاربری نسخه اصلی که توسط یوسف
-                        قبادی برنامه‌نویسی شده بود، با هدف دسترسی آزاد به اینترنت تهیه گردیده و
-                        هرگونه تغییر نام یا استفاده تجاری از آن مجاز نمی‌باشد.
+                    <p style={{ whiteSpace: 'pre-wrap' }}>
+                        {appLang?.about?.desc}
                     </p>
                     <p>
-                        <b>اینترنت برای همه، یا هیچ‌کس!</b>
+                        <b>{appLang?.about?.slogan}</b>
                     </p>
                     <div className='socialMedia'>
                         <a

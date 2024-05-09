@@ -19,6 +19,7 @@ export default function PortModal({
     setPort: any;
 }) {
     const [portInput, setPortInput] = useState(port);
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
 
     const isValidPort = (port2: any) => {
         return /^\d{1,5}$/.test(port2) && parseInt(port2, 10) >= 20 && parseInt(port2, 10) <= 65535;
@@ -56,7 +57,7 @@ export default function PortModal({
                         />
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
-                            انصراف
+                            {appLang?.modal?.cancel}
                         </div>
                         <div
                             className={classNames('btn', 'btn-save')}
@@ -64,7 +65,7 @@ export default function PortModal({
                                 onSaveModal();
                             }}
                         >
-                            بروزرسانی
+                            {appLang?.modal?.update}
                         </div>
                     </div>
                 </div>
