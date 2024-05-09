@@ -10,11 +10,13 @@ import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
 import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
+import { loadLang } from '../lib/loaders';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
 
     const [theme, setTheme] = useState<undefined | string>();
+    const [lang, setLang] = useState('');
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState(false);
@@ -26,6 +28,9 @@ export default function Options() {
     useEffect(() => {
         settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
+        });
+        settings.get('lang').then((value) => {
+            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
         });
         settings.get('ipData').then((value) => {
             setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
@@ -44,8 +49,15 @@ export default function Options() {
         });
     }, []);
 
+    useEffect(() => {
+        setTimeout(function() {
+            loadLang();
+        }, 500);
+    }, [lang]);
+
     if (
         typeof theme === 'undefined' ||
+        typeof lang === 'undefined' ||
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
         typeof autoSetProxy === 'undefined' ||
@@ -193,6 +205,22 @@ export default function Options() {
                         <div className='info' id='flexSwitchCheckChecked'>
                             مشخص‌کردن حالت نمایش برنامه
                         </div>
+                    </div>
+                    <div className={classNames('item')}>
+                        <label className='key'>زبان برنامه</label>
+                        <div className='value'>
+                            <select
+                                onChange={(e) => {
+                                    setLang(e.target.value);
+                                    settings.set('lang', e.target.value);
+                                }}
+                                value={lang}
+                            >
+                                <option value='fa'>فارسی</option>
+                                <option value='en'>English</option>
+                            </select>
+                        </div>
+                        <div className='info'>تغییر زبان رابط کاربری برنامه</div>
                     </div>
                     <div
                         className='item'

@@ -24,8 +24,7 @@ let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 export default function Index() {
-    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } =
-        useStore();
+    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } = useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
         ip: string;
@@ -35,12 +34,15 @@ export default function Index() {
     });
     const [online, setOnline] = useState(true);
 
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
 
     //const [theme, setTheme] = useState<undefined | string>();
+    const [lang, setLang] = useState<undefined | string>();
     const [ipData, setIpData] = useState<undefined | boolean>();
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
@@ -71,6 +73,9 @@ export default function Index() {
         /*settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
         });*/
+        settings.get('lang').then((value) => {
+            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+        });
         settings.get('ipData').then((value) => {
             setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
         });
@@ -120,6 +125,7 @@ export default function Index() {
             window.removeEventListener('online', () => setOnline(true));
             window.removeEventListener('offline', () => setOnline(false));
         };
+
     }, []);
 
     useEffect(() => {
@@ -136,8 +142,8 @@ export default function Index() {
         }
 
         defaultToastWithSubmitButton(
-            `کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.`,
-            'متوجه شدم',
+            `${appLang?.toast?.ir_location}`,
+            `${appLang?.toast?.btn_submit}`,
             'IRAN_IP',
             Infinity
         );
@@ -224,17 +230,17 @@ export default function Index() {
         }
 
         if (isConnected && isLoading) {
-            setStatusText('قطع ارتباط ...');
+            setStatusText(`${appLang?.stutus?.disconnecting}`);
         } else if (!isConnected && isLoading) {
-            setStatusText('درحال اتصال ...');
+            setStatusText(`${appLang?.stutus?.connecting}`);
         } else if (isConnected && ipInfo?.countryCode) {
-            setStatusText('متصل هستید');
+            setStatusText(`${appLang?.stutus?.connected_confirm}`);
         } else if (isConnected && !ipInfo?.countryCode && ipData) {
-            setStatusText('دریافت اطلاعات ...');
+            setStatusText(`${appLang?.stutus?.ip_check}`);
         } else if (isConnected && !ipData) {
-            setStatusText('اتصال برقرار شد');
+            setStatusText(`${appLang?.stutus?.connected}`);
         } else {
-            setStatusText('متصل نیستید');
+            setStatusText(`${appLang?.status?.disconnected}`);
         }
     }, [isLoading, isConnected, ipInfo, ipData]);
 
@@ -267,7 +273,7 @@ export default function Index() {
                 lockBackgroundScroll={false}
                 overlayOpacity={1}
                 duration={250}
-                direction='right'
+                direction={lang === 'fa' ? 'right' : 'left'}
                 className='drawer'
                 overlayClassName='drawerOverlay'
                 size='80vw'
@@ -283,26 +289,26 @@ export default function Index() {
                         <li>
                             <Link to={'/settings'}>
                                 <i className={'material-icons'}>&#xe429;</i>
-                                <span>تنظیمات وارپ</span>
+                                <span>{appLang?.home?.drawer_settings_warp}</span>
                             </Link>
                         </li>
                         {/*<li>
                             <Link to={'/routing'}>
                                 <i className={'material-icons'}>&#xe90e;</i>
-                                <span>قوانین مسیریابی</span>
+                                <span>{appLang?.home?.drawer_settings_routing_rules}</span>
                             </Link>
                         </li>*/}
                         {/*<li className='divider'></li>*/}
                         <li>
                             <Link to={'/options'}>
                                 <i className={'material-icons'}>&#xe8b8;</i>
-                                <span>تنظیمات برنامه</span>
+                                <span>{appLang?.home?.drawer_settings_app}</span>
                             </Link>
                         </li>
                         <li>
                             <Link to={'/debug'}>
                                 <i className={'material-icons'}>&#xe868;</i>
-                                <span>لاگ وارپ</span>
+                                <span>{appLang?.home?.drawer_log_warp}</span>
                             </Link>
                         </li>
                         <li className={hasNewUpdate ? '' : 'hidden'}>
@@ -312,21 +318,21 @@ export default function Index() {
                                 rel='noreferrer'
                             >
                                 <i className={'material-icons'}>&#xe923;</i>
-                                <span>بروزرسانی</span>
-                                <div className='label label-warning label-xs'>نسخه جدید</div>
+                                <span>{appLang?.home?.drawer_update}</span>
+                                <div className='label label-warning label-xs'>{appLang?.home?.drawer_update_label}</div>
                             </a>
                         </li>
                         <li className='divider' />
-                        <li>
+                        {/*<li>
                             <Link to='/speed'>
                                 <i className={'material-icons'}>&#xe9e4;</i>
-                                <span>تست سرعت</span>
+                                <span>{appLang?.home?.drawer_speed_test}</span>
                             </Link>
-                        </li>
+                        </li>*/}
                         <li>
                             <Link to='/about'>
                                 <i className={'material-icons'}>&#xe88e;</i>
-                                <span>درباره برنامه</span>
+                                <span>{appLang?.home?.drawer_about}</span>
                             </Link>
                         </li>
                     </ul>
@@ -356,7 +362,7 @@ export default function Index() {
                     <div className='homeScreen'>
                         <div className='title'>
                             <h1>OBLIVION</h1>
-                            <h2>بر پایه وارپ</h2>
+                            <h2>{appLang?.home?.title_warp_based}</h2>
                         </div>
                         <form action=''>
                             <div className='connector'>
@@ -411,7 +417,7 @@ export default function Index() {
                                     const getTime = new Date().getTime();
                                     if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
                                         defaultToast(
-                                            'برای بررسی مجدد چندثانیه دیگر تلاش کنید!',
+                                            `${appLang?.toast?.ip_check_please_wait}`,
                                             'IP_LOCATION_STATUS',
                                             2000
                                         );

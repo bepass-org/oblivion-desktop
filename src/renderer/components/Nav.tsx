@@ -23,7 +23,7 @@ export default function Nav({ title }: { title: string }) {
 
     return (
         <>
-            <nav>
+            <nav className='header'>
                 <div className='container'>
                     <h3>{title}</h3>
                     <BackButton />

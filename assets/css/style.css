@@ -42,7 +42,7 @@ body:before {
     text-align: right;
 }
 
-nav {
+nav.header {
     float: right;
     width: 100%;
     position: fixed;
@@ -68,43 +68,43 @@ nav.isSticky {
     background: rgba(53, 50, 33, 0.9);
 }
 
-nav i {
+nav.header i {
     color: #676767;
     font-size: 30px !important;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
-[data-bs-theme="dark"] nav i {
+[data-bs-theme="dark"] nav.header i {
     color: #DCDCDC;
 }
 
-nav i:hover {
+nav.header i:hover {
     color: #4f4f4f;
 }
 
-[data-bs-theme="dark"] nav i:hover {
+[data-bs-theme="dark"] nav.header i:hover {
     color: #eaeaea;
 }
 
-nav i.log {
+nav.header i.log {
     color: #A1A1A1;
     margin-right: 15px;
 }
 
-nav i.log:hover {
+nav.header i.log:hover {
     color: #E15959;
 }
 
-[data-bs-theme="dark"] nav i.log:hover {
+[data-bs-theme="dark"] nav.header i.log:hover {
     color: #ed6a6a;
 }
 
-nav a.disabled {
+nav.header a.disabled {
     pointer-events: none;
 }
 
-nav h3 {
+nav.header h3 {
     font-size: 19px;
     font-weight: 200;
     color: #303030;
@@ -112,26 +112,26 @@ nav h3 {
     float: right;
 }
 
-[data-bs-theme="dark"] nav h3 {
+[data-bs-theme="dark"] nav.header h3 {
     color: #DCDCDC;
 }
 
-nav i.backBtn {
+nav.header i.backBtn {
     font-size: 30px;
     float: left;
 }
 
-nav i.backBtn:hover {
+nav.header i.backBtn:hover {
     color: #1058FF;
 }
 
-nav .navMenu {
+nav.header .navMenu {
     position: relative;
     float: right;
     transition: all 0.2s ease-in-out;
 }
 
-nav .navMenu .indicator {
+nav.header .navMenu .indicator {
     position: absolute;
     width: 10px;
     height: 10px;
@@ -290,6 +290,10 @@ nav .navMenu .indicator {
 
 [data-bs-theme="dark"] .homeScreen .title h2 {
     color: #FFA200;
+}
+
+[dir="ltr"] .homeScreen .title h2 {
+    text-align: left;
 }
 
 @media screen and (min-width: 600px) {
@@ -1133,12 +1137,26 @@ nav .navMenu .indicator {
     padding: 0 20px 15px 0;
 }
 
+[dir="ltr"] .drawer .list .appName {
+    float: left;
+    padding: 0 0 15px 20px;
+}
+
+[dir="ltr"] .drawer .list .appName {
+    float: left;
+}
+
 .drawer .list .appName img {
     float: right;
     width: 80px;
     height: 80px;
     object-fit: cover;
     margin: 0 -5px 8px 0;
+}
+
+[dir="ltr"] .drawer .list .appName img {
+    float: left;
+    margin: 0 0 8px -5px;
 }
 
 .drawer .list .appName h3 {
@@ -1149,6 +1167,11 @@ nav .navMenu .indicator {
     font-size: 22px;
     font-weight: 400;
     color: #FFA200;
+}
+
+[dir="ltr"] .drawer .list .appName h3 {
+    float: left;
+    text-align: left;
 }
 
 .drawer .list .appName h3 small {
@@ -1172,6 +1195,10 @@ nav .navMenu .indicator {
     width: 100%;
     list-style: none;
     transition: all 0.2s ease-in-out;
+}
+
+[dir="ltr"] .drawer .list ul li {
+    float: left;
 }
 
 .drawer .list ul li:hover {
@@ -1202,11 +1229,22 @@ nav .navMenu .indicator {
     padding: 10px 20px;
 }
 
+[dir="ltr"] .drawer .list ul li a {
+    float: left;
+}
+
 .drawer .list ul li i {
     float: right;
     color: #b0b0b0;
     font-size: 22px !important;
     padding-left: 20px;
+}
+
+[dir="ltr"] .drawer .list ul li i {
+    float: left;
+    padding-left: 0;
+    padding-right: 20px;
+    margin-top: -3px;
 }
 
 .drawer .list ul li:hover i {
@@ -1225,6 +1263,10 @@ nav .navMenu .indicator {
     font-size: 16px;
 }
 
+[dir="ltr"] .drawer .list ul li span {
+    float: left;
+}
+
 [data-bs-theme="dark"] .drawer .list ul li span {
     color: #e1e1e1;
     font-weight: 200;
@@ -1238,6 +1280,10 @@ nav .navMenu .indicator {
     font-size: 12px;
     margin: 2px 0 0 0;
     background: #FFA200;
+}
+
+[dir="ltr"] .drawer .list ul li .label {
+    float: right;
 }
 
 .drawer .appVersion {

@@ -1,0 +1,27 @@
+{
+    "global": {},
+    "status": {
+        "connecting": "Connecting ...",
+        "connected": "Connected",
+        "connected_confirm": "Connected",
+        "disconnecting": "Disconnecting ...",
+        "disconnected": "Disconnected",
+        "ip_check": "Checking Ip ..."
+    },
+    "home": {
+        "title_warp_based": "Warp Based",
+        "drawer_settings_warp": "Warp Settings",
+        "drawer_settings_routing_rules": "Routing Rules",
+        "drawer_settings_app": "App Settings",
+        "drawer_log_warp": "Warp Log",
+        "drawer_update": "Update",
+        "drawer_update_label": "New Update",
+        "drawer_speed_test": "Speed Test",
+        "drawer_about": "About App"
+    },
+    "toast": {
+        "ip_check_please_wait": "Please wait a few seconds to retry the check!",
+        "ir_location": "Cloudflare has connected to an IP with an Iranian location, which is different from your actual IP. You can use it to bypass filtering, but not sanctions. Don't worry! You can change the location in the settings using the \"Gool\" or \"psiphon\" option.",
+        "btn_submit": "Understood"
+    }
+}

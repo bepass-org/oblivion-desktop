@@ -6,6 +6,7 @@ export type settingsKeys =
     | 'location'
     | 'license'
     | 'theme'
+    | 'lang'
     | 'systemTray'
     | 'flag'
     | 'ipData'
@@ -23,6 +24,7 @@ export const defaultSettings = {
     location: '',
     license: '',
     theme: 'light',
+    lang: 'fa',
     systemTray: false,
     flag: 'xx',
     ipData: true,
