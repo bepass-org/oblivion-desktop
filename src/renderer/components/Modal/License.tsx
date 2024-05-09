@@ -19,6 +19,8 @@ export default function LicenseModal({
 
     if (!isOpen) return <></>;
 
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+
     const onSaveModal = () => {
         const regex = /^[a-zA-Z0-9-]*$/;
         const tmp = regex.test(licenseInput) ? licenseInput : '';
@@ -39,8 +41,7 @@ export default function LicenseModal({
                         </div>
                         <h3>{title}</h3>
                         <p className='withMargin'>
-                            برنامه برای اجرا لزوماً به لایسنس وارپ نیاز نداشته، اما درصورت تمایل
-                            می‌توانید لایسنس خود را اینجا وارد کنید.
+                            {appLang?.modal?.license_desc}
                         </p>
                         <div className='clearfix' />
                         <input
@@ -53,7 +54,7 @@ export default function LicenseModal({
                         />
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
-                            انصراف
+                            {appLang?.modal?.cancel}
                         </div>
                         <div
                             className={classNames('btn', 'btn-save')}
@@ -61,7 +62,7 @@ export default function LicenseModal({
                                 onSaveModal();
                             }}
                         >
-                            بروزرسانی
+                            {appLang?.modal?.update}
                         </div>
                     </div>
                 </div>
