@@ -84,7 +84,7 @@ export default function Settings() {
                     endpoint,
                     setEndpoint
                 }}
-                title={appLang?.settings?.endpoint_title}
+                title={appLang?.modal?.endpoint_title}
                 isOpen={showEndpointModal}
                 onClose={() => {
                     setShowEndpointModal(false);
@@ -96,7 +96,7 @@ export default function Settings() {
                     license,
                     setLicense
                 }}
-                title={appLang?.settings?.license_title}
+                title={appLang?.modal?.license_title}
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);

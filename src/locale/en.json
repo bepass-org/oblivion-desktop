@@ -39,10 +39,29 @@
         "endpoint": "Endpoint",
         "endpoint_desc": "Combination of IP or domain name, along with port",
         "license": "License",
-        "license_desc": "If you have a license (each license is 2x)"
+        "license_desc": "If you have a license (each license is 2x)",
+        "option": "Application Settings",
+        "auto_set_proxy": "Network",
+        "auto_set_proxy_desc": "Set proxy on operating system",
+        "port": "Proxy Port",
+        "port_desc": "Define application proxy port",
+        "share_vpn": "Share (LAN)",
+        "share_vpn_desc": "Share a proxy on the network",
+        "ip_data": "IP Check",
+        "ip_data_desc": "Display IP & location after connection",
+        "dark_mode": "Dark Mode",
+        "dark_mode_desc": "Specify the display mode of the application",
+        "lang": "Language",
+        "lang_desc": "Change application interface language",
+        "system_tray": "System Tray",
+        "system_tray_desc": "Not placing the program icon in the taskbar",
+        "restore": "Restore",
+        "restore_desc": "Apply default application settings"
     },
     "modal": {
         "endpoint_title": "Endpoint",
-        "license_title": "License"
+        "license_title": "License",
+        "port_title": "Proxy Port",
+        "restore_title": "Restore Changes"
     }
 }
