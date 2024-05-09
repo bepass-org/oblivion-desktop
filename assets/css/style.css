@@ -8,6 +8,11 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
+[dir="ltr"] body {
+    text-align: left;
+    direction: ltr;
+}
+
 [data-bs-theme="dark"] body {
     background: #0A0E24;
     color: #DCDCDC;
@@ -541,6 +546,10 @@ nav.header .navMenu .indicator {
     user-select: none;
 }
 
+[dir="ltr"] .settings .item .key {
+    float: left;
+}
+
 [data-bs-theme="dark"] .settings .item .key {
     color: #E8E8E8;
 }
@@ -550,6 +559,10 @@ nav.header .navMenu .indicator {
     margin: 0;
     width: 60%;
     padding-top: 1px;
+}
+
+[dir="ltr"] .settings .item .value {
+    float: right;
 }
 
 .settings .item .value span {
@@ -568,6 +581,11 @@ nav.header .navMenu .indicator {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+[dir="ltr"] .settings .item .value span {
+    float: right;
+    text-align: right;
 }
 
 .settings .item.disabled .value span {
@@ -589,6 +607,11 @@ nav.header .navMenu .indicator {
     margin: 4px 0 0 0;
 }
 
+[dir="ltr"] .settings .item .value select {
+    float: right;
+    text-align: right;
+}
+
 .settings .item.disabled .value select {
     cursor: default;
 }
@@ -607,6 +630,10 @@ nav.header .navMenu .indicator {
     color: #FFA200;
 }
 
+[dir="ltr"] .settings .item .value i {
+    float: right;
+}
+
 .settings .item .value .checkbox {
     float: left;
     border: 3px solid #A1A1A1;
@@ -618,6 +645,10 @@ nav.header .navMenu .indicator {
     margin: 2px 0 -1px 0;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+}
+
+[dir="ltr"] .settings .item .value .checkbox {
+    float: right;
 }
 
 [data-bs-theme="dark"] .settings .item .value .checkbox {
@@ -662,6 +693,10 @@ nav.header .navMenu .indicator {
     transition: all 0.2s ease-in-out;
 }
 
+[dir="ltr"] .settings .item .value .switch {
+    float: right;
+}
+
 [data-bs-theme="dark"] .settings .item .value .switch {
     border-color: #DCDCDC;
 }
@@ -694,6 +729,10 @@ nav.header .navMenu .indicator {
     user-select: none;
 }
 
+[dir="ltr"] .settings .item .info {
+    float: left;
+}
+
 [data-bs-theme="dark"] .settings .item .info {
     color: #a0a0a0;
     font-weight: 200;
@@ -713,10 +752,19 @@ nav.header .navMenu .indicator {
     user-select: none;
 }
 
+[dir="ltr"] .moreSettings {
+    float: left;
+}
+
 .moreSettings i {
     float: right;
     margin: -2px -8px 0 5px;
     opacity: 0.5;
+}
+
+[dir="ltr"] .moreSettings i {
+    float: left;
+    margin: -3px 5px 0 -8px;
 }
 
 .splashScreen {

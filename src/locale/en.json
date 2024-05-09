@@ -23,5 +23,26 @@
         "ip_check_please_wait": "Please wait a few seconds to retry the check!",
         "ir_location": "Cloudflare has connected to an IP with an Iranian location, which is different from your actual IP. You can use it to bypass filtering, but not sanctions. Don't worry! You can change the location in the settings using the \"Gool\" or \"psiphon\" option.",
         "btn_submit": "Understood"
+    },
+    "settings": {
+        "title": "Warp Settings",
+        "more": "More Settings",
+        "method_warp": "Warp",
+        "method_warp_desc": "Enable Warp",
+        "method_gool": "Gool",
+        "method_gool_desc": "Enable WarpInWarp",
+        "method_psiphon": "Psiphon",
+        "method_psiphon_desc": "Enable Psiphon",
+        "method_psiphon_location": "Country",
+        "method_psiphon_location_auto": "Automatic",
+        "method_psiphon_location_desc": "Select the desired country IP",
+        "endpoint": "Endpoint",
+        "endpoint_desc": "Combination of IP or domain name, along with port",
+        "license": "License",
+        "license_desc": "If you have a license (each license is 2x)"
+    },
+    "modal": {
+        "endpoint_title": "Endpoint",
+        "license_title": "License"
     }
 }
