@@ -23,5 +23,26 @@
         "ip_check_please_wait": "برای بررسی مجدد چندثانیه دیگر تلاش کنید!",
         "ir_location": "کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.",
         "btn_submit": "متوجه شدم"
+    },
+    "settings": {
+        "title": "تنظیمات وارپ",
+        "more": "سایر تنظیمات",
+        "method_warp": "وارپ",
+        "method_warp_desc": "فعالسازی Warp",
+        "method_gool": "گول",
+        "method_gool_desc": "فعالسازی WarpInWarp",
+        "method_psiphon": "سایفون",
+        "method_psiphon_desc": "فعالسازی Psiphon",
+        "method_psiphon_location": "انتخاب کشور",
+        "method_psiphon_location_auto": "Automatic",
+        "method_psiphon_location_desc": "انتخاب آی\u200Cپی کشور موردنظر",
+        "endpoint": "اندپوینت",
+        "endpoint_desc": "ترکیبی از IP یا نام دامنه، به\u200Cهمراه پورت",
+        "license": "لایسنس",
+        "license_desc": "اگر لایسنس دارید (هر لایسنس 2x می\u200Cشود)"
+    },
+    "modal": {
+        "endpoint_title": "اندپوینت",
+        "license_title": "لایسنس"
     }
 }

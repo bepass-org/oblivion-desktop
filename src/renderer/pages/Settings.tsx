@@ -25,6 +25,8 @@ export default function Settings() {
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
 
+    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+
     /*useEffect(() => {
         if (endpoint === '' || endpoint === defaultSettings.endpoint) {
             setScan(true);
@@ -76,13 +78,13 @@ export default function Settings() {
 
     return (
         <>
-            <Nav title='تنظیمات وارپ' />
+            <Nav title={appLang?.settings?.title} />
             <EndpointModal
                 {...{
                     endpoint,
                     setEndpoint
                 }}
-                title='اندپوینت'
+                title={appLang?.settings?.endpoint_title}
                 isOpen={showEndpointModal}
                 onClose={() => {
                     setShowEndpointModal(false);
@@ -94,7 +96,7 @@ export default function Settings() {
                     license,
                     setLicense
                 }}
-                title='لایسنس'
+                title={appLang?.settings?.license_title}
                 isOpen={showLicenseModal}
                 onClose={() => {
                     setShowLicenseModal(false);
@@ -146,13 +148,13 @@ export default function Settings() {
                                 settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                             }}
                         >
-                            <label className='key'>وارپ</label>
+                            <label className='key'>{appLang?.settings?.method_gool}</label>
                             <div className='value'>
                                 <div
                                     className={classNames('switch', method === '' ? 'checked' : '')}
                                 />
                             </div>
-                            <div className='info'>فعالسازی Warp</div>
+                            <div className='info'>{appLang?.settings?.method_gool_desc}</div>
                         </div>
                         <div
                             className={classNames('item')}
@@ -172,7 +174,7 @@ export default function Settings() {
                                 }*/
                             }}
                         >
-                            <label className='key'>گول</label>
+                            <label className='key'>{appLang?.settings?.method_gool}</label>
                             <div className='value'>
                                 <div
                                     className={classNames(
@@ -181,7 +183,7 @@ export default function Settings() {
                                     )}
                                 />
                             </div>
-                            <div className='info'>فعالسازی WarpInWarp</div>
+                            <div className='info'>{appLang?.settings?.method_gool_desc}</div>
                         </div>
                         <div
                             className={classNames('item')}
@@ -201,7 +203,7 @@ export default function Settings() {
                               }*/
                             }}
                         >
-                            <label className='key'>سایفون </label>
+                            <label className='key'>{appLang?.settings?.method_psiphon}</label>
                             <div className='value'>
                                 <div
                                     className={classNames(
@@ -210,11 +212,11 @@ export default function Settings() {
                                     )}
                                 />
                             </div>
-                            <div className='info'>فعالسازی Psiphon</div>
+                            <div className='info'>{appLang?.settings?.method_psiphon_desc}</div>
                         </div>
                     </div>
                     <div className={classNames('item', method === 'psiphon' ? '' : 'disabled')}>
-                        <label className='key'>انتخاب کشور</label>
+                        <label className='key'>{appLang?.settings?.method_psiphon_location}</label>
                         <div className='value'>
                             <select
                                 onChange={(e) => {
@@ -225,7 +227,7 @@ export default function Settings() {
                                 disabled={method !== 'psiphon'}
                                 value={location}
                             >
-                                <option value=''>Automatic</option>
+                                <option value=''>{appLang?.settings?.method_psiphon_location_auto}</option>
                                 {countries.map((country: { value: string; label: string }) => (
                                     <option key={country.value} value={country.value}>
                                         {country.label}
@@ -233,12 +235,12 @@ export default function Settings() {
                                 ))}
                             </select>
                         </div>
-                        <div className='info'>انتخاب آی‌پی کشور موردنظر</div>
+                        <div className='info'>{appLang?.settings?.method_psiphon_location_desc}</div>
                     </div>
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
-                    سایر تنظیمات
+                    {appLang?.settings?.more}
                 </div>
                 <div className='settings'>
                     <div
@@ -250,11 +252,11 @@ export default function Settings() {
                             setShowEndpointModal(true);
                         }}
                     >
-                        <label className='key'>اندپوینت</label>
+                        <label className='key'>{appLang?.settings?.endpoint}</label>
                         <div className='value'>
                             <span className='dirLeft'>{endpoint}</span>
                         </div>
-                        <div className='info'>ترکیبی از IP یا نام دامنه، به‌همراه پورت</div>
+                        <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                     </div>
                     <div
                         className='item'
@@ -262,11 +264,11 @@ export default function Settings() {
                             setShowLicenseModal(true);
                         }}
                     >
-                        <label className='key'>لایسنس</label>
+                        <label className='key'>{appLang?.settings?.license}</label>
                         <div className='value'>
                             <span className='dirLeft'>{license || 'Free'}</span>
                         </div>
-                        <div className='info'>اگر لایسنس دارید (هر لایسنس 2x می‌شود)</div>
+                        <div className='info'>{appLang?.settings?.license_desc}</div>
                     </div>
                 </div>
             </div>
