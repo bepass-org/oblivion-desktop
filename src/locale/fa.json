@@ -1,0 +1,27 @@
+{
+    "global": {},
+    "status": {
+        "connecting": "درحال اتصال ...",
+        "connected": "اتصال برقرار شد",
+        "connected_confirm": "متصل هستید",
+        "disconnecting": "قطع ارتباط ...",
+        "disconnected": "متصل نیستید",
+        "ip_check": "دریافت اطلاعات ..."
+    },
+    "home": {
+        "title_warp_based": "بر پایه وارپ",
+        "drawer_settings_warp": "تنظیمات وارپ",
+        "drawer_settings_routing_rules": "قوانین مسیریابی",
+        "drawer_settings_app": "تنظیمات برنامه",
+        "drawer_log_warp": "لاگ وارپ",
+        "drawer_update": "بروزرسانی",
+        "drawer_update_label": "نسخه جدید",
+        "drawer_speed_test": "تست سرعت",
+        "drawer_about": "درباره برنامه"
+    },
+    "toast": {
+        "ip_check_please_wait": "برای بررسی مجدد چندثانیه دیگر تلاش کنید!",
+        "ir_location": "کلودفلر به یک IP با لوکیشن ایران که متفاوت از آیپی اصلیته وصلت کرده که باهاش میتونی فیلترینگ‌رو دور بزنی، اما تحریم‌هارو نه. نگران نباش! در تنظیمات میتونی توسط گزینه «گول» یا «سایفون» لوکیشن رو تغییر بدی.",
+        "btn_submit": "متوجه شدم"
+    }
+}

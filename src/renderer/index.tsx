@@ -5,9 +5,7 @@ import { ipcRenderer } from './lib/utils';
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 root.render(
-    <div dir='rtl'>
-        <App />
-    </div>
+    <App />
 );
 
 // calling IPC exposed from preload script
