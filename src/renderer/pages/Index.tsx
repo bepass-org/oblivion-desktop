@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
 import Drawer from 'react-modern-drawer';
 import { Swipe } from 'react-swipe-component';
@@ -47,6 +47,8 @@ export default function Index() {
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
+
+    const navigate = useNavigate();
 
     const fetchReleaseVersion = async () => {
         //const versionRegex = /\d+(\.\d+)+/;
@@ -344,6 +346,16 @@ export default function Index() {
                                 <span>{appLang?.home?.drawer_speed_test}</span>
                             </Link>
                         </li>*/}
+                        <li>
+                            <a
+                                onClick={() => {
+                                    navigate('/options', { state: { targetId: 'languages' } });
+                                }}
+                            >
+                                <i className='material-icons'>&#xe894;</i>
+                                <span>{appLang?.home?.drawer_lang}</span>
+                            </a>
+                        </li>
                         <li>
                             <Link to='/about'>
                                 <i className={'material-icons'}>&#xe88e;</i>

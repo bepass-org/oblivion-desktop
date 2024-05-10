@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Lottie from 'lottie-react';
 import toast, { Toaster } from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings, languages } from '../../defaultSettings';
@@ -26,6 +27,22 @@ export default function Options() {
     const [showPortModal, setShowPortModal] = useState(false);
     const [appLang, setAppLang] = useState(getLang());
 
+    const { state } = useLocation();
+    const { targetId } = state;
+    const langRef = useRef<any>(null);
+
+    useEffect(() => {
+        setTimeout(function() {
+            if (langRef && targetId === 'languages') {
+                langRef?.current?.scrollIntoView();
+                langRef?.current?.classList?.add('highlight');
+                setTimeout(function() {
+                    langRef?.current?.classList?.remove('highlight');
+                }, 3000);
+            }
+        }, 1000);
+    }, [targetId]);
+
     useEffect(() => {
         settings.get('theme').then((value) => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
@@ -48,6 +65,7 @@ export default function Options() {
         settings.get('shareVPN').then((value) => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
+
     }, []);
 
     if (
@@ -208,7 +226,10 @@ export default function Options() {
                             {appLang?.settings?.dark_mode_desc}
                         </div>
                     </div>
-                    <div className={classNames('item')}>
+                    <div
+                        className={'item'}
+                        ref={langRef}
+                    >
                         <label className='key'>{appLang?.settings?.lang}</label>
                         <div className='value'>
                             <select
