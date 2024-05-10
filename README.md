@@ -78,6 +78,12 @@ technology
 
 </div>
 
+## Supported OS
+
+- Windows 10+ <small>(x64)</small>
+- MacOS <small>(Coming Soon ...)</small>
+- Linux <small>(Coming Soon ...)</small>
+
 ## Languages
 
 - Persian (Farsi)
