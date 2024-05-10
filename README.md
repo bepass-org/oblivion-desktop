@@ -78,6 +78,13 @@ technology
 
 </div>
 
+## Languages
+
+- Persian (Farsi)
+- English
+- Chinese
+- Russian
+
 ## Get Involved
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
