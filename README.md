@@ -38,46 +38,46 @@ technology
         <tr>
             <td>Method</td>
             <td>
-                <input type="checkbox" disabled checked />  Warp & Warp+ <br>
-                <input type="checkbox" disabled checked />  Gool <br>
-                <input type="checkbox" disabled checked />  Cfon <small>(Psiphon)</small>
+                :white_check_mark  Warp & Warp+ <br>
+                :white_check_mark  Gool <br>
+                :white_check_mark  Cfon <small>(Psiphon)</small>
             </td>
         </tr>
         <tr>
             <td>System Proxy</td>
             <td>
-                <input type="checkbox" disabled checked /> Default<br>
-                <input type="checkbox" disabled /> TUN
+                :white_check_mark Default<br>
+                :white_large_square TUN
             </td>
         </tr>
         <tr>
             <td>Routing Rules</td>
             <td>
-                <input type="checkbox" disabled /> GeoIP
+                :white_large_square GeoIP
             </td>
         </tr>
         <tr>
             <td>System Tray</td>
             <td>
-                <input type="checkbox" disabled checked />  Minimize<br>
-                <input type="checkbox" disabled /> Shortcut
+                :white_check_mark  Minimize<br>
+                :white_large_square Shortcut
             </td>
         </tr>
         <tr>
             <td>Languages</td>
             <td>
-                <input type="checkbox" disabled checked />  Persian (Farsi) <br>
-                <input type="checkbox" disabled checked />  English <br>
-                <input type="checkbox" disabled checked />  Chinese <br>
-                <input type="checkbox" disabled checked />  Russian
+                :white_check_mark  Persian (Farsi) <br>
+                :white_check_mark  English <br>
+                :white_check_mark  Chinese <br>
+                :white_check_mark  Russian
             </td>
         </tr>
         <tr>
             <td>Theme</td>
             <td>
-                <input type="checkbox" disabled checked /> Light<br>
-                <input type="checkbox" disabled checked /> Dark<br>
-                <input type="checkbox" disabled /> Auto
+                :white_check_mark Light<br>
+                :white_check_mark Dark<br>
+                :white_large_square Auto
             </td>
         </tr>
     </tbody>
