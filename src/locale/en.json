@@ -22,7 +22,10 @@
     "toast": {
         "ip_check_please_wait": "Please wait a few seconds to retry the check!",
         "ir_location": "Cloudflare has connected to an IP with an Iranian location, which is different from your actual IP. You can use it to bypass filtering, but not sanctions. Don't worry! You can change the location in the settings using the \"Gool\" or \"psiphon\" option.",
-        "btn_submit": "Understood"
+        "btn_submit": "Understood",
+        "please_wait": "Please Wait ...",
+        "offline": "You Are Offline!",
+        "settings_changed": "Applying settings requires reconnecting."
     },
     "settings": {
         "title": "Warp Settings",
@@ -75,7 +78,7 @@
         "desc": "If a log is created by the program, it will be displayed here."
     },
     "about": {
-        "title": "About the app",
+        "title": "About App",
         "desc": "This program is an unofficial, but reliable version of the Oblivion app for Windows, Linux, and Mac.\nThe Oblivion Desktop program is modeled after the user interface of the original version developed by Youssef Ghobadi. It was written, it was prepared for the purpose of free access to the Internet, and any name change or commercial use of it is not allowed.",
         "slogan": "Internet, for all or none!"
     }

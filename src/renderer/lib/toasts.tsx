@@ -1,13 +1,12 @@
 import toast from 'react-hot-toast';
+import { getLang } from './loaders';
 
+const appLang = getLang();
 const defaultToastStyle = {
     fontSize: '13px',
     borderRadius: '10px',
     background: '#333',
     color: '#fff'
-    // borderRadius: '10px',
-    // background: theme === 'dark' ? '#535353' : '#242424',
-    // color: '#F4F5FB'
 };
 
 export const defaultToast = (msg = '', id = 'ID', duration = 5000) => {
@@ -42,19 +41,20 @@ export const defaultToastWithSubmitButton = (
 };
 
 export const checkInternetToast = () => {
-    defaultToast('شما به اینترنت متصل نیستید!', 'ONLINE_STATUS', Infinity);
+    defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', Infinity);
 };
 
 export const settingsHaveChangedToast = ({
-    isConnected,
-}: {
+                                             isConnected,
+                                             isLoading
+                                         }: {
     isConnected: boolean;
     isLoading: boolean;
 }) => {
     if (localStorage.getItem('OBLIVION_CHANGES') === 'TOASTED') return;
     if (isConnected || isLoading) {
         defaultToastWithSubmitButton(
-            'اعمال تنظیمات نیازمند اتصال مجدد می‌باشد.',
+            appLang?.toast?.settings_changed,
             'متوجه شدم',
             'SETTINGS_CHANGED',
             10000
@@ -65,7 +65,7 @@ export const settingsHaveChangedToast = ({
 };
 
 export const loadingToast = () => {
-    toast.loading('کمی صبر کنید ...', {
+    toast.loading(appLang?.toast?.please_wait, {
         id: 'LOADING',
         duration: Infinity,
         style: defaultToastStyle
