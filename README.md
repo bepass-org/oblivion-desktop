@@ -38,45 +38,46 @@ technology
         <tr>
             <td>Method</td>
             <td>
-                ✅ Warp & Warp+ <br>
-                ✅ Gool <br>
-                ✅ Cfon <small>(Psiphon)</small>
+                <input type="checkbox" disabled checked />  Warp & Warp+ <br>
+                <input type="checkbox" disabled checked />  Gool <br>
+                <input type="checkbox" disabled checked />  Cfon <small>(Psiphon)</small>
             </td>
         </tr>
         <tr>
             <td>System Proxy</td>
             <td>
-                &#9745; Default<br>
-                &#9744; TUN
+                <input type="checkbox" disabled checked /> Default<br>
+                <input type="checkbox" disabled /> TUN
             </td>
         </tr>
         <tr>
             <td>Routing Rules</td>
             <td>
-                🕖 GeoIP
+                <input type="checkbox" disabled /> GeoIP
             </td>
         </tr>
         <tr>
             <td>System Tray</td>
             <td>
-                ✅ Minimize<br>
-                🕖 Shortcut
+                <input type="checkbox" disabled checked />  Minimize<br>
+                <input type="checkbox" disabled /> Shortcut
             </td>
         </tr>
         <tr>
             <td>Languages</td>
             <td>
-                ✅ Persian (Farsi) <br>
-                ✅ English <br>
-                ✅ Chinese <br>
-                ✅ Russian
+                <input type="checkbox" disabled checked />  Persian (Farsi) <br>
+                <input type="checkbox" disabled checked />  English <br>
+                <input type="checkbox" disabled checked />  Chinese <br>
+                <input type="checkbox" disabled checked />  Russian
             </td>
         </tr>
         <tr>
             <td>Theme</td>
             <td>
-                ✅ Light<br>
-                ✅ Dark
+                <input type="checkbox" disabled checked /> Light<br>
+                <input type="checkbox" disabled checked /> Dark<br>
+                <input type="checkbox" disabled /> Auto
             </td>
         </tr>
     </tbody>
