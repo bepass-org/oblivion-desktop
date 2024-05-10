@@ -267,6 +267,22 @@ export default function Index() {
 
     return (
         <>
+            <nav className='header'>
+                <div className='container'>
+                    <div onClick={toggleDrawer} className={classNames('navMenu')}>
+                        <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
+                        <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
+                    </div>
+                    {/*<Link to={'/debug'}>
+                        <i className={classNames('material-icons', 'pull-right', 'log')}>
+                            &#xe868;
+                        </i>
+                    </Link>*/}
+                    <Link to='/about'>
+                        <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
+                    </Link>
+                </div>
+            </nav>
             <Drawer
                 open={drawerIsOpen}
                 onClose={toggleDrawer}
@@ -341,22 +357,6 @@ export default function Index() {
                     </div>
                 </div>
             </Drawer>
-            <nav>
-                <div className='container'>
-                    <div onClick={toggleDrawer} className={classNames('navMenu')}>
-                        <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
-                        <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
-                    </div>
-                    {/*<Link to={'/debug'}>
-                        <i className={classNames('material-icons', 'pull-right', 'log')}>
-                            &#xe868;
-                        </i>
-                    </Link>*/}
-                    <Link to='/about'>
-                        <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
-                    </Link>
-                </div>
-            </nav>
             <div className={classNames('myApp', 'verticalAlign')}>
                 <div className='container'>
                     <div className='homeScreen'>
