@@ -118,7 +118,6 @@ export default function Index() {
             defaultToast(message, 'GUIDE', 7000);
         });
 
-        setOnline(true);
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
         return () => {
@@ -130,7 +129,7 @@ export default function Index() {
 
     useEffect(() => {
         if (online) {
-            toast.dismiss('onlineStatus');
+            toast.dismiss('ONLINE_STATUS');
         } else {
             checkInternetToast();
         }
@@ -279,7 +278,7 @@ export default function Index() {
                         </i>
                     </Link>*/}
                     <Link to='/about'>
-                        <i className={classNames('material-icons', 'pull-left')}>&#xe88e;</i>
+                        <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
                     </Link>
                 </div>
             </nav>
