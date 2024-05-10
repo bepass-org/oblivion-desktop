@@ -1,6 +1,11 @@
 # Oblivion Desktop - Unofficial Warp Client for Windows/Mac/Linux
 
-"Internet, for all or none!"
+Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
+
+Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
+technology
+
+<b>"Internet, for all or none!"</b>
 
 ![Version](https://img.shields.io/github/package-json/v/bepass-org/oblivion-desktop?label=Version&color=blue)
 [![Download](https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total?label=Downloads)](https://github.com/bepass-org/oblivion-desktop/releases/latest)
@@ -11,13 +16,6 @@
 ![oblivion.png](screenshot/oblivion.png)
 
 ---
-
-Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
-
-Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
-technology
-
-![virustotal.jpg](screenshot/virustotal.jpg)
 
 ## Features
 
@@ -74,8 +72,6 @@ technology
         </tr>
     </tbody>
 </table>
-
-
 </div>
 
 ## Supported OS
@@ -119,3 +115,9 @@ provided by the following repositories:
 ## Restrictive License
 
 [License.md](LICENSE.md)
+
+![virustotal.jpg](screenshot/virustotal.jpg)
+
+## Security
+
+[SECURITY.md](SECURITY.md)
