@@ -27,7 +27,7 @@ technology
 ## Quick Overview
 
 <div align=left>
-<table>
+<table style='min-width: 50%'>
     <thead align=left>
         <tr>
             <th>Features</th>
@@ -79,7 +79,7 @@ technology
 ## Download
 
 <div align=left>
-<table>
+<table style='min-width: 50%'>
     <thead align=left>
         <tr>
             <th>OS</th>
