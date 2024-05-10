@@ -36,12 +36,26 @@ technology
     </thead>
     <tbody align=left>
         <tr>
+            <td>Method</td>
+            <td>
+                :heavy_check_mark: Warp & Warp+ <br>
+                :heavy_check_mark: Gool <br>
+                :heavy_check_mark: Psiphon
+            </td>
+        </tr>
+        <tr>
             <td>Languages</td>
             <td>
                 :heavy_check_mark: Persian (Farsi) <br>
                 :heavy_check_mark: English <br>
                 :heavy_check_mark: Chinese <br>
                 :heavy_check_mark: Russian
+            </td>
+        </tr>
+        <tr>
+            <td>Dark/Light Theme</td>
+            <td>
+                :heavy_check_mark:
             </td>
         </tr>
     </tbody>
