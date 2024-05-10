@@ -15,8 +15,6 @@ technology
 
 ![oblivion.png](screenshot/oblivion.png)
 
----
-
 ## Features
 
 - **Secure VPN**: Custom WireGuard implementation in Go.
