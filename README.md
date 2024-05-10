@@ -60,7 +60,7 @@ technology
             <td>System Tray</td>
             <td>
                 :white_check_mark:  Minimize<br>
-                :white_large_square: Shortcuts
+                :white_large_square: Shortcuts<br>
                 :white_large_square: BootUp
             </td>
         </tr>
@@ -84,9 +84,9 @@ technology
         <tr>
             <td>Other</td>
             <td>
-                :white_large_square: SpeedTest
+                :white_large_square: SpeedTest<br>
+                :white_large_square: Inline Update<br>
                 :white_large_square: Accessibility
-                :white_large_square: Inline Update
             </td>
         </tr>
     </tbody>
