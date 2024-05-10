@@ -3,10 +3,11 @@ import Nav from '../components/Nav';
 import packageJsonData from '../../../package.json';
 import gitHubMark from '../../../assets/img/github-mark.png';
 import ircf from '../../../assets/img/ircf.png';
+import { getLang } from '../lib/loaders';
 
 export default function About() {
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
-    
+    const appLang = getLang();
+
     return (
         <>
             <Nav title={appLang?.about?.title} />

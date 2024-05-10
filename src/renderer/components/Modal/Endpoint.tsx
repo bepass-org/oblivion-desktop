@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
+import { getLang } from '../../lib/loaders';
 
 export default function EndpointModal({
     title,
@@ -19,7 +20,7 @@ export default function EndpointModal({
     setEndpoint: any;
 }) {
     const [endpointInput, setEndpointInput] = useState(endpoint);
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     const onSaveModal = () => {
         const regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;

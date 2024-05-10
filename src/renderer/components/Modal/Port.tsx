@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
+import { getLang } from '../../lib/loaders';
 
 export default function PortModal({
     title,
@@ -19,7 +20,7 @@ export default function PortModal({
     setPort: any;
 }) {
     const [portInput, setPortInput] = useState(port);
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     const isValidPort = (port2: any) => {
         return /^\d{1,5}$/.test(port2) && parseInt(port2, 10) >= 20 && parseInt(port2, 10) <= 65535;
