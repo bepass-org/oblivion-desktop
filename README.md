@@ -44,6 +44,19 @@ technology
             </td>
         </tr>
         <tr>
+            <td>System Proxy</td>
+            <td>
+                :heavy_check_mark: Default<br>
+                🕖 TUN
+            </td>
+        </tr>
+        <tr>
+            <td>Routing Rules</td>
+            <td>
+                🕖 Coming Soon ...
+            </td>
+        </tr>
+        <tr>
             <td>Languages</td>
             <td>
                 :heavy_check_mark: Persian (Farsi) <br>
@@ -53,9 +66,10 @@ technology
             </td>
         </tr>
         <tr>
-            <td>Dark/Light Theme</td>
+            <td>Theme</td>
             <td>
-                :heavy_check_mark:
+                :heavy_check_mark: Light<br>
+                :heavy_check_mark: Dark
             </td>
         </tr>
     </tbody>
