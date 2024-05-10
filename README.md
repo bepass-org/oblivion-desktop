@@ -24,6 +24,30 @@ technology
 
 ![oblivion.jpg](screenshot/oblivion.jpg)
 
+## Quick Overview
+
+<div align=left>
+<table>
+    <thead align=left>
+        <tr>
+            <th>Features</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody align=left>
+        <tr>
+            <td>Languages</td>
+            <td>
+                :heavy_check_mark: Persian (Farsi) <br>
+                :heavy_check_mark: English <br>
+                :heavy_check_mark: Chinese <br>
+                :heavy_check_mark: Russian
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+
 ## Download
 
 <div align=left>
@@ -82,13 +106,6 @@ technology
     </tbody>
 </table>
 </div>
-
-## Languages
-
-- Persian (Farsi)
-- English
-- Chinese
-- Russian
 
 ## Get Involved
 
