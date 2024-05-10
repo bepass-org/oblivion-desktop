@@ -70,7 +70,7 @@
         "restore_desc": "By confirming the operation of restoring the changes, all program settings will return to the default state and your connection will be disconnected.",
         "routing_rules_sample": "Sample",
         "confirm": "I confirm",
-        "Update": "Update",
+        "update": "Update",
         "cancel": "Cancel"
     },
     "log": {

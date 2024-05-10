@@ -70,7 +70,7 @@
         "restore_desc": "确认恢复更改操作后，所有程序设置将返回默认状态，并且您的连接将断开。",
         "routing_rules_sample": "示例",
         "confirm": "确认",
-        "Update": "更新",
+        "update": "更新",
         "cancel": "取消"
     },
     "log": {
