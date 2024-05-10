@@ -38,15 +38,15 @@ technology
         <tr>
             <td>Method</td>
             <td>
-                :heavy_check_mark: Warp & Warp+ <br>
-                :heavy_check_mark: Gool <br>
-                :heavy_check_mark: Psiphon <small>(cfon)</small>
+                ✅ Warp & Warp+ <br>
+                ✅ Gool <br>
+                ✅ Cfon <small>(Psiphon)</small>
             </td>
         </tr>
         <tr>
             <td>System Proxy</td>
             <td>
-                :heavy_check_mark: Default<br>
+                - [ ] Default<br>
                 🕖 TUN
             </td>
         </tr>
@@ -59,24 +59,24 @@ technology
         <tr>
             <td>System Tray</td>
             <td>
-                :heavy_check_mark: Minimize<br>
+                ✅ Minimize<br>
                 🕖 Shortcut
             </td>
         </tr>
         <tr>
             <td>Languages</td>
             <td>
-                :heavy_check_mark: Persian (Farsi) <br>
-                :heavy_check_mark: English <br>
-                :heavy_check_mark: Chinese <br>
-                :heavy_check_mark: Russian
+                ✅ Persian (Farsi) <br>
+                ✅ English <br>
+                ✅ Chinese <br>
+                ✅ Russian
             </td>
         </tr>
         <tr>
             <td>Theme</td>
             <td>
-                :heavy_check_mark: Light<br>
-                :heavy_check_mark: Dark
+                ✅ Light<br>
+                ✅ Dark
             </td>
         </tr>
     </tbody>
