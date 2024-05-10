@@ -46,8 +46,8 @@ technology
         <tr>
             <td>System Proxy</td>
             <td>
-                - [ ] Default<br>
-                🕖 TUN
+                &#9745; Default<br>
+                &#9744; TUN
             </td>
         </tr>
         <tr>
