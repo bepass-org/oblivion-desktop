@@ -50,15 +50,6 @@ export default function Options() {
         });
     }, []);
 
-    const handleLangChange = () => {
-        loadingToast();
-        setTimeout(function() {
-            loadLang();
-            setAppLang(getLang());
-            toast.dismiss('LOADING');
-        }, 2500);
-    };
-
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
@@ -219,7 +210,14 @@ export default function Options() {
                                 onChange={(e) => {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
-                                    handleLangChange();
+                                    loadingToast();
+                                    setTimeout(function() {
+                                        loadLang();
+                                    }, 750);
+                                    setTimeout(function() {
+                                        setAppLang(getLang());
+                                        toast.dismiss('LOADING');
+                                    }, 1500);
                                 }}
                                 value={lang}
                             >
