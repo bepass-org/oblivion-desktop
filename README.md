@@ -40,7 +40,7 @@ technology
             <td>
                 :heavy_check_mark: Warp & Warp+ <br>
                 :heavy_check_mark: Gool <br>
-                :heavy_check_mark: Psiphon
+                :heavy_check_mark: Psiphon <small>(cfon)</small>
             </td>
         </tr>
         <tr>
