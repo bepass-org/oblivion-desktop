@@ -17,7 +17,8 @@
         "drawer_update": "بروزرسانی",
         "drawer_update_label": "نسخه جدید",
         "drawer_speed_test": "تست سرعت",
-        "drawer_about": "درباره برنامه"
+        "drawer_about": "درباره برنامه",
+        "drawer_lang": "تغییر زبان"
     },
     "toast": {
         "ip_check_please_wait": "برای بررسی مجدد چندثانیه دیگر تلاش کنید!",

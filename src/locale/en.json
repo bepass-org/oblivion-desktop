@@ -17,7 +17,8 @@
         "drawer_update": "Update",
         "drawer_update_label": "New Update",
         "drawer_speed_test": "Speed Test",
-        "drawer_about": "About App"
+        "drawer_about": "About App",
+        "drawer_lang": "Language Change"
     },
     "toast": {
         "ip_check_please_wait": "Please wait a few seconds to retry the check!",

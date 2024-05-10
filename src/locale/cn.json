@@ -17,7 +17,8 @@
         "drawer_update": "更新",
         "drawer_update_label": "新更新",
         "drawer_speed_test": "速度测试",
-        "drawer_about": "关于应用"
+        "drawer_about": "关于应用",
+        "drawer_lang": "语言更改"
     },
     "toast": {
         "ip_check_please_wait": "请等待几秒钟后重试检查！",

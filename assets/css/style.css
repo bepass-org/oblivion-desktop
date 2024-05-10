@@ -548,6 +548,14 @@ nav.header .navMenu .indicator {
     opacity: 0.3;
 }
 
+.settings .item.highlight {
+    background: #fffa9b;
+}
+
+[data-bs-theme="dark"] .settings .item.highlight {
+    background: #2d2e53;
+}
+
 .settings .item:first-child {
     padding-top: 0;
 }
@@ -1316,6 +1324,7 @@ nav.header .navMenu .indicator {
     float: right;
     width: 100%;
     padding: 10px 20px;
+    cursor: pointer;
 }
 
 [dir="ltr"] .drawer .list ul li a {
@@ -1333,7 +1342,7 @@ nav.header .navMenu .indicator {
     float: left;
     padding-left: 0;
     padding-right: 20px;
-    margin-top: -3px;
+    margin-top: -2px;
 }
 
 .drawer .list ul li:hover i {
