@@ -6,6 +6,7 @@
 [![Download](https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total?label=Downloads)](https://github.com/bepass-org/oblivion-desktop/releases/latest)
 [![Stars](https://img.shields.io/github/stars/bepass-org/oblivion-desktop?style=flat&label=Stars&color=tomato
 )](https://github.com/bepass-org/oblivion-desktop)
+[![License](https://img.shields.io/badge/License-Restrictive-f84e29.svg?color=white)](LICENSE.md)
 
 ![oblivion.png](screenshot/oblivion.png)
 
