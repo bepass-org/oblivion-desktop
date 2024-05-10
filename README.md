@@ -39,7 +39,7 @@ technology
             <td>Method</td>
             <td>
                 :white_check_mark:  Warp & Warp+ <br>
-                :white_check_mark:  Gool <br>
+                :white_check_mark:  Gool<br>
                 :white_check_mark:  Cfon <small>(Psiphon)</small>
             </td>
         </tr>
@@ -60,7 +60,8 @@ technology
             <td>System Tray</td>
             <td>
                 :white_check_mark:  Minimize<br>
-                :white_large_square: Shortcut
+                :white_large_square: Shortcuts
+                :white_large_square: BootUp
             </td>
         </tr>
         <tr>
@@ -78,6 +79,14 @@ technology
                 :white_check_mark: Light<br>
                 :white_check_mark: Dark<br>
                 :white_large_square: Auto
+            </td>
+        </tr>
+        <tr>
+            <td>Other</td>
+            <td>
+                :white_large_square: SpeedTest
+                :white_large_square: Accessibility
+                :white_large_square: Inline Update
             </td>
         </tr>
     </tbody>
