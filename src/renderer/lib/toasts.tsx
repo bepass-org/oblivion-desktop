@@ -47,7 +47,6 @@ export const checkInternetToast = () => {
 
 export const settingsHaveChangedToast = ({
     isConnected,
-    isLoading
 }: {
     isConnected: boolean;
     isLoading: boolean;
@@ -63,4 +62,12 @@ export const settingsHaveChangedToast = ({
 
         localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
     }
+};
+
+export const loadingToast = () => {
+    toast.loading('کمی صبر کنید ...', {
+        id: 'LOADING',
+        duration: Infinity,
+        style: defaultToastStyle
+    });
 };
