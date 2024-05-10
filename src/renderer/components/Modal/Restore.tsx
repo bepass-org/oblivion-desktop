@@ -2,18 +2,20 @@ import classNames from 'classnames';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
+import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-    title,
-    isOpen,
-    onClose,
-    setTheme,
-    setIpData,
-    setSystemTray,
-    setPort,
-    setAutoSetProxy,
-    setShareVPN
-}: {
+                                         title,
+                                         isOpen,
+                                         onClose,
+                                         setTheme,
+                                         setIpData,
+                                         setSystemTray,
+                                         setPort,
+                                         setAutoSetProxy,
+                                         setShareVPN,
+                                         setLang
+                                     }: {
     title: string;
     isOpen: boolean;
     onClose: any;
@@ -23,6 +25,7 @@ export default function RestoreModal({
     setPort: any;
     setAutoSetProxy: any;
     setShareVPN: any;
+    setLang: any;
 }) {
     if (!isOpen) return null;
 
@@ -36,12 +39,14 @@ export default function RestoreModal({
         setPort(defaultSettings.port);
         setAutoSetProxy(defaultSettings.autoSetProxy);
         setShareVPN(defaultSettings.shareVPN);
+        setLang(defaultSettings.lang);
         await settings.set('theme', defaultSettings.theme);
         await settings.set('ipData', defaultSettings.ipData);
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('port', defaultSettings.port);
         await settings.set('autoSetProxy', defaultSettings.autoSetProxy);
         await settings.set('shareVPN', defaultSettings.shareVPN);
+        await settings.set('lang', defaultSettings.lang);
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
         // other settings

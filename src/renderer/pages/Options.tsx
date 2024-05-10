@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings, languages } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
-import { settingsHaveChangedToast } from '../lib/toasts';
+import { loadingToast, settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang, loadLang } from '../lib/loaders';
 
@@ -24,8 +24,7 @@ export default function Options() {
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
-
-    const appLang = getLang();
+    const [appLang, setAppLang] = useState(getLang());
 
     useEffect(() => {
         settings.get('theme').then((value) => {
@@ -51,11 +50,14 @@ export default function Options() {
         });
     }, []);
 
-    useEffect(() => {
+    const handleLangChange = () => {
+        loadingToast();
         setTimeout(function() {
             loadLang();
-        }, 1000);
-    }, [lang]);
+            setAppLang(getLang());
+            toast.dismiss('LOADING');
+        }, 2500);
+    };
 
     if (
         typeof theme === 'undefined' ||
@@ -98,12 +100,14 @@ export default function Options() {
                     setSystemTray,
                     setPort,
                     setAutoSetProxy,
-                    setShareVPN
+                    setShareVPN,
+                    setLang
                 }}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
+                    loadLang();
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
@@ -215,6 +219,7 @@ export default function Options() {
                                 onChange={(e) => {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
+                                    handleLangChange();
                                 }}
                                 value={lang}
                             >

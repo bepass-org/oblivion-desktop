@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { settings } from '../../lib/settings';
+import { getLang } from '../../lib/loaders';
 
 export default function RoutingRulesModal({
     title,
