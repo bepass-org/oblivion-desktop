@@ -53,7 +53,7 @@ technology
         <tr>
             <td>Routing Rules</td>
             <td>
-                🕖 Coming Soon ...
+                🕖 GeoIP
             </td>
         </tr>
         <tr>
