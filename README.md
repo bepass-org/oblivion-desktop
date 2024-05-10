@@ -1,4 +1,4 @@
-# Oblivion Desktop - Unofficial Warp Client for Windows/Mac/Linux
+# Oblivion Desktop
 
 Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
 
@@ -7,7 +7,7 @@ technology
 
 <b>"Internet, for all or none!"</b>
 
-![Version](https://img.shields.io/github/package-json/v/bepass-org/oblivion-desktop?label=Version&color=blue)
+[![Version](https://img.shields.io/github/package-json/v/bepass-org/oblivion-desktop?label=Version&color=blue)](https://github.com/bepass-org/oblivion-desktop/releases/latest)
 [![Download](https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total?label=Downloads)](https://github.com/bepass-org/oblivion-desktop/releases/latest)
 [![Stars](https://img.shields.io/github/stars/bepass-org/oblivion-desktop?style=flat&label=Stars&color=tomato
 )](https://github.com/bepass-org/oblivion-desktop)
@@ -112,8 +112,8 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/v0.2.52-beta/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
             </td>
             <td>
-                Windows 10 x64<br>
-                Windows 11 x64
+                v10 x64<br>
+                v11 x64
             </td>
         </tr>
         <tr>
@@ -139,7 +139,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
 <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
             </td>
-            <td>Android 7+</td>
+            <td>v6+</td>
         </tr>
         <tr>
             <td>iOS</td>
@@ -158,7 +158,7 @@ We're a community-driven project, aiming to make the internet accessible for all
 suggest features, or need some help, we'd love to hear from you! Check out
 our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or submit a pull request.
 
-![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg)
+[![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
 ## Acknowledgements
 
