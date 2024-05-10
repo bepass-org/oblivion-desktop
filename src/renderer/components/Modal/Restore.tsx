@@ -26,7 +26,7 @@ export default function RestoreModal({
 }) {
     if (!isOpen) return null;
 
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     const onSaveModal = async () => {
         // in this page

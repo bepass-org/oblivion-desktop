@@ -10,8 +10,10 @@ import { countries, defaultSettings } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
+import { getLang } from '../lib/loaders';
 
 export default function Settings() {
+    const appLang = getLang();
     const { isConnected, isLoading } = useStore();
 
     //const [scan, setScan] = useState(true);
@@ -24,8 +26,6 @@ export default function Settings() {
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
-
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
 
     /*useEffect(() => {
         if (endpoint === '' || endpoint === defaultSettings.endpoint) {

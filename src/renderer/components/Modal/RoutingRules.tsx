@@ -16,7 +16,7 @@ export default function RoutingRulesModal({
     setRoutingRules: any;
 }) {
     const [routingRulesInput, setRoutingRulesInput] = useState(routingRules);
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     if (!isOpen) return <></>;
 

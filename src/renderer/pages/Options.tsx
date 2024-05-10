@@ -10,7 +10,7 @@ import RestoreModal from '../components/Modal/Restore';
 import PortModal from '../components/Modal/Port';
 import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
-import { loadLang } from '../lib/loaders';
+import { getLang, loadLang } from '../lib/loaders';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
@@ -25,7 +25,7 @@ export default function Options() {
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
 
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     useEffect(() => {
         settings.get('theme').then((value) => {

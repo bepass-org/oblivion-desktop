@@ -6,6 +6,7 @@ import ReactCountryFlag from 'react-country-flag';
 import Drawer from 'react-modern-drawer';
 import { Swipe } from 'react-swipe-component';
 import { useStore } from '../store';
+import { getLang } from '../lib/loaders';
 import appIco from '../../../assets/oblivion.png';
 import defFlag from '../../../assets/img/flags/xx.svg';
 import irFlag from '../../../assets/img/flags/ir.svg';
@@ -24,6 +25,7 @@ let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 export default function Index() {
+    const appLang = getLang();
     const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } = useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
@@ -33,8 +35,6 @@ export default function Index() {
         ip: ''
     });
     const [online, setOnline] = useState(true);
-
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {

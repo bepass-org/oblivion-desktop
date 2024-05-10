@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { settings } from '../../lib/settings';
+import { getLang } from '../../lib/loaders';
 
 export default function LicenseModal({
     title,
@@ -19,7 +20,7 @@ export default function LicenseModal({
 
     if (!isOpen) return <></>;
 
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     const onSaveModal = () => {
         const regex = /^[a-zA-Z0-9-]*$/;

@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import Nav from '../components/Nav';
 import { ipcRenderer } from '../lib/utils';
 import { defaultToast } from '../lib/toasts';
+import { getLang } from '../lib/loaders';
 
 export default function Debug() {
     const [log, setLog] = useState('');
-
-    const appLang = JSON.parse(String(localStorage.getItem('OBLIVION_LANG')));
+    const appLang = getLang();
 
     // asking for log every 1sec
     useEffect(() => {
