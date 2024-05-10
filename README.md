@@ -158,6 +158,15 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or su
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
+## Know more
+
+* [FAQ.md](FAQ.md)
+* [License.md](LICENSE.md)
+* [SECURITY.md](SECURITY.md)
+* [DOCS.md](DOCS.md)
+
+![virustotal.jpg](screenshot/virustotal.jpg)
+
 ## Acknowledgements
 
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
@@ -170,17 +179,3 @@ provided by the following repositories:
 - [sing-box](https://github.com/SagerNet/sing-box)
 - [hiddify-next](https://github.com/hiddify/hiddify-next)
 - [and others 🧡](package.json)
-
-## Dev Docs
-
-[DOCS.md](DOCS.md)
-
-## Restrictive License
-
-[License.md](LICENSE.md)
-
-![virustotal.jpg](screenshot/virustotal.jpg)
-
-## Security
-
-[SECURITY.md](SECURITY.md)
