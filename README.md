@@ -84,7 +84,7 @@ We're a community-driven project, aiming to make the internet accessible for all
 suggest features, or need some help, we'd love to hear from you! Check out
 our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or submit a pull request.
 
-![Star History Chart](https://api.star-history.com/svg?repos=bepass-org/oblivion-desktop&type=Date)
+![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg)
 
 ## Acknowledgements
 
