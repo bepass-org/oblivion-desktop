@@ -32,6 +32,7 @@ technology
         <tr>
             <th>OS</th>
             <th>Download</th>
+            <th>Compatibility</th>
         </tr>
     </thead>
     <tbody align=left>
@@ -41,6 +42,10 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/v0.2.52-beta/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/v0.2.52-beta/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
             </td>
+            <td>
+                Windows 10 x64<br>
+                Windows 11 x64
+            </td>
         </tr>
         <tr>
             <td>macOS</td>
@@ -48,6 +53,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.pkg"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a>
             </td>
+            <td></td>
         </tr>
         <tr>
             <td>Linux</td>
@@ -56,6 +62,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop"><img src="https://img.shields.io/badge/tar.xz-x64-f84e29.svg?logo=linux"> </a>
             </td>
+            <td></td>
         </tr>
         <tr>
         <td>Android</td>
@@ -63,6 +70,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
 <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
             </td>
+            <td>Android 7+</td>
         </tr>
         <tr>
         <td>iOS</td>
@@ -73,12 +81,6 @@ technology
     </tbody>
 </table>
 </div>
-
-## Supported OS
-
-- Windows 10+ <small>(x64)</small>
-- MacOS <small>(Coming Soon ...)</small>
-- Linux <small>(Coming Soon ...)</small>
 
 ## Languages
 
