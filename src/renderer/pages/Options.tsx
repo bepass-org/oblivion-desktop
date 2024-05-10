@@ -98,7 +98,12 @@ export default function Options() {
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    loadLang();
+                    setTimeout(function() {
+                        loadLang();
+                    }, 750);
+                    setTimeout(function() {
+                        setAppLang(getLang());
+                    }, 1500);
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
