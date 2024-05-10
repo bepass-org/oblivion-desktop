@@ -73,10 +73,11 @@ technology
             <td>Android 7+</td>
         </tr>
         <tr>
-        <td>iOS</td>
+            <td>iOS</td>
             <td>
                 <small>Coming Soon ...</small>
             </td>
+            <td></td>
         </tr>
     </tbody>
 </table>
