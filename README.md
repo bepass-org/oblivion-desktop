@@ -27,7 +27,7 @@ technology
 ## Quick Overview
 
 <div align=left>
-<table style='min-width: 50%'>
+<table>
     <thead align=left>
         <tr>
             <th>Features</th>
@@ -57,6 +57,13 @@ technology
             </td>
         </tr>
         <tr>
+            <td>System Tray</td>
+            <td>
+                :heavy_check_mark: Minimize<br>
+                🕖 Shortcut
+            </td>
+        </tr>
+        <tr>
             <td>Languages</td>
             <td>
                 :heavy_check_mark: Persian (Farsi) <br>
@@ -79,7 +86,7 @@ technology
 ## Download
 
 <div align=left>
-<table style='min-width: 50%'>
+<table>
     <thead align=left>
         <tr>
             <th>OS</th>
