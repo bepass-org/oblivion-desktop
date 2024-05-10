@@ -38,46 +38,46 @@ technology
         <tr>
             <td>Method</td>
             <td>
-                :white_check_mark  Warp & Warp+ <br>
-                :white_check_mark  Gool <br>
-                :white_check_mark  Cfon <small>(Psiphon)</small>
+                :white_check_mark:  Warp & Warp+ <br>
+                :white_check_mark:  Gool <br>
+                :white_check_mark:  Cfon <small>(Psiphon)</small>
             </td>
         </tr>
         <tr>
             <td>System Proxy</td>
             <td>
-                :white_check_mark Default<br>
-                :white_large_square TUN
+                :white_check_mark: Default<br>
+                :white_large_square: TUN
             </td>
         </tr>
         <tr>
             <td>Routing Rules</td>
             <td>
-                :white_large_square GeoIP
+                :white_large_square: GeoIP
             </td>
         </tr>
         <tr>
             <td>System Tray</td>
             <td>
-                :white_check_mark  Minimize<br>
-                :white_large_square Shortcut
+                :white_check_mark:  Minimize<br>
+                :white_large_square: Shortcut
             </td>
         </tr>
         <tr>
             <td>Languages</td>
             <td>
-                :white_check_mark  Persian (Farsi) <br>
-                :white_check_mark  English <br>
-                :white_check_mark  Chinese <br>
-                :white_check_mark  Russian
+                :white_check_mark:  Persian (Farsi) <br>
+                :white_check_mark:  English <br>
+                :white_check_mark:  Chinese <br>
+                :white_check_mark:  Russian
             </td>
         </tr>
         <tr>
             <td>Theme</td>
             <td>
-                :white_check_mark Light<br>
-                :white_check_mark Dark<br>
-                :white_large_square Auto
+                :white_check_mark: Light<br>
+                :white_check_mark: Dark<br>
+                :white_large_square: Auto
             </td>
         </tr>
     </tbody>
