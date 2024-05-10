@@ -97,6 +97,14 @@ nav.header i.log {
     margin-right: 15px;
 }
 
+nav.header i.navLeft {
+    float: left;
+}
+
+[dir="ltr"] nav.header i.navLeft {
+    float: right;
+}
+
 nav.header i.log:hover {
     color: #E15959;
 }
@@ -117,6 +125,11 @@ nav.header h3 {
     float: right;
 }
 
+[dir="ltr"] nav.header h3 {
+    float: left;
+    margin: 4px 0 0 5px;
+}
+
 [data-bs-theme="dark"] nav.header h3 {
     color: #DCDCDC;
 }
@@ -124,6 +137,11 @@ nav.header h3 {
 nav.header i.backBtn {
     font-size: 30px;
     float: left;
+}
+
+[dir="ltr"] nav.header i.backBtn {
+    float: right;
+    rotate: 180deg;
 }
 
 nav.header i.backBtn:hover {
@@ -134,6 +152,10 @@ nav.header .navMenu {
     position: relative;
     float: right;
     transition: all 0.2s ease-in-out;
+}
+
+[dir="ltr"] nav.header .navMenu {
+    float: left;
 }
 
 nav.header .navMenu .indicator {
