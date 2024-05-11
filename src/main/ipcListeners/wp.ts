@@ -82,7 +82,7 @@ ipcMain.on('wp-start', async (event) => {
     child.on('exit', async () => {
         await disableProxy(event);
         event.reply('wp-end', true);
-        removeDirIfExists(stuffPath);
+        //removeDirIfExists(stuffPath);
     });
 });
 
