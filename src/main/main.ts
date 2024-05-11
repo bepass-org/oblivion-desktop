@@ -10,7 +10,7 @@
  */
 import path from 'path';
 import fs from 'fs';
-import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } from 'electron';
 import settings from 'electron-settings';
 import MenuBuilder from './menu';
 import './ipc';
@@ -198,7 +198,9 @@ if (!gotTheLock) {
 
         let appIcon = null;
         app?.whenReady().then(() => {
-            appIcon = new Tray(getAssetPath('oblivion.png'));
+            const nativeImageIcon = nativeImage.createFromPath(getAssetPath('oblivion.png'));
+            const resizedIcon = nativeImageIcon.resize({ width: 16, height: 16 }); // Resize icon for macOS tray compatibility
+            appIcon = new Tray(resizedIcon);
             appIcon.on('click', () => {
                 if (canOpenFromSystem) {
                     if (!mainWindow) {
@@ -254,7 +256,7 @@ if (!gotTheLock) {
                     label: 'Exit',
                     type: 'normal',
                     click: () => {
-                        app.quit();
+                        app.exit(0);
                     }
                 }
             ]);

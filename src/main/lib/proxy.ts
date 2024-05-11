@@ -36,19 +36,24 @@ const windowsProxySettings = (args: string[], ipcEvent?: IpcMainEvent) => {
     });
 };
 
-export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
-    if (process.platform === 'win32') {
-        return new Promise<void>(async (resolve, reject) => {
-            try {
-                await windowsProxySettings(['ProxyEnable', '-value', '0'], ipcEvent);
-                resolve();
-            } catch (error) {
-                reject(error);
-            }
+const macOSProxySettings = (args: string[]) => {
+    const child = spawn('networksetup', args);
+
+    return new Promise<void>((resolve, reject) => {
+        child.on('exit', () => {
+            resolve();
         });
-    } else {
-        console.log('changing proxy is not supported on your platform yet');
-    }
+
+        child.stderr.on('data', (err: any) => {
+            console.log('Error:', err.toString());
+            reject(err);
+        });
+
+        child.on('error', (err: any) => {
+            console.log('Spawn Error:', err);
+            reject(err);
+        });
+    });
 };
 
 export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
@@ -81,8 +86,42 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
                 reject(error);
             }
         });
+    } else if (process.platform === 'darwin') {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                await macOSProxySettings(['-setwebproxy', 'Wi-Fi', hostIP.toString(), port.toString()]);
+                await macOSProxySettings(['-setsecurewebproxy', 'Wi-Fi', hostIP.toString(), port.toString()]);
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
     } else {
-        console.log('🚀 - enableProxy - port:', port);
+        console.log('Proxy setting not supported on your platform');
+    }
+};
+
+export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
+    if (process.platform === 'win32') {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                await windowsProxySettings(['ProxyEnable', '-value', '0'], ipcEvent);
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    } else if (process.platform === 'darwin') {
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                await macOSProxySettings(['-setwebproxystate', 'Wi-Fi', 'off']);
+                await macOSProxySettings(['-setsecurewebproxystate', 'Wi-Fi', 'off']);
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    } else {
         console.log('changing proxy is not supported on your platform yet');
     }
 };
