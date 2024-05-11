@@ -13,5 +13,5 @@ ipcMain.on('ipc-example', async (event, arg) => {
 
 ipcMain.on('quit', async () => {
     await disableProxy();
-    app.quit();
+    app.exit(0);
 });

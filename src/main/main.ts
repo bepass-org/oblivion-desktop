@@ -30,7 +30,7 @@ let mainWindow: BrowserWindow | null = null;
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
-    app.quit();
+    app.exit(0);
 } else {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
         // Someone tried to run a second instance, we should focus our window.
@@ -276,7 +276,7 @@ if (!gotTheLock) {
 
     app.on('window-all-closed', async () => {
         await disableProxy();
-        app.quit();
+        app.exit(0);
     });
 
     app.whenReady()
