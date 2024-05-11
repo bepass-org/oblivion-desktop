@@ -15,7 +15,7 @@
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
-        "build": "ts-node script/dlWp.ts && concurrently \"npm run build:main\" \"npm run build:renderer\"",
+        "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
         "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
         "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
@@ -175,6 +175,7 @@
         "artifactName": "oblivion-desktop-${os}-${arch}.${ext}",
         "asar": true,
         "asarUnpack": "**\\*.{node,dll}",
+        "beforePack": "./script/beforePackHook.js",
         "files": [
             "dist",
             "node_modules",
@@ -184,8 +185,20 @@
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
             "target": [
-                "dmg",
-                "pkg"
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "pkg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
             ],
             "type": "distribution",
             "hardenedRuntime": true,
