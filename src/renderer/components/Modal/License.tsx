@@ -48,7 +48,7 @@ export default function LicenseModal({
                             spellCheck={false}
                             className='form-control'
                             onChange={(e) => {
-                                setLicenseInput(e.target.value);
+                                setLicenseInput(String(e.target.value).trim());
                             }}
                         />
                         <div className='clearfix' />
