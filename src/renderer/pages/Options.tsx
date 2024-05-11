@@ -28,7 +28,7 @@ export default function Options() {
     const [appLang, setAppLang] = useState(getLang());
 
     const { state } = useLocation();
-    const { targetId } = state;
+    const { targetId } = state || {};
     const langRef = useRef<any>(null);
 
     useEffect(() => {
