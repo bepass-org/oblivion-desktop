@@ -5,6 +5,11 @@ import axios from 'axios';
 import decompress from 'decompress';
 import { doesDirectoryExist, doesFileExist } from '../src/main/lib/utils';
 
+let forceDownload = false;
+if (process.argv[2] && process.argv[2] === 'force') {
+    forceDownload = true;
+}
+
 async function downloadFile(uri: string, destPath: string) {
     return axios
         .get(uri, {
@@ -20,7 +25,13 @@ async function downloadFile(uri: string, destPath: string) {
                     process?.stdout?.cursorTo(0);
                     process?.stdout?.write(`Downloading ${uri}: ${percentCompleted}%`);
                 } catch (error) {
-                    console.error(error);
+                    if (
+                        !String(error).includes(
+                            'TypeError: process?.stdout?.clearLine is not a function'
+                        )
+                    ) {
+                        console.error(error);
+                    }
                 }
             }
         })
@@ -53,7 +64,9 @@ const dlUnzipMove = async (url: string) => {
 
     const isZipFileExist = await doesFileExist(zipFilePath);
 
-    if (!isZipFileExist) {
+    if (!isZipFileExist || forceDownload) {
+        console.log('downloading warp-plus binary based on your platform and architecture...');
+
         await downloadFile(url, zipFilePath);
     } else {
         console.log('➡️ Skipping Download as warp-plus.zip already exist.');

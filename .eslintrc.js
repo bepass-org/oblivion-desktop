@@ -41,7 +41,8 @@ module.exports = {
         'no-unneeded-ternary': 'off',
         'consistent-return': 'off',
         'no-async-promise-executor': 'off',
-        'no-else-return': 'off'
+        'no-else-return': 'off',
+        'func-names': 'off'
     },
     parserOptions: {
         ecmaVersion: 2022,
