@@ -60,9 +60,7 @@ export default function Debug() {
                         </i>
                     </div>
                     <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
-                        {log === ''
-                            ? appLang?.log?.desc
-                            : log}
+                        {log === '' ? appLang?.log?.desc : log}
                     </p>
                 </div>
             </div>

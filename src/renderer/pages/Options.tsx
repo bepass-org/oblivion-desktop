@@ -32,11 +32,11 @@ export default function Options() {
     const langRef = useRef<any>(null);
 
     useEffect(() => {
-        setTimeout(function() {
+        setTimeout(function () {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function() {
+                setTimeout(function () {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -65,7 +65,6 @@ export default function Options() {
         settings.get('shareVPN').then((value) => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
-
     }, []);
 
     if (
@@ -116,10 +115,10 @@ export default function Options() {
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         loadLang();
                     }, 750);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         setAppLang(getLang());
                     }, 1500);
                 }}
@@ -132,7 +131,7 @@ export default function Options() {
                             setAutoSetProxy(!autoSetProxy);
                             settings.set('autoSetProxy', !autoSetProxy);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 if (autoSetProxy) {
                                     setIpData(false);
                                     settings.set('ipData', false);
@@ -226,10 +225,7 @@ export default function Options() {
                             {appLang?.settings?.dark_mode_desc}
                         </div>
                     </div>
-                    <div
-                        className={'item'}
-                        ref={langRef}
-                    >
+                    <div className={'item'} ref={langRef}>
                         <label className='key'>{appLang?.settings?.lang}</label>
                         <div className='value'>
                             <select
@@ -237,10 +233,10 @@ export default function Options() {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
                                     loadingToast();
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         loadLang();
                                     }, 750);
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         setAppLang(getLang());
                                         toast.dismiss('LOADING');
                                     }, 1500);

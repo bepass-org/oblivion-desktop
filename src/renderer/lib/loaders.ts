@@ -16,7 +16,7 @@ export const loadLang = () => {
     settings.get('lang').then((value) => {
         let langData = {};
         let langDir = 'ltr';
-        const key = (typeof value !== 'undefined' ? value : defaultSettings.lang);
+        const key = typeof value !== 'undefined' ? value : defaultSettings.lang;
         if (key === 'fa') {
             langData = fa;
             langDir = 'rtl';

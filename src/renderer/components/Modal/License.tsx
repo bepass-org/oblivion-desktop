@@ -41,9 +41,7 @@ export default function LicenseModal({
                             <div className='miniLine' />
                         </div>
                         <h3>{title}</h3>
-                        <p className='withMargin'>
-                            {appLang?.modal?.license_desc}
-                        </p>
+                        <p className='withMargin'>{appLang?.modal?.license_desc}</p>
                         <div className='clearfix' />
                         <input
                             value={licenseInput}

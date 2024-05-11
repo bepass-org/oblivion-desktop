@@ -45,9 +45,9 @@ export const checkInternetToast = () => {
 };
 
 export const settingsHaveChangedToast = ({
-                                             isConnected,
-                                             isLoading
-                                         }: {
+    isConnected,
+    isLoading
+}: {
     isConnected: boolean;
     isLoading: boolean;
 }) => {

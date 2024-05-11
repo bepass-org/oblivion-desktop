@@ -13,9 +13,7 @@ export default function About() {
             <Nav title={appLang?.about?.title} />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
-                    <p style={{ whiteSpace: 'pre-wrap' }}>
-                        {appLang?.about?.desc}
-                    </p>
+                    <p style={{ whiteSpace: 'pre-wrap' }}>{appLang?.about?.desc}</p>
                     <p>
                         <b>{appLang?.about?.slogan}</b>
                     </p>
@@ -54,7 +52,8 @@ export default function About() {
                                 <img
                                     className='starBadge'
                                     src='https://img.shields.io/github/stars/bepass-org/oblivion-desktop?style=flat&label=Stars&color=tomato'
-                                    alt='stars' />
+                                    alt='stars'
+                                />
                             </a>
                         </p>
                         <div className='clearfix' />
