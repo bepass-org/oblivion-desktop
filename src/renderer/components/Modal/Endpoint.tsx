@@ -48,7 +48,7 @@ export default function EndpointModal({
                             spellCheck={false}
                             className='form-control'
                             onChange={(e) => {
-                                setEndpointInput(e.target.value);
+                                setEndpointInput(String(e.target.value).toLowerCase());
                             }}
                         />
                         <div className='clearfix' />
