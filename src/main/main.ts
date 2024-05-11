@@ -224,33 +224,33 @@ if (!gotTheLock) {
                 },
                 // TODO
                 /*{ label: '', type: 'separator' },
-            {
-                label: 'حالت پروکسی',
-                submenu: [
-                    { label: 'متصل است', type: 'radio' },
-                    { label: 'عدم اتصال', type: 'radio' }
-                ]
-            },
-            { label: '', type: 'separator' },
-            {
-                label: 'Proxy Mode',
-                submenu: [
-                    {
-                        label: 'Set System Proxy',
-                        type: 'normal',
-                        click: async () => {
-                            await enableProxy();
+                {
+                    label: 'حالت پروکسی',
+                    submenu: [
+                        { label: 'متصل است', type: 'radio' },
+                        { label: 'عدم اتصال', type: 'radio' }
+                    ]
+                },
+                { label: '', type: 'separator' },
+                {
+                    label: 'Proxy Mode',
+                    submenu: [
+                        {
+                            label: 'Set System Proxy',
+                            type: 'normal',
+                            click: async () => {
+                                await enableProxy();
+                            }
+                        },
+                        {
+                            label: 'Disable',
+                            type: 'normal',
+                            click: async () => {
+                                await disableProxy();
+                            }
                         }
-                    },
-                    {
-                        label: 'Disable',
-                        type: 'normal',
-                        click: async () => {
-                            await disableProxy();
-                        }
-                    }
-                ]
-            },*/
+                    ]
+                },*/
                 { label: '', type: 'separator' },
                 {
                     label: 'Exit',

@@ -4,9 +4,7 @@ import { ipcRenderer } from './lib/utils';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
-root.render(
-    <App />
-);
+root.render(<App />);
 
 // calling IPC exposed from preload script
 ipcRenderer.on('ipc-example', (arg) => {

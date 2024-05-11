@@ -20,7 +20,6 @@ import { loadLang, loadTheme } from './lib/loaders';
 import { quitOnCtrlW } from './lib/utils';
 
 export default function App() {
-
     useEffect(() => {
         openDevtoolsOnCtrlShiftI();
         loadTheme();

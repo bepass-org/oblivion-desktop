@@ -89,8 +89,18 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
             try {
-                await macOSProxySettings(['-setwebproxy', 'Wi-Fi', hostIP.toString(), port.toString()]);
-                await macOSProxySettings(['-setsecurewebproxy', 'Wi-Fi', hostIP.toString(), port.toString()]);
+                await macOSProxySettings([
+                    '-setwebproxy',
+                    'Wi-Fi',
+                    hostIP.toString(),
+                    port.toString()
+                ]);
+                await macOSProxySettings([
+                    '-setsecurewebproxy',
+                    'Wi-Fi',
+                    hostIP.toString(),
+                    port.toString()
+                ]);
                 resolve();
             } catch (error) {
                 reject(error);
