@@ -26,7 +26,8 @@ let hasNewUpdate = false;
 
 export default function Index() {
     const appLang = getLang();
-    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } = useStore();
+    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } =
+        useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
         ip: string;
@@ -126,7 +127,6 @@ export default function Index() {
             window.removeEventListener('online', () => setOnline(true));
             window.removeEventListener('offline', () => setOnline(false));
         };
-
     }, []);
 
     useEffect(() => {
@@ -336,7 +336,9 @@ export default function Index() {
                             >
                                 <i className={'material-icons'}>&#xe923;</i>
                                 <span>{appLang?.home?.drawer_update}</span>
-                                <div className='label label-warning label-xs'>{appLang?.home?.drawer_update_label}</div>
+                                <div className='label label-warning label-xs'>
+                                    {appLang?.home?.drawer_update_label}
+                                </div>
                             </a>
                         </li>
                         <li className='divider' />

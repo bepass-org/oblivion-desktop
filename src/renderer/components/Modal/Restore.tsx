@@ -5,17 +5,17 @@ import { ipcRenderer } from '../../lib/utils';
 import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-                                         title,
-                                         isOpen,
-                                         onClose,
-                                         setTheme,
-                                         setIpData,
-                                         setSystemTray,
-                                         setPort,
-                                         setAutoSetProxy,
-                                         setShareVPN,
-                                         setLang
-                                     }: {
+    title,
+    isOpen,
+    onClose,
+    setTheme,
+    setIpData,
+    setSystemTray,
+    setPort,
+    setAutoSetProxy,
+    setShareVPN,
+    setLang
+}: {
     title: string;
     isOpen: boolean;
     onClose: any;
@@ -72,9 +72,7 @@ export default function RestoreModal({
                             <div className='miniLine' />
                         </div>
                         <h3>{title}</h3>
-                        <p>
-                            {appLang?.modal?.restore_desc}
-                        </p>
+                        <p>{appLang?.modal?.restore_desc}</p>
                         <div className='clearfix' />
                         <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
                             {appLang?.modal?.cancel}

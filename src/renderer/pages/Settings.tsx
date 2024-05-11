@@ -227,7 +227,9 @@ export default function Settings() {
                                 disabled={method !== 'psiphon'}
                                 value={location}
                             >
-                                <option value=''>{appLang?.settings?.method_psiphon_location_auto}</option>
+                                <option value=''>
+                                    {appLang?.settings?.method_psiphon_location_auto}
+                                </option>
                                 {countries.map((country: { value: string; label: string }) => (
                                     <option key={country.value} value={country.value}>
                                         {country.label}
@@ -235,7 +237,9 @@ export default function Settings() {
                                 ))}
                             </select>
                         </div>
-                        <div className='info'>{appLang?.settings?.method_psiphon_location_desc}</div>
+                        <div className='info'>
+                            {appLang?.settings?.method_psiphon_location_desc}
+                        </div>
                     </div>
                 </div>
                 <div className='moreSettings'>
