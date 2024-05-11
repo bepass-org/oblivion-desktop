@@ -231,15 +231,15 @@ export default function Index() {
         }
 
         if (isConnected && isLoading) {
-            setStatusText(`${appLang?.stutus?.disconnecting}`);
+            setStatusText(`${appLang?.status?.disconnecting}`);
         } else if (!isConnected && isLoading) {
-            setStatusText(`${appLang?.stutus?.connecting}`);
+            setStatusText(`${appLang?.status?.connecting}`);
         } else if (isConnected && ipInfo?.countryCode) {
-            setStatusText(`${appLang?.stutus?.connected_confirm}`);
+            setStatusText(`${appLang?.status?.connected_confirm}`);
         } else if (isConnected && !ipInfo?.countryCode && ipData) {
-            setStatusText(`${appLang?.stutus?.ip_check}`);
+            setStatusText(`${appLang?.status?.ip_check}`);
         } else if (isConnected && !ipData) {
-            setStatusText(`${appLang?.stutus?.connected}`);
+            setStatusText(`${appLang?.status?.connected}`);
         } else {
             setStatusText(`${appLang?.status?.disconnected}`);
         }
