@@ -28,7 +28,7 @@ technology
 <table>
     <thead align=left>
         <tr>
-            <th>Features</th>
+            <th>Feature</th>
             <th>Status</th>
         </tr>
     </thead>
@@ -76,6 +76,8 @@ technology
             <td>
                 :white_check_mark: Light<br>
                 :white_check_mark: Dark<br>
+                :white_check_mark: RTL<br>
+                :white_check_mark: LTR<br>
                 :white_large_square: Auto
             </td>
         </tr>
