@@ -148,13 +148,13 @@ export default function Settings() {
                                 settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                             }}
                         >
-                            <label className='key'>{appLang?.settings?.method_gool}</label>
+                            <label className='key'>{appLang?.settings?.method_warp}</label>
                             <div className='value'>
                                 <div
                                     className={classNames('switch', method === '' ? 'checked' : '')}
                                 />
                             </div>
-                            <div className='info'>{appLang?.settings?.method_gool_desc}</div>
+                            <div className='info'>{appLang?.settings?.method_warp_desc}</div>
                         </div>
                         <div
                             className={classNames('item')}
