@@ -77,7 +77,7 @@ export const getUserSettings = async () => {
 // ! make sure you get the args like ({ port = '' })
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
-        return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ پورت دیگری را از تنظیمات برنامه انتخاب کنید.`;
+        return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`;
     },
     'Invalid license': () => {
         return `لایسنس وارد شده معتبر نیست.`;
@@ -86,10 +86,10 @@ export const wpErrorTranslation: any = {
         return `سقف استفاده از لایسنس پر شده است.`;
     },
     'Access is denied': () => {
-        return `مسیر stuff یافت نشد؛ برنامه را به‌صورت Run as Administrator اجرا کنید.`;
+        return `مسیر stuff یافت نشد؛ برنامه را با Run as Administrator اجرا کنید.`;
     },
     'failed to set endpoint': () => {
-        return `تنظیم‌کردن اندپوینت با خطا مواجه شد؛ از اندپوینت پیشفرض استفاده کنید.`;
+        return `تنظیم اندپوینت با خطا مواجه شد.`;
     },
     /*'load primary warp identity': () => {
         return `هویت‌سنجی در کلودفلر با خطا مواجه شد.`;
