@@ -169,11 +169,9 @@ if (!gotTheLock) {
                     canOpenFromSystem = false;
                 });
 
-                mainWindow.on('close', (event) => {
-                    if (mainWindow) {
-                        event.preventDefault(); // Prevents the default close operation
-                        mainWindow.hide(); // Hides the window instead of closing it
-                    }
+                mainWindow.on('closed', () => {
+                    //await disableProxy();
+                    mainWindow = null;
                 });
 
                 mainWindow.on('minimize', async (e: any) => {
