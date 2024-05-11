@@ -227,9 +227,15 @@
         },
         "linux": {
             "target": [
-                "deb",
                 "rpm",
-                "tar.xz"
+                "tar.xz",
+                {
+                    "target": "deb",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
             ],
             "category": "Utility"
         },

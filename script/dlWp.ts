@@ -10,6 +10,18 @@ if (process.argv[2] && process.argv[2] === 'force') {
     forceDownload = true;
 }
 
+let platform: any = process.platform;
+if (typeof process.argv[3] === 'string') {
+    platform = process.argv[3];
+}
+console.log('➡️ platform:', platform);
+
+let arch: any = process.arch;
+if (typeof process.argv[4] === 'string') {
+    arch = process.argv[4];
+}
+console.log('➡️ arch:', arch);
+
 async function downloadFile(uri: string, destPath: string) {
     return axios
         .get(uri, {
@@ -84,7 +96,7 @@ const dlUnzipMove = async (url: string) => {
 const wpVersion = 'v1.1.3';
 const baseUrl = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}`;
 
-const urls = {
+const urls: any = {
     linux: {
         x64: baseUrl + '/warp-plus_linux-amd64.zip',
         arm64: baseUrl + '/warp-plus_linux-arm64.zip'
@@ -98,11 +110,6 @@ const urls = {
         arm64: baseUrl + '/warp-plus_darwin-arm64.zip'
     }
 };
-
-const platform = process.platform; // linux / win32 / darwin / else(not supported...)
-console.log('➡️ platform:', platform);
-const arch = process.arch; // x64 / arm / arm64 or... / else(not supported...)
-console.log('➡️ arch:', arch);
 
 const notSupported = () => {
     console.log('your platform/architecture is not supported.');
