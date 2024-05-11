@@ -91,9 +91,9 @@ export const wpErrorTranslation: any = {
     'failed to set endpoint': () => {
         return `تنظیم‌کردن اندپوینت با خطا مواجه شد؛ از اندپوینت پیشفرض استفاده کنید.`;
     },
-    'load primary warp identity': () => {
+    /*'load primary warp identity': () => {
         return `هویت‌سنجی در کلودفلر با خطا مواجه شد.`;
-    },
+    },*/
     'script failed to run': () => {
         return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
     },
