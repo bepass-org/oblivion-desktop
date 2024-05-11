@@ -210,7 +210,8 @@
                     "type": "link",
                     "path": "/Applications"
                 }
-            ]
+            ],
+            "writeUpdateInfo": false
         },
         "win": {
             "target": [
@@ -223,7 +224,8 @@
             "perMachine": true,
             "selectPerMachineByDefault": true,
             "allowToChangeInstallationDirectory": true,
-            "runAfterFinish": false
+            "runAfterFinish": false,
+            "differentialPackage": false
         },
         "linux": {
             "target": [
