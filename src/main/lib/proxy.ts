@@ -90,16 +90,15 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await macOSProxySettings([
-                    '-setwebproxy',
+                    '-setsocksfirewallproxy',
                     'Wi-Fi',
                     hostIP.toString(),
                     port.toString()
                 ]);
                 await macOSProxySettings([
-                    '-setsecurewebproxy',
+                    '-setproxybypassdomains',
                     'Wi-Fi',
-                    hostIP.toString(),
-                    port.toString()
+                    'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
                 ]);
                 resolve();
             } catch (error) {
@@ -124,8 +123,7 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
             try {
-                await macOSProxySettings(['-setwebproxystate', 'Wi-Fi', 'off']);
-                await macOSProxySettings(['-setsecurewebproxystate', 'Wi-Fi', 'off']);
+                await macOSProxySettings([ '-setsocksfirewallproxy', 'Wi-Fi', 'off']);
                 resolve();
             } catch (error) {
                 reject(error);
