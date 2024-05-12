@@ -94,7 +94,7 @@ export const wpErrorTranslation: any = {
         return `تنظیم اندپوینت با خطا مواجه شد.`;
     },
     /*'load primary warp identity': () => {
-        return `هویت‌سنجی در کلودفلر با خطا مواجه شد.`;
+        return `خطای هویت‌سنجی در کلودفلر؛ مجدداً تلاش کنید.`;
     },*/
     'script failed to run': () => {
         return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
