@@ -9,7 +9,7 @@ const windowsProxySettings = (args: string[], ipcEvent?: IpcMainEvent) => {
     const child = spawn('powershell', [
         'Set-ItemProperty',
         '-Path',
-        "'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings'",
+        '\'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\'',
         ...args
     ]);
 
@@ -58,7 +58,7 @@ const macOSProxySettings = (args: string[]) => {
 
 export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
     //const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
-    const method = (await settings.get('method')) || defaultSettings.method;
+    //const method = (await settings.get('method')) || defaultSettings.method;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
 
@@ -69,7 +69,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
                     [
                         'ProxyServer',
                         '-value',
-                        `${method === 'psiphon' ? 'socks=' : ''}${hostIP}:${port}`
+                        `socks=${hostIP.toString()}:${port.toString()}`
                     ],
                     ipcEvent
                 );
@@ -123,7 +123,7 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
             try {
-                await macOSProxySettings([ '-setsocksfirewallproxy', 'Wi-Fi', 'off']);
+                await macOSProxySettings(['-setsocksfirewallproxy', 'Wi-Fi', 'off']);
                 resolve();
             } catch (error) {
                 reject(error);
