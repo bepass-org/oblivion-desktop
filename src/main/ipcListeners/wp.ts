@@ -37,10 +37,7 @@ ipcMain.on('wp-start', async (event) => {
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const autoSetProxy = (await settings.get('autoSetProxy')) || defaultSettings.autoSetProxy;
 
-    if (
-        (typeof autoSetProxy === 'boolean' && autoSetProxy) ||
-        typeof autoSetProxy === 'undefined'
-    ) {
+    if (typeof autoSetProxy === 'boolean' && autoSetProxy) {
         await enableProxy(event);
     }
 
