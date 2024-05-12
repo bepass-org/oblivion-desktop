@@ -13,7 +13,7 @@
         "drawer_settings_warp": "تنظیمات وارپ",
         "drawer_settings_routing_rules": "قوانین مسیریابی",
         "drawer_settings_app": "تنظیمات برنامه",
-        "drawer_log_warp": "لاگ وارپ",
+        "drawer_log": "لاگ برنامه",
         "drawer_update": "بروزرسانی",
         "drawer_update_label": "نسخه جدید",
         "drawer_speed_test": "تست سرعت",
@@ -76,7 +76,7 @@
         "cancel": "انصراف"
     },
     "log": {
-        "title": "لاگ وارپ",
+        "title": "برنامه وارپ",
         "desc": "درصورت ایجاد لاگ توسط برنامه، اینجا نمایش داده می\u200Cشود.",
         "error_powershell": "برنامه برای اجرا به نصب نرم\u200Cافزار Powershell نیاز دارد.",
         "error_invalid_license": "لایسنس وارد شده معتبر نیست.",

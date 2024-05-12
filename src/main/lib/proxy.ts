@@ -1,6 +1,7 @@
 import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
 import { defaultSettings } from '../../defaultSettings';
+import { appLog } from './log';
 
 const { spawn } = require('child_process');
 
@@ -19,12 +20,12 @@ const windowsProxySettings = (args: string[], ipcEvent?: IpcMainEvent) => {
         });
 
         child.stderr.on('data', (err: any) => {
-            console.log('err', err.toString());
+            appLog(`err ${err.toString()}`);
             reject(err);
         });
 
         child.on('error', (err: any) => {
-            console.log(err);
+            appLog(err);
             reject(err);
             if (typeof ipcEvent !== 'undefined' && String(err).includes('powershell')) {
                 ipcEvent.reply(
@@ -45,12 +46,12 @@ const macOSProxySettings = (args: string[]) => {
         });
 
         child.stderr.on('data', (err: any) => {
-            console.log('Error:', err.toString());
+            appLog(`Error: ${err.toString()}`);
             reject(err);
         });
 
         child.on('error', (err: any) => {
-            console.log('Spawn Error:', err);
+            appLog(`Spawn Error: ${err}`);
             reject(err);
         });
     });
@@ -106,7 +107,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
             }
         });
     } else {
-        console.log('Proxy setting not supported on your platform');
+        appLog('Proxy setting not supported on your platform');
     }
 };
 
@@ -130,6 +131,6 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
             }
         });
     } else {
-        console.log('changing proxy is not supported on your platform yet');
+        appLog('changing proxy is not supported on your platform yet');
     }
 };

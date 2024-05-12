@@ -3,10 +3,10 @@ import path from 'path';
 import { doesFileExist } from '../lib/utils';
 import { readLogFile } from '../lib/log';
 
-export const wpLogPath = path.join(app.getPath('logs'), 'warp-plus.log');
+export const logPath = path.join(app.getPath('logs'), 'app.log');
 
 ipcMain.on('log', async (event) => {
-    const bool = await doesFileExist(wpLogPath);
+    const bool = await doesFileExist(logPath);
     if (bool) {
         const data = await readLogFile();
         event.reply('log', data);

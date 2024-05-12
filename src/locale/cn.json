@@ -13,7 +13,7 @@
         "drawer_settings_warp": "Warp 设置",
         "drawer_settings_routing_rules": "路由规则",
         "drawer_settings_app": "应用设置",
-        "drawer_log_warp": "Warp 日志",
+        "drawer_log": "应用程序日志",
         "drawer_update": "更新",
         "drawer_update_label": "新更新",
         "drawer_speed_test": "速度测试",
@@ -75,7 +75,7 @@
         "cancel": "取消"
     },
     "log": {
-        "title": "Warp 日志",
+        "title": "应用程序日志",
         "desc": "如果程序创建了日志，将在此处显示。",
         "error_powershell": "程序需要安装 Powershell 软件才能运行。",
         "error_invalid_license": "输入的许可证无效。",

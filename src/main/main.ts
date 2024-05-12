@@ -14,24 +14,29 @@ import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } f
 import settings from 'electron-settings';
 import MenuBuilder from './menu';
 import './ipc';
-import { isDev } from './lib/utils';
+import { isDev, removeFileIfExists } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
-import { wpFileName } from './ipcListeners/wp';
+import { wpDirPath, wpFileName } from './ipcListeners/wp';
+import { logPath } from './ipcListeners/log';
+import { appLog } from './lib/log';
 
 let mainWindow: BrowserWindow | null = null;
-
-// console.log(1, app.getPath('appData'));
-// console.log(2, app.getPath('logs'));
-// console.log(3, app.getPath('userData'));
-// console.log(4, app.getPath('exe'));
-// console.log(5, app.getAppPath());
 
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
     app.exit(0);
 } else {
+    (async () => {
+        await removeFileIfExists(logPath);
+        await appLog(`appPath:', ${app.getAppPath()}`);
+        await appLog(`appData:', ${app.getPath('appData')}`);
+        await appLog(`logs:', ${app.getPath('logs')}`);
+        await appLog(`userData:', ${app.getPath('userData')}`);
+        await appLog(`exe:', ${app.getPath('exe')}`);
+    })();
+
     app.on('second-instance', (event, commandLine, workingDirectory) => {
         // Someone tried to run a second instance, we should focus our window.
         if (mainWindow) {
@@ -48,10 +53,10 @@ if (!gotTheLock) {
             'bin',
             wpFileName
         );
-        const destination = path.join(app.getPath('temp'), wpFileName);
+        const destination = path.join(wpDirPath, wpFileName);
         fs.copyFile(source, destination, (err) => {
             if (err) throw err;
-            console.log('wp binary was copied to tmp directory.');
+            appLog('wp binary was copied to userData directory.');
         });
     }
 
@@ -255,7 +260,8 @@ if (!gotTheLock) {
                 {
                     label: 'Exit',
                     type: 'normal',
-                    click: () => {
+                    click: async () => {
+                        await disableProxy();
                         app.exit(0);
                     }
                 }

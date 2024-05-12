@@ -8,16 +8,14 @@ export type Channels =
     | 'log'
     | 'settings'
     | 'guide-toast'
-    | 'quit';
+    | 'exit';
 
 const electronHandler = {
     ipcRenderer: {
         sendMessage(channel: Channels, ...args: unknown[]) {
-            console.log('sendMessage:', channel, ...args);
             ipcRenderer.send(channel, ...args);
         },
         on(channel: Channels, func: (...args: unknown[]) => void) {
-            console.log('on:', channel, func);
             const subscription = (_event: IpcRendererEvent, ...args: unknown[]) => func(...args);
             ipcRenderer.on(channel, subscription);
 

@@ -325,7 +325,7 @@ export default function Index() {
                         <li>
                             <Link to={'/debug'}>
                                 <i className={'material-icons'}>&#xe868;</i>
-                                <span>{appLang?.home?.drawer_log_warp}</span>
+                                <span>{appLang?.home?.drawer_log}</span>
                             </Link>
                         </li>
                         <li className={hasNewUpdate ? '' : 'hidden'}>

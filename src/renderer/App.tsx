@@ -17,14 +17,14 @@ import Debug from './pages/Debug';
 import SpeedTest from './pages/SpeedTest';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadLang, loadTheme } from './lib/loaders';
-import { quitOnCtrlW } from './lib/utils';
+import { exitOnCtrlW } from './lib/utils';
 
 export default function App() {
     useEffect(() => {
         openDevtoolsOnCtrlShiftI();
         loadTheme();
         loadLang();
-        quitOnCtrlW();
+        exitOnCtrlW();
     }, []);
 
     return (

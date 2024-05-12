@@ -13,7 +13,7 @@
         "drawer_settings_warp": "Настройки Warp",
         "drawer_settings_routing_rules": "Правила маршрутизации",
         "drawer_settings_app": "Настройки приложения",
-        "drawer_log_warp": "Журнал Warp",
+        "drawer_log": "Журнал приложений",
         "drawer_update": "Обновление",
         "drawer_update_label": "Новое обновление",
         "drawer_speed_test": "Тест скорости",
@@ -75,7 +75,7 @@
         "cancel": "Отмена"
     },
     "log": {
-        "title": "Журнал Warp",
+        "title": "Журнал приложений",
         "desc": "Если программа создает журнал, он будет отображаться здесь.",
         "error_powershell": "Для работы программы требуется установленное программное обеспечение Powershell.",
         "error_invalid_license": "Введенная лицензия недействительна.",

@@ -1,9 +1,10 @@
 import fs from 'fs';
-import { wpLogPath } from '../ipcListeners/log';
+import { logPath } from '../ipcListeners/log';
+import { doesFileExist } from './utils';
 
 export function readLogFile() {
     return new Promise((resolve, reject) => {
-        fs.readFile(wpLogPath, 'utf8', (err: any, data: any) => {
+        fs.readFile(logPath, 'utf8', (err: any, data: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -15,7 +16,7 @@ export function readLogFile() {
 
 export function writeToLogFile(message: string) {
     return new Promise((resolve, reject) => {
-        fs.writeFile(wpLogPath, message + '\n', (err: any) => {
+        fs.writeFile(logPath, message + '\n', (err: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -27,7 +28,7 @@ export function writeToLogFile(message: string) {
 
 export function appendToLogFile(message: string) {
     return new Promise((resolve, reject) => {
-        fs.appendFile(wpLogPath, message + '\n', (err: any) => {
+        fs.appendFile(logPath, message + '\n', (err: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -35,4 +36,13 @@ export function appendToLogFile(message: string) {
             }
         });
     });
+}
+
+export async function appLog(message: string) {
+    const isLogFileExist = await doesFileExist(logPath);
+    if (!isLogFileExist) {
+        return writeToLogFile(message + '\n');
+    } else {
+        return appendToLogFile(message + '\n');
+    }
 }
