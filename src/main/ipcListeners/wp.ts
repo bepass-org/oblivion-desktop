@@ -4,10 +4,10 @@ import { app, ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
-import { appendToLogFile, writeToLogFile } from '../lib/log';
-import { doesFileExist, isDev, removeDirIfExists, removeFileIfExists } from '../lib/utils';
+import { appLog } from '../lib/log';
+import { isDev, removeFileIfExists } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
-import { wpLogPath } from './log';
+import { logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 
@@ -22,28 +22,27 @@ export const wpDirPath = isDev()
           'assets',
           'bin'
       )
-    : path.join(app.getPath('temp'));
+    : path.join(app.getPath('userData'));
 export const stuffPath = path.join(wpDirPath, 'stuff');
 
 ipcMain.on('wp-start', async (event) => {
-    removeFileIfExists(wpLogPath);
-
-    // in case user is using another proxy
-    // await disableProxy();
+    await removeFileIfExists(logPath);
 
     const args = await getUserSettings();
 
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
-    const autoSetProxy = (await settings.get('autoSetProxy')) || defaultSettings.autoSetProxy;
+    const autoSetProxy = await settings.get('autoSetProxy');
 
-    if (typeof autoSetProxy === 'boolean' && autoSetProxy) {
+    if (typeof autoSetProxy === 'undefined' && defaultSettings.autoSetProxy) {
+        await enableProxy(event);
+    } else if (typeof autoSetProxy === 'boolean' && autoSetProxy === true) {
         await enableProxy(event);
     }
 
     const command = path.join(wpDirPath, wpFileName);
 
-    console.log('command: ', command, args);
+    appLog(`command: ${command + args.join(' ')}`);
 
     child = spawn(command, args, { cwd: wpDirPath });
 
@@ -51,35 +50,21 @@ ipcMain.on('wp-start', async (event) => {
 
     child.stdout.on('data', async (data: any) => {
         const strData = data.toString();
-        console.log(strData);
         if (strData.includes(successMessage)) {
             event.reply('wp-start', true);
-            /*if (
-                (typeof autoSetProxy === 'boolean' && autoSetProxy) ||
-                typeof autoSetProxy === 'undefined'
-            ) {
-                await enableProxy();
-            }*/
         }
 
         handleWpErrors(strData, event, String(port));
-
-        const isWpLogFileExist = await doesFileExist(wpLogPath);
-        if (!isWpLogFileExist) {
-            writeToLogFile(strData);
-        } else {
-            appendToLogFile(strData);
-        }
+        appLog(strData);
     });
 
     child.stderr.on('data', (err: any) => {
-        console.log('err', err.toString());
+        appLog(`err: ${err.toString()}`);
     });
 
     child.on('exit', async () => {
         await disableProxy(event);
         event.reply('wp-end', true);
-        //removeDirIfExists(stuffPath);
     });
 });
 

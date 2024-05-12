@@ -1,6 +1,8 @@
 import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
+import { removeDirIfExists } from './utils';
+import { stuffPath } from '../ipcListeners/wp';
 
 export const getUserSettings = async () => {
     const randomCountry = () => {
@@ -113,6 +115,7 @@ export const handleWpErrors = (strData: string, ipcEvent: IpcMainEvent, port: st
                     thisWillGetPassedButWillNotCauseError: 'some value'
                 })
             );
+            removeDirIfExists(stuffPath);
         }
     });
 };

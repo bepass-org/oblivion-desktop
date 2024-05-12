@@ -67,11 +67,10 @@ export default class MenuBuilder {
                 { label: 'Show All', selector: 'unhideAllApplications:' },
                 { type: 'separator' },
                 {
-                    label: 'Quit',
-                    accelerator: 'Command+Q',
-                    click: () => {
-                        app.exit(0);
-                    }
+                    label: 'Exit',
+                    accelerator: 'Command+Q'
+                    // click: () => {
+                    // }
                 }
             ]
         };

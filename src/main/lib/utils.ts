@@ -29,6 +29,8 @@ export function removeFileIfExists(filePath: string) {
                     resolve(true);
                 }
             });
+        } else {
+            resolve(true);
         }
     });
 }

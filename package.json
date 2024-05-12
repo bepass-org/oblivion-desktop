@@ -221,10 +221,7 @@
         },
         "nsis": {
             "oneClick": false,
-            "perMachine": true,
-            "selectPerMachineByDefault": true,
             "allowToChangeInstallationDirectory": true,
-            "runAfterFinish": false,
             "differentialPackage": false
         },
         "linux": {

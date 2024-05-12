@@ -2,8 +2,8 @@ export const ipcRenderer = window.electron.ipcRenderer;
 
 export const isDev = () => window.electron.nodeEnv === 'development';
 
-export const quitOnCtrlW = () => {
+export const exitOnCtrlW = () => {
     window.onbeforeunload = () => {
-        ipcRenderer.sendMessage('quit');
+        ipcRenderer.sendMessage('exit');
     };
 };

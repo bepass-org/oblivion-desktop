@@ -13,7 +13,7 @@
         "drawer_settings_warp": "Warp Settings",
         "drawer_settings_routing_rules": "Routing Rules",
         "drawer_settings_app": "App Settings",
-        "drawer_log_warp": "Warp Log",
+        "drawer_log": "App Log",
         "drawer_update": "Update",
         "drawer_update_label": "New Update",
         "drawer_speed_test": "Speed Test",
@@ -75,7 +75,7 @@
         "cancel": "Cancel"
     },
     "log": {
-        "title": "Warp Log",
+        "title": "App Log",
         "desc": "If a log is created by the program, it will be displayed here.",
         "error_powershell": "The program requires Powershell software to be installed to run.",
         "error_invalid_license": "The entered license is not valid.",
