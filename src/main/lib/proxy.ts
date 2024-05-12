@@ -9,7 +9,7 @@ const windowsProxySettings = (args: string[], ipcEvent?: IpcMainEvent) => {
     const child = spawn('powershell', [
         'Set-ItemProperty',
         '-Path',
-        '\'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\'',
+        "'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings'",
         ...args
     ]);
 
