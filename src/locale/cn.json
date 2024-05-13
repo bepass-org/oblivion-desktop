@@ -47,6 +47,8 @@
         "option": "应用设置",
         "auto_set_proxy": "网络",
         "auto_set_proxy_desc": "在操作系统上设置代理",
+        "proxy_mode": "代理模式",
+        "proxy_mode_desc": "定义代理设置",
         "port": "代理端口",
         "port_desc": "定义应用程序的代理端口",
         "share_vpn": "共享（局域网）",
