@@ -22,7 +22,10 @@ export default function Debug() {
 
     ipcRenderer.on('log', (data) => {
         let updatedData = String(data);
-        updatedData = updatedData.replace(/([A-Z]):\\Users\\[^\\]+\\/g, '<DRIVE>:\\Users\\<USER>\\');
+        updatedData = updatedData.replace(
+            /([A-Z]):\\Users\\[^\\]+\\/g,
+            '<DRIVE>:\\Users\\<USER>\\'
+        );
         updatedData = updatedData.replace(/([A-Z]):\\/g, '<DRIVE>:\\');
         updatedData = updatedData.replace(/\/home\/[^\\]+\//, 'home/<USER>/');
         updatedData = updatedData.replace(/\\www\\[^\\]+\\/, '\\www\\<DIR>\\');
