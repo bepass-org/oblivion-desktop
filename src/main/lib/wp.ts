@@ -20,7 +20,7 @@ export const getUserSettings = async () => {
     const location = await settings.get('location');
     const license = await settings.get('license');
     //const gool = await settings.get('gool');
-    const method = await settings.get('method');
+    const method = (await settings.get('method')) || defaultSettings.method;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
 
     // ! push one arg(flag) at a time
