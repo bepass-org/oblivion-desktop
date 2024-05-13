@@ -20,8 +20,8 @@ export const getUserSettings = async () => {
     const location = await settings.get('location');
     const license = await settings.get('license');
     //const gool = await settings.get('gool');
-    const method = (await settings.get('method')) || defaultSettings.method;
-    const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
+    const method = await settings.get('method');
+    const hostIP = await settings.get('hostIP');
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
@@ -31,11 +31,7 @@ export const getUserSettings = async () => {
     }
     // port, hostIP
     args.push('--bind');
-    args.push(
-        typeof port === 'string' || typeof port === 'number'
-            ? `${hostIP}:${port}`
-            : `${hostIP}:${defaultSettings.port}`
-    );
+    args.push(`${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`);
     // license
     if (typeof license === 'string' && license !== '') {
         args.push('--key');
@@ -55,6 +51,8 @@ export const getUserSettings = async () => {
                 args.push(randomCountry());
             }
         }
+    } else {
+        args.push('--gool');
     }
     // scan
     if (
