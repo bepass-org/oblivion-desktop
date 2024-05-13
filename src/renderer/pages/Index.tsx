@@ -2,20 +2,19 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import ReactCountryFlag from 'react-country-flag';
+//import ReactCountryFlag from 'react-country-flag';
 import Drawer from 'react-modern-drawer';
 import { Swipe } from 'react-swipe-component';
 import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
 import appIco from '../../../assets/oblivion.png';
-import defFlag from '../../../assets/img/flags/xx.svg';
-import irFlag from '../../../assets/img/flags/ir.svg';
 import { settings } from '../lib/settings';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
 import { ipcRenderer } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
+import { cfFlag } from '../lib/cfFlag';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -440,12 +439,19 @@ export default function Index() {
                                 }}
                             >
                                 {ipInfo.countryCode ? (
-                                    ipInfo?.countryCode === 'ir' ? (
+                                    <>
+                                        <img
+                                            src={cfFlag(ipInfo?.countryCode)}
+                                            alt='flag'
+                                        />
+                                    </>
+                                    /*ipInfo?.countryCode === 'ir' ? (
                                         <>
-                                            <img src={irFlag} alt='flag' />
+                                            <img src={String(cfFlag('ir'))} alt='flag' />
                                         </>
                                     ) : (
                                         <>
+                                            <img src={(cfFlag(String(ipInfo.countryCode)).toString())} alt='flag' />
                                             <ReactCountryFlag
                                                 countryCode={String(ipInfo.countryCode)}
                                                 svg
@@ -455,10 +461,10 @@ export default function Index() {
                                                 }}
                                             />
                                         </>
-                                    )
+                                    )*/
                                 ) : (
                                     <>
-                                        <img src={defFlag} alt='flag' />
+                                        <img src={String(cfFlag('xx'))} alt='flag' />
                                     </>
                                 )}
                                 <span>{ipInfo?.ip}</span>
