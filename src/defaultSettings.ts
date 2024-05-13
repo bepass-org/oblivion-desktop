@@ -18,7 +18,7 @@ export type settingsKeys =
 
 export const defaultSettings = {
     scan: true,
-    endpoint: 'engage.cloudflareclient.com:2048',
+    endpoint: 'engage.cloudflareclient.com:2408',
     ipType: '',
     port: 8086,
     location: '',
