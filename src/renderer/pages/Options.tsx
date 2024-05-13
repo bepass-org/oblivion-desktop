@@ -22,6 +22,7 @@ export default function Options() {
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
+    const [proxyMode, setProxyMode] = useState('');
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
@@ -32,11 +33,11 @@ export default function Options() {
     const langRef = useRef<any>(null);
 
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function () {
+                setTimeout(function() {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -62,6 +63,9 @@ export default function Options() {
         settings.get('autoSetProxy').then((value) => {
             setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
         });
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
+        });
         settings.get('shareVPN').then((value) => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
@@ -73,6 +77,7 @@ export default function Options() {
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
         typeof autoSetProxy === 'undefined' ||
+        typeof proxyMode === 'undefined' ||
         typeof shareVPN === 'undefined' ||
         typeof systemTray === 'undefined'
     )
@@ -115,10 +120,10 @@ export default function Options() {
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         loadLang();
                     }, 750);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         setAppLang(getLang());
                     }, 1500);
                 }}
@@ -131,7 +136,7 @@ export default function Options() {
                             setAutoSetProxy(!autoSetProxy);
                             settings.set('autoSetProxy', !autoSetProxy);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 if (autoSetProxy) {
                                     setIpData(false);
                                     settings.set('ipData', false);
@@ -146,6 +151,29 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
+                    </div>
+                    <div className={classNames(
+                        'item',
+                        (autoSetProxy ? '' : 'disabled')
+                    )}>
+                        <label className='key'>{appLang?.settings?.proxy_mode}</label>
+                        <div className='value'>
+                            <select
+                                onChange={(e) => {
+                                    if (autoSetProxy) {
+                                        setProxyMode(e.target.value);
+                                        settings.set('proxyMode', e.target.value);
+                                        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+                                    }
+                                }}
+                                value={proxyMode}
+                                disabled={!autoSetProxy}
+                            >
+                                <option value='system'>System Proxy</option>
+                                {/*<option value='tun' disabled>TUN2Sock</option>*/}
+                            </select>
+                        </div>
+                        <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
                     </div>
                     <div
                         className='item'
@@ -233,10 +261,10 @@ export default function Options() {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
                                     loadingToast();
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         loadLang();
                                     }, 750);
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         setAppLang(getLang());
                                         toast.dismiss('LOADING');
                                     }, 1500);

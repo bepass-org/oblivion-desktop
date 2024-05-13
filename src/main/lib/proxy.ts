@@ -60,6 +60,7 @@ const macOSProxySettings = (args: string[]) => {
 export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
     //const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
     const method = (await settings.get('method')) || defaultSettings.method;
+    //const proxyMode = (await settings.get('proxyMode')) || defaultSettings.proxyMode;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
 
