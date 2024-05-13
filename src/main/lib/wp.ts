@@ -82,25 +82,25 @@ export const wpErrorTranslation: any = {
         return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`;
     },
     'Invalid license': () => {
-        return `لایسنس وارد شده معتبر نیست.`;
+        return `لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.`;
     },
     'Too many connected devices': () => {
-        return `سقف استفاده از لایسنس پر شده است.`;
+        return `سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.`;
     },
     'Access is denied': () => {
         return `مسیر stuff یافت نشد؛ برنامه را با Run as Administrator اجرا کنید.`;
     },
     'failed to set endpoint': () => {
-        return `تنظیم اندپوینت با خطا مواجه شد.`;
+        return `خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.`;
     },
-    /*'load primary warp identity': () => {
-        return `خطای هویت‌سنجی در کلودفلر؛ مجدداً تلاش کنید.`;
-    },*/
+    'load primary warp identity': () => {
+        return `خطای بررسی لایسنس؛ دوباره تلاش کرده یا آن‌را حذف کنید.`;
+    },
     'script failed to run': () => {
-        return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
+        return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
     },
     'object null is not iterable': () => {
-        return `برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.`;
+        return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
     }
 };
 
