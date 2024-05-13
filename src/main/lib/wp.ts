@@ -94,7 +94,7 @@ export const wpErrorTranslation: any = {
         return `خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.`;
     },
     'load primary warp identity': () => {
-        return `خطای بررسی لایسنس؛ دوباره تلاش کرده یا آن‌را حذف کنید.`;
+        return `خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.`;
     },
     'script failed to run': () => {
         return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
