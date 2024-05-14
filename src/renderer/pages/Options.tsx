@@ -21,7 +21,7 @@ export default function Options() {
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState(false);
-    const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
+    //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
     const [proxyMode, setProxyMode] = useState('');
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState();
@@ -60,9 +60,9 @@ export default function Options() {
         settings.get('port').then((value) => {
             setPort(typeof value === 'undefined' ? defaultSettings.port : value);
         });
-        settings.get('autoSetProxy').then((value) => {
+        /*settings.get('autoSetProxy').then((value) => {
             setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
-        });
+        });*/
         settings.get('proxyMode').then((value) => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
@@ -76,7 +76,7 @@ export default function Options() {
         typeof lang === 'undefined' ||
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
-        typeof autoSetProxy === 'undefined' ||
+        //typeof autoSetProxy === 'undefined' ||
         typeof proxyMode === 'undefined' ||
         typeof shareVPN === 'undefined' ||
         typeof systemTray === 'undefined'
@@ -112,7 +112,7 @@ export default function Options() {
                     setIpData,
                     setSystemTray,
                     setPort,
-                    setAutoSetProxy,
+                    //setAutoSetProxy,
                     setShareVPN,
                     setLang
                 }}
@@ -130,7 +130,7 @@ export default function Options() {
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
-                    <div
+                    {/*<div
                         className={classNames('item', autoSetProxy ? 'checked' : '')}
                         onClick={() => {
                             setAutoSetProxy(!autoSetProxy);
@@ -151,24 +151,28 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
-                    </div>
-                    <div className={classNames(
-                        'item',
-                        (autoSetProxy ? '' : 'disabled')
-                    )}>
+                    </div>*/}
+                    <div className={'item'}>
                         <label className='key'>{appLang?.settings?.proxy_mode}</label>
                         <div className='value'>
                             <select
                                 onChange={(e) => {
-                                    if (autoSetProxy) {
-                                        setProxyMode(e.target.value);
-                                        settings.set('proxyMode', e.target.value);
-                                        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    }
+                                    //if (autoSetProxy) {
+                                    setProxyMode(e.target.value);
+                                    settings.set('proxyMode', e.target.value);
+                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+                                    //}
+                                    setTimeout(function() {
+                                        if (e.target.value === 'none') {
+                                            setIpData(false);
+                                            settings.set('ipData', false);
+                                        }
+                                    }, 1000);
                                 }}
                                 value={proxyMode}
-                                disabled={!autoSetProxy}
+                                /*disabled={!autoSetProxy}*/
                             >
+                                <option value='none'>None</option>
                                 <option value='system'>System Proxy</option>
                                 {/*<option value='tun' disabled>TUN2Sock</option>*/}
                             </select>
@@ -205,9 +209,9 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                     </div>
                     <div
-                        className={classNames('item', autoSetProxy ? '' : 'disabled')}
+                        className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={() => {
-                            if (autoSetProxy) {
+                            if (proxyMode !== 'none') {
                                 setIpData(!ipData);
                                 settings.set('ipData', !ipData);
                             }

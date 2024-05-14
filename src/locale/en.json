@@ -45,8 +45,6 @@
         "license": "License",
         "license_desc": "If you have a license (each license is 2x)",
         "option": "Application Settings",
-        "auto_set_proxy": "Network",
-        "auto_set_proxy_desc": "Set proxy on operating system",
         "proxy_mode": "Proxy Mode",
         "proxy_mode_desc": "Defining Proxy Settings",
         "port": "Proxy Port",

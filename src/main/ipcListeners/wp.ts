@@ -18,10 +18,10 @@ let child: any;
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
 export const wpDirPath = isDev()
     ? path.join(
-          app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-          'assets',
-          'bin'
-      )
+        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+        'assets',
+        'bin'
+    )
     : path.join(app.getPath('userData'));
 export const stuffPath = path.join(wpDirPath, 'stuff');
 
@@ -32,11 +32,13 @@ ipcMain.on('wp-start', async (event) => {
 
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
-    const autoSetProxy = await settings.get('autoSetProxy');
+    //const autoSetProxy = await settings.get('autoSetProxy');
+    const proxyMode = await settings.get('proxyMode');
 
-    if (typeof autoSetProxy === 'undefined' && defaultSettings.autoSetProxy) {
-        await enableProxy(event);
-    } else if (typeof autoSetProxy === 'boolean' && autoSetProxy === true) {
+    if (
+        typeof proxyMode === 'undefined' ||
+        (typeof proxyMode === 'string' && proxyMode === 'system')
+    ) {
         await enableProxy(event);
     }
 

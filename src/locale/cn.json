@@ -45,8 +45,6 @@
         "license": "许可证",
         "license_desc": "如果您有许可证（每个许可证为 2x）",
         "option": "应用设置",
-        "auto_set_proxy": "网络",
-        "auto_set_proxy_desc": "在操作系统上设置代理",
         "proxy_mode": "代理模式",
         "proxy_mode_desc": "定义代理设置",
         "port": "代理端口",
