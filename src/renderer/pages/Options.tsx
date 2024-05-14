@@ -27,6 +27,7 @@ export default function Options() {
     const [port, setPort] = useState();
     const [showPortModal, setShowPortModal] = useState(false);
     const [appLang, setAppLang] = useState(getLang());
+    const [dns, setDns] = useState<undefined | boolean>();
 
     const { state } = useLocation();
     const { targetId } = state || {};
@@ -69,6 +70,9 @@ export default function Options() {
         settings.get('shareVPN').then((value) => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
+        settings.get('dns').then((value) => {
+            setDns(typeof value === 'undefined' ? defaultSettings.dns : value);
+        });
     }, []);
 
     if (
@@ -79,6 +83,7 @@ export default function Options() {
         //typeof autoSetProxy === 'undefined' ||
         typeof proxyMode === 'undefined' ||
         typeof shareVPN === 'undefined' ||
+        typeof dns === 'undefined' ||
         typeof systemTray === 'undefined'
     )
         return (
@@ -208,6 +213,22 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                     </div>
+                    {/*<div
+                        className={classNames('item')}
+                        onClick={() => {
+                            setDns(!dns);
+                            settings.set('dns', !dns);
+                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+                        }}
+                    >
+                        <label className='key'>{appLang?.settings?.dns}</label>
+                        <div className='value'>
+                            <div className={'checkbox'}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.dns_desc}</div>
+                    </div>*/}
                     <div
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={() => {
