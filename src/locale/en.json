@@ -51,6 +51,8 @@
         "port_desc": "Define application proxy port",
         "share_vpn": "Share (LAN)",
         "share_vpn_desc": "Share a proxy on the network",
+        "dns": "Change DNS",
+        "dns_desc": "Use Google Public DNS",
         "ip_data": "IP Check",
         "ip_data_desc": "Display IP & location after connection",
         "dark_mode": "Dark Mode",

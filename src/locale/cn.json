@@ -51,6 +51,8 @@
         "port_desc": "定义应用程序的代理端口",
         "share_vpn": "共享（局域网）",
         "share_vpn_desc": "在网络上共享代理",
+        "dns": "更改 DNS",
+        "dns_desc": "使用 Google 公共 DNS",
         "ip_data": "IP 检查",
         "ip_data_desc": "连接后显示 IP 和位置",
         "dark_mode": "暗黑模式",

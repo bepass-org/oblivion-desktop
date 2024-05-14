@@ -15,7 +15,8 @@ export type settingsKeys =
     | 'proxyMode'
     | 'shareVPN'
     | 'hostIP'
-    | 'method';
+    | 'method'
+    | 'dns';
 
 export const defaultSettings = {
     scan: true,
@@ -34,7 +35,8 @@ export const defaultSettings = {
     proxyMode: 'system',
     shareVPN: false,
     hostIP: '127.0.0.1',
-    method: 'gool'
+    method: 'gool',
+    dns: true
 };
 
 export const countries: { value: string; label: string }[] = [
