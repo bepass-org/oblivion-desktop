@@ -5,17 +5,17 @@ import { ipcRenderer } from '../../lib/utils';
 import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-    title,
-    isOpen,
-    onClose,
-    setTheme,
-    setIpData,
-    setSystemTray,
-    setPort,
-    setAutoSetProxy,
-    setShareVPN,
-    setLang
-}: {
+                                         title,
+                                         isOpen,
+                                         onClose,
+                                         setTheme,
+                                         setIpData,
+                                         setSystemTray,
+                                         setPort,
+                                         //setAutoSetProxy,
+                                         setShareVPN,
+                                         setLang
+                                     }: {
     title: string;
     isOpen: boolean;
     onClose: any;
@@ -23,7 +23,7 @@ export default function RestoreModal({
     setIpData: any;
     setSystemTray: any;
     setPort: any;
-    setAutoSetProxy: any;
+    //setAutoSetProxy: any;
     setShareVPN: any;
     setLang: any;
 }) {
@@ -37,14 +37,14 @@ export default function RestoreModal({
         setIpData(defaultSettings.ipData);
         setSystemTray(defaultSettings.systemTray);
         setPort(defaultSettings.port);
-        setAutoSetProxy(defaultSettings.autoSetProxy);
+        //setAutoSetProxy(defaultSettings.autoSetProxy);
         setShareVPN(defaultSettings.shareVPN);
         setLang(defaultSettings.lang);
         await settings.set('theme', defaultSettings.theme);
         await settings.set('ipData', defaultSettings.ipData);
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('port', defaultSettings.port);
-        await settings.set('autoSetProxy', defaultSettings.autoSetProxy);
+        //await settings.set('autoSetProxy', defaultSettings.autoSetProxy);
         await settings.set('shareVPN', defaultSettings.shareVPN);
         await settings.set('lang', defaultSettings.lang);
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
