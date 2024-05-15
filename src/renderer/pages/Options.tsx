@@ -12,9 +12,12 @@ import PortModal from '../components/Modal/Port';
 import { loadingToast, settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang, loadLang } from '../lib/loaders';
+import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
+
+    useGoBackOnEscape();
 
     const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState('');
@@ -34,11 +37,11 @@ export default function Options() {
     const langRef = useRef<any>(null);
 
     useEffect(() => {
-        setTimeout(function() {
+        setTimeout(function () {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function() {
+                setTimeout(function () {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -125,10 +128,10 @@ export default function Options() {
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         loadLang();
                     }, 750);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         setAppLang(getLang());
                     }, 1500);
                 }}
@@ -167,7 +170,7 @@ export default function Options() {
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                                     //}
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
                                             settings.set('ipData', false);
@@ -286,10 +289,10 @@ export default function Options() {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
                                     loadingToast();
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         loadLang();
                                     }, 750);
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         setAppLang(getLang());
                                         toast.dismiss('LOADING');
                                     }, 1500);

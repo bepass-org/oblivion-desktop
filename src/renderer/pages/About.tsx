@@ -4,9 +4,12 @@ import packageJsonData from '../../../package.json';
 import gitHubMark from '../../../assets/img/github-mark.png';
 import ircf from '../../../assets/img/ircf.png';
 import { getLang } from '../lib/loaders';
+import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function About() {
     const appLang = getLang();
+
+    useGoBackOnEscape();
 
     return (
         <>

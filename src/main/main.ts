@@ -8,33 +8,31 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
+import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } from 'electron';
 import path from 'path';
 import fs from 'fs';
-import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } from 'electron';
 import settings from 'electron-settings';
+import log from 'electron-log';
 import MenuBuilder from './menu';
-import './ipc';
-import { isDev, removeFileIfExists } from './lib/utils';
+import { isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
-import { wpDirPath, wpFileName } from './ipcListeners/wp';
-import { logPath } from './ipcListeners/log';
-import { appLog } from './lib/log';
+import './ipc';
+import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 
 let mainWindow: BrowserWindow | null = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
+    log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
 } else {
+    log.info('creating new oblivion desktop instance...');
     (async () => {
-        await removeFileIfExists(logPath);
-        await appLog(`appPath:', ${app.getAppPath()}`);
-        await appLog(`appData:', ${app.getPath('appData')}`);
-        await appLog(`logs:', ${app.getPath('logs')}`);
-        await appLog(`userData:', ${app.getPath('userData')}`);
-        await appLog(`exe:', ${app.getPath('exe')}`);
+        log.info(`exe: ${app.getPath('exe')}`);
+        log.info(`userData: ${app.getPath('userData')}`);
+        log.info(`logs: ${app.getPath('logs')}`);
     })();
 
     app.on('second-instance', (event, commandLine, workingDirectory) => {
@@ -45,20 +43,11 @@ if (!gotTheLock) {
         }
     });
 
-    // coping wp binary to tmp on production so it can run without sudo/administrator privilege
-    if (!isDev()) {
-        const source = path.join(
-            app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-            'assets',
-            'bin',
-            wpFileName
-        );
-        const destination = path.join(wpDirPath, wpFileName);
-        fs.copyFile(source, destination, (err) => {
-            if (err) throw err;
-            appLog('wp binary was copied to userData directory.');
-        });
-    }
+    // coping wp binary from assets dir to userData dir so it can run without sudo/administrator privilege
+    fs.copyFile(wpAssetPath, wpBinPath, (err) => {
+        if (err) throw err;
+        log.info('wp binary was copied to userData directory.');
+    });
 
     if (process.env.NODE_ENV === 'production') {
         const sourceMapSupport = require('source-map-support');
@@ -174,8 +163,8 @@ if (!gotTheLock) {
                     canOpenFromSystem = false;
                 });
 
-                mainWindow.on('closed', () => {
-                    //await disableProxy();
+                mainWindow.on('closed', async () => {
+                    await disableProxy();
                     mainWindow = null;
                 });
 
@@ -274,6 +263,7 @@ if (!gotTheLock) {
         // Remove this if your app does not use auto updates
         // eslint-disable-next-line
         // new AppUpdater();
+        log.info('oblivion desktop is ready!');
     };
 
     /**
@@ -281,6 +271,8 @@ if (!gotTheLock) {
      */
 
     app.on('window-all-closed', async () => {
+        log.info('window-all-closed. exiting the app...');
+
         await disableProxy();
         app.exit(0);
     });

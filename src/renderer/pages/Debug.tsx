@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
 import { ipcRenderer } from '../lib/utils';
 import { defaultToast } from '../lib/toasts';
 import { getLang } from '../lib/loaders';
+import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Debug() {
     const [log, setLog] = useState('');
@@ -12,15 +13,17 @@ export default function Debug() {
 
     // asking for log every 1sec
     useEffect(() => {
-        ipcRenderer.sendMessage('log');
+        ipcRenderer.sendMessage('getLogs');
         const intervalId = setInterval(() => {
-            ipcRenderer.sendMessage('log');
+            ipcRenderer.sendMessage('getLogs');
         }, 1000);
         // Cleanup function to clear the interval
         return () => clearInterval(intervalId);
     }, []);
 
-    ipcRenderer.on('log', (data) => {
+    useGoBackOnEscape();
+
+    ipcRenderer.on('getLogs', (data) => {
         let updatedData = String(data);
         updatedData = updatedData.replace(
             /([A-Z]):\\Users\\[^\\]+\\/g,
@@ -48,7 +51,12 @@ export default function Debug() {
             <Nav title={appLang?.log?.title} />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
-                    <div className={classNames('logOptions', log === '' ? 'hidden' : '')}>
+                    <div
+                        onClick={(e: any) => {
+                            handleCopy(e, log);
+                        }}
+                        className={classNames('logOptions', log === '' ? 'hidden' : '')}
+                    >
                         {/*<i
                             className='material-icons'
                             onClick={(e: any) => {
@@ -57,14 +65,7 @@ export default function Debug() {
                                 );
                             }}
                         >&#xf0ff;</i>*/}
-                        <i
-                            className='material-icons'
-                            onClick={(e: any) => {
-                                handleCopy(e, log);
-                            }}
-                        >
-                            &#xe14d;
-                        </i>
+                        <i className='material-icons'>&#xe14d;</i>
                     </div>
                     <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
                         {log === '' ? appLang?.log?.desc : log}

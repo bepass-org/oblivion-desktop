@@ -1,9 +1,11 @@
 import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
+import log from 'electron-log';
 import { defaultSettings } from '../../defaultSettings';
-import { appLog } from './log';
 
 const { spawn } = require('child_process');
+
+// TODO refactor
 
 // tweaking windows proxy settings using powershell
 const windowsProxySettings = (args: string[], ipcEvent?: IpcMainEvent) => {
@@ -20,12 +22,12 @@ const windowsProxySettings = (args: string[], ipcEvent?: IpcMainEvent) => {
         });
 
         child.stderr.on('data', (err: any) => {
-            appLog(`err ${err.toString()}`);
+            log.error(`err ${err.toString()}`);
             reject(err);
         });
 
         child.on('error', (err: any) => {
-            appLog(err);
+            log.error(err);
             reject(err);
             if (typeof ipcEvent !== 'undefined' && String(err).includes('powershell')) {
                 ipcEvent.reply(
@@ -46,12 +48,12 @@ const macOSProxySettings = (args: string[]) => {
         });
 
         child.stderr.on('data', (err: any) => {
-            appLog(`Error: ${err.toString()}`);
+            log.error(`Error: ${err.toString()}`);
             reject(err);
         });
 
         child.on('error', (err: any) => {
-            appLog(`Spawn Error: ${err}`);
+            log.error(`Spawn Error: ${err}`);
             reject(err);
         });
     });
@@ -64,6 +66,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
 
+    log.info('trying to set system proxy...');
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
@@ -83,9 +86,13 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
                     ipcEvent
                 );
                 await windowsProxySettings(['ProxyEnable', '-value', '1'], ipcEvent);
+                log.info("proxy has been set for you'r system successfully!");
+
                 resolve();
             } catch (error) {
+                log.error(`error while trying to set system proxy: , ${JSON.stringify(error)}`);
                 reject(error);
+                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -102,36 +109,51 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
                     'Wi-Fi',
                     'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
                 ]);
+                log.info("proxy has been set for you'r system successfully!");
                 resolve();
             } catch (error) {
+                log.error(`error while trying to set system proxy: , ${JSON.stringify(error)}`);
                 reject(error);
+                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
         });
     } else {
-        appLog('Proxy setting not supported on your platform');
+        log.error('changing proxy is not supported on your platform yet...');
+        ipcEvent?.reply(
+            'guide-toast',
+            `پیکربندی پروکسی در حال حاضر در سیستم عامل شما پشتیبانی نمیشود اما میتوانید به صورت دستی از پروکسی وارپ استفاده کنید.`
+        );
     }
 };
 
 export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
+    log.info('trying to disable system proxy...');
+
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await windowsProxySettings(['ProxyEnable', '-value', '0'], ipcEvent);
+                log.info("proxy has been disabled for you'r system successfully!");
                 resolve();
             } catch (error) {
+                log.error(`error while trying to disable system proxy: , ${JSON.stringify(error)}`);
                 reject(error);
+                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await macOSProxySettings(['-setsocksfirewallproxy', 'Wi-Fi', 'off']);
+                log.info("proxy has been disabled for you'r system successfully!");
                 resolve();
             } catch (error) {
+                log.error(`error while trying to disable system proxy: , ${JSON.stringify(error)}`);
                 reject(error);
+                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
         });
     } else {
-        appLog('changing proxy is not supported on your platform yet');
+        log.error('changing proxy is not supported on your platform yet...');
     }
 };

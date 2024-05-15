@@ -6,10 +6,13 @@ import RoutingRulesModal from '../components/Modal/RoutingRules';
 import { settings } from '../lib/settings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import { toPersianNumber } from '../lib/toPersianNumber';
+import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Routing() {
     const [routingRules, setRoutingRules] = useState();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
+
+    useGoBackOnEscape();
 
     // loading settings
     useEffect(() => {

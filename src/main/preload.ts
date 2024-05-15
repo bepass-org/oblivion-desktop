@@ -1,11 +1,12 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { platform } from 'os';
 
 export type Channels =
     | 'ipc-example'
     | 'open-devtools'
     | 'wp-start'
     | 'wp-end'
-    | 'log'
+    | 'getLogs'
     | 'settings'
     | 'guide-toast'
     | 'exit';
@@ -27,7 +28,8 @@ const electronHandler = {
             ipcRenderer.once(channel, (_event, ...args) => func(...args));
         }
     },
-    nodeEnv: process.env.NODE_ENV
+    NODE_ENV: process.env.NODE_ENV,
+    platform: process.platform
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
