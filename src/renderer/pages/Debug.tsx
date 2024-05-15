@@ -11,7 +11,7 @@ export default function Debug() {
     const [log, setLog] = useState('');
     const appLang = getLang();
 
-    // asking for log every 1sec
+    // asking for log every 1.5sec
     useEffect(() => {
         ipcRenderer.sendMessage('getLogs');
         const intervalId = setInterval(() => {
