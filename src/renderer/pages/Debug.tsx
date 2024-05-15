@@ -16,7 +16,7 @@ export default function Debug() {
         ipcRenderer.sendMessage('getLogs');
         const intervalId = setInterval(() => {
             ipcRenderer.sendMessage('getLogs');
-        }, 1000);
+        }, 1500);
         // Cleanup function to clear the interval
         return () => clearInterval(intervalId);
     }, []);
