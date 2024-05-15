@@ -474,6 +474,12 @@ nav.header .navMenu .indicator {
     flex-direction: column;
 }
 
+.homeScreen .inFoot.withIp {
+    right: 20%;
+    left: 20%;
+    width: 60%;
+}
+
 .homeScreen .inFoot.active {
     opacity: 1;
     bottom: -5px;
@@ -512,7 +518,7 @@ html[data-bs-theme="dark"] .homeScreen .inFoot small {
     width: 17px;
     height: 12px;
     border-radius: 3px;
-    margin: 0 0 0 7px;
+    margin: 1px 0 0 7px;
     object-fit: cover;
 }
 
@@ -523,10 +529,49 @@ html[data-bs-theme="dark"] .homeScreen .inFoot small {
     opacity: 0.5;
 }
 
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: 468px 0;
+    }
+    100% {
+        background-position: -468px 0;
+    }
+}
+
+.shimmer {
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: placeHolderShimmer;
+    animation-name: placeHolderShimmer;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background: #bebebe;
+    background: linear-gradient(to left, #dddddd 8%, #bebebe 18%, #dddddd 33%);
+    background-size: 800px 104px;
+    position: relative;
+    color: transparent !important;
+    border-radius: 25px;
+    height: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+html[data-bs-theme="dark"] .shimmer {
+    background: linear-gradient(to left, #0A0E24 8%, #171c2b 18%, #0A0E24 33%);
+    background-size: 800px 104px;
+}
+
 .homeScreen .inFoot .item span {
     float: left;
     margin-left: 10px;
-    width: calc(100% - 47px);
+    min-width: 150px;
+    width: calc(100% - 43px);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -539,6 +584,9 @@ html[data-bs-theme="dark"] .homeScreen .inFoot small {
 .homeScreen .inFoot .item.ping span {
     opacity: 0.8;
     font-size: 13px;
+    height: 13px;
+    min-width: auto;
+    width: auto;
 }
 
 .logPage .logText {
