@@ -471,11 +471,12 @@ export default function Index() {
                                 'inFoot',
                                 isConnected && !isLoading ? 'active' : ''
                             )}
-                            onClick={() => {
-                                getPing();
+                            onClick={async () => {
+                                await getPing();
                             }}
                         >
-                            <small dir='ltr'>{ping > 0 ? ping + ' ms' : 'timeout'}</small>
+                            <small
+                                dir='ltr'>{ping > 0 ? ping.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms' : 'timeout'}</small>
                         </div>
                     </div>
                 </div>
