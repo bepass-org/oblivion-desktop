@@ -48,6 +48,7 @@ export default function Index() {
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
     const [ping, setPing] = useState<number>(0);
+    const [proxyMode, setProxyMode] = useState('');
 
     const navigate = useNavigate();
 
@@ -90,6 +91,9 @@ export default function Index() {
         });*/
         settings.get('method').then((value) => {
             setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
+        });
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
 
         cachedIpInfo = null;
@@ -443,7 +447,7 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'inFoot',
-                                isConnected && !isLoading ? 'active' : '',
+                                isConnected && !isLoading && (proxyMode !== 'none' && proxyMode !== '') ? 'active' : '',
                                 ipData ? 'withIp' : ''
                             )}
                         >
@@ -476,7 +480,10 @@ export default function Index() {
                                 </span>
                             </div>
                             <div
-                                className='item ping'
+                                className={classNames(
+                                    'item',
+                                    'ping'
+                                )}
                                 onClick={() => {
                                     setPing(0);
                                     setTimeout(async () => {
