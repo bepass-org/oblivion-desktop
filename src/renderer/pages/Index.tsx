@@ -435,7 +435,7 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected && ipInfo?.countryCode && !isLoading ? 'active' : ''
+                                isConnected && !isLoading && (ipInfo?.countryCode || !ipData) ? 'active' : ''
                             )}
                         >
                             {statusText}
@@ -443,7 +443,8 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'inFoot',
-                                isConnected && !isLoading && (ipInfo?.countryCode || !ipData) ? 'active' : ''
+                                isConnected && !isLoading ? 'active' : '',
+                                ipData ? 'withIp' : ''
                             )}
                         >
                             <div
@@ -454,7 +455,7 @@ export default function Index() {
                                 onClick={() => {
                                     setIpInfo({
                                         countryCode: false,
-                                        ip: '...'
+                                        ip: ''
                                     });
                                     const getTime = new Date().getTime();
                                     if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
@@ -469,16 +470,26 @@ export default function Index() {
                                 }}
                             >
                                 <img src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')} alt='flag' />
-                                <span>{ipInfo?.ip}</span>
+                                <span
+                                    className={ipInfo?.countryCode ? '' : 'shimmer'}>
+                                    {ipInfo.ip ? ipInfo.ip : '127.0.0.1'}
+                                </span>
                             </div>
                             <div
                                 className='item ping'
-                                onClick={async () => {
-                                    await getPing();
+                                onClick={() => {
+                                    setPing(0);
+                                    setTimeout(async () => {
+                                        await getPing();
+                                    }, 1500);
                                 }}
                             >
                                 <i className='material-icons'>&#xebca;</i>
-                                <span>{ping > 0 ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms' : 'timeout'}</span>
+                                <span
+                                    className={ping > 0 ? '' : 'shimmer'}
+                                >
+                                    {ping > 0 ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms' : 'timeout'}
+                                </span>
                             </div>
                         </div>
                     </div>
