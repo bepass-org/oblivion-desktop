@@ -245,6 +245,8 @@ export default function Index() {
     useEffect(() => {
         if (ipData) {
             getIpLocation();
+        }
+        if (ping < 1) {
             getPing();
         }
 
@@ -437,26 +439,30 @@ export default function Index() {
                             )}
                         >
                             {statusText}
-                            <br />
+                        </div>
+                        <div
+                            className={classNames(
+                                'inFoot',
+                                isConnected && !isLoading && (ipInfo?.countryCode || !ipData) ? 'active' : ''
+                            )}
+                        >
                             <div
                                 className={classNames(
-                                    'ip',
-                                    isConnected && ipInfo?.countryCode && !isLoading
-                                        ? 'connected'
-                                        : ''
+                                    'item',
+                                    ipData ? '' : 'hidden'
                                 )}
                                 onClick={() => {
                                     setIpInfo({
                                         countryCode: false,
-                                        ip: ''
+                                        ip: '...'
                                     });
                                     const getTime = new Date().getTime();
                                     if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
-                                        defaultToast(
+                                        /*defaultToast(
                                             `${appLang?.toast?.ip_check_please_wait}`,
                                             'IP_LOCATION_STATUS',
                                             2000
-                                        );
+                                        );*/
                                     } else {
                                         getIpLocation();
                                     }
@@ -465,18 +471,15 @@ export default function Index() {
                                 <img src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')} alt='flag' />
                                 <span>{ipInfo?.ip}</span>
                             </div>
-                        </div>
-                        <div
-                            className={classNames(
-                                'inFoot',
-                                isConnected && !isLoading ? 'active' : ''
-                            )}
-                            onClick={async () => {
-                                await getPing();
-                            }}
-                        >
-                            <small
-                                dir='ltr'>{ping > 0 ? ping.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms' : 'timeout'}</small>
+                            <div
+                                className='item ping'
+                                onClick={async () => {
+                                    await getPing();
+                                }}
+                            >
+                                <i className='material-icons'>&#xebca;</i>
+                                <span>{ping > 0 ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms' : 'timeout'}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
