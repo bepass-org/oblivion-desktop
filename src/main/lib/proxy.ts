@@ -86,7 +86,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
                     ipcEvent
                 );
                 await windowsProxySettings(['ProxyEnable', '-value', '1'], ipcEvent);
-                log.info("proxy has been set for you'r system successfully!");
+                log.info('proxy has been set for your system successfully!');
 
                 resolve();
             } catch (error) {
@@ -109,7 +109,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
                     'Wi-Fi',
                     'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
                 ]);
-                log.info("proxy has been set for you'r system successfully!");
+                log.info('proxy has been set for your system successfully!');
                 resolve();
             } catch (error) {
                 log.error(`error while trying to set system proxy: , ${JSON.stringify(error)}`);
@@ -121,7 +121,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
         log.error('changing proxy is not supported on your platform yet...');
         ipcEvent?.reply(
             'guide-toast',
-            `پیکربندی پروکسی در حال حاضر در سیستم عامل شما پشتیبانی نمیشود اما میتوانید به صورت دستی از پروکسی وارپ استفاده کنید.`
+            `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
         );
     }
 };
@@ -133,7 +133,7 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await windowsProxySettings(['ProxyEnable', '-value', '0'], ipcEvent);
-                log.info("proxy has been disabled for you'r system successfully!");
+                log.info('proxy has been disabled for your system successfully!');
                 resolve();
             } catch (error) {
                 log.error(`error while trying to disable system proxy: , ${JSON.stringify(error)}`);
@@ -145,7 +145,7 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 await macOSProxySettings(['-setsocksfirewallproxy', 'Wi-Fi', 'off']);
-                log.info("proxy has been disabled for you'r system successfully!");
+                log.info('proxy has been disabled for your system successfully!');
                 resolve();
             } catch (error) {
                 log.error(`error while trying to disable system proxy: , ${JSON.stringify(error)}`);
