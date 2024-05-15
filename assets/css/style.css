@@ -458,7 +458,7 @@ nav.header .navMenu .indicator {
 
 .homeScreen .inFoot {
     position: fixed;
-    bottom: 0;
+    bottom: -40px;
     left: 10%;
     right: 10%;
     width: 80%;
@@ -467,11 +467,13 @@ nav.header .navMenu .indicator {
     padding: 13px 10px 10px 10px;
     line-height: 15px;
     text-align: center;
-    display: none;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
 }
 
 .homeScreen .inFoot.active {
-    display: block;
+    opacity: 1;
+    bottom: 0;
 }
 
 html[data-bs-theme="dark"] .homeScreen .inFoot {
