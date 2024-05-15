@@ -24,6 +24,8 @@
         "ip_check_please_wait": "Please wait a few seconds to retry the check!",
         "ir_location": "Cloudflare has connected to an IP with an Iranian location, which is different from your actual IP. You can use it to bypass filtering, but not sanctions. Don't worry! You can change the location in the settings using the \"Gool\" or \"psiphon\" option.",
         "btn_submit": "Understood",
+        "copied": "Copied!",
+        "cleared": "The log has been cleared!",
         "please_wait": "Please Wait ...",
         "offline": "You Are Offline!",
         "settings_changed": "Applying settings requires reconnecting."
