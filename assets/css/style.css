@@ -456,6 +456,46 @@ nav.header .navMenu .indicator {
     opacity: 1;
 }
 
+.homeScreen .inFoot {
+    position: fixed;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    background: #f1f1f1;
+    border-radius: 15px 15px 0 0;
+    padding: 13px 10px 10px 10px;
+    line-height: 15px;
+    text-align: center;
+    display: none;
+}
+
+.homeScreen .inFoot.active {
+    display: block;
+}
+
+html[data-bs-theme="dark"] .homeScreen .inFoot {
+    background: #171c2b;
+}
+
+.homeScreen .inFoot small {
+    text-align: center;
+    font-weight: 200;
+    opacity: 0;
+}
+
+html[data-bs-theme="dark"] .homeScreen .inFoot small {
+    font-weight: 100;
+}
+
+.homeScreen .inFoot small {
+    opacity: 0.8;
+}
+
+.homeScreen .inFoot small:not(:empty) {
+    cursor: pointer;
+}
+
 .logPage .logText {
     font-size: 14px;
     line-height: 24px;
