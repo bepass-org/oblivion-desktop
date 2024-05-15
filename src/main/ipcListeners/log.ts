@@ -1,14 +1,26 @@
-import { app, ipcMain } from 'electron';
+import fs from 'fs';
 import path from 'path';
+import { app, ipcMain } from 'electron';
 import { doesFileExist } from '../lib/utils';
-import { readLogFile } from '../lib/log';
 
-export const logPath = path.join(app.getPath('logs'), 'app.log');
+export const logPath = path.join(app?.getPath('logs'), 'main.log');
 
-ipcMain.on('log', async (event) => {
+export function readLogFile() {
+    return new Promise((resolve, reject) => {
+        fs.readFile(logPath, 'utf8', (err: any, data: any) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+ipcMain.on('getLogs', async (event) => {
     const bool = await doesFileExist(logPath);
     if (bool) {
         const data = await readLogFile();
-        event.reply('log', data);
+        event.reply('getLogs', data);
     }
 });

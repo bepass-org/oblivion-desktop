@@ -11,6 +11,7 @@ import LottieFile from '../../../assets/json/1713988096625.json';
 import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
+import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Settings() {
     const appLang = getLang();
@@ -32,6 +33,8 @@ export default function Settings() {
             setScan(true);
         }
     }, [endpoint]);*/
+
+    useGoBackOnEscape();
 
     useEffect(() => {
         /*settings.get('scan').then((value) => {

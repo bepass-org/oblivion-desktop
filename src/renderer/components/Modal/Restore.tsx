@@ -5,17 +5,17 @@ import { ipcRenderer } from '../../lib/utils';
 import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-                                         title,
-                                         isOpen,
-                                         onClose,
-                                         setTheme,
-                                         setIpData,
-                                         setSystemTray,
-                                         setPort,
-                                         //setAutoSetProxy,
-                                         setShareVPN,
-                                         setLang
-                                     }: {
+    title,
+    isOpen,
+    onClose,
+    setTheme,
+    setIpData,
+    setSystemTray,
+    setPort,
+    //setAutoSetProxy,
+    setShareVPN,
+    setLang
+}: {
     title: string;
     isOpen: boolean;
     onClose: any;

@@ -12,7 +12,7 @@ import { settings } from '../lib/settings';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
-import { ipcRenderer } from '../lib/utils';
+import { ipcRenderer, onEscapeKeyPressed } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
 import { cfFlag } from '../lib/cfFlag';
 
@@ -218,6 +218,12 @@ export default function Index() {
             }
         }
     }, [ipInfo]);
+
+    useEffect(() => {
+        onEscapeKeyPressed(() => {
+            setDrawerIsOpen(false);
+        });
+    }, []);
 
     useEffect(() => {
         if (ipData) {
@@ -440,11 +446,9 @@ export default function Index() {
                             >
                                 {ipInfo.countryCode ? (
                                     <>
-                                        <img
-                                            src={cfFlag(ipInfo?.countryCode)}
-                                            alt='flag'
-                                        />
+                                        <img src={cfFlag(ipInfo?.countryCode)} alt='flag' />
                                     </>
+                                ) : (
                                     /*ipInfo?.countryCode === 'ir' ? (
                                         <>
                                             <img src={String(cfFlag('ir'))} alt='flag' />
@@ -462,7 +466,6 @@ export default function Index() {
                                             />
                                         </>
                                     )*/
-                                ) : (
                                     <>
                                         <img src={String(cfFlag('xx'))} alt='flag' />
                                     </>

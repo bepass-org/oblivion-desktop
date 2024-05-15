@@ -31,7 +31,9 @@ export const getUserSettings = async () => {
     }
     // port, hostIP
     args.push('--bind');
-    args.push(`${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`);
+    args.push(
+        `${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`
+    );
     // license
     if (typeof license === 'string' && license !== '') {
         args.push('--key');
