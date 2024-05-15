@@ -24,6 +24,8 @@
         "ip_check_please_wait": "请等待几秒钟后重试检查！",
         "ir_location": "Cloudflare 已连接到一个具有伊朗位置的 IP，与您的实际 IP 不同。您可以使用它来绕过过滤，但不能绕过制裁。不用担心！您可以在设置中使用“Gool”或“psiphon”选项更改位置。",
         "btn_submit": "了解",
+        "copied": "已复制！",
+        "cleared": "日志已被清除！",
         "please_wait": "请等待...",
         "offline": "您处于离线状态！",
         "settings_changed": "应用设置已更改，需要重新连接。"

@@ -44,6 +44,7 @@ export default function Debug() {
 
     const handleClearLog = (e: { preventDefault: () => void }) => {
         e.preventDefault();
+        defaultToast(`${appLang?.toast?.cleared}`, 'CLEARED', 2000);
     };
 
     return (
@@ -52,9 +53,6 @@ export default function Debug() {
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
                     <div
-                        onClick={(e: any) => {
-                            handleCopy(e, log);
-                        }}
                         className={classNames('logOptions', log === '' ? 'hidden' : '')}
                     >
                         {/*<i
@@ -65,9 +63,16 @@ export default function Debug() {
                                 );
                             }}
                         >&#xf0ff;</i>*/}
-                        <i className='material-icons'>&#xe14d;</i>
+                        <i
+                            className='material-icons'
+                            onClick={(e: any) => {
+                                handleCopy(e, log);
+                            }}
+                        >&#xe14d;</i>
                     </div>
-                    <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
+                    <p
+                        className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}
+                    >
                         {log === '' ? appLang?.log?.desc : log}
                     </p>
                 </div>
