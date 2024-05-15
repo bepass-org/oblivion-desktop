@@ -22,9 +22,17 @@ npm run dev # or npm start
 
 To package for the local platform:
 
-```shell
-npm run package
-```
+ ```shell
+ npm run package
+
+# for faster production build (test purposes) use one of the following:
+
+# npm run package:linux
+# npm run package:windows
+# npm run package:mac
+
+# you may add more to above list if this scripts doesn't cover your local platform/architecture
+ ```
 
 ## IPC (sending data between main and renderer)
 
