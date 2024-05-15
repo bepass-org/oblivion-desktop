@@ -47,6 +47,7 @@ export default function Index() {
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
+    const [ping, setPing] = useState<number>(0);
 
     const navigate = useNavigate();
 
@@ -151,6 +152,22 @@ export default function Index() {
         connectedToIrIPOnceDisplayed = true;
     };
 
+    const getPing = async () => {
+        try {
+            const started = window.performance.now();
+            const http = new XMLHttpRequest();
+            await http.open('GET', 'http://cp.cloudflare.com', true);
+            http.onreadystatechange = function() {
+            };
+            http.onloadend = function(e) {
+                setPing(Math.round(window.performance.now() - started));
+            };
+            http.send();
+        } catch (error) {
+            setPing(0);
+        }
+    };
+
     const getIpLocation = async () => {
         try {
             const currentTime = new Date().getTime();
@@ -228,6 +245,7 @@ export default function Index() {
     useEffect(() => {
         if (ipData) {
             getIpLocation();
+            getPing();
         }
 
         if (isLoading || !isConnected) {
@@ -444,11 +462,20 @@ export default function Index() {
                                     }
                                 }}
                             >
-                                <>
-                                    <img src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')} alt='flag' />
-                                </>
+                                <img src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')} alt='flag' />
                                 <span>{ipInfo?.ip}</span>
                             </div>
+                        </div>
+                        <div
+                            className={classNames(
+                                'inFoot',
+                                isConnected && !isLoading ? 'active' : ''
+                            )}
+                            onClick={() => {
+                                getPing();
+                            }}
+                        >
+                            <small dir='ltr'>{ping > 0 ? ping + ' ms' : 'timeout'}</small>
                         </div>
                     </div>
                 </div>
