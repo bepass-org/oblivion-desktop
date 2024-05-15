@@ -444,32 +444,9 @@ export default function Index() {
                                     }
                                 }}
                             >
-                                {ipInfo.countryCode ? (
-                                    <>
-                                        <img src={cfFlag(ipInfo?.countryCode)} alt='flag' />
-                                    </>
-                                ) : (
-                                    /*ipInfo?.countryCode === 'ir' ? (
-                                        <>
-                                            <img src={String(cfFlag('ir'))} alt='flag' />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <img src={(cfFlag(String(ipInfo.countryCode)).toString())} alt='flag' />
-                                            <ReactCountryFlag
-                                                countryCode={String(ipInfo.countryCode)}
-                                                svg
-                                                style={{
-                                                    width: '17px',
-                                                    height: '12px'
-                                                }}
-                                            />
-                                        </>
-                                    )*/
-                                    <>
-                                        <img src={String(cfFlag('xx'))} alt='flag' />
-                                    </>
-                                )}
+                                <>
+                                    <img src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')} alt='flag' />
+                                </>
                                 <span>{ipInfo?.ip}</span>
                             </div>
                         </div>
