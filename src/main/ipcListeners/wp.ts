@@ -49,6 +49,7 @@ ipcMain.on('wp-start', async (event) => {
     child = spawn(command, args, { cwd: wpDirPath });
 
     const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
+    const successTunMessage = `level=INFO msg="serving tun"`;
 
     child.stdout.on('data', async (data: any) => {
         const strData = data.toString();

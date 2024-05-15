@@ -86,7 +86,7 @@ export const wpErrorTranslation: any = {
         return `سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.`;
     },
     'Access is denied': () => {
-        return `مسیر stuff یافت نشد؛ برنامه را با Run as Administrator اجرا کنید.`;
+        return `برنامه را به‌صورت Run as Administrator اجرا کنید.`;
     },
     'failed to set endpoint': () => {
         return `خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.`;
@@ -99,6 +99,12 @@ export const wpErrorTranslation: any = {
     },
     'object null is not iterable': () => {
         return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
+    },
+    'parse args: unknown flag': () => {
+        return `یک دستور نادرست در پس‌زمینه اجرا شده است.`;
+    },
+    'context deadline exceeded': () => {
+        return `مهلت اتصال پایان یافت؛ دوباره تلاش کنید.`;
     }
 };
 
