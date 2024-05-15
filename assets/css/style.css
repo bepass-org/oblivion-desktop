@@ -458,22 +458,25 @@ nav.header .navMenu .indicator {
 
 .homeScreen .inFoot {
     position: fixed;
-    bottom: -40px;
-    left: 10%;
-    right: 10%;
-    width: 80%;
+    bottom: -90px;
+    min-width: 30%;
+    max-width: 80%;
     background: #f1f1f1;
     border-radius: 15px 15px 0 0;
-    padding: 13px 10px 10px 10px;
+    padding: 10px;
     line-height: 15px;
     text-align: center;
     transition: all 0.2s ease-in-out;
     opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .homeScreen .inFoot.active {
     opacity: 1;
-    bottom: 0;
+    bottom: -5px;
 }
 
 html[data-bs-theme="dark"] .homeScreen .inFoot {
@@ -496,6 +499,46 @@ html[data-bs-theme="dark"] .homeScreen .inFoot small {
 
 .homeScreen .inFoot small:not(:empty) {
     cursor: pointer;
+}
+
+.homeScreen .inFoot .item {
+    float: left;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.homeScreen .inFoot .item img {
+    float: left;
+    width: 17px;
+    height: 12px;
+    border-radius: 3px;
+    margin: 0 0 0 7px;
+    object-fit: cover;
+}
+
+.homeScreen .inFoot .item i {
+    float: left;
+    margin: -4px -1px 0 5px;
+    font-size: 20px;
+    opacity: 0.5;
+}
+
+.homeScreen .inFoot .item span {
+    float: left;
+    margin-left: 10px;
+    width: calc(100% - 47px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    direction: ltr;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.homeScreen .inFoot .item.ping span {
+    opacity: 0.8;
+    font-size: 13px;
 }
 
 .logPage .logText {
