@@ -8,6 +8,8 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
+console.log('mmd was here');
+
 import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } from 'electron';
 import path from 'path';
 import fs from 'fs';
