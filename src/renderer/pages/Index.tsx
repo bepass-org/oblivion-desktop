@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-//import ReactCountryFlag from 'react-country-flag';
 import Drawer from 'react-modern-drawer';
 import { Swipe } from 'react-swipe-component';
 import { useStore } from '../store';
