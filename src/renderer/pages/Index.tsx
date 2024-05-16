@@ -161,9 +161,8 @@ export default function Index() {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             await http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function() {
-            };
-            http.onloadend = function(e) {
+            http.onreadystatechange = function () {};
+            http.onloadend = function (e) {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
@@ -439,7 +438,9 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'status',
-                                isConnected && !isLoading && (ipInfo?.countryCode || !ipData) ? 'active' : ''
+                                isConnected && !isLoading && (ipInfo?.countryCode || !ipData)
+                                    ? 'active'
+                                    : ''
                             )}
                         >
                             {statusText}
@@ -447,15 +448,17 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'inFoot',
-                                isConnected && !isLoading && (proxyMode !== 'none' && proxyMode !== '') ? 'active' : '',
+                                isConnected &&
+                                    !isLoading &&
+                                    proxyMode !== 'none' &&
+                                    proxyMode !== ''
+                                    ? 'active'
+                                    : '',
                                 ipData ? 'withIp' : ''
                             )}
                         >
                             <div
-                                className={classNames(
-                                    'item',
-                                    ipData ? '' : 'hidden'
-                                )}
+                                className={classNames('item', ipData ? '' : 'hidden')}
                                 onClick={() => {
                                     setIpInfo({
                                         countryCode: false,
@@ -473,17 +476,16 @@ export default function Index() {
                                     }
                                 }}
                             >
-                                <img src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')} alt='flag' />
-                                <span
-                                    className={ipInfo?.countryCode ? '' : 'shimmer'}>
+                                <img
+                                    src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')}
+                                    alt='flag'
+                                />
+                                <span className={ipInfo?.countryCode ? '' : 'shimmer'}>
                                     {ipInfo.ip ? ipInfo.ip : '127.0.0.1'}
                                 </span>
                             </div>
                             <div
-                                className={classNames(
-                                    'item',
-                                    'ping'
-                                )}
+                                className={classNames('item', 'ping')}
                                 onClick={() => {
                                     setPing(0);
                                     setTimeout(async () => {
@@ -492,10 +494,10 @@ export default function Index() {
                                 }}
                             >
                                 <i className='material-icons'>&#xebca;</i>
-                                <span
-                                    className={ping > 0 ? '' : 'shimmer'}
-                                >
-                                    {ping > 0 ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms' : 'timeout'}
+                                <span className={ping > 0 ? '' : 'shimmer'}>
+                                    {ping > 0
+                                        ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
+                                        : 'timeout'}
                                 </span>
                             </div>
                         </div>

@@ -52,9 +52,7 @@ export default function Debug() {
             <Nav title={appLang?.log?.title} />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
-                    <div
-                        className={classNames('logOptions', log === '' ? 'hidden' : '')}
-                    >
+                    <div className={classNames('logOptions', log === '' ? 'hidden' : '')}>
                         {/*<i
                             className='material-icons'
                             onClick={(e: any) => {
@@ -68,11 +66,11 @@ export default function Debug() {
                             onClick={(e: any) => {
                                 handleCopy(e, log);
                             }}
-                        >&#xe14d;</i>
+                        >
+                            &#xe14d;
+                        </i>
                     </div>
-                    <p
-                        className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}
-                    >
+                    <p className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}>
                         {log === '' ? appLang?.log?.desc : log}
                     </p>
                 </div>
