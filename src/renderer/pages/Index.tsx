@@ -387,7 +387,7 @@ export default function Index() {
                                     navigate('/options', { state: { targetId: 'languages' } });
                                 }}
                             >
-                                <i className='material-icons'>&#xe894;</i>
+                                <i className='material-icons'>&#xe8e2;</i>
                                 <span>{appLang?.home?.drawer_lang}</span>
                             </a>
                         </li>
