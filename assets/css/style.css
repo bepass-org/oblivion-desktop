@@ -609,6 +609,10 @@ html[data-bs-theme="dark"] .shimmer {
     box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
     padding: 10px 15px;
     border-radius: 25px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 [data-bs-theme="dark"] .logPage .logOptions {
