@@ -166,7 +166,7 @@ export default function Index() {
             };
             http.send();
         } catch (error) {
-            setPing(0);
+            setPing(-1);
         }
     };
 
@@ -248,8 +248,13 @@ export default function Index() {
         if (ipData) {
             getIpLocation();
         }
-        if (ping < 1) {
-            getPing();
+        if (ping === 0) {
+            if (
+                (isConnected && !ipData) ||
+                (isConnected && ipInfo?.countryCode)
+            ) {
+                getPing();
+            }
         }
 
         if (isLoading || !isConnected) {
@@ -289,6 +294,7 @@ export default function Index() {
                 });
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
+                setPing(0);
             }
         }
     };
@@ -493,7 +499,7 @@ export default function Index() {
                                 }}
                             >
                                 <i className='material-icons'>&#xebca;</i>
-                                <span className={ping > 0 ? '' : 'shimmer'}>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
                                     {ping > 0
                                         ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
                                         : 'timeout'}
