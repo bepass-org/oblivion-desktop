@@ -30,8 +30,6 @@ npm run package
 # npm run package:linux
 # npm run package:windows
 # npm run package:mac
-
-# you may add more to above list if this scripts doesn't cover your local platform/architecture
 ```
 
 ## IPC (sending data between main and renderer)
