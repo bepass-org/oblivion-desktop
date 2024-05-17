@@ -77,6 +77,6 @@ export const countries: { value: string; label: string }[] = [
 export const languages: { value: string; label: string }[] = [
     { value: 'fa', label: 'فارسی' },
     { value: 'en', label: 'English' },
-    { value: 'cn', label: 'Chinese' },
-    { value: 'ru', label: 'Russian' }
+    { value: 'cn', label: '中国人' },
+    { value: 'ru', label: 'Русский' }
 ];
