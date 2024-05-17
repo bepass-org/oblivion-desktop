@@ -1,7 +1,8 @@
 import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
 import log from 'electron-log';
-import { RegistryPutItem, promisified as regedit } from 'regedit';
+import path from 'path';
+import regedit, { RegistryPutItem } from 'regedit';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 
@@ -10,10 +11,26 @@ const { spawn } = require('child_process');
 // TODO reset to prev proxy settings on disable
 
 // tweaking windows proxy settings using regedit
-const windowsProxySettings = (args: RegistryPutItem, ipcEvent?: IpcMainEvent) => {
-    return regedit.putValue({
-        'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings': {
-            ...args
+const windowsProxySettings = (
+    args: RegistryPutItem,
+    regeditVbsDirPath: string,
+    ipcEvent?: IpcMainEvent
+) => {
+    return new Promise<void>((resolve, reject) => {
+        try {
+            regedit.setExternalVBSLocation(regeditVbsDirPath);
+            regedit.putValue(
+                {
+                    'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings': {
+                        ...args
+                    }
+                },
+                () => {
+                    resolve();
+                }
+            );
+        } catch (error) {
+            reject(error);
         }
     });
 
@@ -67,7 +84,7 @@ const macOSProxySettings = (args: string[]) => {
     });
 };
 
-export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
+export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
         log.info('skipping set system proxy');
@@ -85,21 +102,24 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
-                await windowsProxySettings({
-                    ProxyServer: {
-                        type: 'REG_SZ',
-                        value: `${method === 'psiphon' ? 'socks=' : ''}${hostIP.toString()}:${port.toString()}`
+                await windowsProxySettings(
+                    {
+                        ProxyServer: {
+                            type: 'REG_SZ',
+                            value: `${method === 'psiphon' ? 'socks=' : ''}${hostIP.toString()}:${port.toString()}`
+                        },
+                        ProxyOverride: {
+                            type: 'REG_SZ',
+                            // TODO read from user settings
+                            value: '"localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>"'
+                        },
+                        ProxyEnable: {
+                            type: 'REG_DWORD',
+                            value: 1
+                        }
                     },
-                    ProxyOverride: {
-                        type: 'REG_SZ',
-                        // TODO read from user settings
-                        value: '"localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>"'
-                    },
-                    ProxyEnable: {
-                        type: 'REG_DWORD',
-                        value: 1
-                    }
-                });
+                    regeditVbsDirPath
+                );
                 // await windowsProxySettings(
                 //     [
                 //         'ProxyServer',
@@ -160,7 +180,7 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
     }
 };
 
-export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
+export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
         log.info('skipping disabling system proxy');
@@ -172,12 +192,15 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
-                await windowsProxySettings({
-                    ProxyEnable: {
-                        type: 'REG_DWORD',
-                        value: 0
-                    }
-                });
+                await windowsProxySettings(
+                    {
+                        ProxyEnable: {
+                            type: 'REG_DWORD',
+                            value: 0
+                        }
+                    },
+                    regeditVbsDirPath
+                );
                 // await windowsProxySettings(['ProxyEnable', '-value', '0'], ipcEvent);
                 log.info('proxy has been disabled for your system successfully!');
                 resolve();

@@ -25,6 +25,13 @@ let mainWindow: BrowserWindow | null = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
+export const binAssetsPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin'
+);
+export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
+
 if (!gotTheLock) {
     log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
@@ -251,7 +258,7 @@ if (!gotTheLock) {
                     label: 'Exit',
                     type: 'normal',
                     click: async () => {
-                        await exitTheApp(mainWindow);
+                        await exitTheApp(mainWindow, regeditVbsDirPath);
                     }
                 }
             ]);
@@ -271,7 +278,7 @@ if (!gotTheLock) {
      */
 
     app.on('window-all-closed', async () => {
-        exitTheApp(mainWindow);
+        exitTheApp(mainWindow, regeditVbsDirPath);
     });
 
     app.whenReady()

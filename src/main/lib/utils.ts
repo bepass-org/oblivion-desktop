@@ -62,11 +62,11 @@ export function shouldProxySystem(proxyMode: any) {
     return bool;
 }
 
-export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
+export const exitTheApp = async (mainWindow: BrowserWindow | null, regeditVbsDirPath: string) => {
     log.info('exiting the app...');
     if (mainWindow) {
         mainWindow.hide();
     }
-    await disableProxy();
+    await disableProxy(regeditVbsDirPath);
     app.exit(0);
 };
