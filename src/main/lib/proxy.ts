@@ -61,13 +61,20 @@ const macOSProxySettings = (args: string[]) => {
 };
 
 export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
+    const proxyMode = await settings.get('proxyMode');
+    if (!shouldProxySystem(proxyMode)) {
+        log.info('skipping set system proxy');
+        return;
+    }
+
+    log.info('trying to set system proxy...');
+
     //const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
     const method = (await settings.get('method')) || defaultSettings.method;
     //const proxyMode = (await settings.get('proxyMode')) || defaultSettings.proxyMode;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
 
-    log.info('trying to set system proxy...');
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
@@ -132,7 +139,10 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
 
 export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
-    if (!shouldProxySystem(proxyMode)) return;
+    if (!shouldProxySystem(proxyMode)) {
+        log.info('skipping disabling system proxy');
+        return;
+    }
 
     log.info('trying to disable system proxy...');
 

@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import { platform } from 'os';
 
 export type Channels =
     | 'ipc-example'
@@ -8,8 +7,7 @@ export type Channels =
     | 'wp-end'
     | 'getLogs'
     | 'settings'
-    | 'guide-toast'
-    | 'exit';
+    | 'guide-toast';
 
 const electronHandler = {
     ipcRenderer: {

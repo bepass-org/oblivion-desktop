@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { app } from 'electron';
+import { BrowserWindow, app } from 'electron';
 import log from 'electron-log';
 import { disableProxy } from './proxy';
 
@@ -62,8 +62,11 @@ export function shouldProxySystem(proxyMode: any) {
     return bool;
 }
 
-export const exitTheApp = async () => {
+export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
     log.info('exiting the app...');
+    if (mainWindow) {
+        mainWindow.hide();
+    }
     await disableProxy();
     app.exit(0);
 };

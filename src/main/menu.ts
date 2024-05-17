@@ -207,7 +207,7 @@ export default class MenuBuilder {
                         label: '&Close',
                         accelerator: 'Ctrl+Q',
                         click: async () => {
-                            await exitTheApp();
+                            await exitTheApp(this.mainWindow);
                         }
                     }
                 ]

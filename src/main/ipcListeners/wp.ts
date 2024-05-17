@@ -68,7 +68,6 @@ ipcMain.on('wp-start', async (event) => {
             sendConnectedSignalToRenderer();
         });
     } else {
-        log.info('skipping enabling system proxy');
         connectedFlags[0] = true;
         sendConnectedSignalToRenderer();
     }
@@ -100,20 +99,19 @@ ipcMain.on('wp-start', async (event) => {
     });
 
     child.on('exit', async () => {
+        disconnectedFlags[1] = true;
+        sendDisconnectedSignalToRenderer();
+        log.info('wp process exit successfully.');
+
         if (shouldProxySystem(proxyMode)) {
             disableProxy(event).then(() => {
                 disconnectedFlags[0] = true;
                 sendDisconnectedSignalToRenderer();
             });
         } else {
-            log.info('skipping disabling system proxy');
             disconnectedFlags[0] = true;
             sendDisconnectedSignalToRenderer();
         }
-
-        disconnectedFlags[1] = true;
-        sendDisconnectedSignalToRenderer();
-        log.info('wp process exit successfully.');
     });
 });
 
