@@ -48,3 +48,13 @@ export function removeDirIfExists(dirPath: string) {
         }
     });
 }
+export function shouldProxySystem(proxyMode: any) {
+    let bool = false;
+    if (
+        typeof proxyMode === 'undefined' ||
+        (typeof proxyMode === 'string' && proxyMode === 'system')
+    ) {
+        bool = true;
+    }
+    return bool;
+}

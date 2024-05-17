@@ -2,6 +2,7 @@ import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
 import log from 'electron-log';
 import { defaultSettings } from '../../defaultSettings';
+import { shouldProxySystem } from './utils';
 
 const { spawn } = require('child_process');
 
@@ -118,15 +119,21 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
             }
         });
     } else {
-        log.error('changing proxy is not supported on your platform yet...');
-        ipcEvent?.reply(
-            'guide-toast',
-            `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
-        );
+        return new Promise<void>((resolve, reject) => {
+            log.error('changing proxy is not supported on your platform yet...');
+            ipcEvent?.reply(
+                'guide-toast',
+                `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
+            );
+            reject();
+        });
     }
 };
 
 export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
+    const proxyMode = await settings.get('proxyMode');
+    if (!shouldProxySystem(proxyMode)) return;
+
     log.info('trying to disable system proxy...');
 
     if (process.platform === 'win32') {
@@ -154,6 +161,9 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
             }
         });
     } else {
-        log.error('changing proxy is not supported on your platform yet...');
+        return new Promise<void>((resolve, reject) => {
+            log.error('changing proxy is not supported on your platform yet...');
+            reject();
+        });
     }
 };
