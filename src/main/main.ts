@@ -17,9 +17,9 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
-import { disableProxy } from './lib/proxy';
 import './ipc';
 import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
+import { devPlayground } from './playground';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -29,6 +29,7 @@ if (!gotTheLock) {
     log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
 } else {
+    devPlayground();
     log.info('creating new od instance...');
     (async () => {
         log.info(`exe: ${app.getPath('exe')}`);
