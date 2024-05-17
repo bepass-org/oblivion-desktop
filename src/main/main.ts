@@ -160,12 +160,11 @@ if (!gotTheLock) {
                     // mainWindow.webContents.closeDevTools();
                 });
 
-                mainWindow.on('close', () => {
+                mainWindow.on('close', async () => {
                     canOpenFromSystem = false;
                 });
 
                 mainWindow.on('closed', async () => {
-                    await disableProxy();
                     mainWindow = null;
                 });
 
@@ -251,7 +250,7 @@ if (!gotTheLock) {
                     label: 'Exit',
                     type: 'normal',
                     click: async () => {
-                        await exitTheApp();
+                        await exitTheApp(mainWindow);
                     }
                 }
             ]);
@@ -271,7 +270,7 @@ if (!gotTheLock) {
      */
 
     app.on('window-all-closed', async () => {
-        exitTheApp();
+        exitTheApp(mainWindow);
     });
 
     app.whenReady()
