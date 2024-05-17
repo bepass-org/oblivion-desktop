@@ -249,10 +249,7 @@ export default function Index() {
             getIpLocation();
         }
         if (ping === 0) {
-            if (
-                (isConnected && !ipData) ||
-                (isConnected && ipInfo?.countryCode)
-            ) {
+            if ((isConnected && !ipData) || (isConnected && ipInfo?.countryCode)) {
                 getPing();
             }
         }

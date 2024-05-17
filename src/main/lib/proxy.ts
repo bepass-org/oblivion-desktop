@@ -2,6 +2,7 @@ import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
 import log from 'electron-log';
 import { defaultSettings } from '../../defaultSettings';
+import { shouldProxySystem } from './utils';
 
 const { spawn } = require('child_process');
 
@@ -60,13 +61,20 @@ const macOSProxySettings = (args: string[]) => {
 };
 
 export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
+    const proxyMode = await settings.get('proxyMode');
+    if (!shouldProxySystem(proxyMode)) {
+        log.info('skipping set system proxy');
+        return;
+    }
+
+    log.info('trying to set system proxy...');
+
     //const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
     const method = (await settings.get('method')) || defaultSettings.method;
     //const proxyMode = (await settings.get('proxyMode')) || defaultSettings.proxyMode;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
 
-    log.info('trying to set system proxy...');
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
@@ -118,15 +126,24 @@ export const enableProxy = async (ipcEvent?: IpcMainEvent) => {
             }
         });
     } else {
-        log.error('changing proxy is not supported on your platform yet...');
-        ipcEvent?.reply(
-            'guide-toast',
-            `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
-        );
+        return new Promise<void>((resolve, reject) => {
+            log.error('changing proxy is not supported on your platform yet...');
+            ipcEvent?.reply(
+                'guide-toast',
+                `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
+            );
+            reject();
+        });
     }
 };
 
 export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
+    const proxyMode = await settings.get('proxyMode');
+    if (!shouldProxySystem(proxyMode)) {
+        log.info('skipping disabling system proxy');
+        return;
+    }
+
     log.info('trying to disable system proxy...');
 
     if (process.platform === 'win32') {
@@ -154,6 +171,9 @@ export const disableProxy = async (ipcEvent?: IpcMainEvent) => {
             }
         });
     } else {
-        log.error('changing proxy is not supported on your platform yet...');
+        return new Promise<void>((resolve, reject) => {
+            log.error('changing proxy is not supported on your platform yet...');
+            reject();
+        });
     }
 };

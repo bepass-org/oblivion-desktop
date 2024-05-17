@@ -1,4 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
+import { BrowserWindow, app } from 'electron';
+import log from 'electron-log';
+import { disableProxy } from './proxy';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -48,3 +51,22 @@ export function removeDirIfExists(dirPath: string) {
         }
     });
 }
+export function shouldProxySystem(proxyMode: any) {
+    let bool = false;
+    if (
+        typeof proxyMode === 'undefined' ||
+        (typeof proxyMode === 'string' && proxyMode === 'system')
+    ) {
+        bool = true;
+    }
+    return bool;
+}
+
+export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
+    log.info('exiting the app...');
+    if (mainWindow) {
+        mainWindow.hide();
+    }
+    await disableProxy();
+    app.exit(0);
+};
