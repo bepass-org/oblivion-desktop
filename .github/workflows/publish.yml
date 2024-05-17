@@ -3,9 +3,7 @@ name: Publish
 permissions: write-all
 
 on:
-    push:
-        tags:
-            - '*'
+    workflow_dispatch
 
 jobs:
     publish:
