@@ -5,32 +5,41 @@ this is a [Electron](https://www.electronjs.org/) project bootstrapped with [Ele
 
 in a nutshell its a GUI that interacts with [warp-plus](https://github.com/bepass-org/warp-plus/) binary and changes system proxy setting.
 
-<!-- uses [tun2socks](https://github.com/xjasonlyu/tun2socks) to tunnel all OS traffic through the socks5 proxy that warp-plus creates. and makes sure it's run on three main Desktop Operating Systems. -->
-
 ## Getting Started
+
+0. make sure you have [node](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 
 1. clone this repo
 
-2. install packages and run
+2. install packages
 
 ```shell
 npm install
+```
+
+3. run the development server
+
+```shell
 npm run dev # or npm start
 ```
 
-## Packaging for Production
+## Packaging for Production (build from the source)
 
 To package for the local platform:
 
 ```shell
 npm run package
-
-# for faster production build (test purposes) use one of the following:
-
-# npm run package:linux
-# npm run package:windows
-# npm run package:mac
 ```
+
+for faster production build (test purposes) use one of the following:
+
+```shell
+npm run package:linux
+npm run package:windows
+npm run package:mac
+```
+
+when commands finish you shall have your production build(s) at: `release/build`
 
 ## IPC (sending data between main and renderer)
 
@@ -42,3 +51,6 @@ checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example
 
 -   `wp` refers to `warp-plus` in source.
 -   `od` refers to `oblivion desktop` in source.
+
+-   ### ⚠️ important note for developing on windows:
+    make sure you run `npm run dev` on a terminal(cmd/powershell/etc...) that has a administrator privilege. since `regedit` needed.

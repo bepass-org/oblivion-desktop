@@ -451,10 +451,10 @@ export default function Index() {
                             className={classNames(
                                 'inFoot',
                                 isConnected &&
-                                !isLoading &&
-                                proxyMode !== 'none' &&
-                                proxyMode !== '' &&
-                                ipData
+                                    !isLoading &&
+                                    proxyMode !== 'none' &&
+                                    proxyMode !== '' &&
+                                    ipData
                                     ? 'withIp active'
                                     : ''
                             )}
