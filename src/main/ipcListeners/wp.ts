@@ -6,7 +6,7 @@ import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import { removeFileIfExists } from '../lib/utils';
+import { removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy, enableProxy } from '../lib/proxy';
 import { logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -34,7 +34,24 @@ export const wpBinPath = path.join(wpDirPath, wpFileName);
 
 export const stuffPath = path.join(wpDirPath, 'stuff');
 
+let connectedFlags: boolean[];
+let disconnectedFlags: boolean[];
 ipcMain.on('wp-start', async (event) => {
+    connectedFlags = [false, false];
+    disconnectedFlags = [false, false];
+
+    const sendConnectedSignalToRenderer = () => {
+        if (connectedFlags[0] && connectedFlags[1]) {
+            event.reply('wp-start', true);
+        }
+    };
+
+    const sendDisconnectedSignalToRenderer = () => {
+        if (disconnectedFlags[0] && disconnectedFlags[1]) {
+            event.reply('wp-end', true);
+        }
+    };
+
     await removeFileIfExists(logPath);
     log.info('past logs was deleted for new connection.');
 
@@ -45,11 +62,15 @@ ipcMain.on('wp-start', async (event) => {
     //const autoSetProxy = await settings.get('autoSetProxy');
     const proxyMode = await settings.get('proxyMode');
 
-    if (
-        typeof proxyMode === 'undefined' ||
-        (typeof proxyMode === 'string' && proxyMode === 'system')
-    ) {
-        enableProxy(event);
+    if (shouldProxySystem(proxyMode)) {
+        enableProxy(event).then(() => {
+            connectedFlags[0] = true;
+            sendConnectedSignalToRenderer();
+        });
+    } else {
+        log.info('skipping enabling system proxy');
+        connectedFlags[0] = true;
+        sendConnectedSignalToRenderer();
     }
 
     const command = path.join(wpDirPath, wpFileName);
@@ -65,7 +86,8 @@ ipcMain.on('wp-start', async (event) => {
     child.stdout.on('data', async (data: any) => {
         const strData = data.toString();
         if (strData.includes(successMessage)) {
-            event.reply('wp-start', true);
+            connectedFlags[1] = true;
+            sendConnectedSignalToRenderer();
         }
 
         handleWpErrors(strData, event, String(port));
@@ -78,8 +100,19 @@ ipcMain.on('wp-start', async (event) => {
     });
 
     child.on('exit', async () => {
-        await disableProxy(event);
-        event.reply('wp-end', true);
+        if (shouldProxySystem(proxyMode)) {
+            disableProxy(event).then(() => {
+                disconnectedFlags[0] = true;
+                sendDisconnectedSignalToRenderer();
+            });
+        } else {
+            log.info('skipping disabling system proxy');
+            disconnectedFlags[0] = true;
+            sendDisconnectedSignalToRenderer();
+        }
+
+        disconnectedFlags[1] = true;
+        sendDisconnectedSignalToRenderer();
         log.info('wp process exit successfully.');
     });
 });

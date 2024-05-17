@@ -29,7 +29,7 @@ if (!gotTheLock) {
     log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
 } else {
-    log.info('creating new oblivion desktop instance...');
+    log.info('creating new od instance...');
     (async () => {
         log.info(`exe: ${app.getPath('exe')}`);
         log.info(`userData: ${app.getPath('userData')}`);
@@ -264,7 +264,7 @@ if (!gotTheLock) {
         // Remove this if your app does not use auto updates
         // eslint-disable-next-line
         // new AppUpdater();
-        log.info('oblivion desktop is ready!');
+        log.info('od is ready!');
     };
 
     /**

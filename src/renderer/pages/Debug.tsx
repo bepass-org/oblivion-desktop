@@ -50,7 +50,9 @@ export default function Debug() {
     };
 
     const onScroll = () => {
-        const isNearBottom = Math.ceil((window.innerHeight + window.scrollY) + 200) >= document.documentElement.scrollHeight;
+        const isNearBottom =
+            Math.ceil(window.innerHeight + window.scrollY + 200) >=
+            document.documentElement.scrollHeight;
         if (!isNearBottom) {
             setIsBottom(true);
         } else {
@@ -84,7 +86,10 @@ export default function Debug() {
                                 <i
                                     className='material-icons'
                                     onClick={() => {
-                                        logRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                                        logRef?.current?.scrollIntoView({
+                                            behavior: 'smooth',
+                                            block: 'end'
+                                        });
                                     }}
                                 >
                                     &#xeb53;
@@ -95,7 +100,10 @@ export default function Debug() {
                                 <i
                                     className='material-icons'
                                     onClick={() => {
-                                        logRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        logRef?.current?.scrollIntoView({
+                                            behavior: 'smooth',
+                                            block: 'start'
+                                        });
                                     }}
                                 >
                                     &#xeb2e;
@@ -112,10 +120,7 @@ export default function Debug() {
                         </i>
                     </div>
                     <p
-                        className={classNames(
-                            log === '' ? 'dirRight' : 'dirLeft',
-                            'logText'
-                        )}
+                        className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}
                         ref={logRef}
                     >
                         {log === '' ? appLang?.log?.desc : log}
