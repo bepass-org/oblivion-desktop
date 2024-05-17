@@ -11,6 +11,7 @@ import { disableProxy, enableProxy } from '../lib/proxy';
 import { logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
+import { binAssetsPath, regeditVbsDirPath } from '../main';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -22,13 +23,7 @@ let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
 
-export const wpAssetPath = path.join(
-    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-    'assets',
-    'bin',
-    wpFileName
-);
-
+export const wpAssetPath = path.join(binAssetsPath, wpFileName);
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 
@@ -63,7 +58,7 @@ ipcMain.on('wp-start', async (event) => {
     const proxyMode = await settings.get('proxyMode');
 
     if (shouldProxySystem(proxyMode)) {
-        enableProxy(event).then(() => {
+        enableProxy(regeditVbsDirPath, event).then(() => {
             connectedFlags[0] = true;
             sendConnectedSignalToRenderer();
         });
@@ -104,7 +99,7 @@ ipcMain.on('wp-start', async (event) => {
         log.info('wp process exit successfully.');
 
         if (shouldProxySystem(proxyMode)) {
-            disableProxy(event).then(() => {
+            disableProxy(regeditVbsDirPath, event).then(() => {
                 disconnectedFlags[0] = true;
                 sendDisconnectedSignalToRenderer();
             });

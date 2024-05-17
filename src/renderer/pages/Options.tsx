@@ -25,6 +25,7 @@ export default function Options() {
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
+    // TODO rename to networkConfiguration
     const [proxyMode, setProxyMode] = useState('');
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState();
