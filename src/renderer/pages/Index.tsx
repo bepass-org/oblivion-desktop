@@ -451,12 +451,12 @@ export default function Index() {
                             className={classNames(
                                 'inFoot',
                                 isConnected &&
-                                    !isLoading &&
-                                    proxyMode !== 'none' &&
-                                    proxyMode !== ''
-                                    ? 'active'
-                                    : '',
-                                ipData ? 'withIp' : ''
+                                !isLoading &&
+                                proxyMode !== 'none' &&
+                                proxyMode !== '' &&
+                                ipData
+                                    ? 'withIp active'
+                                    : ''
                             )}
                         >
                             <div
@@ -489,10 +489,12 @@ export default function Index() {
                             <div
                                 className={classNames('item', 'ping')}
                                 onClick={() => {
-                                    setPing(0);
-                                    setTimeout(async () => {
-                                        await getPing();
-                                    }, 1500);
+                                    if (ping >= 0) {
+                                        setPing(0);
+                                        setTimeout(async () => {
+                                            await getPing();
+                                        }, 1500);
+                                    }
                                 }}
                             >
                                 <i className='material-icons'>&#xebca;</i>
