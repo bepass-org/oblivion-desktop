@@ -15,7 +15,7 @@ import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import { isDev } from './lib/utils';
+import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import { disableProxy } from './lib/proxy';
 import './ipc';
@@ -251,8 +251,7 @@ if (!gotTheLock) {
                     label: 'Exit',
                     type: 'normal',
                     click: async () => {
-                        await disableProxy();
-                        app.exit(0);
+                        await exitTheApp();
                     }
                 }
             ]);
@@ -272,10 +271,7 @@ if (!gotTheLock) {
      */
 
     app.on('window-all-closed', async () => {
-        log.info('window-all-closed. exiting the app...');
-
-        await disableProxy();
-        app.exit(0);
+        exitTheApp();
     });
 
     app.whenReady()

@@ -1,4 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
+import { app } from 'electron';
+import log from 'electron-log';
+import { disableProxy } from './proxy';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -58,3 +61,9 @@ export function shouldProxySystem(proxyMode: any) {
     }
     return bool;
 }
+
+export const exitTheApp = async () => {
+    log.info('exiting the app...');
+    await disableProxy();
+    app.exit(0);
+};
