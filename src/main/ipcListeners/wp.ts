@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 // warp-plus
 
 import { app, ipcMain } from 'electron';
@@ -11,7 +10,7 @@ import { disableProxy, enableProxy } from '../lib/proxy';
 import { logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
-import { binAssetsPath, regeditVbsDirPath } from '../main';
+import { regeditVbsDirPath } from '../main';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -23,7 +22,13 @@ let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
 
-export const wpAssetPath = path.join(binAssetsPath, wpFileName);
+export const wpAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    wpFileName
+);
+
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 
