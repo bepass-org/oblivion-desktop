@@ -175,7 +175,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 'guide-toast',
                 `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
             );
-            reject();
+            resolve();
         });
     }
 };
@@ -225,7 +225,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
     } else {
         return new Promise<void>((resolve, reject) => {
             log.error('changing proxy is not supported on your platform yet...');
-            reject();
+            resolve();
         });
     }
 };
