@@ -32,8 +32,12 @@ jobs:
             - name: Install and build
               run: |
                   npm install
+                  if [ "$RUNNER_OS" == "macOS" ]; then
+                    npm install dmg-license
+                  fi
                   npm run postinstall
                   npm run build
+              shell: bash
 
             - name: Publish releases
               env:

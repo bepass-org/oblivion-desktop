@@ -51,6 +51,3 @@ checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example
 
 -   `wp` refers to `warp-plus` in source.
 -   `od` refers to `oblivion desktop` in source.
-
--   ### ⚠️ important note for developing on windows:
-    make sure you run `npm run dev` on a terminal(cmd/powershell/etc...) that has a administrator privilege. since `regedit` needed.
