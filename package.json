@@ -184,7 +184,7 @@
             "dist",
             "node_modules",
             "package.json",
-            "assets/bin"
+            "assets/bin/**"
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
@@ -221,8 +221,7 @@
             "target": [
                 "nsis",
                 "zip"
-            ],
-            "requestedExecutionLevel": "requireAdministrator"
+            ]
         },
         "nsis": {
             "oneClick": false,
