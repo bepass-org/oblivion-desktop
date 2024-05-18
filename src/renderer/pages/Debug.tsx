@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
-import { ipcRenderer } from '../lib/utils';
+import { ipcRenderer, username } from '../lib/utils';
 import { defaultToast } from '../lib/toasts';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
@@ -26,16 +26,15 @@ export default function Debug() {
     useGoBackOnEscape();
 
     ipcRenderer.on('getLogs', (data) => {
-        let updatedData = String(data);
-        updatedData = updatedData.replace(
-            /([A-Z]):\\Users\\[^\\]+\\/g,
-            '<DRIVE>:\\Users\\<USER>\\'
-        );
-        updatedData = updatedData.replace(/([A-Z]):\\/g, '<DRIVE>:\\');
-        updatedData = updatedData.replace(/\/home\/[^\\]+\//, 'home/<USER>/');
-        updatedData = updatedData.replace(/\\www\\[^\\]+\\/, '\\www\\<DIR>\\');
-        updatedData = updatedData.replace(/\\htdocs\\[^\\]+\\/, '\\www\\<DIR>\\');
-        setLog(updatedData);
+        let logs = String(data);
+        // protect user privacy
+        // @ts-ignore
+        logs = logs.replaceAll(username, 'USERNAME');
+        // updatedData = updatedData.replace(/([A-Z]):\\/g, '<DRIVE>:\\');
+        // updatedData = updatedData.replace(/\/home\/[^\\]+\//, 'home/<USER>/');
+        // updatedData = updatedData.replace(/\\www\\[^\\]+\\/, '\\www\\<DIR>\\');
+        // updatedData = updatedData.replace(/\\htdocs\\[^\\]+\\/, '\\www\\<DIR>\\');
+        setLog(logs);
     });
 
     const handleCopy = (e: { preventDefault: () => void }, value: any) => {
@@ -44,10 +43,10 @@ export default function Debug() {
         defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
     };
 
-    const handleClearLog = (e: { preventDefault: () => void }) => {
-        e.preventDefault();
-        defaultToast(`${appLang?.toast?.cleared}`, 'CLEARED', 2000);
-    };
+    // const handleClearLog = (e: { preventDefault: () => void }) => {
+    //     e.preventDefault();
+    //     defaultToast(`${appLang?.toast?.cleared}`, 'CLEARED', 2000);
+    // };
 
     const onScroll = () => {
         const isNearBottom =
