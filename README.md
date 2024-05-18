@@ -156,8 +156,10 @@ technology
 ## Get Involved
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
-suggest features, or need some help, we'd love to hear from you! Check out
-our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or submit a pull request.
+suggest features, or need some help, we'd love to hear from you!  
+Check out
+our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md) and [Developer Docs](DOCS.md).
+
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive&background=%23FFFFFF&axis=%23333333&line=%23ffb300)](https://starchart.cc/bepass-org/oblivion-desktop)
 
@@ -166,7 +168,6 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or su
 * [FAQ.md](FAQ.md)
 * [License.md](LICENSE.md)
 * [SECURITY.md](SECURITY.md)
-* [DOCS.md](DOCS.md)
 
 ![virustotal.jpg](screenshot/virustotal.jpg)
 
