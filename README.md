@@ -183,6 +183,7 @@ provided by the following:
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [GitHub](https://github.com/)
+- [regedit](https://www.npmjs.com/package/regedit)
 - [sing-box](https://github.com/SagerNet/sing-box)
 - [hiddify-next](https://github.com/hiddify/hiddify-next)
 - [and others 🧡](package.json)
