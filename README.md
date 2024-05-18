@@ -174,12 +174,15 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Con
 ## Acknowledgements
 
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
-provided by the following repositories:
+provided by the following:
 
 - Cloudflare Warp
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
 - [oblivion](https://github.com/bepass-org/oblivion)
+- [electron](https://www.electronjs.org/)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+- [electron-builder](https://github.com/electron-userland/electron-builder)
+- [GitHub](https://github.com/)
 - [sing-box](https://github.com/SagerNet/sing-box)
 - [hiddify-next](https://github.com/hiddify/hiddify-next)
 - [and others 🧡](package.json)
