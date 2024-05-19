@@ -592,6 +592,7 @@ html[data-bs-theme="dark"] .shimmer {
 .logPage .logText {
     font-size: 14px;
     line-height: 24px;
+    white-space: pre-line;
 }
 
 [dir="ltr"] .logPage .logText {

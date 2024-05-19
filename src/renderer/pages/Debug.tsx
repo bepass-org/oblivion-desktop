@@ -29,7 +29,7 @@ export default function Debug() {
         let logs = String(data);
         // protect user privacy
         // @ts-ignore
-        logs = logs.replaceAll(username, 'USERNAME');
+        logs = logs.replaceAll(username, '<USERNAME>');
         // updatedData = updatedData.replace(/([A-Z]):\\/g, '<DRIVE>:\\');
         // updatedData = updatedData.replace(/\/home\/[^\\]+\//, 'home/<USER>/');
         // updatedData = updatedData.replace(/\\www\\[^\\]+\\/, '\\www\\<DIR>\\');
@@ -80,33 +80,37 @@ export default function Debug() {
                                 );
                             }}
                         >&#xf0ff;</i>*/}
-                        {isBottom ? (
+                        {log?.length > 1000 && (
                             <>
-                                <i
-                                    className='material-icons'
-                                    onClick={() => {
-                                        logRef?.current?.scrollIntoView({
-                                            behavior: 'smooth',
-                                            block: 'end'
-                                        });
-                                    }}
-                                >
-                                    &#xeb53;
-                                </i>
-                            </>
-                        ) : (
-                            <>
-                                <i
-                                    className='material-icons'
-                                    onClick={() => {
-                                        logRef?.current?.scrollIntoView({
-                                            behavior: 'smooth',
-                                            block: 'start'
-                                        });
-                                    }}
-                                >
-                                    &#xeb2e;
-                                </i>
+                                {isBottom ? (
+                                    <>
+                                        <i
+                                            className='material-icons'
+                                            onClick={() => {
+                                                logRef?.current?.scrollIntoView({
+                                                    behavior: 'smooth',
+                                                    block: 'end'
+                                                });
+                                            }}
+                                        >
+                                            &#xeb53;
+                                        </i>
+                                    </>
+                                ) : (
+                                    <>
+                                        <i
+                                            className='material-icons'
+                                            onClick={() => {
+                                                logRef?.current?.scrollIntoView({
+                                                    behavior: 'smooth',
+                                                    block: 'start'
+                                                });
+                                            }}
+                                        >
+                                            &#xeb2e;
+                                        </i>
+                                    </>
+                                )}
                             </>
                         )}
                         <i
