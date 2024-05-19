@@ -22,7 +22,7 @@ Thank you for your interest in contributing to this project! We appreciate your 
 -   ### 🌐 Translation
 
     The current translation is being done from Persian to other languages using AI. Contributions and feedback from native speakers are welcome.  
-    To contribute, edit the files in the [src/local](src/local) directory directly. Some text may still be hardcoded and will be added to translation keys soon.
+    To contribute, edit the files in the [src/locale](src/locale) directory directly. Some text may still be hardcoded and will be added to translation keys soon.
 
 -   ### 💬 Discussions
 
