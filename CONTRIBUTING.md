@@ -27,5 +27,3 @@ Thank you for your interest in contributing to this project! We appreciate your 
 -   ### 💬 Discussions
 
     If you have any questions, suggestions, or concerns that are not addressed in this document, please feel free to open an issue or contact us directly. We are open to discussions related to the project.
-
-Thanks for you time 🙏, happy coding and translating. 👋😉
