@@ -7,7 +7,7 @@ Thank you for your interest in contributing to this project! We appreciate your 
 -   ### 💻 Development
 
     if you have programming skills that can be helpful:
-    Pick up issues/tasks from issues page or the project board or suggest your own features, fixes, etc.  
+    Pick up issues/tasks from [issues page](https://github.com/bepass-org/oblivion-desktop/issues) or the [project board](https://github.com/orgs/bepass-org/projects/4) or suggest your own features, fixes, etc.  
     Before starting a new task, please coordinate with the collaborators to ensure no one else is working on it.
 
     -   #### Setup your development environment
@@ -22,8 +22,8 @@ Thank you for your interest in contributing to this project! We appreciate your 
 -   ### 🌐 Translation
 
     The current translation is being done from Persian to other languages using AI. Contributions and feedback from native speakers are welcome.  
-    To contribute, edit the files in the src/local directory directly. Some text may still be hardcoded and will be added to translation keys soon.
+    To contribute, edit the files in the [src/local](src/local) directory directly. Some text may still be hardcoded and will be added to translation keys soon.
 
 -   ### 💬 Discussions
 
-    If you have any questions, suggestions, or concerns that are not addressed in this document, please feel free to open an issue or contact us directly. We are open to discussions related to the project.
+    If you have any questions, suggestions, or concerns that are not addressed in this document, please feel free to open an [issue](https://github.com/bepass-org/oblivion-desktop/issues) or contact us directly. We are open to discussions related to the project.
