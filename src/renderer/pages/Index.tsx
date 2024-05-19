@@ -452,10 +452,10 @@ export default function Index() {
                                 'inFoot',
                                 'withIp',
                                 isConnected &&
-                                !isLoading &&
-                                proxyMode !== 'none' &&
-                                proxyMode !== '' &&
-                                ipData
+                                    !isLoading &&
+                                    proxyMode !== 'none' &&
+                                    proxyMode !== '' &&
+                                    ipData
                                     ? 'active'
                                     : ''
                             )}
