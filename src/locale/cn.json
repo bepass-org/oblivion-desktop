@@ -6,7 +6,7 @@
         "connected_confirm": "已连接",
         "disconnecting": "断开连接中...",
         "disconnected": "已断开连接",
-        "ip_check": "检查 IP..."
+        "ip_check": "检查 IP 中..."
     },
     "home": {
         "title_warp_based": "基于 Warp",
@@ -18,7 +18,7 @@
         "drawer_update_label": "新更新",
         "drawer_speed_test": "速度测试",
         "drawer_about": "关于应用",
-        "drawer_lang": "语言更改"
+        "drawer_lang": "更改语言"
     },
     "toast": {
         "ip_check_please_wait": "请等待几秒钟后重试检查！",
@@ -51,13 +51,13 @@
         "proxy_mode_desc": "定义代理设置",
         "port": "代理端口",
         "port_desc": "定义应用程序的代理端口",
-        "share_vpn": "共享（局域网）",
-        "share_vpn_desc": "在网络上共享代理",
+        "share_vpn": "共享代理",
+        "share_vpn_desc": "在局域网上共享代理",
         "dns": "更改 DNS",
         "dns_desc": "使用 Google 公共 DNS",
         "ip_data": "IP 检查",
         "ip_data_desc": "连接后显示 IP 和位置",
-        "dark_mode": "暗黑模式",
+        "dark_mode": "深色模式",
         "dark_mode_desc": "指定应用程序的显示模式",
         "lang": "语言",
         "lang_desc": "更改应用程序界面语言",
