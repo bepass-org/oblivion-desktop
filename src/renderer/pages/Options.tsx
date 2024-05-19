@@ -204,9 +204,11 @@ export default function Options() {
                         className={classNames('item', shareVPN ? 'checked' : '')}
                         onClick={() => {
                             setShareVPN(!shareVPN);
-                            settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             settings.set('shareVPN', !shareVPN);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+                            setTimeout(function() {
+                                settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
+                            }, 1000);
                         }}
                     >
                         <label className='key'>{appLang?.settings?.share_vpn}</label>
