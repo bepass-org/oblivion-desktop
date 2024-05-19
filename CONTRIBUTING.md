@@ -1,6 +1,6 @@
 # Contribution Guide
 
-Thank you for your interest in contributing to this project! We appreciate your help and support. Here are some guidelines to help you get started:
+Thank you for your interest in contributing to oblivion-desktop! We appreciate your help and support. Here are some guidelines to help you get started:
 
 ## Where you can help?
 
