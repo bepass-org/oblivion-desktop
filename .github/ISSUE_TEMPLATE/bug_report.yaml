@@ -45,7 +45,7 @@ body:
       validations:
           required: false
     - type: input
-      id: version
+      id: Oblivion Version
       attributes:
           label: Version
           description: What version of Oblivion Desktop are you using?
@@ -62,6 +62,14 @@ body:
               - Windows
               - macOS
               - Linux
+      validations:
+          required: true
+    - type: input
+      id: Version / Architecture
+      attributes:
+          label: Version
+          description: What version & Architecture of Platform/OS are you using?
+          placeholder: v10 x64
       validations:
           required: true
     - type: textarea
