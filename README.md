@@ -161,7 +161,7 @@ Check out
 our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md) and [Developer Docs](DOCS.md).
 
 
-[![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive&background=%23FFFFFF&axis=%23333333&line=%23ffb300)](https://starchart.cc/bepass-org/oblivion-desktop)
+[![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
 ## Know more
 
