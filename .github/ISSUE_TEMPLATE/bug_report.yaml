@@ -45,9 +45,9 @@ body:
       validations:
           required: false
     - type: input
-      id: Oblivion Version
+      id: oblivion_version
       attributes:
-          label: Version
+          label: Oblivion Version
           description: What version of Oblivion Desktop are you using?
           placeholder: v1.3.8 etc
       validations:
@@ -65,9 +65,9 @@ body:
       validations:
           required: true
     - type: input
-      id: Version / Architecture
+      id: version_architecture
       attributes:
-          label: Version
+          label: Version / Architecture
           description: What version & Architecture of Platform/OS are you using?
           placeholder: v10 x64
       validations:
