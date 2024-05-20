@@ -180,6 +180,7 @@ provided by the following friends:
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
 - [oblivion](https://github.com/bepass-org/oblivion)
 - [electron](https://www.electronjs.org/)
+- [React](https://github.com/facebook/react)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [GitHub](https://github.com/)
