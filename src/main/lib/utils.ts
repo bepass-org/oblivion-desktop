@@ -61,16 +61,14 @@ export function shouldProxySystem(proxyMode: any) {
 }
 
 export function hasLicense(license: any) {
-    return (
-        typeof license !== 'undefined' && license !== ''
-    );
+    return typeof license !== 'undefined' && license !== '';
 }
 
 export function checkEndpoint(endpoint: any) {
-    return (
-        typeof endpoint === 'undefined' ||
+    return typeof endpoint === 'undefined' ||
         (typeof endpoint === 'string' && endpoint === defaultSettings.endpoint)
-    ) ? 'default' : 'custom';
+        ? 'default'
+        : 'custom';
 }
 
 // TODO refactor/remove
