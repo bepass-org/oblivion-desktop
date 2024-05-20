@@ -174,7 +174,7 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Con
 ## Acknowledgements
 
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
-provided by the following:
+provided by the following friends:
 
 - Cloudflare Warp
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
