@@ -71,7 +71,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
-                            value: `${method === 'psiphon' ? 'https://gist.githubusercontent.com/ircfspace/9c22a11117f4f59a1354ff30fc51df90/raw/4148b05e71c540bdb78fc73e268d24c29e333884/gistfile1.txt' : ''}`
+                            value: `${method === 'psiphon' ? `https://ircf.space/inc/pac.php?ip=${hostIP.toString()}&port=${port.toString()}` : ''}`
                         },
                         ProxyEnable: {
                             type: 'REG_DWORD',
