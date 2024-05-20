@@ -79,10 +79,6 @@ export default function Options() {
         });
     }, []);
 
-    useEffect(() => {
-        console.log('🚀 ~ file: Options.tsx:106 ~ proxyMode:', proxyMode);
-    }, [proxyMode]);
-
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
