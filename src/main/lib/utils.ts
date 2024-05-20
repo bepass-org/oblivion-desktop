@@ -51,15 +51,25 @@ export function removeDirIfExists(dirPath: string) {
         }
     });
 }
+
 export function shouldProxySystem(proxyMode: any) {
-    let bool = false;
-    if (
+    return (
         typeof proxyMode === 'undefined' ||
         (typeof proxyMode === 'string' && proxyMode === 'system')
-    ) {
-        bool = true;
+    );
+}
+
+// TODO refactor/remove
+export function calculateMethod(method: any) {
+    switch (method) {
+        case 'gool':
+            return 'gool';
+        case 'psiphon':
+            return 'psiphon';
+
+        default:
+            return 'warp';
     }
-    return bool;
 }
 
 export const exitTheApp = async (mainWindow: BrowserWindow | null, regeditVbsDirPath: string) => {
