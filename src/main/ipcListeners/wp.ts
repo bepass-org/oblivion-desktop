@@ -6,8 +6,8 @@ import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import { removeFileIfExists, shouldProxySystem } from '../lib/utils';
-import { disableProxy, enableProxy } from '../lib/proxy';
-import { logPath } from './log';
+import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
+import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
@@ -54,6 +54,7 @@ ipcMain.on('wp-start', async (event) => {
 
     await removeFileIfExists(logPath);
     log.info('past logs was deleted for new connection.');
+    logMetadata();
 
     const args = await getUserSettings();
 
@@ -62,11 +63,27 @@ ipcMain.on('wp-start', async (event) => {
     //const autoSetProxy = await settings.get('autoSetProxy');
     const proxyMode = await settings.get('proxyMode');
 
+    const handleSystemProxyDisconnect = () => {
+        if (shouldProxySystem(proxyMode)) {
+            disableSystemProxy(regeditVbsDirPath, event).then(() => {
+                disconnectedFlags[0] = true;
+                sendDisconnectedSignalToRenderer();
+            });
+        } else {
+            disconnectedFlags[0] = true;
+            sendDisconnectedSignalToRenderer();
+        }
+    };
+
     if (shouldProxySystem(proxyMode)) {
-        enableProxy(regeditVbsDirPath, event).then(() => {
-            connectedFlags[0] = true;
-            sendConnectedSignalToRenderer();
-        });
+        enableSystemProxy(regeditVbsDirPath, event)
+            .then(() => {
+                connectedFlags[0] = true;
+                sendConnectedSignalToRenderer();
+            })
+            .catch(() => {
+                handleSystemProxyDisconnect();
+            });
     } else {
         connectedFlags[0] = true;
         sendConnectedSignalToRenderer();
@@ -75,12 +92,12 @@ ipcMain.on('wp-start', async (event) => {
     const command = path.join(wpDirPath, wpFileName);
 
     log.info('starting wp process...');
-    log.info(`${command + args.join(' ')}`);
+    log.info(`${command + ' ' + args.join(' ')}`);
 
     child = spawn(command, args, { cwd: wpDirPath });
 
     const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-    const successTunMessage = `level=INFO msg="serving tun"`;
+    // const successTunMessage = `level=INFO msg="serving tun"`;
 
     child.stdout.on('data', async (data: any) => {
         const strData = data.toString();
@@ -101,17 +118,9 @@ ipcMain.on('wp-start', async (event) => {
     child.on('exit', async () => {
         disconnectedFlags[1] = true;
         sendDisconnectedSignalToRenderer();
-        log.info('wp process exit successfully.');
+        log.info('wp process exited.');
 
-        if (shouldProxySystem(proxyMode)) {
-            disableProxy(regeditVbsDirPath, event).then(() => {
-                disconnectedFlags[0] = true;
-                sendDisconnectedSignalToRenderer();
-            });
-        } else {
-            disconnectedFlags[0] = true;
-            sendDisconnectedSignalToRenderer();
-        }
+        handleSystemProxyDisconnect();
     });
 });
 
