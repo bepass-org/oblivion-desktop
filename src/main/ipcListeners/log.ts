@@ -4,12 +4,16 @@ import os from 'os';
 import { app, ipcMain } from 'electron';
 import log from 'electron-log';
 import settings from 'electron-settings';
-import { calculateMethod, doesFileExist, shouldProxySystem } from '../lib/utils';
+import {
+    calculateMethod,
+    checkEndpoint,
+    doesFileExist,
+    hasLicense,
+    shouldProxySystem
+} from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetsPath } from '../main';
 import { wpVersion } from '../config';
-import { getUserSettings } from '../lib/wp';
-import { defaultSettings } from '../../defaultSettings';
 
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
 
@@ -29,17 +33,21 @@ export function readLogFile() {
 export const logMetadata = () => {
     const method = settings.get('method');
     const proxyMode = settings.get('proxyMode');
+    const license = settings.get('license');
+    const endpoint = settings.get('endpoint');
 
-    Promise.all([method, proxyMode])
+    Promise.all([method, proxyMode, license, endpoint])
         .then((data) => {
             log.info('------------------------MetaData------------------------');
-            log.info(`running on: ${process.platform} ${process.arch} ${os.release()}`);
+            log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
             log.info(`at od: ${packageJsonData.version}`);
             log.info(`at wp: ${wpVersion}`);
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
             log.info('method:', calculateMethod(data[0]));
             // TODO rename to network configuration when tun comes
             log.info('proxyMode:', shouldProxySystem(data[1]));
+            log.info('endpoint:', checkEndpoint(data[3]));
+            log.info('license:', hasLicense(data[2]));
             log.info(`exe: ${app.getPath('exe')}`);
             log.info(`userData: ${app.getPath('userData')}`);
             log.info(`logs: ${app.getPath('logs')}`);

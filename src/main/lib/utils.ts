@@ -2,6 +2,7 @@ import fs from 'fs';
 import { BrowserWindow, app } from 'electron';
 import log from 'electron-log';
 import { disableProxy } from './proxy';
+import { defaultSettings } from '../../defaultSettings';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -57,6 +58,19 @@ export function shouldProxySystem(proxyMode: any) {
         typeof proxyMode === 'undefined' ||
         (typeof proxyMode === 'string' && proxyMode === 'system')
     );
+}
+
+export function hasLicense(license: any) {
+    return (
+        typeof license !== 'undefined' && license !== ''
+    );
+}
+
+export function checkEndpoint(endpoint: any) {
+    return (
+        typeof endpoint === 'undefined' ||
+        (typeof endpoint === 'string' && endpoint === defaultSettings.endpoint)
+    ) ? 'default' : 'custom';
 }
 
 // TODO refactor/remove
