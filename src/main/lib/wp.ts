@@ -39,6 +39,8 @@ export const getUserSettings = async () => {
         args.push('--key');
         args.push(license);
     }
+
+    // TODO refactor
     // gool or psiphon
     if (typeof method === 'string') {
         if (method === 'gool') {
