@@ -69,6 +69,10 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                             // TODO read from user settings
                             value: 'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
                         },
+                        AutoConfigURL: {
+                            type: 'REG_SZ',
+                            value: `${method === 'psiphon' ? 'https://gist.githubusercontent.com/ircfspace/9c22a11117f4f59a1354ff30fc51df90/raw/4148b05e71c540bdb78fc73e268d24c29e333884/gistfile1.txt' : ''}`
+                        },
                         ProxyEnable: {
                             type: 'REG_DWORD',
                             value: 1
@@ -134,6 +138,10 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             try {
                 await windowsProxySettings(
                     {
+                        AutoConfigURL: {
+                            type: 'REG_SZ',
+                            value: ''
+                        },
                         ProxyEnable: {
                             type: 'REG_DWORD',
                             value: 0
