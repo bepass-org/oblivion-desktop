@@ -4,6 +4,7 @@ import fs from 'fs';
 import axios from 'axios';
 import decompress from 'decompress';
 import { doesDirectoryExist, doesFileExist } from '../src/main/lib/utils';
+import { wpVersion } from '../src/main/config';
 
 let forceDownload = false;
 if (process.argv[2] && process.argv[2] === 'force') {
@@ -93,7 +94,6 @@ const dlUnzipMove = async (url: string) => {
         });
 };
 
-const wpVersion = 'v1.1.3';
 const baseUrl = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}`;
 
 const urls: any = {

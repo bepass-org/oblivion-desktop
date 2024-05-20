@@ -20,6 +20,7 @@ import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
 import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
+import { logMetadata } from './ipcListeners/log';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -38,11 +39,7 @@ if (!gotTheLock) {
 } else {
     devPlayground();
     log.info('creating new od instance...');
-    (async () => {
-        log.info(`exe: ${app.getPath('exe')}`);
-        log.info(`userData: ${app.getPath('userData')}`);
-        log.info(`logs: ${app.getPath('logs')}`);
-    })();
+    logMetadata();
 
     app.on('second-instance', (event, commandLine, workingDirectory) => {
         // Someone tried to run a second instance, we should focus our window.

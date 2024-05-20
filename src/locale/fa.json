@@ -81,7 +81,6 @@
     "log": {
         "title": "لاگ برنامه",
         "desc": "درصورت ایجاد لاگ توسط برنامه، اینجا نمایش داده می\u200Cشود.",
-        "error_powershell": "برنامه برای اجرا به نصب نرم\u200Cافزار Powershell نیاز دارد.",
         "error_invalid_license": "لایسنس وارد شده معتبر نیست.",
         "error_too_many_connected": "سقف استفاده از لایسنس پر شده است.",
         "error_access_denied": "مسیر stuff یافت نشد؛ برنامه را به\u200Cصورت Run as Administrator اجرا کنید.",

@@ -81,7 +81,6 @@
     "log": {
         "title": "App Log",
         "desc": "If a log is created by the program, it will be displayed here.",
-        "error_powershell": "The program requires Powershell software to be installed to run.",
         "error_invalid_license": "The entered license is not valid.",
         "error_too_many_connected": "Licensing limit has been reached.",
         "error_access_denied": "The path to stuff was not found; run the program as Run as Administrator.",

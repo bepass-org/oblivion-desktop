@@ -81,7 +81,6 @@
     "log": {
         "title": "应用程序日志",
         "desc": "如果程序创建了日志，将在此处显示。",
-        "error_powershell": "程序需要安装 Powershell 软件才能运行。",
         "error_invalid_license": "输入的许可证无效。",
         "error_too_many_connected": "已达到许可证限制。",
         "error_access_denied": "未找到路径；以管理员身份运行程序。",
