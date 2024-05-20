@@ -12,7 +12,7 @@ export default function RestoreModal({
     setIpData,
     setSystemTray,
     setPort,
-    //setAutoSetProxy,
+    setProxyMode,
     setShareVPN,
     setLang
 }: {
@@ -23,7 +23,7 @@ export default function RestoreModal({
     setIpData: any;
     setSystemTray: any;
     setPort: any;
-    //setAutoSetProxy: any;
+    setProxyMode: any;
     setShareVPN: any;
     setLang: any;
 }) {
@@ -37,14 +37,15 @@ export default function RestoreModal({
         setIpData(defaultSettings.ipData);
         setSystemTray(defaultSettings.systemTray);
         setPort(defaultSettings.port);
-        //setAutoSetProxy(defaultSettings.autoSetProxy);
+        setProxyMode(defaultSettings.proxyMode);
         setShareVPN(defaultSettings.shareVPN);
         setLang(defaultSettings.lang);
+        // TODO Promise.all
         await settings.set('theme', defaultSettings.theme);
         await settings.set('ipData', defaultSettings.ipData);
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('port', defaultSettings.port);
-        //await settings.set('autoSetProxy', defaultSettings.autoSetProxy);
+        await settings.set('proxyMode', defaultSettings.proxyMode);
         await settings.set('shareVPN', defaultSettings.shareVPN);
         await settings.set('lang', defaultSettings.lang);
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);

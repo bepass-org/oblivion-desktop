@@ -79,6 +79,10 @@ export default function Options() {
         });
     }, []);
 
+    useEffect(() => {
+        console.log('🚀 ~ file: Options.tsx:106 ~ proxyMode:', proxyMode);
+    }, [proxyMode]);
+
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
@@ -121,7 +125,7 @@ export default function Options() {
                     setIpData,
                     setSystemTray,
                     setPort,
-                    //setAutoSetProxy,
+                    setProxyMode,
                     setShareVPN,
                     setLang
                 }}
@@ -166,11 +170,9 @@ export default function Options() {
                         <div className='value'>
                             <select
                                 onChange={(e) => {
-                                    //if (autoSetProxy) {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    //}
                                     setTimeout(function () {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
@@ -179,7 +181,6 @@ export default function Options() {
                                     }, 1000);
                                 }}
                                 value={proxyMode}
-                                /*disabled={!autoSetProxy}*/
                             >
                                 <option value='none'>None</option>
                                 <option value='system'>System Proxy</option>
