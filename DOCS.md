@@ -51,3 +51,5 @@ checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example
 
 -   `wp` refers to `warp-plus` in source.
 -   `od` refers to `oblivion desktop` in source.
+
+happy hacking 😉
