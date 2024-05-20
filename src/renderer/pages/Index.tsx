@@ -55,11 +55,11 @@ export default function Index() {
         //const versionRegex = /\d+(\.\d+)+/;
         try {
             const response = await fetch(
-                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
+                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases'
             );
             if (response.ok) {
                 const data = await response.json();
-                const latestVersion = String(data?.tag_name);
+                const latestVersion = String(data[0]?.name);
                 const appVersion = String(packageJsonData?.version);
                 if (latestVersion && latestVersion !== appVersion) {
                     hasNewUpdate = true;
