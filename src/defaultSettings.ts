@@ -47,7 +47,7 @@ export const countries: { value: string; label: string }[] = [
     { value: 'CA', label: 'Canada' },
     { value: 'HR', label: 'Croatia' },
     { value: 'CH', label: 'Switzerland' },
-    { value: 'CZ', label: 'Czech Republic' },
+    { value: 'CZ', label: 'Czechia' },
     { value: 'DE', label: 'Germany' },
     { value: 'DK', label: 'Denmark' },
     { value: 'EE', label: 'Estonia' },
