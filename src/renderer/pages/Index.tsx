@@ -161,9 +161,8 @@ export default function Index() {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             await http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function() {
-            };
-            http.onloadend = function(e) {
+            http.onreadystatechange = function () {};
+            http.onloadend = function (e) {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
@@ -466,10 +465,10 @@ export default function Index() {
                                 'inFoot',
                                 'withIp',
                                 isConnected &&
-                                !isLoading &&
-                                proxyMode !== 'none' &&
-                                proxyMode !== '' &&
-                                ipData
+                                    !isLoading &&
+                                    proxyMode !== 'none' &&
+                                    proxyMode !== '' &&
+                                    ipData
                                     ? 'active'
                                     : ''
                             )}

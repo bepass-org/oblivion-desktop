@@ -5,13 +5,13 @@ import { ipcRenderer } from '../../lib/utils';
 import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-                                         title,
-                                         isOpen,
-                                         onClose,
-                                         setTheme,
-                                         setSystemTray,
-                                         setLang
-                                     }: {
+    title,
+    isOpen,
+    onClose,
+    setTheme,
+    setSystemTray,
+    setLang
+}: {
     title: string;
     isOpen: boolean;
     onClose: any;
