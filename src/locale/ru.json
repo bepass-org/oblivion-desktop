@@ -77,6 +77,12 @@
         "scanner_rtt_default": "По умолчанию",
         "scanner_rtt_desc": "Ограничение RTT сканера"
     },
+    "tabs": {
+        "warp": "Warp",
+        "network": "Сеть",
+        "scanner": "Сканер",
+        "app": "Приложение"
+    },
     "modal": {
         "endpoint_title": "Конечная точка",
         "license_title": "Лицензия",

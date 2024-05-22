@@ -11,6 +11,7 @@ import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import EndpointModal from '../components/Modal/Endpoint';
+import Tabs from '../components/Tabs';
 
 export default function Scanner() {
     const { isConnected, isLoading } = useStore();
@@ -66,6 +67,7 @@ export default function Scanner() {
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
+                <Tabs active='scanner' />
                 <div className='settings'>
                     <div
                         className={classNames(

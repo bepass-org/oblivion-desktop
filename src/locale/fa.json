@@ -77,6 +77,12 @@
         "scanner_rtt_default": "Default",
         "scanner_rtt_desc": "تعیین میزان RTT"
     },
+    "tabs": {
+        "warp": "وارپ",
+        "network": "شبکه",
+        "scanner": "اسکنر",
+        "app": "برنامه"
+    },
     "modal": {
         "endpoint_title": "اندپوینت",
         "license_title": "لایسنس",
