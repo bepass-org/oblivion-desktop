@@ -4,6 +4,7 @@ import log from 'electron-log';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
+import { createPacScript, killPackScriptServer, servePacScript } from './pacScript';
 
 const { spawn } = require('child_process');
 
@@ -58,6 +59,14 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             try {
+                let pacServeUrl = '';
+                if (method === 'psiphon') {
+                    await createPacScript(String(hostIP), String(port));
+                    pacServeUrl = await servePacScript();
+                    console.log('🚀 ~ file: proxy.ts:65 ~ pacServeUrl:', pacServeUrl);
+                }
+                console.log('mm34d');
+
                 await windowsProxySettings(
                     {
                         ProxyServer: {
@@ -71,7 +80,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
-                            value: `${method === 'psiphon' ? `https://ircf.space/inc/pac.php?ip=${hostIP.toString()}&port=${port.toString()}` : ''}`
+                            value: `${method === 'psiphon' ? pacServeUrl : ''}`
                         },
                         ProxyEnable: {
                             type: 'REG_DWORD',
@@ -131,10 +140,16 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
         return;
     }
 
+    const method = (await settings.get('method')) || defaultSettings.method;
+
     log.info('trying to disable system proxy...');
 
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
+            if (method === 'psiphon') {
+                killPackScriptServer();
+            }
+
             try {
                 await windowsProxySettings(
                     {
@@ -142,6 +157,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                             type: 'REG_SZ',
                             value: ''
                         },
+                        // disable use script setup?
                         ProxyEnable: {
                             type: 'REG_DWORD',
                             value: 0

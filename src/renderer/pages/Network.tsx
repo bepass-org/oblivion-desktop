@@ -115,7 +115,7 @@ export default function Options() {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
                                             settings.set('ipData', false);
@@ -149,7 +149,7 @@ export default function Options() {
                             setShareVPN(!shareVPN);
                             settings.set('shareVPN', !shareVPN);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             }, 1000);
                         }}
