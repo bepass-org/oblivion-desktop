@@ -353,6 +353,12 @@ export default function Index() {
                             </Link>
                         </li>
                         <li>
+                            <Link to={'/scanner'}>
+                                <i className={'material-icons'}>&#xe8b6;</i>
+                                <span>{appLang?.home?.drawer_settings_scanner}</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to={'/debug'}>
                                 <i className={'material-icons'}>&#xe868;</i>
                                 <span>{appLang?.home?.drawer_log}</span>

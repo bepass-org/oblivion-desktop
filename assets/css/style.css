@@ -940,6 +940,43 @@ html[data-bs-theme="dark"] .shimmer {
     margin: -3px 5px 0 -8px;
 }
 
+.appToast {
+    float: right;
+    width: 100%;
+    padding: 0 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.appToast div {
+    float: right;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 24px;
+    background: #f1f1f1;
+}
+
+[data-bs-theme="dark"] .appToast div {
+    background: #2a273f;
+}
+
+.appToast div i {
+    float: right;
+    height: 100%;
+    padding: 10px 0 10px 10px;
+    opacity: 0.3;
+}
+
+[dir="ltr"] .appToast div i {
+    float: left;
+    padding: 10px 10px 10px 0;
+}
+
 .splashScreen {
     float: left;
     width: 100%;

@@ -13,6 +13,7 @@
         "drawer_settings_warp": "Настройки Warp",
         "drawer_settings_routing_rules": "Правила маршрутизации",
         "drawer_settings_app": "Настройки приложения",
+        "drawer_settings_scanner": "Настройки сканера",
         "drawer_log": "Журнал приложений",
         "drawer_update": "Обновление",
         "drawer_update_label": "Новое обновление",
@@ -64,7 +65,15 @@
         "system_tray": "Системный трей",
         "system_tray_desc": "Не размещать значок программы на панели задач",
         "restore": "Восстановить",
-        "restore_desc": "Применить настройки приложения по умолчанию"
+        "restore_desc": "Применить настройки приложения по умолчанию",
+        "scanner": "Настройки сканера",
+        "scanner_alert": "Сканер активируется, если вы используете адрес конечной точки по умолчанию.",
+        "scanner_ip_type": "Тип конечной точки",
+        "scanner_ip_type_auto": "Автоматически",
+        "scanner_ip_type_desc": "Чтобы найти IP конечной точки",
+        "scanner_rtt": "Интервал",
+        "scanner_rtt_default": "По умолчанию",
+        "scanner_rtt_desc": "Ограничение RTT сканера"
     },
     "modal": {
         "endpoint_title": "Конечная точка",
