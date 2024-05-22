@@ -59,6 +59,8 @@ export default function RestoreModal({
         //await settings.set('gool', defaultSettings.gool);
         await settings.set('method', defaultSettings.method);
         await settings.set('hostIP', defaultSettings.hostIP);
+        await settings.set('ipType', defaultSettings.ipType);
+        await settings.set('rtt', defaultSettings.rtt);
         //
         ipcRenderer.sendMessage('wp-end');
     };

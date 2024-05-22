@@ -13,6 +13,7 @@
         "drawer_settings_warp": "تنظیمات وارپ",
         "drawer_settings_routing_rules": "قوانین مسیریابی",
         "drawer_settings_app": "تنظیمات برنامه",
+        "drawer_settings_scanner": "تنظیمات اسکنر",
         "drawer_log": "لاگ برنامه",
         "drawer_update": "بروزرسانی",
         "drawer_update_label": "نسخه جدید",
@@ -64,7 +65,15 @@
         "system_tray": "مخفی\u200Cسازی",
         "system_tray_desc": "قرار نگرفتن آیکون برنامه در تسک\u200Cبار",
         "restore": "بازگردانی",
-        "restore_desc": "اعمال تنظیمات پیشفرض برنامه"
+        "restore_desc": "اعمال تنظیمات پیشفرض برنامه",
+        "scanner": "تنظیمات اسکنر",
+        "scanner_alert": "اسکنر درصورتی فعال می\u200Cشود که درحال استفاده از آدرس اندپوینت پیشفرض برنامه باشید.",
+        "scanner_ip_type": "نوع اندپوینت",
+        "scanner_ip_type_auto": "Automatic",
+        "scanner_ip_type_desc": "جهت یافتن IP اندپوینت",
+        "scanner_rtt": "وقفه زمانی",
+        "scanner_rtt_default": "Default",
+        "scanner_rtt_desc": "تعیین میزان RTT"
     },
     "modal": {
         "endpoint_title": "اندپوینت",

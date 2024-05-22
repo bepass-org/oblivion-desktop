@@ -13,6 +13,7 @@
         "drawer_settings_warp": "Warp Settings",
         "drawer_settings_routing_rules": "Routing Rules",
         "drawer_settings_app": "App Settings",
+        "drawer_settings_scanner": "Scanner Settings",
         "drawer_log": "App Log",
         "drawer_update": "Update",
         "drawer_update_label": "New Update",
@@ -64,7 +65,15 @@
         "system_tray": "System Tray",
         "system_tray_desc": "Not placing the program icon in the taskbar",
         "restore": "Restore",
-        "restore_desc": "Apply default application settings"
+        "restore_desc": "Apply default application settings",
+        "scanner": "Scanner Settings",
+        "scanner_alert": "The scanner is activated if you are using the default endpoint address.",
+        "scanner_ip_type": "Endpoint type",
+        "scanner_ip_type_auto": "Automatic",
+        "scanner_ip_type_desc": "To find endpoint IP",
+        "scanner_rtt": "Interval",
+        "scanner_rtt_default": "Default",
+        "scanner_rtt_desc": "Scanner RTT limit"
     },
     "modal": {
         "endpoint_title": "Endpoint",

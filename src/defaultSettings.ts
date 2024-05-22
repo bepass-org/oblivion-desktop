@@ -16,7 +16,8 @@ export type settingsKeys =
     | 'shareVPN'
     | 'hostIP'
     | 'method'
-    | 'dns';
+    | 'dns'
+    | 'rtt';
 
 export const defaultSettings = {
     scan: true,
@@ -36,7 +37,8 @@ export const defaultSettings = {
     shareVPN: false,
     hostIP: '127.0.0.1',
     method: 'gool',
-    dns: true
+    dns: true,
+    rtt: '1s'
 };
 
 export const countries: { value: string; label: string }[] = [

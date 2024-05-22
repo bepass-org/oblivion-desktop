@@ -13,6 +13,7 @@
         "drawer_settings_warp": "Warp 设置",
         "drawer_settings_routing_rules": "路由规则",
         "drawer_settings_app": "应用设置",
+        "drawer_settings_scanner": "扫描仪设置",
         "drawer_log": "应用程序日志",
         "drawer_update": "更新",
         "drawer_update_label": "新更新",
@@ -64,7 +65,15 @@
         "system_tray": "系统托盘",
         "system_tray_desc": "不将程序图标放置在任务栏中",
         "restore": "恢复",
-        "restore_desc": "应用默认应用程序设置"
+        "restore_desc": "应用默认应用程序设置",
+        "scanner": "扫描仪设置",
+        "scanner_alert": "如果您使用默认端点地址，扫描仪将被激活。",
+        "scanner_ip_type": "端点类型",
+        "scanner_ip_type_auto": "自动",
+        "scanner_ip_type_desc": "查找端点 IP",
+        "scanner_rtt": "间隔",
+        "scanner_rtt_default": "默认",
+        "scanner_rtt_desc": "扫描仪 RTT 限制"
     },
     "modal": {
         "endpoint_title": "端点",
