@@ -13,6 +13,7 @@ import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
 import { ipcRenderer, onEscapeKeyPressed } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
+import { checkNewUpdate } from '../lib/checkNewUpdate';
 import { cfFlag } from '../lib/cfFlag';
 
 let cachedIpInfo: any = null;
@@ -61,7 +62,7 @@ export default function Index() {
                 const data = await response.json();
                 const latestVersion = String(data[0]?.name);
                 const appVersion = String(packageJsonData?.version);
-                if (latestVersion && latestVersion !== appVersion) {
+                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
                     hasNewUpdate = true;
                 }
             } else {
