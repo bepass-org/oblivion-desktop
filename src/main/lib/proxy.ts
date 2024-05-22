@@ -62,10 +62,9 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 let pacServeUrl = '';
                 if (method === 'psiphon') {
                     await createPacScript(String(hostIP), String(port));
-                    pacServeUrl = await servePacScript();
+                    pacServeUrl = await servePacScript(Number(port) + 1);
                     console.log('🚀 ~ file: proxy.ts:65 ~ pacServeUrl:', pacServeUrl);
                 }
-                console.log('mm34d');
 
                 await windowsProxySettings(
                     {
