@@ -86,6 +86,7 @@ technology
             <td>Other</td>
             <td>
                 :white_check_mark: Scanner<br>
+                :white_check_mark: Ping<br>
                 :white_large_square: SpeedTest<br>
                 :white_large_square: Inline Update<br>
                 :white_large_square: Accessibility
