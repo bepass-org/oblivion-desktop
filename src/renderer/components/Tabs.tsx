@@ -6,10 +6,7 @@ export default function Tabs({ active }: { active: string }) {
     const appLang = getLang();
     return (
         <>
-            <div className={classNames(
-                'tabs',
-                'inSettings'
-            )}>
+            <div className={classNames('tabs', 'inSettings')}>
                 <ul>
                     <li className={active === 'settings' ? 'active' : ''}>
                         <Link to={'/settings'}>
