@@ -7,10 +7,19 @@ import detectPort from 'detect-port';
 import path from 'path';
 import log from 'electron-log';
 import fs from 'fs';
+import { doesDirectoryExist } from './utils';
 
-export const createPacScript = (host: string, port: string | number) => {
+export const createPacScript = async (host: string, port: string | number) => {
     log.info('generating pac script...');
-
+    const binPath = path.join(app?.getPath('userData'), 'pac');
+    const isBinDirExist = await doesDirectoryExist(binPath);
+    if (!isBinDirExist) {
+        fs.mkdir(binPath, { recursive: true }, (err) => {
+            if (err) {
+                console.error(`Error creating directory ${binPath}:`, err);
+            }
+        });
+    }
     return fs.writeFile(
         path.join(app.getPath('userData'), 'pac', 'index.html'),
         `var FindProxyForURL = function(init, profiles) {
