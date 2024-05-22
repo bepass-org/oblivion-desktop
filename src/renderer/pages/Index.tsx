@@ -160,8 +160,9 @@ export default function Index() {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             await http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function () {};
-            http.onloadend = function (e) {
+            http.onreadystatechange = function() {
+            };
+            http.onloadend = function(e) {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
@@ -347,15 +348,21 @@ export default function Index() {
                         </li>*/}
                         {/*<li className='divider'></li>*/}
                         <li>
-                            <Link to={'/options'}>
-                                <i className={'material-icons'}>&#xe8b8;</i>
-                                <span>{appLang?.home?.drawer_settings_app}</span>
+                            <Link to={'/network'}>
+                                <i className={'material-icons'}>&#xeb2f;</i>
+                                <span>{appLang?.home?.drawer_settings_network}</span>
                             </Link>
                         </li>
                         <li>
                             <Link to={'/scanner'}>
-                                <i className={'material-icons'}>&#xe8b6;</i>
+                                <i className={'material-icons'}>&#xe2db;</i>
                                 <span>{appLang?.home?.drawer_settings_scanner}</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/options'}>
+                                <i className={'material-icons'}>&#xe8b8;</i>
+                                <span>{appLang?.home?.drawer_settings_app}</span>
                             </Link>
                         </li>
                         <li>
@@ -364,6 +371,13 @@ export default function Index() {
                                 <span>{appLang?.home?.drawer_log}</span>
                             </Link>
                         </li>
+                        <li className='divider' />
+                        {/*<li>
+                            <Link to='/speed'>
+                                <i className={'material-icons'}>&#xe9e4;</i>
+                                <span>{appLang?.home?.drawer_speed_test}</span>
+                            </Link>
+                        </li>*/}
                         <li className={hasNewUpdate ? '' : 'hidden'}>
                             <a
                                 href='https://github.com/bepass-org/oblivion-desktop/releases/latest'
@@ -377,13 +391,6 @@ export default function Index() {
                                 </div>
                             </a>
                         </li>
-                        <li className='divider' />
-                        {/*<li>
-                            <Link to='/speed'>
-                                <i className={'material-icons'}>&#xe9e4;</i>
-                                <span>{appLang?.home?.drawer_speed_test}</span>
-                            </Link>
-                        </li>*/}
                         <li>
                             <a
                                 onClick={() => {
@@ -458,10 +465,10 @@ export default function Index() {
                                 'inFoot',
                                 'withIp',
                                 isConnected &&
-                                    !isLoading &&
-                                    proxyMode !== 'none' &&
-                                    proxyMode !== '' &&
-                                    ipData
+                                !isLoading &&
+                                proxyMode !== 'none' &&
+                                proxyMode !== '' &&
+                                ipData
                                     ? 'active'
                                     : ''
                             )}

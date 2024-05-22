@@ -5,26 +5,18 @@ import { ipcRenderer } from '../../lib/utils';
 import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-    title,
-    isOpen,
-    onClose,
-    setTheme,
-    setIpData,
-    setSystemTray,
-    setPort,
-    setProxyMode,
-    setShareVPN,
-    setLang
-}: {
+                                         title,
+                                         isOpen,
+                                         onClose,
+                                         setTheme,
+                                         setSystemTray,
+                                         setLang
+                                     }: {
     title: string;
     isOpen: boolean;
     onClose: any;
     setTheme: any;
-    setIpData: any;
     setSystemTray: any;
-    setPort: any;
-    setProxyMode: any;
-    setShareVPN: any;
     setLang: any;
 }) {
     if (!isOpen) return null;
@@ -34,19 +26,11 @@ export default function RestoreModal({
     const onSaveModal = async () => {
         // in this page
         setTheme(defaultSettings.theme);
-        setIpData(defaultSettings.ipData);
         setSystemTray(defaultSettings.systemTray);
-        setPort(defaultSettings.port);
-        setProxyMode(defaultSettings.proxyMode);
-        setShareVPN(defaultSettings.shareVPN);
         setLang(defaultSettings.lang);
         // TODO Promise.all
         await settings.set('theme', defaultSettings.theme);
-        await settings.set('ipData', defaultSettings.ipData);
         await settings.set('systemTray', defaultSettings.systemTray);
-        await settings.set('port', defaultSettings.port);
-        await settings.set('proxyMode', defaultSettings.proxyMode);
-        await settings.set('shareVPN', defaultSettings.shareVPN);
         await settings.set('lang', defaultSettings.lang);
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
@@ -61,6 +45,10 @@ export default function RestoreModal({
         await settings.set('hostIP', defaultSettings.hostIP);
         await settings.set('ipType', defaultSettings.ipType);
         await settings.set('rtt', defaultSettings.rtt);
+        await settings.set('ipData', defaultSettings.ipData);
+        await settings.set('port', defaultSettings.port);
+        await settings.set('proxyMode', defaultSettings.proxyMode);
+        await settings.set('shareVPN', defaultSettings.shareVPN);
         //
         ipcRenderer.sendMessage('wp-end');
     };
