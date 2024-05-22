@@ -16,6 +16,7 @@ import About from './pages/About';
 import Debug from './pages/Debug';
 import SpeedTest from './pages/SpeedTest';
 import Scanner from './pages/Scanner';
+import Network from './pages/Network';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadLang, loadTheme } from './lib/loaders';
 
@@ -39,6 +40,7 @@ export default function App() {
                     <Route path='/debug' element={<Debug />} />
                     <Route path='/speed' element={<SpeedTest />} />
                     <Route path='/scanner' element={<Scanner />} />
+                    <Route path='/network' element={<Network />} />
                 </Routes>
             </Router>
         </>
