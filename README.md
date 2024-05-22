@@ -44,8 +44,8 @@ technology
         <tr>
             <td>Network Configuration</td>
             <td>
-                :white_check_mark: Proxy(No Change)<br>
-                :white_check_mark: System Proxy<br>
+                :white_check_mark: Proxy <small>(No Change)</small><br>
+                :white_check_mark: System Proxy <small>(with PAC)</small><br>
                 :white_large_square: TUN
             </td>
         </tr>
@@ -85,6 +85,7 @@ technology
         <tr>
             <td>Other</td>
             <td>
+                :white_check_mark: Scanner<br>
                 :white_large_square: SpeedTest<br>
                 :white_large_square: Inline Update<br>
                 :white_large_square: Accessibility
