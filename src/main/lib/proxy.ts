@@ -79,7 +79,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
-                            value: `${method === 'psiphon' ? pacServeUrl : ''}`
+                            value: `${method === 'psiphon' ? pacServeUrl + '/proxy.txt' : ''}`
                         },
                         ProxyEnable: {
                             type: 'REG_DWORD',

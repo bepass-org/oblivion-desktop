@@ -6,7 +6,7 @@ import { app } from 'electron';
 import detectPort from 'detect-port';
 import path from 'path';
 import log from 'electron-log';
-import fs from 'fs';
+import fs, { promises as fsPromises } from 'fs';
 import { doesDirectoryExist } from './utils';
 
 export const createPacScript = async (host: string, port: string | number) => {
@@ -14,15 +14,11 @@ export const createPacScript = async (host: string, port: string | number) => {
     const binPath = path.join(app?.getPath('userData'), 'pac');
     const isBinDirExist = await doesDirectoryExist(binPath);
     if (!isBinDirExist) {
-        fs.mkdir(binPath, { recursive: true }, (err) => {
-            if (err) {
-                console.error(`Error creating directory ${binPath}:`, err);
-            }
-        });
+        await fsPromises.mkdir(binPath, { recursive: true });
     }
-    return fs.writeFile(
-        path.join(app.getPath('userData'), 'pac', 'index.html'),
-        `var FindProxyForURL = function(init, profiles) {
+    await fsPromises.writeFile(
+        path.join(app.getPath('userData'), 'pac', 'proxy.txt'),
+        `        var FindProxyForURL = function(init, profiles) {
             return function(url, host) {
                 "use strict";
                 var result = init, scheme = url.substr(0, url.indexOf(":"));
@@ -38,15 +34,9 @@ export const createPacScript = async (host: string, port: string | number) => {
                 if (/^127.0.0.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host)) return "DIRECT";
                 return "SOCKS5 ${host}:${port}; SOCKS ${host}:${port}";
             }
-        });`,
-        function(err) {
-            if (err) {
-                log.error(err);
-            } else {
-                log.info('pac script generated.');
-            }
-        }
+        });`
     );
+    log.info('pac script generated.');
 };
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>;
