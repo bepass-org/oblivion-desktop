@@ -26,8 +26,8 @@ export const getUserSettings = async () => {
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
-    // ipType
-    // port, hostIP
+
+    // hostIP & port
     args.push('--bind');
     args.push(
         `${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`
