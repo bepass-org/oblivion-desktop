@@ -66,12 +66,13 @@ export default function Scanner() {
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
-
                 <div className='settings'>
-                    <div className={classNames(
-                        'item',
-                        endpoint === defaultSettings.endpoint ? '' : 'disabled'
-                    )}>
+                    <div
+                        className={classNames(
+                            'item',
+                            endpoint === defaultSettings.endpoint ? '' : 'disabled'
+                        )}
+                    >
                         <label className='key'>{appLang?.settings?.scanner_ip_type}</label>
                         <div className='value'>
                             <select
@@ -90,10 +91,12 @@ export default function Scanner() {
                         </div>
                         <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
                     </div>
-                    <div className={classNames(
-                        'item',
-                        endpoint === defaultSettings.endpoint ? '' : 'disabled'
-                    )}>
+                    <div
+                        className={classNames(
+                            'item',
+                            endpoint === defaultSettings.endpoint ? '' : 'disabled'
+                        )}
+                    >
                         <label className='key'>{appLang?.settings?.scanner_rtt}</label>
                         <div className='value'>
                             <select
@@ -135,10 +138,12 @@ export default function Scanner() {
                         <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                     </div>
                 </div>
-                <div className={classNames(
-                    'appToast',
-                    endpoint === defaultSettings.endpoint ? 'hidden' : ''
-                )}>
+                <div
+                    className={classNames(
+                        'appToast',
+                        endpoint === defaultSettings.endpoint ? 'hidden' : ''
+                    )}
+                >
                     <div>
                         <i className='material-icons'>&#xe0f0;</i>
                         {appLang?.settings?.scanner_alert}
