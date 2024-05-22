@@ -11,6 +11,7 @@ import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import Tabs from '../components/Tabs';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
@@ -82,6 +83,7 @@ export default function Options() {
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
+                <Tabs active='network' />
                 <div className='settings'>
                     {/*<div
                         className={classNames('item', autoSetProxy ? 'checked' : '')}
@@ -113,7 +115,7 @@ export default function Options() {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
                                             settings.set('ipData', false);
@@ -147,7 +149,7 @@ export default function Options() {
                             setShareVPN(!shareVPN);
                             settings.set('shareVPN', !shareVPN);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             }, 1000);
                         }}

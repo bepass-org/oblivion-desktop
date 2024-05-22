@@ -77,6 +77,12 @@
         "scanner_rtt_default": "Default",
         "scanner_rtt_desc": "Scanner RTT limit"
     },
+    "tabs": {
+        "warp": "Warp",
+        "network": "Network",
+        "scanner": "Scanner",
+        "app": "App"
+    },
     "modal": {
         "endpoint_title": "Endpoint",
         "license_title": "License",

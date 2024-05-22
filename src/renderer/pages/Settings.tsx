@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
-import EndpointModal from '../components/Modal/Endpoint';
+import Tabs from '../components/Tabs';
 import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { countries, defaultSettings } from '../../defaultSettings';
@@ -106,6 +106,7 @@ export default function Settings() {
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
+                <Tabs active='settings' />
                 <div className='settings'>
                     {/*<div
                         className={'item'}

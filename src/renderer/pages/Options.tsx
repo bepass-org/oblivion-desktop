@@ -12,6 +12,7 @@ import { loadingToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang, loadLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import Tabs from '../components/Tabs';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
@@ -29,11 +30,11 @@ export default function Options() {
     const langRef = useRef<any>(null);
 
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function () {
+                setTimeout(function() {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -80,15 +81,16 @@ export default function Options() {
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         loadLang();
                     }, 750);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         setAppLang(getLang());
                     }, 1500);
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
+                <Tabs active='options' />
                 <div className='settings'>
                     <div
                         className='item'
@@ -124,10 +126,10 @@ export default function Options() {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
                                     loadingToast();
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         loadLang();
                                     }, 750);
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         setAppLang(getLang());
                                         toast.dismiss('LOADING');
                                     }, 1500);
