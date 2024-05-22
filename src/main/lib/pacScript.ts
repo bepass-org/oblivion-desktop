@@ -13,8 +13,7 @@ export const createPacScript = (host: string, port: string | number) => {
 
     return fs.writeFile(
         path.join(app.getPath('userData'), 'pac', 'index.html'),
-        `
-        var FindProxyForURL = function(init, profiles) {
+        `var FindProxyForURL = function(init, profiles) {
             return function(url, host) {
                 "use strict";
                 var result = init, scheme = url.substr(0, url.indexOf(":"));
@@ -30,13 +29,13 @@ export const createPacScript = (host: string, port: string | number) => {
                 if (/^127.0.0.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host)) return "DIRECT";
                 return "SOCKS5 ${host}:${port}; SOCKS ${host}:${port}";
             }
-        });
-        `,
-        function (err) {
+        });`,
+        function(err) {
             if (err) {
                 log.error(err);
+            } else {
+                log.info('pac script generated.');
             }
-            log.info('pac script generated.');
         }
     );
 };
