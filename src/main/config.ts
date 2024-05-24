@@ -1,1 +1,1 @@
-export const wpVersion = 'v1.1.3';
+export const wpVersion = 'v1.2.1';
