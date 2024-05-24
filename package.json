@@ -210,7 +210,8 @@
                     ]
                 }
             ],
-            "identity": null
+            "identity": null,
+            "writeUpdateInfo": false
         },
         "win": {
             "target": [
