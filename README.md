@@ -123,10 +123,10 @@ technology
             <td>macOS</td>
             <td>
                 <small>Coming Soon ...</small>
-                <!-- <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-x64-bc544b.svg?logo=apple" /></a><br> -->
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/MAS-arm64-bc544b.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/MAS-x64-bc544b.svg?logo=apple" /></a><br>
             </td>
             <td></td>
         </tr>
