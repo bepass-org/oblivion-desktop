@@ -5,19 +5,21 @@ import { ipcRenderer } from '../../lib/utils';
 import { getLang, loadLang } from '../../lib/loaders';
 
 export default function RestoreModal({
-    title,
-    isOpen,
-    onClose,
-    setTheme,
-    setSystemTray,
-    setLang
-}: {
+                                         title,
+                                         isOpen,
+                                         onClose,
+                                         setTheme,
+                                         setSystemTray,
+                                         setLang,
+                                         setOpenAtLogin
+                                     }: {
     title: string;
     isOpen: boolean;
     onClose: any;
     setTheme: any;
     setSystemTray: any;
     setLang: any;
+    setOpenAtLogin: any;
 }) {
     if (!isOpen) return null;
 
@@ -28,10 +30,12 @@ export default function RestoreModal({
         setTheme(defaultSettings.theme);
         setSystemTray(defaultSettings.systemTray);
         setLang(defaultSettings.lang);
+        setOpenAtLogin(defaultSettings.openAtLogin);
         // TODO Promise.all
         await settings.set('theme', defaultSettings.theme);
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
+        await settings.set('openAtLogin', defaultSettings.openAtLogin);
         document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
         onClose();
         // other settings

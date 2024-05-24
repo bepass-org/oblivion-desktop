@@ -590,8 +590,8 @@ html[data-bs-theme="dark"] .shimmer {
 }
 
 .logPage .logText {
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 14px !important;
+    line-height: 24px !important;
     white-space: pre-line;
 }
 
