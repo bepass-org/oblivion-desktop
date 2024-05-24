@@ -108,6 +108,10 @@ const urls: any = {
     darwin: {
         x64: baseUrl + '/warp-plus_darwin-amd64.zip',
         arm64: baseUrl + '/warp-plus_darwin-arm64.zip'
+    },
+    mas: {
+        x64: baseUrl + '/warp-plus_darwin-amd64.zip',
+        arm64: baseUrl + '/warp-plus_darwin-arm64.zip'
     }
 };
 
@@ -119,6 +123,7 @@ switch (platform) {
     case 'linux':
     case 'win32':
     case 'darwin':
+    case 'mas': // mac universal
         switch (arch) {
             case 'x64':
             case 'arm64':

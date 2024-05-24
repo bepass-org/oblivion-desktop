@@ -32,11 +32,6 @@ jobs:
                   if [ "$RUNNER_OS" == "macOS" ]; then
                     npm install dmg-license
                   fi
-                  if [ "$RUNNER_OS" == "Windows" ]; then
-                    npm run postinstall:windows
-                  else
-                    npm run postinstall
-                  fi
                   npm run build
               shell: bash
 
