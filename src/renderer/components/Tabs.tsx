@@ -8,6 +8,12 @@ export default function Tabs({ active }: { active: string }) {
         <>
             <div className={classNames('tabs', 'inSettings')}>
                 <ul>
+                    <li>
+                        <Link to={'/'}>
+                            <i className={'material-icons'}>&#xe9f6;</i>
+                            <span>{appLang?.tabs?.home}</span>
+                        </Link>
+                    </li>
                     <li className={active === 'settings' ? 'active' : ''}>
                         <Link to={'/settings'}>
                             <i className={'material-icons'}>&#xe429;</i>

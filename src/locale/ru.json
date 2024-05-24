@@ -78,10 +78,11 @@
         "scanner_rtt_desc": "Ограничение RTT сканера"
     },
     "tabs": {
+        "home": "Связь",
         "warp": "Warp",
         "network": "Сеть",
         "scanner": "Сканер",
-        "app": "Приложение"
+        "app": "заявка"
     },
     "modal": {
         "endpoint_title": "Конечная точка",
