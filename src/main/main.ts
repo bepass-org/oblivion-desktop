@@ -34,7 +34,7 @@ export const binAssetsPath = path.join(
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
 if (!gotTheLock) {
-    log.info('did\'nt create new instance since there was already one running.');
+    log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
 } else {
     devPlayground();
@@ -278,7 +278,6 @@ if (!gotTheLock) {
             });
         }
     }
-
 
     /**
      * Add event listeners...
