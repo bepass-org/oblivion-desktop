@@ -21,12 +21,19 @@ const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) 
     });
 };
 
-const macOSProxySettings = (args: string[]) => {
+// https://github.com/SagerNet/sing-box/blob/dev-next/common/settings/proxy_darwin.go
+const macOSNetworkSetup = (args: string[]) => {
     const child = spawn('networksetup', args);
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        let output = '';
+        child.stdout.on('data', async (data: any) => {
+            const strData = data.toString();
+            output += strData;
+        });
+
         child.on('exit', () => {
-            resolve();
+            resolve(output);
         });
 
         child.stderr.on('data', (err: any) => {
@@ -38,6 +45,25 @@ const macOSProxySettings = (args: string[]) => {
             log.error(`Spawn Error: ${err}`);
             reject(err);
         });
+    });
+};
+
+const getMacOSHardwarePortName = () => {
+    return new Promise<string>(async (resolve, reject) => {
+        const hardwarePortsList = await macOSNetworkSetup(['-listallhardwareports']);
+        log.info(hardwarePortsList);
+
+        const hardwarePortRegex = /Hardware Port: (.*)/;
+        const match = String(hardwarePortsList).match(hardwarePortRegex);
+
+        if (match) {
+            const hardwarePort = match[1];
+            log.info(`Hardware Port: ${hardwarePort}`);
+            resolve(hardwarePort);
+        } else {
+            log.error('Hardware Port not found.');
+            reject();
+        }
     });
 };
 
@@ -92,30 +118,34 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
 
                 resolve();
             } catch (error) {
-                log.error(`error while trying to set system proxy: , ${JSON.stringify(error)}`);
+                log.error(`error while trying to set system proxy: , ${error}`);
                 reject(error);
                 ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
+            const hardwarePort = await getMacOSHardwarePortName();
+
             try {
-                await macOSProxySettings([
+                await macOSNetworkSetup([
                     '-setsocksfirewallproxy',
-                    'Wi-Fi',
+                    hardwarePort,
                     hostIP.toString(),
                     port.toString()
                 ]);
-                await macOSProxySettings([
+                await macOSNetworkSetup([
                     '-setproxybypassdomains',
-                    'Wi-Fi',
+                    hardwarePort,
                     // TODO read from user settings
+
                     'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
                 ]);
+                await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'on']);
                 log.info('system proxy has been set.');
                 resolve();
             } catch (error) {
-                log.error(`error while trying to set system proxy: , ${JSON.stringify(error)}`);
+                log.error(`error while trying to set system proxy: , ${error}`);
                 reject(error);
                 ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
@@ -167,19 +197,21 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 log.info('system proxy has been disabled on your system.');
                 resolve();
             } catch (error) {
-                log.error(`error while trying to disable system proxy: , ${JSON.stringify(error)}`);
+                log.error(`error while trying to disable system proxy: , ${error}`);
                 reject(error);
                 ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
+            const hardwarePort = await getMacOSHardwarePortName();
             try {
-                await macOSProxySettings(['-setsocksfirewallproxy', 'Wi-Fi', 'off']);
+                await macOSNetworkSetup(['-setsocksfirewallproxy', hardwarePort, 'off']);
+                await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'off']);
                 log.info('system proxy has been disabled on your system.');
                 resolve();
             } catch (error) {
-                log.error(`error while trying to disable system proxy: , ${JSON.stringify(error)}`);
+                log.error(`error while trying to disable system proxy: , ${error}`);
                 reject(error);
                 ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
             }
