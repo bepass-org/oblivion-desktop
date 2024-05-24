@@ -1586,6 +1586,10 @@ html[data-bs-theme="dark"] .shimmer {
     z-index: 2;
     box-shadow: 0 0 30px rgba(0, 0, 0, .1);
     padding: 1px 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 [data-bs-theme="dark"] .tabs {
