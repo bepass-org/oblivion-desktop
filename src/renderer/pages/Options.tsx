@@ -31,11 +31,11 @@ export default function Options() {
     const langRef = useRef<any>(null);
 
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function () {
+                setTimeout(function() {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -80,16 +80,17 @@ export default function Options() {
                 {...{
                     setTheme,
                     setSystemTray,
-                    setLang
+                    setLang,
+                    setOpenAtLogin
                 }}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         loadLang();
                     }, 750);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         setAppLang(getLang());
                     }, 1500);
                 }}
@@ -131,10 +132,10 @@ export default function Options() {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
                                     loadingToast();
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         loadLang();
                                     }, 750);
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         setAppLang(getLang());
                                         toast.dismiss('LOADING');
                                     }, 1500);
