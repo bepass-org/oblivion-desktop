@@ -22,6 +22,7 @@ export default function Options() {
     const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState('');
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
+    const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [appLang, setAppLang] = useState(getLang());
 
@@ -30,11 +31,11 @@ export default function Options() {
     const langRef = useRef<any>(null);
 
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function () {
+                setTimeout(function() {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -51,12 +52,16 @@ export default function Options() {
         settings.get('systemTray').then((value) => {
             setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
         });
+        settings.get('openAtLogin').then((value) => {
+            setOpenAtLogin(typeof value === 'undefined' ? defaultSettings.openAtLogin : value);
+        });
     }, []);
 
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
-        typeof systemTray === 'undefined'
+        typeof systemTray === 'undefined' ||
+        typeof openAtLogin === 'undefined'
     )
         return (
             <>
@@ -81,10 +86,10 @@ export default function Options() {
                 isOpen={showRestoreModal}
                 onClose={() => {
                     setShowRestoreModal(false);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         loadLang();
                     }, 750);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         setAppLang(getLang());
                     }, 1500);
                 }}
@@ -126,10 +131,10 @@ export default function Options() {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
                                     loadingToast();
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         loadLang();
                                     }, 750);
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         setAppLang(getLang());
                                         toast.dismiss('LOADING');
                                     }, 1500);
@@ -144,6 +149,21 @@ export default function Options() {
                             </select>
                         </div>
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
+                    </div>
+                    <div
+                        className='item'
+                        onClick={() => {
+                            setOpenAtLogin(!openAtLogin);
+                            settings.set('openAtLogin', !openAtLogin);
+                        }}
+                    >
+                        <label className='key'>{appLang?.settings?.open_login}</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', openAtLogin ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.open_login_desc}</div>
                     </div>
                     <div
                         className='item'
