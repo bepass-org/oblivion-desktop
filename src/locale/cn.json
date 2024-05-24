@@ -64,6 +64,8 @@
         "dark_mode_desc": "指定应用程序的显示模式",
         "lang": "语言",
         "lang_desc": "更改应用程序界面语言",
+        "open_login": "登录时开始",
+        "open_login_desc": "系统启动时打开",
         "system_tray": "系统托盘",
         "system_tray_desc": "不将程序图标放置在任务栏中",
         "restore": "恢复",

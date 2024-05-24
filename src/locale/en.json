@@ -64,6 +64,8 @@
         "dark_mode_desc": "Specify the display mode of the application",
         "lang": "Language",
         "lang_desc": "Change application interface language",
+        "open_login": "Start at login",
+        "open_login_desc": "Open at system startup",
         "system_tray": "System Tray",
         "system_tray_desc": "Not placing the program icon in the taskbar",
         "restore": "Restore",

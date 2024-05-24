@@ -17,7 +17,8 @@ export type settingsKeys =
     | 'hostIP'
     | 'method'
     | 'dns'
-    | 'rtt';
+    | 'rtt'
+    | 'openAtLogin';
 
 export const defaultSettings = {
     scan: true,
@@ -38,7 +39,8 @@ export const defaultSettings = {
     hostIP: '127.0.0.1',
     method: 'gool',
     dns: true,
-    rtt: '1s'
+    rtt: '1s',
+    openAtLogin: false
 };
 
 export const countries: { value: string; label: string }[] = [
