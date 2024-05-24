@@ -34,7 +34,7 @@ export const binAssetsPath = path.join(
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
 if (!gotTheLock) {
-    log.info('did\'nt create new instance since there was already one running.');
+    log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
 } else {
     devPlayground();
@@ -271,9 +271,9 @@ if (!gotTheLock) {
     };
 
     async function startAtLogin() {
-        const getOpenAtLogin = await settings.get('openAtLogin');
+        const checkOpenAtLogin = await settings.get('openAtLogin');
         app.setLoginItemSettings({
-            openAtLogin: (typeof getOpenAtLogin === 'boolean' ? getOpenAtLogin : false)
+            openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
         });
     }
 
