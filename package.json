@@ -191,34 +191,23 @@
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
-            "target": {
-                "target": "default",
-                "arch": [
-                    "arm64",
-                    "x64"
-                ]
-            },
-            "type": "distribution",
-            "hardenedRuntime": true,
-            "entitlements": "assets/entitlements.mac.plist",
-            "entitlementsInherit": "assets/entitlements.mac.plist",
-            "gatekeeperAssess": false,
-            "identity": null
-        },
-        "dmg": {
-            "contents": [
+            "target": [
                 {
-                    "x": 130,
-                    "y": 220
+                    "target": "dmg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
                 },
                 {
-                    "x": 410,
-                    "y": 220,
-                    "type": "link",
-                    "path": "/Applications"
+                    "target": "pkg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
                 }
             ],
-            "writeUpdateInfo": false
+            "identity": null
         },
         "win": {
             "target": [

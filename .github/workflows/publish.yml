@@ -9,15 +9,11 @@ on:
 
 jobs:
     publish:
-        # To enable auto publishing to github, update your electron publisher
-        # config in package.json > "build" and remove the conditional below
-        # if: ${{ github.repository_owner == 'electron-react-boilerplate' }}
-
         runs-on: ${{ matrix.os }}
 
         strategy:
             matrix:
-                os: [windows-latest]
+                os: [windows-latest, macos-latest]
                 # os: [ubuntu-latest, windows-latest, macos-latest]
 
         steps:
