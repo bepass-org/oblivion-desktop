@@ -44,7 +44,7 @@ export default function Debug() {
 
     useGoBackOnEscape();
 
-    let userFlag = (username?.startsWith('\\') ? '\<USERNAME>' : '<USERNAME>');
+    let userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
     ipcRenderer.on('getLogs', (data) => {
         let logs = String(data);
         // protect user privacy
@@ -109,7 +109,9 @@ export default function Debug() {
                                             onClick={() => {
                                                 setAutoScroll(false);
                                             }}
-                                        >&#xe1a2;</i>
+                                        >
+                                            &#xe1a2;
+                                        </i>
                                     </>
                                 ) : (
                                     <>
@@ -118,7 +120,9 @@ export default function Debug() {
                                             onClick={() => {
                                                 setAutoScroll(true);
                                             }}
-                                        >&#xe038;</i>
+                                        >
+                                            &#xe038;
+                                        </i>
                                     </>
                                 )}
                                 {/*{isBottom ? (
