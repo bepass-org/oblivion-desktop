@@ -78,6 +78,7 @@
         "scanner_rtt_desc": "Scanner RTT limit"
     },
     "tabs": {
+        "home": "Connect",
         "warp": "Warp",
         "network": "Network",
         "scanner": "Scanner",

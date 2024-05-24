@@ -78,6 +78,7 @@
         "scanner_rtt_desc": "تعیین میزان RTT"
     },
     "tabs": {
+        "home": "اتصال",
         "warp": "وارپ",
         "network": "شبکه",
         "scanner": "اسکنر",

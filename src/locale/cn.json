@@ -78,6 +78,7 @@
         "scanner_rtt_desc": "扫描仪 RTT 限制"
     },
     "tabs": {
+        "home": "连接",
         "warp": "Warp",
         "network": "网络",
         "scanner": "扫描仪",

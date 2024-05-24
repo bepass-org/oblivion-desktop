@@ -1583,7 +1583,7 @@ html[data-bs-theme="dark"] .shimmer {
     right: 0;
     width: 100%;
     margin: 0;
-    z-index: 1;
+    z-index: 2;
     box-shadow: 0 0 30px rgba(0, 0, 0, .1);
     padding: 1px 0;
 }
@@ -1601,7 +1601,7 @@ html[data-bs-theme="dark"] .shimmer {
 
 .tabs ul li {
     float: right;
-    width: 25%;
+    width: 20%;
     list-style: none;
     margin: 0;
 }
@@ -1639,6 +1639,9 @@ html[data-bs-theme="dark"] .shimmer {
     float: right;
     width: 100%;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .tabs ul li a i {
