@@ -203,7 +203,7 @@
                     ]
                 },
                 {
-                    "target": "mas",
+                    "target": "zip",
                     "arch": [
                         "arm64",
                         "x64"
