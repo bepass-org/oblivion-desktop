@@ -7,8 +7,8 @@
 </div>
 
 
->[!IMPORTANT]
->Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
+> [!IMPORTANT]
+> Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
 
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
@@ -67,8 +67,8 @@ technology
             <td>System Tray</td>
             <td>
                 :white_check_mark:  Minimize<br>
-                :white_large_square: Shortcuts<br>
-                :white_large_square: BootUp
+                :white_check_mark: BootUp<br>
+                :white_large_square: Shortcuts
             </td>
         </tr>
         <tr>
@@ -169,8 +169,8 @@ technology
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
 suggest features, or need some help, we'd love to hear from you!  
 Check out
-our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md) and [Developer Docs](DOCS.md).
-
+our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md)
+and [Developer Docs](DOCS.md).
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
