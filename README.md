@@ -83,7 +83,8 @@ technology
                 :white_check_mark:  Persian (Farsi) <br>
                 :white_check_mark:  English <br>
                 :white_check_mark:  Chinese <br>
-                :white_check_mark:  Russian
+                :white_check_mark:  Russian <br>
+                :white_check_mark:  Deutsch
             </td>
         </tr>
         <tr>
