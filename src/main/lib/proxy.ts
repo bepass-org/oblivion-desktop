@@ -88,6 +88,40 @@ const getMacOSDefaultHardwarePortName = () => {
     });
 };
 
+const getMacOSActiveNetworkHardwarePort = () => {
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const devicesList = await macOSNetworkSetup(["-listnetworkserviceorder"]);
+        log.info(devicesList);
+        const activeDeviceRegex = /\(Hardware Port: (.+), Device: (en\d)\)/g;
+        let match;
+        let activeHardwarePort = null;
+        while (true) {
+          match = activeDeviceRegex.exec(devicesList as string);
+          if (match === null) break;
+          const hardwarePort = match[1];
+          const device = match[2];
+          const isDisabled = new RegExp(`\\*\\s*${hardwarePort}`).test(
+            devicesList as string
+          );
+          if (!isDisabled) {
+            activeHardwarePort = hardwarePort;
+            break;
+          }
+        }
+        if (activeHardwarePort) {
+          log.info(`Active Hardware Port: ${activeHardwarePort}`);
+          resolve(activeHardwarePort);
+        } else {
+          log.error("Active Network Device not found.");
+        }
+      } catch (error) {
+        log.error(`Error: ${error}`);
+        reject(error);
+      }
+    });
+};
+
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
@@ -146,7 +180,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
-            const hardwarePort = await getMacOSDefaultHardwarePortName();
+            const hardwarePort = await getMacOSActiveNetworkHardwarePort();
             log.info('using hardwarePort:', hardwarePort);
 
             try {
