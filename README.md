@@ -1,6 +1,14 @@
-# Oblivion Desktop
+<div align="center">
+    <h1>Oblivion Desktop</h1>
+</div>
 
-Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
+<div align="center">
+    <p><small> <a href="README-fa.md">داکیومنت فارسی</a></small></p>
+</div>
+
+
+>[!IMPORTANT]
+>Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
 
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
