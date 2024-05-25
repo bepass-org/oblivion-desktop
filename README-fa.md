@@ -5,7 +5,8 @@
 
 نسخه‌ی غیررسمی از [Oblivion](https://github.com/bepass-org/oblivion)
 
-اوبلیویون دسترسی امن و بهینه به اینترنت را از طریق یک اپلیکیشن کاربرپسند برای ویندوز، مک و لینوکس با استفاده از فناوری Cloudflare Warp فراهم می‌کند.
+اوبلیویون دسترسی امن و بهینه به اینترنت را از طریق یک اپلیکیشن کاربرپسند برای ویندوز، مک و لینوکس با استفاده از فناوری
+Cloudflare Warp فراهم می‌کند.
 
 <b>"اینترنت, برای همه یا هیچکس!"</b>
 
@@ -73,9 +74,9 @@
         <tr>
             <td>نوار سیستم</td>
             <td>
-                :white_check_mark:  ساده سازی<br>
-                :white_large_square: میانبرها<br>
-                :white_large_square: راه‌اندازی خودکار
+                :white_check_mark:  کمینه‌کردن<br>
+                :white_check_mark: راه‌اندازی خودکار<br>
+                :white_large_square: میانبرها
             </td>
         </tr>
         <tr>
@@ -88,7 +89,7 @@
             </td>
         </tr>
         <tr>
-            <td>تم</td>
+            <td>پوسته</td>
             <td>
                 :white_check_mark: روشن<br>
                 :white_check_mark: تاریک<br>
@@ -103,8 +104,8 @@
                 :white_check_mark: اسکنر<br>
                 :white_check_mark: پینگ<br>
                 :white_large_square: تست سرعت<br>
-                :white_large_square: به‌روزرسانی داخلی<br>
-                :white_large_square: دسترسی‌پذیری
+                :white_large_square: بروزرسانی داخلی<br>
+                :white_large_square: دسترس‌پذیری
             </td>
         </tr>
     </tbody>
@@ -173,12 +174,16 @@
 
 ## مشارکت کنید
 
-ما یک پروژه جامعه‌محور هستیم که هدف آن دسترسی همه به اینترنت است. چه بخواهید کد بزنید، ویژگی‌های جدید پیشنهاد دهید یا نیاز به کمک داشته باشید، خوشحال می‌شویم از شما بشنویم!  
-برای اطلاعات بیشتر به [ایشوهای GitHub](https://github.com/bepass-org/oblivion-desktop/issues)، [راهنمای مشارکت](CONTRIBUTING.md) و [مستندات توسعه‌دهندگان](DOCS.md) مراجعه کنید.
+ما یک پروژه جامعه‌محور هستیم که هدف آن دسترسی همه به اینترنت است. چه بخواهید کد بزنید، چه ویژگی‌های جدید پیشنهاد دهید یا
+نیاز به کمک داشته باشید، خوشحال می‌شویم از شما بشنویم!  
+برای اطلاعات بیشتر
+به [ایشوهای GitHub](https://github.com/bepass-org/oblivion-desktop/issues)، [راهنمای مشارکت](CONTRIBUTING.md)
+و [مستندات توسعه‌دهندگان](DOCS.md) مراجعه کنید.
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
 ## بیشتر بدانید
+
 * [سوالات متداول](FAQ.md)
 * [لاینسس](LICENSE.md)
 * [امنیت](SECURITY.md)
@@ -187,11 +192,10 @@
 
 ## تقدیر و تشکر
 
-این پروژه بر شانه‌های غول‌ها ایستاده است و ما از کمک‌ها و الهام‌بخشی دوستان زیر به‌ شدت سپاسگزاریم:
-
+این پروژه بر شانه‌های اشخاصی ایستاده است و ما از کمک‌ها و الهام‌بخشی دوستان زیر به‌ شدت سپاسگزاریم:
 
 - Cloudflare Warp
-- [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشمفروش)
+- [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
 - [Oblivion](https://github.com/bepass-org/oblivion)
 - [Electron](https://www.electronjs.org/)
 - [React](https://github.com/facebook/react)
