@@ -82,5 +82,6 @@ export const languages: { value: string; label: string }[] = [
     { value: 'fa', label: 'فارسی' },
     { value: 'en', label: 'English' },
     { value: 'cn', label: '中文' },
-    { value: 'ru', label: 'Русский' }
+    { value: 'ru', label: 'Русский' },
+    { value: 'de', label: 'Deutsch' },
 ];
