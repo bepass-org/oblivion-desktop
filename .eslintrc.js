@@ -42,7 +42,8 @@ module.exports = {
         'consistent-return': 'off',
         'no-async-promise-executor': 'off',
         'no-else-return': 'off',
-        'func-names': 'off'
+        'func-names': 'off',
+        'prefer-promise-reject-errors': 'off'
     },
     parserOptions: {
         ecmaVersion: 2022,

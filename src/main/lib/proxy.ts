@@ -5,10 +5,12 @@ import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit'
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPackScriptServer, servePacScript } from './pacScript';
+import { exec } from 'child_process';
 
 const { spawn } = require('child_process');
 
 // TODO reset to prev proxy settings on disable
+// TODO refactor (move each os functions to it's own file)
 
 // tweaking windows proxy settings using regedit
 const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) => {
@@ -48,22 +50,41 @@ const macOSNetworkSetup = (args: string[]) => {
     });
 };
 
-const getMacOSHardwarePortName = () => {
+const getMacOSDefaultNetworkInterface = () => {
+    return new Promise((resolve, reject) => {
+        exec("route -n get 0.0.0.0 2>/dev/null | awk '/interface: / {print $2}'", (err, stdout) => {
+            if (err) {
+                console.error(err);
+                reject();
+            }
+            resolve(stdout.trim());
+        });
+    });
+};
+
+const getMacOSDefaultHardwarePortName = () => {
     return new Promise<string>(async (resolve, reject) => {
+        const device = String(await getMacOSDefaultNetworkInterface());
+        log.info('default interface:', device);
+
         const hardwarePortsList = await macOSNetworkSetup(['-listallhardwareports']);
-        log.info(hardwarePortsList);
+        log.info(
+            'hardware ports list: ',
+            String(hardwarePortsList).replace(/Ethernet Address: [0-9a-f:]+/g, '<EthernetAddress>')
+        );
 
-        const hardwarePortRegex = /Hardware Port: (.*)/;
-        const match = String(hardwarePortsList).match(hardwarePortRegex);
+        const lines = String(hardwarePortsList).split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
 
-        if (match) {
-            const hardwarePort = match[1];
-            log.info(`Hardware Port: ${hardwarePort}`);
-            resolve(hardwarePort);
-        } else {
-            log.error('Hardware Port not found.');
-            reject();
+            if (line.startsWith('Device:') && line.endsWith(device)) {
+                const hardwarePortLine = lines[i - 1].trim();
+                if (hardwarePortLine.startsWith('Hardware Port:')) {
+                    resolve(hardwarePortLine.split(': ')[1]);
+                }
+            }
         }
+        resolve('not-found');
     });
 };
 
@@ -125,7 +146,8 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
-            const hardwarePort = await getMacOSHardwarePortName();
+            const hardwarePort = await getMacOSDefaultHardwarePortName();
+            log.info('using hardwarePort:', hardwarePort);
 
             try {
                 await macOSNetworkSetup([
@@ -204,7 +226,8 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
-            const hardwarePort = await getMacOSHardwarePortName();
+            const hardwarePort = await getMacOSDefaultHardwarePortName();
+            log.info('using hardwarePort:', hardwarePort);
             try {
                 await macOSNetworkSetup(['-setsocksfirewallproxy', hardwarePort, 'off']);
                 await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'off']);
