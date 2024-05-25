@@ -3,7 +3,15 @@
 </div>
 
 <div align="center">
-    <p><small> <a href="README.md">English</a></small></p>
+    <p>
+        <a href="README.md">
+            <img src='assets/img/flags/gb.svg' alt='English' style='width: 20px;height: 15px;border-radius: 3px;' />
+            <small>English</small>
+        </a>
+        | 
+       <img src='assets/img/flags/ir.svg' alt='Persian' style='width: 20px;height: 15px;border-radius: 3px;' />
+        <small>فارسی</small>
+    </p>
 </div>
 
 > [!TIP]
