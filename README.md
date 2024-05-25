@@ -1,6 +1,14 @@
-# Oblivion Desktop
+<div align="center">
+    <h1>Oblivion Desktop</h1>
+</div>
 
-Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
+<div align="center">
+    <p><small> <a href="README-fa.md">داکیومنت فارسی</a></small></p>
+</div>
+
+
+> [!IMPORTANT]
+> Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
 
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
@@ -59,8 +67,8 @@ technology
             <td>System Tray</td>
             <td>
                 :white_check_mark:  Minimize<br>
-                :white_large_square: Shortcuts<br>
-                :white_large_square: BootUp
+                :white_check_mark: BootUp<br>
+                :white_large_square: Shortcuts
             </td>
         </tr>
         <tr>
@@ -122,11 +130,10 @@ technology
         <tr>
             <td>macOS</td>
             <td>
-                <small>Coming Soon ...</small>
-                <!-- <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/ZIP-arm64-bc544b.svg?logo=apple" /></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/ZIP-x64-bc544b.svg?logo=apple" /></a><br> -->
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/ZIP-x64-bc544b.svg?logo=apple" /></a>
             </td>
             <td></td>
         </tr>
@@ -161,8 +168,8 @@ technology
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
 suggest features, or need some help, we'd love to hear from you!  
 Check out
-our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md) and [Developer Docs](DOCS.md).
-
+our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md)
+and [Developer Docs](DOCS.md).
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
