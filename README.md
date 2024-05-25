@@ -14,11 +14,10 @@
     </p>
 </div>
 
-> [!TIP]
-> Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
-
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
+
+> Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
 
 <b>"Internet, for all or none!"</b>
 
