@@ -2,8 +2,12 @@
     <h1>Oblivion Desktop</h1>
 </div>
 
+<div align="center">
+    <p><small> <a href="README.md">English</a></small></p>
+</div>
 
-نسخه‌ی غیررسمی از [Oblivion](https://github.com/bepass-org/oblivion)
+> [!TIP]
+> نسخه‌ی غیررسمی از [Oblivion](https://github.com/bepass-org/oblivion)
 
 اوبلیویون دسترسی امن و بهینه به اینترنت را از طریق یک اپلیکیشن کاربرپسند برای ویندوز، مک و لینوکس با استفاده از فناوری
 Cloudflare Warp فراهم می‌کند.
