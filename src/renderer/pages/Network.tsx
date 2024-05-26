@@ -12,6 +12,8 @@ import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import Tabs from '../components/Tabs';
+import { toPersianNumber } from '../lib/toPersianNumber';
+import RoutingRulesModal from '../components/Modal/RoutingRules';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
@@ -27,6 +29,8 @@ export default function Options() {
     const [appLang] = useState(getLang());
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [dns, setDns] = useState<undefined | boolean>();
+    const [routingRules, setRoutingRules] = useState();
+    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
 
     useEffect(() => {
         settings.get('ipData').then((value) => {
@@ -47,7 +51,18 @@ export default function Options() {
         settings.get('dns').then((value) => {
             setDns(typeof value === 'undefined' ? defaultSettings.dns : value);
         });
+        settings.get('routingRules').then((value) => {
+            setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
+        });
     }, []);
+
+    const countRoutingRules = (value: any) => {
+        if (value === '') {
+            return 'غیرفعال';
+        }
+        const lines = value.split('\n');
+        return lines?.length > 0 ? toPersianNumber(lines.length) + ' مورد' : 'غیرفعال';
+    };
 
     if (
         typeof ipData === 'undefined' ||
@@ -55,7 +70,8 @@ export default function Options() {
         //typeof autoSetProxy === 'undefined' ||
         typeof proxyMode === 'undefined' ||
         typeof shareVPN === 'undefined' ||
-        typeof dns === 'undefined'
+        typeof dns === 'undefined' ||
+        typeof routingRules === 'undefined'
     )
         return (
             <>
@@ -79,6 +95,18 @@ export default function Options() {
                 isOpen={showPortModal}
                 onClose={() => {
                     setShowPortModal(false);
+                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+                }}
+            />
+            <RoutingRulesModal
+                {...{
+                    routingRules,
+                    setRoutingRules
+                }}
+                title={appLang?.settings?.routing_rules}
+                isOpen={showRoutingRulesModal}
+                onClose={() => {
+                    setShowRoutingRulesModal(false);
                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                 }}
             />
@@ -115,7 +143,7 @@ export default function Options() {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
                                             settings.set('ipData', false);
@@ -144,12 +172,26 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
                     <div
+                        className='item'
+                        onClick={() => {
+                            setShowRoutingRulesModal(true);
+                        }}
+                    >
+                        <label className='key'>{appLang?.settings?.routing_rules}</label>
+                        <div className='value'>
+                            <span className='dirLeft' dir='rtl'>
+                                {countRoutingRules(routingRules)}
+                            </span>
+                        </div>
+                        <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
+                    </div>
+                    <div
                         className={classNames('item', shareVPN ? 'checked' : '')}
                         onClick={() => {
                             setShareVPN(!shareVPN);
                             settings.set('shareVPN', !shareVPN);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             }, 1000);
                         }}

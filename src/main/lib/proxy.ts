@@ -122,6 +122,22 @@ const getMacOSActiveNetworkHardwarePort = () => {
     });
 };
 
+const setRoutingRules = (value: any) => {
+    const defValue = 'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
+    if (typeof value === 'string' && value !== '') {
+        const myRules = value
+            .replace(/domain:/g, '')
+            .replace(/geoip:/g, '')
+            .replace(/\n|<br>/g, '')
+            .trim();
+        log.info('Routing Rules: Customized');
+        return defValue + ',' + myRules;
+    } else {
+        log.info('Routing Rules: Default');
+        return defValue;
+    }
+};
+
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
@@ -136,6 +152,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     //const proxyMode = (await settings.get('proxyMode')) || defaultSettings.proxyMode;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
+    const routingRules = (await settings.get('routingRules'));
 
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
@@ -156,7 +173,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         ProxyOverride: {
                             type: 'REG_SZ',
                             // TODO read from user settings
-                            value: 'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
+                            value: String(setRoutingRules(routingRules))
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
@@ -194,8 +211,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     '-setproxybypassdomains',
                     hardwarePort,
                     // TODO read from user settings
-
-                    'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>'
+                    String(setRoutingRules(routingRules))
                 ]);
                 await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'on']);
                 log.info('system proxy has been set.');
