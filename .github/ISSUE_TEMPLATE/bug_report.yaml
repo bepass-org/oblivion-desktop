@@ -9,8 +9,8 @@ body:
     - type: checkboxes
       id: confirm-search
       attributes:
-          label: Search first | ابتدا جستجو کنید
-          description: Please search [existing issues](https://github.com/bepass-org/oblivion-desktop/issues) before reporting.
+          label: Attention | توجه
+          description: Please search [existing issues](https://github.com/bepass-org/oblivion-desktop/issues) before reporting | لطفا قبل از ارسال گزارش [ایشوهای موجود را](https://github.com/bepass-org/oblivion-desktop/issues) بررسی کنید.
           options:
               - label: I searched and no similar issues were found | جستجو کردم و هیچ گزارش مشابهی پیدا نشد
                 required: true
