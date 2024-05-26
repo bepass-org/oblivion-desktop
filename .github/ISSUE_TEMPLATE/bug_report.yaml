@@ -4,13 +4,13 @@ body:
     - type: markdown
       attributes:
           value: |
-              Please make sure to provide a descriptive, deterministic, and reproducible report. It saves time for both the developers and users who are looking for solutions. Providing as much information as possible, including screenshots and logs, is highly appreciated. This will help us to better understand the issue and respond more effectively.
+              Please make sure to provide a descriptive report. It saves time for both the developers and users who are looking for solutions. Providing as much information as possible, including screenshots and logs, is highly appreciated. This will help us to better understand the issue and respond more effectively.
 
-              Please DO NOT use this template to ask questions. There are other appropriate channels to ask questions. This template is strictly for reporting bugs.
+              لطفا مطمئن شوید که گزارشی تشریحی ارائه دهید. این باعث می‌شود که برنامه‌نویسان و کاربرانی که در جستجوی راهکارها هستند، زمان کمتری صرف کنند. ارائه اطلاعات بیشتر از جمله اسکرین‌شات و لاگ توصیه می‌شود. این باعث می‌شود که ما بهتر بتوانیم مشکل را درک کرده و به‌صورت بهتر پاسخ دهیم.
     - type: checkboxes
       id: confirm-search
       attributes:
-          label: Search first
+          label: Search first | ابتدا جستجو کنید
           description: Please search [existing issues](https://github.com/bepass-org/oblivion-desktop/issues) before reporting.
           options:
               - label: I searched and no similar issues were found
