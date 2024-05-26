@@ -58,9 +58,7 @@ export default function EndpointModal({
                                         endpointInput === defValue ? 'hidden' : ''
                                     )}
                                     onClick={(e) => {
-                                        setEndpointInput(
-                                            defValue
-                                        );
+                                        setEndpointInput(defValue);
                                     }}
                                 >
                                     <i className='material-icons'>&#xe145;</i>
@@ -73,9 +71,7 @@ export default function EndpointModal({
                                         endpointInput === suggestion ? 'hidden' : ''
                                     )}
                                     onClick={(e) => {
-                                        setEndpointInput(
-                                            suggestion
-                                        );
+                                        setEndpointInput(suggestion);
                                     }}
                                 >
                                     <i className='material-icons'>&#xe145;</i>
