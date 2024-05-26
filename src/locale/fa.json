@@ -96,6 +96,8 @@
         "restore_title": "بازگردانی تغییرات",
         "restore_desc": "با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به\u200Cحالت پیشفرض بازگشته و اتصال شما قطع می\u200Cگردد.",
         "routing_rules_sample": "نمونه",
+        "endpoint_default": "پیشفرض",
+        "endpoint_suggested": "پیشنهادی",
         "confirm": "تایید می\u200Cکنم",
         "update": "بروزرسانی",
         "cancel": "انصراف"

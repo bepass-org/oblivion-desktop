@@ -96,6 +96,8 @@
         "restore_title": "恢复更改",
         "restore_desc": "确认恢复更改操作后，所有程序设置将返回默认状态，并且您的连接将断开。",
         "routing_rules_sample": "示例",
+        "endpoint_default": "默认",
+        "endpoint_suggested": "建议",
         "confirm": "确认",
         "update": "更新",
         "cancel": "取消"
