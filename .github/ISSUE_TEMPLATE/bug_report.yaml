@@ -5,8 +5,7 @@ body:
       attributes:
           value: |
               Please make sure to provide a descriptive report. It saves time for both the developers and users who are looking for solutions. Providing as much information as possible, including screenshots and logs, is highly appreciated. This will help us to better understand the issue and respond more effectively.
-
-              لطفا مطمئن شوید که گزارشی تشریحی ارائه دهید. این باعث می‌شود که برنامه‌نویسان و کاربرانی که در جستجوی راهکارها هستند، زمان کمتری صرف کنند. ارائه اطلاعات بیشتر از جمله اسکرین‌شات و لاگ توصیه می‌شود. این باعث می‌شود که ما بهتر بتوانیم مشکل را درک کرده و به‌صورت بهتر پاسخ دهیم.
+              لطفا مطمئن شوید که گزارشی تشریحی ارائه دهید. این باعث می‌شود که توسعه‌دهندگان و کاربرانی که در جستجوی راهکارها هستند، زمان کمتری صرف کنند. ارائه اطلاعات بیشتر از جمله اسکرین‌شات و لاگ توصیه می‌شود. این باعث می‌شود که ما بهتر بتوانیم مشکل را درک کرده و به‌صورت بهتر پاسخ دهیم.
     - type: checkboxes
       id: confirm-search
       attributes:
