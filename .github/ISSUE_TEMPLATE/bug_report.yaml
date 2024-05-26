@@ -18,8 +18,7 @@ body:
       id: problem
       attributes:
           label: What Happened? | چه اتفاقی افتاده؟
-          description: |
-              Please provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner.
+          description: Please provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner.
               لطفاً اطلاعات کاملی را ارائه دهید. اگر این کار را انجام ندهید، ممکن است مشکل شما به صورت تمام شده تلقی شده یا در زمان مناسبی بررسی نشود.
       validations:
           required: true
@@ -36,7 +35,8 @@ body:
       id: logs
       attributes:
           label: Relevant log output | لاگ برنامه
-          description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+          description: Refer to the program menu, copy the log, and send it to us.
+          به منوی برنامه رجوع کرده و لاگ آن‌را کپی کرده و برایمان بفرستید.
           render: shell
       validations:
           required: true
