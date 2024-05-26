@@ -1270,13 +1270,21 @@ html[data-bs-theme="dark"] .shimmer {
     margin: 0;
 }
 
-.dialog .dialogBox .labels .label {
+[dir="ltr"] .dialog .dialogBox .labels {
     float: right;
+}
+
+.dialog .dialogBox .labels .label {
+    float: left;
     border-radius: 25px;
     font-weight: 200;
     padding: 3px 7px;
-    margin: 0;
+    margin: 0 5px 0 0;
     cursor: pointer;
+}
+
+[dir="ltr"] .dialog .dialogBox .labels .label {
+    float: right;
 }
 
 [data-bs-theme="dark"] .dialog .dialogBox .labels .label {
@@ -1287,6 +1295,11 @@ html[data-bs-theme="dark"] .shimmer {
     float: right;
     font-size: 14px;
     margin: -1px -2px 0 3px;
+}
+
+[dir="ltr"] .dialog .dialogBox .labels .label i {
+    float: left;
+    margin: -1px 3px 0 -2px;
 }
 
 .dialog .dialogBox .btn {
