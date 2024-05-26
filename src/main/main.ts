@@ -25,6 +25,7 @@ import { logMetadata } from './ipcListeners/log';
 let mainWindow: BrowserWindow | null = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
+const appTitle = 'Oblivion Desktop' + (process.env.NODE_ENV === 'development' ? ' ᴅᴇᴠ' : '');
 
 export const binAssetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -106,6 +107,7 @@ if (!gotTheLock) {
         const windowHeight = 650;
 
         const config: any = {
+            title: appTitle,
             show: false,
             width: windowWidth,
             height: windowHeight,
@@ -211,7 +213,7 @@ if (!gotTheLock) {
             });
             const contextMenu = Menu.buildFromTemplate([
                 {
-                    label: 'Oblivion Desktop',
+                    label: appTitle,
                     type: 'normal',
                     click: () => {
                         if (!mainWindow) {
@@ -260,7 +262,7 @@ if (!gotTheLock) {
                 }
             ]);
             contextMenu.items[1].checked = false;
-            appIcon.setToolTip('Oblivion Desktop');
+            appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(contextMenu);
         });
 
