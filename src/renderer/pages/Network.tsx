@@ -58,10 +58,10 @@ export default function Options() {
 
     const countRoutingRules = (value: any) => {
         if (value === '') {
-            return 'غیرفعال';
+            return appLang?.settings?.routing_rules_disabled;
         }
         const lines = value.split('\n');
-        return lines?.length > 0 ? toPersianNumber(lines.length) + ' مورد' : 'غیرفعال';
+        return lines?.length > 0 ? toPersianNumber(lines.length) + ' ' + appLang?.settings?.routing_rules_items : appLang?.settings?.routing_rules_disabled;
     };
 
     if (

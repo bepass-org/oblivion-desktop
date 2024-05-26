@@ -71,7 +71,7 @@
         "restore": "Wiederherstellen",
         "restore_desc": "Einstellungen auf Standard zurücksetzen",
         "scanner": "Scannereinstellungen",
-        "scanner_alert": "Der Scanner ist aktiviert, wenn Sie die Standard-Endpunktadresse verwenden.",
+        "scanner_alert": "Der Scanner ist aktiviert, wenn Sie die Standard-Endpunktadresse verwenden",
         "scanner_ip_type": "Endpunkttyp",
         "scanner_ip_type_auto": "Automatisch",
         "scanner_ip_type_desc": "IP des Endpunkts automatisch finden",
@@ -79,7 +79,9 @@
         "scanner_rtt_default": "Standard",
         "scanner_rtt_desc": "RTT-Limit des Scanners",
         "routing_rules": "Schwarze Liste",
-        "routing_rules_desc": "Verhindern Sie, dass Datenverkehr durch Warp geleitet wird."
+        "routing_rules_desc": "Verhindern Sie, dass Datenverkehr durch Warp geleitet wird",
+        "routing_rules_disabled": "Deaktiviert",
+        "routing_rules_items": "Elemente"
     },
     "tabs": {
         "home": "Verbinden",
