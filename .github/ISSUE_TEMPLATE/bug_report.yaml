@@ -36,8 +36,7 @@ body:
       id: logs
       attributes:
           label: Relevant log output | لاگ برنامه
-          description: Refer to the program menu and copy the log and send it to us
-| به منوی برنامه رجوع کرده و لاگ آن‌را کپی کرده و برایمان بفرستید
+          description: Refer to the program menu and copy the log and send it to us.
           render: shell
       validations:
           required: true
