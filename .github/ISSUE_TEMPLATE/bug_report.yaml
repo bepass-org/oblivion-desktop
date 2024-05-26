@@ -10,7 +10,7 @@ body:
       id: confirm-search
       attributes:
           label: Attention | توجه
-          description: Please search [existing issues](https://github.com/bepass-org/oblivion-desktop/issues) before reporting | لطفا قبل از ارسال گزارش [ایشوهای موجود را](https://github.com/bepass-org/oblivion-desktop/issues) بررسی کنید.
+          description: Please search [existing issues](https://github.com/bepass-org/oblivion-desktop/issues) before reporting | لطفا قبل از ارسال گزارش [ایشوهای موجود](https://github.com/bepass-org/oblivion-desktop/issues) را بررسی کنید.
           options:
               - label: I searched and no similar issues were found | جستجو کردم و هیچ گزارش مشابهی پیدا نشد
                 required: true
@@ -27,8 +27,6 @@ body:
       id: reproduce
       attributes:
           label: Minimal Reproducible Example | چه پروسه‌ای برای مشاهده این مشکل طی کرده‌اید؟
-          description: |
-              Please tell us the steps to reproduce the bug. A [Minimal Reproducible Example (MRE)](https://stackoverflow.com/help/minimal-reproducible-example) is needed.
           placeholder: |
               1. Go to '...'
               2. Click on '....'
