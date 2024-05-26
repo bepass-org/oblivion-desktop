@@ -35,14 +35,6 @@ body:
       validations:
           required: true
     - type: textarea
-      id: expected
-      attributes:
-          label: Expected Behavior | پروسه صحیح باید چگونه باشد؟
-          description: |
-              Please tell us what's the behavior you expect.
-      validations:
-          required: false
-    - type: textarea
       id: logs
       attributes:
           label: Relevant log output | لاگ برنامه
