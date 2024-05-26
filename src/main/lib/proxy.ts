@@ -90,40 +90,39 @@ const getMacOSDefaultHardwarePortName = () => {
 
 const getMacOSActiveNetworkHardwarePort = () => {
     return new Promise<string>(async (resolve, reject) => {
-      try {
-        const devicesList = await macOSNetworkSetup(["-listnetworkserviceorder"]);
-        log.info(devicesList);
-        const activeDeviceRegex = /\(Hardware Port: (.+), Device: (en\d)\)/g;
-        let match;
-        let activeHardwarePort = null;
-        while (true) {
-          match = activeDeviceRegex.exec(devicesList as string);
-          if (match === null) break;
-          const hardwarePort = match[1];
-          const device = match[2];
-          const isDisabled = new RegExp(`\\*\\s*${hardwarePort}`).test(
-            devicesList as string
-          );
-          if (!isDisabled) {
-            activeHardwarePort = hardwarePort;
-            break;
-          }
+        try {
+            const devicesList = await macOSNetworkSetup(['-listnetworkserviceorder']);
+            log.info(devicesList);
+            const activeDeviceRegex = /\(Hardware Port: (.+), Device: (en\d)\)/g;
+            let match;
+            let activeHardwarePort = null;
+            while (true) {
+                match = activeDeviceRegex.exec(devicesList as string);
+                if (match === null) break;
+                const hardwarePort = match[1];
+                const device = match[2];
+                const isDisabled = new RegExp(`\\*\\s*${hardwarePort}`).test(devicesList as string);
+                if (!isDisabled) {
+                    activeHardwarePort = hardwarePort;
+                    break;
+                }
+            }
+            if (activeHardwarePort) {
+                log.info(`Active Hardware Port: ${activeHardwarePort}`);
+                resolve(activeHardwarePort);
+            } else {
+                log.error('Active Network Device not found.');
+            }
+        } catch (error) {
+            log.error(`Error: ${error}`);
+            reject(error);
         }
-        if (activeHardwarePort) {
-          log.info(`Active Hardware Port: ${activeHardwarePort}`);
-          resolve(activeHardwarePort);
-        } else {
-          log.error("Active Network Device not found.");
-        }
-      } catch (error) {
-        log.error(`Error: ${error}`);
-        reject(error);
-      }
     });
 };
 
 const setRoutingRules = (value: any) => {
-    const defValue = 'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
+    const defValue =
+        'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
     if (typeof value === 'string' && value !== '') {
         const myRules = value
             .replace(/domain:/g, '')
@@ -152,7 +151,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     //const proxyMode = (await settings.get('proxyMode')) || defaultSettings.proxyMode;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
-    const routingRules = (await settings.get('routingRules'));
+    const routingRules = await settings.get('routingRules');
 
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
