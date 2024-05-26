@@ -32,11 +32,11 @@ body:
               2. Click on '....'
               3. Scroll down to '....'
               4. See error
-      validations:
-          required: true
     - type: textarea
       id: logs
       attributes:
           label: Relevant log output | لاگ برنامه
           description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
           render: shell
+      validations:
+          required: true
