@@ -77,7 +77,9 @@
         "scanner_ip_type_desc": "Чтобы найти IP конечной точки",
         "scanner_rtt": "Интервал",
         "scanner_rtt_default": "По умолчанию",
-        "scanner_rtt_desc": "Ограничение RTT сканера"
+        "scanner_rtt_desc": "Ограничение RTT сканера",
+        "routing_rules": "Черный список",
+        "routing_rules_desc": "Предотвращать прохождение трафика через искажение"
     },
     "tabs": {
         "home": "Связь",

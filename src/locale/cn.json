@@ -77,7 +77,9 @@
         "scanner_ip_type_desc": "查找端点 IP",
         "scanner_rtt": "间隔",
         "scanner_rtt_default": "默认",
-        "scanner_rtt_desc": "扫描仪 RTT 限制"
+        "scanner_rtt_desc": "扫描仪 RTT 限制",
+        "routing_rules": "黑名单",
+        "routing_rules_desc": "防止流量经过扭曲"
     },
     "tabs": {
         "home": "连接",

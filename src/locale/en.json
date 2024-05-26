@@ -77,7 +77,9 @@
         "scanner_ip_type_desc": "To find endpoint IP",
         "scanner_rtt": "Interval",
         "scanner_rtt_default": "Default",
-        "scanner_rtt_desc": "Scanner RTT limit"
+        "scanner_rtt_desc": "Scanner RTT limit",
+        "routing_rules": "Blacklist",
+        "routing_rules_desc": "Prevent traffic from going through warp"
     },
     "tabs": {
         "home": "Connect",

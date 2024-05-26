@@ -77,7 +77,9 @@
         "scanner_ip_type_desc": "جهت یافتن IP اندپوینت",
         "scanner_rtt": "وقفه زمانی",
         "scanner_rtt_default": "Default",
-        "scanner_rtt_desc": "تعیین میزان RTT"
+        "scanner_rtt_desc": "تعیین میزان RTT",
+        "routing_rules": "لیست سیاه",
+        "routing_rules_desc": "جلوگیری از عبور ترافیک از وارپ"
     },
     "tabs": {
         "home": "اتصال",
