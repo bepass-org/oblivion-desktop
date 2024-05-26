@@ -79,7 +79,9 @@
         "scanner_rtt_default": "По умолчанию",
         "scanner_rtt_desc": "Ограничение RTT сканера",
         "routing_rules": "Черный список",
-        "routing_rules_desc": "Предотвращать прохождение трафика через искажение"
+        "routing_rules_desc": "Предотвращать прохождение трафика через искажение",
+        "routing_rules_disabled": "Отключено",
+        "routing_rules_items": "Предметы"
     },
     "tabs": {
         "home": "Связь",

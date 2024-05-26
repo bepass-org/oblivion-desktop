@@ -79,7 +79,9 @@
         "scanner_rtt_default": "Default",
         "scanner_rtt_desc": "Scanner RTT limit",
         "routing_rules": "Blacklist",
-        "routing_rules_desc": "Prevent traffic from going through warp"
+        "routing_rules_desc": "Prevent traffic from going through warp",
+        "routing_rules_disabled": "Disabled",
+        "routing_rules_items": "Items"
     },
     "tabs": {
         "home": "Connect",
