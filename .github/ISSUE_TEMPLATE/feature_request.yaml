@@ -7,9 +7,10 @@ body:
       attributes:
           value: |
               Here is a template you can use to share your idea.
+              اینجا یک قالب برای شما است که می‌توانید از آن برای اشتراک ایده خود استفاده کنید.
     - type: textarea
       attributes:
-          label: Feature description
-          description: Please provide a clear and concise description of what you want to happen and what problem will this solve.
+          label: Feature description | توضیحات ویژگی
+          description: Please provide a clear and concise description of what you want to happen and what problem will this solve | لطفاً توضیحات روشن و کوتاهی از آنچه که می‌خواهید رخ دهد و مشکلی که پیش می‌آید را حل کنید، ارائه دهید.
       validations:
           required: true
