@@ -45,19 +45,6 @@ body:
               Please tell us what's the behavior you expect.
       validations:
           required: false
-    - type: dropdown
-      id: platform
-      attributes:
-          label: Platform/OS
-          description: What platform are you seeing the problem on?
-          multiple: true
-          options:
-              - Windows
-              - macOS
-              - Linux
-              - Other
-      validations:
-          required: true
     - type: textarea
       id: logs
       attributes:
