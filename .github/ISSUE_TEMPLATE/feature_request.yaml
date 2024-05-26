@@ -7,7 +7,7 @@ body:
       attributes:
           value: |
               Here is a template you can use to share your idea.
-              اینجا یک قالب برای شما است که می‌توانید از آن برای اشتراک ایده خود استفاده کنید.
+              اینجا می‌توانید ایده خود به اشتراک بگذارید.
     - type: textarea
       attributes:
           label: Feature description | توضیحات ویژگی
