@@ -57,7 +57,13 @@ export default function PortModal({
                             }}
                         />
                         <div className='clearfix' />
-                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                        <div
+                            className={classNames('btn', 'btn-cancel')}
+                            onClick={() => {
+                                setPortInput(port);
+                                onClose();
+                            }}
+                        >
                             {appLang?.modal?.cancel}
                         </div>
                         <div

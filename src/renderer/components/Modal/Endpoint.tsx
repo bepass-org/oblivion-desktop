@@ -57,7 +57,13 @@ export default function EndpointModal({
                             }}
                         />
                         <div className='clearfix' />
-                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                        <div
+                            className={classNames('btn', 'btn-cancel')}
+                            onClick={() => {
+                                setEndpointInput(endpoint);
+                                onClose();
+                            }}
+                        >
                             {appLang?.modal?.cancel}
                         </div>
                         <div
