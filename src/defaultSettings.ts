@@ -20,6 +20,9 @@ export type settingsKeys =
     | 'rtt'
     | 'openAtLogin';
 
+const date = new Date();
+const getTimeZone = date?.toString().toLowerCase();
+
 export const defaultSettings = {
     scan: true,
     endpoint: 'engage.cloudflareclient.com:2408',
@@ -28,7 +31,7 @@ export const defaultSettings = {
     location: '',
     license: '',
     theme: 'light',
-    lang: 'fa',
+    lang: (getTimeZone?.includes('iran') ? 'fa' : 'en'),
     systemTray: false,
     flag: 'xx',
     ipData: true,
