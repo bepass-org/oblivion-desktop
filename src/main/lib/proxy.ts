@@ -52,7 +52,7 @@ const macOSNetworkSetup = (args: string[]) => {
 
 const getMacOSActiveNetworkHardwarePorts = () => {
     return new Promise((resolve, reject) => {
-      const command = `
+        const command = `
         for interface in $(networksetup -listallhardwareports | awk '/Device/ {print $2}'); do
           if ifconfig $interface | grep -q "inet "; then
             networksetup -listallhardwareports | awk -v iface=$interface '
@@ -61,25 +61,25 @@ const getMacOSActiveNetworkHardwarePorts = () => {
           fi
         done
       `;
-  
-      exec(command, (error, stdout, stderr) => {
-        if (error) {
-          log.error(`Error executing command: ${error}`);
-          return reject(error.toString());
-        }
-        if (stderr) {
-          log.error(`Error in command output: ${stderr}`);
-          return reject(stderr.toString());
-        }
-        const results = stdout.trim().split('\n'); // Get all active hardware ports
-        if (results.length > 0) {
-          log.info(`Active Hardware Ports: ${results.join(', ')}`);
-          resolve(results);
-        } else {
-          log.error("Active Network Devices not found.");
-          reject("Active Network Devices not found.");
-        }
-      });
+
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                log.error(`Error executing command: ${error}`);
+                return reject(error.toString());
+            }
+            if (stderr) {
+                log.error(`Error in command output: ${stderr}`);
+                return reject(stderr.toString());
+            }
+            const results = stdout.trim().split('\n'); // Get all active hardware ports
+            if (results.length > 0) {
+                log.info(`Active Hardware Ports: ${results.join(', ')}`);
+                resolve(results);
+            } else {
+                log.error('Active Network Devices not found.');
+                reject('Active Network Devices not found.');
+            }
+        });
     });
 };
 
@@ -134,7 +134,6 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         },
                         ProxyOverride: {
                             type: 'REG_SZ',
-                            // TODO read from user settings
                             value: String(setRoutingRules(routingRules))
                         },
                         AutoConfigURL: {
@@ -159,32 +158,37 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
-            const hardwarePorts: string[] = await getMacOSActiveNetworkHardwarePorts() as string[];
+            const hardwarePorts: string[] =
+                (await getMacOSActiveNetworkHardwarePorts()) as string[];
             log.info('using hardwarePort:', hardwarePorts);
             hardwarePorts.forEach(async (hardwarePort) => {
                 log.info('using hardwarePort:', hardwarePort);
-          
+
                 try {
-                  await macOSNetworkSetup([
-                    '-setsocksfirewallproxy',
-                    hardwarePort,
-                    hostIP.toString(),
-                    port.toString()
-                  ]);
-                  await macOSNetworkSetup([
-                    '-setproxybypassdomains',
-                    hardwarePort,
-                    // TODO read from user settings
-                    String(setRoutingRules(routingRules))
-                ]);
-                  await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'on']);
-                  log.info(`System proxy has been set for ${hardwarePort}.`);
+                    await macOSNetworkSetup([
+                        '-setsocksfirewallproxy',
+                        hardwarePort,
+                        hostIP.toString(),
+                        port.toString()
+                    ]);
+                    await macOSNetworkSetup([
+                        '-setproxybypassdomains',
+                        hardwarePort,
+                        String(setRoutingRules(routingRules))
+                    ]);
+                    await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'on']);
+                    log.info(`System proxy has been set for ${hardwarePort}.`);
                 } catch (error) {
-                  log.error(`Error while trying to set system proxy for ${hardwarePort}: ${error}`);
-                  ipcEvent?.reply('guide-toast', `پیکربندی پروکسی برای ${hardwarePort} با خطا روبرو شد!`);
+                    log.error(
+                        `Error while trying to set system proxy for ${hardwarePort}: ${error}`
+                    );
+                    ipcEvent?.reply(
+                        'guide-toast',
+                        `پیکربندی پروکسی برای ${hardwarePort} با خطا روبرو شد!`
+                    );
                 }
-              });
-              resolve();
+            });
+            resolve();
         });
     } else {
         return new Promise<void>((resolve, reject) => {
@@ -240,31 +244,24 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
         });
     } else if (process.platform === 'darwin') {
         return new Promise<void>(async (resolve, reject) => {
-            const hardwarePorts: string[] = await getMacOSActiveNetworkHardwarePorts() as string[];
+            const hardwarePorts: string[] =
+                (await getMacOSActiveNetworkHardwarePorts()) as string[];
             log.info('using hardwarePort:', hardwarePorts);
             hardwarePorts.forEach(async (hardwarePort) => {
                 log.info('using hardwarePort:', hardwarePort);
-          
+
                 try {
-                  await macOSNetworkSetup([
-                    '-setsocksfirewallproxy',
-                    hardwarePort,
-                    ''
-                  ]);
-                  await macOSNetworkSetup([
-                    '-setsocksfirewallproxystate',
-                    hardwarePort,
-                    'off'
-                  ]);
-                  log.info('system proxy has been disabled on your system.');
-                  resolve();
+                    await macOSNetworkSetup(['-setsocksfirewallproxy', hardwarePort, '']);
+                    await macOSNetworkSetup(['-setsocksfirewallproxystate', hardwarePort, 'off']);
+                    log.info('system proxy has been disabled on your system.');
+                    resolve();
                 } catch (error) {
-                  log.error(`error while trying to disable system proxy: , ${error}`);
-                  reject(error);
-                  ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                    log.error(`error while trying to disable system proxy: , ${error}`);
+                    reject(error);
+                    ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
                 }
-              });
-              resolve();
+            });
+            resolve();
         });
     } else {
         return new Promise<void>((resolve, reject) => {
