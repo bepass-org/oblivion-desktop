@@ -15,6 +15,7 @@ import { ipcRenderer, onEscapeKeyPressed } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
 import { checkNewUpdate } from '../lib/checkNewUpdate';
 import { cfFlag } from '../lib/cfFlag';
+import { isDev } from '../lib/utils';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -53,23 +54,26 @@ export default function Index() {
     const navigate = useNavigate();
 
     const fetchReleaseVersion = async () => {
-        //const versionRegex = /\d+(\.\d+)+/;
-        try {
-            const response = await fetch(
-                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases'
-            );
-            if (response.ok) {
-                const data = await response.json();
-                const latestVersion = String(data[0]?.name);
-                const appVersion = String(packageJsonData?.version);
-                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
-                    hasNewUpdate = true;
+        if (!isDev()) {
+            try {
+                const response = await fetch(
+                    'https://api.github.com/repos/bepass-org/oblivion-desktop/releases'
+                );
+                if (response.ok) {
+                    const data = await response.json();
+                    const latestVersion = String(data[0]?.name);
+                    const appVersion = String(packageJsonData?.version);
+                    if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
+                        hasNewUpdate = true;
+                    }
+                } else {
+                    console.error('Failed to fetch release version:', response.statusText);
                 }
-            } else {
-                console.error('Failed to fetch release version:', response.statusText);
+            } catch (error) {
+                console.error('Failed to fetch release version:', error);
             }
-        } catch (error) {
-            console.error('Failed to fetch release version:', error);
+        } else {
+            hasNewUpdate = false;
         }
     };
 
