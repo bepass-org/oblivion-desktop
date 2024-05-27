@@ -31,7 +31,7 @@ export const defaultSettings = {
     location: '',
     license: '',
     theme: 'light',
-    lang: (getTimeZone?.includes('iran') ? 'fa' : 'en'),
+    lang: getTimeZone?.includes('iran') ? 'fa' : 'en',
     systemTray: false,
     flag: 'xx',
     ipData: true,
