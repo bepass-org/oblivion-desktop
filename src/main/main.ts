@@ -25,7 +25,7 @@ import { logMetadata } from './ipcListeners/log';
 let mainWindow: BrowserWindow | null = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
-const appTitle = 'Oblivion Desktop' + (process.env.NODE_ENV === 'development' ? ' ᴅᴇᴠ' : '');
+const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
 
 export const binAssetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -56,13 +56,13 @@ if (!gotTheLock) {
         log.info('wp binary was copied to userData directory.');
     });
 
-    if (process.env.NODE_ENV === 'production') {
+    if (!isDev()) {
         const sourceMapSupport = require('source-map-support');
         sourceMapSupport.install();
     }
 
     const resolveHtmlPath = (htmlFileName: string) => {
-        if (process.env.NODE_ENV === 'development') {
+        if (isDev()) {
             const port = process.env.PORT || 1212;
             const url = new URL(`http://localhost:${port}`);
             url.pathname = htmlFileName;
@@ -71,7 +71,7 @@ if (!gotTheLock) {
         return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
     };
 
-    const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+    const isDebug = isDev() || process.env.DEBUG_PROD === 'true';
 
     if (isDebug && openDevToolsByDefault) {
         require('electron-debug')();
