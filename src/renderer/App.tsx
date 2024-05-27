@@ -11,10 +11,8 @@ import Index from './pages/Index';
 import SplashScreen from './pages/SplashScreen';
 import Settings from './pages/Settings';
 import Options from './pages/Options';
-import Routing from './pages/Routing';
 import About from './pages/About';
 import Debug from './pages/Debug';
-import SpeedTest from './pages/SpeedTest';
 import Scanner from './pages/Scanner';
 import Network from './pages/Network';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
@@ -35,10 +33,8 @@ export default function App() {
                     <Route path='/' element={<Index />} />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='/options' element={<Options />} />
-                    <Route path='/routing' element={<Routing />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/debug' element={<Debug />} />
-                    <Route path='/speed' element={<SpeedTest />} />
                     <Route path='/scanner' element={<Scanner />} />
                     <Route path='/network' element={<Network />} />
                 </Routes>

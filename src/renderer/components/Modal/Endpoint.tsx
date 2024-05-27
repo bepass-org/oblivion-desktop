@@ -21,6 +21,7 @@ export default function EndpointModal({
 }) {
     const [endpointInput, setEndpointInput] = useState(endpoint);
     const appLang = getLang();
+    const suggestion = '188.114.98.224:2408';
 
     const onSaveModal = () => {
         const endpointInputModified = endpointInput.replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -47,7 +48,37 @@ export default function EndpointModal({
                         <div className='line'>
                             <div className='miniLine' />
                         </div>
-                        <h3>{title}</h3>
+                        <h3>
+                            {title}
+                            <div className='labels'>
+                                <div
+                                    className={classNames(
+                                        'label',
+                                        'label-warning',
+                                        endpointInput === defValue ? 'hidden' : ''
+                                    )}
+                                    onClick={(e) => {
+                                        setEndpointInput(defValue);
+                                    }}
+                                >
+                                    <i className='material-icons'>&#xe145;</i>
+                                    {appLang?.modal?.endpoint_default}
+                                </div>
+                                <div
+                                    className={classNames(
+                                        'label',
+                                        'label-danger',
+                                        endpointInput === suggestion ? 'hidden' : ''
+                                    )}
+                                    onClick={(e) => {
+                                        setEndpointInput(suggestion);
+                                    }}
+                                >
+                                    <i className='material-icons'>&#xe145;</i>
+                                    {appLang?.modal?.endpoint_suggested}
+                                </div>
+                            </div>
+                        </h3>
                         <input
                             value={endpointInput}
                             spellCheck={false}
@@ -57,7 +88,13 @@ export default function EndpointModal({
                             }}
                         />
                         <div className='clearfix' />
-                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                        <div
+                            className={classNames('btn', 'btn-cancel')}
+                            onClick={() => {
+                                setEndpointInput(endpoint);
+                                onClose();
+                            }}
+                        >
                             {appLang?.modal?.cancel}
                         </div>
                         <div

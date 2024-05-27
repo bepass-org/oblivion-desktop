@@ -27,7 +27,7 @@ export default function RoutingRulesModal({
         }
         const lines = textareaContent.split('\n');
         const validEntriesSet = new Set();
-        const entryRegex = /^(geoip|regexp|domain|geosite):(.+)$/;
+        const entryRegex = /^(geoip|domain):(.+)$/;
         const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
         const ipRangeRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
         for (const line of lines) {
@@ -35,7 +35,7 @@ export default function RoutingRulesModal({
             if (!trimmedLine) {
                 continue;
             }
-            const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '');
+            const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '').replace(/ /g, '');
             const entry = lineWithoutQuotes.endsWith(',')
                 ? lineWithoutQuotes.slice(0, -1)
                 : lineWithoutQuotes;
@@ -55,9 +55,11 @@ export default function RoutingRulesModal({
         const checkRules = validateRules(routingRulesInput);
         if (checkRules) {
             setRoutingRules(checkRules);
+            setRoutingRulesInput(checkRules);
             settings.set('routingRules', checkRules);
         } else {
             setRoutingRules('');
+            setRoutingRulesInput('');
             settings.set('routingRules', '');
         }
         onClose();
@@ -84,7 +86,7 @@ export default function RoutingRulesModal({
                                     )}
                                     onClick={(e) => {
                                         setRoutingRulesInput(
-                                            `regexp:.*\\.ir$\ndomain:dolat.ir,\ngeosite:apple,\ngeoip:ir`
+                                            `domain:dolat.ir,\ndomain:apple.com,\ngeoip:127.0.0.1,\ndomain:*.ir`
                                         );
                                     }}
                                 >
@@ -102,7 +104,13 @@ export default function RoutingRulesModal({
                             }}
                         />
                         <div className='clearfix' />
-                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                        <div
+                            className={classNames('btn', 'btn-cancel')}
+                            onClick={() => {
+                                setRoutingRulesInput(routingRules);
+                                onClose();
+                            }}
+                        >
                             {appLang?.modal?.cancel}
                         </div>
                         <div

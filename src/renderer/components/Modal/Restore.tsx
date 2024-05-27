@@ -53,6 +53,7 @@ export default function RestoreModal({
         await settings.set('port', defaultSettings.port);
         await settings.set('proxyMode', defaultSettings.proxyMode);
         await settings.set('shareVPN', defaultSettings.shareVPN);
+        await settings.set('routingRules', defaultSettings.routingRules);
         //
         ipcRenderer.sendMessage('wp-end');
     };

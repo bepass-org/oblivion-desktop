@@ -77,7 +77,11 @@
         "scanner_ip_type_desc": "جهت یافتن IP اندپوینت",
         "scanner_rtt": "وقفه زمانی",
         "scanner_rtt_default": "Default",
-        "scanner_rtt_desc": "تعیین میزان RTT"
+        "scanner_rtt_desc": "تعیین میزان RTT",
+        "routing_rules": "لیست سیاه",
+        "routing_rules_desc": "جلوگیری از عبور ترافیک از وارپ",
+        "routing_rules_disabled": "غیرفعال",
+        "routing_rules_items": "مورد"
     },
     "tabs": {
         "home": "اتصال",
@@ -94,6 +98,8 @@
         "restore_title": "بازگردانی تغییرات",
         "restore_desc": "با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به\u200Cحالت پیشفرض بازگشته و اتصال شما قطع می\u200Cگردد.",
         "routing_rules_sample": "نمونه",
+        "endpoint_default": "پیشفرض",
+        "endpoint_suggested": "پیشنهادی",
         "confirm": "تایید می\u200Cکنم",
         "update": "بروزرسانی",
         "cancel": "انصراف"

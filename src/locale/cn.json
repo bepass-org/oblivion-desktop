@@ -77,7 +77,11 @@
         "scanner_ip_type_desc": "查找端点 IP",
         "scanner_rtt": "间隔",
         "scanner_rtt_default": "默认",
-        "scanner_rtt_desc": "扫描仪 RTT 限制"
+        "scanner_rtt_desc": "扫描仪 RTT 限制",
+        "routing_rules": "黑名单",
+        "routing_rules_desc": "防止流量经过扭曲",
+        "routing_rules_disabled": "已禁用",
+        "routing_rules_items": "项目"
     },
     "tabs": {
         "home": "连接",
@@ -94,6 +98,8 @@
         "restore_title": "恢复更改",
         "restore_desc": "确认恢复更改操作后，所有程序设置将返回默认状态，并且您的连接将断开。",
         "routing_rules_sample": "示例",
+        "endpoint_default": "默认",
+        "endpoint_suggested": "建议",
         "confirm": "确认",
         "update": "更新",
         "cancel": "取消"
