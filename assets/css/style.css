@@ -1285,6 +1285,7 @@ html[data-bs-theme="dark"] .shimmer {
 
 [dir="ltr"] .dialog .dialogBox .labels .label {
     float: right;
+    margin: 0 0 0 5px;
 }
 
 [data-bs-theme="dark"] .dialog .dialogBox .labels .label {
