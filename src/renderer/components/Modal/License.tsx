@@ -52,7 +52,13 @@ export default function LicenseModal({
                             }}
                         />
                         <div className='clearfix' />
-                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                        <div
+                            className={classNames('btn', 'btn-cancel')}
+                            onClick={() => {
+                                setLicenseInput(license);
+                                onClose();
+                            }}
+                        >
                             {appLang?.modal?.cancel}
                         </div>
                         <div

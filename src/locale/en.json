@@ -77,7 +77,11 @@
         "scanner_ip_type_desc": "To find endpoint IP",
         "scanner_rtt": "Interval",
         "scanner_rtt_default": "Default",
-        "scanner_rtt_desc": "Scanner RTT limit"
+        "scanner_rtt_desc": "Scanner RTT limit",
+        "routing_rules": "Blacklist",
+        "routing_rules_desc": "Prevent traffic from going through warp",
+        "routing_rules_disabled": "Disabled",
+        "routing_rules_items": "Items"
     },
     "tabs": {
         "home": "Connect",
@@ -94,6 +98,8 @@
         "restore_title": "Restore Changes",
         "restore_desc": "By confirming the operation of restoring the changes, all program settings will return to the default state and your connection will be disconnected.",
         "routing_rules_sample": "Sample",
+        "endpoint_default": "Default",
+        "endpoint_suggested": "suggested",
         "confirm": "I confirm",
         "update": "Update",
         "cancel": "Cancel"

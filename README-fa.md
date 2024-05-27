@@ -42,8 +42,8 @@ Cloudflare Warp فراهم می‌کند.
 
 ## ویژگی‌ها
 
-- **وی‌پی‌ان امن**: پیاده‌سازی اختصاصی WireGuard با زبان Go.
-- **کاربرپسند**: رابط کاربری ساده و آسان.
+-   **وی‌پی‌ان امن**: پیاده‌سازی اختصاصی WireGuard با زبان Go.
+-   **کاربرپسند**: رابط کاربری ساده و آسان.
 
 <p align="center">
     <img src="screenshot/oblivion.jpg" alt="oblivion.jpg">
@@ -195,9 +195,9 @@ Cloudflare Warp فراهم می‌کند.
 
 ## بیشتر بدانید
 
-* [سوالات متداول](FAQ.md)
-* [لاینسس](LICENSE.md)
-* [امنیت](SECURITY.md)
+-   [سوالات متداول](FAQ.md)
+-   [لاینسس](LICENSE.md)
+-   [امنیت](SECURITY.md)
 
 ![virustotal.jpg](screenshot/virustotal.jpg)
 
@@ -205,15 +205,15 @@ Cloudflare Warp فراهم می‌کند.
 
 این پروژه بر شانه‌های اشخاصی ایستاده است و ما از کمک‌ها و الهام‌بخشی دوستان زیر به‌ شدت سپاسگزاریم:
 
-- Cloudflare Warp
-- [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
-- [Oblivion](https://github.com/bepass-org/oblivion)
-- [Electron](https://www.electronjs.org/)
-- [React](https://github.com/facebook/react)
-- [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
-- [electron-builder](https://github.com/electron-userland/electron-builder)
-- [GitHub](https://github.com/)
-- [regedit](https://www.npmjs.com/package/regedit)
-- [sing-box](https://github.com/SagerNet/sing-box)
-- [hiddify-next](https://github.com/hiddify/hiddify-next)
-- [و دیگران 🧡](package.json)
+-   Cloudflare Warp
+-   [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
+-   [Oblivion](https://github.com/bepass-org/oblivion)
+-   [Electron](https://www.electronjs.org/)
+-   [React](https://github.com/facebook/react)
+-   [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+-   [electron-builder](https://github.com/electron-userland/electron-builder)
+-   [GitHub](https://github.com/)
+-   [regedit](https://www.npmjs.com/package/regedit)
+-   [sing-box](https://github.com/SagerNet/sing-box)
+-   [hiddify-next](https://github.com/hiddify/hiddify-next)
+-   [و دیگران 🧡](package.json)
