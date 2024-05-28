@@ -94,24 +94,21 @@ const dlUnzipMove = async (url: string) => {
         });
 };
 
-const baseUrl = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}`;
+const baseUrl = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}/warp-plus_`;
 
 const urls: any = {
     linux: {
-        x64: baseUrl + '/warp-plus_linux-amd64.zip',
-        arm64: baseUrl + '/warp-plus_linux-arm64.zip'
+        x64: baseUrl + 'linux-amd64.zip',
+        arm64: baseUrl + 'linux-arm64.zip'
     },
     win32: {
-        x64: baseUrl + '/warp-plus_windows-amd64.zip',
-        arm64: baseUrl + '/warp-plus_windows-arm64.zip'
+        x64: baseUrl + 'windows-amd64.zip',
+        arm64: baseUrl + 'windows-arm64.zip',
+        ia32: baseUrl + 'windows-386.zip'
     },
     darwin: {
-        x64: baseUrl + '/warp-plus_darwin-amd64.zip',
-        arm64: baseUrl + '/warp-plus_darwin-arm64.zip'
-    },
-    mas: {
-        x64: baseUrl + '/warp-plus_darwin-amd64.zip',
-        arm64: baseUrl + '/warp-plus_darwin-arm64.zip'
+        x64: baseUrl + 'darwin-amd64.zip',
+        arm64: baseUrl + 'darwin-arm64.zip'
     }
 };
 
@@ -123,10 +120,10 @@ switch (platform) {
     case 'linux':
     case 'win32':
     case 'darwin':
-    case 'mas': // mac universal
         switch (arch) {
             case 'x64':
             case 'arm64':
+            case 'ia32':
                 dlUnzipMove(urls[platform][arch]);
                 break;
 

@@ -217,8 +217,22 @@
         },
         "win": {
             "target": [
-                "nsis",
-                "zip"
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "arm64",
+                        "ia32"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "x64",
+                        "arm64",
+                        "ia32"
+                    ]
+                }
             ]
         },
         "nsis": {
@@ -228,10 +242,8 @@
         },
         "linux": {
             "target": [
-                "rpm",
-                "tar.xz",
                 {
-                    "target": "deb",
+                    "target": "tar.xz",
                     "arch": [
                         "arm64",
                         "x64"
