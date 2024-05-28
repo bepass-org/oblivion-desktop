@@ -217,3 +217,10 @@ Cloudflare Warp فراهم می‌کند.
 -   [sing-box](https://github.com/SagerNet/sing-box)
 -   [hiddify-next](https://github.com/hiddify/hiddify-next)
 -   [و دیگران 🧡](package.json)
+
+
+## مشارکت‌کنندگان
+
+ما از کمک و حمایت شما قدردانی می کنیم. ([راهنمای مشارکت](CONTRIBUTING.md))
+
+<img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
