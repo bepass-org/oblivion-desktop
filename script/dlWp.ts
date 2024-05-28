@@ -62,6 +62,7 @@ async function downloadFile(uri: string, destPath: string) {
 
 // download, unzip and move(rename)
 const dlUnzipMove = async (url: string) => {
+    console.log('🚀 ~ file: dlWp.ts:65 ~ url:', url);
     const binPath = './assets/bin';
 
     const isBinDirExist = await doesDirectoryExist(binPath);
