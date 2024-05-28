@@ -210,4 +210,4 @@ provided by the following friends:
 
 We appreciate your help and support. ([Contribution Guide](CONTRIBUTING.md))
 
-![Contributors]([screenshot/oblivion.jpg](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive))
+<img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
