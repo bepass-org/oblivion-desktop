@@ -95,6 +95,7 @@ nav.header i:hover {
 nav.header i.log {
     color: #A1A1A1;
     margin: 0 0 0 15px;
+    font-size: 31px !important;
     float: left;
 }
 
