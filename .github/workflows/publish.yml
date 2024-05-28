@@ -45,7 +45,7 @@ jobs:
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'macos-13'
-              run: npm exec electron-builder --mac dmg zip --x64 --publish always
+              run: npm exec electron-builder -- --mac dmg zip --x64 --publish always
 
             - name: Publish releases mac arm64
               env:
@@ -57,7 +57,7 @@ jobs:
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'macos-14'
-              run: npm exec electron-builder --mac dmg zip --arm64 --publish always
+              run: npm exec electron-builder -- --mac dmg zip --arm64 --publish always
 
             - name: Publish releases windows
               env:
