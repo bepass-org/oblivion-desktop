@@ -309,13 +309,13 @@ export default function Index() {
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                     </div>
-                    {/*<Link to={'/debug'}>
-                        <i className={classNames('material-icons', 'pull-right', 'log')}>
-                            &#xe868;
-                        </i>
-                    </Link>*/}
                     <Link to='/about'>
                         <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
+                    </Link>
+                    <Link to={'/debug'}>
+                        <i className={classNames('material-icons', 'log')}>
+                            &#xe868;
+                        </i>
                     </Link>
                 </div>
             </nav>
@@ -369,12 +369,6 @@ export default function Index() {
                                 <span>{appLang?.home?.drawer_settings_app}</span>
                             </Link>
                         </li>
-                        <li>
-                            <Link to={'/debug'}>
-                                <i className={'material-icons'}>&#xe868;</i>
-                                <span>{appLang?.home?.drawer_log}</span>
-                            </Link>
-                        </li>
                         <li className='divider' />
                         {/*<li>
                             <Link to='/speed'>
@@ -395,7 +389,7 @@ export default function Index() {
                                 </div>
                             </a>
                         </li>
-                        <li>
+                        {/*<li>
                             <a
                                 onClick={() => {
                                     navigate('/options', { state: { targetId: 'languages' } });
@@ -404,11 +398,17 @@ export default function Index() {
                                 <i className='material-icons'>&#xe8e2;</i>
                                 <span>{appLang?.home?.drawer_lang}</span>
                             </a>
-                        </li>
+                        </li>*/}
                         <li>
                             <Link to='/about'>
                                 <i className={'material-icons'}>&#xe88e;</i>
                                 <span>{appLang?.home?.drawer_about}</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/debug'}>
+                                <i className={'material-icons'}>&#xe868;</i>
+                                <span>{appLang?.home?.drawer_log}</span>
                             </Link>
                         </li>
                     </ul>
