@@ -205,3 +205,9 @@ provided by the following friends:
 - [sing-box](https://github.com/SagerNet/sing-box)
 - [hiddify-next](https://github.com/hiddify/hiddify-next)
 - [and others 🧡](package.json)
+
+## Contributors
+
+We appreciate your help and support. ([Contribution Guide](CONTRIBUTING.md))
+
+![Contributors]([https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive](https://contrib.rocks/image?repo=bepass-org/oblivion-desktop))
