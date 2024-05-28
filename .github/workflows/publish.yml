@@ -13,7 +13,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [windows-latest, macos-latest]
+                os: [windows-latest, macos-13, macos-14]
                 # os: [ubuntu-latest, windows-latest, macos-latest]
 
         steps:
@@ -45,4 +45,15 @@ jobs:
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
+                  # build for mac x64
+                  if [ "$MATRIX_OS" == "macos-13" ]; then
+                  npm exec electron-builder --mac dmg zip --x64 --publish always
+
+                  # build for mac arm64
+                  elif [ "$MATRIX_OS" == "macos-14" ]; then
+                    npm exec electron-builder --mac dmg zip --arm64 --publish always
+
+                  # build for windows/linux
+                  else
                   npm exec electron-builder -- --publish always
+                  fi
