@@ -78,6 +78,8 @@
         "scanner_rtt": "Intervall",
         "scanner_rtt_default": "Standard",
         "scanner_rtt_desc": "RTT-Limit des Scanners",
+        "scanner_reserved": "Reserviert",
+        "scanner_reserved_desc": "Reservierten Wireguard-Wert überschreiben",
         "routing_rules": "Schwarze Liste",
         "routing_rules_desc": "Verhindern Sie, dass Datenverkehr durch Warp geleitet wird",
         "routing_rules_disabled": "Deaktiviert",

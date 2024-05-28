@@ -21,6 +21,7 @@ export default function Scanner() {
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
+    const [reserved, setReserved] = useState<undefined | boolean>();
 
     useGoBackOnEscape();
 
@@ -34,12 +35,16 @@ export default function Scanner() {
         settings.get('rtt').then((value) => {
             setRtt(typeof value === 'undefined' ? defaultSettings.rtt : value);
         });
+        settings.get('reserved').then((value) => {
+            setReserved(typeof value === 'undefined' ? defaultSettings.reserved : value);
+        });
     }, []);
 
     if (
         typeof endpoint === 'undefined' ||
         typeof ipType === 'undefined' ||
-        typeof rtt === 'undefined'
+        typeof rtt === 'undefined' ||
+        typeof reserved === 'undefined'
     )
         return (
             <>
@@ -149,6 +154,23 @@ export default function Scanner() {
                     <div>
                         <i className='material-icons'>&#xe0f0;</i>
                         {appLang?.settings?.scanner_alert}
+                    </div>
+                </div>
+                <div className='settings'>
+                    <div
+                        className={'item'}
+                        onClick={() => {
+                            setReserved(!reserved);
+                            settings.set('reserved', !reserved);
+                        }}
+                    >
+                        <label className='key'>{appLang?.settings?.scanner_reserved}</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', reserved ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.scanner_reserved_desc}</div>
                     </div>
                 </div>
             </div>

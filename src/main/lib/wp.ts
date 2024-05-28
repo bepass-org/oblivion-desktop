@@ -23,6 +23,7 @@ export const getUserSettings = async () => {
     const method = await settings.get('method');
     const hostIP = await settings.get('hostIP');
     const rtt = await settings.get('rtt');
+    const reserved = await settings.get('reserved');
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
@@ -79,7 +80,10 @@ export const getUserSettings = async () => {
                 : defaultSettings.endpoint
         );
     }
-
+    if (typeof reserved === 'boolean' && !reserved) {
+        args.push('--reserved');
+        args.push('0,0,0');
+    }
     return args;
 };
 
