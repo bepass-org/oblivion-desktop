@@ -78,6 +78,8 @@
         "scanner_rtt": "Интервал",
         "scanner_rtt_default": "По умолчанию",
         "scanner_rtt_desc": "Ограничение RTT сканера",
+        "scanner_reserved": "Зарезервировано",
+        "scanner_reserved_desc": "Переопределить зарезервированное значение Wireguard",
         "routing_rules": "Черный список",
         "routing_rules_desc": "Предотвращать прохождение трафика через искажение",
         "routing_rules_disabled": "Отключено",

@@ -78,6 +78,8 @@
         "scanner_rtt": "Interval",
         "scanner_rtt_default": "Default",
         "scanner_rtt_desc": "Scanner RTT limit",
+        "scanner_reserved": "Reserved",
+        "scanner_reserved_desc": "Override wireguard reserved value",
         "routing_rules": "Blacklist",
         "routing_rules_desc": "Prevent traffic from going through warp",
         "routing_rules_disabled": "Disabled",

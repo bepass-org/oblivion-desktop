@@ -78,6 +78,8 @@
         "scanner_rtt": "间隔",
         "scanner_rtt_default": "默认",
         "scanner_rtt_desc": "扫描仪 RTT 限制",
+        "scanner_reserved": "保留",
+        "scanner_reserved_desc": "覆盖wireguard保留值",
         "routing_rules": "黑名单",
         "routing_rules_desc": "防止流量经过扭曲",
         "routing_rules_disabled": "已禁用",

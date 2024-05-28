@@ -18,7 +18,8 @@ export type settingsKeys =
     | 'method'
     | 'dns'
     | 'rtt'
-    | 'openAtLogin';
+    | 'openAtLogin'
+    | 'reserved';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -43,7 +44,8 @@ export const defaultSettings = {
     method: 'gool',
     dns: true,
     rtt: '1s',
-    openAtLogin: false
+    openAtLogin: false,
+    reserved: true
 };
 
 export const countries: { value: string; label: string }[] = [

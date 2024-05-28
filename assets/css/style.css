@@ -948,6 +948,7 @@ html[data-bs-theme="dark"] .shimmer {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin-bottom: 10px;
 }
 
 .appToast div {

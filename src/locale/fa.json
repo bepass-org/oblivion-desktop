@@ -78,6 +78,8 @@
         "scanner_rtt": "وقفه زمانی",
         "scanner_rtt_default": "Default",
         "scanner_rtt_desc": "تعیین میزان RTT",
+        "scanner_reserved": "رزرو",
+        "scanner_reserved_desc": "استفاده از Reserved سفارشی وایرگارد",
         "routing_rules": "لیست سیاه",
         "routing_rules_desc": "جلوگیری از عبور ترافیک از وارپ",
         "routing_rules_disabled": "غیرفعال",
