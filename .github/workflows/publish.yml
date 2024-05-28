@@ -35,7 +35,7 @@ jobs:
                   npm run build
               shell: bash
 
-            - name: Publish releases
+            - name: Publish releases mac x64
               env:
                   # These values are used for auto updates signing
                   #   APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -44,17 +44,24 @@ jobs:
                   #   CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - if: matrix.os == 'macos-13'
-              run: |
-                  # build for mac x64
-                  npm exec electron-builder --mac dmg zip --x64 --publish always
+              if: matrix.os == 'macos-13'
+              run: npm exec electron-builder --mac dmg zip --x64 --publish always
 
-            - if: matrix.os == 'macos-14'
-              run: |
-                  # build for mac arm64
-                  npm exec electron-builder --mac dmg zip --arm64 --publish always
+            - name: Publish releases mac arm64
+              env:
+                  # These values are used for auto updates signing
+                  #   APPLE_ID: ${{ secrets.APPLE_ID }}
+                  #   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_ID_PASS }}
+                  #   CSC_LINK: ${{ secrets.CSC_LINK }}
+                  #   CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+                  # This is used for uploading release assets to github
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'macos-14'
+              run: npm exec electron-builder --mac dmg zip --arm64 --publish always
 
-            - if: matrix.os == 'windows-latest'
-              run: |
-                  # build for windows/linux
-                  npm exec electron-builder -- --publish always
+            - name: Publish releases windows
+              env:
+                  # This is used for uploading release assets to github
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'windows-latest'
+              run: npm exec electron-builder -- --publish always
