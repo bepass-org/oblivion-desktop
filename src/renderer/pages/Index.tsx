@@ -313,9 +313,7 @@ export default function Index() {
                         <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
                     </Link>
                     <Link to={'/debug'}>
-                        <i className={classNames('material-icons', 'log')}>
-                            &#xe868;
-                        </i>
+                        <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                     </Link>
                 </div>
             </nav>

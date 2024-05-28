@@ -44,16 +44,17 @@ jobs:
                   #   CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - if: matrix.os == 'macos-13'
               run: |
                   # build for mac x64
-                  if [ "$MATRIX_OS" == "macos-13" ]; then
                   npm exec electron-builder --mac dmg zip --x64 --publish always
 
+            - if: matrix.os == 'macos-14'
+              run: |
                   # build for mac arm64
-                  elif [ "$MATRIX_OS" == "macos-14" ]; then
-                    npm exec electron-builder --mac dmg zip --arm64 --publish always
+                  npm exec electron-builder --mac dmg zip --arm64 --publish always
 
+            - if: matrix.os == 'windows-latest'
+              run: |
                   # build for windows/linux
-                  else
                   npm exec electron-builder -- --publish always
-                  fi
