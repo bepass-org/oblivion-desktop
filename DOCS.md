@@ -49,6 +49,7 @@ checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example
 
 ## Notes
 
+-   if you're wp binary is not updating! remove `warp-plus.zip` and run `npm i` again.
 -   `wp` refers to `warp-plus` in source.
 -   `od` refers to `oblivion desktop` in source.
 
