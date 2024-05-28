@@ -94,7 +94,13 @@ nav.header i:hover {
 
 nav.header i.log {
     color: #A1A1A1;
-    margin-right: 15px;
+    margin: 0 0 0 15px;
+    float: left;
+}
+
+[dir="ltr"] nav.header i.log {
+    float: right;
+    margin: 0 15px 0 0;
 }
 
 nav.header i.navLeft {
