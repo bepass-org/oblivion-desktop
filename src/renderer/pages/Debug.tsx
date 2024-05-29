@@ -8,9 +8,9 @@ import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Debug() {
-    const [log, setLog] = useState('');
+    const [log, setLog] = useState<string>('');
     const [autoScroll, setAutoScroll] = useState<boolean>(false);
-    const logRef = useRef<any>(null);
+    const logRef = useRef<HTMLParagraphElement>(null);
     //const [isBottom, setIsBottom] = useState(true);
     const appLang = getLang();
 
@@ -44,7 +44,7 @@ export default function Debug() {
 
     useGoBackOnEscape();
 
-    let userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
+    const userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
     ipcRenderer.on('getLogs', (data) => {
         let logs = String(data);
         // protect user privacy
@@ -105,6 +105,7 @@ export default function Debug() {
                                 {autoScroll ? (
                                     <>
                                         <i
+                                            role='presentation'
                                             className='material-icons'
                                             onClick={() => {
                                                 setAutoScroll(false);
@@ -116,6 +117,7 @@ export default function Debug() {
                                 ) : (
                                     <>
                                         <i
+                                            role='presentation'
                                             className='material-icons'
                                             onClick={() => {
                                                 setAutoScroll(true);
@@ -157,8 +159,9 @@ export default function Debug() {
                             </>
                         )}
                         <i
+                            role='presentation'
                             className='material-icons'
-                            onClick={(e: any) => {
+                            onClick={(e) => {
                                 handleCopy(e, log);
                             }}
                         >

@@ -30,23 +30,23 @@ export default function RoutingRulesModal({
         const entryRegex = /^(geoip|domain):(.+)$/;
         const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
         const ipRangeRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
-        for (const line of lines) {
+
+        lines.forEach((line) => {
             const trimmedLine = line.trim();
-            if (!trimmedLine) {
-                continue;
+            if (trimmedLine) {
+                const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '').replace(/ /g, '');
+                const entry = lineWithoutQuotes.endsWith(',')
+                    ? lineWithoutQuotes.slice(0, -1)
+                    : lineWithoutQuotes;
+                const cleanedEntry = entry.replace(/,+$/, '');
+                const match = cleanedEntry.match(entryRegex);
+                const ipMatch = cleanedEntry.match(ipRegex);
+                const ipRangeMatch = cleanedEntry.match(ipRangeRegex);
+                if (match || ipMatch || ipRangeMatch) {
+                    validEntriesSet.add(cleanedEntry);
+                }
             }
-            const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '').replace(/ /g, '');
-            const entry = lineWithoutQuotes.endsWith(',')
-                ? lineWithoutQuotes.slice(0, -1)
-                : lineWithoutQuotes;
-            const cleanedEntry = entry.replace(/,+$/, '');
-            const match = cleanedEntry.match(entryRegex);
-            const ipMatch = cleanedEntry.match(ipRegex);
-            const ipRangeMatch = cleanedEntry.match(ipRangeRegex);
-            if (match || ipMatch || ipRangeMatch) {
-                validEntriesSet.add(cleanedEntry);
-            }
-        }
+        });
         const validEntries = Array.from(validEntriesSet);
         return validEntries.length > 0 ? validEntries.join(',\n') : validEntries;
     };
@@ -68,7 +68,7 @@ export default function RoutingRulesModal({
     return (
         <>
             <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} />
+                <div className='dialogBg' onClick={onClose} role='presentation' />
                 <div className='dialogBox'>
                     <div className='container'>
                         <div className='line'>
@@ -78,13 +78,14 @@ export default function RoutingRulesModal({
                             {title}
                             <div className='labels'>
                                 <div
+                                    role='presentation'
                                     className={classNames(
                                         'label',
                                         'label-warning',
                                         'pull-right',
                                         routingRulesInput === '' ? '' : 'hidden'
                                     )}
-                                    onClick={(e) => {
+                                    onClick={() => {
                                         setRoutingRulesInput(
                                             `domain:dolat.ir,\ndomain:apple.com,\ngeoip:127.0.0.1,\ndomain:*.ir`
                                         );
@@ -105,6 +106,9 @@ export default function RoutingRulesModal({
                         />
                         <div className='clearfix' />
                         <div
+                            role='button'
+                            tabIndex={0}
+                            aria-hidden='true'
                             className={classNames('btn', 'btn-cancel')}
                             onClick={() => {
                                 setRoutingRulesInput(routingRules);
@@ -114,10 +118,11 @@ export default function RoutingRulesModal({
                             {appLang?.modal?.cancel}
                         </div>
                         <div
+                            role='button'
+                            tabIndex={0}
+                            aria-hidden='true'
                             className={classNames('btn', 'btn-save')}
-                            onClick={() => {
-                                onSaveModal();
-                            }}
+                            onClick={onSaveModal}
                         >
                             {appLang?.modal?.update}
                         </div>

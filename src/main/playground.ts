@@ -1,10 +1,3 @@
-import { promisified as regedit } from 'regedit';
-import handler from 'serve-handler';
-import http, { RequestListener } from 'http';
-import { app } from 'electron';
-import detectPort from 'detect-port';
-import path from 'path';
-import log from 'electron-log';
 import { isDev } from './lib/utils';
 
 export const devPlayground = () => {
