@@ -2,10 +2,10 @@ import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
 import log from 'electron-log';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
+import { exec } from 'child_process';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPackScriptServer, servePacScript } from './pacScript';
-import { exec } from 'child_process';
 
 const { spawn } = require('child_process');
 
@@ -157,7 +157,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             }
         });
     } else if (process.platform === 'darwin') {
-        return new Promise<void>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve) => {
             const hardwarePorts: string[] =
                 (await getMacOSActiveNetworkHardwarePorts()) as string[];
             log.info('using hardwarePort:', hardwarePorts);
@@ -191,7 +191,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             resolve();
         });
     } else {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve) => {
             log.error('system proxy is not supported on your platform yet...');
             ipcEvent?.reply(
                 'guide-toast',
@@ -264,7 +264,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             resolve();
         });
     } else {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve) => {
             log.error('system proxy is not supported on your platform yet...');
             resolve();
         });

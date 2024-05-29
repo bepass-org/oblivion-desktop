@@ -6,7 +6,7 @@ import { app } from 'electron';
 import detectPort from 'detect-port';
 import path from 'path';
 import log from 'electron-log';
-import fs, { promises as fsPromises } from 'fs';
+import { promises as fsPromises } from 'fs';
 import { doesDirectoryExist } from './utils';
 
 export const createPacScript = async (host: string, port: string | number) => {
