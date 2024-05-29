@@ -1,4 +1,4 @@
-import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
+import { Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
 import { exitTheApp } from './lib/utils';
 import { regeditVbsDirPath } from './main';
 
