@@ -92,6 +92,9 @@ export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`;
     },
+    'Only one usage of each socket address': () => {
+        return `از یک پورت دیگر استفاده نمایید.`;
+    },
     'Invalid license': () => {
         return `لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.`;
     },
