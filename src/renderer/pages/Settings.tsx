@@ -144,6 +144,7 @@ export default function Settings() {
                     </div>*/}
                     <div className='grouped'>
                         <div
+                            role='presentation'
                             className={classNames('item')}
                             onClick={() => {
                                 setMethod('');
@@ -151,8 +152,10 @@ export default function Settings() {
                                 settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                             }}
                         >
-                            <label className='key'>{appLang?.settings?.method_warp}</label>
-                            <div className='value'>
+                            <label className='key' htmlFor='flex-switch-check-checked'>
+                                {appLang?.settings?.method_warp}
+                            </label>
+                            <div className='value' id='flex-switch-check-checked'>
                                 <div
                                     className={classNames('switch', method === '' ? 'checked' : '')}
                                 />
@@ -160,6 +163,7 @@ export default function Settings() {
                             <div className='info'>{appLang?.settings?.method_warp_desc}</div>
                         </div>
                         <div
+                            role='presentation'
                             className={classNames('item')}
                             onClick={() => {
                                 setMethod('gool');
@@ -177,8 +181,10 @@ export default function Settings() {
                                 }*/
                             }}
                         >
-                            <label className='key'>{appLang?.settings?.method_gool}</label>
-                            <div className='value'>
+                            <label className='key' htmlFor='flex-switch-check-checked-gool'>
+                                {appLang?.settings?.method_gool}
+                            </label>
+                            <div className='value' id='flex-switch-check-checked-gool'>
                                 <div
                                     className={classNames(
                                         'switch',
@@ -189,6 +195,7 @@ export default function Settings() {
                             <div className='info'>{appLang?.settings?.method_gool_desc}</div>
                         </div>
                         <div
+                            role='presentation'
                             className={classNames('item')}
                             onClick={() => {
                                 setMethod('psiphon');
@@ -206,8 +213,10 @@ export default function Settings() {
                               }*/
                             }}
                         >
-                            <label className='key'>{appLang?.settings?.method_psiphon}</label>
-                            <div className='value'>
+                            <label className='key' htmlFor='flex-switch-check-checked-psiphon'>
+                                {appLang?.settings?.method_psiphon}
+                            </label>
+                            <div className='value' id='flex-switch-check-checked-psiphon'>
                                 <div
                                     className={classNames(
                                         'switch',
@@ -219,9 +228,12 @@ export default function Settings() {
                         </div>
                     </div>
                     <div className={classNames('item', method === 'psiphon' ? '' : 'disabled')}>
-                        <label className='key'>{appLang?.settings?.method_psiphon_location}</label>
+                        <label className='key' htmlFor='flex-switch-check-checked-psiphon-location'>
+                            {appLang?.settings?.method_psiphon_location}
+                        </label>
                         <div className='value'>
                             <select
+                                id='flex-switch-check-checked-psiphon-location'
                                 onChange={(e) => {
                                     setLocation(e.target.value);
                                     settings.set('location', e.target.value);
@@ -263,14 +275,19 @@ export default function Settings() {
                         <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                     </div>*/}
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             setShowLicenseModal(true);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.license}</label>
+                        <label className='key' htmlFor='flex-switch-check-checked-license'>
+                            {appLang?.settings?.license}
+                        </label>
                         <div className='value'>
-                            <span className='dirLeft'>{license || 'Free'}</span>
+                            <span className='dirLeft' id='flex-switch-check-checked-license'>
+                                {license || 'Free'}
+                            </span>
                         </div>
                         <div className='info'>{appLang?.settings?.license_desc}</div>
                     </div>
