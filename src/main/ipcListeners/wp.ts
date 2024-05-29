@@ -59,7 +59,10 @@ ipcMain.on('wp-start', async (event) => {
 
     const args = await getUserSettings();
 
-    setStuffPath(args);
+    const license = await settings.get('license');
+    if (typeof license === 'string' && license !== '') {
+        setStuffPath(args);
+    }
 
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
