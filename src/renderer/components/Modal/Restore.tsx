@@ -24,15 +24,16 @@ export default function RestoreModal({
     if (!isOpen) return null;
 
     const appLang = getLang();
+    const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
     const onSaveModal = async () => {
         // in this page
-        setTheme(defaultSettings.theme);
+        setTheme(detectingSystemTheme ? 'dark' : 'light');
         setSystemTray(defaultSettings.systemTray);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
         // TODO Promise.all
-        await settings.set('theme', defaultSettings.theme);
+        await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
