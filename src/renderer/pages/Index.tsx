@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Drawer from 'react-modern-drawer';
 import { Swipe } from 'react-swipe-component';
 import { useStore } from '../store';
@@ -11,11 +11,10 @@ import { settings } from '../lib/settings';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
-import { ipcRenderer, onEscapeKeyPressed } from '../lib/utils';
+import { ipcRenderer, onEscapeKeyPressed ,isDev} from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
 import { checkNewUpdate } from '../lib/checkNewUpdate';
 import { cfFlag } from '../lib/cfFlag';
-import { isDev } from '../lib/utils';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -43,15 +42,14 @@ export default function Index() {
     };
 
     //const [theme, setTheme] = useState<undefined | string>();
-    const [lang, setLang] = useState<undefined | string>();
-    const [ipData, setIpData] = useState<undefined | boolean>();
+    const [lang, setLang] = useState<string>();
+    const [ipData, setIpData] = useState<boolean>(false);
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
-    const [method, setMethod] = useState<undefined | string>('');
+    const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
-    const [proxyMode, setProxyMode] = useState('');
+    const [proxyMode, setProxyMode] = useState<string>('');
 
-    const navigate = useNavigate();
 
     const fetchReleaseVersion = async () => {
         if (!isDev()) {
@@ -166,7 +164,7 @@ export default function Index() {
             const http = new XMLHttpRequest();
             await http.open('GET', 'http://cp.cloudflare.com', true);
             http.onreadystatechange = function () {};
-            http.onloadend = function (e) {
+            http.onloadend = function () {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
@@ -305,7 +303,7 @@ export default function Index() {
         <>
             <nav className='header'>
                 <div className='container'>
-                    <div onClick={toggleDrawer} className={classNames('navMenu')}>
+                    <div onClick={toggleDrawer} className={classNames('navMenu')} role='presentation'>
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                     </div>
@@ -438,6 +436,7 @@ export default function Index() {
                                     }}
                                 >
                                     <div
+                                    role='presentation'
                                         onClick={onChange}
                                         className={classNames(
                                             'switch',
@@ -476,6 +475,7 @@ export default function Index() {
                             )}
                         >
                             <div
+                            role='presentation'
                                 className={classNames('item', ipData ? '' : 'hidden')}
                                 onClick={() => {
                                     setIpInfo({
@@ -503,6 +503,7 @@ export default function Index() {
                                 </span>
                             </div>
                             <div
+                            role='presentation'
                                 className={classNames('item', 'ping')}
                                 onClick={() => {
                                     if (ping >= 0) {
