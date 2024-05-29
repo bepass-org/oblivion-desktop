@@ -89,6 +89,17 @@ const dlUnzipMove = async (url: string) => {
     decompress(zipFilePath, binPath)
         .then(() => {
             console.log('✅ warp-plus binary is ready to use.');
+
+            // removing wintun.dll cause it's getting flagged by antivirus's
+            const wintunPath = binPath + '/wintun.dll';
+            doesFileExist(wintunPath).then((isExist) => {
+                if (isExist)
+                    fs.rm(wintunPath, (err) => {
+                        if (err) {
+                            console.error(`Error removing ${wintunPath}:`, err);
+                        }
+                    });
+            });
         })
         .catch((error) => {
             console.log(error);
