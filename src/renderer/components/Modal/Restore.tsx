@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
-import { getLang, loadLang } from '../../lib/loaders';
+import { getLang } from '../../lib/loaders';
 
 export default function RestoreModal({
     title,
@@ -63,7 +63,7 @@ export default function RestoreModal({
     return (
         <>
             <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} />
+                <div className='dialogBg' onClick={onClose} role='presentation' />
                 <div className='dialogBox'>
                     <div className='container'>
                         <div className='line'>
@@ -72,14 +72,19 @@ export default function RestoreModal({
                         <h3>{title}</h3>
                         <p>{appLang?.modal?.restore_desc}</p>
                         <div className='clearfix' />
-                        <div className={classNames('btn', 'btn-cancel')} onClick={onClose}>
+                        <div
+                            className={classNames('btn', 'btn-cancel')}
+                            onClick={onClose}
+                            role='presentation'
+                        >
                             {appLang?.modal?.cancel}
                         </div>
                         <div
+                            role='button'
+                            tabIndex={0}
+                            aria-hidden='true'
                             className={classNames('btn', 'btn-save')}
-                            onClick={() => {
-                                onSaveModal();
-                            }}
+                            onClick={onSaveModal}
                         >
                             {appLang?.modal?.confirm}
                         </div>
