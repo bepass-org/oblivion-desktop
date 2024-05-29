@@ -21,14 +21,14 @@ export default function Options() {
     useGoBackOnEscape();
 
     // TODO rename to networkConfiguration
-    const [proxyMode, setProxyMode] = useState<string>('');
+    const [proxyMode, setProxyMode] = useState('');
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
-    const [shareVPN, setShareVPN] = useState<boolean>();
+    const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState();
-    const [showPortModal, setShowPortModal] = useState<boolean>(false);
+    const [showPortModal, setShowPortModal] = useState(false);
     const [appLang] = useState(getLang());
-    const [ipData, setIpData] = useState<boolean>(false);
-    const [dns, setDns] = useState<boolean>();
+    const [ipData, setIpData] = useState<undefined | boolean>();
+    const [dns, setDns] = useState<undefined | boolean>();
     const [routingRules, setRoutingRules] = useState();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
 

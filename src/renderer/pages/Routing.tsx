@@ -57,13 +57,16 @@ export default function Routing() {
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             setShowRoutingRulesModal(true);
                         }}
                     >
-                        <label className='key'>لیست سیاه</label>
-                        <div className='value'>
+                        <label className='key' htmlFor='routing-rules'>
+                            لیست سیاه
+                        </label>
+                        <div className='value' id='routing-rules'>
                             <span className='dirLeft' dir='rtl'>
                                 {countRoutingRules(routingRules)}
                             </span>
