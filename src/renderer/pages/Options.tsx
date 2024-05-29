@@ -9,14 +9,11 @@ import { defaultSettings, languages } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
 import { loadingToast } from '../lib/toasts';
-import { useStore } from '../store';
 import { getLang, loadLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import Tabs from '../components/Tabs';
 
 export default function Options() {
-    const { isConnected, isLoading } = useStore();
-
     useGoBackOnEscape();
 
     const [theme, setTheme] = useState<undefined | string>();
@@ -99,6 +96,7 @@ export default function Options() {
                 <Tabs active='options' />
                 <div className='settings'>
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             const tmp = theme === 'light' ? 'dark' : 'light';
@@ -125,9 +123,12 @@ export default function Options() {
                         </div>
                     </div>
                     <div className={'item'} ref={langRef}>
-                        <label className='key'>{appLang?.settings?.lang}</label>
+                        <label className='key' htmlFor='lang-select'>
+                            {appLang?.settings?.lang}
+                        </label>
                         <div className='value'>
                             <select
+                                id='lang-select'
                                 onChange={(e) => {
                                     setLang(e.target.value);
                                     settings.set('lang', e.target.value);
@@ -152,30 +153,42 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             setOpenAtLogin(!openAtLogin);
                             settings.set('openAtLogin', !openAtLogin);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.open_login}</label>
+                        <label className='key' htmlFor='open-login'>
+                            {appLang?.settings?.open_login}
+                        </label>
                         <div className='value'>
-                            <div className={classNames('checkbox', openAtLogin ? 'checked' : '')}>
+                            <div
+                                id='open-login'
+                                className={classNames('checkbox', openAtLogin ? 'checked' : '')}
+                            >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.open_login_desc}</div>
                     </div>
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             setSystemTray(!systemTray);
                             settings.set('systemTray', !systemTray);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.system_tray}</label>
+                        <label className='key' htmlFor='system-tray'>
+                            {appLang?.settings?.system_tray}
+                        </label>
                         <div className='value'>
-                            <div className={classNames('checkbox', systemTray ? 'checked' : '')}>
+                            <div
+                                id='system-tray'
+                                className={classNames('checkbox', systemTray ? 'checked' : '')}
+                            >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
@@ -188,13 +201,16 @@ export default function Options() {
                 </div>
                 <div className='settings'>
                     <div
+                        role='presentation'
                         className={'item'}
                         onClick={() => {
                             setShowRestoreModal(true);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.restore}</label>
-                        <div className='value'>
+                        <label className='key' htmlFor='restore'>
+                            {appLang?.settings?.restore}
+                        </label>
+                        <div className='value' id='restore'>
                             <i className='material-icons'>&#xe8ba;</i>
                         </div>
                         <div className='info'>{appLang?.settings?.restore_desc}</div>
