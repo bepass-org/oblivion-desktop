@@ -1,7 +1,8 @@
 import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
+import fs from 'fs';
 import { countries, defaultSettings } from '../../defaultSettings';
-import { removeDirIfExists } from './utils';
+import { doesDirectoryExist, removeDirIfExists } from './utils';
 import { stuffPath } from '../ipcListeners/wp';
 
 export const getUserSettings = async () => {
@@ -84,7 +85,21 @@ export const getUserSettings = async () => {
         args.push('--reserved');
         args.push('0,0,0');
     }
+
     return args;
+};
+
+export const setStuffPath = (args: string[]) => {
+    args.push('--cache-dir');
+    args.push(stuffPath);
+    doesDirectoryExist(stuffPath).then((isExist) => {
+        if (!isExist)
+            fs.mkdir(stuffPath, { recursive: true }, (err) => {
+                if (err) {
+                    console.error(`Error creating directory ${stuffPath}:`, err);
+                }
+            });
+    });
 };
 
 // ! make sure you get the args like ({ port = '' })

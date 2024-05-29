@@ -5,10 +5,11 @@ import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import { removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import fs from 'fs';
+import { doesDirectoryExist, removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
-import { getUserSettings, handleWpErrors } from '../lib/wp';
+import { getUserSettings, handleWpErrors, setStuffPath } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
 
@@ -57,6 +58,8 @@ ipcMain.on('wp-start', async (event) => {
     logMetadata();
 
     const args = await getUserSettings();
+
+    setStuffPath(args);
 
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
