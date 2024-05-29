@@ -29,6 +29,7 @@ export default function Options() {
     const { state } = useLocation();
     const { targetId } = state || {};
     const langRef = useRef<any>(null);
+    const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
     useEffect(() => {
         setTimeout(function () {
@@ -44,7 +45,7 @@ export default function Options() {
 
     useEffect(() => {
         settings.get('theme').then((value) => {
-            setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
+            setTheme(typeof value === 'undefined' ? (detectingSystemTheme ? 'dark' : 'light') : value);
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
