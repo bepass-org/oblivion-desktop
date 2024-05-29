@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
@@ -62,7 +62,7 @@ export default function Options() {
         }
         const lines = value.split('\n');
         return lines?.length > 0
-            ? toPersianNumber(lines.length) + ' ' + appLang?.settings?.routing_rules_items
+            ? toPersianNumber(lines.length) + ' ' + (appLang?.settings?.routing_rules_items || '')
             : appLang?.settings?.routing_rules_disabled;
     };
 
@@ -137,10 +137,13 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
                     </div>*/}
-                    <div className={'item'}>
-                        <label className='key'>{appLang?.settings?.proxy_mode}</label>
+                    <div className='item'>
+                        <label className='key' htmlFor='proxy-mode-selector'>
+                            {appLang?.settings?.proxy_mode}
+                        </label>
                         <div className='value'>
                             <select
+                                id='proxy-mode-selector'
                                 onChange={(e) => {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
@@ -162,25 +165,31 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
                     </div>
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             setShowPortModal(true);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.port}</label>
-                        <div className='value'>
+                        <label className='key' htmlFor='port'>
+                            {appLang?.settings?.port}
+                        </label>
+                        <div className='value' id='port'>
                             <span className='dirLeft'>{port}</span>
                         </div>
                         <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
                     <div
+                        role='presentation'
                         className='item'
                         onClick={() => {
                             setShowRoutingRulesModal(true);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.routing_rules}</label>
-                        <div className='value'>
+                        <label className='key' htmlFor='routing-rules'>
+                            {appLang?.settings?.routing_rules}
+                        </label>
+                        <div className='value' id='routing-rules'>
                             <span className='dirLeft' dir='rtl'>
                                 {countRoutingRules(routingRules)}
                             </span>
@@ -188,6 +197,7 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                     </div>
                     <div
+                        role='presentation'
                         className={classNames('item', shareVPN ? 'checked' : '')}
                         onClick={() => {
                             setShareVPN(!shareVPN);
@@ -198,8 +208,10 @@ export default function Options() {
                             }, 1000);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.share_vpn}</label>
-                        <div className='value'>
+                        <label className='key' htmlFor='share-vpn'>
+                            {appLang?.settings?.share_vpn}
+                        </label>
+                        <div className='value' id='share-vpn'>
                             <div className={classNames('checkbox', shareVPN ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
@@ -223,6 +235,7 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.dns_desc}</div>
                     </div>*/}
                     <div
+                        role='presentation'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={() => {
                             if (proxyMode !== 'none') {
@@ -231,8 +244,10 @@ export default function Options() {
                             }
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.ip_data}</label>
-                        <div className='value'>
+                        <label className='key' htmlFor='ip-data'>
+                            {appLang?.settings?.ip_data}
+                        </label>
+                        <div className='value' id='ip-data'>
                             <div className={classNames('checkbox', ipData ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>

@@ -83,5 +83,6 @@
     "هویت",
     "وارد",
     "یافت"
-  ]
+  ],
+  "editor.formatOnSave": true,
 }

@@ -42,7 +42,7 @@ if (!gotTheLock) {
     log.info('creating new od instance...');
     logMetadata();
 
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
+    app.on('second-instance', () => {
         // Someone tried to run a second instance, we should focus our window.
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
@@ -272,14 +272,14 @@ if (!gotTheLock) {
         log.info('od is ready!');
     };
 
-    async function startAtLogin() {
+    const startAtLogin = async () => {
         if (process.env.NODE_ENV !== 'development') {
             const checkOpenAtLogin = await settings.get('openAtLogin');
             app.setLoginItemSettings({
                 openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
             });
         }
-    }
+    };
 
     /**
      * Add event listeners...

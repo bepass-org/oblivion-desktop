@@ -80,9 +80,12 @@ export default function Scanner() {
                             endpoint === defaultSettings.endpoint ? '' : 'disabled'
                         )}
                     >
-                        <label className='key'>{appLang?.settings?.scanner_ip_type}</label>
+                        <label className='key' htmlFor='id-type-select'>
+                            {appLang?.settings?.scanner_ip_type}
+                        </label>
                         <div className='value'>
                             <select
+                                id='id-type-select'
                                 onChange={(e) => {
                                     setIpType(e.target.value);
                                     settings.set('ipType', e.target.value);
@@ -104,9 +107,12 @@ export default function Scanner() {
                             endpoint === defaultSettings.endpoint ? '' : 'disabled'
                         )}
                     >
-                        <label className='key'>{appLang?.settings?.scanner_rtt}</label>
+                        <label className='key' htmlFor='rtt-select'>
+                            {appLang?.settings?.scanner_rtt}
+                        </label>
                         <div className='value'>
                             <select
+                                id='rtt-select'
                                 onChange={(e) => {
                                     setRtt(e.target.value);
                                     settings.set('rtt', e.target.value);
@@ -133,14 +139,19 @@ export default function Scanner() {
                 </div>
                 <div className='settings'>
                     <div
+                        role='presentation'
                         className={classNames('item')}
                         onClick={() => {
                             setShowEndpointModal(true);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.endpoint}</label>
+                        <label className='key' htmlFor='endpoint'>
+                            {appLang?.settings?.endpoint}
+                        </label>
                         <div className='value'>
-                            <span className='dirLeft'>{endpoint}</span>
+                            <span className='dirLeft' id='endpoint'>
+                                {endpoint}
+                            </span>
                         </div>
                         <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                     </div>
@@ -158,15 +169,21 @@ export default function Scanner() {
                 </div>
                 <div className='settings'>
                     <div
+                        role='presentation'
                         className={'item'}
                         onClick={() => {
                             setReserved(!reserved);
                             settings.set('reserved', !reserved);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.scanner_reserved}</label>
+                        <label className='key' htmlFor='reserved'>
+                            {appLang?.settings?.scanner_reserved}
+                        </label>
                         <div className='value'>
-                            <div className={classNames('checkbox', reserved ? 'checked' : '')}>
+                            <div
+                                id='reserved'
+                                className={classNames('checkbox', reserved ? 'checked' : '')}
+                            >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>

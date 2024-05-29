@@ -27,7 +27,6 @@ export default function PortModal({
     };
 
     const onSaveModal = () => {
-        const portRegex = /:\d{1,5}$/;
         const tmp = isValidPort(portInput) ? portInput : defValue;
         setPortInput(tmp);
         setPort(tmp);
@@ -40,7 +39,7 @@ export default function PortModal({
     return (
         <>
             <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} />
+                <div className='dialogBg' onClick={onClose} role='presentation' />
                 <div className='dialogBox'>
                     <div className='container'>
                         <div className='line'>
@@ -58,6 +57,7 @@ export default function PortModal({
                         />
                         <div className='clearfix' />
                         <div
+                            role='presentation'
                             className={classNames('btn', 'btn-cancel')}
                             onClick={() => {
                                 setPortInput(port);
@@ -67,6 +67,7 @@ export default function PortModal({
                             {appLang?.modal?.cancel}
                         </div>
                         <div
+                            role='presentation'
                             className={classNames('btn', 'btn-save')}
                             onClick={() => {
                                 onSaveModal();
