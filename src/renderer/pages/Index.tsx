@@ -43,7 +43,7 @@ export default function Index() {
 
     //const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState<string>();
-    const [ipData, setIpData] = useState<boolean>(false);
+    const [ipData, setIpData] = useState<boolean>();
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<string>('');
