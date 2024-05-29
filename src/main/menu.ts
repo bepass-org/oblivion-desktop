@@ -200,12 +200,12 @@ export default class MenuBuilder {
             {
                 label: '&File',
                 submenu: [
+                    // {
+                    //     label: '&Open',
+                    //     accelerator: 'Ctrl+O'
+                    // },
                     {
-                        label: '&Open',
-                        accelerator: 'Ctrl+O'
-                    },
-                    {
-                        label: '&Close',
+                        label: '&Exit',
                         accelerator: 'Ctrl+Q',
                         click: async () => {
                             await exitTheApp(this.mainWindow, regeditVbsDirPath);
@@ -213,74 +213,76 @@ export default class MenuBuilder {
                     }
                 ]
             },
-            {
-                label: '&View',
-                submenu:
-                    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
-                        ? [
-                              {
-                                  label: '&Reload',
-                                  accelerator: 'Ctrl+R',
-                                  click: () => {
-                                      this.mainWindow.webContents.reload();
-                                  }
-                              },
-                              {
-                                  label: 'Toggle &Full Screen',
-                                  accelerator: 'F11',
-                                  click: () => {
-                                      this.mainWindow.setFullScreen(
-                                          !this.mainWindow.isFullScreen()
-                                      );
-                                  }
-                              },
-                              {
-                                  label: 'Toggle &Developer Tools',
-                                  accelerator: 'Alt+Ctrl+I',
-                                  click: () => {
-                                      this.mainWindow.webContents.toggleDevTools();
-                                  }
-                              }
-                          ]
-                        : [
-                              {
-                                  label: 'Toggle &Full Screen',
-                                  accelerator: 'F11',
-                                  click: () => {
-                                      this.mainWindow.setFullScreen(
-                                          !this.mainWindow.isFullScreen()
-                                      );
-                                  }
-                              }
-                          ]
-            },
+            // {
+            //     label: '&View',
+            //     submenu:
+            //         process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
+            //             ? [
+            //                   {
+            //                       label: '&Reload',
+            //                       accelerator: 'Ctrl+R',
+            //                       click: () => {
+            //                           this.mainWindow.webContents.reload();
+            //                       }
+            //                   },
+            //                   {
+            //                       label: 'Toggle &Full Screen',
+            //                       accelerator: 'F11',
+            //                       click: () => {
+            //                           this.mainWindow.setFullScreen(
+            //                               !this.mainWindow.isFullScreen()
+            //                           );
+            //                       }
+            //                   },
+            //                   {
+            //                       label: 'Toggle &Developer Tools',
+            //                       accelerator: 'Alt+Ctrl+I',
+            //                       click: () => {
+            //                           this.mainWindow.webContents.toggleDevTools();
+            //                       }
+            //                   }
+            //               ]
+            //             : [
+            //                   {
+            //                       label: 'Toggle &Full Screen',
+            //                       accelerator: 'F11',
+            //                       click: () => {
+            //                           this.mainWindow.setFullScreen(
+            //                               !this.mainWindow.isFullScreen()
+            //                           );
+            //                       }
+            //                   }
+            //               ]
+            // },
             {
                 label: 'Help',
                 submenu: [
                     {
                         label: 'Learn More',
                         click() {
-                            shell.openExternal('https://electronjs.org');
+                            shell.openExternal('https://github.com/bepass-org/oblivion-desktop');
                         }
                     },
+                    // {
+                    //     label: 'Documentation',
+                    //     click() {
+                    //         shell.openExternal(
+                    //             'https://github.com/electron/electron/tree/main/docs#readme'
+                    //         );
+                    //     }
+                    // },
+                    // {
+                    //     label: 'Community Discussions',
+                    //     click() {
+                    //         shell.openExternal('https://www.electronjs.org/community');
+                    //     }
+                    // },
                     {
-                        label: 'Documentation',
+                        label: 'Issues',
                         click() {
                             shell.openExternal(
-                                'https://github.com/electron/electron/tree/main/docs#readme'
+                                'https://github.com/bepass-org/oblivion-desktop/issues'
                             );
-                        }
-                    },
-                    {
-                        label: 'Community Discussions',
-                        click() {
-                            shell.openExternal('https://www.electronjs.org/community');
-                        }
-                    },
-                    {
-                        label: 'Search Issues',
-                        click() {
-                            shell.openExternal('https://github.com/electron/electron/issues');
                         }
                     }
                 ]
