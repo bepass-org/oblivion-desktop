@@ -21,14 +21,22 @@ export const defaultToastWithSubmitButton = (
     msg = '',
     submitTitle = '',
     id = 'ID',
-    duration = 5000
+    duration = 5000,
+    onSubmitCallBack = () => {}
 ) => {
     toast(
         (currentToast) => (
             <>
                 <div className='customToast'>
                     <p>{msg}</p>
-                    <button onClick={() => toast.dismiss(currentToast?.id)}> {submitTitle}</button>
+                    <button
+                        onClick={() => {
+                            toast.dismiss(currentToast?.id);
+                            onSubmitCallBack();
+                        }}
+                    >
+                        {submitTitle}
+                    </button>
                 </div>
             </>
         ),
@@ -44,6 +52,7 @@ export const checkInternetToast = () => {
     defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', Infinity);
 };
 
+let doNotShowSettingsHaveChangedToastInCurrentSession = false;
 export const settingsHaveChangedToast = ({
     isConnected,
     isLoading
@@ -51,16 +60,18 @@ export const settingsHaveChangedToast = ({
     isConnected: boolean;
     isLoading: boolean;
 }) => {
-    if (localStorage.getItem('OBLIVION_CHANGES') === 'TOASTED') return;
+    if (doNotShowSettingsHaveChangedToastInCurrentSession) return;
     if (isConnected || isLoading) {
         defaultToastWithSubmitButton(
             appLang?.toast?.settings_changed,
+            // TODO i18n
             'متوجه شدم',
             'SETTINGS_CHANGED',
-            10000
+            3000,
+            () => {
+                doNotShowSettingsHaveChangedToastInCurrentSession = true;
+            }
         );
-
-        localStorage.setItem('OBLIVION_CHANGES', 'TOASTED');
     }
 };
 

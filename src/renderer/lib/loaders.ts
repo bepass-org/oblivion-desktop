@@ -10,7 +10,10 @@ import de from '../../locale/de.json';
 export const loadTheme = () => {
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
     settings.get('theme').then((theme) => {
-        document.documentElement.setAttribute('data-bs-theme', theme || detectingSystemTheme ? 'dark' : 'light');
+        document.documentElement.setAttribute(
+            'data-bs-theme',
+            theme || detectingSystemTheme ? 'dark' : 'light'
+        );
     });
 };
 
