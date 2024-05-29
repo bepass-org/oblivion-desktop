@@ -37,7 +37,7 @@ export default function RestoreModal({
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
-        document.documentElement.setAttribute('data-bs-theme', defaultSettings.theme);
+        document.documentElement.setAttribute('data-bs-theme', detectingSystemTheme ? 'dark' : 'light');
         onClose();
         // other settings
         //await settings.set('scan', defaultSettings.scan);
