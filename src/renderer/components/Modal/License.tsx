@@ -34,7 +34,7 @@ export default function LicenseModal({
     return (
         <>
             <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} />
+                <div className='dialogBg' onClick={onClose} role='presentation' />
                 <div className='dialogBox'>
                     <div className='container'>
                         <div className='line'>
@@ -53,6 +53,7 @@ export default function LicenseModal({
                         />
                         <div className='clearfix' />
                         <div
+                            role='presentation'
                             className={classNames('btn', 'btn-cancel')}
                             onClick={() => {
                                 setLicenseInput(license);
@@ -62,6 +63,7 @@ export default function LicenseModal({
                             {appLang?.modal?.cancel}
                         </div>
                         <div
+                            role='presentation'
                             className={classNames('btn', 'btn-save')}
                             onClick={() => {
                                 onSaveModal();

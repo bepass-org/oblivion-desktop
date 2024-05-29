@@ -42,7 +42,7 @@ export default function EndpointModal({
     return (
         <>
             <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} />
+                <div className='dialogBg' onClick={onClose} role='presentation' />
                 <div className='dialogBox'>
                     <div className='container'>
                         <div className='line'>
@@ -52,12 +52,13 @@ export default function EndpointModal({
                             {title}
                             <div className='labels'>
                                 <div
+                                    role='presentation'
                                     className={classNames(
                                         'label',
                                         'label-warning',
                                         endpointInput === defValue ? 'hidden' : ''
                                     )}
-                                    onClick={(e) => {
+                                    onClick={() => {
                                         setEndpointInput(defValue);
                                     }}
                                 >
@@ -65,12 +66,13 @@ export default function EndpointModal({
                                     {appLang?.modal?.endpoint_default}
                                 </div>
                                 <div
+                                    role='presentation'
                                     className={classNames(
                                         'label',
                                         'label-danger',
                                         endpointInput === suggestion ? 'hidden' : ''
                                     )}
-                                    onClick={(e) => {
+                                    onClick={() => {
                                         setEndpointInput(suggestion);
                                     }}
                                 >
@@ -89,6 +91,7 @@ export default function EndpointModal({
                         />
                         <div className='clearfix' />
                         <div
+                            role='presentation'
                             className={classNames('btn', 'btn-cancel')}
                             onClick={() => {
                                 setEndpointInput(endpoint);
@@ -98,6 +101,7 @@ export default function EndpointModal({
                             {appLang?.modal?.cancel}
                         </div>
                         <div
+                            role='presentation'
                             className={classNames('btn', 'btn-save')}
                             onClick={() => {
                                 onSaveModal();
