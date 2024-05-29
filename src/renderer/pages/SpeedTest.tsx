@@ -9,7 +9,11 @@ export default function SpeedTest() {
                 <div className='container'>
                     <p>برای تست سرعت اینترنت می‌توانید از این‌ابزار استفاده نمایید.</p>
                     <div className='iframe'>
-                        <iframe src='https://openspeedtest.com/Get-widget.php' allowFullScreen />
+                        <iframe
+                            src='https://openspeedtest.com/Get-widget.php'
+                            allowFullScreen
+                            title='speedtest'
+                        />
                     </div>
                 </div>
             </div>
