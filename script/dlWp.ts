@@ -62,7 +62,6 @@ async function downloadFile(uri: string, destPath: string) {
 
 // download, unzip and move(rename)
 const dlUnzipMove = async (url: string) => {
-    console.log('🚀 ~ file: dlWp.ts:65 ~ url:', url);
     const binPath = './assets/bin';
 
     const isBinDirExist = await doesDirectoryExist(binPath);
@@ -74,7 +73,7 @@ const dlUnzipMove = async (url: string) => {
         });
     }
 
-    const zipFilePath = './warp-plus.zip';
+    const zipFilePath = `./warp-plus-${wpVersion}.zip`;
 
     const isZipFileExist = await doesFileExist(zipFilePath);
 
@@ -83,7 +82,7 @@ const dlUnzipMove = async (url: string) => {
 
         await downloadFile(url, zipFilePath);
     } else {
-        console.log('➡️ Skipping Download as warp-plus.zip already exist.');
+        console.log(`➡️ Skipping Download as ${zipFilePath} already exist.`);
     }
 
     decompress(zipFilePath, binPath)
