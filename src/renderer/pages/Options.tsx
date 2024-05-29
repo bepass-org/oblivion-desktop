@@ -42,7 +42,9 @@ export default function Options() {
 
     useEffect(() => {
         settings.get('theme').then((value) => {
-            setTheme(typeof value === 'undefined' ? (detectingSystemTheme ? 'dark' : 'light') : value);
+            setTheme(
+                typeof value === 'undefined' ? (detectingSystemTheme ? 'dark' : 'light') : value
+            );
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
