@@ -11,7 +11,7 @@ import { settings } from '../lib/settings';
 import 'react-modern-drawer/dist/index.css';
 import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
-import { ipcRenderer, onEscapeKeyPressed ,isDev} from '../lib/utils';
+import { ipcRenderer, onEscapeKeyPressed, isDev } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
 import { checkNewUpdate } from '../lib/checkNewUpdate';
 import { cfFlag } from '../lib/cfFlag';
@@ -49,7 +49,6 @@ export default function Index() {
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
-
 
     const fetchReleaseVersion = async () => {
         if (!isDev()) {
@@ -303,7 +302,11 @@ export default function Index() {
         <>
             <nav className='header'>
                 <div className='container'>
-                    <div onClick={toggleDrawer} className={classNames('navMenu')} role='presentation'>
+                    <div
+                        onClick={toggleDrawer}
+                        className={classNames('navMenu')}
+                        role='presentation'
+                    >
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                     </div>
@@ -436,7 +439,7 @@ export default function Index() {
                                     }}
                                 >
                                     <div
-                                    role='presentation'
+                                        role='presentation'
                                         onClick={onChange}
                                         className={classNames(
                                             'switch',
@@ -475,7 +478,7 @@ export default function Index() {
                             )}
                         >
                             <div
-                            role='presentation'
+                                role='presentation'
                                 className={classNames('item', ipData ? '' : 'hidden')}
                                 onClick={() => {
                                     setIpInfo({
@@ -503,7 +506,7 @@ export default function Index() {
                                 </span>
                             </div>
                             <div
-                            role='presentation'
+                                role='presentation'
                                 className={classNames('item', 'ping')}
                                 onClick={() => {
                                     if (ping >= 0) {
