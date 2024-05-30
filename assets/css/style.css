@@ -1296,8 +1296,12 @@ html[data-bs-theme="dark"] .shimmer {
     margin: 0 0 0 5px;
 }
 
-[data-bs-theme="dark"] .dialog .dialogBox .labels .label {
+[data-bs-theme="dark"] .dialog .dialogBox .labels .label.label-warning {
     background-color: #8b5100;
+}
+
+[data-bs-theme="dark"] .dialog .dialogBox .labels .label.label-danger {
+    background-color: #9b2623;
 }
 
 .dialog .dialogBox .labels .label i {
