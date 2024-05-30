@@ -39,12 +39,15 @@ const EndpointModal: FC<EndpointModalProps> = ({
         onClose();
     }, [defValue, endpointInput, onClose, setEndpoint]);
 
-    const setEndpointSuggestion = useCallback((item: number) => {
-        if (typeof item === 'undefined' || !item) {
-            item = 0;
-        }
-        setEndpointInput(suggestion[item]);
-    }, [suggestion]);
+    const setEndpointSuggestion = useCallback(
+        (item: number) => {
+            if (typeof item === 'undefined' || !item) {
+                item = 0;
+            }
+            setEndpointInput(suggestion[item]);
+        },
+        [suggestion]
+    );
 
     const setEndpointDefault = useCallback(() => {
         setEndpointInput(defValue);
