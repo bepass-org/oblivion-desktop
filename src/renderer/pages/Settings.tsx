@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -63,6 +63,40 @@ export default function Settings() {
         });
     }, []);
 
+    const onCloseLicenseModal = useCallback(() => {
+        setShowLicenseModal(false);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
+
+    const onEnableWarp = useCallback(() => {
+        setMethod('');
+        settings.set('method', '');
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onEnableGool = useCallback(() => {
+        setMethod('gool');
+        settings.set('method', 'gool');
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onEnablePsiphon = useCallback(() => {
+        setMethod('psiphon');
+        settings.set('method', 'psiphon');
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onChangeLocation = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setLocation(event.target.value);
+            settings.set('location', event.target.value);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+        },
+        [isConnected, isLoading]
+    );
+
     if (
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
@@ -98,10 +132,7 @@ export default function Settings() {
                 }}
                 title={appLang?.modal?.license_title}
                 isOpen={showLicenseModal}
-                onClose={() => {
-                    setShowLicenseModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
+                onClose={onCloseLicenseModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='settings' />
@@ -144,11 +175,7 @@ export default function Settings() {
                         <div
                             role='presentation'
                             className={classNames('item')}
-                            onClick={() => {
-                                setMethod('');
-                                settings.set('method', '');
-                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            }}
+                            onClick={onEnableWarp}
                         >
                             <label className='key' htmlFor='flex-switch-check-checked'>
                                 {appLang?.settings?.method_warp}
@@ -163,21 +190,7 @@ export default function Settings() {
                         <div
                             role='presentation'
                             className={classNames('item')}
-                            onClick={() => {
-                                setMethod('gool');
-                                settings.set('method', 'gool');
-                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-
-                                /*if (!psiphon) {
-                                    setGool(!gool);
-                                    settings.set('gool', !gool);
-                                    settingsHaveChanged();
-                                }*/
-                                /*if (psiphon && !gool) {
-                                    setPsiphon(false);
-                                    settings.set('psiphon', false);
-                                }*/
-                            }}
+                            onClick={onEnableGool}
                         >
                             <label className='key' htmlFor='flex-switch-check-checked-gool'>
                                 {appLang?.settings?.method_gool}
@@ -195,21 +208,7 @@ export default function Settings() {
                         <div
                             role='presentation'
                             className={classNames('item')}
-                            onClick={() => {
-                                setMethod('psiphon');
-                                settings.set('method', 'psiphon');
-                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-
-                                /*if (!gool) {
-                                    setPsiphon(!psiphon);
-                                    settings.set('psiphon', !psiphon);
-                                    settingsHaveChanged();
-                                }*/
-                                /*if (gool && !psiphon) {
-                                  setGool(false);
-                                  settings.set('gool', false);
-                              }*/
-                            }}
+                            onClick={onEnablePsiphon}
                         >
                             <label className='key' htmlFor='flex-switch-check-checked-psiphon'>
                                 {appLang?.settings?.method_psiphon}
@@ -232,18 +231,14 @@ export default function Settings() {
                         <div className='value'>
                             <select
                                 id='flex-switch-check-checked-psiphon-location'
-                                onChange={(e) => {
-                                    setLocation(e.target.value);
-                                    settings.set('location', e.target.value);
-                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                }}
+                                onChange={onChangeLocation}
                                 disabled={method !== 'psiphon'}
                                 value={location}
                             >
                                 <option value=''>
                                     {appLang?.settings?.method_psiphon_location_auto}
                                 </option>
-                                {countries.map((country: { value: string; label: string }) => (
+                                {countries.map((country) => (
                                     <option key={country.value} value={country.value}>
                                         {country.label}
                                     </option>
@@ -272,13 +267,7 @@ export default function Settings() {
                         </div>
                         <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                     </div>*/}
-                    <div
-                        role='presentation'
-                        className='item'
-                        onClick={() => {
-                            setShowLicenseModal(true);
-                        }}
-                    >
+                    <div role='presentation' className='item' onClick={onOpenLicenseModal}>
                         <label className='key' htmlFor='flex-switch-check-checked-license'>
                             {appLang?.settings?.license}
                         </label>
