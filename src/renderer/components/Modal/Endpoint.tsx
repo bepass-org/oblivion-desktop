@@ -1,29 +1,31 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { getLang } from '../../lib/loaders';
 
-export default function EndpointModal({
+interface EndpointModalProps {
+    title: string;
+    isOpen: boolean;
+    onClose: () => void;
+    defValue?: string;
+    endpoint: string;
+    setEndpoint: (value: string) => void;
+}
+
+const EndpointModal: FC<EndpointModalProps> = ({
     title,
     isOpen,
     onClose,
     defValue = defaultSettings.endpoint,
     endpoint,
     setEndpoint
-}: {
-    title: string;
-    isOpen: boolean;
-    onClose: any;
-    defValue?: string;
-    endpoint: any;
-    setEndpoint: any;
-}) {
-    const [endpointInput, setEndpointInput] = useState(endpoint);
+}) => {
+    const [endpointInput, setEndpointInput] = useState<string>(endpoint);
     const appLang = getLang();
-    const suggestion = '188.114.98.224:2408';
+    const suggestion = useMemo(() => '188.114.98.224:2408', []);
 
-    const onSaveModal = () => {
+    const onSaveModal = useCallback(() => {
         const endpointInputModified = endpointInput.replace(/^https?:\/\//, '').replace(/\/$/, '');
         let regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
         if (endpointInput.startsWith('[')) {
@@ -35,83 +37,83 @@ export default function EndpointModal({
         setEndpoint(tmp);
         settings.set('endpoint', tmp);
         onClose();
-    };
+    }, [defValue, endpointInput, onClose, setEndpoint]);
 
     if (!isOpen) return <></>;
 
     return (
-        <>
-            <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} role='presentation' />
-                <div className='dialogBox'>
-                    <div className='container'>
-                        <div className='line'>
-                            <div className='miniLine' />
-                        </div>
-                        <h3>
-                            {title}
-                            <div className='labels'>
-                                <div
-                                    role='presentation'
-                                    className={classNames(
-                                        'label',
-                                        'label-warning',
-                                        endpointInput === defValue ? 'hidden' : ''
-                                    )}
-                                    onClick={() => {
-                                        setEndpointInput(defValue);
-                                    }}
-                                >
-                                    <i className='material-icons'>&#xe145;</i>
-                                    {appLang?.modal?.endpoint_default}
-                                </div>
-                                <div
-                                    role='presentation'
-                                    className={classNames(
-                                        'label',
-                                        'label-danger',
-                                        endpointInput === suggestion ? 'hidden' : ''
-                                    )}
-                                    onClick={() => {
-                                        setEndpointInput(suggestion);
-                                    }}
-                                >
-                                    <i className='material-icons'>&#xe145;</i>
-                                    {appLang?.modal?.endpoint_suggested}
-                                </div>
+        <div className='dialog'>
+            <div className='dialogBg' onClick={onClose} role='presentation' />
+            <div className='dialogBox'>
+                <div className='container'>
+                    <div className='line'>
+                        <div className='miniLine' />
+                    </div>
+                    <h3>
+                        {title}
+                        <div className='labels'>
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-warning',
+                                    endpointInput === defValue ? 'hidden' : ''
+                                )}
+                                onClick={() => {
+                                    setEndpointInput(defValue);
+                                }}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                {appLang?.modal?.endpoint_default}
                             </div>
-                        </h3>
-                        <input
-                            value={endpointInput}
-                            spellCheck={false}
-                            className='form-control'
-                            onChange={(e) => {
-                                setEndpointInput(String(e.target.value).toLowerCase().trim());
-                            }}
-                        />
-                        <div className='clearfix' />
-                        <div
-                            role='presentation'
-                            className={classNames('btn', 'btn-cancel')}
-                            onClick={() => {
-                                setEndpointInput(endpoint);
-                                onClose();
-                            }}
-                        >
-                            {appLang?.modal?.cancel}
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-danger',
+                                    endpointInput === suggestion ? 'hidden' : ''
+                                )}
+                                onClick={() => {
+                                    setEndpointInput(suggestion);
+                                }}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                {appLang?.modal?.endpoint_suggested}
+                            </div>
                         </div>
-                        <div
-                            role='presentation'
-                            className={classNames('btn', 'btn-save')}
-                            onClick={() => {
-                                onSaveModal();
-                            }}
-                        >
-                            {appLang?.modal?.update}
-                        </div>
+                    </h3>
+                    <input
+                        value={endpointInput}
+                        spellCheck={false}
+                        className='form-control'
+                        onChange={(e) => {
+                            setEndpointInput(String(e.target.value).toLowerCase().trim());
+                        }}
+                    />
+                    <div className='clearfix' />
+                    <div
+                        role='presentation'
+                        className={classNames('btn', 'btn-cancel')}
+                        onClick={() => {
+                            setEndpointInput(endpoint);
+                            onClose();
+                        }}
+                    >
+                        {appLang?.modal?.cancel}
+                    </div>
+                    <div
+                        role='presentation'
+                        className={classNames('btn', 'btn-save')}
+                        onClick={() => {
+                            onSaveModal();
+                        }}
+                    >
+                        {appLang?.modal?.update}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
-}
+};
+
+export default EndpointModal;
