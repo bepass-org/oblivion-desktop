@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -18,7 +18,7 @@ export default function Scanner() {
     const [appLang] = useState(getLang());
 
     const [endpoint, setEndpoint] = useState<string>();
-    const [showEndpointModal, setShowEndpointModal] = useState(false);
+    const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
     const [reserved, setReserved] = useState<undefined | boolean>();
@@ -40,6 +40,36 @@ export default function Scanner() {
         });
     }, []);
 
+    const onCloseEndpointModal = useCallback(() => {
+        setShowEndpointModal(false);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
+
+    const onChangeType = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setIpType(event.target.value);
+            settings.set('ipType', event.target.value);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+        },
+        [isConnected, isLoading]
+    );
+
+    const onChangeRTT = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setRtt(event.target.value);
+            settings.set('rtt', event.target.value);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+        },
+        [isConnected, isLoading]
+    );
+
+    const onClickReservedButton = useCallback(() => {
+        setReserved(!reserved);
+        settings.set('reserved', !reserved);
+    }, [reserved]);
+
     if (
         typeof endpoint === 'undefined' ||
         typeof ipType === 'undefined' ||
@@ -47,13 +77,11 @@ export default function Scanner() {
         typeof reserved === 'undefined'
     )
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop />
                 </div>
-            </>
+            </div>
         );
 
     return (
@@ -64,10 +92,7 @@ export default function Scanner() {
                 setEndpoint={setEndpoint}
                 title={appLang?.modal?.endpoint_title}
                 isOpen={showEndpointModal}
-                onClose={() => {
-                    setShowEndpointModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
+                onClose={onCloseEndpointModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='scanner' />
@@ -84,11 +109,7 @@ export default function Scanner() {
                         <div className='value'>
                             <select
                                 id='id-type-select'
-                                onChange={(e) => {
-                                    setIpType(e.target.value);
-                                    settings.set('ipType', e.target.value);
-                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                }}
+                                onChange={onChangeType}
                                 disabled={endpoint !== defaultSettings.endpoint}
                                 value={ipType}
                             >
@@ -111,11 +132,7 @@ export default function Scanner() {
                         <div className='value'>
                             <select
                                 id='rtt-select'
-                                onChange={(e) => {
-                                    setRtt(e.target.value);
-                                    settings.set('rtt', e.target.value);
-                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                }}
+                                onChange={onChangeRTT}
                                 disabled={endpoint !== defaultSettings.endpoint}
                                 value={rtt}
                             >
@@ -139,9 +156,7 @@ export default function Scanner() {
                     <div
                         role='presentation'
                         className={classNames('item')}
-                        onClick={() => {
-                            setShowEndpointModal(true);
-                        }}
+                        onClick={onOpenEndpointModal}
                     >
                         <label className='key' htmlFor='endpoint'>
                             {appLang?.settings?.endpoint}
@@ -166,14 +181,7 @@ export default function Scanner() {
                     </div>
                 </div>
                 <div className='settings'>
-                    <div
-                        role='presentation'
-                        className={'item'}
-                        onClick={() => {
-                            setReserved(!reserved);
-                            settings.set('reserved', !reserved);
-                        }}
-                    >
+                    <div role='presentation' className={'item'} onClick={onClickReservedButton}>
                         <label className='key' htmlFor='reserved'>
                             {appLang?.settings?.scanner_reserved}
                         </label>
