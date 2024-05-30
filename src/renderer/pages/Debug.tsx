@@ -44,7 +44,7 @@ export default function Debug() {
 
     useGoBackOnEscape();
 
-    const userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
+    const userFlag = '<USERNAME>';
     ipcRenderer.on('getLogs', (data) => {
         let logs = String(data);
         // protect user privacy
