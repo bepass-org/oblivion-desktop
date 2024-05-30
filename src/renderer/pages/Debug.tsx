@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
@@ -57,11 +57,14 @@ export default function Debug() {
         setLog(logs);
     });
 
-    const handleCopy = (e: { preventDefault: () => void }, value: any) => {
-        e.preventDefault();
-        navigator.clipboard.writeText(value);
-        defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
-    };
+    const handleCopy = useCallback(
+        (e: MouseEvent<HTMLElement>, value: string) => {
+            e.preventDefault();
+            navigator.clipboard.writeText(value);
+            defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
+        },
+        [appLang?.toast?.copied]
+    );
 
     // const handleClearLog = (e: { preventDefault: () => void }) => {
     //     e.preventDefault();
