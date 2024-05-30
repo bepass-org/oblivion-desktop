@@ -71,6 +71,16 @@ export default function Options() {
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items]
     );
 
+    const onClosePortModal = useCallback(() => {
+        setShowPortModal(false);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onCloseRoutingRulesModal = useCallback(() => {
+        setShowRoutingRulesModal(false);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
     if (
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
@@ -92,28 +102,18 @@ export default function Options() {
         <>
             <Nav title={appLang?.settings?.network} />
             <PortModal
-                {...{
-                    port,
-                    setPort
-                }}
+                port={port}
+                setPort={setPort}
                 title={appLang?.modal?.port_title}
                 isOpen={showPortModal}
-                onClose={() => {
-                    setShowPortModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
+                onClose={onClosePortModal}
             />
             <RoutingRulesModal
-                {...{
-                    routingRules,
-                    setRoutingRules
-                }}
+                routingRules={routingRules}
+                setRoutingRules={setRoutingRules}
                 title={appLang?.settings?.routing_rules}
                 isOpen={showRoutingRulesModal}
-                onClose={() => {
-                    setShowRoutingRulesModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
+                onClose={onCloseRoutingRulesModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='network' />
