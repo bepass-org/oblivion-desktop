@@ -24,8 +24,8 @@ export default function Options() {
     const [proxyMode, setProxyMode] = useState('');
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
-    const [port, setPort] = useState();
-    const [showPortModal, setShowPortModal] = useState(false);
+    const [port, setPort] = useState<number>();
+    const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const [appLang] = useState(getLang());
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [dns, setDns] = useState<undefined | boolean>();
