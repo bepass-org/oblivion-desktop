@@ -1,8 +1,20 @@
 import classNames from 'classnames';
+import { useCallback, useMemo } from 'react';
+
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
 import { getLang } from '../../lib/loaders';
+
+interface RestoreModalProps {
+    title: string;
+    isOpen: boolean;
+    onClose: () => void;
+    setTheme: (value: string) => void;
+    setSystemTray: (value: boolean) => void;
+    setLang: (value: string) => void;
+    setOpenAtLogin: (value: boolean) => void;
+}
 
 export default function RestoreModal({
     title,
@@ -12,21 +24,15 @@ export default function RestoreModal({
     setSystemTray,
     setLang,
     setOpenAtLogin
-}: {
-    title: string;
-    isOpen: boolean;
-    onClose: any;
-    setTheme: any;
-    setSystemTray: any;
-    setLang: any;
-    setOpenAtLogin: any;
-}) {
-    if (!isOpen) return null;
+}: RestoreModalProps) {
+    const detectingSystemTheme = useMemo(
+        () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
+        []
+    );
 
     const appLang = getLang();
-    const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
-    const onSaveModal = async () => {
+    const onSaveModal = useCallback(async () => {
         // in this page
         setTheme(detectingSystemTheme ? 'dark' : 'light');
         setSystemTray(defaultSettings.systemTray);
@@ -61,39 +67,39 @@ export default function RestoreModal({
         await settings.set('reserved', defaultSettings.reserved);
         //
         ipcRenderer.sendMessage('wp-end');
-    };
+    }, [detectingSystemTheme, setTheme, setSystemTray, setLang, setOpenAtLogin, onClose]);
+
+    if (!isOpen) return null;
 
     return (
-        <>
-            <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} role='presentation' />
-                <div className='dialogBox'>
-                    <div className='container'>
-                        <div className='line'>
-                            <div className='miniLine' />
-                        </div>
-                        <h3>{title}</h3>
-                        <p>{appLang?.modal?.restore_desc}</p>
-                        <div className='clearfix' />
-                        <div
-                            className={classNames('btn', 'btn-cancel')}
-                            onClick={onClose}
-                            role='presentation'
-                        >
-                            {appLang?.modal?.cancel}
-                        </div>
-                        <div
-                            role='button'
-                            tabIndex={0}
-                            aria-hidden='true'
-                            className={classNames('btn', 'btn-save')}
-                            onClick={onSaveModal}
-                        >
-                            {appLang?.modal?.confirm}
-                        </div>
+        <div className='dialog'>
+            <div className='dialogBg' onClick={onClose} role='presentation' />
+            <div className='dialogBox'>
+                <div className='container'>
+                    <div className='line'>
+                        <div className='miniLine' />
+                    </div>
+                    <h3>{title}</h3>
+                    <p>{appLang?.modal?.restore_desc}</p>
+                    <div className='clearfix' />
+                    <div
+                        className={classNames('btn', 'btn-cancel')}
+                        onClick={onClose}
+                        role='presentation'
+                    >
+                        {appLang?.modal?.cancel}
+                    </div>
+                    <div
+                        role='button'
+                        tabIndex={0}
+                        aria-hidden='true'
+                        className={classNames('btn', 'btn-save')}
+                        onClick={onSaveModal}
+                    >
+                        {appLang?.modal?.confirm}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

@@ -9,8 +9,8 @@ import { toPersianNumber } from '../lib/toPersianNumber';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Routing() {
-    const [routingRules, setRoutingRules] = useState();
-    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
+    const [routingRules, setRoutingRules] = useState<string>();
+    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
 
     useGoBackOnEscape();
 

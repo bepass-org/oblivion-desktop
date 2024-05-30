@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -21,16 +21,16 @@ export default function Options() {
     useGoBackOnEscape();
 
     // TODO rename to networkConfiguration
-    const [proxyMode, setProxyMode] = useState('');
+    const [proxyMode, setProxyMode] = useState<string>('');
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
-    const [port, setPort] = useState();
-    const [showPortModal, setShowPortModal] = useState(false);
+    const [port, setPort] = useState<number>();
+    const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const [appLang] = useState(getLang());
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [dns, setDns] = useState<undefined | boolean>();
-    const [routingRules, setRoutingRules] = useState();
-    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
+    const [routingRules, setRoutingRules] = useState<string>();
+    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
 
     useEffect(() => {
         settings.get('ipData').then((value) => {
@@ -56,15 +56,30 @@ export default function Options() {
         });
     }, []);
 
-    const countRoutingRules = (value: any) => {
-        if (value === '') {
-            return appLang?.settings?.routing_rules_disabled;
-        }
-        const lines = value.split('\n');
-        return lines?.length > 0
-            ? toPersianNumber(lines.length) + ' ' + (appLang?.settings?.routing_rules_items || '')
-            : appLang?.settings?.routing_rules_disabled;
-    };
+    const countRoutingRules = useCallback(
+        (value: string) => {
+            if (value === '') {
+                return appLang?.settings?.routing_rules_disabled;
+            }
+            const lines = value.split('\n');
+            return lines?.length > 0
+                ? toPersianNumber(lines.length) +
+                      ' ' +
+                      (appLang?.settings?.routing_rules_items || '')
+                : appLang?.settings?.routing_rules_disabled;
+        },
+        [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items]
+    );
+
+    const onClosePortModal = useCallback(() => {
+        setShowPortModal(false);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
+
+    const onCloseRoutingRulesModal = useCallback(() => {
+        setShowRoutingRulesModal(false);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+    }, [isConnected, isLoading]);
 
     if (
         typeof ipData === 'undefined' ||
@@ -76,41 +91,29 @@ export default function Options() {
         typeof routingRules === 'undefined'
     )
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </>
+            </div>
         );
 
     return (
         <>
             <Nav title={appLang?.settings?.network} />
             <PortModal
-                {...{
-                    port,
-                    setPort
-                }}
+                port={port}
+                setPort={setPort}
                 title={appLang?.modal?.port_title}
                 isOpen={showPortModal}
-                onClose={() => {
-                    setShowPortModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
+                onClose={onClosePortModal}
             />
             <RoutingRulesModal
-                {...{
-                    routingRules,
-                    setRoutingRules
-                }}
+                routingRules={routingRules}
+                setRoutingRules={setRoutingRules}
                 title={appLang?.settings?.routing_rules}
                 isOpen={showRoutingRulesModal}
-                onClose={() => {
-                    setShowRoutingRulesModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
+                onClose={onCloseRoutingRulesModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='network' />
