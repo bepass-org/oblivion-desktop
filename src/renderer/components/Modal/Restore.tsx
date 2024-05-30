@@ -64,36 +64,34 @@ export default function RestoreModal({
     };
 
     return (
-        <>
-            <div className='dialog'>
-                <div className='dialogBg' onClick={onClose} role='presentation' />
-                <div className='dialogBox'>
-                    <div className='container'>
-                        <div className='line'>
-                            <div className='miniLine' />
-                        </div>
-                        <h3>{title}</h3>
-                        <p>{appLang?.modal?.restore_desc}</p>
-                        <div className='clearfix' />
-                        <div
-                            className={classNames('btn', 'btn-cancel')}
-                            onClick={onClose}
-                            role='presentation'
-                        >
-                            {appLang?.modal?.cancel}
-                        </div>
-                        <div
-                            role='button'
-                            tabIndex={0}
-                            aria-hidden='true'
-                            className={classNames('btn', 'btn-save')}
-                            onClick={onSaveModal}
-                        >
-                            {appLang?.modal?.confirm}
-                        </div>
+        <div className='dialog'>
+            <div className='dialogBg' onClick={onClose} role='presentation' />
+            <div className='dialogBox'>
+                <div className='container'>
+                    <div className='line'>
+                        <div className='miniLine' />
+                    </div>
+                    <h3>{title}</h3>
+                    <p>{appLang?.modal?.restore_desc}</p>
+                    <div className='clearfix' />
+                    <div
+                        className={classNames('btn', 'btn-cancel')}
+                        onClick={onClose}
+                        role='presentation'
+                    >
+                        {appLang?.modal?.cancel}
+                    </div>
+                    <div
+                        role='button'
+                        tabIndex={0}
+                        aria-hidden='true'
+                        className={classNames('btn', 'btn-save')}
+                        onClick={onSaveModal}
+                    >
+                        {appLang?.modal?.confirm}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
