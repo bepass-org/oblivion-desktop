@@ -25,7 +25,7 @@ export default function Options() {
 
     const { state } = useLocation();
     const { targetId } = state || {};
-    const langRef = useRef<any>(null);
+    const langRef = useRef<HTMLDivElement>(null);
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
     useEffect(() => {
@@ -64,13 +64,11 @@ export default function Options() {
         typeof openAtLogin === 'undefined'
     )
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </>
+            </div>
         );
 
     return (
