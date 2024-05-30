@@ -43,7 +43,8 @@ module.exports = {
         'no-async-promise-executor': 'off',
         'no-else-return': 'off',
         'func-names': 'off',
-        'prefer-promise-reject-errors': 'off'
+        'prefer-promise-reject-errors': 'off',
+        'react/function-component-definition': 'off'
     },
     parserOptions: {
         ecmaVersion: 2022,
