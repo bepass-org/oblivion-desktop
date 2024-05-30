@@ -66,6 +66,10 @@ export default function Debug() {
         [appLang?.toast?.copied]
     );
 
+    const setAuthScrollEnabled = useCallback(() => setAutoScroll(true), []);
+
+    const setAuthScrollDisabled = useCallback(() => setAutoScroll(false), []);
+
     // const handleClearLog = (e: { preventDefault: () => void }) => {
     //     e.preventDefault();
     //     defaultToast(`${appLang?.toast?.cleared}`, 'CLEARED', 2000);
@@ -110,9 +114,7 @@ export default function Debug() {
                                         <i
                                             role='presentation'
                                             className='material-icons'
-                                            onClick={() => {
-                                                setAutoScroll(false);
-                                            }}
+                                            onClick={setAuthScrollDisabled}
                                         >
                                             &#xe1a2;
                                         </i>
@@ -122,9 +124,7 @@ export default function Debug() {
                                         <i
                                             role='presentation'
                                             className='material-icons'
-                                            onClick={() => {
-                                                setAutoScroll(true);
-                                            }}
+                                            onClick={setAuthScrollEnabled}
                                         >
                                             &#xe038;
                                         </i>
