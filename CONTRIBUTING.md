@@ -31,4 +31,5 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
     If you have any questions, suggestions, or concerns that are not addressed in this document, please feel free to open an [issue](https://github.com/bepass-org/oblivion-desktop/issues) or contact us directly. We are open to discussions related to the project.
 
 ### ⚠️ Warning
+
 we recommend to not use your real name/account when contributing to this project. as it may causes you problem in some countries(that have problems with free circulation of information).
