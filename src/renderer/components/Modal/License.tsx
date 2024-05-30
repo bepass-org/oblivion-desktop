@@ -38,7 +38,7 @@ export default function LicenseModal({
 
     const handleLicenseInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
-            setLicenseInput(e.target.value.toLowerCase().trim());
+            setLicenseInput(e.target.value.trim());
         },
         [setLicenseInput]
     );
