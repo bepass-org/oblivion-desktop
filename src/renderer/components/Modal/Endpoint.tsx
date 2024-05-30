@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { getLang } from '../../lib/loaders';
@@ -39,6 +39,26 @@ const EndpointModal: FC<EndpointModalProps> = ({
         onClose();
     }, [defValue, endpointInput, onClose, setEndpoint]);
 
+    const setEndpointSuggestion = useCallback(() => {
+        setEndpointInput(suggestion);
+    }, [suggestion]);
+
+    const setEndpointDefault = useCallback(() => {
+        setEndpointInput(defValue);
+    }, [defValue]);
+
+    const handleCancelButtonClick = useCallback(() => {
+        setEndpointInput(endpoint);
+        onClose();
+    }, [endpoint, onClose]);
+
+    const handleEndpointInputChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            setEndpointInput(e.target.value.toLowerCase().trim());
+        },
+        [setEndpointInput]
+    );
+
     if (!isOpen) return <></>;
 
     return (
@@ -59,9 +79,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     'label-warning',
                                     endpointInput === defValue ? 'hidden' : ''
                                 )}
-                                onClick={() => {
-                                    setEndpointInput(defValue);
-                                }}
+                                onClick={setEndpointDefault}
                             >
                                 <i className='material-icons'>&#xe145;</i>
                                 {appLang?.modal?.endpoint_default}
@@ -73,9 +91,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     'label-danger',
                                     endpointInput === suggestion ? 'hidden' : ''
                                 )}
-                                onClick={() => {
-                                    setEndpointInput(suggestion);
-                                }}
+                                onClick={setEndpointSuggestion}
                             >
                                 <i className='material-icons'>&#xe145;</i>
                                 {appLang?.modal?.endpoint_suggested}
@@ -86,27 +102,20 @@ const EndpointModal: FC<EndpointModalProps> = ({
                         value={endpointInput}
                         spellCheck={false}
                         className='form-control'
-                        onChange={(e) => {
-                            setEndpointInput(String(e.target.value).toLowerCase().trim());
-                        }}
+                        onChange={handleEndpointInputChange}
                     />
                     <div className='clearfix' />
                     <div
                         role='presentation'
                         className={classNames('btn', 'btn-cancel')}
-                        onClick={() => {
-                            setEndpointInput(endpoint);
-                            onClose();
-                        }}
+                        onClick={handleCancelButtonClick}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
                         role='presentation'
                         className={classNames('btn', 'btn-save')}
-                        onClick={() => {
-                            onSaveModal();
-                        }}
+                        onClick={onSaveModal}
                     >
                         {appLang?.modal?.update}
                     </div>
