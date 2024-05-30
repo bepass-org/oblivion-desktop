@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { getLang } from '../../lib/loaders';
@@ -37,6 +37,15 @@ export default function PortModal({
         onClose();
     }, [defValue, portInput, onClose, setPort, isValidPort]);
 
+    const handleCancelButtonClick = useCallback(() => {
+        setPortInput(port);
+        onClose();
+    }, [port, onClose]);
+
+    const handlePortInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        setPortInput(Number(event.target.value));
+    }, []);
+
     if (!isOpen) return <></>;
 
     return (
@@ -53,27 +62,20 @@ export default function PortModal({
                         spellCheck={false}
                         value={portInput}
                         className='form-control'
-                        onChange={(e) => {
-                            setPortInput(Number(e.target.value));
-                        }}
+                        onChange={handlePortInputChange}
                     />
                     <div className='clearfix' />
                     <div
                         role='presentation'
                         className={classNames('btn', 'btn-cancel')}
-                        onClick={() => {
-                            setPortInput(port);
-                            onClose();
-                        }}
+                        onClick={handleCancelButtonClick}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
                         role='presentation'
                         className={classNames('btn', 'btn-save')}
-                        onClick={() => {
-                            onSaveModal();
-                        }}
+                        onClick={onSaveModal}
                     >
                         {appLang?.modal?.update}
                     </div>
