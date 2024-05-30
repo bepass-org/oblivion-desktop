@@ -44,12 +44,13 @@ export default function Debug() {
 
     useGoBackOnEscape();
 
-    const userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
+    const userFlag = '<USERNAME>';
     ipcRenderer.on('getLogs', (data) => {
         let logs = String(data);
         // protect user privacy
         // @ts-ignore
         logs = logs.replaceAll(username, userFlag);
+        logs = logs.replaceAll(/\\\\/g, '\\');
         // updatedData = updatedData.replace(/([A-Z]):\\/g, '<DRIVE>:\\');
         // updatedData = updatedData.replace(/\/home\/[^\\]+\//, 'home/<USER>/');
         // updatedData = updatedData.replace(/\\www\\[^\\]+\\/, '\\www\\<DIR>\\');
