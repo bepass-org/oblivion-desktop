@@ -23,7 +23,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
 }) => {
     const [endpointInput, setEndpointInput] = useState<string>(endpoint);
     const appLang = getLang();
-    const suggestion = useMemo(() => '188.114.98.224:2408', []);
+    const suggestion = useMemo(() => ['188.114.98.224:2408', '162.159.192.175:891'], []);
 
     const onSaveModal = useCallback(() => {
         const endpointInputModified = endpointInput.replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -39,8 +39,11 @@ const EndpointModal: FC<EndpointModalProps> = ({
         onClose();
     }, [defValue, endpointInput, onClose, setEndpoint]);
 
-    const setEndpointSuggestion = useCallback(() => {
-        setEndpointInput(suggestion);
+    const setEndpointSuggestion = useCallback((item: number) => {
+        if (typeof item === 'undefined' || !item) {
+            item = 0;
+        }
+        setEndpointInput(suggestion[item]);
     }, [suggestion]);
 
     const setEndpointDefault = useCallback(() => {
@@ -76,6 +79,34 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 role='presentation'
                                 className={classNames(
                                     'label',
+                                    'label-danger',
+                                    endpointInput === suggestion[0] ? 'hidden' : ''
+                                )}
+                                onClick={() => {
+                                    setEndpointSuggestion(0);
+                                }}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                E1
+                            </div>
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-primary',
+                                    endpointInput === suggestion[1] ? 'hidden' : ''
+                                )}
+                                onClick={() => {
+                                    setEndpointSuggestion(1);
+                                }}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                E2
+                            </div>
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
                                     'label-warning',
                                     endpointInput === defValue ? 'hidden' : ''
                                 )}
@@ -83,18 +114,6 @@ const EndpointModal: FC<EndpointModalProps> = ({
                             >
                                 <i className='material-icons'>&#xe145;</i>
                                 {appLang?.modal?.endpoint_default}
-                            </div>
-                            <div
-                                role='presentation'
-                                className={classNames(
-                                    'label',
-                                    'label-danger',
-                                    endpointInput === suggestion ? 'hidden' : ''
-                                )}
-                                onClick={setEndpointSuggestion}
-                            >
-                                <i className='material-icons'>&#xe145;</i>
-                                {appLang?.modal?.endpoint_suggested}
                             </div>
                         </div>
                     </h3>
