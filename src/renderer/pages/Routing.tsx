@@ -21,7 +21,7 @@ export default function Routing() {
         });
     }, []);
 
-    const countRoutingRules = (value: any) => {
+    const countRoutingRules = (value: string) => {
         if (value === '') {
             return 'غیرفعال';
         }
@@ -31,13 +31,11 @@ export default function Routing() {
 
     if (typeof routingRules === 'undefined')
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </>
+            </div>
         );
 
     return (
