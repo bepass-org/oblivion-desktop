@@ -18,7 +18,7 @@ export default function Scanner() {
     const [appLang] = useState(getLang());
 
     const [endpoint, setEndpoint] = useState<string>();
-    const [showEndpointModal, setShowEndpointModal] = useState(false);
+    const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
     const [reserved, setReserved] = useState<undefined | boolean>();
@@ -47,13 +47,11 @@ export default function Scanner() {
         typeof reserved === 'undefined'
     )
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop />
                 </div>
-            </>
+            </div>
         );
 
     return (
