@@ -29,7 +29,7 @@ export default function Options() {
     const [appLang] = useState(getLang());
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [dns, setDns] = useState<undefined | boolean>();
-    const [routingRules, setRoutingRules] = useState();
+    const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState(false);
 
     useEffect(() => {
