@@ -17,7 +17,7 @@ export default function Scanner() {
     const { isConnected, isLoading } = useStore();
     const [appLang] = useState(getLang());
 
-    const [endpoint, setEndpoint] = useState();
+    const [endpoint, setEndpoint] = useState<string>();
     const [showEndpointModal, setShowEndpointModal] = useState(false);
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
@@ -60,10 +60,8 @@ export default function Scanner() {
         <>
             <Nav title={appLang?.settings?.scanner} />
             <EndpointModal
-                {...{
-                    endpoint,
-                    setEndpoint
-                }}
+                endpoint={endpoint}
+                setEndpoint={setEndpoint}
                 title={appLang?.modal?.endpoint_title}
                 isOpen={showEndpointModal}
                 onClose={() => {
