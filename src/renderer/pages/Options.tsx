@@ -17,10 +17,10 @@ export default function Options() {
     useGoBackOnEscape();
 
     const [theme, setTheme] = useState<undefined | string>();
-    const [lang, setLang] = useState('');
+    const [lang, setLang] = useState<string>('');
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
-    const [showRestoreModal, setShowRestoreModal] = useState(false);
+    const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [appLang, setAppLang] = useState(getLang());
 
     const { state } = useLocation();
