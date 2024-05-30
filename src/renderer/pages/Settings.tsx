@@ -24,7 +24,7 @@ export default function Settings() {
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     const [location, setLocation] = useState<undefined | string>();
     const [license, setLicense] = useState<string>();
-    const [showLicenseModal, setShowLicenseModal] = useState(false);
+    const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
 
@@ -69,13 +69,11 @@ export default function Settings() {
         typeof method === 'undefined'
     )
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </>
+            </div>
         );
 
     return (
