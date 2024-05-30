@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, ChangeEvent } from 'react';
 import Lottie from 'lottie-react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
@@ -25,7 +25,7 @@ export default function Options() {
 
     const { state } = useLocation();
     const { targetId } = state || {};
-    const langRef = useRef<any>(null);
+    const langRef = useRef<HTMLDivElement>(null);
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
     useEffect(() => {
@@ -57,6 +57,50 @@ export default function Options() {
         });
     }, []);
 
+    const onCloseRestoreModal = useCallback(() => {
+        setShowRestoreModal(false);
+        setTimeout(function () {
+            loadLang();
+        }, 750);
+        setTimeout(function () {
+            setAppLang(getLang());
+        }, 1500);
+    }, []);
+
+    const onChangeTheme = useCallback(() => {
+        const tmp = theme === 'light' ? 'dark' : 'light';
+        setTheme(tmp);
+        settings.set('theme', tmp);
+        document.documentElement.setAttribute('data-bs-theme', tmp);
+    }, [theme]);
+
+    const onChangeLanguage = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+        setLang(e.target.value);
+        settings.set('lang', e.target.value);
+        loadingToast();
+
+        setTimeout(function () {
+            loadLang();
+        }, 750);
+
+        setTimeout(function () {
+            setAppLang(getLang());
+            toast.dismiss('LOADING');
+        }, 1500);
+    }, []);
+
+    const onClickAutoStartButton = useCallback(() => {
+        setOpenAtLogin(!openAtLogin);
+        settings.set('openAtLogin', !openAtLogin);
+    }, [openAtLogin]);
+
+    const onClicksystemTrayButton = useCallback(() => {
+        setSystemTray(!systemTray);
+        settings.set('systemTray', !systemTray);
+    }, [systemTray]);
+
+    const onOpenRestoreModal = useCallback(() => setShowRestoreModal(true), []);
+
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
@@ -64,13 +108,11 @@ export default function Options() {
         typeof openAtLogin === 'undefined'
     )
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </>
+            </div>
         );
 
     return (
@@ -85,29 +127,12 @@ export default function Options() {
                 }}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
-                onClose={() => {
-                    setShowRestoreModal(false);
-                    setTimeout(function () {
-                        loadLang();
-                    }, 750);
-                    setTimeout(function () {
-                        setAppLang(getLang());
-                    }, 1500);
-                }}
+                onClose={onCloseRestoreModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='options' />
                 <div className='settings'>
-                    <div
-                        role='presentation'
-                        className='item'
-                        onClick={() => {
-                            const tmp = theme === 'light' ? 'dark' : 'light';
-                            setTheme(tmp);
-                            settings.set('theme', tmp);
-                            document.documentElement.setAttribute('data-bs-theme', tmp);
-                        }}
-                    >
+                    <div role='presentation' className='item' onClick={onChangeTheme}>
                         <label className='key' htmlFor='flexSwitchCheckChecked'>
                             {appLang?.settings?.dark_mode}
                         </label>
@@ -125,28 +150,13 @@ export default function Options() {
                             {appLang?.settings?.dark_mode_desc}
                         </div>
                     </div>
-                    <div className={'item'} ref={langRef}>
+                    <div className='item' ref={langRef}>
                         <label className='key' htmlFor='lang-select'>
                             {appLang?.settings?.lang}
                         </label>
                         <div className='value'>
-                            <select
-                                id='lang-select'
-                                onChange={(e) => {
-                                    setLang(e.target.value);
-                                    settings.set('lang', e.target.value);
-                                    loadingToast();
-                                    setTimeout(function () {
-                                        loadLang();
-                                    }, 750);
-                                    setTimeout(function () {
-                                        setAppLang(getLang());
-                                        toast.dismiss('LOADING');
-                                    }, 1500);
-                                }}
-                                value={lang}
-                            >
-                                {languages.map((lng: { value: string; label: string }) => (
+                            <select id='lang-select' onChange={onChangeLanguage} value={lang}>
+                                {languages.map((lng) => (
                                     <option key={lng.value} value={lng.value}>
                                         {lng.label}
                                     </option>
@@ -155,14 +165,7 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
-                    <div
-                        role='presentation'
-                        className='item'
-                        onClick={() => {
-                            setOpenAtLogin(!openAtLogin);
-                            settings.set('openAtLogin', !openAtLogin);
-                        }}
-                    >
+                    <div role='presentation' className='item' onClick={onClickAutoStartButton}>
                         <label className='key' htmlFor='open-login'>
                             {appLang?.settings?.open_login}
                         </label>
@@ -176,14 +179,7 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.open_login_desc}</div>
                     </div>
-                    <div
-                        role='presentation'
-                        className='item'
-                        onClick={() => {
-                            setSystemTray(!systemTray);
-                            settings.set('systemTray', !systemTray);
-                        }}
-                    >
+                    <div role='presentation' className='item' onClick={onClicksystemTrayButton}>
                         <label className='key' htmlFor='system-tray'>
                             {appLang?.settings?.system_tray}
                         </label>
@@ -203,13 +199,7 @@ export default function Options() {
                     {appLang?.settings?.more}
                 </div>
                 <div className='settings'>
-                    <div
-                        role='presentation'
-                        className={'item'}
-                        onClick={() => {
-                            setShowRestoreModal(true);
-                        }}
-                    >
+                    <div role='presentation' className={'item'} onClick={onOpenRestoreModal}>
                         <label className='key' htmlFor='restore'>
                             {appLang?.settings?.restore}
                         </label>

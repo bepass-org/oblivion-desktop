@@ -1,6 +1,9 @@
 export const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
-export const toPersianNumber = (n: string | number | undefined, doNotConvertFloat = false): any => {
+export const toPersianNumber = (
+    n: string | number | undefined,
+    doNotConvertFloat = false
+): string => {
     if (typeof n === 'undefined') {
         return '';
     }

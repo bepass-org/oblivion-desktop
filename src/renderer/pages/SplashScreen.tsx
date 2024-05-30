@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { isDev } from '../lib/utils';
 
 export default function SplashScreen() {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState<boolean>(true);
     useEffect(() => {
         setTimeout(
             () => {
@@ -12,15 +12,13 @@ export default function SplashScreen() {
         );
     }, []);
 
-    if (!show) return <></>;
+    if (!show) return;
     return (
-        <>
-            <div className='splashScreen'>
-                <div className='splashScreenImg' />
-                <div className='loading'>
-                    <div className='spinner' />
-                </div>
+        <div className='splashScreen'>
+            <div className='splashScreenImg' />
+            <div className='loading'>
+                <div className='spinner' />
             </div>
-        </>
+        </div>
     );
 }

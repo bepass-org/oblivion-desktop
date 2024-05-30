@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Lottie from 'lottie-react';
 import Nav from '../components/Nav';
 import RoutingRulesModal from '../components/Modal/RoutingRules';
@@ -21,48 +21,39 @@ export default function Routing() {
         });
     }, []);
 
-    const countRoutingRules = (value: any) => {
+    const countRoutingRules = useCallback((value: string) => {
         if (value === '') {
             return 'غیرفعال';
         }
         const lines = value.split('\n');
         return lines?.length > 0 ? toPersianNumber(lines.length) + ' مورد' : 'غیرفعال';
-    };
+    }, []);
+
+    const onCloseRoutingRulesModal = useCallback(() => setShowRoutingRulesModal(false), []);
+    const onOpenRoutingRulesModal = useCallback(() => setShowRoutingRulesModal(true), []);
 
     if (typeof routingRules === 'undefined')
         return (
-            <>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </>
+            </div>
         );
 
     return (
         <>
             <Nav title='قوانین مسیریابی' />
             <RoutingRulesModal
-                {...{
-                    routingRules,
-                    setRoutingRules
-                }}
+                routingRules={routingRules}
+                setRoutingRules={setRoutingRules}
                 title='لیست سیاه'
                 isOpen={showRoutingRulesModal}
-                onClose={() => {
-                    setShowRoutingRulesModal(false);
-                }}
+                onClose={onCloseRoutingRulesModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='settings'>
-                    <div
-                        role='presentation'
-                        className='item'
-                        onClick={() => {
-                            setShowRoutingRulesModal(true);
-                        }}
-                    >
+                    <div role='presentation' className='item' onClick={onOpenRoutingRulesModal}>
                         <label className='key' htmlFor='routing-rules'>
                             لیست سیاه
                         </label>
