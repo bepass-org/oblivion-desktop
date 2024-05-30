@@ -23,7 +23,7 @@ export default function Settings() {
     //const [ipType, setIpType] = useState<undefined | string>();
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     const [location, setLocation] = useState<undefined | string>();
-    const [license, setLicense] = useState();
+    const [license, setLicense] = useState<string>();
     const [showLicenseModal, setShowLicenseModal] = useState(false);
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');

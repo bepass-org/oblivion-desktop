@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
@@ -44,7 +44,7 @@ export default function Debug() {
 
     useGoBackOnEscape();
 
-    const userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
+    const userFlag = username?.startsWith('\\') ? '\<USERNAME>' : '<USERNAME>';
     ipcRenderer.on('getLogs', (data) => {
         let logs = String(data);
         // protect user privacy
@@ -57,11 +57,18 @@ export default function Debug() {
         setLog(logs);
     });
 
-    const handleCopy = (e: { preventDefault: () => void }, value: any) => {
-        e.preventDefault();
-        navigator.clipboard.writeText(value);
-        defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
-    };
+    const handleCopy = useCallback(
+        (e: MouseEvent<HTMLElement>, value: string) => {
+            e.preventDefault();
+            navigator.clipboard.writeText(value);
+            defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
+        },
+        [appLang?.toast?.copied]
+    );
+
+    const setAuthScrollEnabled = useCallback(() => setAutoScroll(true), []);
+
+    const setAuthScrollDisabled = useCallback(() => setAutoScroll(false), []);
 
     // const handleClearLog = (e: { preventDefault: () => void }) => {
     //     e.preventDefault();
@@ -107,9 +114,7 @@ export default function Debug() {
                                         <i
                                             role='presentation'
                                             className='material-icons'
-                                            onClick={() => {
-                                                setAutoScroll(false);
-                                            }}
+                                            onClick={setAuthScrollDisabled}
                                         >
                                             &#xe1a2;
                                         </i>
@@ -119,9 +124,7 @@ export default function Debug() {
                                         <i
                                             role='presentation'
                                             className='material-icons'
-                                            onClick={() => {
-                                                setAutoScroll(true);
-                                            }}
+                                            onClick={setAuthScrollEnabled}
                                         >
                                             &#xe038;
                                         </i>
