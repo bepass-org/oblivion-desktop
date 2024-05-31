@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { getLang } from '../../lib/loaders';
 
@@ -19,8 +19,16 @@ export default function LicenseModal({
     setLicense
 }: LicenseModalProps) {
     const [licenseInput, setLicenseInput] = useState<string>(license);
+    const [showModal, setshowModal] = useState<boolean>(isOpen);
+
+    useEffect(() => setshowModal(isOpen), [isOpen]);
 
     const appLang = getLang();
+
+    const handleOnClose = useCallback(() => {
+        setshowModal(false);
+        setTimeout(onClose, 300);
+    }, [onClose]);
 
     const onSaveModal = useCallback(() => {
         const regex = /^[a-zA-Z0-9-]*$/;
@@ -28,13 +36,13 @@ export default function LicenseModal({
         setLicenseInput(tmp);
         setLicense(tmp);
         settings.set('license', tmp);
-        onClose();
-    }, [onClose, licenseInput, setLicense]);
+        handleOnClose();
+    }, [handleOnClose, licenseInput, setLicense]);
 
     const handleCancelButtonClick = useCallback(() => {
         setLicenseInput(license);
-        onClose();
-    }, [license, onClose]);
+        handleOnClose();
+    }, [license, handleOnClose]);
 
     const handleLicenseInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,8 +54,8 @@ export default function LicenseModal({
     if (!isOpen) return <></>;
 
     return (
-        <div className='dialog'>
-            <div className='dialogBg' onClick={onClose} role='presentation' />
+        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
+            <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>
                     <div className='line'>

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { getLang } from '../../lib/loaders';
 
@@ -19,6 +19,15 @@ export default function RoutingRulesModal({
     setRoutingRules
 }: RoutingRulesModalProps) {
     const [routingRulesInput, setRoutingRulesInput] = useState<string>(routingRules);
+    const [showModal, setshowModal] = useState<boolean>(isOpen);
+
+    useEffect(() => setshowModal(isOpen), [isOpen]);
+
+    const handleOnClose = useCallback(() => {
+        setshowModal(false);
+        setTimeout(onClose, 300);
+    }, [onClose]);
+
     const appLang = getLang();
 
     const validateRules = useCallback((textareaContent: string): string => {
@@ -62,13 +71,13 @@ export default function RoutingRulesModal({
             setRoutingRulesInput('');
             settings.set('routingRules', '');
         }
-        onClose();
-    }, [routingRulesInput, validateRules, onClose, setRoutingRules, setRoutingRulesInput]);
+        handleOnClose();
+    }, [routingRulesInput, validateRules, handleOnClose, setRoutingRules, setRoutingRulesInput]);
 
     const handleCancelButtonClick = useCallback(() => {
         setRoutingRulesInput(routingRules);
-        onClose();
-    }, [routingRules, onClose]);
+        handleOnClose();
+    }, [routingRules, handleOnClose]);
 
     const handleRoutingRulesInput = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -84,8 +93,8 @@ export default function RoutingRulesModal({
     if (!isOpen) return <></>;
 
     return (
-        <div className='dialog'>
-            <div className='dialogBg' onClick={onClose} role='presentation' />
+        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
+            <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>
                     <div className='line'>
