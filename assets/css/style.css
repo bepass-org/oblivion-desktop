@@ -530,6 +530,16 @@ html[data-bs-theme="dark"] .homeScreen .inFoot small {
     object-fit: cover;
 }
 
+.homeScreen .inFoot .item img[alt="false Flag"],
+.homeScreen .inFoot .item img[alt="xx Flag"] {
+    filter: brightness(77%);
+}
+
+html[data-bs-theme="dark"] .homeScreen .inFoot .item img[alt="false Flag"],
+html[data-bs-theme="dark"] .homeScreen .inFoot .item img[alt="xx Flag"] {
+    filter: brightness(33%);
+}
+
 .homeScreen .inFoot .item i {
     float: left;
     margin: -4px -1px 0 5px;
