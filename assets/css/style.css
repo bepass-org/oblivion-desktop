@@ -294,9 +294,6 @@ nav.header .navMenu .indicator {
 .homeScreen .title {
     float: right;
     width: 227px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .homeScreen .title h1 {
@@ -316,11 +313,12 @@ nav.header .navMenu .indicator {
 
 .homeScreen .title h2 {
     float: right;
+    width: 100%;
     padding: 0;
     color: #FFA200;
     font-size: 25px;
     font-weight: 300;
-    text-align: center;
+    text-align: right;
     margin: 0;
 }
 
@@ -422,7 +420,6 @@ nav.header .navMenu .indicator {
     float: right;
     text-align: center;
     color: #4B4B4B;
-    transition: all 0.5s ease-in-out;
 }
 
 [data-bs-theme="dark"] .homeScreen .status {
