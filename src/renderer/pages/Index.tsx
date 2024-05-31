@@ -306,9 +306,15 @@ export default function Index() {
                     <div
                         onClick={toggleDrawer}
                         className={classNames('navMenu')}
-                        role='switch'
+                        role='navigation'
                         aria-controls='menu'
                         tabIndex={1}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                toggleDrawer();
+                            }
+                        }}
                     >
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
@@ -339,9 +345,9 @@ export default function Index() {
                             Oblivion <small>Desktop</small>
                         </h3>
                     </div>
-                    <ul>
-                        <li>
-                            <Link to={'/settings'}>
+                    <ul role='menu' aria-labelledby='menubutton'>
+                        <li role='presentation'>
+                            <Link to={'/settings'} role='menuitem'>
                                 <i className={'material-icons'}>&#xe429;</i>
                                 <span>{appLang?.home?.drawer_settings_warp}</span>
                             </Link>
@@ -353,20 +359,20 @@ export default function Index() {
                             </Link>
                         </li>*/}
                         {/*<li className='divider'></li>*/}
-                        <li>
-                            <Link to={'/network'}>
+                        <li role='presentation'>
+                            <Link to={'/network'} role='menuitem'>
                                 <i className={'material-icons'}>&#xeb2f;</i>
                                 <span>{appLang?.home?.drawer_settings_network}</span>
                             </Link>
                         </li>
-                        <li>
-                            <Link to={'/scanner'}>
+                        <li role='presentation'>
+                            <Link to={'/scanner'} role='menuitem'>
                                 <i className={'material-icons'}>&#xe2db;</i>
                                 <span>{appLang?.home?.drawer_settings_scanner}</span>
                             </Link>
                         </li>
-                        <li>
-                            <Link to={'/options'}>
+                        <li role='presentation'>
+                            <Link to={'/options'} role='menuitem'>
                                 <i className={'material-icons'}>&#xe8b8;</i>
                                 <span>{appLang?.home?.drawer_settings_app}</span>
                             </Link>
@@ -378,11 +384,12 @@ export default function Index() {
                                 <span>{appLang?.home?.drawer_speed_test}</span>
                             </Link>
                         </li>*/}
-                        <li className={hasNewUpdate ? '' : 'hidden'}>
+                        <li className={hasNewUpdate ? '' : 'hidden'} role='presentation'>
                             <a
                                 href='https://github.com/bepass-org/oblivion-desktop/releases/latest'
                                 target='_blank'
                                 rel='noreferrer'
+                                role='menuitem'
                             >
                                 <i className={'material-icons'}>&#xe923;</i>
                                 <span>{appLang?.home?.drawer_update}</span>
@@ -401,20 +408,20 @@ export default function Index() {
                                 <span>{appLang?.home?.drawer_lang}</span>
                             </a>
                         </li>*/}
-                        <li>
-                            <Link to='/about'>
+                        <li role='presentation'>
+                            <Link to='/about' role='menuitem'>
                                 <i className={'material-icons'}>&#xe88e;</i>
                                 <span>{appLang?.home?.drawer_about}</span>
                             </Link>
                         </li>
-                        <li>
-                            <Link to={'/debug'}>
+                        <li role='presentation'>
+                            <Link to={'/debug'} role='menuitem'>
                                 <i className={'material-icons'}>&#xe868;</i>
                                 <span>{appLang?.home?.drawer_log}</span>
                             </Link>
                         </li>
                     </ul>
-                    <div className='appVersion'>
+                    <div className='appVersion' role='note'>
                         v<b>{packageJsonData.version}</b>
                     </div>
                 </div>
@@ -426,10 +433,13 @@ export default function Index() {
                             <h1>OBLIVION</h1>
                             <h2>{appLang?.home?.title_warp_based}</h2>
                         </div>
-                        <form action='' onSubmit={e => {
-                            e.preventDefault();
-                            onChange();
-                        }}>
+                        <form
+                            action=''
+                            onSubmit={e => {
+                                e.preventDefault();
+                                onChange();
+                            }}
+                        >
                             <div className='connector'>
                                 <Swipe
                                     nodeName='div'
@@ -446,7 +456,7 @@ export default function Index() {
                                 >
                                     <button
                                         type='submit'
-                                        role='presentation'
+                                        role='switch'
                                         tabIndex={0}
                                         className={classNames(
                                             'switch',
