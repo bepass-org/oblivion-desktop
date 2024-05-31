@@ -277,7 +277,7 @@ export default function Settings() {
                     <i className='material-icons'>&#xe313;</i>
                     {appLang?.settings?.more}
                 </div>
-                <div className='settings'>
+                <div className='settings' role='menu'>
                     {/*<div
                         className={classNames('item')}
                         onClick={() => {
