@@ -12,6 +12,7 @@ import { loadingToast } from '../lib/toasts';
 import { getLang, loadLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import Tabs from '../components/Tabs';
+import AnimatedComponent from '../components/Animated';
 
 export default function Options() {
     useGoBackOnEscape();
@@ -108,15 +109,17 @@ export default function Options() {
         typeof openAtLogin === 'undefined'
     )
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop={true} />
+            <AnimatedComponent>
+                <div className='settings'>
+                    <div className='lottie'>
+                        <Lottie animationData={LottieFile} loop={true} />
+                    </div>
                 </div>
-            </div>
+            </AnimatedComponent>
         );
 
     return (
-        <>
+        <AnimatedComponent>
             <Nav title={appLang?.settings?.option} />
             <RestoreModal
                 {...{
@@ -211,6 +214,6 @@ export default function Options() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </>
+        </AnimatedComponent>
     );
 }

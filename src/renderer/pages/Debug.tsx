@@ -6,6 +6,7 @@ import { ipcRenderer, username } from '../lib/utils';
 import { defaultToast } from '../lib/toasts';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import AnimatedComponent from '../components/Animated';
 
 export default function Debug() {
     const [log, setLog] = useState<string>('');
@@ -95,7 +96,7 @@ export default function Debug() {
     }, []);*/
 
     return (
-        <>
+        <AnimatedComponent>
             <Nav title={appLang?.log?.title} />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
@@ -181,6 +182,6 @@ export default function Debug() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </>
+        </AnimatedComponent>
     );
 }

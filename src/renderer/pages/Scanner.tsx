@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
+// import { motion } from 'framer-motion';
+
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
@@ -12,6 +14,7 @@ import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import EndpointModal from '../components/Modal/Endpoint';
 import Tabs from '../components/Tabs';
+import AnimatedComponent from '../components/Animated';
 
 export default function Scanner() {
     const { isConnected, isLoading } = useStore();
@@ -77,15 +80,17 @@ export default function Scanner() {
         typeof reserved === 'undefined'
     )
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop />
+            <AnimatedComponent>
+                <div className='settings'>
+                    <div className='lottie'>
+                        <Lottie animationData={LottieFile} loop />
+                    </div>
                 </div>
-            </div>
+            </AnimatedComponent>
         );
 
     return (
-        <>
+        <AnimatedComponent>
             <Nav title={appLang?.settings?.scanner} />
             <EndpointModal
                 endpoint={endpoint}
@@ -94,7 +99,19 @@ export default function Scanner() {
                 isOpen={showEndpointModal}
                 onClose={onCloseEndpointModal}
             />
-            <div className={classNames('myApp', 'normalPage')}>
+            <div
+                // initial={{
+                //     opacity: 0
+                // }}
+
+                // animate={{
+                //     opacity: 1
+                // }}
+                // exit={{
+                //     opacity: 0
+                // }}
+                className={classNames('myApp', 'normalPage')}
+            >
                 <Tabs active='scanner' />
                 <div className='settings'>
                     <div
@@ -198,6 +215,6 @@ export default function Scanner() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </>
+        </AnimatedComponent>
     );
 }

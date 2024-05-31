@@ -12,6 +12,7 @@ import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import AnimatedComponent from '../components/Animated';
 
 export default function Settings() {
     const appLang = getLang();
@@ -103,15 +104,17 @@ export default function Settings() {
         typeof method === 'undefined'
     )
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop={true} />
+            <AnimatedComponent>
+                <div className='settings'>
+                    <div className='lottie'>
+                        <Lottie animationData={LottieFile} loop={true} />
+                    </div>
                 </div>
-            </div>
+            </AnimatedComponent>
         );
 
     return (
-        <>
+        <AnimatedComponent>
             <Nav title={appLang?.settings?.title} />
             {/*<EndpointModal
                 {...{
@@ -126,10 +129,8 @@ export default function Settings() {
                 }}
             />*/}
             <LicenseModal
-                {...{
-                    license,
-                    setLicense
-                }}
+                license={license}
+                setLicense={setLicense}
                 title={appLang?.modal?.license_title}
                 isOpen={showLicenseModal}
                 onClose={onCloseLicenseModal}
@@ -172,11 +173,7 @@ export default function Settings() {
                         <div className='info'>برای اندپوینت تصادفی</div>
                     </div>*/}
                     <div className='grouped'>
-                        <div
-                            role='presentation'
-                            className={classNames('item')}
-                            onClick={onEnableWarp}
-                        >
+                        <div role='presentation' className='item' onClick={onEnableWarp}>
                             <label className='key' htmlFor='flex-switch-check-checked'>
                                 {appLang?.settings?.method_warp}
                             </label>
@@ -187,11 +184,7 @@ export default function Settings() {
                             </div>
                             <div className='info'>{appLang?.settings?.method_warp_desc}</div>
                         </div>
-                        <div
-                            role='presentation'
-                            className={classNames('item')}
-                            onClick={onEnableGool}
-                        >
+                        <div role='presentation' className='item' onClick={onEnableGool}>
                             <label className='key' htmlFor='flex-switch-check-checked-gool'>
                                 {appLang?.settings?.method_gool}
                             </label>
@@ -205,11 +198,7 @@ export default function Settings() {
                             </div>
                             <div className='info'>{appLang?.settings?.method_gool_desc}</div>
                         </div>
-                        <div
-                            role='presentation'
-                            className={classNames('item')}
-                            onClick={onEnablePsiphon}
-                        >
+                        <div role='presentation' className='item' onClick={onEnablePsiphon}>
                             <label className='key' htmlFor='flex-switch-check-checked-psiphon'>
                                 {appLang?.settings?.method_psiphon}
                             </label>
@@ -281,6 +270,6 @@ export default function Settings() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </>
+        </AnimatedComponent>
     );
 }

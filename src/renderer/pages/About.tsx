@@ -5,6 +5,7 @@ import gitHubMark from '../../../assets/img/github-mark.png';
 import ircf from '../../../assets/img/ircf.png';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import AnimatedComponent from '../components/Animated';
 
 export default function About() {
     const appLang = getLang();
@@ -12,7 +13,7 @@ export default function About() {
     useGoBackOnEscape();
 
     return (
-        <>
+        <AnimatedComponent>
             <Nav title={appLang?.about?.title} />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
@@ -90,6 +91,6 @@ export default function About() {
                     </div>
                 </div>
             </div>
-        </>
+        </AnimatedComponent>
     );
 }

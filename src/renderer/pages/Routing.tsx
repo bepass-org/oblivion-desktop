@@ -7,6 +7,7 @@ import { settings } from '../lib/settings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import { toPersianNumber } from '../lib/toPersianNumber';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import AnimatedComponent from '../components/Animated';
 
 export default function Routing() {
     const [routingRules, setRoutingRules] = useState<string>();
@@ -34,15 +35,17 @@ export default function Routing() {
 
     if (typeof routingRules === 'undefined')
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop={true} />
+            <AnimatedComponent>
+                <div className='settings'>
+                    <div className='lottie'>
+                        <Lottie animationData={LottieFile} loop={true} />
+                    </div>
                 </div>
-            </div>
+            </AnimatedComponent>
         );
 
     return (
-        <>
+        <AnimatedComponent>
             <Nav title='قوانین مسیریابی' />
             <RoutingRulesModal
                 routingRules={routingRules}
@@ -66,6 +69,6 @@ export default function Routing() {
                     </div>
                 </div>
             </div>
-        </>
+        </AnimatedComponent>
     );
 }
