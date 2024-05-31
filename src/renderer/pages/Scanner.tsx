@@ -171,7 +171,7 @@ export default function Scanner() {
                                 </option>
                             </select>
                         </div>
-                        <div className='info'>{appLang?.settings?.scanner_rtt_desc}</div>
+                        <div className='info' role='note'>{appLang?.settings?.scanner_rtt_desc}</div>
                     </div>
                 </div>
                 <div className='moreSettings'>
