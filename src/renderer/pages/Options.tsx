@@ -29,11 +29,11 @@ export default function Options() {
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
     useEffect(() => {
-        setTimeout(function () {
+        setTimeout(function() {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function () {
+                setTimeout(function() {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -59,10 +59,10 @@ export default function Options() {
 
     const onCloseRestoreModal = useCallback(() => {
         setShowRestoreModal(false);
-        setTimeout(function () {
+        setTimeout(function() {
             loadLang();
         }, 750);
-        setTimeout(function () {
+        setTimeout(function() {
             setAppLang(getLang());
         }, 1500);
     }, []);
@@ -79,11 +79,11 @@ export default function Options() {
         settings.set('lang', e.target.value);
         loadingToast();
 
-        setTimeout(function () {
+        setTimeout(function() {
             loadLang();
         }, 750);
 
-        setTimeout(function () {
+        setTimeout(function() {
             setAppLang(getLang());
             toast.dismiss('LOADING');
         }, 1500);
@@ -131,13 +131,24 @@ export default function Options() {
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='options' />
-                <div className='settings'>
-                    <div role='presentation' className='item' onClick={onChangeTheme}>
-                        <label className='key' htmlFor='flexSwitchCheckChecked'>
+                <div className='settings' role='menu'>
+                    <div
+                        role='presentation'
+                        className='item'
+                        onClick={onChangeTheme}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onChangeTheme();
+                            }
+                        }}
+                    >
+                        <label className='key' htmlFor='flexSwitchCheckChecked' role='label'>
                             {appLang?.settings?.dark_mode}
                         </label>
                         <div className='value'>
                             <div
+                                tabIndex={0}
                                 className={classNames(
                                     'checkbox',
                                     theme === 'dark' ? 'checked' : ''
@@ -150,14 +161,15 @@ export default function Options() {
                             {appLang?.settings?.dark_mode_desc}
                         </div>
                     </div>
-                    <div className='item' ref={langRef}>
-                        <label className='key' htmlFor='lang-select'>
+                    <div className='item' role='presentation' ref={langRef}>
+                        <label className='key' htmlFor='lang-select' role='label'>
                             {appLang?.settings?.lang}
                         </label>
                         <div className='value'>
-                            <select id='lang-select' onChange={onChangeLanguage} value={lang}>
+                            <select id='lang-select' onChange={onChangeLanguage} value={lang} tabIndex={1}
+                                    role='listbox'>
                                 {languages.map((lng) => (
-                                    <option key={lng.value} value={lng.value}>
+                                    <option key={lng.value} value={lng.value} role='option'>
                                         {lng.label}
                                     </option>
                                 ))}
@@ -165,12 +177,23 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
-                    <div role='presentation' className='item' onClick={onClickAutoStartButton}>
-                        <label className='key' htmlFor='open-login'>
+                    <div
+                        role='presentation'
+                        className='item'
+                        onClick={onClickAutoStartButton}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onClickAutoStartButton();
+                            }
+                        }}
+                    >
+                        <label className='key' htmlFor='open-login' role='label'>
                             {appLang?.settings?.open_login}
                         </label>
                         <div className='value'>
                             <div
+                                tabIndex={2}
                                 id='open-login'
                                 className={classNames('checkbox', openAtLogin ? 'checked' : '')}
                             >
@@ -179,12 +202,23 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.open_login_desc}</div>
                     </div>
-                    <div role='presentation' className='item' onClick={onClicksystemTrayButton}>
-                        <label className='key' htmlFor='system-tray'>
+                    <div
+                        role='presentation'
+                        className='item'
+                        onClick={onClicksystemTrayButton}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onClicksystemTrayButton();
+                            }
+                        }}
+                    >
+                        <label className='key' htmlFor='system-tray' role='label'>
                             {appLang?.settings?.system_tray}
                         </label>
                         <div className='value'>
                             <div
+                                tabIndex={3}
                                 id='system-tray'
                                 className={classNames('checkbox', systemTray ? 'checked' : '')}
                             >
@@ -198,12 +232,22 @@ export default function Options() {
                     <i className='material-icons'>&#xe313;</i>
                     {appLang?.settings?.more}
                 </div>
-                <div className='settings'>
-                    <div role='presentation' className={'item'} onClick={onOpenRestoreModal}>
-                        <label className='key' htmlFor='restore'>
+                <div className='settings' role='menu'>
+                    <div
+                        role='presentation'
+                        className={'item'}
+                        onClick={onOpenRestoreModal}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onOpenRestoreModal();
+                            }
+                        }}
+                    >
+                        <label className='key' htmlFor='restore' role='label'>
                             {appLang?.settings?.restore}
                         </label>
-                        <div className='value' id='restore'>
+                        <div className='value' id='restore' tabIndex={4}>
                             <i className='material-icons'>&#xe8ba;</i>
                         </div>
                         <div className='info'>{appLang?.settings?.restore_desc}</div>
