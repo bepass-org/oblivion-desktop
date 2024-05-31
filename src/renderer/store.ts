@@ -3,11 +3,11 @@ import { getLang } from './lib/loaders';
 
 export interface IStore {
     isConnected: boolean;
-    setIsConnected: any;
+    setIsConnected: (bool: boolean) => void;
     isLoading: boolean;
-    setIsLoading: any;
+    setIsLoading: (bool: boolean) => void;
     statusText: string;
-    setStatusText: any;
+    setStatusText: (status: string) => void;
 }
 
 const appLang = getLang();
