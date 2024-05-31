@@ -340,7 +340,7 @@ export default function Index() {
             >
                 <div className='list'>
                     <div className='appName'>
-                        <img src={appIco} alt='icon' />
+                        <img src={appIco} alt='Oblivion Logo' />
                         <h3>
                             Oblivion <small>Desktop</small>
                         </h3>
@@ -495,7 +495,7 @@ export default function Index() {
                             )}
                         >
                             <div
-                                role='presentation'
+                                role='note'
                                 className={classNames('item', ipData ? '' : 'hidden')}
                                 onClick={() => {
                                     setIpInfo({
@@ -516,7 +516,7 @@ export default function Index() {
                             >
                                 <img
                                     src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')}
-                                    alt='flag'
+                                    alt={`${ipInfo?.countryCode} Flag`}
                                 />
                                 <span className={ipInfo?.countryCode ? '' : 'shimmer'}>
                                     {ipInfo.ip ? ipInfo.ip : '127.0.0.1'}
