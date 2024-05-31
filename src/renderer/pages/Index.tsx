@@ -339,7 +339,7 @@ export default function Index() {
                 size='80vw'
             >
                 <div className='list'>
-                    <div className='appName'>
+                    <div className='appName' role='main'>
                         <img src={appIco} alt='Oblivion Logo' />
                         <h3>
                             Oblivion <small>Desktop</small>
