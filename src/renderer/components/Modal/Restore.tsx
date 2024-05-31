@@ -94,17 +94,30 @@ export default function RestoreModal({
                     <div className='clearfix' />
                     <div
                         className={classNames('btn', 'btn-cancel')}
-                        onClick={handleOnClose}
-                        role='presentation'
+                        onClick={onClose}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onClose();
+                            }
+                        }}
+                        tabIndex={1}
+                        role='button'
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
                         role='button'
-                        tabIndex={0}
                         aria-hidden='true'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onSaveModal();
+                            }
+                        }}
+                        tabIndex={0}
                     >
                         {appLang?.modal?.confirm}
                     </div>

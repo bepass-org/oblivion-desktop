@@ -113,53 +113,79 @@ export default function Scanner() {
                 className={classNames('myApp', 'normalPage')}
             >
                 <Tabs active='scanner' />
-                <div className='settings'>
+                <div className='settings' role='menu'>
                     <div
+                        role='presentation'
                         className={classNames(
                             'item',
                             endpoint === defaultSettings.endpoint ? '' : 'disabled'
                         )}
                     >
-                        <label className='key' htmlFor='id-type-select'>
+                        <label className='key' htmlFor='id-type-select' role='label'>
                             {appLang?.settings?.scanner_ip_type}
                         </label>
                         <div className='value'>
                             <select
+                                tabIndex={0}
+                                role='listbox'
                                 id='id-type-select'
                                 onChange={onChangeType}
                                 disabled={endpoint !== defaultSettings.endpoint}
                                 value={ipType}
                             >
-                                <option value=''>{appLang?.settings?.scanner_ip_type_auto}</option>
-                                <option value='-4'>IPv4</option>
-                                <option value='-6'>IPv6</option>
+                                <option value='' role='option'>
+                                    {appLang?.settings?.scanner_ip_type_auto}
+                                </option>
+                                <option value='-4' role='option'>
+                                    IPv4
+                                </option>
+                                <option value='-6' role='option'>
+                                    IPv6
+                                </option>
                             </select>
                         </div>
                         <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
                     </div>
                     <div
+                        role='presentation'
                         className={classNames(
                             'item',
                             endpoint === defaultSettings.endpoint ? '' : 'disabled'
                         )}
                     >
-                        <label className='key' htmlFor='rtt-select'>
+                        <label className='key' htmlFor='rtt-select' role='label'>
                             {appLang?.settings?.scanner_rtt}
                         </label>
                         <div className='value'>
                             <select
+                                tabIndex={1}
+                                role='listbox'
                                 id='rtt-select'
                                 onChange={onChangeRTT}
                                 disabled={endpoint !== defaultSettings.endpoint}
                                 value={rtt}
                             >
-                                <option value='1s'>{appLang?.settings?.scanner_rtt_default}</option>
-                                <option value='300ms'>300ms</option>
-                                <option value='500ms'>500ms</option>
-                                <option value='750ms'>750ms</option>
-                                <option value='1s'>1s</option>
-                                <option value='2s'>2s</option>
-                                <option value='3s'>3s</option>
+                                <option value='1s' role='option'>
+                                    {appLang?.settings?.scanner_rtt_default}
+                                </option>
+                                <option value='300ms' role='option'>
+                                    300ms
+                                </option>
+                                <option value='500ms' role='option'>
+                                    500ms
+                                </option>
+                                <option value='750ms' role='option'>
+                                    750ms
+                                </option>
+                                <option value='1s' role='option'>
+                                    1s
+                                </option>
+                                <option value='2s' role='option'>
+                                    2s
+                                </option>
+                                <option value='3s' role='option'>
+                                    3s
+                                </option>
                             </select>
                         </div>
                         <div className='info'>{appLang?.settings?.scanner_rtt_desc}</div>
@@ -174,12 +200,18 @@ export default function Scanner() {
                         role='presentation'
                         className={classNames('item')}
                         onClick={onOpenEndpointModal}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onOpenEndpointModal();
+                            }
+                        }}
                     >
-                        <label className='key' htmlFor='endpoint'>
+                        <label className='key' htmlFor='endpoint' role='label'>
                             {appLang?.settings?.endpoint}
                         </label>
                         <div className='value'>
-                            <span className='dirLeft' id='endpoint'>
+                            <span className='dirLeft' id='endpoint' tabIndex={2}>
                                 {endpoint}
                             </span>
                         </div>
@@ -198,12 +230,23 @@ export default function Scanner() {
                     </div>
                 </div>
                 <div className='settings'>
-                    <div role='presentation' className={'item'} onClick={onClickReservedButton}>
-                        <label className='key' htmlFor='reserved'>
+                    <div
+                        role='presentation'
+                        className={'item'}
+                        onClick={onClickReservedButton}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onClickReservedButton();
+                            }
+                        }}
+                    >
+                        <label className='key' htmlFor='reserved' role='label'>
                             {appLang?.settings?.scanner_reserved}
                         </label>
                         <div className='value'>
                             <div
+                                tabIndex={3}
                                 id='reserved'
                                 className={classNames('checkbox', reserved ? 'checked' : '')}
                             >

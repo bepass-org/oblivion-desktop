@@ -17,13 +17,15 @@ export default function About() {
             <Nav title={appLang?.about?.title} />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
-                    <p style={{ whiteSpace: 'pre-wrap' }}>{appLang?.about?.desc}</p>
-                    <p>
+                    <p style={{ whiteSpace: 'pre-wrap' }} role='note'>
+                        {appLang?.about?.desc}
+                    </p>
+                    <p role='note'>
                         <b>{appLang?.about?.slogan}</b>
                     </p>
                     <div className='socialMedia'>
                         <a
-                            href='https://github.com/ircfofficial/oblivion-desktop'
+                            href='https://github.com/bepass-org/oblivion-desktop'
                             target='_blank'
                             rel='noreferrer'
                         >
@@ -45,7 +47,7 @@ export default function About() {
                             </div>
                         </a>
                         <p className='text-center'>
-                            <small>
+                            <small role='note'>
                                 v<b>{packageJsonData.version}</b>
                             </small>
                             <a
@@ -56,7 +58,7 @@ export default function About() {
                                 <img
                                     className='starBadge'
                                     src='https://img.shields.io/github/stars/bepass-org/oblivion-desktop?style=flat&label=Stars&color=tomato'
-                                    alt='stars'
+                                    alt='star Badge'
                                 />
                             </a>
                         </p>

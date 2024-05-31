@@ -123,23 +123,36 @@ export default function RoutingRulesModal({
                         spellCheck={false}
                         className='form-control'
                         onChange={handleRoutingRulesInput}
+                        tabIndex={0}
                     />
                     <div className='clearfix' />
                     <div
                         role='button'
-                        tabIndex={0}
+                        tabIndex={2}
                         aria-hidden='true'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleCancelButtonClick();
+                            }
+                        }}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
                         role='button'
-                        tabIndex={0}
+                        tabIndex={1}
                         aria-hidden='true'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onSaveModal();
+                            }
+                        }}
                     >
                         {appLang?.modal?.update}
                     </div>

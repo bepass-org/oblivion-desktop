@@ -28,7 +28,7 @@ const Nav: FC<NavProps> = ({ title }) => {
     return (
         <nav className='header'>
             <div className='container'>
-                <h3>{title}</h3>
+                <h3 role='heading'>{title}</h3>
                 <BackButton />
             </div>
         </nav>

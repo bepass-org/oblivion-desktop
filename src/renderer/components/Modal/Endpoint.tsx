@@ -131,23 +131,39 @@ const EndpointModal: FC<EndpointModalProps> = ({
                         </div>
                     </h3>
                     <input
+                        tabIndex={0}
                         value={endpointInput}
                         spellCheck={false}
                         className='form-control'
                         onChange={handleEndpointInputChange}
+                        type='text'
                     />
                     <div className='clearfix' />
                     <div
-                        role='presentation'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleCancelButtonClick();
+                            }
+                        }}
+                        role='button'
+                        tabIndex={2}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onSaveModal();
+                            }
+                        }}
+                        tabIndex={1}
                     >
                         {appLang?.modal?.update}
                     </div>

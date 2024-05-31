@@ -100,7 +100,10 @@ export default function Debug() {
             <Nav title={appLang?.log?.title} />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
-                    <div className={classNames('logOptions', log === '' ? 'hidden' : '')}>
+                    <div
+                        className={classNames('logOptions', log === '' ? 'hidden' : '')}
+                        role='menubar'
+                    >
                         {/*<i
                             className='material-icons'
                             onClick={(e: any) => {
@@ -114,9 +117,9 @@ export default function Debug() {
                                 {autoScroll ? (
                                     <>
                                         <i
-                                            role='presentation'
                                             className='material-icons'
                                             onClick={setAuthScrollDisabled}
+                                            role='link'
                                         >
                                             &#xe1a2;
                                         </i>
@@ -124,9 +127,9 @@ export default function Debug() {
                                 ) : (
                                     <>
                                         <i
-                                            role='presentation'
                                             className='material-icons'
                                             onClick={setAuthScrollEnabled}
+                                            role='link'
                                         >
                                             &#xe038;
                                         </i>
@@ -164,8 +167,8 @@ export default function Debug() {
                             </>
                         )}
                         <i
-                            role='presentation'
                             className='material-icons'
+                            role='link'
                             onClick={(e) => {
                                 handleCopy(e, log);
                             }}
@@ -176,6 +179,8 @@ export default function Debug() {
                     <p
                         className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}
                         ref={logRef}
+                        role='log'
+                        aria-live='assertive'
                     >
                         {log === '' ? appLang?.log?.desc : log}
                     </p>
