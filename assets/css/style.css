@@ -361,6 +361,7 @@ nav.header .navMenu .indicator {
     position: relative;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    border: none;
 }
 
 [data-bs-theme="dark"] .homeScreen form .connector .switch {

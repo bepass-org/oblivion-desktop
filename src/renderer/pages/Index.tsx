@@ -162,8 +162,9 @@ export default function Index() {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             await http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function () {};
-            http.onloadend = function () {
+            http.onreadystatechange = function() {
+            };
+            http.onloadend = function() {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
@@ -305,15 +306,17 @@ export default function Index() {
                     <div
                         onClick={toggleDrawer}
                         className={classNames('navMenu')}
-                        role='presentation'
+                        role='switch'
+                        aria-controls='menu'
+                        tabIndex={1}
                     >
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                     </div>
-                    <Link to='/about'>
+                    <Link to='/about' tabIndex={3}>
                         <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
                     </Link>
-                    <Link to={'/debug'}>
+                    <Link to={'/debug'} tabIndex={2}>
                         <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                     </Link>
                 </div>
@@ -423,7 +426,10 @@ export default function Index() {
                             <h1>OBLIVION</h1>
                             <h2>{appLang?.home?.title_warp_based}</h2>
                         </div>
-                        <form action=''>
+                        <form action='' onSubmit={e => {
+                            e.preventDefault();
+                            onChange();
+                        }}>
                             <div className='connector'>
                                 <Swipe
                                     nodeName='div'
@@ -438,9 +444,10 @@ export default function Index() {
                                         }
                                     }}
                                 >
-                                    <div
+                                    <button
+                                        type='submit'
                                         role='presentation'
-                                        onClick={onChange}
+                                        tabIndex={0}
                                         className={classNames(
                                             'switch',
                                             isConnected ? 'active' : '',
@@ -450,7 +457,7 @@ export default function Index() {
                                         <div className='circle'>
                                             <div className='spinner' />
                                         </div>
-                                    </div>
+                                    </button>
                                 </Swipe>
                             </div>
                         </form>
@@ -469,10 +476,10 @@ export default function Index() {
                                 'inFoot',
                                 'withIp',
                                 isConnected &&
-                                    !isLoading &&
-                                    proxyMode !== 'none' &&
-                                    proxyMode !== '' &&
-                                    ipData
+                                !isLoading &&
+                                proxyMode !== 'none' &&
+                                proxyMode !== '' &&
+                                ipData
                                     ? 'active'
                                     : ''
                             )}
