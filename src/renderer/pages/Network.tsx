@@ -193,7 +193,7 @@ export default function Options() {
                             {appLang?.settings?.port}
                         </label>
                         <div className='value' id='port'>
-                            <span className='dirLeft' tabIndex={1}>
+                            <span className='dirLeft' tabIndex={-1}>
                                 {port}
                             </span>
                         </div>
@@ -216,7 +216,7 @@ export default function Options() {
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
-                            <span className='dirLeft' dir='rtl' tabIndex={2}>
+                            <span className='dirLeft' dir='rtl' tabIndex={-1}>
                                 {countRoutingRules(routingRules)}
                             </span>
                         </div>
@@ -251,8 +251,8 @@ export default function Options() {
                         </label>
                         <div className='value' id='share-vpn'>
                             <div
+                                tabIndex={-1}
                                 className={classNames('checkbox', shareVPN ? 'checked' : '')}
-                                tabIndex={3}
                             >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
@@ -301,7 +301,7 @@ export default function Options() {
                         <div className='value' id='ip-data'>
                             <div
                                 className={classNames('checkbox', ipData ? 'checked' : '')}
-                                tabIndex={4}
+                                tabIndex={-1}
                             >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>

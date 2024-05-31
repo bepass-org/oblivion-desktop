@@ -101,7 +101,7 @@ export default function RestoreModal({
                                 onClose();
                             }
                         }}
-                        tabIndex={1}
+                        tabIndex={0}
                         role='button'
                     >
                         {appLang?.modal?.cancel}

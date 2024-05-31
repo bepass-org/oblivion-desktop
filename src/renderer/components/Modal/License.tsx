@@ -76,7 +76,7 @@ export default function LicenseModal({
                     <div
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
-                        tabIndex={2}
+                        tabIndex={0}
                         role='button'
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
@@ -90,7 +90,7 @@ export default function LicenseModal({
                     <div
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        tabIndex={1}
+                        tabIndex={0}
                         role='button'
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {

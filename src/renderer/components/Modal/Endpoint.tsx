@@ -149,7 +149,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                             }
                         }}
                         role='button'
-                        tabIndex={2}
+                        tabIndex={0}
                     >
                         {appLang?.modal?.cancel}
                     </div>
@@ -163,7 +163,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 onSaveModal();
                             }
                         }}
-                        tabIndex={1}
+                        tabIndex={0}
                     >
                         {appLang?.modal?.update}
                     </div>

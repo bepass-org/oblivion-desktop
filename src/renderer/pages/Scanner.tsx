@@ -158,7 +158,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <select
-                                tabIndex={1}
+                                tabIndex={0}
                                 role='listbox'
                                 id='rtt-select'
                                 onChange={onChangeRTT}
@@ -211,7 +211,7 @@ export default function Scanner() {
                             {appLang?.settings?.endpoint}
                         </label>
                         <div className='value'>
-                            <span className='dirLeft' id='endpoint' tabIndex={2}>
+                            <span className='dirLeft' id='endpoint' tabIndex={-1}>
                                 {endpoint}
                             </span>
                         </div>
@@ -246,7 +246,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <div
-                                tabIndex={3}
+                                tabIndex={-1}
                                 id='reserved'
                                 className={classNames('checkbox', reserved ? 'checked' : '')}
                             >

@@ -128,7 +128,7 @@ export default function RoutingRulesModal({
                     <div className='clearfix' />
                     <div
                         role='button'
-                        tabIndex={2}
+                        tabIndex={0}
                         aria-hidden='true'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
@@ -143,8 +143,7 @@ export default function RoutingRulesModal({
                     </div>
                     <div
                         role='button'
-                        tabIndex={1}
-                        aria-hidden='true'
+                        tabIndex={0}
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
                         onKeyDown={(e) => {

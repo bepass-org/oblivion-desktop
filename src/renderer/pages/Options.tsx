@@ -151,7 +151,7 @@ export default function Options() {
                         </label>
                         <div className='value'>
                             <div
-                                tabIndex={0}
+                                tabIndex={-1}
                                 className={classNames(
                                     'checkbox',
                                     theme === 'dark' ? 'checked' : ''
@@ -173,7 +173,7 @@ export default function Options() {
                                 id='lang-select'
                                 onChange={onChangeLanguage}
                                 value={lang}
-                                tabIndex={1}
+                                tabIndex={0}
                                 role='listbox'
                             >
                                 {languages.map((lng) => (
@@ -201,7 +201,7 @@ export default function Options() {
                         </label>
                         <div className='value'>
                             <div
-                                tabIndex={2}
+                                tabIndex={-1}
                                 id='open-login'
                                 className={classNames('checkbox', openAtLogin ? 'checked' : '')}
                             >
@@ -226,7 +226,7 @@ export default function Options() {
                         </label>
                         <div className='value'>
                             <div
-                                tabIndex={3}
+                                tabIndex={-1}
                                 id='system-tray'
                                 className={classNames('checkbox', systemTray ? 'checked' : '')}
                             >
@@ -255,7 +255,7 @@ export default function Options() {
                         <label className='key' htmlFor='restore' role='label'>
                             {appLang?.settings?.restore}
                         </label>
-                        <div className='value' id='restore' tabIndex={4}>
+                        <div className='value' id='restore' tabIndex={-1}>
                             <i className='material-icons'>&#xe8ba;</i>
                         </div>
                         <div className='info'>{appLang?.settings?.restore_desc}</div>

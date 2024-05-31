@@ -189,7 +189,7 @@ export default function Settings() {
                             </label>
                             <div className='value' id='flex-switch-check-checked'>
                                 <div
-                                    tabIndex={0}
+                                    tabIndex={-1}
                                     className={classNames('switch', method === '' ? 'checked' : '')}
                                 />
                             </div>
@@ -215,7 +215,7 @@ export default function Settings() {
                             </label>
                             <div className='value' id='flex-switch-check-checked-gool'>
                                 <div
-                                    tabIndex={1}
+                                    tabIndex={-1}
                                     className={classNames(
                                         'switch',
                                         method === 'gool' ? 'checked' : ''
@@ -244,7 +244,7 @@ export default function Settings() {
                             </label>
                             <div className='value' id='flex-switch-check-checked-psiphon'>
                                 <div
-                                    tabIndex={2}
+                                    tabIndex={-1}
                                     className={classNames(
                                         'switch',
                                         method === 'psiphon' ? 'checked' : ''
@@ -269,7 +269,7 @@ export default function Settings() {
                                 disabled={method !== 'psiphon'}
                                 value={location}
                                 role='listbox'
-                                tabIndex={3}
+                                tabIndex={-1}
                             >
                                 <option value='' role='option'>
                                     {appLang?.settings?.method_psiphon_location_auto}
@@ -325,7 +325,7 @@ export default function Settings() {
                             <span
                                 className='dirLeft'
                                 id='flex-switch-check-checked-license'
-                                tabIndex={4}
+                                tabIndex={-1}
                             >
                                 {license || 'Free'}
                             </span>
