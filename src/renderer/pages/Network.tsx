@@ -14,7 +14,6 @@ import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import Tabs from '../components/Tabs';
 import { toPersianNumber } from '../lib/toPersianNumber';
 import RoutingRulesModal from '../components/Modal/RoutingRules';
-import AnimatedComponent from '../components/Animated';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
@@ -92,17 +91,15 @@ export default function Options() {
         typeof routingRules === 'undefined'
     )
         return (
-            <AnimatedComponent>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </AnimatedComponent>
+            </div>
         );
 
     return (
-        <AnimatedComponent>
+        <>
             <Nav title={appLang?.settings?.network} />
             <PortModal
                 port={port}
@@ -311,6 +308,6 @@ export default function Options() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </AnimatedComponent>
+        </>
     );
 }

@@ -1,10 +1,9 @@
 import classNames from 'classnames';
 import Nav from '../components/Nav';
-import AnimatedComponent from '../components/Animated';
 
 export default function SpeedTest() {
     return (
-        <AnimatedComponent>
+        <>
             <Nav title='تست سرعت' />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
@@ -18,6 +17,6 @@ export default function SpeedTest() {
                     </div>
                 </div>
             </div>
-        </AnimatedComponent>
+        </>
     );
 }

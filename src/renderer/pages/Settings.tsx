@@ -12,7 +12,6 @@ import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
-import AnimatedComponent from '../components/Animated';
 
 export default function Settings() {
     const appLang = getLang();
@@ -104,17 +103,15 @@ export default function Settings() {
         typeof method === 'undefined'
     )
         return (
-            <AnimatedComponent>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop={true} />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop={true} />
                 </div>
-            </AnimatedComponent>
+            </div>
         );
 
     return (
-        <AnimatedComponent>
+        <>
             <Nav title={appLang?.settings?.title} />
             {/*<EndpointModal
                 {...{
@@ -335,6 +332,6 @@ export default function Settings() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </AnimatedComponent>
+        </>
     );
 }

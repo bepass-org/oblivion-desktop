@@ -14,7 +14,6 @@ import { getLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 import EndpointModal from '../components/Modal/Endpoint';
 import Tabs from '../components/Tabs';
-import AnimatedComponent from '../components/Animated';
 
 export default function Scanner() {
     const { isConnected, isLoading } = useStore();
@@ -80,17 +79,15 @@ export default function Scanner() {
         typeof reserved === 'undefined'
     )
         return (
-            <AnimatedComponent>
-                <div className='settings'>
-                    <div className='lottie'>
-                        <Lottie animationData={LottieFile} loop />
-                    </div>
+            <div className='settings'>
+                <div className='lottie'>
+                    <Lottie animationData={LottieFile} loop />
                 </div>
-            </AnimatedComponent>
+            </div>
         );
 
     return (
-        <AnimatedComponent>
+        <>
             <Nav title={appLang?.settings?.scanner} />
             <EndpointModal
                 endpoint={endpoint}
@@ -258,6 +255,6 @@ export default function Scanner() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </AnimatedComponent>
+        </>
     );
 }

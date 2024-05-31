@@ -15,7 +15,6 @@ import { ipcRenderer, onEscapeKeyPressed, isDev } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
 import { checkNewUpdate } from '../lib/checkNewUpdate';
 import { cfFlag } from '../lib/cfFlag';
-import AnimatedComponent from '../components/Animated';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -350,7 +349,7 @@ export default function Index() {
     };
 
     return (
-        <AnimatedComponent>
+        <>
             <nav className='header'>
                 <div className='container'>
                     <div
@@ -556,6 +555,6 @@ export default function Index() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
-        </AnimatedComponent>
+        </>
     );
 }

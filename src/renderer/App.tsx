@@ -10,7 +10,7 @@ import 'assets/css/style.css';
 import SplashScreen from './pages/SplashScreen';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadLang, loadTheme } from './lib/loaders';
-import AnimatedRoutes from './routes';
+import AppRoutes from './routes';
 
 export default function App() {
     useEffect(() => {
@@ -23,7 +23,7 @@ export default function App() {
         <>
             <SplashScreen />
             <Router>
-                <AnimatedRoutes />
+                <AppRoutes />
             </Router>
         </>
     );

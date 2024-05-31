@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { isDev } from '../lib/utils';
-import AnimatedComponent from '../components/Animated';
 
 export default function SplashScreen() {
     const [show, setShow] = useState<boolean>(true);
@@ -15,13 +14,11 @@ export default function SplashScreen() {
 
     if (!show) return;
     return (
-        <AnimatedComponent>
-            <div className='splashScreen'>
-                <div className='splashScreenImg' />
-                <div className='loading'>
-                    <div className='spinner' />
-                </div>
+        <div className='splashScreen'>
+            <div className='splashScreenImg' />
+            <div className='loading'>
+                <div className='spinner' />
             </div>
-        </AnimatedComponent>
+        </div>
     );
 }

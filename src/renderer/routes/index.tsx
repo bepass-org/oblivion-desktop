@@ -1,5 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { Route, Routes } from 'react-router-dom';
 
 import Index from '../pages/Index';
 import Settings from '../pages/Settings';
@@ -9,21 +8,18 @@ import Debug from '../pages/Debug';
 import Scanner from '../pages/Scanner';
 import Network from '../pages/Network';
 
-const AnimatedRoutes = () => {
-    const location = useLocation();
+const AppRoutes = () => {
     return (
-        <AnimatePresence mode='wait'>
-            <Routes location={location} key={location.pathname}>
-                <Route path='/' element={<Index />} />
-                <Route path='/settings' element={<Settings />} />
-                <Route path='/options' element={<Options />} />
-                <Route path='/about' element={<About />} />
-                <Route path='/debug' element={<Debug />} />
-                <Route path='/scanner' element={<Scanner />} />
-                <Route path='/network' element={<Network />} />
-            </Routes>
-        </AnimatePresence>
+        <Routes>
+            <Route path='/' element={<Index />} />
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/options' element={<Options />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/debug' element={<Debug />} />
+            <Route path='/scanner' element={<Scanner />} />
+            <Route path='/network' element={<Network />} />
+        </Routes>
     );
 };
 
-export default AnimatedRoutes;
+export default AppRoutes;
