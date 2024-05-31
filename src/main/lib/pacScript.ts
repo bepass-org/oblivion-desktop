@@ -68,7 +68,7 @@ export const servePacScript = (port = 8087) => {
     });
 };
 
-export const killPackScriptServer = async () => {
+export const killPacScriptServer = async () => {
     try {
         await server.close();
         log.info('pac script server closed.');
