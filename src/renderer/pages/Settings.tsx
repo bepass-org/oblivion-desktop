@@ -256,7 +256,7 @@ export default function Settings() {
                                 disabled={method !== 'psiphon'}
                                 value={location}
                                 role='listbox'
-                                tabIndex={4}
+                                tabIndex={3}
                             >
                                 <option value='' role='option'>
                                     {appLang?.settings?.method_psiphon_location_auto}
@@ -305,7 +305,7 @@ export default function Settings() {
                             {appLang?.settings?.license}
                         </label>
                         <div className='value' role='link'>
-                            <span className='dirLeft' id='flex-switch-check-checked-license' tabIndex={5}>
+                            <span className='dirLeft' id='flex-switch-check-checked-license' tabIndex={4}>
                                 {license || 'Free'}
                             </span>
                         </div>

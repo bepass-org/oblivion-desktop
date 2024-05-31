@@ -64,8 +64,8 @@ export default function Options() {
             const lines = value.split('\n');
             return lines?.length > 0
                 ? toPersianNumber(lines.length) +
-                      ' ' +
-                      (appLang?.settings?.routing_rules_items || '')
+                ' ' +
+                (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
         },
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items]
@@ -117,7 +117,7 @@ export default function Options() {
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='network' />
-                <div className='settings'>
+                <div className='settings' role='menu'>
                     {/*<div
                         className={classNames('item', autoSetProxy ? 'checked' : '')}
                         onClick={() => {
@@ -132,7 +132,7 @@ export default function Options() {
                             }, 1000);
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.auto_set_proxy}</label>
+                        <label className='key' role='label'>{appLang?.settings?.auto_set_proxy}</label>
                         <div className='value'>
                             <div className={classNames('checkbox', autoSetProxy ? 'checked' : '')}>
                                 <i className='material-icons'>&#xe876;</i>
@@ -140,18 +140,20 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
                     </div>*/}
-                    <div className='item'>
-                        <label className='key' htmlFor='proxy-mode-selector'>
+                    <div className='item' role='presentation'>
+                        <label className='key' htmlFor='proxy-mode-selector' role='label'>
                             {appLang?.settings?.proxy_mode}
                         </label>
                         <div className='value'>
                             <select
+                                tabIndex={0}
+                                role='listbox'
                                 id='proxy-mode-selector'
                                 onChange={(e) => {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
                                             settings.set('ipData', false);
@@ -160,8 +162,8 @@ export default function Options() {
                                 }}
                                 value={proxyMode}
                             >
-                                <option value='none'>None</option>
-                                <option value='system'>System Proxy</option>
+                                <option value='none' role='option'>None</option>
+                                <option value='system' role='option'>System Proxy</option>
                                 {/*<option value='tun' disabled>TUN2Sock</option>*/}
                             </select>
                         </div>
@@ -173,12 +175,18 @@ export default function Options() {
                         onClick={() => {
                             setShowPortModal(true);
                         }}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                setShowPortModal(true);
+                            }
+                        }}
                     >
-                        <label className='key' htmlFor='port'>
+                        <label className='key' htmlFor='port' role='label'>
                             {appLang?.settings?.port}
                         </label>
                         <div className='value' id='port'>
-                            <span className='dirLeft'>{port}</span>
+                            <span className='dirLeft' tabIndex={1}>{port}</span>
                         </div>
                         <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
@@ -188,12 +196,18 @@ export default function Options() {
                         onClick={() => {
                             setShowRoutingRulesModal(true);
                         }}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                setShowRoutingRulesModal(true);
+                            }
+                        }}
                     >
-                        <label className='key' htmlFor='routing-rules'>
+                        <label className='key' htmlFor='routing-rules' role='label'>
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
-                            <span className='dirLeft' dir='rtl'>
+                            <span className='dirLeft' dir='rtl' tabIndex={2}>
                                 {countRoutingRules(routingRules)}
                             </span>
                         </div>
@@ -206,16 +220,28 @@ export default function Options() {
                             setShareVPN(!shareVPN);
                             settings.set('shareVPN', !shareVPN);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             }, 1000);
                         }}
+                        onKeyDown={e => {
+                            // TODO: The code needs refactoring
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                setShareVPN(!shareVPN);
+                                settings.set('shareVPN', !shareVPN);
+                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+                                setTimeout(function() {
+                                    settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
+                                }, 1000);
+                            }
+                        }}
                     >
-                        <label className='key' htmlFor='share-vpn'>
+                        <label className='key' htmlFor='share-vpn' role='label'>
                             {appLang?.settings?.share_vpn}
                         </label>
                         <div className='value' id='share-vpn'>
-                            <div className={classNames('checkbox', shareVPN ? 'checked' : '')}>
+                            <div className={classNames('checkbox', shareVPN ? 'checked' : '')} tabIndex={3}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
@@ -229,7 +255,7 @@ export default function Options() {
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                         }}
                     >
-                        <label className='key'>{appLang?.settings?.dns}</label>
+                        <label className='key' role='label'>{appLang?.settings?.dns}</label>
                         <div className='value'>
                             <div className={'checkbox'}>
                                 <i className='material-icons'>&#xe876;</i>
@@ -246,12 +272,22 @@ export default function Options() {
                                 settings.set('ipData', !ipData);
                             }
                         }}
+                        onKeyDown={e => {
+                            // TODO: The code needs refactoring
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                if (proxyMode !== 'none') {
+                                    setIpData(!ipData);
+                                    settings.set('ipData', !ipData);
+                                }
+                            }
+                        }}
                     >
-                        <label className='key' htmlFor='ip-data'>
+                        <label className='key' htmlFor='ip-data' role='label'>
                             {appLang?.settings?.ip_data}
                         </label>
                         <div className='value' id='ip-data'>
-                            <div className={classNames('checkbox', ipData ? 'checked' : '')}>
+                            <div className={classNames('checkbox', ipData ? 'checked' : '')} tabIndex={4}>
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
