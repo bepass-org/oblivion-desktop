@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
@@ -34,7 +34,7 @@ export default function Index() {
         countryCode: false,
         ip: ''
     });
-    const [online, setOnline] = useState(true);
+    const [online, setOnline] = useState<boolean>(true);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
@@ -161,10 +161,9 @@ export default function Index() {
         try {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
-            await http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function() {
-            };
-            http.onloadend = function() {
+            http.open('GET', 'http://cp.cloudflare.com', true);
+            http.onreadystatechange = function () {};
+            http.onloadend = function () {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
@@ -277,7 +276,7 @@ export default function Index() {
         }
     }, [isLoading, isConnected, ipInfo, ipData]);
 
-    const onChange = () => {
+    const onChange = useCallback(() => {
         if (!online) {
             checkInternetToast();
         } else {
@@ -297,6 +296,56 @@ export default function Index() {
                 setPing(0);
             }
         }
+    }, [online, isLoading, isConnected, setIsLoading]);
+
+    const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            toggleDrawer();
+        }
+    }, []);
+
+    const onSubmit = useCallback(
+        (event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            onChange();
+        },
+        [onChange]
+    );
+
+    const handleOnSwipedLeft = useCallback(() => {
+        if (isConnected && !isLoading) {
+            onChange();
+        }
+    }, [isConnected, isLoading, onChange]);
+
+    const handleOnSwipedRight = useCallback(() => {
+        if (!isConnected && !isLoading) {
+            onChange();
+        }
+    }, [isConnected, isLoading, onChange]);
+
+    const handleOnClickIp = () => {
+        setIpInfo({
+            countryCode: false,
+            ip: ''
+        });
+
+        const getTime = new Date().getTime();
+        if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
+            return;
+        }
+
+        getIpLocation();
+    };
+
+    const handleOnClickPing = () => {
+        if (ping >= 0) {
+            setPing(0);
+            setTimeout(async () => {
+                await getPing();
+            }, 1500);
+        }
     };
 
     return (
@@ -305,24 +354,19 @@ export default function Index() {
                 <div className='container'>
                     <div
                         onClick={toggleDrawer}
-                        className={classNames('navMenu')}
-                        role='navigation'
+                        className='navMenu'
+                        role='menu'
                         aria-controls='menu'
-                        tabIndex={1}
-                        onKeyDown={e => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                toggleDrawer();
-                            }
-                        }}
+                        tabIndex={-1}
+                        onKeyDown={handleMenuOnKeyDown}
                     >
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                     </div>
-                    <Link to='/about' tabIndex={3}>
+                    <Link to='/about' tabIndex={-2}>
                         <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
                     </Link>
-                    <Link to={'/debug'} tabIndex={2}>
+                    <Link to={'/debug'} tabIndex={-3}>
                         <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                     </Link>
                 </div>
@@ -433,30 +477,17 @@ export default function Index() {
                             <h1>OBLIVION</h1>
                             <h2>{appLang?.home?.title_warp_based}</h2>
                         </div>
-                        <form
-                            action=''
-                            onSubmit={e => {
-                                e.preventDefault();
-                                onChange();
-                            }}
-                        >
+                        <form action='' onSubmit={onSubmit}>
                             <div className='connector'>
                                 <Swipe
                                     nodeName='div'
-                                    onSwipedLeft={() => {
-                                        if (isConnected && !isLoading) {
-                                            onChange();
-                                        }
-                                    }}
-                                    onSwipedRight={() => {
-                                        if (!isConnected && !isLoading) {
-                                            onChange();
-                                        }
-                                    }}
+                                    onSwipedLeft={handleOnSwipedLeft}
+                                    onSwipedRight={handleOnSwipedRight}
                                 >
                                     <button
                                         type='submit'
                                         role='switch'
+                                        aria-checked={isConnected}
                                         tabIndex={0}
                                         className={classNames(
                                             'switch',
@@ -486,33 +517,18 @@ export default function Index() {
                                 'inFoot',
                                 'withIp',
                                 isConnected &&
-                                !isLoading &&
-                                proxyMode !== 'none' &&
-                                proxyMode !== '' &&
-                                ipData
+                                    !isLoading &&
+                                    proxyMode !== 'none' &&
+                                    proxyMode !== '' &&
+                                    ipData
                                     ? 'active'
                                     : ''
                             )}
                         >
                             <div
-                                role='note'
+                                role='presentation'
                                 className={classNames('item', ipData ? '' : 'hidden')}
-                                onClick={() => {
-                                    setIpInfo({
-                                        countryCode: false,
-                                        ip: ''
-                                    });
-                                    const getTime = new Date().getTime();
-                                    if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
-                                        /*defaultToast(
-                                            `${appLang?.toast?.ip_check_please_wait}`,
-                                            'IP_LOCATION_STATUS',
-                                            2000
-                                        );*/
-                                    } else {
-                                        getIpLocation();
-                                    }
-                                }}
+                                onClick={handleOnClickIp}
                             >
                                 <img
                                     src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')}
@@ -525,14 +541,7 @@ export default function Index() {
                             <div
                                 role='presentation'
                                 className={classNames('item', 'ping')}
-                                onClick={() => {
-                                    if (ping >= 0) {
-                                        setPing(0);
-                                        setTimeout(async () => {
-                                            await getPing();
-                                        }, 1500);
-                                    }
-                                }}
+                                onClick={handleOnClickPing}
                             >
                                 <i className='material-icons'>&#xebca;</i>
                                 <span className={ping === 0 ? 'shimmer' : ''}>
