@@ -58,22 +58,38 @@ export default function LicenseModal({
                     <div className='clearfix' />
                     <input
                         value={licenseInput}
+                        tabIndex={0}
                         spellCheck={false}
                         className='form-control'
                         onChange={handleLicenseInputChange}
+                        type='text'
                     />
                     <div className='clearfix' />
                     <div
-                        role='presentation'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
+                        tabIndex={2}
+                        role='button'
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleCancelButtonClick();
+                            }
+                        }}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
-                        role='presentation'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
+                        tabIndex={1}
+                        role='button'
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onSaveModal();
+                            }
+                        }}
                     >
                         {appLang?.modal?.update}
                     </div>

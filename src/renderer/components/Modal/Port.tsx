@@ -63,19 +63,34 @@ export default function PortModal({
                         value={portInput}
                         className='form-control'
                         onChange={handlePortInputChange}
+                        tabIndex={0}
                     />
                     <div className='clearfix' />
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
+                        tabIndex={2}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleCancelButtonClick();
+                            }
+                        }}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
+                        tabIndex={1}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                onSaveModal();
+                            }
+                        }}
                     >
                         {appLang?.modal?.update}
                     </div>
