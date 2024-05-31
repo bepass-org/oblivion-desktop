@@ -59,12 +59,12 @@ export default function Debug() {
     });
 
     const handleCopy = useCallback(
-        (e: MouseEvent<HTMLElement>, value: string) => {
+        (e: MouseEvent<HTMLElement>) => {
             e.preventDefault();
-            navigator.clipboard.writeText(value);
+            navigator.clipboard.writeText(log);
             defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
         },
-        [appLang?.toast?.copied]
+        [appLang?.toast?.copied, log]
     );
 
     const setAuthScrollEnabled = useCallback(() => setAutoScroll(true), []);
@@ -165,13 +165,7 @@ export default function Debug() {
                                 )}*/}
                             </>
                         )}
-                        <i
-                            className='material-icons'
-                            role='link'
-                            onClick={(e) => {
-                                handleCopy(e, log);
-                            }}
-                        >
+                        <i className='material-icons' role='link' onClick={handleCopy}>
                             &#xe14d;
                         </i>
                     </div>
