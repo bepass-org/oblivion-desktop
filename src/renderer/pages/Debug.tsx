@@ -99,7 +99,10 @@ export default function Debug() {
             <Nav title={appLang?.log?.title} />
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
-                    <div className={classNames('logOptions', log === '' ? 'hidden' : '')} role='menubar'>
+                    <div
+                        className={classNames('logOptions', log === '' ? 'hidden' : '')}
+                        role='menubar'
+                    >
                         {/*<i
                             className='material-icons'
                             onClick={(e: any) => {

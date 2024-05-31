@@ -16,7 +16,9 @@ export default function About() {
             <Nav title={appLang?.about?.title} />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
-                    <p style={{ whiteSpace: 'pre-wrap' }} role='note'>{appLang?.about?.desc}</p>
+                    <p style={{ whiteSpace: 'pre-wrap' }} role='note'>
+                        {appLang?.about?.desc}
+                    </p>
                     <p role='note'>
                         <b>{appLang?.about?.slogan}</b>
                     </p>

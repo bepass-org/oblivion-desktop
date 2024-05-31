@@ -64,8 +64,8 @@ export default function Options() {
             const lines = value.split('\n');
             return lines?.length > 0
                 ? toPersianNumber(lines.length) +
-                ' ' +
-                (appLang?.settings?.routing_rules_items || '')
+                      ' ' +
+                      (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
         },
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items]
@@ -153,7 +153,7 @@ export default function Options() {
                                     setProxyMode(e.target.value);
                                     settings.set('proxyMode', e.target.value);
                                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         if (e.target.value === 'none') {
                                             setIpData(false);
                                             settings.set('ipData', false);
@@ -162,8 +162,12 @@ export default function Options() {
                                 }}
                                 value={proxyMode}
                             >
-                                <option value='none' role='option'>None</option>
-                                <option value='system' role='option'>System Proxy</option>
+                                <option value='none' role='option'>
+                                    None
+                                </option>
+                                <option value='system' role='option'>
+                                    System Proxy
+                                </option>
                                 {/*<option value='tun' disabled>TUN2Sock</option>*/}
                             </select>
                         </div>
@@ -175,7 +179,7 @@ export default function Options() {
                         onClick={() => {
                             setShowPortModal(true);
                         }}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 setShowPortModal(true);
@@ -186,7 +190,9 @@ export default function Options() {
                             {appLang?.settings?.port}
                         </label>
                         <div className='value' id='port'>
-                            <span className='dirLeft' tabIndex={1}>{port}</span>
+                            <span className='dirLeft' tabIndex={1}>
+                                {port}
+                            </span>
                         </div>
                         <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
@@ -196,7 +202,7 @@ export default function Options() {
                         onClick={() => {
                             setShowRoutingRulesModal(true);
                         }}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 setShowRoutingRulesModal(true);
@@ -220,18 +226,18 @@ export default function Options() {
                             setShareVPN(!shareVPN);
                             settings.set('shareVPN', !shareVPN);
                             settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                             }, 1000);
                         }}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             // TODO: The code needs refactoring
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 setShareVPN(!shareVPN);
                                 settings.set('shareVPN', !shareVPN);
                                 settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
                                 }, 1000);
                             }
@@ -241,7 +247,10 @@ export default function Options() {
                             {appLang?.settings?.share_vpn}
                         </label>
                         <div className='value' id='share-vpn'>
-                            <div className={classNames('checkbox', shareVPN ? 'checked' : '')} tabIndex={3}>
+                            <div
+                                className={classNames('checkbox', shareVPN ? 'checked' : '')}
+                                tabIndex={3}
+                            >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
@@ -272,7 +281,7 @@ export default function Options() {
                                 settings.set('ipData', !ipData);
                             }
                         }}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             // TODO: The code needs refactoring
                             if (e.key === 'Enter') {
                                 e.preventDefault();
@@ -287,7 +296,10 @@ export default function Options() {
                             {appLang?.settings?.ip_data}
                         </label>
                         <div className='value' id='ip-data'>
-                            <div className={classNames('checkbox', ipData ? 'checked' : '')} tabIndex={4}>
+                            <div
+                                className={classNames('checkbox', ipData ? 'checked' : '')}
+                                tabIndex={4}
+                            >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>

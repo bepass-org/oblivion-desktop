@@ -71,7 +71,7 @@ export default function PortModal({
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
                         tabIndex={2}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 handleCancelButtonClick();
@@ -85,7 +85,7 @@ export default function PortModal({
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
                         tabIndex={1}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onSaveModal();

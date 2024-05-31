@@ -70,7 +70,7 @@ export default function LicenseModal({
                         onClick={handleCancelButtonClick}
                         tabIndex={2}
                         role='button'
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 handleCancelButtonClick();
@@ -84,7 +84,7 @@ export default function LicenseModal({
                         onClick={onSaveModal}
                         tabIndex={1}
                         role='button'
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onSaveModal();

@@ -123,7 +123,7 @@ export default function RoutingRulesModal({
                         aria-hidden='true'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 handleCancelButtonClick();
@@ -138,7 +138,7 @@ export default function RoutingRulesModal({
                         aria-hidden='true'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onSaveModal();

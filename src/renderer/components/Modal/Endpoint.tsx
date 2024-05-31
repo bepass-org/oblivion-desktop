@@ -132,7 +132,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     <div
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 handleCancelButtonClick();
@@ -147,7 +147,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                         role='button'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onSaveModal();

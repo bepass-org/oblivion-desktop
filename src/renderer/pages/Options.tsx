@@ -29,11 +29,11 @@ export default function Options() {
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
 
     useEffect(() => {
-        setTimeout(function() {
+        setTimeout(function () {
             if (langRef && targetId === 'languages') {
                 langRef?.current?.scrollIntoView();
                 langRef?.current?.classList?.add('highlight');
-                setTimeout(function() {
+                setTimeout(function () {
                     langRef?.current?.classList?.remove('highlight');
                 }, 3000);
             }
@@ -59,10 +59,10 @@ export default function Options() {
 
     const onCloseRestoreModal = useCallback(() => {
         setShowRestoreModal(false);
-        setTimeout(function() {
+        setTimeout(function () {
             loadLang();
         }, 750);
-        setTimeout(function() {
+        setTimeout(function () {
             setAppLang(getLang());
         }, 1500);
     }, []);
@@ -79,11 +79,11 @@ export default function Options() {
         settings.set('lang', e.target.value);
         loadingToast();
 
-        setTimeout(function() {
+        setTimeout(function () {
             loadLang();
         }, 750);
 
-        setTimeout(function() {
+        setTimeout(function () {
             setAppLang(getLang());
             toast.dismiss('LOADING');
         }, 1500);
@@ -136,7 +136,7 @@ export default function Options() {
                         role='presentation'
                         className='item'
                         onClick={onChangeTheme}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onChangeTheme();
@@ -166,8 +166,13 @@ export default function Options() {
                             {appLang?.settings?.lang}
                         </label>
                         <div className='value'>
-                            <select id='lang-select' onChange={onChangeLanguage} value={lang} tabIndex={1}
-                                    role='listbox'>
+                            <select
+                                id='lang-select'
+                                onChange={onChangeLanguage}
+                                value={lang}
+                                tabIndex={1}
+                                role='listbox'
+                            >
                                 {languages.map((lng) => (
                                     <option key={lng.value} value={lng.value} role='option'>
                                         {lng.label}
@@ -181,7 +186,7 @@ export default function Options() {
                         role='presentation'
                         className='item'
                         onClick={onClickAutoStartButton}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onClickAutoStartButton();
@@ -206,7 +211,7 @@ export default function Options() {
                         role='presentation'
                         className='item'
                         onClick={onClicksystemTrayButton}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onClicksystemTrayButton();
@@ -237,7 +242,7 @@ export default function Options() {
                         role='presentation'
                         className={'item'}
                         onClick={onOpenRestoreModal}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onOpenRestoreModal();

@@ -85,7 +85,7 @@ export default function RestoreModal({
                     <div
                         className={classNames('btn', 'btn-cancel')}
                         onClick={onClose}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onClose();
@@ -101,7 +101,7 @@ export default function RestoreModal({
                         aria-hidden='true'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onSaveModal();

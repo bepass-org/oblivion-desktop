@@ -176,7 +176,7 @@ export default function Settings() {
                             role='presentation'
                             className={classNames('item')}
                             onClick={onEnableWarp}
-                            onKeyDown={e => {
+                            onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     onEnableWarp();
@@ -198,14 +198,18 @@ export default function Settings() {
                             role='presentation'
                             className={classNames('item')}
                             onClick={onEnableGool}
-                            onKeyDown={e => {
+                            onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     onEnableGool();
                                 }
                             }}
                         >
-                            <label className='key' htmlFor='flex-switch-check-checked-gool' role='label'>
+                            <label
+                                className='key'
+                                htmlFor='flex-switch-check-checked-gool'
+                                role='label'
+                            >
                                 {appLang?.settings?.method_gool}
                             </label>
                             <div className='value' id='flex-switch-check-checked-gool'>
@@ -223,14 +227,18 @@ export default function Settings() {
                             role='presentation'
                             className={classNames('item')}
                             onClick={onEnablePsiphon}
-                            onKeyDown={e => {
+                            onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     onEnablePsiphon();
                                 }
                             }}
                         >
-                            <label className='key' htmlFor='flex-switch-check-checked-psiphon' role='label'>
+                            <label
+                                className='key'
+                                htmlFor='flex-switch-check-checked-psiphon'
+                                role='label'
+                            >
                                 {appLang?.settings?.method_psiphon}
                             </label>
                             <div className='value' id='flex-switch-check-checked-psiphon'>
@@ -246,7 +254,11 @@ export default function Settings() {
                         </div>
                     </div>
                     <div className={classNames('item', method === 'psiphon' ? '' : 'disabled')}>
-                        <label className='key' htmlFor='flex-switch-check-checked-psiphon-location' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='flex-switch-check-checked-psiphon-location'
+                            role='label'
+                        >
                             {appLang?.settings?.method_psiphon_location}
                         </label>
                         <div className='value'>
@@ -294,18 +306,26 @@ export default function Settings() {
                         role='presentation'
                         className='item'
                         onClick={onOpenLicenseModal}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onOpenLicenseModal();
                             }
                         }}
                     >
-                        <label className='key' htmlFor='flex-switch-check-checked-license' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='flex-switch-check-checked-license'
+                            role='label'
+                        >
                             {appLang?.settings?.license}
                         </label>
                         <div className='value' role='link'>
-                            <span className='dirLeft' id='flex-switch-check-checked-license' tabIndex={4}>
+                            <span
+                                className='dirLeft'
+                                id='flex-switch-check-checked-license'
+                                tabIndex={4}
+                            >
                                 {license || 'Free'}
                             </span>
                         </div>

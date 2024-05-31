@@ -116,9 +116,15 @@ export default function Scanner() {
                                 disabled={endpoint !== defaultSettings.endpoint}
                                 value={ipType}
                             >
-                                <option value='' role='option'>{appLang?.settings?.scanner_ip_type_auto}</option>
-                                <option value='-4' role='option'>IPv4</option>
-                                <option value='-6' role='option'>IPv6</option>
+                                <option value='' role='option'>
+                                    {appLang?.settings?.scanner_ip_type_auto}
+                                </option>
+                                <option value='-4' role='option'>
+                                    IPv4
+                                </option>
+                                <option value='-6' role='option'>
+                                    IPv6
+                                </option>
                             </select>
                         </div>
                         <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
@@ -142,13 +148,27 @@ export default function Scanner() {
                                 disabled={endpoint !== defaultSettings.endpoint}
                                 value={rtt}
                             >
-                                <option value='1s' role='option'>{appLang?.settings?.scanner_rtt_default}</option>
-                                <option value='300ms' role='option'>300ms</option>
-                                <option value='500ms' role='option'>500ms</option>
-                                <option value='750ms' role='option'>750ms</option>
-                                <option value='1s' role='option'>1s</option>
-                                <option value='2s' role='option'>2s</option>
-                                <option value='3s' role='option'>3s</option>
+                                <option value='1s' role='option'>
+                                    {appLang?.settings?.scanner_rtt_default}
+                                </option>
+                                <option value='300ms' role='option'>
+                                    300ms
+                                </option>
+                                <option value='500ms' role='option'>
+                                    500ms
+                                </option>
+                                <option value='750ms' role='option'>
+                                    750ms
+                                </option>
+                                <option value='1s' role='option'>
+                                    1s
+                                </option>
+                                <option value='2s' role='option'>
+                                    2s
+                                </option>
+                                <option value='3s' role='option'>
+                                    3s
+                                </option>
                             </select>
                         </div>
                         <div className='info'>{appLang?.settings?.scanner_rtt_desc}</div>
@@ -163,7 +183,7 @@ export default function Scanner() {
                         role='presentation'
                         className={classNames('item')}
                         onClick={onOpenEndpointModal}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onOpenEndpointModal();
@@ -197,7 +217,7 @@ export default function Scanner() {
                         role='presentation'
                         className={'item'}
                         onClick={onClickReservedButton}
-                        onKeyDown={e => {
+                        onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 onClickReservedButton();
