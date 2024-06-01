@@ -82,7 +82,6 @@ export default function RestoreModal({
 
     return (
         <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
-            {' '}
             <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>
