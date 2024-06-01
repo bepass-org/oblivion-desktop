@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -81,6 +81,39 @@ export default function Options() {
         settingsHaveChangedToast({ ...{ isConnected, isLoading } });
     }, [isConnected, isLoading]);
 
+    const onChangeProxyMode = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setProxyMode(event.target.value);
+            settings.set('proxyMode', event.target.value);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+            setTimeout(function () {
+                if (event.target.value === 'none') {
+                    setIpData(false);
+                    settings.set('ipData', false);
+                }
+            }, 1000);
+        },
+        [isConnected, isLoading]
+    );
+
+    const openPortModal = useCallback(() => setShowPortModal(true), []);
+    const openRoutingRulesModal = useCallback(() => setShowRoutingRulesModal(true), []);
+    const handleShareVPN = useCallback(() => {
+        setShareVPN(!shareVPN);
+        settings.set('shareVPN', !shareVPN);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+        setTimeout(function () {
+            settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
+        }, 1000);
+    }, [isConnected, isLoading, shareVPN]);
+
+    const handleCheckIpData = useCallback(() => {
+        if (proxyMode !== 'none') {
+            setIpData(!ipData);
+            settings.set('ipData', !ipData);
+        }
+    }, [ipData, proxyMode]);
+
     if (
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
@@ -149,17 +182,7 @@ export default function Options() {
                                 tabIndex={0}
                                 role='listbox'
                                 id='proxy-mode-selector'
-                                onChange={(e) => {
-                                    setProxyMode(e.target.value);
-                                    settings.set('proxyMode', e.target.value);
-                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function () {
-                                        if (e.target.value === 'none') {
-                                            setIpData(false);
-                                            settings.set('ipData', false);
-                                        }
-                                    }, 1000);
-                                }}
+                                onChange={onChangeProxyMode}
                                 value={proxyMode}
                             >
                                 <option value='none' role='option'>
@@ -176,13 +199,11 @@ export default function Options() {
                     <div
                         role='presentation'
                         className='item'
-                        onClick={() => {
-                            setShowPortModal(true);
-                        }}
+                        onClick={openPortModal}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
-                                setShowPortModal(true);
+                                openPortModal();
                             }
                         }}
                     >
@@ -190,7 +211,7 @@ export default function Options() {
                             {appLang?.settings?.port}
                         </label>
                         <div className='value' id='port'>
-                            <span className='dirLeft' tabIndex={1}>
+                            <span className='dirLeft' tabIndex={-1}>
                                 {port}
                             </span>
                         </div>
@@ -199,13 +220,11 @@ export default function Options() {
                     <div
                         role='presentation'
                         className='item'
-                        onClick={() => {
-                            setShowRoutingRulesModal(true);
-                        }}
+                        onClick={openRoutingRulesModal}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
-                                setShowRoutingRulesModal(true);
+                                openRoutingRulesModal();
                             }
                         }}
                     >
@@ -213,7 +232,7 @@ export default function Options() {
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
-                            <span className='dirLeft' dir='rtl' tabIndex={2}>
+                            <span className='dirLeft' dir='rtl' tabIndex={-1}>
                                 {countRoutingRules(routingRules)}
                             </span>
                         </div>
@@ -222,24 +241,12 @@ export default function Options() {
                     <div
                         role='presentation'
                         className={classNames('item', shareVPN ? 'checked' : '')}
-                        onClick={() => {
-                            setShareVPN(!shareVPN);
-                            settings.set('shareVPN', !shareVPN);
-                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function () {
-                                settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
-                            }, 1000);
-                        }}
+                        onClick={handleShareVPN}
                         onKeyDown={(e) => {
                             // TODO: The code needs refactoring
                             if (e.key === 'Enter') {
                                 e.preventDefault();
-                                setShareVPN(!shareVPN);
-                                settings.set('shareVPN', !shareVPN);
-                                settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                setTimeout(function () {
-                                    settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
-                                }, 1000);
+                                handleShareVPN();
                             }
                         }}
                     >
@@ -248,8 +255,8 @@ export default function Options() {
                         </label>
                         <div className='value' id='share-vpn'>
                             <div
+                                tabIndex={-1}
                                 className={classNames('checkbox', shareVPN ? 'checked' : '')}
-                                tabIndex={3}
                             >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
@@ -275,20 +282,12 @@ export default function Options() {
                     <div
                         role='presentation'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
-                        onClick={() => {
-                            if (proxyMode !== 'none') {
-                                setIpData(!ipData);
-                                settings.set('ipData', !ipData);
-                            }
-                        }}
+                        onClick={handleCheckIpData}
                         onKeyDown={(e) => {
                             // TODO: The code needs refactoring
                             if (e.key === 'Enter') {
                                 e.preventDefault();
-                                if (proxyMode !== 'none') {
-                                    setIpData(!ipData);
-                                    settings.set('ipData', !ipData);
-                                }
+                                handleCheckIpData();
                             }
                         }}
                     >
@@ -298,7 +297,7 @@ export default function Options() {
                         <div className='value' id='ip-data'>
                             <div
                                 className={classNames('checkbox', ipData ? 'checked' : '')}
-                                tabIndex={4}
+                                tabIndex={-1}
                             >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>

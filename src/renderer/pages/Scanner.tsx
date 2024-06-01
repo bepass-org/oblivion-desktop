@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
+// import { motion } from 'framer-motion';
+
 import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
@@ -94,7 +96,19 @@ export default function Scanner() {
                 isOpen={showEndpointModal}
                 onClose={onCloseEndpointModal}
             />
-            <div className={classNames('myApp', 'normalPage')}>
+            <div
+                // initial={{
+                //     opacity: 0
+                // }}
+
+                // animate={{
+                //     opacity: 1
+                // }}
+                // exit={{
+                //     opacity: 0
+                // }}
+                className={classNames('myApp', 'normalPage')}
+            >
                 <Tabs active='scanner' />
                 <div className='settings' role='menu'>
                     <div
@@ -141,7 +155,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <select
-                                tabIndex={1}
+                                tabIndex={0}
                                 role='listbox'
                                 id='rtt-select'
                                 onChange={onChangeRTT}
@@ -171,7 +185,9 @@ export default function Scanner() {
                                 </option>
                             </select>
                         </div>
-                        <div className='info' role='note'>{appLang?.settings?.scanner_rtt_desc}</div>
+                        <div className='info' role='note'>
+                            {appLang?.settings?.scanner_rtt_desc}
+                        </div>
                     </div>
                 </div>
                 <div className='moreSettings'>
@@ -194,7 +210,7 @@ export default function Scanner() {
                             {appLang?.settings?.endpoint}
                         </label>
                         <div className='value'>
-                            <span className='dirLeft' id='endpoint' tabIndex={2}>
+                            <span className='dirLeft' id='endpoint' tabIndex={-1}>
                                 {endpoint}
                             </span>
                         </div>
@@ -229,7 +245,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <div
-                                tabIndex={3}
+                                tabIndex={-1}
                                 id='reserved'
                                 className={classNames('checkbox', reserved ? 'checked' : '')}
                             >

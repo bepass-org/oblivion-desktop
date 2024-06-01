@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { getLang } from '../../lib/loaders';
@@ -22,7 +22,17 @@ const EndpointModal: FC<EndpointModalProps> = ({
     setEndpoint
 }) => {
     const [endpointInput, setEndpointInput] = useState<string>(endpoint);
+    const [showModal, setshowModal] = useState<boolean>(isOpen);
+
+    useEffect(() => setshowModal(isOpen), [isOpen]);
+
     const appLang = getLang();
+
+    const handleOnClose = useCallback(() => {
+        setshowModal(false);
+        setTimeout(onClose, 300);
+    }, [onClose]);
+
     const suggestion = useMemo(() => ['188.114.98.224:2408', '162.159.192.175:891'], []);
 
     const onSaveModal = useCallback(() => {
@@ -36,8 +46,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
         setEndpointInput(tmp);
         setEndpoint(tmp);
         settings.set('endpoint', tmp);
-        onClose();
-    }, [defValue, endpointInput, onClose, setEndpoint]);
+        handleOnClose();
+    }, [defValue, endpointInput, handleOnClose, setEndpoint]);
 
     const setEndpointSuggestion = useCallback(
         (item: number) => {
@@ -55,8 +65,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
 
     const handleCancelButtonClick = useCallback(() => {
         setEndpointInput(endpoint);
-        onClose();
-    }, [endpoint, onClose]);
+        handleOnClose();
+    }, [endpoint, handleOnClose]);
 
     const handleEndpointInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,8 +78,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
     if (!isOpen) return <></>;
 
     return (
-        <div className='dialog'>
-            <div className='dialogBg' onClick={onClose} role='presentation' />
+        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
+            <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>
                     <div className='line'>
@@ -139,7 +149,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                             }
                         }}
                         role='button'
-                        tabIndex={2}
+                        tabIndex={0}
                     >
                         {appLang?.modal?.cancel}
                     </div>
@@ -153,7 +163,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 onSaveModal();
                             }
                         }}
-                        tabIndex={1}
+                        tabIndex={0}
                     >
                         {appLang?.modal?.update}
                     </div>

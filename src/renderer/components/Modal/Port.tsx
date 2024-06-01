@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { getLang } from '../../lib/loaders';
@@ -22,7 +22,16 @@ export default function PortModal({
     setPort
 }: PortModalProps) {
     const [portInput, setPortInput] = useState<number>(port);
+    const [showModal, setshowModal] = useState<boolean>(isOpen);
+
+    useEffect(() => setshowModal(isOpen), [isOpen]);
+
     const appLang = getLang();
+
+    const handleOnClose = useCallback(() => {
+        setshowModal(false);
+        setTimeout(onClose, 300);
+    }, [onClose]);
 
     const isValidPort = useCallback((value: number) => {
         // return /^\d{1,5}$/.test(value) && parseInt(value, 10) >= 20 && parseInt(value, 10) <= 65535;
@@ -34,13 +43,13 @@ export default function PortModal({
         setPortInput(tmp);
         setPort(tmp);
         settings.set('port', tmp);
-        onClose();
-    }, [defValue, portInput, onClose, setPort, isValidPort]);
+        handleOnClose();
+    }, [defValue, portInput, handleOnClose, setPort, isValidPort]);
 
     const handleCancelButtonClick = useCallback(() => {
         setPortInput(port);
-        onClose();
-    }, [port, onClose]);
+        handleOnClose();
+    }, [port, handleOnClose]);
 
     const handlePortInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setPortInput(Number(event.target.value));
@@ -49,8 +58,8 @@ export default function PortModal({
     if (!isOpen) return <></>;
 
     return (
-        <div className='dialog'>
-            <div className='dialogBg' onClick={onClose} role='presentation' />
+        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
+            <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>
                     <div className='line'>
@@ -70,7 +79,7 @@ export default function PortModal({
                         role='button'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
-                        tabIndex={2}
+                        tabIndex={0}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
@@ -84,7 +93,7 @@ export default function PortModal({
                         role='button'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        tabIndex={1}
+                        tabIndex={0}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();

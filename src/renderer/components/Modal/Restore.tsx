@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
@@ -30,7 +30,16 @@ export default function RestoreModal({
         []
     );
 
+    const [showModal, setshowModal] = useState<boolean>(isOpen);
+
+    useEffect(() => setshowModal(isOpen), [isOpen]);
+
     const appLang = getLang();
+
+    const handleOnClose = useCallback(() => {
+        setshowModal(false);
+        setTimeout(onClose, 300);
+    }, [onClose]);
 
     const onSaveModal = useCallback(async () => {
         // in this page
@@ -47,7 +56,7 @@ export default function RestoreModal({
             'data-bs-theme',
             detectingSystemTheme ? 'dark' : 'light'
         );
-        onClose();
+        handleOnClose();
         // other settings
         //await settings.set('scan', defaultSettings.scan);
         await settings.set('endpoint', defaultSettings.endpoint);
@@ -67,13 +76,13 @@ export default function RestoreModal({
         await settings.set('reserved', defaultSettings.reserved);
         //
         ipcRenderer.sendMessage('wp-end');
-    }, [detectingSystemTheme, setTheme, setSystemTray, setLang, setOpenAtLogin, onClose]);
+    }, [detectingSystemTheme, setTheme, setSystemTray, setLang, setOpenAtLogin, handleOnClose]);
 
     if (!isOpen) return null;
 
     return (
-        <div className='dialog'>
-            <div className='dialogBg' onClick={onClose} role='presentation' />
+        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
+            <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>
                     <div className='line'>
@@ -91,7 +100,7 @@ export default function RestoreModal({
                                 onClose();
                             }
                         }}
-                        tabIndex={1}
+                        tabIndex={0}
                         role='button'
                     >
                         {appLang?.modal?.cancel}

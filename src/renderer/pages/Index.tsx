@@ -357,16 +357,16 @@ export default function Index() {
                         className='navMenu'
                         role='menu'
                         aria-controls='menu'
-                        tabIndex={-1}
+                        tabIndex={0}
                         onKeyDown={handleMenuOnKeyDown}
                     >
                         <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                         <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                     </div>
-                    <Link to='/about' tabIndex={-2}>
+                    <Link to='/about' tabIndex={0}>
                         <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
                     </Link>
-                    <Link to={'/debug'} tabIndex={-3}>
+                    <Link to={'/debug'} tabIndex={0}>
                         <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                     </Link>
                 </div>

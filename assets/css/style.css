@@ -1159,6 +1159,11 @@ html[data-bs-theme="dark"] .shimmer {
     left: 0;
     width: 100%;
     z-index: 2;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.no-opacity {
+    opacity: 0;
 }
 
 .dialog .dialogBg {
@@ -1252,10 +1257,12 @@ html[data-bs-theme="dark"] .shimmer {
     direction: ltr;
     font-weight: 400;
     border-width: 2px;
+    border-radius: 5px;
 }
 
 .dialog .dialogBox textarea {
     min-height: 100px;
+    border-radius: 5px;
     height: 150px;
     max-height: 200px;
     resize: vertical;
