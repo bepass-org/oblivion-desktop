@@ -1,8 +1,6 @@
 import classNames from 'classnames';
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { settings } from '../../../lib/settings';
+import {  FC} from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
-import { getLang } from '../../../lib/loaders';
 import useEndpointModal from './useEndpointModal';
 
 interface EndpointModalProps {
