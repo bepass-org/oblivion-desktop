@@ -97,7 +97,12 @@ export default function Options() {
     );
 
     const openPortModal = useCallback(() => setShowPortModal(true), []);
-    const openRoutingRulesModal = useCallback(() => setShowRoutingRulesModal(true), []);
+    const openRoutingRulesModal = useCallback(() => {
+        if (proxyMode !== 'none') {
+            setShowRoutingRulesModal(true);
+        }
+    }, [proxyMode]);
+
     const handleShareVPN = useCallback(() => {
         setShareVPN(!shareVPN);
         settings.set('shareVPN', !shareVPN);
@@ -219,7 +224,10 @@ export default function Options() {
                     </div>
                     <div
                         role='presentation'
-                        className='item'
+                        className={classNames(
+                            'item',
+                            proxyMode === 'none' ? 'disabled' : ''
+                        )}
                         onClick={openRoutingRulesModal}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
