@@ -49,12 +49,15 @@ export default function Scanner() {
 
     const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
 
-    const onKeyDownEndpoint= useCallback((e:KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            onOpenEndpointModal();
-        }
-    }, [onOpenEndpointModal]);
+    const onKeyDownEndpoint = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onOpenEndpointModal();
+            }
+        },
+        [onOpenEndpointModal]
+    );
 
     const onChangeType = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
@@ -79,12 +82,15 @@ export default function Scanner() {
         settings.set('reserved', !reserved);
     }, [reserved]);
 
-    const onKeyDownReservedButton = useCallback((e:KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            onClickReservedButton();
-        }
-    }, [onClickReservedButton]);
+    const onKeyDownReservedButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickReservedButton();
+            }
+        },
+        [onClickReservedButton]
+    );
 
     if (
         typeof endpoint === 'undefined' ||
