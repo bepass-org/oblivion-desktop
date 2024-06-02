@@ -199,7 +199,7 @@ if (!gotTheLock) {
 
         let appIcon = null;
         app?.whenReady().then(() => {
-            const nativeImageIcon = nativeImage.createFromPath(getAssetPath('oblivion.png'));
+            const nativeImageIcon = nativeImage.createFromPath(getAssetPath('img/status/disconnected.png'));
             const resizedIcon = nativeImageIcon.resize({ width: 16, height: 16 }); // Resize icon for macOS tray compatibility
             appIcon = new Tray(resizedIcon);
             appIcon.on('click', () => {
