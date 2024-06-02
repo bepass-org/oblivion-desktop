@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import classNames from 'classnames';
 import Nav from '../components/Nav';
@@ -59,12 +59,21 @@ export default function Debug() {
     });
 
     const handleCopy = useCallback(
-        (e: MouseEvent<HTMLElement>) => {
-            e.preventDefault();
+        (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLDivElement>) => {
+            event.preventDefault();
             navigator.clipboard.writeText(log);
             defaultToast(`${appLang?.toast?.copied}`, 'COPIED', 2000);
         },
         [appLang?.toast?.copied, log]
+    );
+
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === 'Enter') {
+                handleCopy(event);
+            }
+        },
+        [handleCopy]
     );
 
     const setAuthScrollEnabled = useCallback(() => setAutoScroll(true), []);
@@ -115,24 +124,18 @@ export default function Debug() {
                             <>
                                 {autoScroll ? (
                                     <>
-                                        <i
-                                            className='material-icons'
-                                            onClick={setAuthScrollDisabled}
-                                            role='link'
-                                        >
-                                            &#xe1a2;
-                                        </i>
+                                        <div onClick={setAuthScrollDisabled} role='presentation'>
+                                            <i className='material-icons' role='link'>
+                                                &#xe1a2;
+                                            </i>
+                                        </div>
                                     </>
                                 ) : (
-                                    <>
-                                        <i
-                                            className='material-icons'
-                                            onClick={setAuthScrollEnabled}
-                                            role='link'
-                                        >
+                                    <div role='presentation' onClick={setAuthScrollEnabled}>
+                                        <i className='material-icons' role='link'>
                                             &#xe038;
                                         </i>
-                                    </>
+                                    </div>
                                 )}
                                 {/*{isBottom ? (
                                     <>
@@ -165,9 +168,16 @@ export default function Debug() {
                                 )}*/}
                             </>
                         )}
-                        <i className='material-icons' role='link' onClick={handleCopy}>
-                            &#xe14d;
-                        </i>
+                        <div
+                            role='button'
+                            onClick={handleCopy}
+                            onKeyDown={handleKeyDown}
+                            tabIndex={0}
+                        >
+                            <i className='material-icons' role='link'>
+                                &#xe14d;
+                            </i>
+                        </div>
                     </div>
                     <p
                         className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}

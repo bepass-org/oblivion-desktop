@@ -181,7 +181,11 @@ export default function Settings() {
                                 }
                             }}
                         >
-                            <label className='key' htmlFor='flex-switch-check-checked' role='label'>
+                            <label
+                                className='key'
+                                htmlFor='flex-switch-check-checked'
+                                // role='label'
+                            >
                                 {appLang?.settings?.method_warp}
                             </label>
                             <div className='value' id='flex-switch-check-checked'>
@@ -206,7 +210,7 @@ export default function Settings() {
                             <label
                                 className='key'
                                 htmlFor='flex-switch-check-checked-gool'
-                                role='label'
+                                // role='label'
                             >
                                 {appLang?.settings?.method_gool}
                             </label>
@@ -235,7 +239,7 @@ export default function Settings() {
                             <label
                                 className='key'
                                 htmlFor='flex-switch-check-checked-psiphon'
-                                role='label'
+                                // role='label'
                             >
                                 {appLang?.settings?.method_psiphon}
                             </label>
@@ -255,7 +259,7 @@ export default function Settings() {
                         <label
                             className='key'
                             htmlFor='flex-switch-check-checked-psiphon-location'
-                            role='label'
+                            // role='label'
                         >
                             {appLang?.settings?.method_psiphon_location}
                         </label>
@@ -265,14 +269,21 @@ export default function Settings() {
                                 onChange={onChangeLocation}
                                 disabled={method !== 'psiphon'}
                                 value={location}
-                                role='listbox'
+                                // role='listbox'
                                 tabIndex={-1}
                             >
-                                <option value='' role='option'>
+                                <option
+                                    value=''
+                                    // role='option'
+                                >
                                     {appLang?.settings?.method_psiphon_location_auto}
                                 </option>
                                 {countries.map((country) => (
-                                    <option key={country.value} value={country.value} role='option'>
+                                    <option
+                                        key={country.value}
+                                        value={country.value}
+                                        // role='option'
+                                    >
                                         {country.label}
                                     </option>
                                 ))}
@@ -314,7 +325,7 @@ export default function Settings() {
                         <label
                             className='key'
                             htmlFor='flex-switch-check-checked-license'
-                            role='label'
+                            // role='label'
                         >
                             {appLang?.settings?.license}
                         </label>
