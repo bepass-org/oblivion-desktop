@@ -198,17 +198,20 @@ if (!gotTheLock) {
         createMainWindow();
 
         const trayIconChanger = (status: string) => {
-            const nativeImageIcon = nativeImage.createFromPath(getAssetPath(`img/status/${status}.png`));
+            const nativeImageIcon = nativeImage.createFromPath(
+                getAssetPath(`img/status/${status}.png`)
+            );
             // Resize icon for macOS tray compatibility
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
         let appIcon = null;
         app?.whenReady().then(() => {
-            appIcon = new Tray(trayIconChanger('disconnected'));
-            /*ipcMain.on('tray-icon', (event, newStatus) => {
-                appIcon.setImage(trayIconChanger(newStatus));
-            });*/
+            const nativeImageIcon = nativeImage.createFromPath(
+                getAssetPath('img/status/disconnected.png')
+            );
+            const resizedIcon = nativeImageIcon.resize({ width: 16, height: 16 }); // Resize icon for macOS tray compatibility
+            appIcon = new Tray(resizedIcon);
             appIcon.on('click', () => {
                 if (canOpenFromSystem) {
                     if (!mainWindow) {

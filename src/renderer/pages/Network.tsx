@@ -224,10 +224,7 @@ export default function Options() {
                     </div>
                     <div
                         role='presentation'
-                        className={classNames(
-                            'item',
-                            proxyMode === 'none' ? 'disabled' : ''
-                        )}
+                        className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={openRoutingRulesModal}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
