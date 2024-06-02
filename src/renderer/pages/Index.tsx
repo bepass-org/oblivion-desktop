@@ -136,7 +136,7 @@ export default function Index() {
 
     useEffect(() => {
         if (online) {
-            toast.dismiss('ONLINE_STATUS');
+            toast.remove('ONLINE_STATUS');
         } else {
             checkInternetToast();
         }
@@ -217,7 +217,7 @@ export default function Index() {
                         setTimeout(getIpLocation, 7500);
                     }
                     clearTimeout(timeoutId);
-                    toast.dismiss('ipLocationStatus');
+                    toast.remove('ipLocationStatus');
                 }
             }
         } catch (error) {
@@ -235,7 +235,7 @@ export default function Index() {
             if (method === '' && ipInfo?.countryCode === 'ir') {
                 ipToast();
             } else {
-                toast.dismiss('ipChangedToIR');
+                toast.remove('ipChangedToIR');
             }
         }
     }, [ipInfo]);
@@ -244,6 +244,7 @@ export default function Index() {
         onEscapeKeyPressed(() => {
             setDrawerIsOpen(false);
         });
+        toast.remove('COPIED');
     }, []);
 
     useEffect(() => {
@@ -257,8 +258,8 @@ export default function Index() {
         }
 
         if (isLoading || !isConnected) {
-            toast.dismiss('ipChangedToIR');
-            toast.dismiss('ipLocationStatus');
+            toast.remove('ipChangedToIR');
+            toast.remove('ipLocationStatus');
         }
 
         if (isConnected && isLoading) {

@@ -85,7 +85,7 @@ export default function Options() {
 
         setTimeout(function () {
             setAppLang(getLang());
-            toast.dismiss('LOADING');
+            toast.remove('LOADING');
         }, 1500);
     }, []);
 

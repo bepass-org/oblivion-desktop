@@ -31,7 +31,7 @@ export const defaultToastWithSubmitButton = (
                     <p>{msg}</p>
                     <button
                         onClick={() => {
-                            toast.dismiss(currentToast?.id);
+                            toast.remove(currentToast?.id);
                             onSubmitCallBack();
                         }}
                     >
