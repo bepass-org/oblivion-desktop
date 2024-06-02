@@ -44,6 +44,20 @@ const systemCheckKWriteDeps = (): boolean => {
     }
 };
 
+const detectDesktopEnvironment = () => {
+    return new Promise((resolve, reject) => {
+        exec('echo $DESKTOP_SESSION', (err, stdout) => {
+            stdout = stdout.trim();
+            if (err) {
+                log.error(err);
+                reject(err);
+            }
+            log.info('DE:', String(stdout));
+            resolve(String(stdout));
+        });
+    });
+};
+
 const enableGnomeProxy = async (ip: string, port: string): Promise<void> => {
     const proxySettings = {
         mode: 'manual',
@@ -278,32 +292,47 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
         });
     } else if (process.platform === 'linux') {
         return new Promise<void>(async (resolve, reject) => {
-            if (systemCheckGSettingsDeps()) {
-                await enableGnomeProxy(hostIP.toString(), port.toString())
-                    .then(() => {
-                        log.info('Successfully enabled proxy for GNOME');
-                        resolve();
-                    })
-                    .catch(() => {
-                        log.error('Failed to enable proxy for GNOME');
-                        reject();
-                    });
-            } else if (systemCheckKWriteDeps()) {
-                await enableKDEProxy(hostIP.toString(), port.toString())
-                    .then(() => {
-                        log.info('Successfully enabled proxy for KDE');
-                        resolve();
-                    })
-                    .catch(() => {
-                        log.error('Failed to enable proxy for KDE');
-                        ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
-                        reject();
-                    });
-            } else {
-                log.error('Desktop Environment not supported.');
-                ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
-                reject();
+            const DE = await detectDesktopEnvironment();
+
+            switch (DE) {
+                case 'gnome':
+                    await enableGnomeProxy(hostIP.toString(), port.toString())
+                        .then(() => {
+                            log.info('Successfully enabled proxy for GNOME');
+                            resolve();
+                        })
+                        .catch(() => {
+                            log.error('Failed to enable proxy for GNOME');
+                            reject();
+                        });
+                    break;
+
+                case 'plasma': // (kde)
+                    await enableKDEProxy(hostIP.toString(), port.toString())
+                        .then(() => {
+                            log.info('Successfully enabled proxy for KDE');
+                            resolve();
+                        })
+                        .catch(() => {
+                            log.error('Failed to enable proxy for KDE');
+                            ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                            reject();
+                        });
+                    break;
+
+                default:
+                    log.error('Desktop Environment not supported.');
+                    ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                    reject();
+                    break;
             }
+            // if (systemCheckGSettingsDeps()) {
+
+            // } else if (systemCheckKWriteDeps()) {
+
+            // } else {
+
+            // }
         });
     } else {
         return new Promise<void>((resolve) => {
@@ -380,31 +409,47 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
         });
     } else if (process.platform === 'linux') {
         return new Promise<void>(async (resolve, reject) => {
-            if (systemCheckGSettingsDeps()) {
-                await disableGNOMEProxy()
-                    .then(() => {
-                        log.info('Successfully disabled proxy for GNOME');
-                        resolve();
-                    })
-                    .catch(() => {
-                        log.error('Failed to disabled proxy for GNOME');
-                        reject();
-                    });
-            } else if (systemCheckKWriteDeps()) {
-                await disableKDEProxy()
-                    .then(() => {
-                        log.info('Successfully disabled proxy for KDE');
-                        resolve();
-                    })
-                    .catch(() => {
-                        log.error('Failed to disabled proxy for KDE');
-                        reject();
-                    });
-            } else {
-                log.error('Desktop Environment not supported.');
-                ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
-                reject();
+            const DE = await detectDesktopEnvironment();
+
+            switch (DE) {
+                case 'gnome':
+                    await disableGNOMEProxy()
+                        .then(() => {
+                            log.info('Successfully disabled proxy for GNOME');
+                            resolve();
+                        })
+                        .catch(() => {
+                            log.error('Failed to disabled proxy for GNOME');
+                            reject();
+                        });
+                    break;
+
+                case 'plasma':
+                    await disableKDEProxy()
+                        .then(() => {
+                            log.info('Successfully disabled proxy for KDE');
+                            resolve();
+                        })
+                        .catch(() => {
+                            log.error('Failed to disabled proxy for KDE');
+                            reject();
+                        });
+                    break;
+
+                default:
+                    log.error('Desktop Environment not supported.');
+                    ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                    reject();
+                    break;
             }
+
+            // if (systemCheckGSettingsDeps()) {
+
+            // } else if (systemCheckKWriteDeps()) {
+
+            // } else {
+
+            // }
         });
     } else {
         return new Promise<void>((resolve) => {
