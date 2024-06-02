@@ -63,9 +63,8 @@ export const settingsHaveChangedToast = ({
     if (doNotShowSettingsHaveChangedToastInCurrentSession) return;
     if (isConnected || isLoading) {
         defaultToastWithSubmitButton(
-            appLang?.toast?.settings_changed,
-            // TODO i18n
-            'متوجه شدم',
+            `${appLang?.toast?.settings_changed}`,
+            `${appLang?.toast?.btn_submit}`,
             'SETTINGS_CHANGED',
             3000,
             () => {
