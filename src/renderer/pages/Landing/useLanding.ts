@@ -140,7 +140,7 @@ const useLanding = () => {
                 setStatusText(`${appLang?.status?.disconnected}`);
             }
         });
-    }, [isConnected, isLoading, ipInfo]);
+    }, [isConnected, isLoading, ipInfo, proxyStatus]);
 
     useEffect(() => {
         if (online) {
@@ -292,7 +292,6 @@ const useLanding = () => {
         if (!online) {
             checkInternetToast();
         } else {
-            setProxyStatus(proxyMode);
             if (isLoading) {
                 ipcRenderer.sendMessage('wp-end');
             } else if (isConnected) {
@@ -303,6 +302,7 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
+                setProxyStatus(proxyMode);
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
                 setPing(0);
