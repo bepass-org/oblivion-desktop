@@ -118,31 +118,6 @@ const useLanding = () => {
     }, []);
 
     useEffect(() => {
-        ipcRenderer.on('wp-start', (ok) => {
-            if (ok) {
-                setIsLoading(false);
-                setIsConnected(true);
-                if (proxyStatus && proxyStatus !== '') {
-                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
-                }
-            }
-        });
-
-        ipcRenderer.on('wp-end', (ok) => {
-            if (ok) {
-                setIsConnected(false);
-                setIsLoading(false);
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                ipcRenderer.sendMessage('tray-icon', 'disconnected');
-                setStatusText(`${appLang?.status?.disconnected}`);
-            }
-        });
-    }, [isConnected, isLoading, ipInfo, proxyStatus]);
-
-    useEffect(() => {
         if (online) {
             toast.remove('ONLINE_STATUS');
         } else {
@@ -279,14 +254,38 @@ const useLanding = () => {
             if (proxyStatus !== 'none') {
                 setStatusText(`${appLang?.status?.ip_check}`);
             } else {
-                setStatusText(`${appLang?.status?.connecting}`);
+                setStatusText(`${appLang?.status?.connected}`);
             }
         } else if (isConnected && !ipData) {
             setStatusText(`${appLang?.status?.connected}`);
         } else {
             setStatusText(`${appLang?.status?.disconnected}`);
         }
-    }, [isLoading, isConnected, ipInfo, ipData]);
+
+        ipcRenderer.on('wp-start', (ok) => {
+            if (ok) {
+                setIsLoading(false);
+                setIsConnected(true);
+                if (proxyStatus !== '') {
+                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
+                }
+            }
+        });
+
+        ipcRenderer.on('wp-end', (ok) => {
+            if (ok) {
+                setIsConnected(false);
+                setIsLoading(false);
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
+                if (proxyStatus !== '') {
+                    ipcRenderer.sendMessage('tray-icon', 'disconnected');
+                }
+            }
+        });
+    }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const onChange = useCallback(() => {
         if (!online) {
@@ -308,7 +307,7 @@ const useLanding = () => {
                 setPing(0);
             }
         }
-    }, [online, isLoading, isConnected, setIsLoading]);
+    }, [online, isLoading, isConnected, setIsLoading, proxyMode]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter') {
