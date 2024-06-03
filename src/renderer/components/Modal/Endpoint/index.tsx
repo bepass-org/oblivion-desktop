@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import {  FC} from 'react';
+import { FC } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 

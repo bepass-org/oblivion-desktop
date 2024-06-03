@@ -65,6 +65,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
         },
         [setEndpointInput]
     );
+
     return {
         endpointInput,
         showModal,
