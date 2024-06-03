@@ -190,6 +190,8 @@ const setRoutingRules = (value: any) => {
         const myRules = value
             .replace(/domain:/g, '')
             .replace(/geoip:/g, '')
+            .replace(/ip:/g, '')
+            .replace(/range:/g, '')
             .replace(/\n|<br>/g, '')
             .trim();
         log.info('Routing Rules: Customized');

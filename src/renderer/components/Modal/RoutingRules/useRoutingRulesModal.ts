@@ -29,7 +29,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         }
         const lines = textareaContent.split('\n');
         const validEntriesSet = new Set<string>();
-        const entryRegex = /^(geoip|domain):(.+)$/;
+        const entryRegex = /^(geoip|domain|ip|range):(.+)$/;
         const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
         const ipRangeRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
 
@@ -100,7 +100,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     );
 
     const handleSetRoutingRulesSimple = useCallback(() => {
-        setRoutingRulesInput(`domain:dolat.ir,\ndomain:apple.com,\ngeoip:127.0.0.1,\ndomain:*.ir`);
+        setRoutingRulesInput(`domain:dolat.ir,\ndomain:apple.com,\nip:127.0.0.1,\ndomain:*.ir`);
     }, [setRoutingRulesInput]);
 
     return {
