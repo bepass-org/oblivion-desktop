@@ -197,6 +197,8 @@ if (!gotTheLock) {
 
         createMainWindow();
 
+        let appIcon: any = null;
+
         const trayIconChanger = (status: string) => {
             const nativeImageIcon = nativeImage.createFromPath(
                 getAssetPath(`img/status/${status}.png`)
@@ -205,12 +207,8 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
-        let appIcon = null;
-        app?.whenReady().then(() => {
-            appIcon = new Tray(trayIconChanger('disconnected'));
-            /*ipcMain.on('tray-icon', (event, newStatus) => {
-                appIcon.setImage(trayIconChanger(newStatus));
-            });*/
+        const systemTrayMenu = (status: string) => {
+            appIcon = new Tray(trayIconChanger(status));
             appIcon.on('click', () => {
                 if (canOpenFromSystem) {
                     if (!mainWindow) {
@@ -234,33 +232,33 @@ if (!gotTheLock) {
                 },
                 // TODO
                 /*{ label: '', type: 'separator' },
-            {
-                label: 'حالت پروکسی',
-                submenu: [
-                    { label: 'متصل است', type: 'radio' },
-                    { label: 'عدم اتصال', type: 'radio' }
-                ]
-            },
-            { label: '', type: 'separator' },
-            {
-                label: 'Proxy Mode',
-                submenu: [
-                    {
-                        label: 'Set System Proxy',
-                        type: 'normal',
-                        click: async () => {
-                            await enableProxy();
+                {
+                    label: 'حالت پروکسی',
+                    submenu: [
+                        { label: 'متصل است', type: 'radio' },
+                        { label: 'عدم اتصال', type: 'radio' }
+                    ]
+                },
+                { label: '', type: 'separator' },
+                {
+                    label: 'Proxy Mode',
+                    submenu: [
+                        {
+                            label: 'Set System Proxy',
+                            type: 'normal',
+                            click: async () => {
+                                await enableProxy();
+                            }
+                        },
+                        {
+                            label: 'Disable',
+                            type: 'normal',
+                            click: async () => {
+                                await disableProxy();
+                            }
                         }
-                    },
-                    {
-                        label: 'Disable',
-                        type: 'normal',
-                        click: async () => {
-                            await disableProxy();
-                        }
-                    }
-                ]
-            },*/
+                    ]
+                },*/
                 { label: '', type: 'separator' },
                 {
                     label: 'Exit',
@@ -273,6 +271,13 @@ if (!gotTheLock) {
             contextMenu.items[1].checked = false;
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(contextMenu);
+        };
+
+        app?.whenReady().then(() => {
+            systemTrayMenu('disconnected');
+            ipcMain.on('tray-icon', async (event, newStatus) => {
+                appIcon.setImage(trayIconChanger(newStatus));
+            });
         });
 
         // Remove this if your app does not use auto updates

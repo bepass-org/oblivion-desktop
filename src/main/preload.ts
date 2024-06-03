@@ -7,7 +7,8 @@ export type Channels =
     | 'wp-end'
     | 'getLogs'
     | 'settings'
-    | 'guide-toast';
+    | 'guide-toast'
+    | 'tray-icon';
 
 const electronHandler = {
     ipcRenderer: {
