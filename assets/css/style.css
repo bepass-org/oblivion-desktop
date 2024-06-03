@@ -787,6 +787,14 @@ html[data-bs-theme="dark"] .shimmer {
     cursor: default;
 }
 
+.settings .item .value span[dir="auto"] {
+    direction: rtl;
+}
+
+[dir="ltr"] .settings .item .value span[dir="auto"] {
+    direction: ltr;
+}
+
 .settings .item .value select {
     float: left;
     border: none;
