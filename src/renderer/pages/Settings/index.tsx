@@ -1,142 +1,32 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback, ChangeEvent, KeyboardEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
-import Nav from '../components/Nav';
-import Tabs from '../components/Tabs';
-import LicenseModal from '../components/Modal/License';
-import { settings } from '../lib/settings';
-import { countries, defaultSettings } from '../../defaultSettings';
-import LottieFile from '../../../assets/json/1713988096625.json';
-import { settingsHaveChangedToast } from '../lib/toasts';
-import { useStore } from '../store';
-import { getLang } from '../lib/loaders';
-import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import Nav from '../../components/Nav';
+import Tabs from '../../components/Tabs';
+import LicenseModal from '../../components/Modal/License';
+import { countries } from '../../../defaultSettings';
+import LottieFile from '../../../../assets/json/1713988096625.json';
+import useSettings from './useSettings';
 
 export default function Settings() {
-    const appLang = getLang();
-    const { isConnected, isLoading } = useStore();
-
-    //const [scan, setScan] = useState(true);
-    //const [endpoint, setEndpoint] = useState();
-    //const [showEndpointModal, setShowEndpointModal] = useState(false);
-    //const [ipType, setIpType] = useState<undefined | string>();
-    //const [psiphon, setPsiphon] = useState<undefined | boolean>();
-    const [location, setLocation] = useState<undefined | string>();
-    const [license, setLicense] = useState<string>();
-    const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
-    //const [gool, setGool] = useState<undefined | boolean>();
-    const [method, setMethod] = useState<undefined | string>('');
-
-    /*useEffect(() => {
-        if (endpoint === '' || endpoint === defaultSettings.endpoint) {
-            setScan(true);
-        }
-    }, [endpoint]);*/
-
-    useGoBackOnEscape();
-
-    useEffect(() => {
-        /*settings.get('scan').then((value) => {
-            setScan(typeof value === 'undefined' ? defaultSettings.scan : value);
-        });*/
-        /*settings.get('endpoint').then((value) => {
-            setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
-        });*/
-        /*settings.get('ipType').then((value) => {
-            setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
-        });*/
-        /*settings.get('psiphon').then((value) => {
-            setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
-        });*/
-        settings.get('location').then((value) => {
-            setLocation(typeof value === 'undefined' ? defaultSettings.location : value);
-        });
-        settings.get('license').then((value) => {
-            setLicense(typeof value === 'undefined' ? defaultSettings.license : value);
-        });
-        /*settings.get('gool').then((value) => {
-            setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
-        });*/
-        settings.get('method').then((value) => {
-            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
-        });
-    }, []);
-
-    const onCloseLicenseModal = useCallback(() => {
-        setShowLicenseModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
-
-    const onKeyDownLicense = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onOpenLicenseModal();
-            }
-        },
-        [onOpenLicenseModal]
-    );
-
-    const onEnableWarp = useCallback(() => {
-        setMethod('');
-        settings.set('method', '');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onKeyDownWarp = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onEnableWarp();
-            }
-        },
-        [isConnected, isLoading]
-    );
-
-    const onEnableGool = useCallback(() => {
-        setMethod('gool');
-        settings.set('method', 'gool');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onKeyDownGool = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onEnableGool();
-            }
-        },
-        [isConnected, isLoading]
-    );
-
-    const onEnablePsiphon = useCallback(() => {
-        setMethod('psiphon');
-        settings.set('method', 'psiphon');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onKeyDownPsiphon = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onEnablePsiphon();
-            }
-        },
-        [onEnablePsiphon]
-    );
-
-    const onChangeLocation = useCallback(
-        (event: ChangeEvent<HTMLSelectElement>) => {
-            setLocation(event.target.value);
-            settings.set('location', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-        },
-        [isConnected, isLoading]
-    );
-
+    const {
+        appLang,
+        license,
+        location,
+        method,
+        onChangeLocation,
+        onCloseLicenseModal,
+        onEnableGool,
+        onEnablePsiphon,
+        onEnableWarp,
+        onKeyDownGool,
+        onKeyDownLicense,
+        onKeyDownPsiphon,
+        onKeyDownWarp,
+        onOpenLicenseModal,
+        setLicense,
+        showLicenseModal
+    } = useSettings();
     if (
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
