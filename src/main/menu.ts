@@ -198,6 +198,7 @@ export default class MenuBuilder {
     buildDefaultTemplate() {
         const templateDefault = [
             {
+                // TODO locale
                 label: '&File',
                 submenu: [
                     // {
@@ -205,6 +206,7 @@ export default class MenuBuilder {
                     //     accelerator: 'Ctrl+O'
                     // },
                     {
+                        // TODO locale
                         label: '&Exit',
                         accelerator: 'Ctrl+Q',
                         click: async () => {
@@ -255,9 +257,12 @@ export default class MenuBuilder {
             //               ]
             // },
             {
+                // TODO locale
                 label: 'Help',
                 submenu: [
                     {
+                        // TODO locale
+
                         label: 'Learn More',
                         click() {
                             shell.openExternal('https://github.com/bepass-org/oblivion-desktop');
@@ -278,6 +283,7 @@ export default class MenuBuilder {
                     //     }
                     // },
                     {
+                        // TODO locale
                         label: 'Issues',
                         click() {
                             shell.openExternal(
