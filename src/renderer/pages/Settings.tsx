@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent, KeyboardEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -70,11 +70,31 @@ export default function Settings() {
 
     const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
 
+    const onKeyDownLicense = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onOpenLicenseModal();
+            }
+        },
+        [onOpenLicenseModal]
+    );
+
     const onEnableWarp = useCallback(() => {
         setMethod('');
         settings.set('method', '');
         settingsHaveChangedToast({ ...{ isConnected, isLoading } });
     }, [isConnected, isLoading]);
+
+    const onKeyDownWarp = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onEnableWarp();
+            }
+        },
+        [isConnected, isLoading]
+    );
 
     const onEnableGool = useCallback(() => {
         setMethod('gool');
@@ -82,11 +102,31 @@ export default function Settings() {
         settingsHaveChangedToast({ ...{ isConnected, isLoading } });
     }, [isConnected, isLoading]);
 
+    const onKeyDownGool = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onEnableGool();
+            }
+        },
+        [isConnected, isLoading]
+    );
+
     const onEnablePsiphon = useCallback(() => {
         setMethod('psiphon');
         settings.set('method', 'psiphon');
         settingsHaveChangedToast({ ...{ isConnected, isLoading } });
     }, [isConnected, isLoading]);
+
+    const onKeyDownPsiphon = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onEnablePsiphon();
+            }
+        },
+        [onEnablePsiphon]
+    );
 
     const onChangeLocation = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
@@ -174,12 +214,7 @@ export default function Settings() {
                             role='presentation'
                             className={classNames('item')}
                             onClick={onEnableWarp}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    onEnableWarp();
-                                }
-                            }}
+                            onKeyDown={onKeyDownWarp}
                         >
                             <label
                                 className='key'
@@ -200,12 +235,7 @@ export default function Settings() {
                             role='presentation'
                             className={classNames('item')}
                             onClick={onEnableGool}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    onEnableGool();
-                                }
-                            }}
+                            onKeyDown={onKeyDownGool}
                         >
                             <label
                                 className='key'
@@ -229,12 +259,7 @@ export default function Settings() {
                             role='presentation'
                             className={classNames('item')}
                             onClick={onEnablePsiphon}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    onEnablePsiphon();
-                                }
-                            }}
+                            onKeyDown={onKeyDownPsiphon}
                         >
                             <label
                                 className='key'
@@ -315,12 +340,7 @@ export default function Settings() {
                         role='presentation'
                         className='item'
                         onClick={onOpenLicenseModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onOpenLicenseModal();
-                            }
-                        }}
+                        onKeyDown={onKeyDownLicense}
                     >
                         <label
                             className='key'
