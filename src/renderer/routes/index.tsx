@@ -6,7 +6,7 @@ import Options from '../pages/Options';
 import About from '../pages/About';
 import Debug from '../pages/Debug';
 import Scanner from '../pages/Scanner';
-import Network from '../pages/Network';
+import Network from '../pages/Network/Network';
 
 const AppRoutes = () => {
     return (
