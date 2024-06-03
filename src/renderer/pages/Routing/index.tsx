@@ -1,37 +1,19 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback } from 'react';
 import Lottie from 'lottie-react';
-import Nav from '../components/Nav';
-import RoutingRulesModal from '../components/Modal/RoutingRules';
-import { settings } from '../lib/settings';
-import LottieFile from '../../../assets/json/1713988096625.json';
-import { toPersianNumber } from '../lib/toPersianNumber';
-import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import Nav from '../../components/Nav';
+import RoutingRulesModal from '../../components/Modal/RoutingRules';
+import LottieFile from '../../../../assets/json/1713988096625.json';
+import useRouting from './useRouting';
 
 export default function Routing() {
-    const [routingRules, setRoutingRules] = useState<string>();
-    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
-
-    useGoBackOnEscape();
-
-    // loading settings
-    useEffect(() => {
-        settings.get('routingRules').then((value) => {
-            setRoutingRules(typeof value === 'undefined' ? '' : value);
-        });
-    }, []);
-
-    const countRoutingRules = useCallback((value: string) => {
-        if (value === '') {
-            return 'غیرفعال';
-        }
-        const lines = value.split('\n');
-        return lines?.length > 0 ? toPersianNumber(lines.length) + ' مورد' : 'غیرفعال';
-    }, []);
-
-    const onCloseRoutingRulesModal = useCallback(() => setShowRoutingRulesModal(false), []);
-    const onOpenRoutingRulesModal = useCallback(() => setShowRoutingRulesModal(true), []);
-
+    const {
+        countRoutingRules,
+        onCloseRoutingRulesModal,
+        onOpenRoutingRulesModal,
+        routingRules,
+        showRoutingRulesModal,
+        setRoutingRules
+    } = useRouting();
     if (typeof routingRules === 'undefined')
         return (
             <div className='settings'>
