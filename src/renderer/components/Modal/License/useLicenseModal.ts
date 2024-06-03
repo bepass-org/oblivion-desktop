@@ -12,14 +12,14 @@ interface LicenseModalProps {
 const useLicenseModal = (props: LicenseModalProps) => {
     const { isOpen, license, onClose, setLicense } = props;
     const [licenseInput, setLicenseInput] = useState<string>(license);
-    const [showModal, setshowModal] = useState<boolean>(isOpen);
+    const [showModal, setShowModal] = useState<boolean>(isOpen);
 
-    useEffect(() => setshowModal(isOpen), [isOpen]);
+    useEffect(() => setShowModal(isOpen), [isOpen]);
 
     const appLang = getLang();
 
     const handleOnClose = useCallback(() => {
-        setshowModal(false);
+        setShowModal(false);
         setTimeout(onClose, 300);
     }, [onClose]);
 
