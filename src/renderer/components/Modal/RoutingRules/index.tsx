@@ -1,7 +1,4 @@
 import classNames from 'classnames';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { settings } from '../../../lib/settings';
-import { getLang } from '../../../lib/loaders';
 import useRoutingRulesModal from './useRoutingRulesModal';
 
 interface RoutingRulesModalProps {
