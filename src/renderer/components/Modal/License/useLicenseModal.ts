@@ -1,0 +1,79 @@
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { getLang } from '../../../lib/loaders';
+import { settings } from '../../../lib/settings';
+
+interface LicenseModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    license: string;
+    setLicense: (value: string) => void;
+}
+
+const useLicenseModal = (props: LicenseModalProps) => {
+    const { isOpen, license, onClose, setLicense } = props;
+    const [licenseInput, setLicenseInput] = useState<string>(license);
+    const [showModal, setShowModal] = useState<boolean>(isOpen);
+
+    useEffect(() => setShowModal(isOpen), [isOpen]);
+
+    const appLang = getLang();
+
+    const handleOnClose = useCallback(() => {
+        setShowModal(false);
+        setTimeout(onClose, 300);
+    }, [onClose]);
+
+    const onSaveModalClick = useCallback(() => {
+        const regex = /^[a-zA-Z0-9-]*$/;
+        const tmp = regex.test(licenseInput) ? licenseInput : '';
+        setLicenseInput(tmp);
+        setLicense(tmp);
+        settings.set('license', tmp);
+        handleOnClose();
+    }, [handleOnClose, licenseInput, setLicense]);
+
+    const onSaveModalKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onSaveModalClick();
+            }
+        },
+        [onSaveModalClick]
+    );
+
+    const handleCancelButtonClick = useCallback(() => {
+        setLicenseInput(license);
+        handleOnClose();
+    }, [license, handleOnClose]);
+
+    const handleCancelButtonKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleCancelButtonClick();
+            }
+        },
+        [handleCancelButtonClick]
+    );
+
+    const handleLicenseInputChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            setLicenseInput(e.target.value.trim());
+        },
+        [setLicenseInput]
+    );
+    return {
+        appLang,
+        handleCancelButtonClick,
+        handleLicenseInputChange,
+        handleOnClose,
+        licenseInput,
+        onSaveModalClick,
+        showModal,
+        handleCancelButtonKeyDown,
+        onSaveModalKeyDown
+    };
+};
+
+export default useLicenseModal;

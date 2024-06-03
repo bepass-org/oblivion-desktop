@@ -1,7 +1,5 @@
 import classNames from 'classnames';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { settings } from '../../lib/settings';
-import { getLang } from '../../lib/loaders';
+import useLicenseModal from './useLicenseModal';
 
 interface LicenseModalProps {
     title: string;
@@ -18,38 +16,22 @@ export default function LicenseModal({
     license,
     setLicense
 }: LicenseModalProps) {
-    const [licenseInput, setLicenseInput] = useState<string>(license);
-    const [showModal, setshowModal] = useState<boolean>(isOpen);
-
-    useEffect(() => setshowModal(isOpen), [isOpen]);
-
-    const appLang = getLang();
-
-    const handleOnClose = useCallback(() => {
-        setshowModal(false);
-        setTimeout(onClose, 300);
-    }, [onClose]);
-
-    const onSaveModal = useCallback(() => {
-        const regex = /^[a-zA-Z0-9-]*$/;
-        const tmp = regex.test(licenseInput) ? licenseInput : '';
-        setLicenseInput(tmp);
-        setLicense(tmp);
-        settings.set('license', tmp);
-        handleOnClose();
-    }, [handleOnClose, licenseInput, setLicense]);
-
-    const handleCancelButtonClick = useCallback(() => {
-        setLicenseInput(license);
-        handleOnClose();
-    }, [license, handleOnClose]);
-
-    const handleLicenseInputChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            setLicenseInput(e.target.value.trim());
-        },
-        [setLicenseInput]
-    );
+    const {
+        appLang,
+        handleCancelButtonClick,
+        handleCancelButtonKeyDown,
+        handleLicenseInputChange,
+        handleOnClose,
+        licenseInput,
+        onSaveModalClick,
+        onSaveModalKeyDown,
+        showModal
+    } = useLicenseModal({
+        isOpen,
+        onClose,
+        license,
+        setLicense
+    });
 
     if (!isOpen) return <></>;
 
@@ -78,26 +60,16 @@ export default function LicenseModal({
                         onClick={handleCancelButtonClick}
                         tabIndex={0}
                         role='button'
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                handleCancelButtonClick();
-                            }
-                        }}
+                        onKeyDown={handleCancelButtonKeyDown}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
                         className={classNames('btn', 'btn-save')}
-                        onClick={onSaveModal}
+                        onClick={onSaveModalClick}
                         tabIndex={0}
                         role='button'
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onSaveModal();
-                            }
-                        }}
+                        onKeyDown={onSaveModalKeyDown}
                     >
                         {appLang?.modal?.update}
                     </div>
