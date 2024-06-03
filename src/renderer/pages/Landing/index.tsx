@@ -27,7 +27,7 @@ export default function Landing() {
         statusText,
         toggleDrawer
     } = useLanding();
-    
+
     return (
         <>
             <LandingHeader
