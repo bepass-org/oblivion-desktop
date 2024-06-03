@@ -17,6 +17,7 @@ import RoutingRulesModal from '../components/Modal/RoutingRules';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
+    const [lang, setLang] = useState<string>('');
 
     useGoBackOnEscape();
 
@@ -54,6 +55,9 @@ export default function Options() {
         settings.get('routingRules').then((value) => {
             setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
         });
+        settings.get('lang').then((value) => {
+            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+        });
     }, []);
 
     const countRoutingRules = useCallback(
@@ -63,12 +67,12 @@ export default function Options() {
             }
             const lines = value.split('\n');
             return lines?.length > 0
-                ? toPersianNumber(lines.length) +
-                      ' ' +
-                      (appLang?.settings?.routing_rules_items || '')
+                ? (lang === 'fa' ? toPersianNumber(lines.length) : lines.length) +
+                ' ' +
+                (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
         },
-        [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items]
+        [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]
     );
 
     const onClosePortModal = useCallback(() => {
@@ -277,7 +281,7 @@ export default function Options() {
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
-                            <span className='dirLeft' dir='rtl' tabIndex={-1}>
+                            <span className='dirLeft' dir='auto' tabIndex={-1}>
                                 {countRoutingRules(routingRules)}
                             </span>
                         </div>
