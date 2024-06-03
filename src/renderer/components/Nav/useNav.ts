@@ -1,11 +1,6 @@
-import { FC, useCallback, useEffect } from 'react';
-import BackButton from './BackButton';
+import { useCallback, useEffect } from 'react';
 
-interface NavProps {
-    title: string;
-}
-
-const Nav: FC<NavProps> = ({ title }) => {
+const useNav = () => {
     const isSticky = useCallback(() => {
         const header = document.querySelector('nav');
         const scrollTop = window?.scrollY;
@@ -24,19 +19,5 @@ const Nav: FC<NavProps> = ({ title }) => {
             window.removeEventListener('scroll', isSticky);
         };
     }, [isSticky]);
-
-    return (
-        <nav className='header'>
-            <div className='container'>
-                <h3
-                // role='heading'
-                >
-                    {title}
-                </h3>
-                <BackButton />
-            </div>
-        </nav>
-    );
 };
-
-export default Nav;
+export default useNav;
