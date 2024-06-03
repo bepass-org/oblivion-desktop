@@ -20,14 +20,15 @@ export default function RestoreModal({
     setLang,
     setOpenAtLogin
 }: RestoreModalProps) {
-    const { appLang, handleOnClose, onSaveModal, showModal } = useRestoreModal({
-        isOpen,
-        onClose,
-        setLang,
-        setOpenAtLogin,
-        setSystemTray,
-        setTheme
-    });
+    const { appLang, handleOnClose, onSaveModal, onCancelKeyDown, onConfirmKeyDown, showModal } =
+        useRestoreModal({
+            isOpen,
+            onClose,
+            setLang,
+            setOpenAtLogin,
+            setSystemTray,
+            setTheme
+        });
 
     if (!isOpen) return null;
 
@@ -45,12 +46,7 @@ export default function RestoreModal({
                     <div
                         className={classNames('btn', 'btn-cancel')}
                         onClick={onClose}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onClose();
-                            }
-                        }}
+                        onKeyDown={onCancelKeyDown}
                         tabIndex={0}
                         role='button'
                     >
@@ -61,12 +57,7 @@ export default function RestoreModal({
                         aria-hidden='true'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onSaveModal();
-                            }
-                        }}
+                        onKeyDown={onConfirmKeyDown}
                         tabIndex={0}
                     >
                         {appLang?.modal?.confirm}

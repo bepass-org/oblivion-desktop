@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { getLang } from '../../../lib/loaders';
@@ -30,6 +30,16 @@ const useRestoreModal = (props: RestoreModalProps) => {
         setshowModal(false);
         setTimeout(onClose, 300);
     }, [onClose]);
+
+    const onCancelKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleOnClose();
+            }
+        },
+        [handleOnClose]
+    );
 
     const onSaveModal = useCallback(async () => {
         // in this page
@@ -68,10 +78,22 @@ const useRestoreModal = (props: RestoreModalProps) => {
         ipcRenderer.sendMessage('wp-end');
     }, [detectingSystemTheme, setTheme, setSystemTray, setLang, setOpenAtLogin, handleOnClose]);
 
+    const onConfirmKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onSaveModal();
+            }
+        },
+        [onSaveModal]
+    );
+
     return {
         showModal,
         handleOnClose,
         onSaveModal,
+        onConfirmKeyDown,
+        onCancelKeyDown,
         appLang
     };
 };

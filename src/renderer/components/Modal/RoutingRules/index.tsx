@@ -19,10 +19,12 @@ export default function RoutingRulesModal({
     const {
         appLang,
         handleCancelButtonClick,
+        handleCancelButtonKeyDown,
         handleOnClose,
         handleRoutingRulesInput,
         handleSetRoutingRulesSimple,
         onSaveModal,
+        onUpdateKeyDown,
         routingRulesInput,
         showModal
     } = useRoutingRulesModal({
@@ -74,12 +76,7 @@ export default function RoutingRulesModal({
                         aria-hidden='true'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                handleCancelButtonClick();
-                            }
-                        }}
+                        onKeyDown={handleCancelButtonKeyDown}
                     >
                         {appLang?.modal?.cancel}
                     </div>
@@ -88,12 +85,7 @@ export default function RoutingRulesModal({
                         tabIndex={0}
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onSaveModal();
-                            }
-                        }}
+                        onKeyDown={onUpdateKeyDown}
                     >
                         {appLang?.modal?.update}
                     </div>

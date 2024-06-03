@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { getLang } from '../../../lib/loaders';
 import { settings } from '../../../lib/settings';
 
@@ -40,6 +40,15 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleOnClose();
     }, [defValue, endpointInput, handleOnClose, setEndpoint]);
 
+    const onUpdateKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                onSaveModal();
+            }
+        },
+        [onSaveModal]
+    );
+
     const setEndpointSuggestion = useCallback(
         (item: number) => {
             if (typeof item === 'undefined' || !item) {
@@ -59,6 +68,15 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleOnClose();
     }, [endpoint, handleOnClose]);
 
+    const handleCancelButtonKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                handleCancelButtonClick();
+            }
+        },
+        [handleCancelButtonClick]
+    );
+
     const handleEndpointInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             setEndpointInput(e.target.value.toLowerCase().trim());
@@ -72,9 +90,11 @@ const useEndpointModal = (props: EndpointModalProps) => {
         appLang,
         suggestion,
         onSaveModal,
+        onUpdateKeyDown,
         setEndpointSuggestion,
         setEndpointDefault,
         handleCancelButtonClick,
+        handleCancelButtonKeyDown,
         handleEndpointInputChange,
         handleOnClose
     };

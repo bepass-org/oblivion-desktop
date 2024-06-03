@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { getLang } from '../../../lib/loaders';
 import { settings } from '../../../lib/settings';
 
@@ -67,10 +67,30 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         handleOnClose();
     }, [routingRulesInput, validateRules, handleOnClose, setRoutingRules, setRoutingRulesInput]);
 
+    const onUpdateKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onSaveModal();
+            }
+        },
+        [onSaveModal]
+    );
+
     const handleCancelButtonClick = useCallback(() => {
         setRoutingRulesInput(routingRules);
         handleOnClose();
     }, [routingRules, handleOnClose]);
+
+    const handleCancelButtonKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleCancelButtonClick();
+            }
+        },
+        [handleCancelButtonClick]
+    );
 
     const handleRoutingRulesInput = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -86,10 +106,12 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     return {
         appLang,
         handleCancelButtonClick,
+        handleCancelButtonKeyDown,
         handleOnClose,
         handleRoutingRulesInput,
         handleSetRoutingRulesSimple,
         onSaveModal,
+        onUpdateKeyDown,
         routingRulesInput,
         showModal
     };
