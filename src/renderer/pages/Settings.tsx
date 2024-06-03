@@ -4,7 +4,7 @@ import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
 import Tabs from '../components/Tabs';
-import LicenseModal from '../components/Modal/License';
+import LicenseModal from '../components/Modal/License/License';
 import { settings } from '../lib/settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
