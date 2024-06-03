@@ -1,10 +1,10 @@
-import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from "react";
-import { getLang } from "../../lib/loaders";
-import { ipcRenderer, username } from "../../lib/utils";
-import useGoBackOnEscape from "../../hooks/useGoBackOnEscape";
-import { defaultToast } from "../../lib/toasts";
+import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { getLang } from '../../lib/loaders';
+import { ipcRenderer, username } from '../../lib/utils';
+import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
+import { defaultToast } from '../../lib/toasts';
 
-const useDebug = ()=>{
+const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const [autoScroll, setAutoScroll] = useState<boolean>(false);
     const logRef = useRef<HTMLParagraphElement>(null);
@@ -108,7 +108,7 @@ const useDebug = ()=>{
         handleKeyDown,
         setAuthScrollEnabled,
         setAuthScrollDisabled
-    }
-}
+    };
+};
 
-export default useDebug
+export default useDebug;

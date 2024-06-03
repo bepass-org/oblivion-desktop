@@ -4,8 +4,16 @@ import Nav from '../../components/Nav';
 import useDebug from './useDebug';
 
 export default function Debug() {
-
-    const {appLang,autoScroll,handleCopy,handleKeyDown,log,logRef,setAuthScrollDisabled,setAuthScrollEnabled}=useDebug()
+    const {
+        appLang,
+        autoScroll,
+        handleCopy,
+        handleKeyDown,
+        log,
+        logRef,
+        setAuthScrollDisabled,
+        setAuthScrollEnabled
+    } = useDebug();
     return (
         <>
             <Nav title={appLang?.log?.title} />
