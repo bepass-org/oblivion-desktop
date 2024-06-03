@@ -5,8 +5,8 @@ import Settings from '../pages/Settings';
 import Options from '../pages/Options';
 import About from '../pages/About';
 import Debug from '../pages/Debug';
-import Scanner from '../pages/Scanner';
-import Network from '../pages/Network/Network';
+import Scanner from '../pages/Scanner/Scanner';
+import Network from '../pages/Network';
 
 const AppRoutes = () => {
     return (
