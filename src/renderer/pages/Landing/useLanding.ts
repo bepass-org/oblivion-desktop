@@ -97,6 +97,19 @@ const useLanding = () => {
             canCheckNewVer = false;
         }
 
+        ipcRenderer.on('guide-toast', (message: any) => {
+            defaultToast(message, 'GUIDE', 7000);
+        });
+
+        window.addEventListener('online', () => setOnline(true));
+        window.addEventListener('offline', () => setOnline(false));
+        return () => {
+            window.removeEventListener('online', () => setOnline(true));
+            window.removeEventListener('offline', () => setOnline(false));
+        };
+    }, []);
+
+    useEffect(() => {
         ipcRenderer.on('wp-start', (ok) => {
             if (ok) {
                 setIsLoading(false);
@@ -119,18 +132,7 @@ const useLanding = () => {
                 ipcRenderer.sendMessage('tray-icon', 'disconnected');
             }
         });
-
-        ipcRenderer.on('guide-toast', (message: any) => {
-            defaultToast(message, 'GUIDE', 7000);
-        });
-
-        window.addEventListener('online', () => setOnline(true));
-        window.addEventListener('offline', () => setOnline(false));
-        return () => {
-            window.removeEventListener('online', () => setOnline(true));
-            window.removeEventListener('offline', () => setOnline(false));
-        };
-    }, []);
+    }, [isConnected, isLoading, ipInfo]);
 
     useEffect(() => {
         if (online) {
@@ -160,8 +162,9 @@ const useLanding = () => {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function () {};
-            http.onloadend = function () {
+            http.onreadystatechange = function() {
+            };
+            http.onloadend = function() {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();
