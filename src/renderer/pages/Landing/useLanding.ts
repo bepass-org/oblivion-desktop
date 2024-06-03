@@ -101,6 +101,7 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
+                ipcRenderer.sendMessage('tray-icon', `connected-${proxyMode}`);
             }
         });
 
@@ -113,6 +114,7 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
+                ipcRenderer.sendMessage('tray-icon', 'disconnected');
             }
         });
 
