@@ -1566,6 +1566,7 @@ html[data-bs-theme="dark"] .shimmer {
     color: #b0b0b0;
     font-size: 22px !important;
     padding-left: 20px;
+    transition: all 0.2s ease-in-out;
 }
 
 [dir="ltr"] .drawer .list ul li i {
