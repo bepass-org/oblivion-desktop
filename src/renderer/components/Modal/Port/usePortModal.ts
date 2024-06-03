@@ -13,14 +13,14 @@ interface PortModalProps {
 const usePortModal = (props: PortModalProps) => {
     const { isOpen, onClose, port, setPort, defValue } = props;
     const [portInput, setPortInput] = useState<number>(port);
-    const [showModal, setshowModal] = useState<boolean>(isOpen);
+    const [showModal, setShowModal] = useState<boolean>(isOpen);
 
-    useEffect(() => setshowModal(isOpen), [isOpen]);
+    useEffect(() => setShowModal(isOpen), [isOpen]);
 
     const appLang = getLang();
 
     const handleOnClose = useCallback(() => {
-        setshowModal(false);
+        setShowModal(false);
         setTimeout(onClose, 300);
     }, [onClose]);
 

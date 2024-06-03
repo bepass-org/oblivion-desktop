@@ -12,12 +12,12 @@ interface RoutingRulesModalProps {
 const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     const { isOpen, onClose, routingRules, setRoutingRules } = props;
     const [routingRulesInput, setRoutingRulesInput] = useState<string>(routingRules);
-    const [showModal, setshowModal] = useState<boolean>(isOpen);
+    const [showModal, setShowModal] = useState<boolean>(isOpen);
 
-    useEffect(() => setshowModal(isOpen), [isOpen]);
+    useEffect(() => setShowModal(isOpen), [isOpen]);
 
     const handleOnClose = useCallback(() => {
-        setshowModal(false);
+        setShowModal(false);
         setTimeout(onClose, 300);
     }, [onClose]);
 

@@ -20,14 +20,14 @@ const useRestoreModal = (props: RestoreModalProps) => {
         []
     );
 
-    const [showModal, setshowModal] = useState<boolean>(isOpen);
+    const [showModal, setShowModal] = useState<boolean>(isOpen);
 
-    useEffect(() => setshowModal(isOpen), [isOpen]);
+    useEffect(() => setShowModal(isOpen), [isOpen]);
 
     const appLang = getLang();
 
     const handleOnClose = useCallback(() => {
-        setshowModal(false);
+        setShowModal(false);
         setTimeout(onClose, 300);
     }, [onClose]);
 
