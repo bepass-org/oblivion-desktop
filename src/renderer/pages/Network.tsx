@@ -68,8 +68,8 @@ export default function Options() {
             const lines = value.split('\n');
             return lines?.length > 0
                 ? (lang === 'fa' ? toPersianNumber(lines.length) : lines.length) +
-                ' ' +
-                (appLang?.settings?.routing_rules_items || '')
+                      ' ' +
+                      (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
         },
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]

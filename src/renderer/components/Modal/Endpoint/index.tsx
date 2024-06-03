@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import {  FC} from 'react';
+import { FC } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 
@@ -24,9 +24,11 @@ const EndpointModal: FC<EndpointModalProps> = ({
         appLang,
         endpointInput,
         handleCancelButtonClick,
+        handleCancelButtonKeyDown,
         handleEndpointInputChange,
         handleOnClose,
         onSaveModal,
+        onUpdateKeyDown,
         setEndpointDefault,
         setEndpointSuggestion,
         showModal,
@@ -106,12 +108,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     <div
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                handleCancelButtonClick();
-                            }
-                        }}
+                        onKeyDown={handleCancelButtonKeyDown}
                         role='button'
                         tabIndex={0}
                     >
@@ -121,12 +118,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                         role='button'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onSaveModal();
-                            }
-                        }}
+                        onKeyDown={onUpdateKeyDown}
                         tabIndex={0}
                     >
                         {appLang?.modal?.update}
