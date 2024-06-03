@@ -101,7 +101,9 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
-                ipcRenderer.sendMessage('tray-icon', `connected-${proxyMode}`);
+                if (proxyMode) {
+                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyMode}`);
+                }
             }
         });
 
