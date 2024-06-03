@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import Nav from '../../components/Nav';
 import packageJsonData from '../../../../package.json';
-import gitHubMark from '../../../assets/img/github-mark.png';
-import ircf from '../../../assets/img/ircf.png';
+import gitHubMark from '../../../../assets/img/github-mark.png';
+import ircf from '../../../../assets/img/ircf.png';
 import { getLang } from '../../lib/loaders';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 
