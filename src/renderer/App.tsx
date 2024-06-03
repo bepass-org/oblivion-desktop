@@ -7,7 +7,7 @@ import 'assets/css/shabnam.css';
 import 'assets/css/materialIcons.css';
 import 'assets/css/style.css';
 
-import SplashScreen from './pages/SplashScreen';
+import SplashScreen from './pages/SplashScreen/SplashScreen';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadLang, loadTheme } from './lib/loaders';
 import AppRoutes from './routes';
