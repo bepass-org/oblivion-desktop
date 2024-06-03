@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Index from '../pages/Index';
-import Settings from '../pages/Settings/Settings';
+import Settings from '../pages/Settings';
 import Options from '../pages/Options';
 import About from '../pages/About';
 import Debug from '../pages/Debug';
