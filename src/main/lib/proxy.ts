@@ -404,6 +404,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 } catch (error) {
                     log.error(`error while trying to disable system proxy: , ${error}`);
                     reject(error);
+                    // TODO locale
                     ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
                 }
             });
