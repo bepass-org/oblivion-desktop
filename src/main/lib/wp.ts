@@ -105,36 +105,47 @@ export const setStuffPath = (args: string[]) => {
 // ! make sure you get the args like ({ port = '' })
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
+        // TODO locale
         return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`;
     },
     'Only one usage of each socket address': () => {
+        // TODO locale
         return `از یک پورت دیگر استفاده نمایید.`;
     },
     'Invalid license': () => {
+        // TODO locale
         return `لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.`;
     },
     'Too many connected devices': () => {
+        // TODO locale
         return `سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.`;
     },
     'Access is denied': () => {
+        // TODO locale
         return `برنامه را به‌صورت Run as Administrator اجرا کنید.`;
     },
     'failed to set endpoint': () => {
+        // TODO locale
         return `خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.`;
     },
     'load primary warp identity': () => {
+        // TODO locale
         return `خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.`;
     },
     'script failed to run': () => {
+        // TODO locale
         return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
     },
     'object null is not iterable': () => {
+        // TODO locale
         return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
     },
     'parse args: unknown flag': () => {
+        // TODO locale
         return `یک دستور نادرست در پس‌زمینه اجرا شده است.`;
     },
     'context deadline exceeded': () => {
+        // TODO locale
         return `مهلت اتصال پایان یافت؛ دوباره تلاش کنید.`;
     }
 };
