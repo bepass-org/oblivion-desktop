@@ -1,6 +1,6 @@
 // warp-plus
 
-import { app, ipcMain, ipcRenderer } from 'electron';
+import { app, ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
@@ -44,14 +44,12 @@ ipcMain.on('wp-start', async (event) => {
     const sendConnectedSignalToRenderer = () => {
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
-            //ipcRenderer.send('tray-icon', 'connected-proxy');
         }
     };
 
     const sendDisconnectedSignalToRenderer = () => {
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
-            //ipcRenderer.send('tray-icon', 'disconnected');
         }
     };
 
@@ -127,7 +125,6 @@ ipcMain.on('wp-start', async (event) => {
         disconnectedFlags[1] = true;
         sendDisconnectedSignalToRenderer();
         log.info('wp process exited.');
-
         handleSystemProxyDisconnect();
     });
 });
