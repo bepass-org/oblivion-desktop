@@ -638,16 +638,20 @@ html[data-bs-theme="dark"] .shimmer {
     background: rgba(53, 50, 33, 0.9);
 }
 
+.logPage .logOptions div[role] {
+    float: left;
+    margin-right: 10px;
+}
+
+.logPage .logOptions div[role]:last-child {
+    margin-right: 0
+}
+
 .logPage .logOptions i {
     float: left;
     font-size: 20px;
-    margin-right: 15px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-}
-
-.logPage .logOptions i:last-child {
-    margin-right: 0
 }
 
 .logPage .logOptions i:hover {

@@ -124,14 +124,14 @@ export default function Debug() {
                             <>
                                 {autoScroll ? (
                                     <>
-                                        <div onClick={setAuthScrollDisabled} role='presentation'>
+                                        <div onClick={setAuthScrollDisabled} role='presentation' tabIndex={0}>
                                             <i className='material-icons' role='link'>
                                                 &#xe1a2;
                                             </i>
                                         </div>
                                     </>
                                 ) : (
-                                    <div role='presentation' onClick={setAuthScrollEnabled}>
+                                    <div role='presentation' onClick={setAuthScrollEnabled} tabIndex={0}>
                                         <i className='material-icons' role='link'>
                                             &#xe038;
                                         </i>
