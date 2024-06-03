@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect, useRef, useCallback, ChangeEvent } from 'react';
+import { useState, useEffect, useRef, useCallback, ChangeEvent, KeyboardEvent } from 'react';
 import Lottie from 'lottie-react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
@@ -67,12 +67,22 @@ export default function Options() {
         }, 1500);
     }, []);
 
-    const onChangeTheme = useCallback(() => {
+    const onClickChangeTheme = useCallback(() => {
         const tmp = theme === 'light' ? 'dark' : 'light';
         setTheme(tmp);
         settings.set('theme', tmp);
         document.documentElement.setAttribute('data-bs-theme', tmp);
     }, [theme]);
+
+    const onKeyDownChangeTheme = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickChangeTheme();
+            }
+        },
+        [onClickChangeTheme]
+    );
 
     const onChangeLanguage = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
         setLang(e.target.value);
@@ -94,12 +104,42 @@ export default function Options() {
         settings.set('openAtLogin', !openAtLogin);
     }, [openAtLogin]);
 
-    const onClicksystemTrayButton = useCallback(() => {
+    const onKeyDownAutoStartButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickAutoStartButton();
+            }
+        },
+        [onClickAutoStartButton]
+    );
+
+    const onClickSystemTrayButton = useCallback(() => {
         setSystemTray(!systemTray);
         settings.set('systemTray', !systemTray);
     }, [systemTray]);
 
-    const onOpenRestoreModal = useCallback(() => setShowRestoreModal(true), []);
+    const onKeyDownSystemTrayButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickSystemTrayButton();
+            }
+        },
+        [onClickSystemTrayButton]
+    );
+
+    const onClickRestore = useCallback(() => setShowRestoreModal(true), []);
+
+    const onKeyDownRestore = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickRestore();
+            }
+        },
+        [onClickRestore]
+    );
 
     if (
         typeof theme === 'undefined' ||
@@ -135,15 +175,14 @@ export default function Options() {
                     <div
                         role='presentation'
                         className='item'
-                        onClick={onChangeTheme}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onChangeTheme();
-                            }
-                        }}
+                        onClick={onClickChangeTheme}
+                        onKeyDown={onKeyDownChangeTheme}
                     >
-                        <label className='key' htmlFor='flexSwitchCheckChecked' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='flexSwitchCheckChecked'
+                            // role='label'
+                        >
                             {appLang?.settings?.dark_mode}
                         </label>
                         <div className='value'>
@@ -162,7 +201,11 @@ export default function Options() {
                         </div>
                     </div>
                     <div className='item' role='presentation' ref={langRef}>
-                        <label className='key' htmlFor='lang-select' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='lang-select'
+                            // role='label'
+                        >
                             {appLang?.settings?.lang}
                         </label>
                         <div className='value'>
@@ -171,10 +214,14 @@ export default function Options() {
                                 onChange={onChangeLanguage}
                                 value={lang}
                                 tabIndex={0}
-                                role='listbox'
+                                // role='listbox'
                             >
                                 {languages.map((lng) => (
-                                    <option key={lng.value} value={lng.value} role='option'>
+                                    <option
+                                        key={lng.value}
+                                        value={lng.value}
+                                        // role='option'
+                                    >
                                         {lng.label}
                                     </option>
                                 ))}
@@ -186,14 +233,13 @@ export default function Options() {
                         role='presentation'
                         className='item'
                         onClick={onClickAutoStartButton}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onClickAutoStartButton();
-                            }
-                        }}
+                        onKeyDown={onKeyDownAutoStartButton}
                     >
-                        <label className='key' htmlFor='open-login' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='open-login'
+                            // role='label'
+                        >
                             {appLang?.settings?.open_login}
                         </label>
                         <div className='value'>
@@ -210,15 +256,14 @@ export default function Options() {
                     <div
                         role='presentation'
                         className='item'
-                        onClick={onClicksystemTrayButton}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onClicksystemTrayButton();
-                            }
-                        }}
+                        onClick={onClickSystemTrayButton}
+                        onKeyDown={onKeyDownSystemTrayButton}
                     >
-                        <label className='key' htmlFor='system-tray' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='system-tray'
+                            // role='label'
+                        >
                             {appLang?.settings?.system_tray}
                         </label>
                         <div className='value'>
@@ -241,15 +286,14 @@ export default function Options() {
                     <div
                         role='presentation'
                         className={'item'}
-                        onClick={onOpenRestoreModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onOpenRestoreModal();
-                            }
-                        }}
+                        onClick={onClickRestore}
+                        onKeyDown={onKeyDownRestore}
                     >
-                        <label className='key' htmlFor='restore' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='restore'
+                            // role='label'
+                        >
                             {appLang?.settings?.restore}
                         </label>
                         <div className='value' id='restore' tabIndex={-1}>

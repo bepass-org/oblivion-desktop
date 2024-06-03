@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent, KeyboardEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
@@ -96,14 +96,34 @@ export default function Options() {
         [isConnected, isLoading]
     );
 
-    const openPortModal = useCallback(() => setShowPortModal(true), []);
-    const openRoutingRulesModal = useCallback(() => {
+    const onClickPort = useCallback(() => setShowPortModal(true), []);
+
+    const onKeyDownClickPort = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickPort();
+            }
+        },
+        [onClickPort]
+    );
+    const onClickRoutingRoles = useCallback(() => {
         if (proxyMode !== 'none') {
             setShowRoutingRulesModal(true);
         }
     }, [proxyMode]);
 
-    const handleShareVPN = useCallback(() => {
+    const onKeyDownRoutingRoles = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickRoutingRoles();
+            }
+        },
+        [onClickRoutingRoles]
+    );
+
+    const handleShareVPNOnClick = useCallback(() => {
         setShareVPN(!shareVPN);
         settings.set('shareVPN', !shareVPN);
         settingsHaveChangedToast({ ...{ isConnected, isLoading } });
@@ -112,12 +132,32 @@ export default function Options() {
         }, 1000);
     }, [isConnected, isLoading, shareVPN]);
 
-    const handleCheckIpData = useCallback(() => {
+    const handleShareVPNOnKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleShareVPNOnClick();
+            }
+        },
+        [handleShareVPNOnClick]
+    );
+
+    const handleCheckIpDataOnClick = useCallback(() => {
         if (proxyMode !== 'none') {
             setIpData(!ipData);
             settings.set('ipData', !ipData);
         }
     }, [ipData, proxyMode]);
+
+    const handleCheckIpDataOnKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleCheckIpDataOnClick();
+            }
+        },
+        [handleCheckIpDataOnClick]
+    );
 
     if (
         typeof ipData === 'undefined' ||
@@ -179,21 +219,27 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
                     </div>*/}
                     <div className='item' role='presentation'>
-                        <label className='key' htmlFor='proxy-mode-selector' role='label'>
+                        <label className='key' htmlFor='proxy-mode-selector'>
                             {appLang?.settings?.proxy_mode}
                         </label>
                         <div className='value'>
                             <select
                                 tabIndex={0}
-                                role='listbox'
+                                // role='listbox'
                                 id='proxy-mode-selector'
                                 onChange={onChangeProxyMode}
                                 value={proxyMode}
                             >
-                                <option value='none' role='option'>
+                                <option
+                                    value='none'
+                                    //  role='option'
+                                >
                                     None
                                 </option>
-                                <option value='system' role='option'>
+                                <option
+                                    value='system'
+                                    // role='option'
+                                >
                                     System Proxy
                                 </option>
                                 {/*<option value='tun' disabled>TUN2Sock</option>*/}
@@ -204,15 +250,10 @@ export default function Options() {
                     <div
                         role='presentation'
                         className='item'
-                        onClick={openPortModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                openPortModal();
-                            }
-                        }}
+                        onClick={onClickPort}
+                        onKeyDown={onKeyDownClickPort}
                     >
-                        <label className='key' htmlFor='port' role='label'>
+                        <label className='key' htmlFor='port'>
                             {appLang?.settings?.port}
                         </label>
                         <div className='value' id='port'>
@@ -225,15 +266,14 @@ export default function Options() {
                     <div
                         role='presentation'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
-                        onClick={openRoutingRulesModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                openRoutingRulesModal();
-                            }
-                        }}
+                        onClick={onClickRoutingRoles}
+                        onKeyDown={onKeyDownRoutingRoles}
                     >
-                        <label className='key' htmlFor='routing-rules' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='routing-rules'
+                            //  role='label'
+                        >
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
@@ -246,16 +286,17 @@ export default function Options() {
                     <div
                         role='presentation'
                         className={classNames('item', shareVPN ? 'checked' : '')}
-                        onClick={handleShareVPN}
-                        onKeyDown={(e) => {
+                        onClick={handleShareVPNOnClick}
+                        onKeyDown={
                             // TODO: The code needs refactoring
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                handleShareVPN();
-                            }
-                        }}
+                            handleShareVPNOnKeyDown
+                        }
                     >
-                        <label className='key' htmlFor='share-vpn' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='share-vpn'
+                            // role='label'
+                        >
                             {appLang?.settings?.share_vpn}
                         </label>
                         <div className='value' id='share-vpn'>
@@ -287,16 +328,17 @@ export default function Options() {
                     <div
                         role='presentation'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
-                        onClick={handleCheckIpData}
-                        onKeyDown={(e) => {
+                        onClick={handleCheckIpDataOnClick}
+                        onKeyDown={
                             // TODO: The code needs refactoring
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                handleCheckIpData();
-                            }
-                        }}
+                            handleCheckIpDataOnKeyDown
+                        }
                     >
-                        <label className='key' htmlFor='ip-data' role='label'>
+                        <label
+                            className='key'
+                            htmlFor='ip-data'
+                            // role='label'
+                        >
                             {appLang?.settings?.ip_data}
                         </label>
                         <div className='value' id='ip-data'>

@@ -1,8 +1,7 @@
 import classNames from 'classnames';
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { settings } from '../../lib/settings';
-import { defaultSettings } from '../../../defaultSettings';
-import { getLang } from '../../lib/loaders';
+import {  FC} from 'react';
+import { defaultSettings } from '../../../../defaultSettings';
+import useEndpointModal from './useEndpointModal';
 
 interface EndpointModalProps {
     title: string;
@@ -21,59 +20,24 @@ const EndpointModal: FC<EndpointModalProps> = ({
     endpoint,
     setEndpoint
 }) => {
-    const [endpointInput, setEndpointInput] = useState<string>(endpoint);
-    const [showModal, setshowModal] = useState<boolean>(isOpen);
-
-    useEffect(() => setshowModal(isOpen), [isOpen]);
-
-    const appLang = getLang();
-
-    const handleOnClose = useCallback(() => {
-        setshowModal(false);
-        setTimeout(onClose, 300);
-    }, [onClose]);
-
-    const suggestion = useMemo(() => ['188.114.98.224:2408', '162.159.192.175:891'], []);
-
-    const onSaveModal = useCallback(() => {
-        const endpointInputModified = endpointInput.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        let regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
-        if (endpointInput.startsWith('[')) {
-            regex =
-                /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))/;
-        }
-        const tmp = regex.test(endpointInputModified) ? endpointInputModified : defValue;
-        setEndpointInput(tmp);
-        setEndpoint(tmp);
-        settings.set('endpoint', tmp);
-        handleOnClose();
-    }, [defValue, endpointInput, handleOnClose, setEndpoint]);
-
-    const setEndpointSuggestion = useCallback(
-        (item: number) => {
-            if (typeof item === 'undefined' || !item) {
-                item = 0;
-            }
-            setEndpointInput(suggestion[item]);
-        },
-        [suggestion]
-    );
-
-    const setEndpointDefault = useCallback(() => {
-        setEndpointInput(defValue);
-    }, [defValue]);
-
-    const handleCancelButtonClick = useCallback(() => {
-        setEndpointInput(endpoint);
-        handleOnClose();
-    }, [endpoint, handleOnClose]);
-
-    const handleEndpointInputChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            setEndpointInput(e.target.value.toLowerCase().trim());
-        },
-        [setEndpointInput]
-    );
+    const {
+        appLang,
+        endpointInput,
+        handleCancelButtonClick,
+        handleEndpointInputChange,
+        handleOnClose,
+        onSaveModal,
+        setEndpointDefault,
+        setEndpointSuggestion,
+        showModal,
+        suggestion
+    } = useEndpointModal({
+        isOpen,
+        onClose,
+        defValue,
+        endpoint,
+        setEndpoint
+    });
 
     if (!isOpen) return <></>;
 
