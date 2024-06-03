@@ -19,7 +19,16 @@ let hasNewUpdate = false;
 
 const useLanding = () => {
     const appLang = getLang();
-    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } =
+    const {
+        isConnected,
+        setIsConnected,
+        isLoading,
+        setIsLoading,
+        statusText,
+        setStatusText,
+        proxyStatus,
+        setProxyStatus
+    } =
         useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
@@ -114,14 +123,13 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
-                if (proxyMode) {
-                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyMode}`);
+                if (proxyStatus && proxyStatus !== '') {
+                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
                 }
             }
         });
 
         ipcRenderer.on('wp-end', (ok) => {
-            console.log('🚀 - ipcRenderer.once - ok:', ok);
             if (ok) {
                 setIsConnected(false);
                 setIsLoading(false);
@@ -130,6 +138,7 @@ const useLanding = () => {
                     ip: ''
                 });
                 ipcRenderer.sendMessage('tray-icon', 'disconnected');
+                setStatusText(`${appLang?.status?.disconnected}`);
             }
         });
     }, [isConnected, isLoading, ipInfo]);
@@ -184,7 +193,6 @@ const useLanding = () => {
                     const signal = controller.signal;
                     const timeoutId = setTimeout(() => {
                         controller.abort();
-                        console.log('Fetching aborted due to timeout.');
                     }, 5000);
                     const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
                         signal
@@ -270,7 +278,11 @@ const useLanding = () => {
         } else if (isConnected && ipInfo?.countryCode) {
             setStatusText(`${appLang?.status?.connected_confirm}`);
         } else if (isConnected && !ipInfo?.countryCode && ipData) {
-            setStatusText(`${appLang?.status?.ip_check}`);
+            if (proxyStatus !== 'none') {
+                setStatusText(`${appLang?.status?.ip_check}`);
+            } else {
+                setStatusText(`${appLang?.status?.connecting}`);
+            }
         } else if (isConnected && !ipData) {
             setStatusText(`${appLang?.status?.connected}`);
         } else {
@@ -282,8 +294,8 @@ const useLanding = () => {
         if (!online) {
             checkInternetToast();
         } else {
+            setProxyStatus(proxyMode);
             if (isLoading) {
-                console.log('🚀 - onChange - isLoading:', isLoading);
                 ipcRenderer.sendMessage('wp-end');
             } else if (isConnected) {
                 ipcRenderer.sendMessage('wp-end');
@@ -368,7 +380,8 @@ const useLanding = () => {
         handleOnSwipedLeft,
         handleOnSwipedRight,
         handleOnClickIp,
-        handleOnClickPing
+        handleOnClickPing,
+        proxyStatus
     };
 };
 export default useLanding;

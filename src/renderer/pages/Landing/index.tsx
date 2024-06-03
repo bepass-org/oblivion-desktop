@@ -25,7 +25,8 @@ export default function Landing() {
         onSubmit,
         ping,
         statusText,
-        toggleDrawer
+        toggleDrawer,
+        proxyStatus
     } = useLanding();
 
     return (
@@ -56,6 +57,7 @@ export default function Landing() {
                 ping={ping}
                 proxyMode={proxyMode}
                 statusText={statusText}
+                proxyStatus={proxyStatus}
             />
             <Toaster position='bottom-center' reverseOrder={false} />
         </>
