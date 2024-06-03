@@ -28,8 +28,7 @@ const useLanding = () => {
         setStatusText,
         proxyStatus,
         setProxyStatus
-    } =
-        useStore();
+    } = useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
         ip: string;
@@ -171,9 +170,8 @@ const useLanding = () => {
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             http.open('GET', 'http://cp.cloudflare.com', true);
-            http.onreadystatechange = function() {
-            };
-            http.onloadend = function() {
+            http.onreadystatechange = function () {};
+            http.onloadend = function () {
                 setPing(Math.round(window.performance.now() - started));
             };
             http.send();

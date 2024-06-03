@@ -24,21 +24,21 @@ interface LandingBodyProps {
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
-                                               appLang,
-                                               handleOnClickIp,
-                                               handleOnClickPing,
-                                               handleOnSwipedLeft,
-                                               handleOnSwipedRight,
-                                               ipData,
-                                               ipInfo,
-                                               isConnected,
-                                               isLoading,
-                                               onSubmit,
-                                               ping,
-                                               proxyMode,
-                                               statusText,
-                                               proxyStatus
-                                           }) => {
+    appLang,
+    handleOnClickIp,
+    handleOnClickPing,
+    handleOnSwipedLeft,
+    handleOnSwipedRight,
+    ipData,
+    ipInfo,
+    isConnected,
+    isLoading,
+    onSubmit,
+    ping,
+    proxyMode,
+    statusText,
+    proxyStatus
+}) => {
     return (
         <div className={classNames('myApp', 'verticalAlign')}>
             <div className='container'>
@@ -87,11 +87,11 @@ const LandingBody: FC<LandingBodyProps> = ({
                             'inFoot',
                             'withIp',
                             isConnected &&
-                            !isLoading &&
-                            proxyMode !== 'none' &&
-                            proxyStatus !== 'none' &&
-                            proxyMode !== '' &&
-                            ipData
+                                !isLoading &&
+                                proxyMode !== 'none' &&
+                                proxyStatus !== 'none' &&
+                                proxyMode !== '' &&
+                                ipData
                                 ? 'active'
                                 : ''
                         )}
