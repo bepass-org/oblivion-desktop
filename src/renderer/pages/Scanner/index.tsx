@@ -1,97 +1,32 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback, ChangeEvent, KeyboardEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 // import { motion } from 'framer-motion';
 
-import Nav from '../components/Nav';
-import { settings } from '../lib/settings';
-import { defaultSettings } from '../../defaultSettings';
-import LottieFile from '../../../assets/json/1713988096625.json';
-import { settingsHaveChangedToast } from '../lib/toasts';
-import { useStore } from '../store';
-import { getLang } from '../lib/loaders';
-import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
-import EndpointModal from '../components/Modal/Endpoint';
-import Tabs from '../components/Tabs';
+import Nav from '../../components/Nav';
+import { defaultSettings } from '../../../defaultSettings';
+import LottieFile from '../../../../assets/json/1713988096625.json';
+import EndpointModal from '../../components/Modal/Endpoint';
+import Tabs from '../../components/Tabs';
+import useScanner from './useScanner';
 
 export default function Scanner() {
-    const { isConnected, isLoading } = useStore();
-    const [appLang] = useState(getLang());
-
-    const [endpoint, setEndpoint] = useState<string>();
-    const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
-    const [ipType, setIpType] = useState<undefined | string>();
-    const [rtt, setRtt] = useState<undefined | string>();
-    const [reserved, setReserved] = useState<undefined | boolean>();
-
-    useGoBackOnEscape();
-
-    useEffect(() => {
-        settings.get('endpoint').then((value) => {
-            setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
-        });
-        settings.get('ipType').then((value) => {
-            setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
-        });
-        settings.get('rtt').then((value) => {
-            setRtt(typeof value === 'undefined' ? defaultSettings.rtt : value);
-        });
-        settings.get('reserved').then((value) => {
-            setReserved(typeof value === 'undefined' ? defaultSettings.reserved : value);
-        });
-    }, []);
-
-    const onCloseEndpointModal = useCallback(() => {
-        setShowEndpointModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
-
-    const onKeyDownEndpoint = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onOpenEndpointModal();
-            }
-        },
-        [onOpenEndpointModal]
-    );
-
-    const onChangeType = useCallback(
-        (event: ChangeEvent<HTMLSelectElement>) => {
-            setIpType(event.target.value);
-            settings.set('ipType', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-        },
-        [isConnected, isLoading]
-    );
-
-    const onChangeRTT = useCallback(
-        (event: ChangeEvent<HTMLSelectElement>) => {
-            setRtt(event.target.value);
-            settings.set('rtt', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-        },
-        [isConnected, isLoading]
-    );
-
-    const onClickReservedButton = useCallback(() => {
-        setReserved(!reserved);
-        settings.set('reserved', !reserved);
-    }, [reserved]);
-
-    const onKeyDownReservedButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickReservedButton();
-            }
-        },
-        [onClickReservedButton]
-    );
-
+    const {
+        onChangeRTT,
+        setEndpoint,
+        onChangeType,
+        onClickReservedButton,
+        onCloseEndpointModal,
+        onKeyDownEndpoint,
+        onKeyDownReservedButton,
+        onOpenEndpointModal,
+        appLang,
+        endpoint,
+        ipType,
+        reserved,
+        rtt,
+        showEndpointModal
+    } = useScanner();
     if (
         typeof endpoint === 'undefined' ||
         typeof ipType === 'undefined' ||

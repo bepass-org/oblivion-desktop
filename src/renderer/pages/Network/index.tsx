@@ -1,168 +1,39 @@
 import classNames from 'classnames';
-import { useState, useEffect, useCallback, ChangeEvent, KeyboardEvent } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
-import Nav from '../components/Nav';
-import { settings } from '../lib/settings';
-import { defaultSettings } from '../../defaultSettings';
-import LottieFile from '../../../assets/json/1713988096625.json';
-import PortModal from '../components/Modal/Port';
-import { settingsHaveChangedToast } from '../lib/toasts';
-import { useStore } from '../store';
-import { getLang } from '../lib/loaders';
-import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
-import Tabs from '../components/Tabs';
-import { toPersianNumber } from '../lib/toPersianNumber';
-import RoutingRulesModal from '../components/Modal/RoutingRules';
+import Nav from '../../components/Nav';
+import LottieFile from '../../../../assets/json/1713988096625.json';
+import PortModal from '../../components/Modal/Port';
+import Tabs from '../../components/Tabs';
+import RoutingRulesModal from '../../components/Modal/RoutingRules';
+import useOptions from './useOptions';
 
 export default function Options() {
-    const { isConnected, isLoading } = useStore();
-    const [lang, setLang] = useState<string>('');
-
-    useGoBackOnEscape();
-
-    // TODO rename to networkConfiguration
-    const [proxyMode, setProxyMode] = useState<string>('');
-    //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
-    const [shareVPN, setShareVPN] = useState<undefined | boolean>();
-    const [port, setPort] = useState<number>();
-    const [showPortModal, setShowPortModal] = useState<boolean>(false);
-    const [appLang] = useState(getLang());
-    const [ipData, setIpData] = useState<undefined | boolean>();
-    const [dns, setDns] = useState<undefined | boolean>();
-    const [routingRules, setRoutingRules] = useState<string>();
-    const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
-
-    useEffect(() => {
-        settings.get('ipData').then((value) => {
-            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
-        });
-        settings.get('port').then((value) => {
-            setPort(typeof value === 'undefined' ? defaultSettings.port : value);
-        });
-        /*settings.get('autoSetProxy').then((value) => {
-            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
-        });*/
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
-        settings.get('shareVPN').then((value) => {
-            setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
-        });
-        settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? defaultSettings.dns : value);
-        });
-        settings.get('routingRules').then((value) => {
-            setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
-        });
-        settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
-        });
-    }, []);
-
-    const countRoutingRules = useCallback(
-        (value: string) => {
-            if (value === '') {
-                return appLang?.settings?.routing_rules_disabled;
-            }
-            const lines = value.split('\n');
-            return lines?.length > 0
-                ? (lang === 'fa' ? toPersianNumber(lines.length) : lines.length) +
-                      ' ' +
-                      (appLang?.settings?.routing_rules_items || '')
-                : appLang?.settings?.routing_rules_disabled;
-        },
-        [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]
-    );
-
-    const onClosePortModal = useCallback(() => {
-        setShowPortModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onCloseRoutingRulesModal = useCallback(() => {
-        setShowRoutingRulesModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
-
-    const onChangeProxyMode = useCallback(
-        (event: ChangeEvent<HTMLSelectElement>) => {
-            setProxyMode(event.target.value);
-            settings.set('proxyMode', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-            setTimeout(function () {
-                if (event.target.value === 'none') {
-                    setIpData(false);
-                    settings.set('ipData', false);
-                }
-            }, 1000);
-        },
-        [isConnected, isLoading]
-    );
-
-    const onClickPort = useCallback(() => setShowPortModal(true), []);
-
-    const onKeyDownClickPort = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickPort();
-            }
-        },
-        [onClickPort]
-    );
-    const onClickRoutingRoles = useCallback(() => {
-        if (proxyMode !== 'none') {
-            setShowRoutingRulesModal(true);
-        }
-    }, [proxyMode]);
-
-    const onKeyDownRoutingRoles = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickRoutingRoles();
-            }
-        },
-        [onClickRoutingRoles]
-    );
-
-    const handleShareVPNOnClick = useCallback(() => {
-        setShareVPN(!shareVPN);
-        settings.set('shareVPN', !shareVPN);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-        setTimeout(function () {
-            settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
-        }, 1000);
-    }, [isConnected, isLoading, shareVPN]);
-
-    const handleShareVPNOnKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleShareVPNOnClick();
-            }
-        },
-        [handleShareVPNOnClick]
-    );
-
-    const handleCheckIpDataOnClick = useCallback(() => {
-        if (proxyMode !== 'none') {
-            setIpData(!ipData);
-            settings.set('ipData', !ipData);
-        }
-    }, [ipData, proxyMode]);
-
-    const handleCheckIpDataOnKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCheckIpDataOnClick();
-            }
-        },
-        [handleCheckIpDataOnClick]
-    );
-
+    const {
+        countRoutingRules,
+        dns,
+        setPort,
+        setRoutingRules,
+        handleCheckIpDataOnClick,
+        handleCheckIpDataOnKeyDown,
+        handleShareVPNOnClick,
+        handleShareVPNOnKeyDown,
+        ipData,
+        onChangeProxyMode,
+        onClickPort,
+        onClickRoutingRoles,
+        onClosePortModal,
+        onCloseRoutingRulesModal,
+        onKeyDownClickPort,
+        onKeyDownRoutingRoles,
+        port,
+        proxyMode,
+        routingRules,
+        shareVPN,
+        showPortModal,
+        showRoutingRulesModal,
+        appLang
+    } = useOptions();
     if (
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
@@ -183,20 +54,6 @@ export default function Options() {
     return (
         <>
             <Nav title={appLang?.settings?.network} />
-            <PortModal
-                port={port}
-                setPort={setPort}
-                title={appLang?.modal?.port_title}
-                isOpen={showPortModal}
-                onClose={onClosePortModal}
-            />
-            <RoutingRulesModal
-                routingRules={routingRules}
-                setRoutingRules={setRoutingRules}
-                title={appLang?.settings?.routing_rules}
-                isOpen={showRoutingRulesModal}
-                onClose={onCloseRoutingRulesModal}
-            />
             <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='network' />
                 <div className='settings' role='menu'>
@@ -358,6 +215,20 @@ export default function Options() {
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
+            <PortModal
+                port={port}
+                setPort={setPort}
+                title={appLang?.modal?.port_title}
+                isOpen={showPortModal}
+                onClose={onClosePortModal}
+            />
+            <RoutingRulesModal
+                routingRules={routingRules}
+                setRoutingRules={setRoutingRules}
+                title={appLang?.settings?.routing_rules}
+                isOpen={showRoutingRulesModal}
+                onClose={onCloseRoutingRulesModal}
+            />
         </>
     );
 }

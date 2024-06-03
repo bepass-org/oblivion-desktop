@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Index from '../pages/Index';
+import Landing from '../pages/Landing';
 import Settings from '../pages/Settings';
 import Options from '../pages/Options';
 import About from '../pages/About';
@@ -11,7 +11,7 @@ import Network from '../pages/Network';
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path='/' element={<Index />} />
+            <Route path='/' element={<Landing />} />
             <Route path='/settings' element={<Settings />} />
             <Route path='/options' element={<Options />} />
             <Route path='/about' element={<About />} />
