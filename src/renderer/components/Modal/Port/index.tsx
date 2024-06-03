@@ -1,38 +1,41 @@
 import classNames from 'classnames';
-import useLicenseModal from './useLicenseModal';
+import { defaultSettings } from '../../../../defaultSettings';
+import usePortModal from './usePortModal';
 
-interface LicenseModalProps {
+interface PortModalProps {
     title: string;
     isOpen: boolean;
     onClose: () => void;
-    license: string;
-    setLicense: (value: string) => void;
+    defValue?: number;
+    port: number;
+    setPort: (value: number) => void;
 }
 
-export default function LicenseModal({
+export default function PortModal({
     title,
     isOpen,
     onClose,
-    license,
-    setLicense
-}: LicenseModalProps) {
+    defValue = defaultSettings.port,
+    port,
+    setPort
+}: PortModalProps) {
     const {
         appLang,
         handleCancelButtonClick,
         handleCancelButtonKeyDown,
-        handleLicenseInputChange,
         handleOnClose,
-        licenseInput,
+        handlePortInputChange,
         onSaveModalClick,
         onSaveModalKeyDown,
+        portInput,
         showModal
-    } = useLicenseModal({
+    } = usePortModal({
         isOpen,
         onClose,
-        license,
-        setLicense
+        defValue,
+        port,
+        setPort
     });
-
     if (!isOpen) return <></>;
 
     return (
@@ -44,31 +47,29 @@ export default function LicenseModal({
                         <div className='miniLine' />
                     </div>
                     <h3>{title}</h3>
-                    <p className='withMargin'>{appLang?.modal?.license_desc}</p>
-                    <div className='clearfix' />
                     <input
-                        value={licenseInput}
-                        tabIndex={0}
+                        type='number'
                         spellCheck={false}
+                        value={portInput}
                         className='form-control'
-                        onChange={handleLicenseInputChange}
-                        type='text'
+                        onChange={handlePortInputChange}
+                        tabIndex={0}
                     />
                     <div className='clearfix' />
                     <div
+                        role='button'
                         className={classNames('btn', 'btn-cancel')}
                         onClick={handleCancelButtonClick}
                         tabIndex={0}
-                        role='button'
                         onKeyDown={handleCancelButtonKeyDown}
                     >
                         {appLang?.modal?.cancel}
                     </div>
                     <div
+                        role='button'
                         className={classNames('btn', 'btn-save')}
                         onClick={onSaveModalClick}
                         tabIndex={0}
-                        role='button'
                         onKeyDown={onSaveModalKeyDown}
                     >
                         {appLang?.modal?.update}

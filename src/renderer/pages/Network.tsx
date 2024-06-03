@@ -6,7 +6,7 @@ import Nav from '../components/Nav';
 import { settings } from '../lib/settings';
 import { defaultSettings } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
-import PortModal from '../components/Modal/Port';
+import PortModal from '../components/Modal/Port/Port';
 import { settingsHaveChangedToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang } from '../lib/loaders';
