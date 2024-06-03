@@ -1,13 +1,10 @@
-import classNames from 'classnames';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
-import { settings } from '../../lib/settings';
-import { defaultSettings } from '../../../defaultSettings';
-import { ipcRenderer } from '../../lib/utils';
-import { getLang } from '../../lib/loaders';
+import { defaultSettings } from '../../../../defaultSettings';
+import { settings } from '../../../lib/settings';
+import { getLang } from '../../../lib/loaders';
+import { ipcRenderer } from '../../../lib/utils';
 
 interface RestoreModalProps {
-    title: string;
     isOpen: boolean;
     onClose: () => void;
     setTheme: (value: string) => void;
@@ -16,15 +13,8 @@ interface RestoreModalProps {
     setOpenAtLogin: (value: boolean) => void;
 }
 
-export default function RestoreModal({
-    title,
-    isOpen,
-    onClose,
-    setTheme,
-    setSystemTray,
-    setLang,
-    setOpenAtLogin
-}: RestoreModalProps) {
+const useRestoreModal = (props: RestoreModalProps) => {
+    const { isOpen, onClose, setLang, setOpenAtLogin, setSystemTray, setTheme } = props;
     const detectingSystemTheme = useMemo(
         () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
         []
@@ -78,50 +68,12 @@ export default function RestoreModal({
         ipcRenderer.sendMessage('wp-end');
     }, [detectingSystemTheme, setTheme, setSystemTray, setLang, setOpenAtLogin, handleOnClose]);
 
-    if (!isOpen) return null;
+    return {
+        showModal,
+        handleOnClose,
+        onSaveModal,
+        appLang
+    };
+};
 
-    return (
-        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
-            <div className='dialogBg' onClick={handleOnClose} role='presentation' />
-            <div className='dialogBox'>
-                <div className='container'>
-                    <div className='line'>
-                        <div className='miniLine' />
-                    </div>
-                    <h3>{title}</h3>
-                    <p>{appLang?.modal?.restore_desc}</p>
-                    <div className='clearfix' />
-                    <div
-                        className={classNames('btn', 'btn-cancel')}
-                        onClick={onClose}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onClose();
-                            }
-                        }}
-                        tabIndex={0}
-                        role='button'
-                    >
-                        {appLang?.modal?.cancel}
-                    </div>
-                    <div
-                        role='button'
-                        aria-hidden='true'
-                        className={classNames('btn', 'btn-save')}
-                        onClick={onSaveModal}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                onSaveModal();
-                            }
-                        }}
-                        tabIndex={0}
-                    >
-                        {appLang?.modal?.confirm}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+export default useRestoreModal;
