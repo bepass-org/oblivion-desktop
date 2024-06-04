@@ -12,6 +12,7 @@ import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors, setStuffPath } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
+import { customEvent } from '../lib/customEvent';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -44,12 +45,14 @@ ipcMain.on('wp-start', async (event) => {
     const sendConnectedSignalToRenderer = () => {
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
+            customEvent.emit('zombie');
         }
     };
 
     const sendDisconnectedSignalToRenderer = () => {
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
+            customEvent.emit('zombie');
         }
     };
 
