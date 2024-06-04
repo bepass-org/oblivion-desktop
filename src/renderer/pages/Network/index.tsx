@@ -7,6 +7,7 @@ import PortModal from '../../components/Modal/Port';
 import Tabs from '../../components/Tabs';
 import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
+import Dropdown from '../../components/Dropdown';
 
 export default function Options() {
     const {
@@ -80,32 +81,23 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
                     </div>*/}
                     <div className='item' role='presentation'>
-                        <label className='key' htmlFor='proxy-mode-selector'>
-                            {appLang?.settings?.proxy_mode}
-                        </label>
-                        <div className='value'>
-                            <select
-                                tabIndex={0}
-                                // role='listbox'
-                                id='proxy-mode-selector'
-                                onChange={onChangeProxyMode}
-                                value={proxyMode}
-                            >
-                                <option
-                                    value='none'
-                                    //  role='option'
-                                >
-                                    None
-                                </option>
-                                <option
-                                    value='system'
-                                    // role='option'
-                                >
-                                    System Proxy
-                                </option>
-                                {/*<option value='tun' disabled>TUN2Sock</option>*/}
-                            </select>
-                        </div>
+                        <Dropdown
+                            id='proxy-mode-selector'
+                            items={[
+                                {
+                                    value: 'none',
+                                    label: 'None'
+                                },
+                                {
+                                    value: 'system',
+                                    label: 'System Proxy'
+                                }
+                            ]}
+                            onChange={onChangeProxyMode}
+                            value={proxyMode}
+                            label={appLang?.settings?.proxy_mode}
+                            tabIndex={0}
+                        />
                         <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
                     </div>
                     <div
