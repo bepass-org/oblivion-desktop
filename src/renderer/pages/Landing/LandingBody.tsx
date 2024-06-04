@@ -20,6 +20,7 @@ interface LandingBodyProps {
     handleOnSwipedRight: () => void;
     handleOnClickIp: () => void;
     handleOnClickPing: () => void;
+    proxyStatus: string;
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
@@ -35,7 +36,8 @@ const LandingBody: FC<LandingBodyProps> = ({
     onSubmit,
     ping,
     proxyMode,
-    statusText
+    statusText,
+    proxyStatus
 }) => {
     return (
         <div className={classNames('myApp', 'verticalAlign')}>
@@ -87,6 +89,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                             isConnected &&
                                 !isLoading &&
                                 proxyMode !== 'none' &&
+                                proxyStatus !== 'none' &&
                                 proxyMode !== '' &&
                                 ipData
                                 ? 'active'
