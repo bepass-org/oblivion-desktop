@@ -189,7 +189,7 @@ Cloudflare Warp فراهم می‌کند.
 </table>
 </div>
 
-## به مشکل برخوردید 🐞?
+## به مشکل برخوردید 🐞؟
 
 قسمت [ویکی](https://github.com/bepass-org/oblivion-desktop/wiki) را بررسی کنید و در [مشکلات](https://github.com/bepass-org/oblivion-desktop/issues) جستجو کنید (باز و [بسته](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed)!) و اگر پاسخ خود را دریافت نکردید، سپس [یکی مشکل جدید گزارش کنید](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
 
