@@ -7,6 +7,7 @@ import LottieFile from '../../../../assets/json/1713988096625.json';
 import RestoreModal from '../../components/Modal/Restore';
 import Tabs from '../../components/Tabs';
 import useOptions from './useOptions';
+import Dropdown from '../../components/Dropdown';
 
 export default function Options() {
     const {
@@ -93,32 +94,14 @@ export default function Options() {
                         </div>
                     </div>
                     <div className='item' role='presentation' ref={langRef}>
-                        <label
-                            className='key'
-                            htmlFor='lang-select'
-                            // role='label'
-                        >
-                            {appLang?.settings?.lang}
-                        </label>
-                        <div className='value'>
-                            <select
-                                id='lang-select'
-                                onChange={onChangeLanguage}
-                                value={lang}
-                                tabIndex={0}
-                                // role='listbox'
-                            >
-                                {languages.map((lng) => (
-                                    <option
-                                        key={lng.value}
-                                        value={lng.value}
-                                        // role='option'
-                                    >
-                                        {lng.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        <Dropdown
+                            id='lang-select'
+                            onChange={onChangeLanguage}
+                            value={lang}
+                            label={appLang?.settings?.lang}
+                            tabIndex={0}
+                            items={languages}
+                        />
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
                     <div

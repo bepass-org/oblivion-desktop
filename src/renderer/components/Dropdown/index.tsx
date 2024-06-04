@@ -9,7 +9,7 @@ interface DropdownProps {
     }[];
     value: string;
     onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-    disabled: boolean;
+    disabled?: boolean;
     tabIndex?: number;
 }
 const Dropdown: FC<DropdownProps> = ({
@@ -37,7 +37,7 @@ const Dropdown: FC<DropdownProps> = ({
                     value={value}
                 >
                     {items.map((option) => (
-                        <option value={option.value} tabIndex={0}>
+                        <option value={option.value} tabIndex={0} key={option.value + option.label}>
                             {option.label}
                         </option>
                     ))}
