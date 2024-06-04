@@ -36,7 +36,7 @@ export const binAssetsPath = path.join(
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
 if (!gotTheLock) {
-    log.info("did'nt create new instance since there was already one running.");
+    log.info('did not create new instance since there was already one running.');
     app.exit(0);
 } else {
     devPlayground();
@@ -231,31 +231,40 @@ if (!gotTheLock) {
                         }
                     }
                 },
-                // TODO
                 /*{ label: '', type: 'separator' },
                 {
-                    label: 'حالت پروکسی',
-                    submenu: [
-                        { label: 'متصل است', type: 'radio' },
-                        { label: 'عدم اتصال', type: 'radio' }
-                    ]
+                    id: 'serviceStatus',
+                    label: '🔘 Disconnected',
+                    click: () => {
+                        if (!mainWindow) {
+                            createMainWindow();
+                        } else {
+                            mainWindow.show();
+                        }
+                        ipcMain.on('tray-menu', async (event, arg) => {
+                            event.reply('tray-menu', 'serviceStatus', arg);
+                        });
+                    }
                 },
                 { label: '', type: 'separator' },
                 {
+                    id: 'proxyMode',
                     label: 'Proxy Mode',
                     submenu: [
                         {
                             label: 'Set System Proxy',
-                            type: 'normal',
+                            type: 'checkbox',
+                            checked: true,
                             click: async () => {
-                                await enableProxy();
+                                //await enableProxy();
                             }
                         },
                         {
                             label: 'Disable',
-                            type: 'normal',
+                            type: 'checkbox',
+                            checked: false,
                             click: async () => {
-                                await disableProxy();
+                                //await disableProxy();
                             }
                         }
                     ]
@@ -269,7 +278,16 @@ if (!gotTheLock) {
                     }
                 }
             ]);
-            contextMenu.items[1].checked = false;
+            /*const serviceStatusMenu = contextMenu.items.find(item => item.id === 'serviceStatus');
+            const proxyModeMenu = contextMenu.items.find(item => item.id === 'proxyMode');
+            customEvent.on('tray-icon', (newStatus) => {
+                if (serviceStatusMenu) {
+                    serviceStatusMenu.label = (newStatus !== 'disconnected' ? '🟢 Connected' : '🔘 Disconnected');
+                }
+                if (proxyModeMenu && proxyModeMenu.submenu) {
+                    proxyModeMenu.submenu.items[0].checked = true;
+                }
+            });*/
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(contextMenu);
         };
