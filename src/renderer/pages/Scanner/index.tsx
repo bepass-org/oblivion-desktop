@@ -9,6 +9,7 @@ import LottieFile from '../../../../assets/json/1713988096625.json';
 import EndpointModal from '../../components/Modal/Endpoint';
 import Tabs from '../../components/Tabs';
 import useScanner from './useScanner';
+import Dropdown from '../../components/Dropdown';
 
 export default function Scanner() {
     const {
@@ -73,42 +74,25 @@ export default function Scanner() {
                             endpoint === defaultSettings.endpoint ? '' : 'disabled'
                         )}
                     >
-                        <label
-                            className='key'
-                            htmlFor='id-type-select'
-                            // role='label'
-                        >
-                            {appLang?.settings?.scanner_ip_type}
-                        </label>
-                        <div className='value'>
-                            <select
-                                tabIndex={0}
-                                // role='listbox'
-                                id='id-type-select'
-                                onChange={onChangeType}
-                                disabled={endpoint !== defaultSettings.endpoint}
-                                value={ipType}
-                            >
-                                <option
-                                    value=''
-                                    //  role='option'
-                                >
-                                    {appLang?.settings?.scanner_ip_type_auto}
-                                </option>
-                                <option
-                                    value='-4'
-                                    // role='option'
-                                >
-                                    IPv4
-                                </option>
-                                <option
-                                    value='-6'
-                                    // role='option'
-                                >
-                                    IPv6
-                                </option>
-                            </select>
-                        </div>
+                        <Dropdown
+                            id='id-type-select'
+                            onChange={onChangeType}
+                            value={ipType}
+                            label={appLang?.settings?.scanner_ip_type}
+                            tabIndex={0}
+                            disabled={endpoint !== defaultSettings.endpoint}
+                            items={[
+                                {
+                                    value: '',
+                                    label: appLang?.settings?.scanner_ip_type_auto
+                                },
+                                { value: '-4', label: 'IPv4' },
+                                {
+                                    value: '-6',
+                                    label: 'IPv6'
+                                }
+                            ]}
+                        />
                         <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
                     </div>
                     <div
@@ -118,66 +102,44 @@ export default function Scanner() {
                             endpoint === defaultSettings.endpoint ? '' : 'disabled'
                         )}
                     >
-                        <label
-                            className='key'
-                            htmlFor='rtt-select'
-                            // role='label'
-                        >
-                            {appLang?.settings?.scanner_rtt}
-                        </label>
-                        <div className='value'>
-                            <select
-                                tabIndex={0}
-                                // role='listbox'
-                                id='rtt-select'
-                                onChange={onChangeRTT}
-                                disabled={endpoint !== defaultSettings.endpoint}
-                                value={rtt}
-                            >
-                                <option
-                                    value='1s'
-                                    // role='option'
-                                >
-                                    {appLang?.settings?.scanner_rtt_default}
-                                </option>
-                                <option
-                                    value='300ms'
-                                    // role='option'
-                                >
-                                    300ms
-                                </option>
-                                <option
-                                    value='500ms'
-                                    // role='option'
-                                >
-                                    500ms
-                                </option>
-                                <option
-                                    value='750ms'
-                                    // role='option'
-                                >
-                                    750ms
-                                </option>
-                                <option
-                                    value='1s'
-                                    // role='option'
-                                >
-                                    1s
-                                </option>
-                                <option
-                                    value='2s'
-                                    // role='option'
-                                >
-                                    2s
-                                </option>
-                                <option
-                                    value='3s'
-                                    // role='option'
-                                >
-                                    3s
-                                </option>
-                            </select>
-                        </div>
+                        <Dropdown
+                            label={appLang?.settings?.scanner_rtt}
+                            id='rtt-select'
+                            onChange={onChangeRTT}
+                            value={rtt}
+                            disabled={endpoint !== defaultSettings.endpoint}
+                            tabIndex={0}
+                            items={[
+                                {
+                                    value: '1s',
+                                    label: appLang?.settings?.scanner_rtt_default
+                                },
+                                {
+                                    value: '300ms',
+                                    label: '300ms'
+                                },
+                                {
+                                    value: '500ms',
+                                    label: '500ms'
+                                },
+                                {
+                                    value: '750ms',
+                                    label: '750ms'
+                                },
+                                {
+                                    value: '1s',
+                                    label: '1s'
+                                },
+                                {
+                                    value: '2s',
+                                    label: '2s'
+                                },
+                                {
+                                    value: '3s',
+                                    label: '3s'
+                                }
+                            ]}
+                        />
                         <div className='info' role='note'>
                             {appLang?.settings?.scanner_rtt_desc}
                         </div>

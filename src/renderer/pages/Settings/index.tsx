@@ -7,6 +7,7 @@ import LicenseModal from '../../components/Modal/License';
 import { countries } from '../../../defaultSettings';
 import LottieFile from '../../../../assets/json/1713988096625.json';
 import useSettings from './useSettings';
+import Dropdown from '../../components/Dropdown';
 
 export default function Settings() {
     const {
@@ -171,39 +172,21 @@ export default function Settings() {
                         </div>
                     </div>
                     <div className={classNames('item', method === 'psiphon' ? '' : 'disabled')}>
-                        <label
-                            className='key'
-                            htmlFor='flex-switch-check-checked-psiphon-location'
-                            // role='label'
-                        >
-                            {appLang?.settings?.method_psiphon_location}
-                        </label>
-                        <div className='value'>
-                            <select
-                                id='flex-switch-check-checked-psiphon-location'
-                                onChange={onChangeLocation}
-                                disabled={method !== 'psiphon'}
-                                value={location}
-                                // role='listbox'
-                                tabIndex={-1}
-                            >
-                                <option
-                                    value=''
-                                    // role='option'
-                                >
-                                    {appLang?.settings?.method_psiphon_location_auto}
-                                </option>
-                                {countries.map((country) => (
-                                    <option
-                                        key={country.value}
-                                        value={country.value}
-                                        // role='option'
-                                    >
-                                        {country.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        <Dropdown
+                            id='flex-switch-check-checked-psiphon-location'
+                            onChange={onChangeLocation}
+                            value={location}
+                            label={appLang?.settings?.method_psiphon_location}
+                            tabIndex={-1}
+                            disabled={method !== 'psiphon'}
+                            items={[
+                                {
+                                    value: '',
+                                    label: appLang?.settings?.method_psiphon_location_auto
+                                },
+                                ...countries
+                            ]}
+                        />
                         <div className='info'>
                             {appLang?.settings?.method_psiphon_location_desc}
                         </div>
