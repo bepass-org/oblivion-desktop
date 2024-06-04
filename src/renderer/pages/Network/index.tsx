@@ -206,7 +206,6 @@ export default function Options() {
                     </div>
                 </div>
             </div>
-            <Toaster position='bottom-center' reverseOrder={false} />
             <PortModal
                 port={port}
                 setPort={setPort}
@@ -221,6 +220,7 @@ export default function Options() {
                 isOpen={showRoutingRulesModal}
                 onClose={onCloseRoutingRulesModal}
             />
+            <Toaster position='bottom-center' reverseOrder={false} containerStyle={{ bottom: '70px' }} />
         </>
     );
 }
