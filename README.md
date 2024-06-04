@@ -176,6 +176,10 @@ technology
 </table>
 </div>
 
+## Faced Bug 🐞?
+
+checkout [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search in [issues](https://github.com/bepass-org/oblivion-desktop/issues)(open and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did'nt get your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
+
 ## Get Involved
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,

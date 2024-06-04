@@ -21,6 +21,7 @@ import './ipc';
 import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
+import { customEvent } from './lib/customEvent';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -33,6 +34,14 @@ export const binAssetsPath = path.join(
     'bin'
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
+
+customEvent.on('zombie', () => {
+    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
+    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
+    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
+    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
+    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
+});
 
 if (!gotTheLock) {
     log.info("did'nt create new instance since there was already one running.");
