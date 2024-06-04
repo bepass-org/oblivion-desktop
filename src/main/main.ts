@@ -35,14 +35,6 @@ export const binAssetsPath = path.join(
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
-customEvent.on('zombie', () => {
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-});
-
 if (!gotTheLock) {
     log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
@@ -284,7 +276,10 @@ if (!gotTheLock) {
 
         app?.whenReady().then(() => {
             systemTrayMenu('disconnected');
-            ipcMain.on('tray-icon', async (event, newStatus) => {
+            /*ipcMain.on('tray-icon', async (event, newStatus) => {
+                appIcon.setImage(trayIconChanger(newStatus));
+            });*/
+            customEvent.on('tray-icon', (newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
             });
         });

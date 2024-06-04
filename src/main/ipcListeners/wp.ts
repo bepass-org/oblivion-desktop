@@ -42,17 +42,22 @@ ipcMain.on('wp-start', async (event) => {
     connectedFlags = [false, false];
     disconnectedFlags = [false, false];
 
+    const port = (await settings.get('port')) || defaultSettings.port;
+    const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
+    //const autoSetProxy = await settings.get('autoSetProxy');
+    const proxyMode = await settings.get('proxyMode');
+
     const sendConnectedSignalToRenderer = () => {
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
-            customEvent.emit('zombie');
+            customEvent.emit('tray-icon', `connected-${proxyMode}`);
         }
     };
 
     const sendDisconnectedSignalToRenderer = () => {
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
-            customEvent.emit('zombie');
+            customEvent.emit('tray-icon', 'disconnected');
         }
     };
 
@@ -66,11 +71,6 @@ ipcMain.on('wp-start', async (event) => {
     if (typeof license === 'string' && license !== '') {
         setStuffPath(args);
     }*/
-
-    const port = (await settings.get('port')) || defaultSettings.port;
-    const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
-    //const autoSetProxy = await settings.get('autoSetProxy');
-    const proxyMode = await settings.get('proxyMode');
 
     const handleSystemProxyDisconnect = () => {
         if (shouldProxySystem(proxyMode)) {

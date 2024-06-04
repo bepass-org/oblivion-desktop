@@ -266,9 +266,9 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
-                if (proxyStatus !== '') {
+                /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
-                }
+                }*/
             }
         });
 
@@ -280,9 +280,9 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
-                if (proxyStatus !== '') {
+                /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', 'disconnected');
-                }
+                }*/
             }
         });
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
