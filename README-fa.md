@@ -191,10 +191,10 @@ Cloudflare Warp فراهم می‌کند.
 
 ## به مشکل برخوردید 🐞؟
 
-قسمت [ویکی](https://github.com/bepass-org/oblivion-desktop/wiki) را بررسی کنید و
+قسمت [ویکی](https://github.com/bepass-org/oblivion-desktop/wiki) را بررسی کرده و
 در [مشکلات](https://github.com/bepass-org/oblivion-desktop/issues) (باز
-و [بسته](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed)) جستجو کنید!. اگر پاسخ خود را
-دریافت نکردید، سپس [یکی مشکل جدید گزارش کنید](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
+و [بسته](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed)!) جستجو کنید؛ اگر پاسخ خود را
+پیدا نکردید، [یک مشکل جدید](https://github.com/bepass-org/oblivion-desktop/issues/new/choose) گزارش کنید.
 
 ## مشارکت کنید
 
