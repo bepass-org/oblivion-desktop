@@ -19,8 +19,16 @@ let hasNewUpdate = false;
 
 const useLanding = () => {
     const appLang = getLang();
-    const { isConnected, setIsConnected, isLoading, setIsLoading, statusText, setStatusText } =
-        useStore();
+    const {
+        isConnected,
+        setIsConnected,
+        isLoading,
+        setIsLoading,
+        statusText,
+        setStatusText,
+        proxyStatus,
+        setProxyStatus
+    } = useStore();
     const [ipInfo, setIpInfo] = useState<{
         countryCode: string | boolean;
         ip: string;
@@ -97,27 +105,6 @@ const useLanding = () => {
             canCheckNewVer = false;
         }
 
-        ipcRenderer.on('wp-start', (ok) => {
-            if (ok) {
-                setIsLoading(false);
-                setIsConnected(true);
-                ipcRenderer.sendMessage('tray-icon', `connected-${proxyMode}`);
-            }
-        });
-
-        ipcRenderer.on('wp-end', (ok) => {
-            console.log('🚀 - ipcRenderer.once - ok:', ok);
-            if (ok) {
-                setIsConnected(false);
-                setIsLoading(false);
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                ipcRenderer.sendMessage('tray-icon', 'disconnected');
-            }
-        });
-
         ipcRenderer.on('guide-toast', (message: any) => {
             defaultToast(message, 'GUIDE', 7000);
         });
@@ -179,7 +166,6 @@ const useLanding = () => {
                     const signal = controller.signal;
                     const timeoutId = setTimeout(() => {
                         controller.abort();
-                        console.log('Fetching aborted due to timeout.');
                     }, 5000);
                     const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
                         signal
@@ -265,20 +251,47 @@ const useLanding = () => {
         } else if (isConnected && ipInfo?.countryCode) {
             setStatusText(`${appLang?.status?.connected_confirm}`);
         } else if (isConnected && !ipInfo?.countryCode && ipData) {
-            setStatusText(`${appLang?.status?.ip_check}`);
+            if (proxyStatus !== 'none') {
+                setStatusText(`${appLang?.status?.ip_check}`);
+            } else {
+                setStatusText(`${appLang?.status?.connected}`);
+            }
         } else if (isConnected && !ipData) {
             setStatusText(`${appLang?.status?.connected}`);
         } else {
             setStatusText(`${appLang?.status?.disconnected}`);
         }
-    }, [isLoading, isConnected, ipInfo, ipData]);
+
+        ipcRenderer.on('wp-start', (ok) => {
+            if (ok) {
+                setIsLoading(false);
+                setIsConnected(true);
+                if (proxyStatus !== '') {
+                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
+                }
+            }
+        });
+
+        ipcRenderer.on('wp-end', (ok) => {
+            if (ok) {
+                setIsConnected(false);
+                setIsLoading(false);
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
+                if (proxyStatus !== '') {
+                    ipcRenderer.sendMessage('tray-icon', 'disconnected');
+                }
+            }
+        });
+    }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const onChange = useCallback(() => {
         if (!online) {
             checkInternetToast();
         } else {
             if (isLoading) {
-                console.log('🚀 - onChange - isLoading:', isLoading);
                 ipcRenderer.sendMessage('wp-end');
             } else if (isConnected) {
                 ipcRenderer.sendMessage('wp-end');
@@ -288,12 +301,13 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
+                setProxyStatus(proxyMode);
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
                 setPing(0);
             }
         }
-    }, [online, isLoading, isConnected, setIsLoading]);
+    }, [online, isLoading, isConnected, setIsLoading, proxyMode]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter') {
@@ -363,7 +377,8 @@ const useLanding = () => {
         handleOnSwipedLeft,
         handleOnSwipedRight,
         handleOnClickIp,
-        handleOnClickPing
+        handleOnClickPing,
+        proxyStatus
     };
 };
 export default useLanding;
