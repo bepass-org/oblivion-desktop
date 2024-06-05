@@ -251,7 +251,16 @@ if (!gotTheLock) {
                             key: 'connectToggle',
                             msg: 'Connect Tray Click!'
                         });
-                        appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext((connectLabel === 'Connect' ? 'Connecting ...' : 'Disconnecting ...'), false)));
+                        appIcon.setContextMenu(
+                            Menu.buildFromTemplate(
+                                trayMenuContext(
+                                    connectLabel === 'Connect'
+                                        ? 'Connecting ...'
+                                        : 'Disconnecting ...',
+                                    false
+                                )
+                            )
+                        );
                         openOrShowToggle('/');
                     }
                 },
@@ -330,7 +339,14 @@ if (!gotTheLock) {
             });*/
             customEvent.on('tray-icon', (newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
-                appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext((newStatus !== 'disconnected' ? '✓ Connected' : 'Connect'), true)));
+                appIcon.setContextMenu(
+                    Menu.buildFromTemplate(
+                        trayMenuContext(
+                            newStatus !== 'disconnected' ? '✓ Connected' : 'Connect',
+                            true
+                        )
+                    )
+                );
             });
         });
 
