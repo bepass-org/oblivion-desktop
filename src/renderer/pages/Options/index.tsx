@@ -178,7 +178,11 @@ export default function Options() {
                     </div>
                 </div>
             </div>
-            <Toaster position='bottom-center' reverseOrder={false} containerStyle={{ bottom: '70px' }} />
+            <Toaster
+                position='bottom-center'
+                reverseOrder={false}
+                containerStyle={{ bottom: '70px' }}
+            />
         </>
     );
 }

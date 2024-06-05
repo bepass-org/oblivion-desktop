@@ -220,7 +220,11 @@ export default function Options() {
                 isOpen={showRoutingRulesModal}
                 onClose={onCloseRoutingRulesModal}
             />
-            <Toaster position='bottom-center' reverseOrder={false} containerStyle={{ bottom: '70px' }} />
+            <Toaster
+                position='bottom-center'
+                reverseOrder={false}
+                containerStyle={{ bottom: '70px' }}
+            />
         </>
     );
 }
