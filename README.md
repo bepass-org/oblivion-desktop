@@ -76,7 +76,7 @@ technology
             <td>
                 :white_check_mark:  Minimize<br>
                 :white_check_mark: BootUp<br>
-                :white_large_square: Shortcuts
+                :white_check_mark: Shortcuts
             </td>
         </tr>
         <tr>
@@ -96,7 +96,7 @@ technology
                 :white_check_mark: Dark<br>
                 :white_check_mark: RTL<br>
                 :white_check_mark: LTR<br>
-                :white_large_square: Auto
+                :white_check_mark: Auto
             </td>
         </tr>
         <tr>
