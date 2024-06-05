@@ -89,7 +89,7 @@ Cloudflare Warp فراهم می‌کند.
             <td>
                 :white_check_mark:  کمینه‌کردن<br>
                 :white_check_mark: راه‌اندازی خودکار<br>
-                :white_large_square: میانبرها
+                :white_check_mark: میانبرها
             </td>
         </tr>
         <tr>
@@ -109,7 +109,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: تاریک<br>
                 :white_check_mark: راست‌چین<br>
                 :white_check_mark: چپ‌چین<br>
-                :white_large_square: خودکار
+                :white_check_mark: خودکار
             </td>
         </tr>
         <tr>
