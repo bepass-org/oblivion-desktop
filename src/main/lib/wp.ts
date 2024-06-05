@@ -106,47 +106,47 @@ export const setStuffPath = (args: string[]) => {
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         // TODO locale
-        return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`;
+        return `Port ${port} is being used by another program; Change it.`;
     },
     'Only one usage of each socket address': () => {
         // TODO locale
-        return `از یک پورت دیگر استفاده نمایید.`;
+        return `Use another port.`;
     },
     'Invalid license': () => {
         // TODO locale
-        return `لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.`;
+        return `the entered license is not valid; Remove it.`;
     },
     'Too many connected devices': () => {
         // TODO locale
-        return `سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.`;
+        return `the license usage limit is filled; Remove it.`;
     },
     'Access is denied': () => {
         // TODO locale
-        return `برنامه را به‌صورت Run as Administrator اجرا کنید.`;
+        return `Run the program as Run as Administrator.`;
     },
     'failed to set endpoint': () => {
         // TODO locale
-        return `خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.`;
+        return `Check or replace the endpoint value, or try again.`;
     },
     'load primary warp identity': () => {
         // TODO locale
-        return `خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.`;
+        return `Authentication error in cloudflare; Try again.`;
     },
     'script failed to run': () => {
         // TODO locale
-        return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
+        return `the program encountered an error; Try again.`;
     },
     'object null is not iterable': () => {
         // TODO locale
-        return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
+        return `the program encountered an error; Try again.`;
     },
     'parse args: unknown flag': () => {
         // TODO locale
-        return `یک دستور نادرست در پس‌زمینه اجرا شده است.`;
+        return `an invalid command was executed in the background.`;
     },
     'context deadline exceeded': () => {
         // TODO locale
-        return `مهلت اتصال پایان یافت؛ دوباره تلاش کنید.`;
+        return `Connection timed out; Try again.`;
     }
 };
 

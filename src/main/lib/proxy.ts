@@ -256,7 +256,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 log.error(`error while trying to set system proxy: , ${error}`);
                 reject(error);
                 // TODO locale
-                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -288,7 +288,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     // TODO locale
                     ipcEvent?.reply(
                         'guide-toast',
-                        `پیکربندی پروکسی برای ${hardwarePort} با خطا روبرو شد!`
+                        `Error configuring proxy for ${hardwarePort}!`
                     );
                 }
             });
@@ -320,7 +320,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         .catch(() => {
                             log.error('Failed to enable proxy for KDE');
                             // TODO locale
-                            ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                            ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
                             reject();
                         });
                     break;
@@ -328,7 +328,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 default:
                     log.error('Desktop Environment not supported.');
                     // TODO locale
-                    ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                    ipcEvent?.reply('guide-toast', `Desktop environment is not supported!`);
                     reject();
                     break;
             }
@@ -346,7 +346,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             // TODO locale
             ipcEvent?.reply(
                 'guide-toast',
-                `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
+                `Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.`
             );
             resolve();
         });
@@ -391,7 +391,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 log.error(`error while trying to disable system proxy: , ${error}`);
                 reject(error);
                 // TODO locale
-                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -411,7 +411,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                     log.error(`error while trying to disable system proxy: , ${error}`);
                     reject(error);
                     // TODO locale
-                    ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                    ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
                 }
             });
             resolve();
@@ -448,7 +448,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 default:
                     log.error('Desktop Environment not supported.');
                     // TODO locale
-                    ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                    ipcEvent?.reply('guide-toast', `The desktop environment is not supported!`);
                     reject();
                     break;
             }
