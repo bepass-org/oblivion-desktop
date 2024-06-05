@@ -16,3 +16,11 @@ ipcRenderer.sendMessage('ipc-example', ['ping']);
 setTimeout(() => {
     ipcRenderer.sendMessage('ipc-example', ['ping2']);
 }, 1000);
+
+// tray-menu example(listening for tryMenu click on renderer)
+ipcRenderer.on('tray-menu', (args) => {
+    console.log('🚀 ~ file: index.tsx:22 ~ args:', args);
+});
+
+// ! this needs to be executed for it to work so make sure you put in somewhere that gets executed (like useEffect)
+ipcRenderer.sendMessage('tray-menu');

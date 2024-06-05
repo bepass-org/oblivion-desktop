@@ -9,7 +9,17 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 
-import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } from 'electron';
+import {
+    app,
+    BrowserWindow,
+    ipcMain,
+    screen,
+    shell,
+    Menu,
+    Tray,
+    nativeImage,
+    IpcMainEvent
+} from 'electron';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
@@ -219,6 +229,14 @@ if (!gotTheLock) {
                     }
                 }
             });
+
+            let trayMenuEvent: IpcMainEvent;
+            ipcMain.on('tray-menu', (event, args) => {
+                trayMenuEvent = event;
+                console.log('🚀 ~ file: main.ts:212 ~ args:', args);
+                console.log('🚀 ~ file: main.ts:212 ~ event:', event);
+            });
+
             const contextMenu = Menu.buildFromTemplate([
                 {
                     label: appTitle,
@@ -229,6 +247,27 @@ if (!gotTheLock) {
                         } else {
                             mainWindow.show();
                         }
+                    }
+                },
+                { label: '', type: 'separator' },
+                {
+                    label: 'Connect',
+                    type: 'normal',
+                    click: async () => {
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'Connect',
+                            msg: 'Connect Tray Click!'
+                        });
+                    }
+                },
+                {
+                    label: 'Disconnect',
+                    type: 'normal',
+                    click: async () => {
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'Disconnect',
+                            msg: 'Disconnect Tray Click!'
+                        });
                     }
                 },
                 /*{ label: '', type: 'separator' },
