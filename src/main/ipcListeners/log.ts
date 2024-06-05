@@ -62,10 +62,10 @@ export const logMetadata = () => {
         });
 };
 
-ipcMain.on('getLogs', async (event) => {
+ipcMain.on('get-logs', async (event) => {
     const bool = await doesFileExist(logPath);
     if (bool) {
         const data = await readLogFile();
-        event.reply('getLogs', data);
+        event.reply('get-logs', data);
     }
 });

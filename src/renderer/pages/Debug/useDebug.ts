@@ -13,9 +13,9 @@ const useDebug = () => {
 
     // asking for log every 1.5sec
     useEffect(() => {
-        ipcRenderer.sendMessage('getLogs');
+        ipcRenderer.sendMessage('get-logs');
         const intervalId = setInterval(() => {
-            ipcRenderer.sendMessage('getLogs');
+            ipcRenderer.sendMessage('get-logs');
         }, 1500);
         // Cleanup function to clear the interval
         return () => clearInterval(intervalId);
@@ -42,7 +42,7 @@ const useDebug = () => {
     useGoBackOnEscape();
 
     const userFlag = '<USERNAME>';
-    ipcRenderer.on('getLogs', (data) => {
+    ipcRenderer.on('get-logs', (data) => {
         let logs = String(data);
         // protect user privacy
         // @ts-ignore
