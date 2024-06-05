@@ -128,7 +128,7 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.open_login_desc}</div>
                     </div>
-                    <div
+                    {/*<div
                         role='presentation'
                         className='item'
                         onClick={onClickSystemTrayButton}
@@ -151,7 +151,7 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.system_tray_desc}</div>
-                    </div>
+                    </div>*/}
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
