@@ -284,10 +284,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         `Error while trying to set system proxy for ${hardwarePort}: ${error}`
                     );
                     // TODO locale
-                    ipcEvent?.reply(
-                        'guide-toast',
-                        `Error configuring proxy for ${hardwarePort}!`
-                    );
+                    ipcEvent?.reply('guide-toast', `Error configuring proxy for ${hardwarePort}!`);
                 }
             });
             resolve();
@@ -318,7 +315,10 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         .catch(() => {
                             log.error('Failed to enable proxy for KDE');
                             // TODO locale
-                            ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
+                            ipcEvent?.reply(
+                                'guide-toast',
+                                `Proxy configuration encountered an error!`
+                            );
                             reject();
                         });
                     break;
