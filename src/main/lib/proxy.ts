@@ -194,10 +194,8 @@ const setRoutingRules = (value: any) => {
             .replace(/range:/g, '')
             .replace(/\n|<br>/g, '')
             .trim();
-        log.info('Routing Rules: Customized');
         return defValue + ',' + myRules;
     } else {
-        log.info('Routing Rules: Default');
         return defValue;
     }
 };
