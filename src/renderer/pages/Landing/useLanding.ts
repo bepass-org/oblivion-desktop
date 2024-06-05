@@ -109,8 +109,10 @@ const useLanding = () => {
             defaultToast(message, 'GUIDE', 7000);
         });
 
-        ipcRenderer.on('tray-menu', (args) => {
-            onChange();
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'Connect') {
+                onChange();
+            }
         });
 
         window.addEventListener('online', () => setOnline(true));
