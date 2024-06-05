@@ -3,6 +3,7 @@ import { getLang } from '../../lib/loaders';
 import { ipcRenderer, username } from '../../lib/utils';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { defaultToast } from '../../lib/toasts';
+import { useNavigate } from 'react-router-dom';
 
 const useDebug = () => {
     const [log, setLog] = useState<string>('');
@@ -10,9 +11,16 @@ const useDebug = () => {
     const logRef = useRef<HTMLParagraphElement>(null);
     //const [isBottom, setIsBottom] = useState(true);
     const appLang = getLang();
+    const navigate = useNavigate();
 
-    // asking for log every 1.5sec
     useEffect(() => {
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
+        });
+
+        // asking for log every 1.5sec
         ipcRenderer.sendMessage('get-logs');
         const intervalId = setInterval(() => {
             ipcRenderer.sendMessage('get-logs');

@@ -6,11 +6,23 @@ import ircf from '../../../../assets/img/ircf.png';
 import twitter from '../../../../assets/img/twitter.png';
 import { getLang } from '../../lib/loaders';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
+import { useEffect } from 'react';
+import { ipcRenderer } from '../../lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 export default function About() {
     const appLang = getLang();
+    const navigate = useNavigate();
 
     useGoBackOnEscape();
+
+    useEffect(() => {
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
+        });
+    }, []);
 
     return (
         <>
