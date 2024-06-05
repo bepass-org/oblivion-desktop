@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -7,6 +7,7 @@ import { getLang, loadLang } from '../../lib/loaders';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { loadingToast } from '../../lib/toasts';
+import { ipcRenderer } from '../../lib/utils';
 
 const useOptions = () => {
     useGoBackOnEscape();
@@ -22,6 +23,8 @@ const useOptions = () => {
     const { targetId } = state || {};
     const langRef = useRef<HTMLDivElement>(null);
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(function () {
@@ -49,6 +52,12 @@ const useOptions = () => {
         });
         settings.get('openAtLogin').then((value) => {
             setOpenAtLogin(typeof value === 'undefined' ? defaultSettings.openAtLogin : value);
+        });
+
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
         });
     }, []);
 

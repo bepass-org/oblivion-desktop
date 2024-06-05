@@ -239,6 +239,10 @@ if (!gotTheLock) {
                     type: 'normal',
                     click: () => {
                         openOrShowToggle();
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'changePage',
+                            msg: '/'
+                        });
                     }
                 },
                 { label: '', type: 'separator' },
@@ -250,10 +254,86 @@ if (!gotTheLock) {
                     click: async () => {
                         openOrShowToggle();
                         trayMenuEvent.reply('tray-menu', {
-                            key: 'Connect',
+                            key: 'connectToggle',
                             msg: 'Connect Tray Click!'
                         });
                         appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext((connectLabel === 'Connect' ? 'Connecting ...' : 'Disconnecting ...'), false)));
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'changePage',
+                            msg: '/'
+                        });
+                    }
+                },
+                {
+                    label: 'Settings',
+                    submenu: [
+                        {
+                            label: 'Warp',
+                            type: 'normal',
+                            click: async () => {
+                                openOrShowToggle();
+                                trayMenuEvent.reply('tray-menu', {
+                                    key: 'changePage',
+                                    msg: '/settings'
+                                });
+                            }
+                        },
+                        {
+                            label: 'Network',
+                            type: 'normal',
+                            click: async () => {
+                                openOrShowToggle();
+                                trayMenuEvent.reply('tray-menu', {
+                                    key: 'changePage',
+                                    msg: '/network'
+                                });
+                            }
+                        },
+                        {
+                            label: 'Scanner',
+                            type: 'normal',
+                            click: async () => {
+                                openOrShowToggle();
+                                trayMenuEvent.reply('tray-menu', {
+                                    key: 'changePage',
+                                    msg: '/scanner'
+                                });
+                            }
+                        },
+                        {
+                            label: 'Application',
+                            type: 'normal',
+                            click: async () => {
+                                openOrShowToggle();
+                                trayMenuEvent.reply('tray-menu', {
+                                    key: 'changePage',
+                                    msg: '/options'
+                                });
+                            }
+                        }
+                    ]
+                },
+                { label: '', type: 'separator' },
+                {
+                    label: 'About',
+                    type: 'normal',
+                    click: async () => {
+                        openOrShowToggle();
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'changePage',
+                            msg: '/about'
+                        });
+                    }
+                },
+                {
+                    label: 'Log',
+                    type: 'normal',
+                    click: async () => {
+                        openOrShowToggle();
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'changePage',
+                            msg: '/debug'
+                        });
                     }
                 },
                 { label: '', type: 'separator' },

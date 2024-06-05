@@ -9,6 +9,7 @@ import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer, isDev, onEscapeKeyPressed } from '../../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import packageJsonData from '../../../../package.json';
+import { useNavigate } from 'react-router-dom';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -51,6 +52,8 @@ const useLanding = () => {
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
+
+    const navigate = useNavigate();
 
     const fetchReleaseVersion = async () => {
         if (!isDev()) {
@@ -99,6 +102,12 @@ const useLanding = () => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
 
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
+        });
+
         cachedIpInfo = null;
         if (canCheckNewVer) {
             fetchReleaseVersion();
@@ -110,8 +119,11 @@ const useLanding = () => {
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'Connect') {
+            if (args.key === 'connectToggle') {
                 onChange();
+            }
+            if (args.key === 'changePage') {
+                navigate(args.msg);
             }
         });
 

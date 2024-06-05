@@ -6,6 +6,8 @@ import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { defaultSettings } from '../../../defaultSettings';
+import { useNavigate } from 'react-router-dom';
+import { ipcRenderer } from '../../lib/utils';
 
 const useOptions = () => {
     const { isConnected, isLoading } = useStore();
@@ -24,6 +26,8 @@ const useOptions = () => {
     const [dns, setDns] = useState<undefined | boolean>();
     const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         settings.get('ipData').then((value) => {
@@ -49,6 +53,12 @@ const useOptions = () => {
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+        });
+
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
         });
     }, []);
 

@@ -5,6 +5,8 @@ import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
+import { useNavigate } from 'react-router-dom';
+import { ipcRenderer } from '../../lib/utils';
 
 const useScanner = () => {
     const { isConnected, isLoading } = useStore();
@@ -15,6 +17,8 @@ const useScanner = () => {
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
     const [reserved, setReserved] = useState<undefined | boolean>();
+
+    const navigate = useNavigate();
 
     useGoBackOnEscape();
 
@@ -30,6 +34,12 @@ const useScanner = () => {
         });
         settings.get('reserved').then((value) => {
             setReserved(typeof value === 'undefined' ? defaultSettings.reserved : value);
+        });
+
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
         });
     }, []);
 
