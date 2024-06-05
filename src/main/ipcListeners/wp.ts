@@ -13,6 +13,7 @@ import { getUserSettings, handleWpErrors, setStuffPath } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
+import toast from 'react-hot-toast';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -51,6 +52,7 @@ ipcMain.on('wp-start', async (event) => {
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
             customEvent.emit('tray-icon', `connected-${proxyMode}`);
+            toast.remove('GUIDE');
         }
     };
 
