@@ -321,7 +321,6 @@ const useLanding = () => {
                 });
                 setProxyStatus(proxyMode);
                 ipcRenderer.sendMessage('wp-start');
-                toast.remove('GUIDE');
                 setIsLoading(true);
                 setPing(0);
             }
