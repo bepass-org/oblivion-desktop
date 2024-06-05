@@ -253,7 +253,7 @@ if (!gotTheLock) {
                             key: 'Connect',
                             msg: 'Connect Tray Click!'
                         });
-                        appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext('In Progress ...', false)));
+                        appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext((connectLabel === 'Connect' ? 'Connecting ...' : 'Disconnecting ...'), false)));
                     }
                 },
                 { label: '', type: 'separator' },
