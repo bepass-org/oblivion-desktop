@@ -3,6 +3,7 @@ import Nav from '../../components/Nav';
 import packageJsonData from '../../../../package.json';
 import gitHubMark from '../../../../assets/img/github-mark.png';
 import ircf from '../../../../assets/img/ircf.png';
+import twitter from '../../../../assets/img/twitter.png';
 import { getLang } from '../../lib/loaders';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 
@@ -43,6 +44,15 @@ export default function About() {
                                 </div>
                                 <div className='host'>Website</div>
                                 <div className='name'>ircf.space</div>
+                            </div>
+                        </a>
+                        <a href='https://twitter.com/ircfspace' target='_blank' rel='noreferrer'>
+                            <div className='item'>
+                                <div className='icon'>
+                                    <img src={twitter} alt='ircf' />
+                                </div>
+                                <div className='host'>Twitter</div>
+                                <div className='name'>ircfspace</div>
                             </div>
                         </a>
                         <p className='text-center'>
