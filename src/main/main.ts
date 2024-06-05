@@ -152,8 +152,6 @@ if (!gotTheLock) {
             config.webPreferences.devToolsKeyCombination = true;
         }
 
-        let canOpenFromSystem = true;
-
         function createMainWindow() {
             if (!mainWindow) {
                 mainWindow = new BrowserWindow(config);
@@ -164,7 +162,6 @@ if (!gotTheLock) {
                     if (!mainWindow) {
                         throw new Error('"mainWindow" is not defined');
                     }
-                    // await settings.get('systemTray')
                     if (process.env.START_MINIMIZED) {
                         mainWindow.minimize();
                     } else {
@@ -178,8 +175,9 @@ if (!gotTheLock) {
                     // mainWindow.webContents.closeDevTools();
                 });
 
-                mainWindow.on('close', async () => {
-                    canOpenFromSystem = false;
+                mainWindow.on('close', async (e: any) => {
+                    e.preventDefault();
+                    mainWindow?.hide();
                 });
 
                 mainWindow.on('closed', async () => {
@@ -188,9 +186,6 @@ if (!gotTheLock) {
 
                 mainWindow.on('minimize', async (e: any) => {
                     e.preventDefault();
-                    if (await settings.get('systemTray')) {
-                        mainWindow?.hide();
-                    }
                 });
 
                 const menuBuilder = new MenuBuilder(mainWindow);
@@ -219,11 +214,15 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
-        const openOrShowToggle = () => {
+        const openOrShowToggle = (redirect: any) => {
             if (!mainWindow) {
                 createMainWindow();
             } else {
                 mainWindow.show();
+                trayMenuEvent.reply('tray-menu', {
+                    key: 'changePage',
+                    msg: redirect
+                });
             }
         };
 
@@ -238,11 +237,7 @@ if (!gotTheLock) {
                     label: appTitle,
                     type: 'normal',
                     click: () => {
-                        openOrShowToggle();
-                        trayMenuEvent.reply('tray-menu', {
-                            key: 'changePage',
-                            msg: '/'
-                        });
+                        openOrShowToggle('/');
                     }
                 },
                 { label: '', type: 'separator' },
@@ -252,16 +247,12 @@ if (!gotTheLock) {
                     type: 'normal',
                     enabled: connectEnable,
                     click: async () => {
-                        openOrShowToggle();
                         trayMenuEvent.reply('tray-menu', {
                             key: 'connectToggle',
                             msg: 'Connect Tray Click!'
                         });
                         appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext((connectLabel === 'Connect' ? 'Connecting ...' : 'Disconnecting ...'), false)));
-                        trayMenuEvent.reply('tray-menu', {
-                            key: 'changePage',
-                            msg: '/'
-                        });
+                        openOrShowToggle('/');
                     }
                 },
                 {
@@ -271,44 +262,28 @@ if (!gotTheLock) {
                             label: 'Warp',
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle();
-                                trayMenuEvent.reply('tray-menu', {
-                                    key: 'changePage',
-                                    msg: '/settings'
-                                });
+                                openOrShowToggle('/settings');
                             }
                         },
                         {
                             label: 'Network',
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle();
-                                trayMenuEvent.reply('tray-menu', {
-                                    key: 'changePage',
-                                    msg: '/network'
-                                });
+                                openOrShowToggle('/network');
                             }
                         },
                         {
                             label: 'Scanner',
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle();
-                                trayMenuEvent.reply('tray-menu', {
-                                    key: 'changePage',
-                                    msg: '/scanner'
-                                });
+                                openOrShowToggle('/scanner');
                             }
                         },
                         {
                             label: 'Application',
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle();
-                                trayMenuEvent.reply('tray-menu', {
-                                    key: 'changePage',
-                                    msg: '/options'
-                                });
+                                openOrShowToggle('/options');
                             }
                         }
                     ]
@@ -318,22 +293,14 @@ if (!gotTheLock) {
                     label: 'About',
                     type: 'normal',
                     click: async () => {
-                        openOrShowToggle();
-                        trayMenuEvent.reply('tray-menu', {
-                            key: 'changePage',
-                            msg: '/about'
-                        });
+                        openOrShowToggle('/about');
                     }
                 },
                 {
                     label: 'Log',
                     type: 'normal',
                     click: async () => {
-                        openOrShowToggle();
-                        trayMenuEvent.reply('tray-menu', {
-                            key: 'changePage',
-                            msg: '/debug'
-                        });
+                        openOrShowToggle('/debug');
                     }
                 },
                 { label: '', type: 'separator' },
@@ -349,14 +316,8 @@ if (!gotTheLock) {
 
         const systemTrayMenu = (status: string) => {
             appIcon = new Tray(trayIconChanger(status));
-            appIcon.on('click', () => {
-                if (canOpenFromSystem) {
-                    if (!mainWindow) {
-                        createMainWindow();
-                    } else {
-                        mainWindow.show();
-                    }
-                }
+            appIcon.on('click', async () => {
+                openOrShowToggle('/');
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext('Connect', true)));
