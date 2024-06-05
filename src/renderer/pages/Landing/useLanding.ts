@@ -109,6 +109,10 @@ const useLanding = () => {
             defaultToast(message, 'GUIDE', 7000);
         });
 
+        ipcRenderer.on('tray-menu', (args) => {
+            onChange();
+        });
+
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
         return () => {
@@ -303,6 +307,7 @@ const useLanding = () => {
                 });
                 setProxyStatus(proxyMode);
                 ipcRenderer.sendMessage('wp-start');
+                toast.remove('GUIDE');
                 setIsLoading(true);
                 setPing(0);
             }

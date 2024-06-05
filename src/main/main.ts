@@ -209,6 +209,7 @@ if (!gotTheLock) {
         createMainWindow();
 
         let appIcon: any = null;
+        //let contextMenu: any = null;
 
         const trayIconChanger = (status: string) => {
             const nativeImageIcon = nativeImage.createFromPath(
@@ -216,6 +217,54 @@ if (!gotTheLock) {
             );
             // Resize icon for macOS tray compatibility
             return nativeImageIcon.resize({ width: 16, height: 16 });
+        };
+
+        const openOrShowToggle = () => {
+            if (!mainWindow) {
+                createMainWindow();
+            } else {
+                mainWindow.show();
+            }
+        };
+
+        let trayMenuEvent: IpcMainEvent;
+        ipcMain.on('tray-menu', (event, args) => {
+            trayMenuEvent = event;
+        });
+
+        const trayMenuContext: any = (connectLabel: string, connectEnable: boolean) => {
+            return [
+                {
+                    label: appTitle,
+                    type: 'normal',
+                    click: () => {
+                        openOrShowToggle();
+                    }
+                },
+                { label: '', type: 'separator' },
+                {
+                    id: 'connectToggle',
+                    label: connectLabel,
+                    type: 'normal',
+                    enabled: connectEnable,
+                    click: async () => {
+                        openOrShowToggle();
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'Connect',
+                            msg: 'Connect Tray Click!'
+                        });
+                        appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext('In Progress ...', false)));
+                    }
+                },
+                { label: '', type: 'separator' },
+                {
+                    label: 'Exit',
+                    type: 'normal',
+                    click: async () => {
+                        await exitTheApp(mainWindow, regeditVbsDirPath);
+                    }
+                }
+            ];
         };
 
         const systemTrayMenu = (status: string) => {
@@ -229,106 +278,8 @@ if (!gotTheLock) {
                     }
                 }
             });
-
-            let trayMenuEvent: IpcMainEvent;
-            ipcMain.on('tray-menu', (event, args) => {
-                trayMenuEvent = event;
-                console.log('🚀 ~ file: main.ts:212 ~ args:', args);
-                console.log('🚀 ~ file: main.ts:212 ~ event:', event);
-            });
-
-            const contextMenu = Menu.buildFromTemplate([
-                {
-                    label: appTitle,
-                    type: 'normal',
-                    click: () => {
-                        if (!mainWindow) {
-                            createMainWindow();
-                        } else {
-                            mainWindow.show();
-                        }
-                    }
-                },
-                { label: '', type: 'separator' },
-                {
-                    label: 'Connect',
-                    type: 'normal',
-                    click: async () => {
-                        trayMenuEvent.reply('tray-menu', {
-                            key: 'Connect',
-                            msg: 'Connect Tray Click!'
-                        });
-                    }
-                },
-                {
-                    label: 'Disconnect',
-                    type: 'normal',
-                    click: async () => {
-                        trayMenuEvent.reply('tray-menu', {
-                            key: 'Disconnect',
-                            msg: 'Disconnect Tray Click!'
-                        });
-                    }
-                },
-                /*{ label: '', type: 'separator' },
-                {
-                    id: 'serviceStatus',
-                    label: '🔘 Disconnected',
-                    click: () => {
-                        if (!mainWindow) {
-                            createMainWindow();
-                        } else {
-                            mainWindow.show();
-                        }
-                        ipcMain.on('tray-menu', async (event, arg) => {
-                            event.reply('tray-menu', 'serviceStatus', arg);
-                        });
-                    }
-                },
-                { label: '', type: 'separator' },
-                {
-                    id: 'proxyMode',
-                    label: 'Proxy Mode',
-                    submenu: [
-                        {
-                            label: 'Set System Proxy',
-                            type: 'checkbox',
-                            checked: true,
-                            click: async () => {
-                                //await enableProxy();
-                            }
-                        },
-                        {
-                            label: 'Disable',
-                            type: 'checkbox',
-                            checked: false,
-                            click: async () => {
-                                //await disableProxy();
-                            }
-                        }
-                    ]
-                },*/
-                { label: '', type: 'separator' },
-                {
-                    label: 'Exit',
-                    type: 'normal',
-                    click: async () => {
-                        await exitTheApp(mainWindow, regeditVbsDirPath);
-                    }
-                }
-            ]);
-            /*const serviceStatusMenu = contextMenu.items.find(item => item.id === 'serviceStatus');
-            const proxyModeMenu = contextMenu.items.find(item => item.id === 'proxyMode');
-            customEvent.on('tray-icon', (newStatus) => {
-                if (serviceStatusMenu) {
-                    serviceStatusMenu.label = (newStatus !== 'disconnected' ? '🟢 Connected' : '🔘 Disconnected');
-                }
-                if (proxyModeMenu && proxyModeMenu.submenu) {
-                    proxyModeMenu.submenu.items[0].checked = true;
-                }
-            });*/
             appIcon.setToolTip(appTitle);
-            appIcon.setContextMenu(contextMenu);
+            appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext('Connect', true)));
         };
 
         app?.whenReady().then(() => {
@@ -338,6 +289,7 @@ if (!gotTheLock) {
             });*/
             customEvent.on('tray-icon', (newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
+                appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext((newStatus !== 'disconnected' ? '✓ Connected' : 'Connect'), true)));
             });
         });
 
