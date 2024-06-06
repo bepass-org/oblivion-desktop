@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 import enUS from './en';
 import faIR from './fa';
 import ruRU from './ru';
@@ -8,9 +10,7 @@ import { defaultSettings } from '../defaultSettings';
 type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
 type directionType = 'rtl' | 'ltr';
 
-const lang = (
-    localStorage.getItem('OBLIVION_LNG') ? localStorage.getItem('OBLIVION_LNG') : defaultSettings.lang
-) as LanguageType;
+const lang = (Cookies.get('lang') ? Cookies.get('lang') : defaultSettings.lang) as LanguageType;
 
 export { lang };
 
@@ -26,7 +26,10 @@ const getDirection = () => {
     return direction[lang] as directionType;
 };
 
-export { getDirection };
+const getDirectionByLang = (language: LanguageType) => {
+    return direction[language] as directionType;
+};
+export { getDirection, getDirectionByLang };
 
 const getLanguageName = (): LanguageType => {
     return lang;
@@ -53,13 +56,17 @@ const translate = {
 };
 
 const getTranslate = () => {
-    return translate[lang];
+    const language = (
+        Cookies.get('lang') ? Cookies.get('lang') : defaultSettings.lang
+    ) as LanguageType;
+
+    return translate[language];
 };
 
 export { getTranslate };
 
 const changeLang = (language: string) => {
-    localStorage.setItem('OBLIVION_LNG', language);
+    Cookies.set('lang', language);
     window.location.reload();
 };
 
