@@ -4,6 +4,7 @@ import fs from 'fs';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { doesDirectoryExist, removeDirIfExists } from './utils';
 import { stuffPath } from '../ipcListeners/wp';
+import { getTranslate } from '../../localization';
 
 export const getUserSettings = async () => {
     const randomCountry = () => {
@@ -103,10 +104,12 @@ export const setStuffPath = (args: string[]) => {
 };
 
 // ! make sure you get the args like ({ port = '' })
+const appLang = getTranslate();
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         // TODO locale
-        return `Port ${port} is being used by another program; Change it.`;
+        // return `Port ${port} is being used by another program; Change it.`;
+        return appLang.log.error_access_denied;
     },
     'Only one usage of each socket address': () => {
         // TODO locale
@@ -142,10 +145,12 @@ export const wpErrorTranslation: any = {
     },
     'parse args: unknown flag': () => {
         // TODO locale
-        return `an invalid command was executed in the background.`;
+        // return `an invalid command was executed in the background.`;
+        return `An invalid command was executed in the background.`;
     },
     'context deadline exceeded': () => {
         // TODO locale
+        // return `Connection timed out; Try again.`;
         return `Connection timed out; Try again.`;
     }
 };

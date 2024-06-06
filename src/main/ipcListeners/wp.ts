@@ -1,19 +1,18 @@
 // warp-plus
 
+import toast from 'react-hot-toast';
 import { app, ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import fs from 'fs';
-import { doesDirectoryExist, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
-import { getUserSettings, handleWpErrors, setStuffPath } from '../lib/wp';
+import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
-import toast from 'react-hot-toast';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
