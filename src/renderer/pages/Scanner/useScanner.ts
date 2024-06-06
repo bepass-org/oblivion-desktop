@@ -1,16 +1,16 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
-import { useNavigate } from 'react-router-dom';
 import { ipcRenderer } from '../../lib/utils';
+import { getTranslate } from '../../../localization';
 
 const useScanner = () => {
     const { isConnected, isLoading } = useStore();
-    const [appLang] = useState(getLang());
+    const [appLang] = useState(getTranslate());
 
     const [endpoint, setEndpoint] = useState<string>();
     const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);

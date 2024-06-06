@@ -1,15 +1,15 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
-import { useNavigate } from 'react-router-dom';
+import { getTranslate } from '../../../localization';
 
 const useSettings = () => {
-    const appLang = getLang();
+    const appLang = getTranslate();
     const { isConnected, isLoading } = useStore();
 
     //const [scan, setScan] = useState(true);

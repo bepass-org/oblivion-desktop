@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { getLang } from '../../../lib/loaders';
 import { settings } from '../../../lib/settings';
+import { getTranslate } from '../../../../localization';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -21,7 +21,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         setTimeout(onClose, 300);
     }, [onClose]);
 
-    const appLang = getLang();
+    const appLang = getTranslate();
 
     const validateRules = useCallback((textareaContent: string): string => {
         if (textareaContent === '') {

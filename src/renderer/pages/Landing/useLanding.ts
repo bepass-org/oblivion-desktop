@@ -1,7 +1,6 @@
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import { settings } from '../../lib/settings';
@@ -9,7 +8,7 @@ import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer, isDev, onEscapeKeyPressed } from '../../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import packageJsonData from '../../../../package.json';
-import { useNavigate } from 'react-router-dom';
+import { getDirection, getLanguageName, getTranslate } from '../../../localization';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -19,7 +18,7 @@ let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 const useLanding = () => {
-    const appLang = getLang();
+    const appLang = getTranslate();
     const {
         isConnected,
         setIsConnected,
@@ -55,6 +54,28 @@ const useLanding = () => {
 
     const navigate = useNavigate();
 
+    const onChange = useCallback(() => {
+        if (!online) {
+            checkInternetToast();
+        } else {
+            if (isLoading) {
+                ipcRenderer.sendMessage('wp-end');
+            } else if (isConnected) {
+                ipcRenderer.sendMessage('wp-end');
+                setIsLoading(true);
+            } else {
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
+                setProxyStatus(proxyMode);
+                ipcRenderer.sendMessage('wp-start');
+                setIsLoading(true);
+                setPing(0);
+            }
+        }
+    }, [online, isLoading, isConnected, setIsLoading, proxyMode, setProxyStatus]);
+
     const fetchReleaseVersion = async () => {
         if (!isDev()) {
             try {
@@ -84,7 +105,7 @@ const useLanding = () => {
             setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
         });*/
         settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+            setLang(typeof value === 'undefined' ? getLanguageName() : value);
         });
         settings.get('ipData').then((value) => {
             setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
@@ -304,28 +325,6 @@ const useLanding = () => {
             }
         });
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
-
-    const onChange = useCallback(() => {
-        if (!online) {
-            checkInternetToast();
-        } else {
-            if (isLoading) {
-                ipcRenderer.sendMessage('wp-end');
-            } else if (isConnected) {
-                ipcRenderer.sendMessage('wp-end');
-                setIsLoading(true);
-            } else {
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                setProxyStatus(proxyMode);
-                ipcRenderer.sendMessage('wp-start');
-                setIsLoading(true);
-                setPing(0);
-            }
-        }
-    }, [online, isLoading, isConnected, setIsLoading, proxyMode]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Enter') {
