@@ -284,7 +284,10 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     log.error(
                         `Error while trying to set system proxy for ${hardwarePort}: ${error}`
                     );
-                    ipcEvent?.reply('guide-toast', appLang.log.error_configuring_proxy(hardwarePort));
+                    ipcEvent?.reply(
+                        'guide-toast',
+                        appLang.log.error_configuring_proxy(hardwarePort)
+                    );
                 }
             });
             resolve();
@@ -339,10 +342,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     } else {
         return new Promise<void>((resolve) => {
             log.error('system proxy is not supported on your platform yet...');
-            ipcEvent?.reply(
-                'guide-toast',
-                appLang.log.error_configuration_not_supported
-            );
+            ipcEvent?.reply('guide-toast', appLang.log.error_configuration_not_supported);
             resolve();
         });
     }

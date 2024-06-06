@@ -120,17 +120,20 @@ const persian: Language = {
         error_invalid_license: 'لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.',
         error_too_many_connected: 'سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.',
         error_access_denied: 'برنامه را به‌صورت Run as Administrator اجرا کنید.',
-        error_failed_set_endpoint: 'خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.',
+        error_failed_set_endpoint:
+            'خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.',
         error_warp_identity: 'خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.',
         error_script_failed: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_object_null: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
-        error_port_already_in_use: (value) => 'پورت {value}$ توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.',
+        error_port_already_in_use: (value) =>
+            'پورت {value}$ توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.',
         error_port_socket: 'از یک پورت دیگر استفاده نمایید.',
         error_unknown_flag: 'یک دستور نادرست در پس‌زمینه اجرا شده است.',
         error_deadline_exceeded: 'مهلت اتصال پایان یافت؛ دوباره تلاش کنید.',
         error_configuration_encountered: 'پیکربندی پروکسی با خطا مواجه شد!',
         error_desktop_not_supported: 'محیط دسکتاپ پشتیبانی نمی‌شود!',
-        error_configuration_not_supported: 'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
+        error_configuration_not_supported:
+            'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
         error_configuring_proxy: (value) => 'خطای پیکربندی پروکسی برای ${value}!'
     },
     about: {
