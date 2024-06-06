@@ -1,8 +1,8 @@
 import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
-import { getLang } from '../../../lib/loaders';
 import { ipcRenderer } from '../../../lib/utils';
+import { getTranslate } from '../../../../localization';
 
 interface RestoreModalProps {
     isOpen: boolean;
@@ -24,7 +24,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
-    const appLang = getLang();
+    const appLang = getTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, Fragment } from 'react';
+import { ChangeEvent, FC } from 'react';
 
 interface DropdownProps {
     label?: string;

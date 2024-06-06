@@ -9,14 +9,16 @@ import 'assets/css/style.css';
 
 import SplashScreen from './pages/SplashScreen';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
-import { loadLang, loadTheme } from './lib/loaders';
+import { loadTheme } from './lib/loaders';
 import AppRoutes from './routes';
+import { getDirection, getLanguageName } from '../localization';
 
 export default function App() {
     useEffect(() => {
         openDevtoolsOnCtrlShiftI();
         loadTheme();
-        loadLang();
+        document.documentElement.setAttribute('lang', getLanguageName());
+        document.documentElement.setAttribute('dir', getDirection());
     }, []);
 
     return (

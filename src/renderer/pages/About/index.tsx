@@ -1,17 +1,17 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Nav from '../../components/Nav';
 import packageJsonData from '../../../../package.json';
 import gitHubMark from '../../../../assets/img/github-mark.png';
 import ircf from '../../../../assets/img/ircf.png';
 import twitter from '../../../../assets/img/twitter.png';
-import { getLang } from '../../lib/loaders';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
-import { useEffect } from 'react';
 import { ipcRenderer } from '../../lib/utils';
-import { useNavigate } from 'react-router-dom';
+import { getTranslate } from '../../../localization';
 
 export default function About() {
-    const appLang = getLang();
+    const appLang = getTranslate();
     const navigate = useNavigate();
 
     useGoBackOnEscape();
