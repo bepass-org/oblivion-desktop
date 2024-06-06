@@ -116,17 +116,17 @@ const deutsch: Language = {
     log: {
         title: 'Protokoll',
         desc: 'Wenn vom Programm ein Protokoll erstellt wird, wird es hier angezeigt.',
-        error_invalid_license: 'Die eingegebene Lizenz ist ungültig.',
-        error_too_many_connected: 'Das Lizenzlimit wurde erreicht.',
-        error_access_denied:
-            'Der Pfad wurde nicht gefunden. Starten Sie das Programm mit „Als Administrator ausführen“.',
-        error_failed_set_endpoint:
-            'Das Festlegen des Endpunkts ist fehlgeschlagen. Standardendpunkt verwenden.',
-        error_warp_identity: 'Identity in Cloudflare hat einen Fehler festgestellt.',
-        error_script_failed: 'Im Skript ist ein Fehler aufgetreten. Versuchen Sie es erneut.',
-        error_object_null: 'Bei der Anwendung ist ein Fehler aufgetreten. Versuchen Sie es erneut.',
-        error_port:
-            'Der Port wird von einer anderen Anwendung verwendet. Wählen Sie in den Anwendungseinstellungen einen anderen Port aus.'
+        error_invalid_license: 'Die eingegebene Lizenz ist ungültig; Entfernen Sie es.',
+        error_too_many_connected: 'Das Lizenznutzungslimit ist erreicht; Entfernen Sie es.',
+        error_access_denied: 'Führen Sie das Programm als Als Administrator ausführen aus.',
+        error_failed_set_endpoint: 'Überprüfen oder ersetzen Sie den Endpunktwert oder versuchen Sie es erneut.',
+        error_warp_identity: 'Authentifizierungsfehler in Cloudflare; Versuchen Sie es erneut.',
+        error_script_failed: 'Das Programm hat einen Fehler festgestellt; Versuchen Sie es erneut.',
+        error_object_null: 'Das Programm hat einen Fehler festgestellt; Versuchen Sie es erneut.',
+        error_port_already_in_use: 'Port {{port}} wird von einem anderen Programm verwendet; Ändern Sie es.',
+        error_port_socket: 'Anderen Port verwenden.',
+        error_unknown_flag: 'Im Hintergrund wurde ein ungültiger Befehl ausgeführt.',
+        error_deadline_exceeded: 'Zeitüberschreitung bei der Verbindung; Versuchen Sie es erneut.'
     },
     about: {
         title: 'Über',

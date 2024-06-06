@@ -107,51 +107,37 @@ export const setStuffPath = (args: string[]) => {
 const appLang = getTranslate();
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
-        // TODO locale
-        // return `Port ${port} is being used by another program; Change it.`;
-        return appLang.log.error_access_denied;
+        return appLang.log.error_port_already_in_use;
     },
     'Only one usage of each socket address': () => {
-        // TODO locale
-        return `Use another port.`;
+        return appLang.log.error_port_socket;
     },
     'Invalid license': () => {
-        // TODO locale
-        return `the entered license is not valid; Remove it.`;
+        return appLang.log.error_invalid_license;
     },
     'Too many connected devices': () => {
-        // TODO locale
-        return `the license usage limit is filled; Remove it.`;
+        return appLang.log.error_too_many_connected;
     },
     'Access is denied': () => {
-        // TODO locale
-        return `Run the program as Run as Administrator.`;
+        return appLang.log.error_access_denied;
     },
     'failed to set endpoint': () => {
-        // TODO locale
-        return `Check or replace the endpoint value, or try again.`;
+        return appLang.log.error_failed_set_endpoint;
     },
     'load primary warp identity': () => {
-        // TODO locale
-        return `Authentication error in cloudflare; Try again.`;
+        return appLang.log.error_warp_identity;
     },
     'script failed to run': () => {
-        // TODO locale
-        return `the program encountered an error; Try again.`;
+        return appLang.log.error_script_failed;
     },
     'object null is not iterable': () => {
-        // TODO locale
-        return `the program encountered an error; Try again.`;
+        return appLang.log.error_object_null;
     },
     'parse args: unknown flag': () => {
-        // TODO locale
-        // return `an invalid command was executed in the background.`;
-        return `An invalid command was executed in the background.`;
+        return appLang.log.error_unknown_flag;
     },
     'context deadline exceeded': () => {
-        // TODO locale
-        // return `Connection timed out; Try again.`;
-        return `Connection timed out; Try again.`;
+        return appLang.log.error_deadline_exceeded;
     }
 };
 
