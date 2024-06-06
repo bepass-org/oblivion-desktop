@@ -107,7 +107,7 @@ export const setStuffPath = (args: string[]) => {
 const appLang = getTranslate();
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
-        return appLang.log.error_port_already_in_use;
+        return appLang.log.error_port_already_in_use(port);
     },
     'Only one usage of each socket address': () => {
         return appLang.log.error_port_socket;

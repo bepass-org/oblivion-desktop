@@ -122,10 +122,14 @@ const russian: Language = {
         error_warp_identity: 'Ошибка аутентификации в Cloudflare; Попробуйте еще раз.',
         error_script_failed: 'В программе произошла ошибка; Попробуйте еще раз.',
         error_object_null: 'В программе произошла ошибка; Попробуйте еще раз.',
-        error_port_already_in_use: 'Порт {{port}} используется другой программой; Измени это.',
+        error_port_already_in_use: (value) => 'Порт ${port} используется другой программой; Измени это.',
         error_port_socket: 'Использовать другой порт.',
         error_unknown_flag: 'В фоновом режиме была выполнена недопустимая команда.',
-        error_deadline_exceeded: 'Время ожидания соединения истекло; Попробуйте еще раз.'
+        error_deadline_exceeded: 'Время ожидания соединения истекло; Попробуйте еще раз.',
+        error_configuration_encountered: 'В конфигурации прокси произошла ошибка!',
+        error_desktop_not_supported: 'Среда рабочего стола не поддерживается!',
+        error_configuration_not_supported: 'Конфигурация прокси-сервера не поддерживается в вашей операционной системе, но вы можете использовать Warp Proxy вручную.',
+        error_configuring_proxy: (value) => 'Ошибка настройки прокси-сервера для ${value}!'
     },
     about: {
         title: 'О приложении',
