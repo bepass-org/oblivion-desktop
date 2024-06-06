@@ -214,6 +214,8 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
+        let trayMenuEvent: IpcMainEvent;
+
         const openOrShowToggle = (redirect: any) => {
             if (!mainWindow) {
                 createMainWindow();
@@ -226,8 +228,7 @@ if (!gotTheLock) {
             }
         };
 
-        let trayMenuEvent: IpcMainEvent;
-        ipcMain.on('tray-menu', (event, args) => {
+        ipcMain.on('tray-menu', (event) => {
             trayMenuEvent = event;
         });
 

@@ -1,16 +1,16 @@
 import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { ipcRenderer, username } from '../../lib/utils';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { defaultToast } from '../../lib/toasts';
-import { useNavigate } from 'react-router-dom';
+import { getTranslate } from '../../../localization';
 
 const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const [autoScroll, setAutoScroll] = useState<boolean>(false);
     const logRef = useRef<HTMLParagraphElement>(null);
     //const [isBottom, setIsBottom] = useState(true);
-    const appLang = getLang();
+    const appLang = getTranslate();
     const navigate = useNavigate();
 
     useEffect(() => {
