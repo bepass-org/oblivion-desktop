@@ -9,7 +9,7 @@ type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
 type directionType = 'rtl' | 'ltr';
 
 const lang = (
-    localStorage.getItem('lang') ? localStorage.getItem('lang') : defaultSettings.lang
+    localStorage.getItem('OBLIVION_LNG') ? localStorage.getItem('OBLIVION_LNG') : defaultSettings.lang
 ) as LanguageType;
 
 export { lang };
@@ -59,7 +59,7 @@ const getTranslate = () => {
 export { getTranslate };
 
 const changeLang = (language: string) => {
-    localStorage.setItem('lang', language);
+    localStorage.setItem('OBLIVION_LNG', language);
     window.location.reload();
 };
 
