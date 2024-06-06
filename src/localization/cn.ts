@@ -133,6 +133,20 @@ const chinese: Language = {
         title: '关于应用',
         desc: '该应用程序是 Warp 客户端的 Windows、Linux 和 MacOS 的非官方但可靠版本，基于 Oblivion 或 Forget 项目。\nOblivion Desktop应用旨在实现对互联网的自由访问。界面设计基于 Yousef Gabardi 开发的原始版本。不允许任何改名或商业用途。',
         slogan: '互联网，联万物；不通达，何存乎！'
+    },
+    systemTray: {
+        connect: '连接',
+        connecting: '正在连接 ...',
+        connected: '已连接',
+        disconnecting: '断开连接 ...',
+        settings: '设置',
+        settings_warp: 'Warp',
+        settings_network: '网络',
+        settings_scanner: '扫描仪',
+        settings_app: '应用程序',
+        about: '关于',
+        log: '日志',
+        exit: '退出'
     }
 };
 export default chinese;

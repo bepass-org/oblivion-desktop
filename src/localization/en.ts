@@ -134,6 +134,20 @@ const english: Language = {
         title: 'About App',
         desc: 'This program is an unofficial, but reliable version of the Oblivion app for Windows, Linux, and Mac.\nThe Oblivion Desktop program is modeled after the user interface of the original version developed by Youssef Ghobadi. It was written, it was prepared for the purpose of free access to the Internet, and any name change or commercial use of it is not allowed.',
         slogan: 'Internet, for all or none!'
+    },
+    systemTray: {
+        connect: 'Connect',
+        connecting: 'Connecting ...',
+        connected: 'Connected',
+        disconnecting: 'Disconnecting ...',
+        settings: 'Settings',
+        settings_warp: 'Warp',
+        settings_network: 'Network',
+        settings_scanner: 'Scanner',
+        settings_app: 'Application',
+        about: 'About',
+        log: 'Log',
+        exit: 'Exit'
     }
 };
 export default english;

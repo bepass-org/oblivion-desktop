@@ -138,6 +138,21 @@ export interface About {
     slogan: string;
 }
 
+export interface SystemTray {
+    connect: string;
+    connecting: string;
+    connected: string;
+    disconnecting: string;
+    settings: string;
+    settings_warp: string;
+    settings_network: string;
+    settings_scanner: string;
+    settings_app: string;
+    about: string;
+    log: string;
+    exit: string;
+}
+
 export interface Language {
     global: Global;
     status: Status;
@@ -148,4 +163,5 @@ export interface Language {
     modal: Modal;
     log: Log;
     about: About;
+    systemTray: SystemTray;
 }
