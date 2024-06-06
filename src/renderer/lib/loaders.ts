@@ -26,12 +26,3 @@ export const loadLang = () => {
         document.documentElement.setAttribute('dir', langDir);
     });
 };
-
-// export const getLang = () => {
-//     const lang = localStorage.getItem('OBLIVION_LANG');
-//     if (!lang || typeof lang === 'undefined') {
-//         loadLang();
-//         return;
-//     }
-//     return JSON.parse(String(lang));
-// };
