@@ -128,7 +128,8 @@ const chinese: Language = {
         error_deadline_exceeded: '连接超时；再试一次。',
         error_configuration_encountered: '代理配置遇到错误！',
         error_desktop_not_supported: '不支持桌面环境！',
-        error_configuration_not_supported: '您的操作系统不支持代理配置，但您可以手动使用 Warp 代理。',
+        error_configuration_not_supported:
+            '您的操作系统不支持代理配置，但您可以手动使用 Warp 代理。',
         error_configuring_proxy: (value) => '为 ${value} 配置代理时出错！'
     },
     about: {

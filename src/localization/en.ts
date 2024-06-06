@@ -123,13 +123,15 @@ const english: Language = {
         error_warp_identity: 'Authentication error in cloudflare; Try again.',
         error_script_failed: 'The program encountered an error; Try again.',
         error_object_null: 'The program encountered an error; Try again.',
-        error_port_already_in_use: (value) => 'Port ${value} is being used by another program; Change it.',
+        error_port_already_in_use: (value) =>
+            'Port ${value} is being used by another program; Change it.',
         error_port_socket: 'Use another port.',
         error_unknown_flag: 'An invalid command was executed in the background.',
         error_deadline_exceeded: 'Connection timed out; Try again.',
         error_configuration_encountered: 'Proxy configuration encountered an error!',
         error_desktop_not_supported: 'Desktop environment is not supported!',
-        error_configuration_not_supported: 'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
+        error_configuration_not_supported:
+            'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
         error_configuring_proxy: (value) => 'Error configuring proxy for ${value}!'
     },
     about: {

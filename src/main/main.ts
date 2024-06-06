@@ -331,7 +331,9 @@ if (!gotTheLock) {
                 openOrShowToggle('/');
             });
             appIcon.setToolTip(appTitle);
-            appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, true)));
+            appIcon.setContextMenu(
+                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, true))
+            );
         };
 
         app?.whenReady().then(() => {
@@ -344,7 +346,9 @@ if (!gotTheLock) {
                 appIcon.setContextMenu(
                     Menu.buildFromTemplate(
                         trayMenuContext(
-                            newStatus !== 'disconnected' ? `✓ ${appLang.systemTray.connected}` : appLang.systemTray.connect,
+                            newStatus !== 'disconnected'
+                                ? `✓ ${appLang.systemTray.connected}`
+                                : appLang.systemTray.connect,
                             true
                         )
                     )
