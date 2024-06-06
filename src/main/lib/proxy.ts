@@ -26,23 +26,23 @@ const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) 
     });
 };
 
-const systemCheckGSettingsDeps = (): boolean => {
-    try {
-        exec('gsettings --version');
-        return true;
-    } catch (error) {
-        return false;
-    }
-};
+// const systemCheckGSettingsDeps = (): boolean => {
+//     try {
+//         exec('gsettings --version');
+//         return true;
+//     } catch (error) {
+//         return false;
+//     }
+// };
 
-const systemCheckKWriteDeps = (): boolean => {
-    try {
-        exec('kwriteconfig5 --version');
-        return true;
-    } catch (error) {
-        return false;
-    }
-};
+// const systemCheckKWriteDeps = (): boolean => {
+//     try {
+//         exec('kwriteconfig5 --version');
+//         return true;
+//     } catch (error) {
+//         return false;
+//     }
+// };
 
 const detectDesktopEnvironment = () => {
     return new Promise((resolve, reject) => {

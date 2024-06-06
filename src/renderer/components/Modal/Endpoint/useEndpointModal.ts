@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { getLang } from '../../../lib/loaders';
 import { settings } from '../../../lib/settings';
+import { getTranslate } from '../../../../localization';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -17,7 +17,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
-    const appLang = getLang();
+    const appLang = getTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);

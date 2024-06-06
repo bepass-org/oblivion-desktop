@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
-import { getLang, loadLang } from '../../lib/loaders';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { loadingToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
+import { changeLang, getLanguageName, getTranslate } from '../../../localization';
 
 const useOptions = () => {
     useGoBackOnEscape();
@@ -17,7 +17,7 @@ const useOptions = () => {
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
-    const [appLang, setAppLang] = useState(getLang());
+    const [appLang, setAppLang] = useState(getTranslate());
 
     const { state } = useLocation();
     const { targetId } = state || {};
@@ -45,7 +45,7 @@ const useOptions = () => {
             );
         });
         settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+            setLang(typeof value === 'undefined' ? getLanguageName() : value);
         });
         settings.get('systemTray').then((value) => {
             setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
@@ -63,11 +63,10 @@ const useOptions = () => {
 
     const onCloseRestoreModal = useCallback(() => {
         setShowRestoreModal(false);
+
         setTimeout(function () {
-            loadLang();
-        }, 750);
-        setTimeout(function () {
-            setAppLang(getLang());
+            setAppLang(getTranslate());
+            toast.remove('LOADING');
         }, 1500);
     }, []);
 
@@ -92,13 +91,14 @@ const useOptions = () => {
         setLang(e.target.value);
         settings.set('lang', e.target.value);
         loadingToast();
+        changeLang(e.target.value);
+
+        // setTimeout(function () {
+        //     loadLang();
+        // }, 750);
 
         setTimeout(function () {
-            loadLang();
-        }, 750);
-
-        setTimeout(function () {
-            setAppLang(getLang());
+            setAppLang(getTranslate());
             toast.remove('LOADING');
         }, 1500);
     }, []);

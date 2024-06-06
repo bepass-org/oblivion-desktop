@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { getLang } from '../lib/loaders';
+import { getTranslate } from '../../localization';
 
 interface TabsProps {
     active: string;
 }
 
 export default function Tabs({ active }: TabsProps) {
-    const appLang = getLang();
+    const appLang = getTranslate();
     return (
         <div className={classNames('tabs', 'inSettings')}>
             <ul role='menubar' aria-orientation='horizontal'>
