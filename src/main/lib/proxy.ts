@@ -149,38 +149,36 @@ const macOSNetworkSetup = (args: string[]) => {
     });
 };
 
-const getMacOSActiveNetworkHardwarePorts = () => {
-    return new Promise((resolve, reject) => {
-        // REVIEW: convert this bash command to typescript using existing os API library.
-        const command = `
-        for interface in $(networksetup -listallhardwareports | awk '/Device/ {print $2}'); do
-          if ifconfig $interface | grep -q "inet "; then
-            networksetup -listallhardwareports | awk -v iface=$interface '
-              /Hardware Port/ {port=$3; for(i=4;i<=NF;i++) port=port" "$i}
-              /Device/ {if ($2 == iface) {print port}}'
-          fi
-        done
-      `;
+const getMacOSActiveNetworkHardwarePorts = async (): Promise<string[]> => {
+    try {
+        const { stdout } = await execPromise('networksetup -listallnetworkservices');
+        log.info('networksetup -listallnetworkservices:', stdout);
+        const lines = stdout.trim().split('\n');
+        const hardwarePorts: string[] = [];
+        await Promise.all(
+            lines.map(async (line) => {
+                if (line === "An asterisk (*) denotes that a network service is disabled." || line === "" || line.startsWith("*")) {
+                    return;
+                }
+                const { stdout: serviceContent } = await execPromise(`networksetup -getinfo "${line}"`);
+                const ipAddressRegex = /IP address:\s*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/;
+                const ipv6AddressRegex = /IPv6 IP address:\s*([a-fA-F0-9:]+)/;
+                const hasValidIpAddress = ipAddressRegex.test(serviceContent);
+                const hasValidIpv6Address = ipv6AddressRegex.test(serviceContent);
 
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                log.error(`Error executing command: ${error}`);
-                return reject(error.toString());
-            }
-            if (stderr) {
-                log.error(`Error in command output: ${stderr}`);
-                return reject(stderr.toString());
-            }
-            const results = stdout.trim().split('\n'); // Get all active hardware ports
-            if (results.length > 0) {
-                log.info(`Active Hardware Ports: ${results.join(', ')}`);
-                resolve(results);
-            } else {
-                log.error('Active Network Devices not found.');
-                reject('Active Network Devices not found.');
-            }
-        });
-    });
+                if (hasValidIpAddress || hasValidIpv6Address) {
+                    hardwarePorts.push(line);
+                }
+            })
+        );
+        if (hardwarePorts.length === 0) {
+            throw new Error("Active Network Devices not found.");
+        }
+        return hardwarePorts;
+    } catch (error) {
+        log.error(`Error getting active network hardware ports: ${error}`);
+        throw error;
+    }
 };
 
 const setRoutingRules = (value: any) => {
@@ -197,6 +195,48 @@ const setRoutingRules = (value: any) => {
         return defValue + ',' + myRules;
     } else {
         return defValue;
+    }
+};
+
+const checkProxyState = async (): Promise<boolean> => {
+    try {
+        if (process.platform === 'win32') {
+            const { stdout } = await execPromise('reg query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" /v ProxyEnable');
+            return stdout.includes('0x1');
+        } else if (process.platform === 'darwin') {
+            const hardwarePorts: string[] = await getMacOSActiveNetworkHardwarePorts();
+            let isSet = true;
+            await Promise.all(hardwarePorts.map(async (hardwarePort) => {
+                const { stdout } = await execPromise(`networksetup -getsocksfirewallproxy ${hardwarePort}`);
+                log.info(`networksetup -getsocksfirewallproxy ${hardwarePort}:`, stdout);
+                const hostIP = await settings.get('hostIP');
+                const port = await settings.get('port');
+                if (stdout.includes(`Server: ${hostIP}`) && stdout.includes(`Port: ${port}`) && stdout.includes('Enabled: Yes')) {
+                    log.info('Proxy is enabled for  ', hardwarePort);
+                }else{
+                    log.info('Proxy is not enabled for  ', hardwarePort);
+                    isSet = false;
+                }
+            }));
+            return isSet;
+        } else if (process.platform === 'linux') {
+            if (systemCheckGSettingsDeps()) {
+                const { stdout } = await execPromise('gsettings get org.gnome.system.proxy mode');
+                return stdout.trim() !== "'none'";
+            } else if (systemCheckKWriteDeps()) {
+                const { stdout } = await execPromise('kwriteconfig5 --file kioslaverc --group "Proxy Settings" --key "socksProxy"');
+                return stdout.trim() !== '';
+            } else {
+                log.error('Desktop Environment not supported.');
+                return false;
+            }
+        } else {
+            log.error('system proxy is not supported on your platform yet...');
+            return false;
+        }
+    } catch (error) {
+        log.error(`Error checking proxy state: ${error}`);
+        return false;
     }
 };
 
