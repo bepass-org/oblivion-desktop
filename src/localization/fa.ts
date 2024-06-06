@@ -135,6 +135,20 @@ const persian: Language = {
         title: 'درباره برنامه',
         desc: 'این\u200Cبرنامه یک نسخه غیررسمی، اما قابل اطمینان از اپ Oblivion یا فراموشی است که برای ویندوز، لینوکس و مک ارائه گردیده است.\nبرنامه Oblivion Desktop با الگو گرفتن از رابط کاربری نسخه اصلی که توسط یوسف قبادی برنامه\u200Cنویسی شده بود، با هدف دسترسی آزاد به اینترنت تهیه گردیده و هرگونه تغییر نام یا استفاده تجاری از آن مجاز نمی\u200Cباشد.',
         slogan: 'اینترنت برای همه، یا هیچ\u200Cکس!'
+    },
+    systemTray: {
+        connect: 'اتصال',
+        connecting: 'درحال اتصال ...',
+        connected: 'متصل هستید',
+        disconnecting: 'لغو اتصال ...',
+        settings: 'تنظیمات',
+        settings_warp: 'وارپ',
+        settings_network: 'شبکه',
+        settings_scanner: 'اسکنر',
+        settings_app: 'برنامه',
+        about: 'درباره',
+        log: 'لاگ',
+        exit: 'خروج'
     }
 };
 export default persian;

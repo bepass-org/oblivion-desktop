@@ -32,9 +32,11 @@ import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
+import { getTranslate } from '../localization';
 
 let mainWindow: BrowserWindow | null = null;
 
+const appLang = getTranslate();
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
 
@@ -256,8 +258,8 @@ if (!gotTheLock) {
                             Menu.buildFromTemplate(
                                 trayMenuContext(
                                     connectLabel === 'Connect'
-                                        ? 'Connecting ...'
-                                        : 'Disconnecting ...',
+                                        ? appLang.systemTray.connecting
+                                        : appLang.systemTray.disconnecting,
                                     false
                                 )
                             )
@@ -266,31 +268,31 @@ if (!gotTheLock) {
                     }
                 },
                 {
-                    label: 'Settings',
+                    label: appLang.systemTray.settings,
                     submenu: [
                         {
-                            label: 'Warp',
+                            label: appLang.systemTray.settings_warp,
                             type: 'normal',
                             click: async () => {
                                 openOrShowToggle('/settings');
                             }
                         },
                         {
-                            label: 'Network',
+                            label: appLang.systemTray.settings_network,
                             type: 'normal',
                             click: async () => {
                                 openOrShowToggle('/network');
                             }
                         },
                         {
-                            label: 'Scanner',
+                            label: appLang.systemTray.settings_scanner,
                             type: 'normal',
                             click: async () => {
                                 openOrShowToggle('/scanner');
                             }
                         },
                         {
-                            label: 'Application',
+                            label: appLang.systemTray.settings_app,
                             type: 'normal',
                             click: async () => {
                                 openOrShowToggle('/options');
@@ -300,14 +302,14 @@ if (!gotTheLock) {
                 },
                 { label: '', type: 'separator' },
                 {
-                    label: 'About',
+                    label: appLang.systemTray.about,
                     type: 'normal',
                     click: async () => {
                         openOrShowToggle('/about');
                     }
                 },
                 {
-                    label: 'Log',
+                    label: appLang.systemTray.log,
                     type: 'normal',
                     click: async () => {
                         openOrShowToggle('/debug');
@@ -315,7 +317,7 @@ if (!gotTheLock) {
                 },
                 { label: '', type: 'separator' },
                 {
-                    label: 'Exit',
+                    label: appLang.systemTray.exit,
                     type: 'normal',
                     click: async () => {
                         await exitTheApp(mainWindow, regeditVbsDirPath);
@@ -330,7 +332,7 @@ if (!gotTheLock) {
                 openOrShowToggle('/');
             });
             appIcon.setToolTip(appTitle);
-            appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext('Connect', true)));
+            appIcon.setContextMenu(Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, true)));
         };
 
         app?.whenReady().then(() => {
@@ -343,7 +345,7 @@ if (!gotTheLock) {
                 appIcon.setContextMenu(
                     Menu.buildFromTemplate(
                         trayMenuContext(
-                            newStatus !== 'disconnected' ? '✓ Connected' : 'Connect',
+                            newStatus !== 'disconnected' ? `✓ ${appLang.systemTray.connected}` : appLang.systemTray.connect,
                             true
                         )
                     )
