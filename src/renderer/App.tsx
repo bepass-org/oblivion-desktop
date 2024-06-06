@@ -16,7 +16,7 @@ export default function App() {
     useEffect(() => {
         openDevtoolsOnCtrlShiftI();
         loadTheme();
-        loadLang()
+        loadLang();
     }, []);
 
     return (
