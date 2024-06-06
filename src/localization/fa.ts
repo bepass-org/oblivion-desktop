@@ -115,17 +115,17 @@ const persian: Language = {
     log: {
         title: 'لاگ برنامه',
         desc: 'درصورت ایجاد لاگ توسط برنامه، اینجا نمایش داده می\u200Cشود.',
-        error_invalid_license: 'لایسنس وارد شده معتبر نیست.',
-        error_too_many_connected: 'سقف استفاده از لایسنس پر شده است.',
-        error_access_denied:
-            'مسیر stuff یافت نشد؛ برنامه را به\u200Cصورت Run as Administrator اجرا کنید.',
-        error_failed_set_endpoint:
-            'تنظیم\u200Cکردن اندپوینت با خطا مواجه شد؛ از اندپوینت پیشفرض استفاده کنید.',
-        error_warp_identity: 'هویت\u200Cسنجی در کلودفلر با خطا مواجه شد.',
-        error_script_failed: 'برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.',
-        error_object_null: 'برنامه با خطا مواجه شد؛ مجدداً تلاش کنید.',
-        error_port:
-            'پورت توسط برنامه دیگری درحال استفاده است؛ پورت دیگری را از تنظیمات برنامه انتخاب کنید.'
+        error_invalid_license: 'لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.',
+        error_too_many_connected: 'سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.',
+        error_access_denied: 'برنامه را به‌صورت Run as Administrator اجرا کنید.',
+        error_failed_set_endpoint: 'خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.',
+        error_warp_identity: 'خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.',
+        error_script_failed: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
+        error_object_null: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
+        error_port_already_in_use: 'پورت {{port}} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.',
+        error_port_socket: 'از یک پورت دیگر استفاده نمایید.',
+        error_unknown_flag: 'یک دستور نادرست در پس‌زمینه اجرا شده است.',
+        error_deadline_exceeded: 'مهلت اتصال پایان یافت؛ دوباره تلاش کنید.'
     },
     about: {
         title: 'درباره برنامه',

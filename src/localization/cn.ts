@@ -113,14 +113,17 @@ const chinese: Language = {
     log: {
         title: '应用日志',
         desc: '如果应用生成日志，将在此处显示。',
-        error_invalid_license: '输入的许可证无效。',
-        error_too_many_connected: '许可证使用设备已达上限。',
-        error_access_denied: '找不到 stuff 路径；请以管理员身份运行应用。',
-        error_failed_set_endpoint: '设置端点失败；使用默认端点。',
-        error_warp_identity: '验证 Cloudflare 的 Warp 身份失败。',
-        error_script_failed: '应用出现错误；请重试。',
-        error_object_null: '应用出现错误；请重试。',
-        error_port: '端口已被其它应用占用，请在设置中选择其它端口。'
+        error_invalid_license: '输入的许可证无效；去掉它。',
+        error_too_many_connected: '许可证使用限制已满；去掉它。',
+        error_access_denied: '以管理员身份运行程序。',
+        error_failed_set_endpoint: '检查或替换端点值，或重试。',
+        error_warp_identity: 'cloudflare 中的身份验证错误；再试一次。',
+        error_script_failed: '程序遇到错误；再试一次。',
+        error_object_null: '程序遇到错误；再试一次。',
+        error_port_already_in_use: '端口 {{port}} 正在被另一个程序使用；更改。',
+        error_port_socket: '使用另一个端口。',
+        error_unknown_flag: '后台执行了无效命令。',
+        error_deadline_exceeded: '连接超时；再试一次。'
     },
     about: {
         title: '关于应用',

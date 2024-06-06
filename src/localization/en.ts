@@ -114,16 +114,17 @@ const english: Language = {
     log: {
         title: 'App Log',
         desc: 'If a log is created by the program, it will be displayed here.',
-        error_invalid_license: 'The entered license is not valid.',
-        error_too_many_connected: 'Licensing limit has been reached.',
-        error_access_denied:
-            'The path to stuff was not found; run the program as Run as Administrator.',
-        error_failed_set_endpoint: 'Setting endpoint failed; use default endpoint.',
-        error_warp_identity: 'Identity in Cloudflare encountered an error.',
-        error_script_failed: 'The script encountered an error; try again.',
-        error_object_null: 'The application encountered an error; try again.',
-        error_port:
-            'The port is in use by another application; select another port from the application settings.'
+        error_invalid_license: 'The entered license is not valid; Remove it.',
+        error_too_many_connected: 'The license usage limit is filled; Remove it.',
+        error_access_denied: 'Run the program as Run as Administrator.',
+        error_failed_set_endpoint: 'Check or replace the endpoint value, or try again.',
+        error_warp_identity: 'Authentication error in cloudflare; Try again.',
+        error_script_failed: 'The program encountered an error; Try again.',
+        error_object_null: 'The program encountered an error; Try again.',
+        error_port_already_in_use: 'Port {{port}} is being used by another program; Change it.',
+        error_port_socket: 'Use another port.',
+        error_unknown_flag: 'An invalid command was executed in the background.',
+        error_deadline_exceeded: 'Connection timed out; Try again.'
     },
     about: {
         title: 'About App',
