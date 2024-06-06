@@ -69,6 +69,8 @@ export interface Settings {
     lang_desc: string;
     open_login: string;
     open_login_desc: string;
+    auto_connect: string;
+    auto_connect_desc: string;
     system_tray: string;
     system_tray_desc: string;
     restore: string;

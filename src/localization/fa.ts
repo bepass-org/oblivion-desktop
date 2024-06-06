@@ -69,6 +69,8 @@ const persian: Language = {
         lang_desc: 'تغییر زبان رابط کاربری برنامه',
         open_login: 'اجرای خودکار',
         open_login_desc: 'بازشدن هنگام روشن\u200Cشدن سیستم',
+        auto_connect: 'اتصال خودکار',
+        auto_connect_desc: 'متصل‌شدن هنگام بازشدن برنامه',
         system_tray: 'مخفی\u200Cسازی',
         system_tray_desc: 'قرار نگرفتن آیکون برنامه در تسک\u200Cبار',
         restore: 'بازگردانی',

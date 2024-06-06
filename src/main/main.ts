@@ -39,6 +39,7 @@ let mainWindow: BrowserWindow | null = null;
 const appLang = getTranslate();
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
+let trayMenuEvent: IpcMainEvent;
 
 export const binAssetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -216,8 +217,6 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
-        let trayMenuEvent: IpcMainEvent;
-
         const openOrShowToggle = (redirect: any) => {
             if (!mainWindow) {
                 createMainWindow();
@@ -365,6 +364,13 @@ if (!gotTheLock) {
             app.setLoginItemSettings({
                 openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
             });
+            const checkAutoConnect = await settings.get('autoConnect');
+            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
+                trayMenuEvent.reply('tray-menu', {
+                    key: 'connectToggle',
+                    msg: 'Connect Tray Click!'
+                });
+            }
         }
     };
 

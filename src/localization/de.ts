@@ -71,6 +71,8 @@ const deutsch: Language = {
         lang_desc: 'Sprache der Anwendungsoberfläche ändern',
         open_login: 'Mit Windows starten',
         open_login_desc: 'Beim Systemstart öffnen',
+        auto_connect: 'Automatische Verbindung',
+        auto_connect_desc: 'Verbinden, wenn App geöffnet wird',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
         restore: 'Wiederherstellen',

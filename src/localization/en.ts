@@ -69,6 +69,8 @@ const english: Language = {
         lang_desc: 'Change application interface language',
         open_login: 'Start at login',
         open_login_desc: 'Open at system startup',
+        auto_connect: 'Auto Connection',
+        auto_connect_desc: 'Connect when app opens',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
         restore: 'Restore',
