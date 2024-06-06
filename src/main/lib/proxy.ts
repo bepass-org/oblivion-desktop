@@ -7,6 +7,7 @@ import { promisify } from 'util';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
+import { getTranslate } from '../../localization';
 
 const execPromise = promisify(exec);
 
@@ -200,6 +201,7 @@ const setRoutingRules = (value: any) => {
     }
 };
 
+const appLang = getTranslate();
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
@@ -253,8 +255,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             } catch (error) {
                 log.error(`error while trying to set system proxy: , ${error}`);
                 reject(error);
-                // TODO locale
-                ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
+                ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -283,8 +284,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     log.error(
                         `Error while trying to set system proxy for ${hardwarePort}: ${error}`
                     );
-                    // TODO locale
-                    ipcEvent?.reply('guide-toast', `Error configuring proxy for ${hardwarePort}!`);
+                    ipcEvent?.reply('guide-toast', appLang.log.error_configuring_proxy(hardwarePort));
                 }
             });
             resolve();
@@ -314,10 +314,9 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         })
                         .catch(() => {
                             log.error('Failed to enable proxy for KDE');
-                            // TODO locale
                             ipcEvent?.reply(
                                 'guide-toast',
-                                `Proxy configuration encountered an error!`
+                                appLang.log.error_configuration_encountered
                             );
                             reject();
                         });
@@ -325,8 +324,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
 
                 default:
                     log.error('Desktop Environment not supported.');
-                    // TODO locale
-                    ipcEvent?.reply('guide-toast', `Desktop environment is not supported!`);
+                    ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
                     reject();
                     break;
             }
@@ -341,10 +339,9 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     } else {
         return new Promise<void>((resolve) => {
             log.error('system proxy is not supported on your platform yet...');
-            // TODO locale
             ipcEvent?.reply(
                 'guide-toast',
-                `Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.`
+                appLang.log.error_configuration_not_supported
             );
             resolve();
         });
@@ -388,8 +385,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             } catch (error) {
                 log.error(`error while trying to disable system proxy: , ${error}`);
                 reject(error);
-                // TODO locale
-                ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
+                ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -408,8 +404,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 } catch (error) {
                     log.error(`error while trying to disable system proxy: , ${error}`);
                     reject(error);
-                    // TODO locale
-                    ipcEvent?.reply('guide-toast', `Proxy configuration encountered an error!`);
+                    ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
                 }
             });
             resolve();
@@ -445,8 +440,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
 
                 default:
                     log.error('Desktop Environment not supported.');
-                    // TODO locale
-                    ipcEvent?.reply('guide-toast', `The desktop environment is not supported!`);
+                    ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
                     reject();
                     break;
             }

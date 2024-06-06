@@ -122,10 +122,14 @@ export interface Log {
     error_warp_identity: string;
     error_script_failed: string;
     error_object_null: string;
-    error_port_already_in_use: string;
+    error_port_already_in_use: (value: string) => string;
     error_port_socket: string;
     error_unknown_flag: string;
     error_deadline_exceeded: string;
+    error_configuration_encountered: string;
+    error_desktop_not_supported: string;
+    error_configuration_not_supported: string;
+    error_configuring_proxy: (value: string) => string;
 }
 
 export interface About {
