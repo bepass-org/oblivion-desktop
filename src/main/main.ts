@@ -222,11 +222,11 @@ if (!gotTheLock) {
             if (!mainWindow) {
                 createMainWindow();
             } else {
-                mainWindow.show();
                 trayMenuEvent.reply('tray-menu', {
                     key: 'changePage',
                     msg: redirect
                 });
+                mainWindow.show();
             }
         };
 
