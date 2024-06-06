@@ -66,6 +66,7 @@ const useOptions = () => {
 
         setTimeout(function () {
             setAppLang(getTranslate());
+            toast.remove('LOADING');
         }, 1500);
     }, []);
 

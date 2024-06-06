@@ -2,7 +2,7 @@ import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { defaultSettings } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
-import { getTranslate } from '../../../../localization';
+import { changeLang, getTranslate } from '../../../../localization';
 
 interface RestoreModalProps {
     isOpen: boolean;
@@ -51,6 +51,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
         await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
+        changeLang(defaultSettings.lang);
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
         document.documentElement.setAttribute(
             'data-bs-theme',
