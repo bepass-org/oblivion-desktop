@@ -8,7 +8,9 @@ import { defaultSettings } from '../defaultSettings';
 type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
 type directionType = 'rtl' | 'ltr';
 
-const lang = (localStorage.getItem('lang') ? localStorage.getItem('lang') : defaultSettings.lang) as LanguageType;
+const lang = (
+    localStorage.getItem('lang') ? localStorage.getItem('lang') : defaultSettings.lang
+) as LanguageType;
 
 export { lang };
 
