@@ -1,3 +1,4 @@
+import { getDirection, getLanguageName } from '../../localization';
 import { settings } from './settings';
 
 // import fa from '../../locale/fa.json';
@@ -16,28 +17,15 @@ export const loadTheme = () => {
     });
 };
 
-// export const loadLang = () => {
-//     settings.get('lang').then((value) => {
-//         let langData = {};
-//         let langDir = 'ltr';
-//         const key = typeof value !== 'undefined' ? value : defaultSettings.lang;
-//         if (key === 'fa') {
-//             langData = fa;
-//             langDir = 'rtl';
-//         } else if (key === 'en') {
-//             langData = en;
-//         } else if (key === 'cn') {
-//             langData = cn;
-//         } else if (key === 'ru') {
-//             langData = ru;
-//         } else if (key === 'de') {
-//             langData = de;
-//         }
-//         localStorage.setItem('OBLIVION_LANG', JSON.stringify(langData));
-//         document.documentElement.setAttribute('lang', key);
-//         document.documentElement.setAttribute('dir', langDir);
-//     });
-// };
+export const loadLang = () => {
+    settings.get('lang').then(() => {
+        const langDir = getDirection();
+        const key = getLanguageName();
+
+        document.documentElement.setAttribute('lang', key);
+        document.documentElement.setAttribute('dir', langDir);
+    });
+};
 
 // export const getLang = () => {
 //     const lang = localStorage.getItem('OBLIVION_LANG');
