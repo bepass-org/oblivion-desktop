@@ -16,6 +16,7 @@ const useOptions = () => {
     const [lang, setLang] = useState<string>('');
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
+    const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [appLang, setAppLang] = useState(getTranslate());
 
@@ -52,6 +53,9 @@ const useOptions = () => {
         });
         settings.get('openAtLogin').then((value) => {
             setOpenAtLogin(typeof value === 'undefined' ? defaultSettings.openAtLogin : value);
+        });
+        settings.get('autoConnect').then((value) => {
+            setAutoConnect(typeof value === 'undefined' ? defaultSettings.autoConnect : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -108,6 +112,11 @@ const useOptions = () => {
         settings.set('openAtLogin', !openAtLogin);
     }, [openAtLogin]);
 
+    const onClickAutoConnectButton = useCallback(() => {
+        setAutoConnect(!autoConnect);
+        settings.set('autoConnect', !autoConnect);
+    }, [autoConnect]);
+
     const onKeyDownAutoStartButton = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
             if (e.key === 'Enter') {
@@ -116,6 +125,16 @@ const useOptions = () => {
             }
         },
         [onClickAutoStartButton]
+    );
+
+    const onKeyDownAutoConnectButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickAutoConnectButton();
+            }
+        },
+        [onClickAutoConnectButton]
     );
 
     const onClickSystemTrayButton = useCallback(() => {
@@ -150,6 +169,7 @@ const useOptions = () => {
         lang,
         systemTray,
         openAtLogin,
+        autoConnect,
         showRestoreModal,
         appLang,
         langRef,
@@ -158,7 +178,9 @@ const useOptions = () => {
         onKeyDownChangeTheme,
         onChangeLanguage,
         onClickAutoStartButton,
+        onClickAutoConnectButton,
         onKeyDownAutoStartButton,
+        onKeyDownAutoConnectButton,
         onClickSystemTrayButton,
         onKeyDownSystemTrayButton,
         onClickRestore,
@@ -166,7 +188,8 @@ const useOptions = () => {
         setTheme,
         setSystemTray,
         setLang,
-        setOpenAtLogin
+        setOpenAtLogin,
+        setAutoConnect
     };
 };
 

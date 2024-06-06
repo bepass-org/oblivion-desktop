@@ -69,6 +69,8 @@ const chinese: Language = {
         lang_desc: '更改应用界面语言',
         open_login: '开机自启',
         open_login_desc: '系统启动时打开',
+        auto_connect: '自动连接',
+        auto_connect_desc: '应用程序打开时连接',
         system_tray: '隐藏系统托盘',
         system_tray_desc: '不在任务栏显示应用图标',
         restore: '恢复默认设置',
