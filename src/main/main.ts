@@ -39,7 +39,6 @@ let mainWindow: BrowserWindow | null = null;
 const appLang = getTranslate();
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
-let trayMenuEvent: IpcMainEvent;
 
 export const binAssetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -217,21 +216,42 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
+        let trayMenuEvent: IpcMainEvent;
+        ipcMain.on('tray-menu', (event) => {
+            trayMenuEvent = event;
+        });
+
         const openOrShowToggle = (redirect: any) => {
             if (!mainWindow) {
                 createMainWindow();
             } else {
-                trayMenuEvent.reply('tray-menu', {
-                    key: 'changePage',
-                    msg: redirect
-                });
                 mainWindow.show();
+                try {
+                    trayMenuEvent.reply('tray-menu', {
+                        key: 'changePage',
+                        msg: redirect
+                    });
+                }
+                catch(err) {
+                    console.log(err);
+                }
             }
         };
 
-        ipcMain.on('tray-menu', (event) => {
-            trayMenuEvent = event;
-        });
+        const autoConnect = async () => {
+            const checkAutoConnect = await settings.get('autoConnect');
+            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
+                try {
+                    trayMenuEvent.reply('tray-menu', {
+                        key: 'connectToggle',
+                        msg: 'Connect Tray Click!'
+                    });
+                }
+                catch(err) {
+                    console.log(err);
+                }
+            }
+        };
 
         const trayMenuContext: any = (connectLabel: string, connectStatus:string, connectEnable: boolean) => {
             return [
@@ -261,7 +281,7 @@ if (!gotTheLock) {
                                         : appLang.systemTray.disconnecting,
                                     connectStatus,
                                     false
-                                ) 
+                                )
                             )
                         );
                         openOrShowToggle('/');
@@ -339,6 +359,7 @@ if (!gotTheLock) {
 
         app?.whenReady().then(() => {
             systemTrayMenu('disconnected');
+            autoConnect();
             /*ipcMain.on('tray-icon', async (event, newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
             });*/
@@ -370,13 +391,6 @@ if (!gotTheLock) {
             app.setLoginItemSettings({
                 openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
             });
-            const checkAutoConnect = await settings.get('autoConnect');
-            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
-                trayMenuEvent.reply('tray-menu', {
-                    key: 'connectToggle',
-                    msg: 'Connect Tray Click!'
-                });
-            }
         }
     };
 
