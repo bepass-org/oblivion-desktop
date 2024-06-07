@@ -123,12 +123,6 @@ const useLanding = () => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
 
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
-
         cachedIpInfo = null;
         if (canCheckNewVer) {
             fetchReleaseVersion();
