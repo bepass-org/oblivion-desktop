@@ -227,10 +227,18 @@ if (!gotTheLock) {
             } else {
                 mainWindow.show();
                 try {
-                    trayMenuEvent.reply('tray-menu', {
+                    /*trayMenuEvent.reply('tray-menu', {
                         key: 'changePage',
                         msg: value
-                    });
+                    });*/
+                    if ( value ) {
+                        ipcMain.on('tray-menu', (event) => {
+                            event.reply('tray-menu', {
+                                key: 'changePage',
+                                msg: value
+                            })
+                        });
+                    }
                 }
                 catch(err) {
                     console.log(err);
@@ -242,9 +250,15 @@ if (!gotTheLock) {
             const checkAutoConnect = await settings.get('autoConnect');
             if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
                 try {
-                    trayMenuEvent.reply('tray-menu', {
+                    /*trayMenuEvent.reply('tray-menu', {
                         key: 'connectToggle',
                         msg: 'Connect Tray Click!'
+                    });*/
+                    ipcMain.on('tray-menu', (event) => {
+                        event.reply('tray-menu', {
+                            key: 'connectToggle',
+                            msg: 'Connect Tray Click!'
+                        })
                     });
                 }
                 catch(err) {
@@ -349,7 +363,7 @@ if (!gotTheLock) {
         const systemTrayMenu = (status: string) => {
             appIcon = new Tray(trayIconChanger(status));
             appIcon.on('click', async () => {
-                redirectTo('/');
+                redirectTo(false);
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
