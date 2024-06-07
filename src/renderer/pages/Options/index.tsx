@@ -61,7 +61,8 @@ export default function Options() {
                     setTheme,
                     setSystemTray,
                     setLang,
-                    setOpenAtLogin
+                    setOpenAtLogin,
+                    setAutoConnect
                 }}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
