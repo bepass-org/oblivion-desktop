@@ -233,7 +233,7 @@ if (!gotTheLock) {
             trayMenuEvent = event;
         });
 
-        const trayMenuContext: any = (connectLabel: string, connectEnable: boolean) => {
+        const trayMenuContext: any = (connectLabel: string, connectStatus:string, connectEnable: boolean) => {
             return [
                 {
                     label: appTitle,
@@ -256,11 +256,12 @@ if (!gotTheLock) {
                         appIcon.setContextMenu(
                             Menu.buildFromTemplate(
                                 trayMenuContext(
-                                    connectLabel === 'Connect'
+                                    connectStatus === 'connect'
                                         ? appLang.systemTray.connecting
                                         : appLang.systemTray.disconnecting,
+                                    connectStatus,
                                     false
-                                )
+                                ) 
                             )
                         );
                         openOrShowToggle('/');
@@ -332,7 +333,7 @@ if (!gotTheLock) {
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
-                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, true))
+                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, 'connect', true))
             );
         };
 
@@ -349,6 +350,7 @@ if (!gotTheLock) {
                             newStatus !== 'disconnected'
                                 ? `✓ ${appLang.systemTray.connected}`
                                 : appLang.systemTray.connect,
+                            newStatus,
                             true
                         )
                     )
