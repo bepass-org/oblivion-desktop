@@ -6,7 +6,7 @@ interface RestoreModalProps {
     isOpen: boolean;
     onClose: () => void;
     setTheme: (value: string) => void;
-    setSystemTray: (value: boolean) => void;
+    //setSystemTray: (value: boolean) => void;
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
@@ -17,7 +17,7 @@ export default function RestoreModal({
     isOpen,
     onClose,
     setTheme,
-    setSystemTray,
+    //setSystemTray,
     setLang,
     setOpenAtLogin,
     setAutoConnect
@@ -27,7 +27,7 @@ export default function RestoreModal({
             isOpen,
             onClose,
             setTheme,
-            setSystemTray,
+            //setSystemTray,
             setLang,
             setOpenAtLogin,
             setAutoConnect

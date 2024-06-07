@@ -30,18 +30,18 @@ export default function Options() {
         autoConnect,
         showRestoreModal,
         setTheme,
-        setSystemTray,
+        //setSystemTray,
         setLang,
         setOpenAtLogin,
         setAutoConnect,
-        systemTray,
+        //systemTray,
         theme
     } = useOptions();
 
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
-        typeof systemTray === 'undefined' ||
+        //typeof systemTray === 'undefined' ||
         typeof openAtLogin === 'undefined' ||
         typeof autoConnect === 'undefined'
     )
@@ -59,7 +59,7 @@ export default function Options() {
             <RestoreModal
                 {...{
                     setTheme,
-                    setSystemTray,
+                    //setSystemTray,
                     setLang,
                     setOpenAtLogin,
                     setAutoConnect

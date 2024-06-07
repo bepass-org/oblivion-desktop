@@ -8,14 +8,14 @@ interface RestoreModalProps {
     isOpen: boolean;
     onClose: () => void;
     setTheme: (value: string) => void;
-    setSystemTray: (value: boolean) => void;
+    //setSystemTray: (value: boolean) => void;
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
 }
 
 const useRestoreModal = (props: RestoreModalProps) => {
-    const { isOpen, onClose, setTheme, setSystemTray, setLang, setOpenAtLogin, setAutoConnect } = props;
+    const { isOpen, onClose, setTheme, setLang, setOpenAtLogin, setAutoConnect } = props;
     const detectingSystemTheme = useMemo(
         () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
         []
@@ -45,13 +45,13 @@ const useRestoreModal = (props: RestoreModalProps) => {
     const onSaveModal = useCallback(async () => {
         // in this page
         setTheme(detectingSystemTheme ? 'dark' : 'light');
-        setSystemTray(defaultSettings.systemTray);
+        //setSystemTray(defaultSettings.systemTray);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
         setAutoConnect(defaultSettings.autoConnect);
         // TODO Promise.all
         await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
-        await settings.set('systemTray', defaultSettings.systemTray);
+        //await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
         changeLang(defaultSettings.lang);
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
@@ -80,7 +80,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('reserved', defaultSettings.reserved);
         //
         ipcRenderer.sendMessage('wp-end');
-    }, [detectingSystemTheme, setTheme, setSystemTray, setLang, setOpenAtLogin, setAutoConnect, handleOnClose]);
+    }, [detectingSystemTheme, setTheme, setLang, setOpenAtLogin, setAutoConnect, handleOnClose]);
 
     const onConfirmKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
