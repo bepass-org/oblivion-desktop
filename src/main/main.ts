@@ -164,11 +164,12 @@ if (!gotTheLock) {
                     if (!mainWindow) {
                         throw new Error('"mainWindow" is not defined');
                     }
-                    if (process.env.START_MINIMIZED) {
+                    /*if (process.env.START_MINIMIZED) {
                         mainWindow.minimize();
                     } else {
                         mainWindow.show();
-                    }
+                    }*/
+                    mainWindow.show(); 
                 });
 
                 ipcMain.on('open-devtools', async () => {
@@ -221,27 +222,16 @@ if (!gotTheLock) {
             trayMenuEvent = event;
         });
 
-        const redirectTo = (value: any) => {
+        const redirectTo = (value: string) => {
             if (!mainWindow) {
                 createMainWindow();
             } else {
                 mainWindow.show();
-                try {
-                    /*trayMenuEvent.reply('tray-menu', {
+                if ( value !== '' ) {
+                    trayMenuEvent.reply('tray-menu', {
                         key: 'changePage',
                         msg: value
-                    });*/
-                    if ( value ) {
-                        ipcMain.on('tray-menu', (event) => {
-                            event.reply('tray-menu', {
-                                key: 'changePage',
-                                msg: value
-                            })
-                        });
-                    }
-                }
-                catch(err) {
-                    console.log(err);
+                    });
                 }
             }
         };
@@ -363,7 +353,7 @@ if (!gotTheLock) {
         const systemTrayMenu = (status: string) => {
             appIcon = new Tray(trayIconChanger(status));
             appIcon.on('click', async () => {
-                redirectTo(false);
+                redirectTo('');
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
