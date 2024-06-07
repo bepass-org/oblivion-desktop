@@ -53,7 +53,6 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
         //await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
-        changeLang(defaultSettings.lang);
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
         await settings.set('autoConnect', defaultSettings.autoConnect);
         document.documentElement.setAttribute(
@@ -80,6 +79,9 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('reserved', defaultSettings.reserved);
         //
         ipcRenderer.sendMessage('wp-end');
+        setTimeout(function () {
+            changeLang(defaultSettings.lang);
+        }, 1500);
     }, [detectingSystemTheme, setTheme, setLang, setOpenAtLogin, setAutoConnect, handleOnClose]);
 
     const onConfirmKeyDown = useCallback(
