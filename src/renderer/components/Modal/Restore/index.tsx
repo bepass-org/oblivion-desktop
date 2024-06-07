@@ -6,9 +6,10 @@ interface RestoreModalProps {
     isOpen: boolean;
     onClose: () => void;
     setTheme: (value: string) => void;
-    setSystemTray: (value: boolean) => void;
+    //setSystemTray: (value: boolean) => void;
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
+    setAutoConnect: (value: boolean) => void;
 }
 
 export default function RestoreModal({
@@ -16,18 +17,20 @@ export default function RestoreModal({
     isOpen,
     onClose,
     setTheme,
-    setSystemTray,
+    //setSystemTray,
     setLang,
-    setOpenAtLogin
+    setOpenAtLogin,
+    setAutoConnect
 }: RestoreModalProps) {
     const { appLang, handleOnClose, onSaveModal, onCancelKeyDown, onConfirmKeyDown, showModal } =
         useRestoreModal({
             isOpen,
             onClose,
+            setTheme,
+            //setSystemTray,
             setLang,
             setOpenAtLogin,
-            setSystemTray,
-            setTheme
+            setAutoConnect
         });
 
     if (!isOpen) return null;

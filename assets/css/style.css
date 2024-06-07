@@ -798,7 +798,6 @@ html[data-bs-theme="dark"] .shimmer {
 .settings .item .value select {
     float: left;
     border: none;
-    padding: 2px 0 0 0;
     background: none;
     direction: ltr;
     font-size: 22px;
@@ -806,7 +805,9 @@ html[data-bs-theme="dark"] .shimmer {
     color: #FFA200;
     cursor: pointer;
     appearance: none;
-    margin: 4px 0 0 0;
+    line-height: 24px;
+    padding: 0;
+    margin: 4px 0 -2px 0;
 }
 
 [dir="ltr"] .settings .item .value select {

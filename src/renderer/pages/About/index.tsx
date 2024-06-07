@@ -67,6 +67,32 @@ export default function About() {
                                 <div className='name'>ircfspace</div>
                             </div>
                         </a>
+                        <a
+                            href='https://github.com/bepass-org/oblivion-desktop/blob/main/FAQ.md'
+                            target='_blank'
+                            rel='noreferrer'
+                        >
+                            <div className='item'>
+                                <div className='icon'>
+                                    <i className='material-icons'>&#xf04c;</i>
+                                </div>
+                                <div className='host'>Github</div>
+                                <div className='name'>Frequently asked questions</div>
+                            </div>
+                        </a>
+                        <a
+                            href='https://github.com/bepass-org/oblivion-desktop/wiki'
+                            target='_blank'
+                            rel='noreferrer'
+                        >
+                            <div className='item'>
+                                <div className='icon'>
+                                    <i className='material-icons'>&#xe0e0;</i>
+                                </div>
+                                <div className='host'>Github</div>
+                                <div className='name'>Wiki</div>
+                            </div>
+                        </a>
                         <p className='text-center'>
                             <small role='note'>
                                 v<b>{packageJsonData.version}</b>

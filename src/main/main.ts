@@ -39,7 +39,6 @@ let mainWindow: BrowserWindow | null = null;
 const appLang = getTranslate();
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
-let trayMenuEvent: IpcMainEvent;
 
 export const binAssetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -165,11 +164,12 @@ if (!gotTheLock) {
                     if (!mainWindow) {
                         throw new Error('"mainWindow" is not defined');
                     }
-                    if (process.env.START_MINIMIZED) {
+                    /*if (process.env.START_MINIMIZED) {
                         mainWindow.minimize();
                     } else {
                         mainWindow.show();
-                    }
+                    }*/
+                    mainWindow.show(); 
                 });
 
                 ipcMain.on('open-devtools', async () => {
@@ -217,29 +217,53 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
-        const openOrShowToggle = (redirect: any) => {
-            if (!mainWindow) {
-                createMainWindow();
-            } else {
-                trayMenuEvent.reply('tray-menu', {
-                    key: 'changePage',
-                    msg: redirect
-                });
-                mainWindow.show();
-            }
-        };
-
+        let trayMenuEvent: IpcMainEvent;
         ipcMain.on('tray-menu', (event) => {
             trayMenuEvent = event;
         });
 
-        const trayMenuContext: any = (connectLabel: string, connectEnable: boolean) => {
+        const redirectTo = (value: string) => {
+            if (!mainWindow) {
+                createMainWindow();
+            } else {
+                mainWindow.show();
+                if ( value !== '' ) {
+                    trayMenuEvent.reply('tray-menu', {
+                        key: 'changePage',
+                        msg: value
+                    });
+                }
+            }
+        };
+
+        const autoConnect = async () => {
+            const checkAutoConnect = await settings.get('autoConnect');
+            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
+                try {
+                    /*trayMenuEvent.reply('tray-menu', {
+                        key: 'connectToggle',
+                        msg: 'Connect Tray Click!'
+                    });*/
+                    ipcMain.on('tray-menu', (event) => {
+                        event.reply('tray-menu', {
+                            key: 'connectToggle',
+                            msg: 'Connect Tray Click!'
+                        })
+                    });
+                }
+                catch(err) {
+                    console.log(err);
+                }
+            }
+        };
+
+        const trayMenuContext: any = (connectLabel: string, connectStatus:string, connectEnable: boolean) => {
             return [
                 {
                     label: appTitle,
                     type: 'normal',
                     click: () => {
-                        openOrShowToggle('/');
+                        redirectTo('/');
                     }
                 },
                 { label: '', type: 'separator' },
@@ -256,14 +280,15 @@ if (!gotTheLock) {
                         appIcon.setContextMenu(
                             Menu.buildFromTemplate(
                                 trayMenuContext(
-                                    connectLabel === 'Connect'
+                                    connectStatus === 'connect'
                                         ? appLang.systemTray.connecting
                                         : appLang.systemTray.disconnecting,
+                                    connectStatus,
                                     false
                                 )
                             )
                         );
-                        openOrShowToggle('/');
+                        redirectTo('/');
                     }
                 },
                 {
@@ -273,28 +298,28 @@ if (!gotTheLock) {
                             label: appLang.systemTray.settings_warp,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/settings');
+                                redirectTo('/settings');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_network,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/network');
+                                redirectTo('/network');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_scanner,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/scanner');
+                                redirectTo('/scanner');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_app,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/options');
+                                redirectTo('/options');
                             }
                         }
                     ]
@@ -304,14 +329,14 @@ if (!gotTheLock) {
                     label: appLang.systemTray.about,
                     type: 'normal',
                     click: async () => {
-                        openOrShowToggle('/about');
+                        redirectTo('/about');
                     }
                 },
                 {
                     label: appLang.systemTray.log,
                     type: 'normal',
                     click: async () => {
-                        openOrShowToggle('/debug');
+                        redirectTo('/debug');
                     }
                 },
                 { label: '', type: 'separator' },
@@ -328,16 +353,17 @@ if (!gotTheLock) {
         const systemTrayMenu = (status: string) => {
             appIcon = new Tray(trayIconChanger(status));
             appIcon.on('click', async () => {
-                openOrShowToggle('/');
+                redirectTo('');
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
-                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, true))
+                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, 'connect', true))
             );
         };
 
         app?.whenReady().then(() => {
             systemTrayMenu('disconnected');
+            autoConnect();
             /*ipcMain.on('tray-icon', async (event, newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
             });*/
@@ -349,6 +375,7 @@ if (!gotTheLock) {
                             newStatus !== 'disconnected'
                                 ? `✓ ${appLang.systemTray.connected}`
                                 : appLang.systemTray.connect,
+                            newStatus,
                             true
                         )
                     )
@@ -368,13 +395,6 @@ if (!gotTheLock) {
             app.setLoginItemSettings({
                 openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
             });
-            const checkAutoConnect = await settings.get('autoConnect');
-            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
-                trayMenuEvent.reply('tray-menu', {
-                    key: 'connectToggle',
-                    msg: 'Connect Tray Click!'
-                });
-            }
         }
     };
 

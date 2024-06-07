@@ -127,7 +127,7 @@ const deutsch: Language = {
         error_script_failed: 'Das Programm hat einen Fehler festgestellt; Versuchen Sie es erneut.',
         error_object_null: 'Das Programm hat einen Fehler festgestellt; Versuchen Sie es erneut.',
         error_port_already_in_use: (value) =>
-            'Port ${port} wird von einem anderen Programm verwendet; Ändern Sie es.',
+            'Port ${value} wird von einem anderen Programm verwendet; Ändern Sie es.',
         error_port_socket: 'Anderen Port verwenden.',
         error_unknown_flag: 'Im Hintergrund wurde ein ungültiger Befehl ausgeführt.',
         error_deadline_exceeded: 'Zeitüberschreitung bei der Verbindung; Versuchen Sie es erneut.',

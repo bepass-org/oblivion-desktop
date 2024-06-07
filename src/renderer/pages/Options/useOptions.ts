@@ -95,7 +95,6 @@ const useOptions = () => {
         setLang(e.target.value);
         settings.set('lang', e.target.value);
         loadingToast();
-        changeLang(e.target.value);
 
         // setTimeout(function () {
         //     loadLang();
@@ -104,6 +103,7 @@ const useOptions = () => {
         setTimeout(function () {
             setAppLang(getTranslate());
             toast.remove('LOADING');
+            changeLang(e.target.value);
         }, 1500);
     }, []);
 
@@ -167,7 +167,7 @@ const useOptions = () => {
     return {
         theme,
         lang,
-        systemTray,
+        //systemTray,
         openAtLogin,
         autoConnect,
         showRestoreModal,
@@ -181,12 +181,12 @@ const useOptions = () => {
         onClickAutoConnectButton,
         onKeyDownAutoStartButton,
         onKeyDownAutoConnectButton,
-        onClickSystemTrayButton,
-        onKeyDownSystemTrayButton,
+        //onClickSystemTrayButton,
+        //onKeyDownSystemTrayButton,
         onClickRestore,
         onKeyDownRestore,
         setTheme,
-        setSystemTray,
+        //setSystemTray,
         setLang,
         setOpenAtLogin,
         setAutoConnect
