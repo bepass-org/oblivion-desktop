@@ -221,7 +221,7 @@ if (!gotTheLock) {
             trayMenuEvent = event;
         });
 
-        const openOrShowToggle = (redirect: any) => {
+        const redirectTo = (value: any) => {
             if (!mainWindow) {
                 createMainWindow();
             } else {
@@ -229,7 +229,7 @@ if (!gotTheLock) {
                 try {
                     trayMenuEvent.reply('tray-menu', {
                         key: 'changePage',
-                        msg: redirect
+                        msg: value
                     });
                 }
                 catch(err) {
@@ -259,7 +259,7 @@ if (!gotTheLock) {
                     label: appTitle,
                     type: 'normal',
                     click: () => {
-                        openOrShowToggle('/');
+                        redirectTo('/');
                     }
                 },
                 { label: '', type: 'separator' },
@@ -284,7 +284,7 @@ if (!gotTheLock) {
                                 )
                             )
                         );
-                        openOrShowToggle('/');
+                        redirectTo('/');
                     }
                 },
                 {
@@ -294,28 +294,28 @@ if (!gotTheLock) {
                             label: appLang.systemTray.settings_warp,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/settings');
+                                redirectTo('/settings');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_network,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/network');
+                                redirectTo('/network');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_scanner,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/scanner');
+                                redirectTo('/scanner');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_app,
                             type: 'normal',
                             click: async () => {
-                                openOrShowToggle('/options');
+                                redirectTo('/options');
                             }
                         }
                     ]
@@ -325,14 +325,14 @@ if (!gotTheLock) {
                     label: appLang.systemTray.about,
                     type: 'normal',
                     click: async () => {
-                        openOrShowToggle('/about');
+                        redirectTo('/about');
                     }
                 },
                 {
                     label: appLang.systemTray.log,
                     type: 'normal',
                     click: async () => {
-                        openOrShowToggle('/debug');
+                        redirectTo('/debug');
                     }
                 },
                 { label: '', type: 'separator' },
@@ -349,7 +349,7 @@ if (!gotTheLock) {
         const systemTrayMenu = (status: string) => {
             appIcon = new Tray(trayIconChanger(status));
             appIcon.on('click', async () => {
-                openOrShowToggle('/');
+                redirectTo('/');
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
