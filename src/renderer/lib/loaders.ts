@@ -1,6 +1,6 @@
-import Cookies from 'js-cookie';
-import { getDirection, getDirectionByLang, getLanguageName } from '../../localization';
+import {  getDirectionByLang } from '../../localization';
 import { settings } from './settings';
+import { store } from './utils';
 
 // import fa from '../../locale/fa.json';
 // import en from '../../locale/en.json';
@@ -20,7 +20,7 @@ export const loadTheme = () => {
 
 export const loadLang = () => {
     settings.get('lang').then((data) => {
-        Cookies.set('lang', data);
+        store.set('lang', data);
         const langDir = getDirectionByLang(data);
         document.documentElement.setAttribute('lang', data);
         document.documentElement.setAttribute('dir', langDir);

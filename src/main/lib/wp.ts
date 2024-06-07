@@ -4,7 +4,7 @@ import fs from 'fs';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { doesDirectoryExist, removeDirIfExists } from './utils';
 import { stuffPath } from '../ipcListeners/wp';
-import { getTranslate } from '../../localization';
+import { getTranslateElectron } from '../../localization/electron';
 
 export const getUserSettings = async () => {
     const randomCountry = () => {
@@ -104,7 +104,7 @@ export const setStuffPath = (args: string[]) => {
 };
 
 // ! make sure you get the args like ({ port = '' })
-const appLang = getTranslate();
+const appLang = getTranslateElectron();
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         return appLang.log.error_port_already_in_use(port);

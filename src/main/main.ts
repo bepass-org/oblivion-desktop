@@ -28,15 +28,16 @@ import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
+import "./store"
 import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
-import { getTranslate } from '../localization';
+import { getTranslateElectron } from '../localization/electron';
 
 let mainWindow: BrowserWindow | null = null;
 
-const appLang = getTranslate();
+const appLang = getTranslateElectron();
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
 

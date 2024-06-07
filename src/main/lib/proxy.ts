@@ -7,7 +7,7 @@ import { promisify } from 'util';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
-import { getTranslate } from '../../localization';
+import { getTranslateElectron } from '../../localization/electron';
 
 const execPromise = promisify(exec);
 
@@ -201,7 +201,7 @@ const setRoutingRules = (value: any) => {
     }
 };
 
-const appLang = getTranslate();
+const appLang = getTranslateElectron();
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
