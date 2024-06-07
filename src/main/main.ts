@@ -9,7 +9,17 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 
-import { app, BrowserWindow, ipcMain, screen, shell, Menu, Tray, nativeImage } from 'electron';
+import {
+    app,
+    BrowserWindow,
+    ipcMain,
+    screen,
+    shell,
+    Menu,
+    Tray,
+    nativeImage,
+    IpcMainEvent
+} from 'electron';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
@@ -22,11 +32,14 @@ import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
+import { getTranslate } from '../localization';
 
 let mainWindow: BrowserWindow | null = null;
 
+const appLang = getTranslate();
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
+let trayMenuEvent: IpcMainEvent;
 
 export const binAssetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -35,16 +48,8 @@ export const binAssetsPath = path.join(
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
-customEvent.on('zombie', () => {
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-    console.log('🧟 HELLO WORLD HELLO WORLD 🧟');
-});
-
 if (!gotTheLock) {
-    log.info("did'nt create new instance since there was already one running.");
+    log.info('did not create new instance since there was already one running.');
     app.exit(0);
 } else {
     devPlayground();
@@ -150,8 +155,6 @@ if (!gotTheLock) {
             config.webPreferences.devToolsKeyCombination = true;
         }
 
-        let canOpenFromSystem = true;
-
         function createMainWindow() {
             if (!mainWindow) {
                 mainWindow = new BrowserWindow(config);
@@ -162,7 +165,6 @@ if (!gotTheLock) {
                     if (!mainWindow) {
                         throw new Error('"mainWindow" is not defined');
                     }
-                    // await settings.get('systemTray')
                     if (process.env.START_MINIMIZED) {
                         mainWindow.minimize();
                     } else {
@@ -176,8 +178,9 @@ if (!gotTheLock) {
                     // mainWindow.webContents.closeDevTools();
                 });
 
-                mainWindow.on('close', async () => {
-                    canOpenFromSystem = false;
+                mainWindow.on('close', async (e: any) => {
+                    e.preventDefault();
+                    mainWindow?.hide();
                 });
 
                 mainWindow.on('closed', async () => {
@@ -186,9 +189,6 @@ if (!gotTheLock) {
 
                 mainWindow.on('minimize', async (e: any) => {
                     e.preventDefault();
-                    if (await settings.get('systemTray')) {
-                        mainWindow?.hide();
-                    }
                 });
 
                 const menuBuilder = new MenuBuilder(mainWindow);
@@ -207,6 +207,7 @@ if (!gotTheLock) {
         createMainWindow();
 
         let appIcon: any = null;
+        //let contextMenu: any = null;
 
         const trayIconChanger = (status: string) => {
             const nativeImageIcon = nativeImage.createFromPath(
@@ -216,76 +217,142 @@ if (!gotTheLock) {
             return nativeImageIcon.resize({ width: 16, height: 16 });
         };
 
-        const systemTrayMenu = (status: string) => {
-            appIcon = new Tray(trayIconChanger(status));
-            appIcon.on('click', () => {
-                if (canOpenFromSystem) {
-                    if (!mainWindow) {
-                        createMainWindow();
-                    } else {
-                        mainWindow.show();
-                    }
-                }
-            });
-            const contextMenu = Menu.buildFromTemplate([
+        const openOrShowToggle = (redirect: any) => {
+            if (!mainWindow) {
+                createMainWindow();
+            } else {
+                trayMenuEvent.reply('tray-menu', {
+                    key: 'changePage',
+                    msg: redirect
+                });
+                mainWindow.show();
+            }
+        };
+
+        ipcMain.on('tray-menu', (event) => {
+            trayMenuEvent = event;
+        });
+
+        const trayMenuContext: any = (connectLabel: string, connectEnable: boolean) => {
+            return [
                 {
                     label: appTitle,
                     type: 'normal',
                     click: () => {
-                        if (!mainWindow) {
-                            createMainWindow();
-                        } else {
-                            mainWindow.show();
-                        }
+                        openOrShowToggle('/');
                     }
-                },
-                // TODO
-                /*{ label: '', type: 'separator' },
-                {
-                    label: 'حالت پروکسی',
-                    submenu: [
-                        { label: 'متصل است', type: 'radio' },
-                        { label: 'عدم اتصال', type: 'radio' }
-                    ]
                 },
                 { label: '', type: 'separator' },
                 {
-                    label: 'Proxy Mode',
+                    id: 'connectToggle',
+                    label: connectLabel,
+                    type: 'normal',
+                    enabled: connectEnable,
+                    click: async () => {
+                        trayMenuEvent.reply('tray-menu', {
+                            key: 'connectToggle',
+                            msg: 'Connect Tray Click!'
+                        });
+                        appIcon.setContextMenu(
+                            Menu.buildFromTemplate(
+                                trayMenuContext(
+                                    connectLabel === 'Connect'
+                                        ? appLang.systemTray.connecting
+                                        : appLang.systemTray.disconnecting,
+                                    false
+                                )
+                            )
+                        );
+                        openOrShowToggle('/');
+                    }
+                },
+                {
+                    label: appLang.systemTray.settings,
                     submenu: [
                         {
-                            label: 'Set System Proxy',
+                            label: appLang.systemTray.settings_warp,
                             type: 'normal',
                             click: async () => {
-                                await enableProxy();
+                                openOrShowToggle('/settings');
                             }
                         },
                         {
-                            label: 'Disable',
+                            label: appLang.systemTray.settings_network,
                             type: 'normal',
                             click: async () => {
-                                await disableProxy();
+                                openOrShowToggle('/network');
+                            }
+                        },
+                        {
+                            label: appLang.systemTray.settings_scanner,
+                            type: 'normal',
+                            click: async () => {
+                                openOrShowToggle('/scanner');
+                            }
+                        },
+                        {
+                            label: appLang.systemTray.settings_app,
+                            type: 'normal',
+                            click: async () => {
+                                openOrShowToggle('/options');
                             }
                         }
                     ]
-                },*/
+                },
                 { label: '', type: 'separator' },
                 {
-                    label: 'Exit',
+                    label: appLang.systemTray.about,
+                    type: 'normal',
+                    click: async () => {
+                        openOrShowToggle('/about');
+                    }
+                },
+                {
+                    label: appLang.systemTray.log,
+                    type: 'normal',
+                    click: async () => {
+                        openOrShowToggle('/debug');
+                    }
+                },
+                { label: '', type: 'separator' },
+                {
+                    label: appLang.systemTray.exit,
                     type: 'normal',
                     click: async () => {
                         await exitTheApp(mainWindow, regeditVbsDirPath);
                     }
                 }
-            ]);
-            contextMenu.items[1].checked = false;
+            ];
+        };
+
+        const systemTrayMenu = (status: string) => {
+            appIcon = new Tray(trayIconChanger(status));
+            appIcon.on('click', async () => {
+                openOrShowToggle('/');
+            });
             appIcon.setToolTip(appTitle);
-            appIcon.setContextMenu(contextMenu);
+            appIcon.setContextMenu(
+                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, true))
+            );
         };
 
         app?.whenReady().then(() => {
             systemTrayMenu('disconnected');
-            ipcMain.on('tray-icon', async (event, newStatus) => {
+            /*ipcMain.on('tray-icon', async (event, newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
+            });*/
+            customEvent.on('tray-icon', (newStatus) => {
+                appIcon.setImage(trayIconChanger(newStatus));
+                appIcon.setContextMenu(
+                    Menu.buildFromTemplate(
+                        trayMenuContext(
+                            newStatus !== 'disconnected'
+                                ? `✓ ${appLang.systemTray.connected}`
+                                : appLang.systemTray.connect,
+                            true
+                        )
+                    )
+                );
             });
         });
 
@@ -301,6 +368,13 @@ if (!gotTheLock) {
             app.setLoginItemSettings({
                 openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
             });
+            const checkAutoConnect = await settings.get('autoConnect');
+            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
+                trayMenuEvent.reply('tray-menu', {
+                    key: 'connectToggle',
+                    msg: 'Connect Tray Click!'
+                });
+            }
         }
     };
 

@@ -1,20 +1,24 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
+import { ipcRenderer } from '../../lib/utils';
+import { getTranslate } from '../../../localization';
 
 const useScanner = () => {
     const { isConnected, isLoading } = useStore();
-    const [appLang] = useState(getLang());
+    const [appLang] = useState(getTranslate());
 
     const [endpoint, setEndpoint] = useState<string>();
     const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
     const [reserved, setReserved] = useState<undefined | boolean>();
+
+    const navigate = useNavigate();
 
     useGoBackOnEscape();
 
@@ -30,6 +34,12 @@ const useScanner = () => {
         });
         settings.get('reserved').then((value) => {
             setReserved(typeof value === 'undefined' ? defaultSettings.reserved : value);
+        });
+
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
         });
     }, []);
 

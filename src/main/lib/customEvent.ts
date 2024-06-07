@@ -8,7 +8,7 @@ export const customEvent = new EventEmitter();
 
 // listen for an event
 customEvent.on('greet', () => {
-    console.log('Hello world!');
+    // do something
 });
 
 // trigger an event

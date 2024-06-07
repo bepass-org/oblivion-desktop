@@ -1,13 +1,15 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
+import { ipcRenderer } from '../../lib/utils';
+import { getTranslate } from '../../../localization';
 
 const useSettings = () => {
-    const appLang = getLang();
+    const appLang = getTranslate();
     const { isConnected, isLoading } = useStore();
 
     //const [scan, setScan] = useState(true);
@@ -20,6 +22,8 @@ const useSettings = () => {
     const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
+
+    const navigate = useNavigate();
 
     /*useEffect(() => {
         if (endpoint === '' || endpoint === defaultSettings.endpoint) {
@@ -53,6 +57,12 @@ const useSettings = () => {
         });*/
         settings.get('method').then((value) => {
             setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
+        });
+
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
         });
     }, []);
 

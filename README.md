@@ -76,7 +76,7 @@ technology
             <td>
                 :white_check_mark:  Minimize<br>
                 :white_check_mark: BootUp<br>
-                :white_large_square: Shortcuts
+                :white_check_mark: Shortcuts
             </td>
         </tr>
         <tr>
@@ -96,7 +96,7 @@ technology
                 :white_check_mark: Dark<br>
                 :white_check_mark: RTL<br>
                 :white_check_mark: LTR<br>
-                :white_large_square: Auto
+                :white_check_mark: Auto
             </td>
         </tr>
         <tr>
@@ -178,7 +178,10 @@ technology
 
 ## Faced Bug 🐞?
 
-checkout [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search in [issues](https://github.com/bepass-org/oblivion-desktop/issues)(open and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did'nt get your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
+checkout [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
+in [issues](https://github.com/bepass-org/oblivion-desktop/issues) (open
+and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did'nt
+get your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
 
 ## Get Involved
 

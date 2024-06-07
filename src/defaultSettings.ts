@@ -19,6 +19,7 @@ export type settingsKeys =
     | 'dns'
     | 'rtt'
     | 'openAtLogin'
+    | 'autoConnect'
     | 'reserved';
 
 const date = new Date();
@@ -45,6 +46,7 @@ export const defaultSettings = {
     dns: true,
     rtt: '1s',
     openAtLogin: false,
+    autoConnect: false,
     reserved: true
 };
 

@@ -64,6 +64,10 @@ export function hasLicense(license: any) {
     return typeof license !== 'undefined' && license !== '';
 }
 
+export function checkRoutingRules(value: any) {
+    return typeof value === 'string' && value !== '' ? 'Customized' : 'Default';
+}
+
 export function checkEndpoint(endpoint: any) {
     return typeof endpoint === 'undefined' ||
         (typeof endpoint === 'string' && endpoint === defaultSettings.endpoint)

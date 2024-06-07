@@ -1,15 +1,28 @@
 import classNames from 'classnames';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Nav from '../../components/Nav';
 import packageJsonData from '../../../../package.json';
 import gitHubMark from '../../../../assets/img/github-mark.png';
 import ircf from '../../../../assets/img/ircf.png';
-import { getLang } from '../../lib/loaders';
+import twitter from '../../../../assets/img/twitter.png';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
+import { ipcRenderer } from '../../lib/utils';
+import { getTranslate } from '../../../localization';
 
 export default function About() {
-    const appLang = getLang();
+    const appLang = getTranslate();
+    const navigate = useNavigate();
 
     useGoBackOnEscape();
+
+    useEffect(() => {
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
+        });
+    }, []);
 
     return (
         <>
@@ -43,6 +56,15 @@ export default function About() {
                                 </div>
                                 <div className='host'>Website</div>
                                 <div className='name'>ircf.space</div>
+                            </div>
+                        </a>
+                        <a href='https://twitter.com/ircfspace' target='_blank' rel='noreferrer'>
+                            <div className='item'>
+                                <div className='icon'>
+                                    <img src={twitter} alt='ircf' />
+                                </div>
+                                <div className='host'>Twitter</div>
+                                <div className='name'>ircfspace</div>
                             </div>
                         </a>
                         <p className='text-center'>

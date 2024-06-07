@@ -7,6 +7,7 @@ import settings from 'electron-settings';
 import {
     calculateMethod,
     checkEndpoint,
+    checkRoutingRules,
     doesFileExist,
     hasLicense,
     shouldProxySystem
@@ -35,8 +36,9 @@ export const logMetadata = () => {
     const proxyMode = settings.get('proxyMode');
     const license = settings.get('license');
     const endpoint = settings.get('endpoint');
+    const routingRules = settings.get('routingRules');
 
-    Promise.all([method, proxyMode, license, endpoint])
+    Promise.all([method, proxyMode, license, endpoint, routingRules])
         .then((data) => {
             log.info('------------------------MetaData------------------------');
             log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
@@ -46,6 +48,7 @@ export const logMetadata = () => {
             log.info('method:', calculateMethod(data[0]));
             // TODO rename to network configuration when tun comes
             log.info('proxyMode:', shouldProxySystem(data[1]));
+            log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
             log.info('license:', hasLicense(data[2]));
             log.info(`exe: ${app.getPath('exe')}`);
@@ -59,10 +62,10 @@ export const logMetadata = () => {
         });
 };
 
-ipcMain.on('getLogs', async (event) => {
+ipcMain.on('get-logs', async (event) => {
     const bool = await doesFileExist(logPath);
     if (bool) {
         const data = await readLogFile();
-        event.reply('getLogs', data);
+        event.reply('get-logs', data);
     }
 });

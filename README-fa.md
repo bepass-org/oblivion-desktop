@@ -89,7 +89,7 @@ Cloudflare Warp فراهم می‌کند.
             <td>
                 :white_check_mark:  کمینه‌کردن<br>
                 :white_check_mark: راه‌اندازی خودکار<br>
-                :white_large_square: میانبرها
+                :white_check_mark: میانبرها
             </td>
         </tr>
         <tr>
@@ -109,7 +109,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: تاریک<br>
                 :white_check_mark: راست‌چین<br>
                 :white_check_mark: چپ‌چین<br>
-                :white_large_square: خودکار
+                :white_check_mark: خودکار
             </td>
         </tr>
         <tr>
@@ -191,7 +191,10 @@ Cloudflare Warp فراهم می‌کند.
 
 ## به مشکل برخوردید 🐞؟
 
-قسمت [ویکی](https://github.com/bepass-org/oblivion-desktop/wiki) را بررسی کنید و در [مشکلات](https://github.com/bepass-org/oblivion-desktop/issues) جستجو کنید (باز و [بسته](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed)!) و اگر پاسخ خود را دریافت نکردید، سپس [یکی مشکل جدید گزارش کنید](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
+قسمت [ویکی](https://github.com/bepass-org/oblivion-desktop/wiki) را بررسی کرده و
+در [مشکلات](https://github.com/bepass-org/oblivion-desktop/issues) (باز
+و [بسته](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed)!) جستجو کنید؛ اگر پاسخ خود را
+پیدا نکردید، [یک مشکل جدید](https://github.com/bepass-org/oblivion-desktop/issues/new/choose) گزارش کنید.
 
 ## مشارکت کنید
 

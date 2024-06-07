@@ -5,10 +5,11 @@ export type Channels =
     | 'open-devtools'
     | 'wp-start'
     | 'wp-end'
-    | 'getLogs'
+    | 'get-logs'
     | 'settings'
     | 'guide-toast'
-    | 'tray-icon';
+    | 'tray-icon'
+    | 'tray-menu';
 
 const electronHandler = {
     ipcRenderer: {

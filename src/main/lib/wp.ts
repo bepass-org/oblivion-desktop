@@ -4,6 +4,7 @@ import fs from 'fs';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { doesDirectoryExist, removeDirIfExists } from './utils';
 import { stuffPath } from '../ipcListeners/wp';
+import { getTranslate } from '../../localization';
 
 export const getUserSettings = async () => {
     const randomCountry = () => {
@@ -103,50 +104,40 @@ export const setStuffPath = (args: string[]) => {
 };
 
 // ! make sure you get the args like ({ port = '' })
+const appLang = getTranslate();
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
-        // TODO locale
-        return `پورت ${port} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`;
+        return appLang.log.error_port_already_in_use(port);
     },
     'Only one usage of each socket address': () => {
-        // TODO locale
-        return `از یک پورت دیگر استفاده نمایید.`;
+        return appLang.log.error_port_socket;
     },
     'Invalid license': () => {
-        // TODO locale
-        return `لایسنس وارد شده معتبر نیست؛ آن‌را حذف کنید.`;
+        return appLang.log.error_invalid_license;
     },
     'Too many connected devices': () => {
-        // TODO locale
-        return `سقف استفاده از لایسنس پر شده؛ آن‌را حذف کنید.`;
+        return appLang.log.error_too_many_connected;
     },
     'Access is denied': () => {
-        // TODO locale
-        return `برنامه را به‌صورت Run as Administrator اجرا کنید.`;
+        return appLang.log.error_access_denied;
     },
     'failed to set endpoint': () => {
-        // TODO locale
-        return `خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.`;
+        return appLang.log.error_failed_set_endpoint;
     },
     'load primary warp identity': () => {
-        // TODO locale
-        return `خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.`;
+        return appLang.log.error_warp_identity;
     },
     'script failed to run': () => {
-        // TODO locale
-        return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
+        return appLang.log.error_script_failed;
     },
     'object null is not iterable': () => {
-        // TODO locale
-        return `برنامه با خطا مواجه شد؛ دوباره تلاش کنید.`;
+        return appLang.log.error_object_null;
     },
     'parse args: unknown flag': () => {
-        // TODO locale
-        return `یک دستور نادرست در پس‌زمینه اجرا شده است.`;
+        return appLang.log.error_unknown_flag;
     },
     'context deadline exceeded': () => {
-        // TODO locale
-        return `مهلت اتصال پایان یافت؛ دوباره تلاش کنید.`;
+        return appLang.log.error_deadline_exceeded;
     }
 };
 

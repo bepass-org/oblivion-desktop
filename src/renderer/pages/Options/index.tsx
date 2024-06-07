@@ -16,20 +16,24 @@ export default function Options() {
         langRef,
         onChangeLanguage,
         onClickAutoStartButton,
+        onClickAutoConnectButton,
         onClickChangeTheme,
         onClickRestore,
-        onClickSystemTrayButton,
+        // onClickSystemTrayButton,
         onCloseRestoreModal,
         onKeyDownAutoStartButton,
+        onKeyDownAutoConnectButton,
         onKeyDownChangeTheme,
         onKeyDownRestore,
-        onKeyDownSystemTrayButton,
+        // onKeyDownSystemTrayButton,
         openAtLogin,
+        autoConnect,
         showRestoreModal,
         setTheme,
         setSystemTray,
         setLang,
         setOpenAtLogin,
+        setAutoConnect,
         systemTray,
         theme
     } = useOptions();
@@ -38,7 +42,8 @@ export default function Options() {
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
         typeof systemTray === 'undefined' ||
-        typeof openAtLogin === 'undefined'
+        typeof openAtLogin === 'undefined' ||
+        typeof autoConnect === 'undefined'
     )
         return (
             <div className='settings'>
@@ -131,6 +136,30 @@ export default function Options() {
                     <div
                         role='presentation'
                         className='item'
+                        onClick={onClickAutoConnectButton}
+                        onKeyDown={onKeyDownAutoConnectButton}
+                    >
+                        <label
+                            className='key'
+                            htmlFor='auto-connect'
+                            // role='label'
+                        >
+                            {appLang?.settings?.auto_connect}
+                        </label>
+                        <div className='value'>
+                            <div
+                                tabIndex={-1}
+                                id='auto-connect'
+                                className={classNames('checkbox', autoConnect ? 'checked' : '')}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.auto_connect_desc}</div>
+                    </div>
+                    {/*<div
+                        role='presentation'
+                        className='item'
                         onClick={onClickSystemTrayButton}
                         onKeyDown={onKeyDownSystemTrayButton}
                     >
@@ -151,7 +180,7 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.system_tray_desc}</div>
-                    </div>
+                    </div>*/}
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
@@ -178,7 +207,11 @@ export default function Options() {
                     </div>
                 </div>
             </div>
-            <Toaster position='bottom-center' reverseOrder={false} />
+            <Toaster
+                position='bottom-center'
+                reverseOrder={false}
+                containerStyle={{ bottom: '70px' }}
+            />
         </>
     );
 }

@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
-import { getLang } from './loaders';
+import { getTranslate } from '../../localization';
 
-const appLang = getLang();
+const appLang = getTranslate();
 const defaultToastStyle = {
     fontSize: '13px',
     borderRadius: '10px',
@@ -49,7 +49,7 @@ export const defaultToastWithSubmitButton = (
 };
 
 export const checkInternetToast = () => {
-    defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', Infinity);
+    defaultToast(`${appLang?.toast?.offline}`, 'ONLINE_STATUS', Infinity);
 };
 
 let doNotShowSettingsHaveChangedToastInCurrentSession = false;
@@ -75,7 +75,7 @@ export const settingsHaveChangedToast = ({
 };
 
 export const loadingToast = () => {
-    toast.loading(appLang?.toast?.please_wait, {
+    toast.loading(`${appLang?.toast?.please_wait}`, {
         id: 'LOADING',
         duration: Infinity,
         style: defaultToastStyle

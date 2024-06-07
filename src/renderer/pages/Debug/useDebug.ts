@@ -1,21 +1,29 @@
 import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { getLang } from '../../lib/loaders';
+import { useNavigate } from 'react-router-dom';
 import { ipcRenderer, username } from '../../lib/utils';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { defaultToast } from '../../lib/toasts';
+import { getTranslate } from '../../../localization';
 
 const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const [autoScroll, setAutoScroll] = useState<boolean>(false);
     const logRef = useRef<HTMLParagraphElement>(null);
     //const [isBottom, setIsBottom] = useState(true);
-    const appLang = getLang();
+    const appLang = getTranslate();
+    const navigate = useNavigate();
 
-    // asking for log every 1.5sec
     useEffect(() => {
-        ipcRenderer.sendMessage('getLogs');
+        ipcRenderer.on('tray-menu', (args: any) => {
+            if (args.key === 'changePage') {
+                navigate(args.msg);
+            }
+        });
+
+        // asking for log every 1.5sec
+        ipcRenderer.sendMessage('get-logs');
         const intervalId = setInterval(() => {
-            ipcRenderer.sendMessage('getLogs');
+            ipcRenderer.sendMessage('get-logs');
         }, 1500);
         // Cleanup function to clear the interval
         return () => clearInterval(intervalId);
@@ -42,7 +50,7 @@ const useDebug = () => {
     useGoBackOnEscape();
 
     const userFlag = '<USERNAME>';
-    ipcRenderer.on('getLogs', (data) => {
+    ipcRenderer.on('get-logs', (data) => {
         let logs = String(data);
         // protect user privacy
         // @ts-ignore

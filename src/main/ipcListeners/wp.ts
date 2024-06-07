@@ -1,15 +1,15 @@
 // warp-plus
 
+import toast from 'react-hot-toast';
 import { app, ipcMain } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import fs from 'fs';
-import { doesDirectoryExist, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
-import { getUserSettings, handleWpErrors, setStuffPath } from '../lib/wp';
+import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
@@ -42,17 +42,23 @@ ipcMain.on('wp-start', async (event) => {
     connectedFlags = [false, false];
     disconnectedFlags = [false, false];
 
+    const port = (await settings.get('port')) || defaultSettings.port;
+    const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
+    //const autoSetProxy = await settings.get('autoSetProxy');
+    const proxyMode = await settings.get('proxyMode');
+
     const sendConnectedSignalToRenderer = () => {
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
-            customEvent.emit('zombie');
+            customEvent.emit('tray-icon', `connected-${proxyMode}`);
+            toast.remove('GUIDE');
         }
     };
 
     const sendDisconnectedSignalToRenderer = () => {
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
-            customEvent.emit('zombie');
+            customEvent.emit('tray-icon', 'disconnected');
         }
     };
 
@@ -66,11 +72,6 @@ ipcMain.on('wp-start', async (event) => {
     if (typeof license === 'string' && license !== '') {
         setStuffPath(args);
     }*/
-
-    const port = (await settings.get('port')) || defaultSettings.port;
-    const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
-    //const autoSetProxy = await settings.get('autoSetProxy');
-    const proxyMode = await settings.get('proxyMode');
 
     const handleSystemProxyDisconnect = () => {
         if (shouldProxySystem(proxyMode)) {

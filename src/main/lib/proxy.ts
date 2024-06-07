@@ -7,6 +7,7 @@ import { promisify } from 'util';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
+import { getTranslate } from '../../localization';
 
 const execPromise = promisify(exec);
 
@@ -26,6 +27,14 @@ const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) 
     });
 };
 
+// const systemCheckGSettingsDeps = (): boolean => {
+//     try {
+//         exec('gsettings --version');
+//         return true;
+//     } catch (error) {
+//         return false;
+//     }
+// };
 // const systemCheckGSettingsDeps = (): boolean => {
 //     try {
 //         exec('gsettings --version');
@@ -194,14 +203,13 @@ const setRoutingRules = (value: any) => {
             .replace(/range:/g, '')
             .replace(/\n|<br>/g, '')
             .trim();
-        log.info('Routing Rules: Customized');
         return defValue + ',' + myRules;
     } else {
-        log.info('Routing Rules: Default');
         return defValue;
     }
 };
 
+const appLang = getTranslate();
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
@@ -255,8 +263,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             } catch (error) {
                 log.error(`error while trying to set system proxy: , ${error}`);
                 reject(error);
-                // TODO locale
-                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -285,10 +292,9 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     log.error(
                         `Error while trying to set system proxy for ${hardwarePort}: ${error}`
                     );
-                    // TODO locale
                     ipcEvent?.reply(
                         'guide-toast',
-                        `پیکربندی پروکسی برای ${hardwarePort} با خطا روبرو شد!`
+                        appLang.log.error_configuring_proxy(hardwarePort)
                     );
                 }
             });
@@ -343,11 +349,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     else {
         return new Promise<void>((resolve) => {
             log.error('system proxy is not supported on your platform yet...');
-            // TODO locale
-            ipcEvent?.reply(
-                'guide-toast',
-                `پیکربندی پروکسی در سیستم‌عامل شما پشتیبانی نمیشود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.`
-            );
+            ipcEvent?.reply('guide-toast', appLang.log.error_configuration_not_supported);
             resolve();
         });
     }
@@ -390,8 +392,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             } catch (error) {
                 log.error(`error while trying to disable system proxy: , ${error}`);
                 reject(error);
-                // TODO locale
-                ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
             }
         });
     } else if (process.platform === 'darwin') {
@@ -410,8 +411,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 } catch (error) {
                     log.error(`error while trying to disable system proxy: , ${error}`);
                     reject(error);
-                    // TODO locale
-                    ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                    ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
                 }
             });
             resolve();
