@@ -245,6 +245,22 @@
         "linux": {
             "target": [
                 {
+                    "target": "deb",
+                    "arch": [
+                        "arm64",
+                        "x64",
+                        "ia32"
+                    ]
+                },
+                {
+                    "target": "rpm",
+                    "arch": [
+                        "arm64",
+                        "x64",
+                        "ia32"
+                    ]
+                },
+                {
                     "target": "tar.xz",
                     "arch": [
                         "arm64",
