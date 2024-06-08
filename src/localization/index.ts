@@ -55,12 +55,12 @@ const translate = {
     de: deDE
 };
 
-const getTranslate = (forceLang?:string) => {
+const getTranslate = (forceLang?: string) => {
     let language;
     if (typeof forceLang === 'string' && forceLang !== '') {
         language = forceLang;
     } else {
-        language = (Cookies.get('lang') || defaultSettings.lang)
+        language = Cookies.get('lang') || defaultSettings.lang;
     }
     return translate[language as LanguageType];
 };
