@@ -104,7 +104,7 @@ export const setStuffPath = (args: string[]) => {
 };
 
 // ! make sure you get the args like ({ port = '' })
-const appLang = getTranslate();
+const appLang = getTranslate('en');
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         return appLang.log.error_port_already_in_use(port);

@@ -36,7 +36,7 @@ import { getTranslate } from '../localization';
 
 let mainWindow: BrowserWindow | null = null;
 
-const appLang = getTranslate();
+const appLang = getTranslate('en');
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
 
