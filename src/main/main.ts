@@ -180,7 +180,12 @@ if (!gotTheLock) {
 
                 mainWindow.on('close', async (e: any) => {
                     e.preventDefault();
-                    mainWindow?.hide();
+
+                    if (isDev()) {
+                        exitTheApp(mainWindow, regeditVbsDirPath);
+                    } else {
+                        mainWindow?.hide();
+                    }
                 });
 
                 mainWindow.on('closed', async () => {

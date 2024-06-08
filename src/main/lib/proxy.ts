@@ -53,10 +53,10 @@ const isGnome = (): boolean => {
     }
 };
 
-const isKDE = (v = '5'): boolean => {
+const isKDE = (v = '5') => {
     try {
         exec(`kwriteconfig${v} --version`);
-        return true;
+        return v;
     } catch (error) {
         return false;
     }
@@ -120,16 +120,27 @@ const disableGNOMEProxy = async (): Promise<void> => {
     }
 };
 
-const enableKDEProxy = async (ip: string, port: string, v = '5'): Promise<void> => {
-    const proxySettings = {
-        socksProxy: `socks://${ip}:${port}`
-    };
-
+// TODO refactor
+const enableKDEProxy = async (
+    host: string,
+    port: string,
+    routingRules: any,
+    v = '5'
+): Promise<void> => {
     try {
         await execPromise(
-            `kwriteconfig${v} --file kioslaverc --group 'Proxy Settings' --key 'socksProxy' '${proxySettings.socksProxy}'`
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key ProxyType 1`
         );
-        log.info(`Proxy settings enabled for KDE with SOCKS5 proxy: ${proxySettings.socksProxy}`);
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key socksProxy "${host}:${port}"`
+        );
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key Authmode 0`
+        );
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key NoProxyFor '${routingRules}'`
+        );
+        log.info(`Proxy settings enabled for KDE with SOCKS5 proxy: "${host}:${port}"`);
     } catch (err) {
         log.error(`Error setting SOCKS proxy for KDE: ${err}`);
         throw err;
@@ -139,7 +150,7 @@ const enableKDEProxy = async (ip: string, port: string, v = '5'): Promise<void> 
 const disableKDEProxy = async (v = '5'): Promise<string> => {
     try {
         await execPromise(
-            `kwriteconfig${v} --file kioslaverc --group 'Proxy Settings' --key 'socksProxy' ''`
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key ProxyType 0`
         );
         log.info('Proxy settings disabled for KDE');
         return 'Proxy disabled for KDE';
@@ -303,6 +314,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
         });
     } else if (process.platform === 'linux') {
         let notSupported = true;
+        let shouldResolve = false;
         return new Promise<void>(async (resolve, reject) => {
             if (isGnome()) {
                 await enableGnomeProxy(
@@ -313,24 +325,28 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     .then(() => {
                         notSupported = false;
                         log.info('Successfully enabled proxy for GNOME');
-                        resolve();
+                        shouldResolve = true;
                     })
                     .catch(() => {
                         log.error('Failed to enable proxy for GNOME');
                         // TODO locale
                         ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
-                        reject();
                     });
             }
             const isPlasma5 = isKDE('5');
             const isPlasma6 = isKDE('6');
             const plasmaVersion = isPlasma5 || isPlasma6;
             if (typeof plasmaVersion === 'string') {
-                await enableKDEProxy(hostIP.toString(), port.toString(), plasmaVersion)
+                await enableKDEProxy(
+                    hostIP.toString(),
+                    port.toString(),
+                    setRoutingRules(routingRules),
+                    plasmaVersion
+                )
                     .then(() => {
                         notSupported = false;
                         log.info('Successfully enabled proxy for KDE');
-                        resolve();
+                        shouldResolve = true;
                     })
                     .catch(() => {
                         log.error('Failed to enable proxy for KDE');
@@ -338,6 +354,11 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
                         reject();
                     });
+            }
+            if (shouldResolve) {
+                resolve();
+            } else {
+                reject();
             }
             if (notSupported) {
                 log.error('Desktop Environment not supported.');
