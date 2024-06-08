@@ -55,12 +55,14 @@ const translate = {
     de: deDE
 };
 
-const getTranslate = () => {
-    const language = (
-        Cookies.get('lang') ? Cookies.get('lang') : defaultSettings.lang
-    ) as LanguageType;
-
-    return translate[language];
+const getTranslate = (forceLang?: string) => {
+    let language;
+    if (typeof forceLang === 'string' && forceLang !== '') {
+        language = forceLang;
+    } else {
+        language = Cookies.get('lang') || defaultSettings.lang;
+    }
+    return translate[language as LanguageType];
 };
 
 export { getTranslate };

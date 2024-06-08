@@ -210,7 +210,7 @@ const getMacOSActiveNetworkHardwarePorts = () => {
     });
 };
 
-const appLang = getTranslate();
+const appLang = getTranslate('en');
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
