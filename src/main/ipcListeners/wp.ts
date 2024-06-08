@@ -6,13 +6,14 @@ import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import { removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
+import { showWpLogs } from '../dxConfig';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -118,10 +119,12 @@ ipcMain.on('wp-start', async (event) => {
 
         handleWpErrors(strData, event, String(port));
 
+        if (!showWpLogs && isDev()) return;
         simpleLog.info(strData);
     });
 
     child.stderr.on('data', (err: any) => {
+        if (!showWpLogs && isDev()) return;
         simpleLog.error(`err: ${err.toString()}`);
     });
 

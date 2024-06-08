@@ -169,7 +169,7 @@ if (!gotTheLock) {
                     } else {
                         mainWindow.show();
                     }*/
-                    mainWindow.show(); 
+                    mainWindow.show();
                 });
 
                 ipcMain.on('open-devtools', async () => {
@@ -227,7 +227,7 @@ if (!gotTheLock) {
                 createMainWindow();
             } else {
                 mainWindow.show();
-                if ( value !== '' ) {
+                if (value !== '') {
                     trayMenuEvent.reply('tray-menu', {
                         key: 'changePage',
                         msg: value
@@ -248,16 +248,19 @@ if (!gotTheLock) {
                         event.reply('tray-menu', {
                             key: 'connectToggle',
                             msg: 'Connect Tray Click!'
-                        })
+                        });
                     });
-                }
-                catch(err) {
+                } catch (err) {
                     console.log(err);
                 }
             }
         };
 
-        const trayMenuContext: any = (connectLabel: string, connectStatus:string, connectEnable: boolean) => {
+        const trayMenuContext: any = (
+            connectLabel: string,
+            connectStatus: string,
+            connectEnable: boolean
+        ) => {
             return [
                 {
                     label: appTitle,
