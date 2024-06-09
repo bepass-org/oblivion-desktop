@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { getTranslate } from '../../localization';
 
-const appLang = getTranslate("en");
+const appLang = getTranslate();
 const defaultToastStyle = {
     fontSize: '13px',
     borderRadius: '10px',
