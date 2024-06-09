@@ -53,14 +53,17 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
         setTheme(detectingSystemTheme ? 'dark' : 'light');
         document.documentElement.setAttribute(
-          'data-bs-theme',
-          detectingSystemTheme ? 'dark' : 'light'
+            'data-bs-theme',
+            detectingSystemTheme ? 'dark' : 'light'
         );
         //await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
         changeLang(defaultSettings.lang);
         document.documentElement.setAttribute('lang', defaultSettings.lang);
-        document.documentElement.setAttribute('dir', getDirectionByLang(defaultSettings.lang as LanguageType));
+        document.documentElement.setAttribute(
+            'dir',
+            getDirectionByLang(defaultSettings.lang as LanguageType)
+        );
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
         await settings.set('autoConnect', defaultSettings.autoConnect);
         handleOnClose();

@@ -9,7 +9,7 @@ import {
     LanguageType,
     changeLang,
     getDirectionByLang,
-    getLanguageName,
+    getLanguageName
 } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 

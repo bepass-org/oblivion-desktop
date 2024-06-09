@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { getTranslate } from '../../localization';
 
-const appLang = getTranslate("en");
+const appLang = getTranslate('en');
 const defaultToastStyle = {
     fontSize: '13px',
     borderRadius: '10px',
@@ -48,7 +48,7 @@ export const defaultToastWithSubmitButton = (
     );
 };
 
-export const checkInternetToast = (msg:string) => {
+export const checkInternetToast = (msg: string) => {
     defaultToast(msg, 'ONLINE_STATUS', Infinity);
 };
 
