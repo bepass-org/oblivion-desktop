@@ -48,8 +48,8 @@ export const defaultToastWithSubmitButton = (
     );
 };
 
-export const checkInternetToast = () => {
-    defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', Infinity);
+export const checkInternetToast = (msg:string) => {
+    defaultToast(msg, 'ONLINE_STATUS', Infinity);
 };
 
 let doNotShowSettingsHaveChangedToastInCurrentSession = false;
