@@ -127,7 +127,7 @@ const deutsch: Language = {
         error_script_failed: 'Das Programm hat einen Fehler festgestellt; Versuchen Sie es erneut.',
         error_object_null: 'Das Programm hat einen Fehler festgestellt; Versuchen Sie es erneut.',
         error_port_already_in_use: (value) =>
-            'Port ${value} wird von einem anderen Programm verwendet; Ändern Sie es.',
+            `Port ${value} wird von einem anderen Programm verwendet; Ändern Sie es.`,
         error_port_socket: 'Anderen Port verwenden.',
         error_unknown_flag: 'Im Hintergrund wurde ein ungültiger Befehl ausgeführt.',
         error_deadline_exceeded: 'Zeitüberschreitung bei der Verbindung; Versuchen Sie es erneut.',
@@ -135,11 +135,11 @@ const deutsch: Language = {
         error_desktop_not_supported: 'Desktop-Umgebung wird nicht unterstützt!',
         error_configuration_not_supported:
             'Proxy-Konfiguration wird in Ihrem Betriebssystem nicht unterstützt, aber Sie können Warp Proxy manuell verwenden.',
-        error_configuring_proxy: (value) => 'Fehler beim Konfigurieren des Proxys für ${value}!'
+        error_configuring_proxy: (value) => `Fehler beim Konfigurieren des Proxys für ${value}!`
     },
     about: {
         title: 'Über',
-        desc: 'Dieses Programm ist eine inoffizielle, aber zuverlässige Version der Oblivion-App für Windows, Linux und Mac.\nDas Oblivion Desktop-Programm ist der Benutzeroberfläche der von Youssef Ghobadi entwickelten Originalversion nachempfunden. Es wurde für den Zweck des freien Zugangs zum Internet geschrieben und erstellt.\nEine Namensänderung oder kommerzielle Nutzung ist nicht gestattet.',
+        desc: 'Dieses Programm ist eine inoffizielle, aber zuverlässige Version der Oblivion-App für Windows, Linux und Mac.\nDas Oblivion Desktop-Programm ist der Benutzeroberfläche der von Yousef Ghobadi entwickelten Originalversion nachempfunden. Es wurde für den Zweck des freien Zugangs zum Internet geschrieben und erstellt.\nEine Namensänderung oder kommerzielle Nutzung ist nicht gestattet.',
         slogan: 'Internet, für alle oder niemanden!'
     },
     systemTray: {
