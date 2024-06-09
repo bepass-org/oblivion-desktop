@@ -12,7 +12,7 @@ export interface IStore {
     setProxyStatus: (status: string) => void;
 }
 
-const appLang = getTranslate();
+const appLang = getTranslate("en");
 export const useStore = create<IStore>((set) => ({
     isConnected: false,
     setIsConnected: (bool: boolean) => set(() => ({ isConnected: bool })),
