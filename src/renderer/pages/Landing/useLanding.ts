@@ -8,7 +8,8 @@ import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer, isDev, onEscapeKeyPressed } from '../../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import packageJsonData from '../../../../package.json';
-import { getDirection, getLanguageName, getTranslate } from '../../../localization';
+import { getLanguageName } from '../../../localization';
+import useTranslate from '../../../localization/useTranslate';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -18,7 +19,7 @@ let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 const useLanding = () => {
-    const appLang = getTranslate();
+    const appLang = useTranslate();
     const {
         isConnected,
         setIsConnected,

@@ -1,12 +1,6 @@
-import {  getDirectionByLang } from '../../localization';
+import { getDirectionByLang } from '../../localization';
 import { settings } from './settings';
 import { store } from './utils';
-
-// import fa from '../../locale/fa.json';
-// import en from '../../locale/en.json';
-// import ru from '../../locale/ru.json';
-// import cn from '../../locale/cn.json';
-// import de from '../../locale/de.json';
 
 export const loadTheme = () => {
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;

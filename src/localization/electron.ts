@@ -24,4 +24,3 @@ export const getTranslateElectron = () => {
 
     return translate[language];
 };
-

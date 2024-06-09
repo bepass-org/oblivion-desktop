@@ -9,9 +9,10 @@ import twitter from '../../../../assets/img/twitter.png';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { ipcRenderer } from '../../lib/utils';
 import { getTranslate } from '../../../localization';
+import useTranslate from '../../../localization/useTranslate';
 
 export default function About() {
-    const appLang = getTranslate();
+    const appLang = useTranslate();
     const navigate = useNavigate();
 
     useGoBackOnEscape();

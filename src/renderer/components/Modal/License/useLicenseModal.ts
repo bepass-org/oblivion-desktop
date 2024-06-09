@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
-import { getTranslate } from '../../../../localization';
+import useTranslate from '../../../../localization/useTranslate';
 
 interface LicenseModalProps {
     isOpen: boolean;
@@ -16,7 +16,7 @@ const useLicenseModal = (props: LicenseModalProps) => {
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
-    const appLang = getTranslate();
+    const appLang = useTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);

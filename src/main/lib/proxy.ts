@@ -8,10 +8,28 @@ import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
 import { getTranslateElectron } from '../../localization/electron';
+import { getTranslate } from '../../localization';
 
 const execPromise = promisify(exec);
 
 const { spawn } = require('child_process');
+
+const setRoutingRules = (value: any) => {
+    const defValue =
+        'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
+    if (typeof value === 'string' && value !== '') {
+        const myRules = value
+            .replace(/domain:/g, '')
+            .replace(/geoip:/g, '')
+            .replace(/ip:/g, '')
+            .replace(/range:/g, '')
+            .replace(/\n|<br>/g, '')
+            .trim();
+        return defValue + ',' + myRules;
+    } else {
+        return defValue;
+    }
+};
 
 // TODO reset to prev proxy settings on disable
 // TODO refactor (move each os functions to it's own file)
@@ -27,39 +45,26 @@ const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) 
     });
 };
 
-// const systemCheckGSettingsDeps = (): boolean => {
-//     try {
-//         exec('gsettings --version');
-//         return true;
-//     } catch (error) {
-//         return false;
-//     }
-// };
-
-// const systemCheckKWriteDeps = (): boolean => {
-//     try {
-//         exec('kwriteconfig5 --version');
-//         return true;
-//     } catch (error) {
-//         return false;
-//     }
-// };
-
-const detectDesktopEnvironment = () => {
-    return new Promise((resolve, reject) => {
-        exec('echo $DESKTOP_SESSION', (err, stdout) => {
-            stdout = stdout.trim();
-            if (err) {
-                log.error(err);
-                reject(err);
-            }
-            log.info('DE:', String(stdout));
-            resolve(String(stdout));
-        });
-    });
+const isGnome = (): boolean => {
+    try {
+        exec('gsettings --version');
+        return true;
+    } catch (error) {
+        return false;
+    }
 };
 
-const enableGnomeProxy = async (ip: string, port: string): Promise<void> => {
+const isKDE = (v = '5') => {
+    try {
+        exec(`kwriteconfig${v} --version`);
+        return v;
+    } catch (error) {
+        return false;
+    }
+};
+
+// TODO refactor
+const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Promise<void> => {
     const proxySettings = {
         mode: 'manual',
         socks: `socks5://${ip}:${port}`,
@@ -76,6 +81,28 @@ const enableGnomeProxy = async (ip: string, port: string): Promise<void> => {
 
         await execPromise(`gsettings set org.gnome.system.proxy.socks port ${proxySettings.port}`);
         log.info(`SOCKS port set to ${proxySettings.port}`);
+
+        // https://wiki.archlinux.org/title/Proxy_server#Proxy_settings_on_GNOME3
+        const normalizeRoutingRules = (rules: any) => {
+            let str = `"[`;
+            const arrRules = String(rules).split(',');
+            arrRules.forEach((r, index) => {
+                if (index === arrRules.length - 1) {
+                    str += `'${r}'`;
+                } else {
+                    str += `'${r}', `;
+                }
+            });
+            str += `]"`;
+            return str;
+        };
+
+        const normalizedRoutingRules = normalizeRoutingRules(routingRules);
+
+        await execPromise(
+            `gsettings set org.gnome.system.proxy ignore-hosts ${normalizedRoutingRules}`
+        );
+        log.info(`Ignore Hosts has been set.`);
 
         log.info(`Proxy settings enabled for GNOME with SOCKS5 proxy: ${proxySettings.socks}`);
     } catch (err) {
@@ -94,26 +121,37 @@ const disableGNOMEProxy = async (): Promise<void> => {
     }
 };
 
-const enableKDEProxy = async (ip: string, port: string): Promise<void> => {
-    const proxySettings = {
-        socksProxy: `socks://${ip}:${port}`
-    };
-
+// TODO refactor
+const enableKDEProxy = async (
+    host: string,
+    port: string,
+    routingRules: any,
+    v = '5'
+): Promise<void> => {
     try {
         await execPromise(
-            `kwriteconfig5 --file kioslaverc --group 'Proxy Settings' --key 'socksProxy' '${proxySettings.socksProxy}'`
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key ProxyType 1`
         );
-        log.info(`Proxy settings enabled for KDE with SOCKS5 proxy: ${proxySettings.socksProxy}`);
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key socksProxy "${host}:${port}"`
+        );
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key Authmode 0`
+        );
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key NoProxyFor '${routingRules}'`
+        );
+        log.info(`Proxy settings enabled for KDE with SOCKS5 proxy: "${host}:${port}"`);
     } catch (err) {
         log.error(`Error setting SOCKS proxy for KDE: ${err}`);
         throw err;
     }
 };
 
-const disableKDEProxy = async (): Promise<string> => {
+const disableKDEProxy = async (v = '5'): Promise<string> => {
     try {
         await execPromise(
-            `kwriteconfig5 --file kioslaverc --group 'Proxy Settings' --key 'socksProxy' ''`
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key ProxyType 0`
         );
         log.info('Proxy settings disabled for KDE');
         return 'Proxy disabled for KDE';
@@ -184,24 +222,7 @@ const getMacOSActiveNetworkHardwarePorts = () => {
     });
 };
 
-const setRoutingRules = (value: any) => {
-    const defValue =
-        'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
-    if (typeof value === 'string' && value !== '') {
-        const myRules = value
-            .replace(/domain:/g, '')
-            .replace(/geoip:/g, '')
-            .replace(/ip:/g, '')
-            .replace(/range:/g, '')
-            .replace(/\n|<br>/g, '')
-            .trim();
-        return defValue + ',' + myRules;
-    } else {
-        return defValue;
-    }
-};
-
-const appLang = getTranslateElectron();
+const appLang = getTranslate('en');
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     if (!shouldProxySystem(proxyMode)) {
@@ -293,55 +314,63 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             resolve();
         });
     } else if (process.platform === 'linux') {
+        let notSupported = true;
+        let shouldResolve = false;
         return new Promise<void>(async (resolve, reject) => {
-            const DE = await detectDesktopEnvironment();
-
-            switch (DE) {
-                case 'gnome':
-                    await enableGnomeProxy(hostIP.toString(), port.toString())
-                        .then(() => {
-                            log.info('Successfully enabled proxy for GNOME');
-                            resolve();
-                        })
-                        .catch(() => {
-                            log.error('Failed to enable proxy for GNOME');
-                            reject();
-                        });
-                    break;
-
-                case 'plasma': // (kde)
-                    await enableKDEProxy(hostIP.toString(), port.toString())
-                        .then(() => {
-                            log.info('Successfully enabled proxy for KDE');
-                            resolve();
-                        })
-                        .catch(() => {
-                            log.error('Failed to enable proxy for KDE');
-                            ipcEvent?.reply(
-                                'guide-toast',
-                                appLang.log.error_configuration_encountered
-                            );
-                            reject();
-                        });
-                    break;
-
-                default:
-                    log.error('Desktop Environment not supported.');
-                    ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
-                    reject();
-                    break;
+            if (isGnome()) {
+                await enableGnomeProxy(
+                    hostIP.toString(),
+                    port.toString(),
+                    setRoutingRules(routingRules)
+                )
+                    .then(() => {
+                        notSupported = false;
+                        log.info('Successfully enabled proxy for GNOME');
+                        shouldResolve = true;
+                    })
+                    .catch(() => {
+                        log.error('Failed to enable proxy for GNOME');
+                        // TODO locale
+                        ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                    });
             }
-            // if (systemCheckGSettingsDeps()) {
-
-            // } else if (systemCheckKWriteDeps()) {
-
-            // } else {
-
-            // }
+            const isPlasma5 = isKDE('5');
+            const isPlasma6 = isKDE('6');
+            const plasmaVersion = isPlasma5 || isPlasma6;
+            if (typeof plasmaVersion === 'string') {
+                await enableKDEProxy(
+                    hostIP.toString(),
+                    port.toString(),
+                    setRoutingRules(routingRules),
+                    plasmaVersion
+                )
+                    .then(() => {
+                        notSupported = false;
+                        log.info('Successfully enabled proxy for KDE');
+                        shouldResolve = true;
+                    })
+                    .catch(() => {
+                        log.error('Failed to enable proxy for KDE');
+                        // TODO locale
+                        ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                        reject();
+                    });
+            }
+            if (shouldResolve) {
+                resolve();
+            } else {
+                reject();
+            }
+            if (notSupported) {
+                log.error('Desktop Environment not supported.');
+                // TODO locale
+                ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                reject();
+            }
         });
     } else {
         return new Promise<void>((resolve) => {
-            log.error('system proxy is not supported on your platform yet...');
+            log.error('system proxy is not supported on your platform.');
             ipcEvent?.reply('guide-toast', appLang.log.error_configuration_not_supported);
             resolve();
         });
@@ -410,52 +439,45 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             resolve();
         });
     } else if (process.platform === 'linux') {
+        let notSupported = true;
         return new Promise<void>(async (resolve, reject) => {
-            const DE = await detectDesktopEnvironment();
-
-            switch (DE) {
-                case 'gnome':
-                    await disableGNOMEProxy()
-                        .then(() => {
-                            log.info('Successfully disabled proxy for GNOME');
-                            resolve();
-                        })
-                        .catch(() => {
-                            log.error('Failed to disabled proxy for GNOME');
-                            reject();
-                        });
-                    break;
-
-                case 'plasma':
-                    await disableKDEProxy()
-                        .then(() => {
-                            log.info('Successfully disabled proxy for KDE');
-                            resolve();
-                        })
-                        .catch(() => {
-                            log.error('Failed to disabled proxy for KDE');
-                            reject();
-                        });
-                    break;
-
-                default:
-                    log.error('Desktop Environment not supported.');
-                    ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
-                    reject();
-                    break;
+            if (isGnome()) {
+                await disableGNOMEProxy()
+                    .then(() => {
+                        notSupported = false;
+                        log.info('Successfully disabled proxy for GNOME');
+                        resolve();
+                    })
+                    .catch(() => {
+                        log.error('Failed to disabled proxy for GNOME');
+                        reject();
+                    });
             }
-
-            // if (systemCheckGSettingsDeps()) {
-
-            // } else if (systemCheckKWriteDeps()) {
-
-            // } else {
-
-            // }
+            const isPlasma5 = isKDE('5');
+            const isPlasma6 = isKDE('6');
+            const plasmaVersion = isPlasma5 || isPlasma6;
+            if (typeof plasmaVersion === 'string') {
+                await disableKDEProxy(plasmaVersion)
+                    .then(() => {
+                        notSupported = false;
+                        log.info('Successfully disabled proxy for KDE');
+                        resolve();
+                    })
+                    .catch(() => {
+                        log.error('Failed to disabled proxy for KDE');
+                        reject();
+                    });
+            }
+            if (notSupported) {
+                log.error('Desktop Environment not supported.');
+                // TODO locale
+                ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                reject();
+            }
         });
     } else {
         return new Promise<void>((resolve) => {
-            log.error('system proxy is not supported on your platform yet...');
+            log.error('system proxy is not supported on your platform.');
             resolve();
         });
     }

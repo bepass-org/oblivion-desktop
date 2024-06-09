@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { ipcRenderer, username } from '../../lib/utils';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { defaultToast } from '../../lib/toasts';
-import { getTranslate } from '../../../localization';
+import useTranslate from '../../../localization/useTranslate';
 
 const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const [autoScroll, setAutoScroll] = useState<boolean>(false);
     const logRef = useRef<HTMLParagraphElement>(null);
     //const [isBottom, setIsBottom] = useState(true);
-    const appLang = getTranslate();
+    const appLang = useTranslate();
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -1,13 +1,17 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { loadingToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
-import { changeLang, getLanguageName, getTranslate } from '../../../localization';
+import {
+    LanguageType,
+    changeLang,
+    getDirectionByLang,
+    getLanguageName,
+} from '../../../localization';
+import useTranslate from '../../../localization/useTranslate';
 
 const useOptions = () => {
     useGoBackOnEscape();
@@ -18,7 +22,7 @@ const useOptions = () => {
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
-    const [appLang, setAppLang] = useState(getTranslate());
+    const appLang = useTranslate();
 
     const { state } = useLocation();
     const { targetId } = state || {};
@@ -67,11 +71,6 @@ const useOptions = () => {
 
     const onCloseRestoreModal = useCallback(() => {
         setShowRestoreModal(false);
-
-        setTimeout(function () {
-            setAppLang(getTranslate());
-            toast.remove('LOADING');
-        }, 1500);
     }, []);
 
     const onClickChangeTheme = useCallback(() => {
@@ -92,19 +91,13 @@ const useOptions = () => {
     );
 
     const onChangeLanguage = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-        setLang(e.target.value);
-        settings.set('lang', e.target.value);
-        loadingToast();
+        const language = e.target.value;
+        setLang(language);
+        changeLang(language);
 
-        // setTimeout(function () {
-        //     loadLang();
-        // }, 750);
-
-        setTimeout(function () {
-            setAppLang(getTranslate());
-            toast.remove('LOADING');
-            changeLang(e.target.value);
-        }, 1500);
+        settings.set('lang', language);
+        document.documentElement.setAttribute('lang', language);
+        document.documentElement.setAttribute('dir', getDirectionByLang(language as LanguageType));
     }, []);
 
     const onClickAutoStartButton = useCallback(() => {

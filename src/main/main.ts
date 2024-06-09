@@ -28,16 +28,16 @@ import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import "./store"
+import './store';
 import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
-import { getTranslateElectron } from '../localization/electron';
+import { getTranslate } from '../localization';
 
 let mainWindow: BrowserWindow | null = null;
 
-const appLang = getTranslateElectron();
+const appLang = getTranslate('en');
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
 
@@ -170,7 +170,7 @@ if (!gotTheLock) {
                     } else {
                         mainWindow.show();
                     }*/
-                    mainWindow.show(); 
+                    mainWindow.show();
                 });
 
                 ipcMain.on('open-devtools', async () => {
@@ -181,7 +181,12 @@ if (!gotTheLock) {
 
                 mainWindow.on('close', async (e: any) => {
                     e.preventDefault();
-                    mainWindow?.hide();
+
+                    if (isDev()) {
+                        exitTheApp(mainWindow, regeditVbsDirPath);
+                    } else {
+                        mainWindow?.hide();
+                    }
                 });
 
                 mainWindow.on('closed', async () => {
@@ -228,7 +233,7 @@ if (!gotTheLock) {
                 createMainWindow();
             } else {
                 mainWindow.show();
-                if ( value !== '' ) {
+                if (value !== '') {
                     trayMenuEvent.reply('tray-menu', {
                         key: 'changePage',
                         msg: value
@@ -249,16 +254,19 @@ if (!gotTheLock) {
                         event.reply('tray-menu', {
                             key: 'connectToggle',
                             msg: 'Connect Tray Click!'
-                        })
+                        });
                     });
-                }
-                catch(err) {
+                } catch (err) {
                     console.log(err);
                 }
             }
         };
 
-        const trayMenuContext: any = (connectLabel: string, connectStatus:string, connectEnable: boolean) => {
+        const trayMenuContext: any = (
+            connectLabel: string,
+            connectStatus: string,
+            connectEnable: boolean
+        ) => {
             return [
                 {
                     label: appTitle,

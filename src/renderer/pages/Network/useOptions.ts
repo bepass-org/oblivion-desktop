@@ -7,7 +7,7 @@ import { toPersianNumber } from '../../lib/toPersianNumber';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
-import { getTranslate } from '../../../localization';
+import useTranslate from '../../../localization/useTranslate';
 
 const useOptions = () => {
     const { isConnected, isLoading } = useStore();
@@ -21,7 +21,7 @@ const useOptions = () => {
     const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
-    const [appLang] = useState(getTranslate());
+    const appLang = useTranslate();
     const [ipData, setIpData] = useState<undefined | boolean>();
     const [dns, setDns] = useState<undefined | boolean>();
     const [routingRules, setRoutingRules] = useState<string>();

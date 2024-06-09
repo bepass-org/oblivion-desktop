@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
-import { getTranslate } from '../../../../localization';
+import useTranslate from '../../../../localization/useTranslate';
 
 interface PortModalProps {
     isOpen: boolean;
@@ -17,7 +17,7 @@ const usePortModal = (props: PortModalProps) => {
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
-    const appLang = getTranslate();
+    const appLang = useTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);

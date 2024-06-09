@@ -11,7 +11,7 @@
         "url": "https://github.com/bepass-org/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "0.20.0-beta",
+    "version": "0.21.4-beta",
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
@@ -245,11 +245,24 @@
         "linux": {
             "target": [
                 {
+                    "target": "deb",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "rpm",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
                     "target": "tar.xz",
                     "arch": [
                         "arm64",
-                        "x64",
-                        "ia32"
+                        "x64"
                     ]
                 }
             ],

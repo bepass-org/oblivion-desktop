@@ -13,8 +13,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [windows-latest, macos-13, macos-14]
-                # os: [ubuntu-latest, windows-latest, macos-latest]
+                os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
         steps:
             - name: Checkout git repo
@@ -64,4 +63,11 @@ jobs:
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'windows-latest'
+              run: npm exec electron-builder -- --publish always
+
+            - name: Publish releases GNU Linux
+              env:
+                  # This is used for uploading release assets to github
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'ubuntu-latest'
               run: npm exec electron-builder -- --publish always

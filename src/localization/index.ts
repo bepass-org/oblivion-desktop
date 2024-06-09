@@ -4,13 +4,11 @@ import ruRU from './ru';
 import cnCN from './cn';
 import deDE from './de';
 import { defaultSettings } from '../defaultSettings';
-import { store } from '../renderer/lib/utils';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
+export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
 type directionType = 'rtl' | 'ltr';
 
-const lang = (store.get('lang') ? store.get('lang') : defaultSettings.lang) as LanguageType;
-
+const lang = defaultSettings.lang as LanguageType;
 export { lang };
 
 const direction = {
@@ -35,16 +33,6 @@ const getLanguageName = (): LanguageType => {
 };
 
 export { getLanguageName };
-// const fonts = {
-//     fa: 'IRANSans',
-//     en: 'Ubuntu'
-// };
-
-// const getFonts = () => {
-//     return fonts[lang];
-// };
-
-// export { getFonts };
 
 const translate = {
     fa: faIR,
@@ -54,19 +42,24 @@ const translate = {
     de: deDE
 };
 
-const getTranslate = () => {
-    const language = (
-        store.get('lang') ? store.get('lang') : defaultSettings.lang
-    ) as LanguageType;
-
-    return translate[language];
+const getTranslate = (forceLang?: string) => {
+    let language;
+    if (typeof forceLang === 'string' && forceLang !== '') {
+        language = forceLang;
+    } else {
+        language = defaultSettings.lang;
+    }
+    return translate[language as LanguageType];
 };
 
 export { getTranslate };
 
 const changeLang = (language: string) => {
-    store.set('lang', language);
-    window.location.reload();
+    // store.set('lang', language);
+    localStorage.setItem('lang', language);
+    window.dispatchEvent(new Event('storage'));
+
+    // window.location.reload();
 };
 
 export { changeLang };
