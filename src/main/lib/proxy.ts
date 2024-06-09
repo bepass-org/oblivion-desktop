@@ -53,13 +53,22 @@ const isGnome = (): boolean => {
     }
 };
 
-const isKDE = (v = '5') => {
-    try {
-        exec(`kwriteconfig${v} --version`);
-        return v;
-    } catch (error) {
-        return false;
-    }
+const isKDE = () => {
+    const checkKwriteConfig = (v = '5') => {
+        let value;
+        exec(`kwriteconfig${v} --version`, (err) => {
+            if (err) value = false;
+            else value = v;
+        });
+        return value;
+    };
+
+    const isPlasma5 = checkKwriteConfig('5');
+    const isPlasma6 = checkKwriteConfig('6');
+
+    if (isPlasma5 === '5') return isPlasma5;
+    else if (isPlasma6 === '6') return isPlasma6;
+    else return false;
 };
 
 // TODO refactor
@@ -333,9 +342,8 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
                     });
             }
-            const isPlasma5 = isKDE('5');
-            const isPlasma6 = isKDE('6');
-            const plasmaVersion = isPlasma5 || isPlasma6;
+
+            const plasmaVersion = isKDE();
             if (typeof plasmaVersion === 'string') {
                 await enableKDEProxy(
                     hostIP.toString(),
@@ -452,9 +460,8 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                         reject();
                     });
             }
-            const isPlasma5 = isKDE('5');
-            const isPlasma6 = isKDE('6');
-            const plasmaVersion = isPlasma5 || isPlasma6;
+
+            const plasmaVersion = isKDE();
             if (typeof plasmaVersion === 'string') {
                 await disableKDEProxy(plasmaVersion)
                     .then(() => {
