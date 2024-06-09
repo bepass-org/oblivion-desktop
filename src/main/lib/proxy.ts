@@ -47,28 +47,39 @@ const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) 
 const isGnome = (): boolean => {
     try {
         exec('gsettings --version');
+        log.info(`gsettings found!`);
         return true;
     } catch (error) {
         return false;
     }
 };
 
-const isKDE = () => {
-    const checkKwriteConfig = (v = '5') => {
-        let value;
-        exec(`kwriteconfig${v} --version`, (err) => {
-            if (err) value = false;
-            else value = v;
+const isKDE = async () => {
+    const checkKwriteConfig = async (v = '5') => {
+        return new Promise((resolve) => {
+            try {
+                exec(`kwriteconfig${v} --help`, (err) => {
+                    if (!err) {
+                        log.info(`kwriteconfig${v} found!`);
+                        resolve(v);
+                    } else {
+                        resolve(false);
+                    }
+                });
+            } catch (error) {
+                resolve(false);
+            }
         });
-        return value;
     };
 
-    const isPlasma5 = checkKwriteConfig('5');
-    const isPlasma6 = checkKwriteConfig('6');
+    return new Promise(async (resolve) => {
+        const isPlasma5 = await checkKwriteConfig('5');
+        const isPlasma6 = await checkKwriteConfig('6');
 
-    if (isPlasma5 === '5') return isPlasma5;
-    else if (isPlasma6 === '6') return isPlasma6;
-    else return false;
+        if (typeof isPlasma5 === 'string' && isPlasma5 === '5') resolve(isPlasma5);
+        else if (typeof isPlasma6 === 'string' && isPlasma6 === '6') resolve(isPlasma6);
+        else resolve(false);
+    });
 };
 
 // TODO refactor
@@ -82,13 +93,10 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
 
     try {
         await execPromise(`gsettings set org.gnome.system.proxy mode '${proxySettings.mode}'`);
-        log.info(`Proxy mode set to ${proxySettings.mode}`);
 
         await execPromise(`gsettings set org.gnome.system.proxy.socks host ${proxySettings.host}`);
-        log.info(`SOCKS host set to ${proxySettings.host}`);
 
         await execPromise(`gsettings set org.gnome.system.proxy.socks port ${proxySettings.port}`);
-        log.info(`SOCKS port set to ${proxySettings.port}`);
 
         // https://wiki.archlinux.org/title/Proxy_server#Proxy_settings_on_GNOME3
         const normalizeRoutingRules = (rules: any) => {
@@ -110,9 +118,6 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
         await execPromise(
             `gsettings set org.gnome.system.proxy ignore-hosts ${normalizedRoutingRules}`
         );
-        log.info(`Ignore Hosts has been set.`);
-
-        log.info(`Proxy settings enabled for GNOME with SOCKS5 proxy: ${proxySettings.socks}`);
     } catch (err) {
         log.error(`Error setting proxy: ${err}`);
         throw err;
@@ -149,7 +154,6 @@ const enableKDEProxy = async (
         await execPromise(
             `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key NoProxyFor '${routingRules}'`
         );
-        log.info(`Proxy settings enabled for KDE with SOCKS5 proxy: "${host}:${port}"`);
     } catch (err) {
         log.error(`Error setting SOCKS proxy for KDE: ${err}`);
         throw err;
@@ -333,7 +337,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 )
                     .then(() => {
                         notSupported = false;
-                        log.info('Successfully enabled proxy for GNOME');
+                        log.info('Enabled proxy for GNOME.');
                         shouldResolve = true;
                     })
                     .catch(() => {
@@ -343,7 +347,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     });
             }
 
-            const plasmaVersion = isKDE();
+            const plasmaVersion = await isKDE();
             if (typeof plasmaVersion === 'string') {
                 await enableKDEProxy(
                     hostIP.toString(),
@@ -353,7 +357,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 )
                     .then(() => {
                         notSupported = false;
-                        log.info('Successfully enabled proxy for KDE');
+                        log.info('Enabled proxy for KDE.');
                         shouldResolve = true;
                     })
                     .catch(() => {
@@ -452,7 +456,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                 await disableGNOMEProxy()
                     .then(() => {
                         notSupported = false;
-                        log.info('Successfully disabled proxy for GNOME');
+                        log.info('Disabled proxy for GNOME.');
                         resolve();
                     })
                     .catch(() => {
@@ -461,12 +465,12 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                     });
             }
 
-            const plasmaVersion = isKDE();
+            const plasmaVersion = await isKDE();
             if (typeof plasmaVersion === 'string') {
                 await disableKDEProxy(plasmaVersion)
                     .then(() => {
                         notSupported = false;
-                        log.info('Successfully disabled proxy for KDE');
+                        log.info('Disabled proxy for KDE.');
                         resolve();
                     })
                     .catch(() => {
