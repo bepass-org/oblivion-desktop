@@ -1,12 +1,5 @@
-import Cookies from 'js-cookie';
-import { getDirection, getDirectionByLang, getLanguageName } from '../../localization';
+import { getDirectionByLang } from '../../localization';
 import { settings } from './settings';
-
-// import fa from '../../locale/fa.json';
-// import en from '../../locale/en.json';
-// import ru from '../../locale/ru.json';
-// import cn from '../../locale/cn.json';
-// import de from '../../locale/de.json';
 
 export const loadTheme = () => {
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
@@ -20,7 +13,6 @@ export const loadTheme = () => {
 
 export const loadLang = () => {
     settings.get('lang').then((data) => {
-        Cookies.set('lang', data);
         const langDir = getDirectionByLang(data);
         document.documentElement.setAttribute('lang', data);
         document.documentElement.setAttribute('dir', langDir);

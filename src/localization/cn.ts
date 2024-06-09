@@ -122,7 +122,7 @@ const chinese: Language = {
         error_warp_identity: 'cloudflare 中的身份验证错误；再试一次。',
         error_script_failed: '程序遇到错误；再试一次。',
         error_object_null: '程序遇到错误；再试一次。',
-        error_port_already_in_use: (value) => '端口 ${value} 正在被另一个程序使用；更改。',
+        error_port_already_in_use: (value) => `端口 ${value} 正在被另一个程序使用；更改。`,
         error_port_socket: '使用另一个端口。',
         error_unknown_flag: '后台执行了无效命令。',
         error_deadline_exceeded: '连接超时；再试一次。',
@@ -130,11 +130,11 @@ const chinese: Language = {
         error_desktop_not_supported: '不支持桌面环境！',
         error_configuration_not_supported:
             '您的操作系统不支持代理配置，但您可以手动使用 Warp 代理。',
-        error_configuring_proxy: (value) => '为 ${value} 配置代理时出错！'
+        error_configuring_proxy: (value) => `为 ${value} 配置代理时出错！`
     },
     about: {
         title: '关于应用',
-        desc: '该应用程序是 Warp 客户端的 Windows、Linux 和 MacOS 的非官方但可靠版本，基于 Oblivion 或 Forget 项目。\nOblivion Desktop应用旨在实现对互联网的自由访问。界面设计基于 Yousef Gabardi 开发的原始版本。不允许任何改名或商业用途。',
+        desc: '该应用程序是 Warp 客户端的 Windows、Linux 和 MacOS 的非官方但可靠版本，基于 Oblivion 或 Forget 项目。\nOblivion Desktop应用旨在实现对互联网的自由访问。界面设计基于 Yousef Ghobadi 开发的原始版本。不允许任何改名或商业用途。',
         slogan: '互联网，联万物；不通达，何存乎！'
     },
     systemTray: {

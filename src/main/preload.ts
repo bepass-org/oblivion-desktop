@@ -30,7 +30,7 @@ const electronHandler = {
     },
     NODE_ENV: process.env.NODE_ENV,
     platform: process.platform,
-    username: process.env.USER || process.env.USERNAME || null
+    username: process.env.USER || process.env.USERNAME || null,
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

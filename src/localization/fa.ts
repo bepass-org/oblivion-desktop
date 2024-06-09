@@ -126,7 +126,7 @@ const persian: Language = {
         error_script_failed: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_object_null: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_port_already_in_use: (value) =>
-            'پورت {value}$ توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.',
+            `پورت {value}$ توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`,
         error_port_socket: 'از یک پورت دیگر استفاده نمایید.',
         error_unknown_flag: 'یک دستور نادرست در پس‌زمینه اجرا شده است.',
         error_deadline_exceeded: 'مهلت اتصال پایان یافت؛ دوباره تلاش کنید.',
@@ -134,7 +134,7 @@ const persian: Language = {
         error_desktop_not_supported: 'محیط دسکتاپ پشتیبانی نمی‌شود!',
         error_configuration_not_supported:
             'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
-        error_configuring_proxy: (value) => 'خطای پیکربندی پروکسی برای ${value}!'
+        error_configuring_proxy: (value) => `خطای پیکربندی پروکسی برای ${value}!`
     },
     about: {
         title: 'درباره برنامه',

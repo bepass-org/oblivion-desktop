@@ -6,10 +6,10 @@ import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
-import { getTranslate } from '../../../localization';
+import useTranslate from '../../../localization/useTranslate';
 
 const useSettings = () => {
-    const appLang = getTranslate();
+    const appLang = useTranslate();
     const { isConnected, isLoading } = useStore();
 
     //const [scan, setScan] = useState(true);

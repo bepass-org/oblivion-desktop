@@ -2,7 +2,8 @@ import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { defaultSettings } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
-import { changeLang, getTranslate } from '../../../../localization';
+import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
+import useTranslate from '../../../../localization/useTranslate';
 
 interface RestoreModalProps {
     isOpen: boolean;
@@ -25,7 +26,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
-    const appLang = getTranslate();
+    const appLang = useTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);
@@ -44,21 +45,24 @@ const useRestoreModal = (props: RestoreModalProps) => {
 
     const onSaveModal = useCallback(async () => {
         // in this page
-        setTheme(detectingSystemTheme ? 'dark' : 'light');
         //setSystemTray(defaultSettings.systemTray);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
         setAutoConnect(defaultSettings.autoConnect);
         // TODO Promise.all
         await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
+        setTheme(detectingSystemTheme ? 'dark' : 'light');
+        document.documentElement.setAttribute(
+          'data-bs-theme',
+          detectingSystemTheme ? 'dark' : 'light'
+        );
         //await settings.set('systemTray', defaultSettings.systemTray);
         await settings.set('lang', defaultSettings.lang);
+        changeLang(defaultSettings.lang);
+        document.documentElement.setAttribute('lang', defaultSettings.lang);
+        document.documentElement.setAttribute('dir', getDirectionByLang(defaultSettings.lang as LanguageType));
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
         await settings.set('autoConnect', defaultSettings.autoConnect);
-        document.documentElement.setAttribute(
-            'data-bs-theme',
-            detectingSystemTheme ? 'dark' : 'light'
-        );
         handleOnClose();
         // other settings
         //await settings.set('scan', defaultSettings.scan);
@@ -79,9 +83,6 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('reserved', defaultSettings.reserved);
         //
         ipcRenderer.sendMessage('wp-end');
-        setTimeout(function () {
-            changeLang(defaultSettings.lang);
-        }, 1500);
     }, [detectingSystemTheme, setTheme, setLang, setOpenAtLogin, setAutoConnect, handleOnClose]);
 
     const onConfirmKeyDown = useCallback(

@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-
 import enUS from './en';
 import faIR from './fa';
 import ruRU from './ru';
@@ -7,11 +5,10 @@ import cnCN from './cn';
 import deDE from './de';
 import { defaultSettings } from '../defaultSettings';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
+export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
 type directionType = 'rtl' | 'ltr';
 
-const lang = (Cookies.get('lang') ? Cookies.get('lang') : defaultSettings.lang) as LanguageType;
-
+const lang = defaultSettings.lang as LanguageType;
 export { lang };
 
 const direction = {
@@ -36,16 +33,6 @@ const getLanguageName = (): LanguageType => {
 };
 
 export { getLanguageName };
-// const fonts = {
-//     fa: 'IRANSans',
-//     en: 'Ubuntu'
-// };
-
-// const getFonts = () => {
-//     return fonts[lang];
-// };
-
-// export { getFonts };
 
 const translate = {
     fa: faIR,
@@ -60,7 +47,7 @@ const getTranslate = (forceLang?: string) => {
     if (typeof forceLang === 'string' && forceLang !== '') {
         language = forceLang;
     } else {
-        language = Cookies.get('lang') || defaultSettings.lang;
+        language = defaultSettings.lang;
     }
     return translate[language as LanguageType];
 };
@@ -68,8 +55,11 @@ const getTranslate = (forceLang?: string) => {
 export { getTranslate };
 
 const changeLang = (language: string) => {
-    Cookies.set('lang', language);
-    window.location.reload();
+    // store.set('lang', language);
+    localStorage.setItem('lang', language);
+    window.dispatchEvent(new Event('storage'));
+
+    // window.location.reload();
 };
 
 export { changeLang };
