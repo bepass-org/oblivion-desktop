@@ -63,6 +63,13 @@ const useLicenseModal = (props: LicenseModalProps) => {
         },
         [setLicenseInput]
     );
+
+    const handleClearLicenseInput = useCallback(() => {
+        setLicenseInput('');
+        setLicense('');
+        handleOnClose();
+    }, [setLicenseInput, setLicense, handleOnClose]);
+
     return {
         appLang,
         handleCancelButtonClick,
@@ -72,7 +79,8 @@ const useLicenseModal = (props: LicenseModalProps) => {
         onSaveModalClick,
         showModal,
         handleCancelButtonKeyDown,
-        onSaveModalKeyDown
+        onSaveModalKeyDown,
+        handleClearLicenseInput
     };
 };
 

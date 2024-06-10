@@ -103,6 +103,7 @@ export interface Modal {
     endpoint_title: string;
     license_title: string;
     license_desc: string;
+    license_clear: string;
     port_title: string;
     restore_title: string;
     restore_desc: string;

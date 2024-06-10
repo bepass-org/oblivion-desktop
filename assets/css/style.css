@@ -1334,6 +1334,14 @@ html[data-bs-theme="dark"] .shimmer {
     background-color: #9b2623;
 }
 
+.dialog .dialogBox .labels .label.label-default {
+    background-color: #9b9b9b;
+}
+
+[data-bs-theme="dark"] .dialog .dialogBox .labels .label.label-default {
+    background-color: #7b7b7b;
+}
+
 .dialog .dialogBox .labels .label i {
     float: right;
     font-size: 14px;

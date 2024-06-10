@@ -25,7 +25,8 @@ export default function LicenseModal({
         licenseInput,
         onSaveModalClick,
         onSaveModalKeyDown,
-        showModal
+        showModal,
+        handleClearLicenseInput
     } = useLicenseModal({
         isOpen,
         onClose,
@@ -43,7 +44,23 @@ export default function LicenseModal({
                     <div className='line'>
                         <div className='miniLine' />
                     </div>
-                    <h3>{title}</h3>
+                    <h3>
+                        {title}
+                        <div className='labels'>
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-default',
+                                    licenseInput === '' ? 'hidden' : ''
+                                )}
+                                onClick={handleClearLicenseInput}
+                            >
+                                <i className='material-icons'>&#xf0ff;</i>
+                                {appLang?.modal?.license_clear}
+                            </div>
+                        </div>
+                    </h3>
                     <p className='withMargin'>{appLang?.modal?.license_desc}</p>
                     <div className='clearfix' />
                     <input

@@ -104,6 +104,7 @@ const deutsch: Language = {
         license_title: 'Lizenz',
         license_desc:
             'Für die Ausführung des Programms ist nicht unbedingt eine Warp-Lizenz erforderlich. Wenn Sie möchten, können Sie Ihre Lizenz hier eingeben.',
+        license_clear: 'Löschen',
         port_title: 'Proxy-Port',
         restore_title: 'Standardeinstellungen wiederherstellen',
         restore_desc:

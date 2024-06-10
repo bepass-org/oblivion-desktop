@@ -102,6 +102,7 @@ const chinese: Language = {
         license_title: '许可证',
         license_desc:
             '应用不一定需要 Warp 许可证才能运行，但如果您愿意，可以在此处输入您的许可证。',
+        license_clear: '清除',
         port_title: '代理端口',
         restore_title: '恢复更改',
         restore_desc: '确认恢复默认设置后，所有应用设置将恢复为默认值，并且您的连接将断开。',

@@ -19,7 +19,7 @@ import {
     Tray,
     nativeImage,
     IpcMainEvent,
-  globalShortcut
+    globalShortcut
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
@@ -104,12 +104,12 @@ if (!gotTheLock) {
             .catch(console.log);
     };
 
-  const registerQuitShortcut = () => {
-	const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
-	globalShortcut.register(shortcut, async () => {
-	  await exitTheApp(mainWindow, regeditVbsDirPath);
-	});
-  }
+    const registerQuitShortcut = () => {
+        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+        globalShortcut.register(shortcut, async () => {
+            await exitTheApp(mainWindow, regeditVbsDirPath);
+        });
+    };
 
     const createWindow = async () => {
         if (isDebug) {
