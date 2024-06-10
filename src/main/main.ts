@@ -104,6 +104,13 @@ if (!gotTheLock) {
             .catch(console.log);
     };
 
+  const registerQuitShortcut = () => {
+	const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+	globalShortcut.register(shortcut, async () => {
+	  await exitTheApp(mainWindow, regeditVbsDirPath);
+	});
+  }
+
     const createWindow = async () => {
         if (isDebug) {
             await installExtensions();
@@ -398,13 +405,6 @@ if (!gotTheLock) {
         // new AppUpdater();
         log.info('od is ready!');
     };
-
-    const registerQuitShortcut = () => {
-        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
-            globalShortcut.register(shortcut, async () => {
-			  await exitTheApp(mainWindow, regeditVbsDirPath);
-        });
-    }
 
     const startAtLogin = async () => {
         if (process.env.NODE_ENV !== 'development') {
