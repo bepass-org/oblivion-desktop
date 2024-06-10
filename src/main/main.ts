@@ -351,7 +351,7 @@ if (!gotTheLock) {
                 { label: '', type: 'separator' },
                 {
                     label: appLang.systemTray.exit,
-                    accelerator: 'CommandOrControl+Q',
+                    accelerator: process.platform === 'darwin' ? 'CommandOrControl+Q' : '',
                     type: 'normal',
                     click: async () => {
                         await exitTheApp(mainWindow, regeditVbsDirPath);
@@ -392,7 +392,9 @@ if (!gotTheLock) {
                 );
             });
             globalShortcut.register('CommandOrControl+Q', async () => {
-                await exitTheApp(mainWindow, regeditVbsDirPath);
+                if (process.platform === 'darwin') {
+                    await exitTheApp(mainWindow, regeditVbsDirPath);
+                }
             });
         });
 
