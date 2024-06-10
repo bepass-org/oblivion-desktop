@@ -343,8 +343,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     })
                     .catch(() => {
                         log.error('Failed to enable proxy for GNOME');
-                        // TODO locale
-                        ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                        ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
                     });
             }
 
@@ -363,8 +362,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     })
                     .catch(() => {
                         log.error('Failed to enable proxy for KDE');
-                        // TODO locale
-                        ipcEvent?.reply('guide-toast', `پیکربندی پروکسی با خطا روبرو شد!`);
+                        ipcEvent?.reply('guide-toast', appLang.log.error_configuration_encountered);
                         reject();
                     });
             }
@@ -375,8 +373,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
             }
             if (notSupported) {
                 log.error('Desktop Environment not supported.');
-                // TODO locale
-                ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
                 reject();
             }
         });
@@ -481,8 +478,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             }
             if (notSupported) {
                 log.error('Desktop Environment not supported.');
-                // TODO locale
-                ipcEvent?.reply('guide-toast', `محیط دسکتاپ پشتیبانی نمی‌شود!`);
+                ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
                 reject();
             }
         });
