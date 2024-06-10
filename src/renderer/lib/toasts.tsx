@@ -15,6 +15,9 @@ export const defaultToast = (msg = '', id = 'ID', duration = 5000) => {
         duration: duration,
         style: defaultToastStyle
     });
+    setTimeout(() => {
+        toast.remove(id);
+    }, (duration+200));
 };
 
 export const defaultToastWithSubmitButton = (
