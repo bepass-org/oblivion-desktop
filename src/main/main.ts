@@ -18,7 +18,8 @@ import {
     Menu,
     Tray,
     nativeImage,
-    IpcMainEvent
+    IpcMainEvent,
+  globalShortcut
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
@@ -350,6 +351,7 @@ if (!gotTheLock) {
                 { label: '', type: 'separator' },
                 {
                     label: appLang.systemTray.exit,
+                    accelerator: 'CommandOrControl+Q',
                     type: 'normal',
                     click: async () => {
                         await exitTheApp(mainWindow, regeditVbsDirPath);
@@ -388,6 +390,9 @@ if (!gotTheLock) {
                         )
                     )
                 );
+            });
+            globalShortcut.register('CommandOrControl+Q', async () => {
+                await exitTheApp(mainWindow, regeditVbsDirPath);
             });
         });
 
