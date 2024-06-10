@@ -1,7 +1,6 @@
 import fs from 'fs';
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, ipcMain } from 'electron';
 import log from 'electron-log';
-import { disableProxy } from './proxy';
 import { defaultSettings } from '../../defaultSettings';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
@@ -93,6 +92,12 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null, regeditVbsDir
     if (mainWindow) {
         mainWindow.hide();
     }
-    await disableProxy(regeditVbsDirPath);
-    app.exit(0);
+
+    // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
+    // also ipcMain.emit and ipcRenderer.sendMessage does'nt encounter and are separated(internally by electron)
+    ipcMain.on('wp-end', () => {
+        app.exit(0);
+    });
+
+    ipcMain.emit('wp-end');
 };

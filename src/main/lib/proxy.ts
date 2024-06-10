@@ -449,17 +449,18 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
         });
     } else if (process.platform === 'linux') {
         let notSupported = true;
+        let shouldResolve = false;
         return new Promise<void>(async (resolve, reject) => {
             if (isGnome()) {
                 await disableGNOMEProxy()
                     .then(() => {
                         notSupported = false;
                         log.info('Disabled proxy for GNOME.');
-                        resolve();
+                        shouldResolve = true;
                     })
                     .catch(() => {
                         log.error('Failed to disabled proxy for GNOME');
-                        reject();
+                        shouldResolve = false;
                     });
             }
 
@@ -469,13 +470,14 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                     .then(() => {
                         notSupported = false;
                         log.info('Disabled proxy for KDE.');
-                        resolve();
+                        shouldResolve = true;
                     })
                     .catch(() => {
                         log.error('Failed to disabled proxy for KDE');
-                        reject();
+                        shouldResolve = false;
                     });
             }
+            if (shouldResolve) resolve();
             if (notSupported) {
                 log.error('Desktop Environment not supported.');
                 ipcEvent?.reply('guide-toast', appLang.log.error_desktop_not_supported);
