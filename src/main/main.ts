@@ -351,7 +351,6 @@ if (!gotTheLock) {
                 { label: '', type: 'separator' },
                 {
                     label: appLang.systemTray.exit,
-                    accelerator: process.platform === 'darwin' ? 'CommandOrControl+Q' : '',
                     type: 'normal',
                     click: async () => {
                         await exitTheApp(mainWindow, regeditVbsDirPath);
@@ -391,11 +390,7 @@ if (!gotTheLock) {
                     )
                 );
             });
-            globalShortcut.register('CommandOrControl+Q', async () => {
-                if (process.platform === 'darwin') {
-                    await exitTheApp(mainWindow, regeditVbsDirPath);
-                }
-            });
+            registerQuitShortcut();
         });
 
         // Remove this if your app does not use auto updates
@@ -403,6 +398,13 @@ if (!gotTheLock) {
         // new AppUpdater();
         log.info('od is ready!');
     };
+
+    const registerQuitShortcut = () => {
+        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+            globalShortcut.register(shortcut, async () => {
+			  await exitTheApp(mainWindow, regeditVbsDirPath);
+        });
+    }
 
     const startAtLogin = async () => {
         if (process.env.NODE_ENV !== 'development') {
