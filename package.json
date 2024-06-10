@@ -264,7 +264,9 @@
                     ]
                 }
             ],
-            "category": "Utility"
+            "description": "Unofficial Warp Client",
+            "category": "Utility",
+            "icon": "assets"
         },
         "directories": {
             "app": "release/app",

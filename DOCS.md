@@ -43,6 +43,8 @@ npm run package:mac
 
 when commands finish you shall have your production build(s) at: `release/build`
 
+for more specific builds checkout: https://www.electron.build/cli
+
 ## IPC (sending data between main and renderer)
 
 as you may be familiar with electron already.  

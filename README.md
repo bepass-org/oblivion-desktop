@@ -128,12 +128,12 @@ technology
         <tr>
             <td>Windows</td>
             <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a><br>
-                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-arm64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-arm64-67b7d1.svg?logo=windows"></a><br>
-                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-x86-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-67b7d1.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-x64-0C88D8.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-arm64-0C88D8.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-x86-0C88D8.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x64-005AA8.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
             </td>
             <td>
                 v10<br>
@@ -143,25 +143,32 @@ technology
         <tr>
             <td>macOS</td>
             <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-bc544b.svg?logo=apple" /></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-bc544b.svg?logo=apple" /></a>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-arm64-F0F0F1.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-x64-F0F0F1.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-5D5D5D.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
             </td>
             <td></td>
         </tr>
         <tr>
             <td>Linux</td>
-            <td>                
-                <small>Coming Soon ...</small>
+            <td>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DEB-x64-DC470E.svg?logo=debian"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DEB-arm64-DC470E.svg?logo=debian"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a><br>    
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-x64-01ABD2.svg?logo=redhat"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/tar.xz-x64-EDC204.svg?logo=linux"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/tar.xz-arm64-EDC204.svg?logo=linux"></a><br>             
             </td>
-            <td></td>
+            <td>
+                Gnome<br>
+                KDE
+            </td>
         </tr>
-        <tr>
         <td>Android</td>
             <td>
                 <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
-<a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
+                <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
             </td>
             <td>v6+</td>
         </tr>
