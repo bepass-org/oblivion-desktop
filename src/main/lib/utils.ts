@@ -87,17 +87,17 @@ export function calculateMethod(method: any) {
     }
 }
 
-export const exitTheApp = async (mainWindow: BrowserWindow | null, regeditVbsDirPath: string) => {
+export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
     log.info('exiting the app...');
     if (mainWindow) {
         mainWindow.hide();
     }
 
     // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
-    // also ipcMain.emit and ipcRenderer.sendMessage does'nt encounter and are separated(internally by electron)
-    ipcMain.on('wp-end', () => {
+    ipcMain.on('exit', () => {
+        console.log('🚀 ~ file: utils.ts:98 ~ exit:');
         app.exit(0);
     });
 
-    ipcMain.emit('wp-end');
+    ipcMain.emit('end-wp-and-exit-app');
 };

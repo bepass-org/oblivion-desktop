@@ -107,7 +107,7 @@ if (!gotTheLock) {
     const registerQuitShortcut = () => {
         const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
         globalShortcut.register(shortcut, async () => {
-            await exitTheApp(mainWindow, regeditVbsDirPath);
+            await exitTheApp(mainWindow);
         });
     };
 
@@ -188,8 +188,11 @@ if (!gotTheLock) {
 
                 mainWindow.on('close', async (e: any) => {
                     e.preventDefault();
-
-                    mainWindow?.hide();
+                    if (isDev()) {
+                        exitTheApp(mainWindow);
+                    } else {
+                        mainWindow?.hide();
+                    }
                 });
 
                 mainWindow.on('closed', async () => {
@@ -356,7 +359,7 @@ if (!gotTheLock) {
                     label: appLang.systemTray.exit,
                     type: 'normal',
                     click: async () => {
-                        await exitTheApp(mainWindow, regeditVbsDirPath);
+                        await exitTheApp(mainWindow);
                     }
                 }
             ];
@@ -417,7 +420,7 @@ if (!gotTheLock) {
 
     app.on('window-all-closed', async () => {
         await startAtLogin();
-        exitTheApp(mainWindow, regeditVbsDirPath);
+        exitTheApp(mainWindow);
     });
 
     app.whenReady()

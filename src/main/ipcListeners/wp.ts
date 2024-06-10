@@ -37,9 +37,12 @@ export const wpBinPath = path.join(wpDirPath, wpFileName);
 
 export const stuffPath = path.join(wpDirPath, 'stuff');
 
+let exitOnWpEnd = false;
+
 let connectedFlags: boolean[];
 let disconnectedFlags: boolean[];
 ipcMain.on('wp-start', async (event) => {
+    exitOnWpEnd = false;
     connectedFlags = [false, false];
     disconnectedFlags = [false, false];
 
@@ -60,6 +63,10 @@ ipcMain.on('wp-start', async (event) => {
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
             customEvent.emit('tray-icon', 'disconnected');
+
+            console.log('🚀 ~ file: wp.ts:69 ~ exitOnWpEnd:', exitOnWpEnd);
+            // send signal to `exitTheApp` function
+            if (exitOnWpEnd) ipcMain.emit('exit');
         }
     };
 
@@ -140,6 +147,26 @@ ipcMain.on('wp-end', async (event) => {
     try {
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
+        }
+    } catch (error) {
+        log.error(error);
+        event.reply('wp-end', false);
+    }
+});
+
+ipcMain.on('end-wp-and-exit-app', async (event) => {
+    console.log('🚀 ~ file: wp.ts:158 ~ end-wp-and-exit-app:');
+    try {
+        if (typeof child?.pid !== 'undefined') {
+            console.log('🚀 ~ file: wp.ts:161 ~ typeof child?.pid:', typeof child?.pid);
+            console.log('im here');
+
+            treeKill(child.pid, 'SIGKILL');
+            exitOnWpEnd = true;
+        } else {
+            // send signal to `exitTheApp` function
+            console.log('🚀 ~ file: wp.ts:167 ~ ipcMain:');
+            ipcMain.emit('exit');
         }
     } catch (error) {
         log.error(error);
