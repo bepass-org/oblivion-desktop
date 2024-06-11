@@ -168,8 +168,8 @@ Cloudflare Warp فراهم می‌کند.
             <td>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DEB-x64-DC470E.svg?logo=debian"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DEB-arm64-DC470E.svg?logo=debian"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a><br>    
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-x64-01ABD2.svg?logo=redhat"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a><br>    
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/tar.xz-x64-EDC204.svg?logo=linux"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/tar.xz-arm64-EDC204.svg?logo=linux"></a><br>             
             </td>
@@ -240,6 +240,6 @@ Cloudflare Warp فراهم می‌کند.
 
 ## مشارکت‌کنندگان
 
-ما از کمک و حمایت شما قدردانی می کنیم. ([راهنمای مشارکت](CONTRIBUTING.md))
+ اوبلیویون دسکتاپ اینجاست چون شما کمک کردین. دمتون گرم✌️🧡 ([راهنمای مشارکت](CONTRIBUTING.md))
 
 <img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
