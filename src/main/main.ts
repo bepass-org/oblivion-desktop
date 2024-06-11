@@ -111,6 +111,11 @@ if (!gotTheLock) {
         });
     };
 
+    const unregisterQuitShortcut = () => {
+        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+        globalShortcut.unregister(shortcut);
+    };
+
     const createWindow = async () => {
         if (isDebug) {
             await installExtensions();
@@ -202,6 +207,9 @@ if (!gotTheLock) {
                 mainWindow.on('minimize', async (e: any) => {
                     e.preventDefault();
                 });
+
+                mainWindow.on('focus', registerQuitShortcut);
+                mainWindow.on('blur', unregisterQuitShortcut);
 
                 const menuBuilder = new MenuBuilder(mainWindow);
                 menuBuilder.buildMenu();
@@ -396,7 +404,6 @@ if (!gotTheLock) {
                     )
                 );
             });
-            registerQuitShortcut();
         });
 
         // Remove this if your app does not use auto updates
