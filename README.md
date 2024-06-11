@@ -228,6 +228,6 @@ provided by the following friends:
 
 ## Contributors
 
-Oblivion Desktop made possible by you.✌️ We appreciate your help and support.🧡 ([Contribution Guide](CONTRIBUTING.md))
+Oblivion Desktop made possible by you. ✌️ We appreciate your help and support. 🧡 ([Contribution Guide](CONTRIBUTING.md))
 
 <img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
