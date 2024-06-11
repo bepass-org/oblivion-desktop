@@ -13,6 +13,10 @@ export const loadTheme = () => {
 
 export const loadLang = () => {
     settings.get('lang').then((data) => {
+        if (!localStorage.getItem('lang')) {
+            localStorage.setItem('lang', 'en');
+        }
+
         const langDir = getDirectionByLang(data);
         document.documentElement.setAttribute('lang', data);
         document.documentElement.setAttribute('dir', langDir);
