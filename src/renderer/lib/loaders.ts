@@ -11,10 +11,13 @@ export const loadTheme = () => {
     });
 };
 
+const date = new Date();
+const getTimeZone = date?.toString().toLowerCase();
+
 export const loadLang = () => {
     settings.get('lang').then((data) => {
         if (!localStorage.getItem('lang')) {
-            localStorage.setItem('lang', 'en');
+            localStorage.setItem('lang', getTimeZone?.includes('iran') ? 'fa' : 'en');
         }
 
         const langDir = getDirectionByLang(data);
