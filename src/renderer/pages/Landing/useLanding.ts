@@ -135,7 +135,7 @@ const useLanding = () => {
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'connectToggle') {
+            if (args.key === 'connectToggle' && !isLoading) {
                 onChange();
             }
             if (args.key === 'changePage') {

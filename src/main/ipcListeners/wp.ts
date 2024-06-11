@@ -45,6 +45,7 @@ ipcMain.on('wp-start', async (event) => {
     exitOnWpEnd = false;
     connectedFlags = [false, false];
     disconnectedFlags = [false, false];
+    customEvent.emit('tray-icon', 'connecting');
 
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
@@ -144,6 +145,7 @@ ipcMain.on('wp-start', async (event) => {
 });
 
 ipcMain.on('wp-end', async (event) => {
+    customEvent.emit('tray-icon', 'disconnecting');
     try {
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');

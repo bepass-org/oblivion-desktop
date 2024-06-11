@@ -295,12 +295,12 @@ if (!gotTheLock) {
                     label: connectLabel,
                     type: 'normal',
                     enabled: connectEnable,
-                    click: async () => {
+                    click: () => {
                         trayMenuEvent.reply('tray-menu', {
                             key: 'connectToggle',
                             msg: 'Connect Tray Click!'
                         });
-                        appIcon.setContextMenu(
+                        /*appIcon.setContextMenu(
                             Menu.buildFromTemplate(
                                 trayMenuContext(
                                     connectStatus === 'connect'
@@ -310,7 +310,7 @@ if (!gotTheLock) {
                                     false
                                 )
                             )
-                        );
+                        );*/
                         redirectTo('/');
                     }
                 },
@@ -320,28 +320,28 @@ if (!gotTheLock) {
                         {
                             label: appLang.systemTray.settings_warp,
                             type: 'normal',
-                            click: async () => {
+                            click: () => {
                                 redirectTo('/settings');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_network,
                             type: 'normal',
-                            click: async () => {
+                            click: () => {
                                 redirectTo('/network');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_scanner,
                             type: 'normal',
-                            click: async () => {
+                            click: () => {
                                 redirectTo('/scanner');
                             }
                         },
                         {
                             label: appLang.systemTray.settings_app,
                             type: 'normal',
-                            click: async () => {
+                            click: () => {
                                 redirectTo('/options');
                             }
                         }
@@ -351,14 +351,14 @@ if (!gotTheLock) {
                 {
                     label: appLang.systemTray.about,
                     type: 'normal',
-                    click: async () => {
+                    click: () => {
                         redirectTo('/about');
                     }
                 },
                 {
                     label: appLang.systemTray.log,
                     type: 'normal',
-                    click: async () => {
+                    click: () => {
                         redirectTo('/debug');
                     }
                 },
@@ -391,15 +391,25 @@ if (!gotTheLock) {
                 appIcon.setImage(trayIconChanger(newStatus));
             });*/
             customEvent.on('tray-icon', (newStatus) => {
-                appIcon.setImage(trayIconChanger(newStatus));
+                if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
+                    appIcon.setImage(trayIconChanger(newStatus));
+                }
+                let connectionStatus = '';
+                if (newStatus.startsWith('connected')) {
+                    connectionStatus = `✓ ${appLang.systemTray.connected}`;
+                } else if (newStatus === 'disconnected') {
+                    connectionStatus = appLang.systemTray.connect;
+                } else if (newStatus === 'connecting') {
+                    connectionStatus = appLang.systemTray.connecting;
+                } else if (newStatus === 'disconnecting') {
+                    connectionStatus = appLang.systemTray.disconnecting;
+                }
                 appIcon.setContextMenu(
                     Menu.buildFromTemplate(
                         trayMenuContext(
-                            newStatus !== 'disconnected'
-                                ? `✓ ${appLang.systemTray.connected}`
-                                : appLang.systemTray.connect,
+                            connectionStatus,
                             newStatus,
-                            true
+                            !(newStatus === 'disconnecting' || newStatus === 'connecting')
                         )
                     )
                 );
