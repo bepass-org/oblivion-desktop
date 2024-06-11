@@ -145,8 +145,8 @@ ipcMain.on('wp-start', async (event) => {
 });
 
 ipcMain.on('wp-end', async (event) => {
-    customEvent.emit('tray-icon', 'disconnecting');
     try {
+        customEvent.emit('tray-icon', 'disconnecting');
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
         }
@@ -159,6 +159,7 @@ ipcMain.on('wp-end', async (event) => {
 ipcMain.on('end-wp-and-exit-app', async (event) => {
     console.log('🚀 ~ file: wp.ts:158 ~ end-wp-and-exit-app:');
     try {
+        customEvent.emit('tray-icon', 'disconnecting');
         if (typeof child?.pid !== 'undefined') {
             console.log('🚀 ~ file: wp.ts:161 ~ typeof child?.pid:', typeof child?.pid);
             console.log('im here');
