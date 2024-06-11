@@ -45,7 +45,6 @@ ipcMain.on('wp-start', async (event) => {
     exitOnWpEnd = false;
     connectedFlags = [false, false];
     disconnectedFlags = [false, false];
-    customEvent.emit('tray-icon', 'connecting');
 
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
@@ -53,6 +52,7 @@ ipcMain.on('wp-start', async (event) => {
     const proxyMode = await settings.get('proxyMode');
 
     const sendConnectedSignalToRenderer = () => {
+        customEvent.emit('tray-icon', 'connecting');
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
             customEvent.emit('tray-icon', `connected-${proxyMode}`);
@@ -61,13 +61,14 @@ ipcMain.on('wp-start', async (event) => {
     };
 
     const sendDisconnectedSignalToRenderer = () => {
+        customEvent.emit('tray-icon', 'disconnecting');
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
-            customEvent.emit('tray-icon', 'disconnected');
 
             console.log('🚀 ~ file: wp.ts:69 ~ exitOnWpEnd:', exitOnWpEnd);
             // send signal to `exitTheApp` function
             if (exitOnWpEnd) ipcMain.emit('exit');
+            customEvent.emit('tray-icon', 'disconnected');
         }
     };
 
@@ -146,7 +147,6 @@ ipcMain.on('wp-start', async (event) => {
 
 ipcMain.on('wp-end', async (event) => {
     try {
-        customEvent.emit('tray-icon', 'disconnecting');
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
         }
@@ -159,11 +159,9 @@ ipcMain.on('wp-end', async (event) => {
 ipcMain.on('end-wp-and-exit-app', async (event) => {
     console.log('🚀 ~ file: wp.ts:158 ~ end-wp-and-exit-app:');
     try {
-        customEvent.emit('tray-icon', 'disconnecting');
         if (typeof child?.pid !== 'undefined') {
             console.log('🚀 ~ file: wp.ts:161 ~ typeof child?.pid:', typeof child?.pid);
             console.log('im here');
-
             treeKill(child.pid, 'SIGKILL');
             exitOnWpEnd = true;
         } else {
