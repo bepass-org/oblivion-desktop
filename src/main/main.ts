@@ -248,7 +248,7 @@ if (!gotTheLock) {
             } else {
                 mainWindow.show();
                 if (value !== '') {
-                    trayMenuEvent.reply('tray-menu', {
+                    trayMenuEvent?.reply('tray-menu', {
                         key: 'changePage',
                         msg: value
                     });
@@ -296,10 +296,12 @@ if (!gotTheLock) {
                     type: 'normal',
                     enabled: connectEnable,
                     click: () => {
-                        trayMenuEvent.reply('tray-menu', {
+                        if ( connectStatus === 'disconnected' ) {
+                          trayMenuEvent?.reply('tray-menu', {
                             key: 'connectToggle',
                             msg: 'Connect Tray Click!'
-                        });
+                          });
+                        }
                         /*appIcon.setContextMenu(
                             Menu.buildFromTemplate(
                                 trayMenuContext(
@@ -380,7 +382,7 @@ if (!gotTheLock) {
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
-                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, 'connect', true))
+                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, status, true))
             );
         };
 
