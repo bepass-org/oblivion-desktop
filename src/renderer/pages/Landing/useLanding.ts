@@ -216,7 +216,7 @@ const useLanding = () => {
                     const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
                     if (getLoc && cfHost === 'cloudflare.com') {
                         if (
-                            (method === 'psiphon' && checkWarp !== 'on' && checkWarp !== 'plus' && getLoc !== 'ir') ||
+                            (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
                             checkWarp === 'on' ||
                             checkWarp === 'plus'
                         ) {
