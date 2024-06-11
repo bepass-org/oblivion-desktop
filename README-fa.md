@@ -117,9 +117,9 @@ Cloudflare Warp فراهم می‌کند.
             <td>
                 :white_check_mark: اسکنر<br>
                 :white_check_mark: پینگ<br>
-                :white_large_square: تست سرعت<br>
+                :white_check_mark: دسترس‌پذیری<br>
                 :white_large_square: بروزرسانی داخلی<br>
-                :white_large_square: دسترس‌پذیری
+                :white_large_square: تست سرعت
             </td>
         </tr>
     </tbody>

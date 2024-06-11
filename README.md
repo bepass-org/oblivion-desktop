@@ -104,9 +104,9 @@ technology
             <td>
                 :white_check_mark: Scanner<br>
                 :white_check_mark: Ping<br>
-                :white_large_square: SpeedTest<br>
+                :white_large_square: Accessibility<br>
                 :white_large_square: Inline Update<br>
-                :white_large_square: Accessibility
+                :white_large_square: SpeedTest
             </td>
         </tr>
     </tbody>
