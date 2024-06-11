@@ -296,11 +296,11 @@ if (!gotTheLock) {
                     type: 'normal',
                     enabled: connectEnable,
                     click: () => {
-                        if ( connectStatus === 'disconnected' ) {
-                          trayMenuEvent?.reply('tray-menu', {
-                            key: 'connectToggle',
-                            msg: 'Connect Tray Click!'
-                          });
+                        if (connectStatus === 'disconnected') {
+                            trayMenuEvent?.reply('tray-menu', {
+                                key: 'connectToggle',
+                                msg: 'Connect Tray Click!'
+                            });
                         }
                         /*appIcon.setContextMenu(
                             Menu.buildFromTemplate(
@@ -375,6 +375,20 @@ if (!gotTheLock) {
             ];
         };
 
+        const connectionLabel = (status: string) => {
+            let text = '';
+            if (status.startsWith('connected')) {
+                text = `✓ ${appLang.systemTray.connected}`;
+            } else if (status === 'disconnected') {
+                text = appLang.systemTray.connect;
+            } else if (status === 'connecting') {
+                text = appLang.systemTray.connecting;
+            } else if (status === 'disconnecting') {
+                text = appLang.systemTray.disconnecting;
+            }
+            return text;
+        };
+
         const systemTrayMenu = (status: string) => {
             appIcon = new Tray(trayIconChanger(status));
             appIcon.on('click', async () => {
@@ -382,7 +396,7 @@ if (!gotTheLock) {
             });
             appIcon.setToolTip(appTitle);
             appIcon.setContextMenu(
-                Menu.buildFromTemplate(trayMenuContext(appLang.systemTray.connect, status, true))
+                Menu.buildFromTemplate(trayMenuContext(connectionLabel(status), status, true))
             );
         };
 
@@ -396,20 +410,10 @@ if (!gotTheLock) {
                 if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
                     appIcon.setImage(trayIconChanger(newStatus));
                 }
-                let connectionStatus = '';
-                if (newStatus.startsWith('connected')) {
-                    connectionStatus = `✓ ${appLang.systemTray.connected}`;
-                } else if (newStatus === 'disconnected') {
-                    connectionStatus = appLang.systemTray.connect;
-                } else if (newStatus === 'connecting') {
-                    connectionStatus = appLang.systemTray.connecting;
-                } else if (newStatus === 'disconnecting') {
-                    connectionStatus = appLang.systemTray.disconnecting;
-                }
                 appIcon.setContextMenu(
                     Menu.buildFromTemplate(
                         trayMenuContext(
-                            connectionStatus,
+                            connectionLabel(newStatus),
                             newStatus,
                             !(newStatus === 'disconnecting' || newStatus === 'connecting')
                         )
