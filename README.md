@@ -144,8 +144,8 @@ technology
             <td>macOS</td>
             <td>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-arm64-F0F0F1.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-x64-F0F0F1.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-5D5D5D.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-x64-5D5D5D.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
             </td>
             <td></td>
