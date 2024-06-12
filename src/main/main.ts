@@ -193,11 +193,7 @@ if (!gotTheLock) {
 
                 mainWindow.on('close', async (e: any) => {
                     e.preventDefault();
-                    if (isDev()) {
-                        exitTheApp(mainWindow);
-                    } else {
-                        mainWindow?.hide();
-                    }
+                    mainWindow?.hide();
                 });
 
                 mainWindow.on('closed', async () => {
