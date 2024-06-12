@@ -6,15 +6,32 @@ import { app } from 'electron';
 import detectPort from 'detect-port';
 import path from 'path';
 import log from 'electron-log';
+import settings from 'electron-settings';
 import { promises as fsPromises } from 'fs';
 import { doesDirectoryExist } from './utils';
 
-export const createPacScript = async (host: string, port: string | number) => {
+export const createPacScript = async (hostIp: string, port: string | number) => {
     log.info('generating pac script...');
     const binPath = path.join(app?.getPath('userData'), 'pac');
     const isBinDirExist = await doesDirectoryExist(binPath);
     if (!isBinDirExist) {
         await fsPromises.mkdir(binPath, { recursive: true });
+    }
+    const routingRules = await settings.get('routingRules');
+    console.log(routingRules);
+    let domainRules = {};
+    if (typeof routingRules === 'string' && routingRules !== '') {
+        domainRules = routingRules
+            .replace(/\n|<br>/g, '')
+            .split(',')
+            .map((rule) => {
+                const parts = rule.split(':');
+                return {
+                    type: parts[0],
+                    value: parts[1],
+                    regex: parts[1].startsWith('*')
+                };
+            });
     }
     await fsPromises.writeFile(
         path.join(app.getPath('userData'), 'pac', 'proxy.txt'),
@@ -31,8 +48,19 @@ export const createPacScript = async (host: string, port: string | number) => {
         }("+proxy", {
             "+proxy": function(url, host, scheme) {
                 "use strict";
+                for (const rule of ${JSON.stringify(domainRules)}) {
+                    if (rule.type === "domain" && rule.value === host) {
+                        return "DIRECT";
+                    }
+                    if (rule.type === "ip" && rule.value === host) {
+                        return "DIRECT";
+                    }
+                    if ((rule.type === "domain" || rule.type === "range") && rule.regex && new RegExp(rule.value.replace("*", ".*") + "$").test(host)) {
+                        return "DIRECT";
+                    }
+                }
                 if (/^127.0.0.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host)) return "DIRECT";
-                return "SOCKS5 ${host}:${port}; SOCKS ${host}:${port}";
+                return "SOCKS5 ${hostIp}:${port}; SOCKS ${hostIp}:${port}";
             }
         });`
     );
