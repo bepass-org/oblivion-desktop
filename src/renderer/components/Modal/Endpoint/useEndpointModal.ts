@@ -24,7 +24,16 @@ const useEndpointModal = (props: EndpointModalProps) => {
         setTimeout(onClose, 300);
     }, [onClose]);
 
-    const suggestion = useMemo(() => ['188.114.98.224:2408', '162.159.192.175:891'], []);
+    const suggestion = useMemo(
+        () => [
+            '188.114.98.224:2408',
+            '162.159.192.175:891',
+            '162.159.192.36:908',
+            '162.159.195.55:908',
+            '188.114.97.159:942'
+        ],
+        []
+    );
 
     const onSaveModal = useCallback(() => {
         const endpointInputModified = endpointInput.replace(/^https?:\/\//, '').replace(/\/$/, '');

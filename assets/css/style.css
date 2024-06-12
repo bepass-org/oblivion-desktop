@@ -1313,7 +1313,7 @@ html[data-bs-theme="dark"] .shimmer {
 }
 
 .dialog .dialogBox .labels .label {
-    float: left;
+    float: right;
     border-radius: 25px;
     font-weight: 200;
     padding: 3px 7px;
@@ -1322,7 +1322,7 @@ html[data-bs-theme="dark"] .shimmer {
 }
 
 [dir="ltr"] .dialog .dialogBox .labels .label {
-    float: right;
+    float: left;
     margin: 0 0 0 5px;
 }
 

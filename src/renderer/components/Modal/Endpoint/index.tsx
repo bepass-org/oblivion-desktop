@@ -54,34 +54,24 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     <h3>
                         {title}
                         <div className='labels'>
-                            <div
-                                role='presentation'
-                                className={classNames(
-                                    'label',
-                                    'label-danger',
-                                    endpointInput === suggestion[0] ? 'hidden' : ''
-                                )}
-                                onClick={() => {
-                                    setEndpointSuggestion(0);
-                                }}
-                            >
-                                <i className='material-icons'>&#xe145;</i>
-                                E1
-                            </div>
-                            <div
-                                role='presentation'
-                                className={classNames(
-                                    'label',
-                                    'label-primary',
-                                    endpointInput === suggestion[1] ? 'hidden' : ''
-                                )}
-                                onClick={() => {
-                                    setEndpointSuggestion(1);
-                                }}
-                            >
-                                <i className='material-icons'>&#xe145;</i>
-                                E2
-                            </div>
+                            {[...suggestion.keys()].map((key) => (
+                                <>
+                                    <div
+                                        role='presentation'
+                                        className={classNames(
+                                            'label',
+                                            'label-default',
+                                            endpointInput === suggestion[key] ? 'hidden' : ''
+                                        )}
+                                        key={key}
+                                        onClick={() => {
+                                            setEndpointSuggestion(key);
+                                        }}
+                                    >
+                                        <i className='material-icons'>&#xe145;</i>S{key + 1}
+                                    </div>
+                                </>
+                            ))}
                             <div
                                 role='presentation'
                                 className={classNames(
