@@ -217,8 +217,7 @@ const useLanding = () => {
                     if (getLoc && cfHost === 'cloudflare.com') {
                         if (
                             (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
-                            checkWarp === 'on' ||
-                            checkWarp === 'plus'
+                            checkWarp !== 'off'
                         ) {
                             const ipInfo2 = {
                                 countryCode: getLoc,
