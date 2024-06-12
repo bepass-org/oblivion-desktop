@@ -48,18 +48,22 @@ export const createPacScript = async (hostIp: string, port: string | number) => 
         }("+proxy", {
             "+proxy": function(url, host, scheme) {
                 "use strict";
-                for (const rule of ${JSON.stringify(domainRules)}) {
-                    if (rule.type === "domain" && rule.value === host) {
-                        return "DIRECT";
-                    }
-                    if (rule.type === "ip" && rule.value === host) {
-                        return "DIRECT";
-                    }
-                    if ((rule.type === "domain" || rule.type === "range") && rule.regex && new RegExp(rule.value.replace("*", ".*") + "$").test(host)) {
-                        return "DIRECT";
+                if (Object.keys(${JSON.stringify(domainRules)}).length > 0) {
+                    for (const rule of ${JSON.stringify(domainRules)}) {
+                        if (rule.type === "domain" && rule.value === host) {
+                            return "DIRECT";
+                        }
+                        if (rule.type === "ip" && rule.value === host) {
+                            return "DIRECT";
+                        }
+                        if ((rule.type === "domain" || rule.type === "range") && rule.regex && new RegExp(rule.value.replace("*", ".*") + "$").test(host)) {
+                            return "DIRECT";
+                        }
                     }
                 }
-                if (/^127.0.0.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host)) return "DIRECT";
+                if (/^127.0.0.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host)) {
+                    return "DIRECT";
+                }
                 return "SOCKS5 ${hostIp}:${port}; SOCKS ${hostIp}:${port}";
             }
         });`
