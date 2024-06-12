@@ -193,7 +193,14 @@ if (!gotTheLock) {
 
                 mainWindow.on('close', async (e: any) => {
                     e.preventDefault();
-                    mainWindow?.hide();
+                    if (isDev()) {
+                        console.log(
+                            'The od has been closed due to the modification of main.ts ...'
+                        );
+                        await exitTheApp(mainWindow);
+                    } else {
+                        mainWindow?.hide();
+                    }
                 });
 
                 mainWindow.on('closed', async () => {
@@ -292,7 +299,10 @@ if (!gotTheLock) {
                     type: 'normal',
                     enabled: connectEnable,
                     click: () => {
-                        if (connectStatus === 'disconnected') {
+                        if (
+                            connectStatus.startsWith('connected') ||
+                            connectStatus === 'disconnected'
+                        ) {
                             trayMenuEvent?.reply('tray-menu', {
                                 key: 'connectToggle',
                                 msg: 'Connect Tray Click!'
@@ -439,7 +449,8 @@ if (!gotTheLock) {
 
     app.on('window-all-closed', async () => {
         await startAtLogin();
-        exitTheApp(mainWindow);
+        await exitTheApp(mainWindow);
+        console.log('window-all-closed');
     });
 
     app.whenReady()
