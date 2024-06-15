@@ -67,6 +67,7 @@ const useLicenseModal = (props: LicenseModalProps) => {
     const handleClearLicenseInput = useCallback(() => {
         setLicenseInput('');
         setLicense('');
+        settings.set('license', '');
         handleOnClose();
     }, [setLicenseInput, setLicense, handleOnClose]);
 
