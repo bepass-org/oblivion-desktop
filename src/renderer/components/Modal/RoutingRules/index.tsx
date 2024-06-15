@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import useRoutingRulesModal from './useRoutingRulesModal';
+import Textarea from '../../Textarea';
 
 interface RoutingRulesModalProps {
     title: string;
@@ -62,12 +63,10 @@ export default function RoutingRulesModal({
                             </div>
                         </div>
                     </h3>
-                    <textarea
+                    <Textarea
+                        id='modal_routing_rules_textarea'
                         value={routingRulesInput}
-                        spellCheck={false}
-                        className='form-control'
                         onChange={handleRoutingRulesInput}
-                        tabIndex={0}
                     />
                     <div className='clearfix' />
                     <div
