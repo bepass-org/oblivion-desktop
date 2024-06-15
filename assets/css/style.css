@@ -1733,3 +1733,24 @@ html[data-bs-theme="dark"] .shimmer {
 [data-bs-theme="dark"] .tabs ul li.active a i {
     background: #273286;
 }
+
+.contextMenu {
+    background: #ededed;
+    border-radius: 3px;
+    width: 75px;
+    direction: ltr;
+}
+.contextMenu .menuItem {
+    float: right;
+    width: 100%;
+    padding: 3px 15px;
+    font-size: 13px;
+    color: #2c2c2c;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+}
+.contextMenu .menuItem:hover {
+    background: #dad9d9;
+    color: #1c1c1c;
+}
