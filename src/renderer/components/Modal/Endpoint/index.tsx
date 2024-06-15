@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
+import Input from '../../Input';
 
 interface EndpointModalProps {
     title: string;
@@ -86,11 +87,10 @@ const EndpointModal: FC<EndpointModalProps> = ({
                             </div>
                         </div>
                     </h3>
-                    <input
-                        tabIndex={0}
+                    <Input
+                        id='modal_endpoint_input'
                         value={endpointInput}
-                        spellCheck={false}
-                        className='form-control'
+                        tabIndex={0}
                         onChange={handleEndpointInputChange}
                         type='text'
                     />

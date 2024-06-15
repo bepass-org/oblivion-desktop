@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import useLicenseModal from './useLicenseModal';
+import Input from '../../Input';
 
 interface LicenseModalProps {
     title: string;
@@ -63,11 +64,10 @@ export default function LicenseModal({
                     </h3>
                     <p className='withMargin'>{appLang?.modal?.license_desc}</p>
                     <div className='clearfix' />
-                    <input
+                    <Input
+                        id='modal_license_input'
                         value={licenseInput}
                         tabIndex={0}
-                        spellCheck={false}
-                        className='form-control'
                         onChange={handleLicenseInputChange}
                         type='text'
                     />

@@ -4,11 +4,11 @@ interface InputProps {
     id?: string;
     value: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    disabled?: boolean;
     tabIndex?: number;
+    type?: string;
 }
 
-const Input: FC<InputProps> = ({ id, onChange, value, disabled, tabIndex = 0 }) => {
+const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text' }) => {
     const [contextMenuStyle, setContextMenuStyle] = useState<{ left: number; top: number } | null>(
         null
     );
@@ -107,9 +107,8 @@ const Input: FC<InputProps> = ({ id, onChange, value, disabled, tabIndex = 0 }) 
                 spellCheck={false}
                 className='form-control'
                 onChange={onChange}
-                disabled={disabled}
                 onContextMenu={handleContextMenu}
-                type='text'
+                type={type}
             />
             {contextMenuStyle && (
                 <div
