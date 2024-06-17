@@ -269,7 +269,7 @@ if (!gotTheLock) {
                     });*/
                     ipcMain.on('tray-menu', (event) => {
                         event.reply('tray-menu', {
-                            key: 'connectToggle',
+                            key: 'connect',
                             msg: 'Connect Tray Click!'
                         });
                     });
@@ -304,7 +304,7 @@ if (!gotTheLock) {
                             connectStatus === 'disconnected'
                         ) {
                             trayMenuEvent?.reply('tray-menu', {
-                                key: 'connectToggle',
+                                key: connectStatus === 'disconnected' ? 'connect' : 'disconnect',
                                 msg: 'Connect Tray Click!'
                             });
                         }

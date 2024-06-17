@@ -135,8 +135,19 @@ const useLanding = () => {
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'connectToggle' && !isLoading) {
-                onChange();
+            if (args.key === 'connect' && !isLoading) {
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
+                setProxyStatus(proxyMode);
+                ipcRenderer.sendMessage('wp-start');
+                setIsLoading(true);
+                setPing(0);
+            }
+            if (args.key === 'disconnect' && !isLoading) {
+                ipcRenderer.sendMessage('wp-end');
+                setIsLoading(true);
             }
             if (args.key === 'changePage') {
                 navigate(args.msg);
