@@ -3,6 +3,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 import Input from '../../Input';
+import { settings } from '../../../lib/settings';
 
 interface EndpointModalProps {
     title: string;
@@ -44,8 +45,13 @@ const EndpointModal: FC<EndpointModalProps> = ({
 
     const suggestionRef = useRef<any>(null);
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
+    const [scanResult, setScanResult] = useState<string>('');
 
     useEffect(() => {
+        settings.get('scanResult').then((value) => {
+            setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
+        });
+
         const handleClickOutside = (event: MouseEvent) => {
             if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
                 setShowSuggestion(false);
@@ -98,7 +104,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                 role='presentation'
                                                 key={key}
                                                 onClick={() => {
-                                                    setEndpointSuggestion(key);
+                                                    setEndpointSuggestion(suggestion[key]);
                                                     setShowSuggestion(false);
                                                 }}
                                             >
@@ -107,6 +113,24 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                             </div>
                                         </>
                                     ))}
+                                    {scanResult && (
+                                        <>
+                                            <div
+                                                className={classNames(
+                                                    'item',
+                                                    scanResult === endpointInput ? 'disabled' : ''
+                                                )}
+                                                role='presentation'
+                                                onClick={() => {
+                                                    setEndpointSuggestion(scanResult);
+                                                    setShowSuggestion(false);
+                                                }}
+                                            >
+                                                <small>E</small>
+                                                {suggestion.length + 1}
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             <div

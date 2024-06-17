@@ -59,15 +59,9 @@ const useEndpointModal = (props: EndpointModalProps) => {
         [onSaveModal]
     );
 
-    const setEndpointSuggestion = useCallback(
-        (item: number) => {
-            if (typeof item === 'undefined' || !item) {
-                item = 0;
-            }
-            setEndpointInput(suggestion[item]);
-        },
-        [suggestion]
-    );
+    const setEndpointSuggestion = useCallback((item: string) => {
+        setEndpointInput(item);
+    }, []);
 
     const setEndpointDefault = useCallback(() => {
         setEndpointInput(defValue);

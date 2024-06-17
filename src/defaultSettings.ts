@@ -20,7 +20,8 @@ export type settingsKeys =
     | 'rtt'
     | 'openAtLogin'
     | 'autoConnect'
-    | 'reserved';
+    | 'reserved'
+    | 'scanResult';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -47,7 +48,8 @@ export const defaultSettings = {
     rtt: '1s',
     openAtLogin: false,
     autoConnect: false,
-    reserved: true
+    reserved: true,
+    scanResult: ''
 };
 
 export const countries: { value: string; label: string }[] = [
