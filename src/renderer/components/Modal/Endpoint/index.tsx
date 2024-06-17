@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 import Input from '../../Input';
@@ -42,7 +42,20 @@ const EndpointModal: FC<EndpointModalProps> = ({
         setEndpoint
     });
 
+    const suggestionRef = useRef<any>(null);
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
+        setShowSuggestion(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
     if (!isOpen) return <></>;
 
@@ -63,6 +76,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 onClick={() => {
                                     setShowSuggestion(!showSuggestion);
                                 }}
+                                ref={suggestionRef}
                             >
                                 <i className='material-icons'>&#xe145;</i>
                                 {appLang?.modal?.endpoint_suggested}
@@ -78,7 +92,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                 className={classNames(
                                                     'item',
                                                     suggestion[key] === endpointInput
-                                                        ? 'hidden'
+                                                        ? 'disabled'
                                                         : ''
                                                 )}
                                                 role='presentation'
@@ -100,7 +114,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 className={classNames(
                                     'label',
                                     'label-warning',
-                                    endpointInput === defValue ? 'hidden' : ''
+                                    endpointInput === defValue ? 'disabled' : ''
                                 )}
                                 onClick={setEndpointDefault}
                             >

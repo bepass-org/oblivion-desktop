@@ -1321,6 +1321,10 @@ html[data-bs-theme="dark"] .shimmer {
     cursor: pointer;
     position: relative;
 }
+.dialog .dialogBox .labels .label.disabled {
+    opacity: 0.2;
+    cursor: default;
+}
 
 [dir="ltr"] .dialog .dialogBox .labels .label {
     float: left;
@@ -1359,6 +1363,10 @@ html[data-bs-theme="dark"] .shimmer {
 .dialog .dialogBox .labels .label .dropDownInLabel .item:hover {
     background: #f8f8f8;
     color: #1c1c1c;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel .item.disabled {
+    opacity: 0.2;
+    cursor: default;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel .item small {
     font-size: 12px;
