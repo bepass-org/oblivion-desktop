@@ -1319,11 +1319,51 @@ html[data-bs-theme="dark"] .shimmer {
     padding: 3px 7px;
     margin: 0 5px 0 0;
     cursor: pointer;
+    position: relative;
 }
 
 [dir="ltr"] .dialog .dialogBox .labels .label {
     float: left;
     margin: 0 0 0 5px;
+}
+
+.dialog .dialogBox .labels .label .dropDownInLabel {
+    position: absolute;
+    top: 25px;
+    left: 5px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    direction: ltr;
+    float: left;
+    width: 65px;
+    height: 90px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+[dir="ltr"] .dialog .dialogBox .labels .label .dropDownInLabel {
+    left: inherit;
+    right: 5px;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel .item {
+    float: right;
+    width: 100%;
+    padding: 7px 15px;
+    font-size: 12px;
+    color: #2c2c2c;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+    text-align: left;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel .item:hover {
+    background: #f8f8f8;
+    color: #1c1c1c;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel .item small {
+    font-size: 12px;
+    padding-right: 1px;
+    opacity: 0.5;
 }
 
 [data-bs-theme="dark"] .dialog .dialogBox .labels .label.label-warning {
@@ -1735,7 +1775,8 @@ html[data-bs-theme="dark"] .shimmer {
 }
 
 .contextMenu {
-    background: #ededed;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     width: 75px;
     direction: ltr;
@@ -1751,6 +1792,6 @@ html[data-bs-theme="dark"] .shimmer {
     transition: all 0.2s ease-in-out;
 }
 .contextMenu .menuItem:hover {
-    background: #dad9d9;
+    background: #f8f8f8;
     color: #1c1c1c;
 }

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 import Input from '../../Input';
@@ -42,6 +42,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
         setEndpoint
     });
 
+    const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
+
     if (!isOpen) return <></>;
 
     return (
@@ -55,24 +57,44 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     <h3>
                         {title}
                         <div className='labels'>
-                            {[...suggestion.keys()].map((key) => (
-                                <>
-                                    <div
-                                        role='presentation'
-                                        className={classNames(
-                                            'label',
-                                            'label-default',
-                                            endpointInput === suggestion[key] ? 'hidden' : ''
-                                        )}
-                                        key={key}
-                                        onClick={() => {
-                                            setEndpointSuggestion(key);
-                                        }}
-                                    >
-                                        <i className='material-icons'>&#xe145;</i>S{key + 1}
-                                    </div>
-                                </>
-                            ))}
+                            <div
+                                role='presentation'
+                                className={classNames('label', 'label-danger')}
+                                onClick={() => {
+                                    setShowSuggestion(!showSuggestion);
+                                }}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                {appLang?.modal?.endpoint_suggested}
+                                <div
+                                    className={classNames(
+                                        'dropDownInLabel',
+                                        showSuggestion ? '' : 'hidden'
+                                    )}
+                                >
+                                    {[...suggestion.keys()].map((key) => (
+                                        <>
+                                            <div
+                                                className={classNames(
+                                                    'item',
+                                                    suggestion[key] === endpointInput
+                                                        ? 'hidden'
+                                                        : ''
+                                                )}
+                                                role='presentation'
+                                                key={key}
+                                                onClick={() => {
+                                                    setEndpointSuggestion(key);
+                                                    setShowSuggestion(false);
+                                                }}
+                                            >
+                                                <small>S</small>
+                                                {key + 1}
+                                            </div>
+                                        </>
+                                    ))}
+                                </div>
+                            </div>
                             <div
                                 role='presentation'
                                 className={classNames(
