@@ -95,7 +95,6 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
 
     // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
     ipcMain.on('exit', () => {
-        console.log('🚀 ~ file: utils.ts:98 ~ exit:');
         app.exit(0);
     });
 

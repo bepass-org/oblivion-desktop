@@ -65,7 +65,6 @@ ipcMain.on('wp-start', async (event) => {
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
             event.reply('wp-end', true);
 
-            console.log('🚀 ~ file: wp.ts:69 ~ exitOnWpEnd:', exitOnWpEnd);
             // send signal to `exitTheApp` function
             if (exitOnWpEnd) ipcMain.emit('exit');
             customEvent.emit('tray-icon', 'disconnected');
@@ -141,6 +140,8 @@ ipcMain.on('wp-start', async (event) => {
         disconnectedFlags[1] = true;
         sendDisconnectedSignalToRenderer();
         log.info('wp process exited.');
+        // manually setting pid to undefined
+        child.pid = undefined;
         handleSystemProxyDisconnect();
     });
 });
@@ -157,16 +158,12 @@ ipcMain.on('wp-end', async (event) => {
 });
 
 ipcMain.on('end-wp-and-exit-app', async (event) => {
-    console.log('🚀 ~ file: wp.ts:158 ~ end-wp-and-exit-app:');
     try {
         if (typeof child?.pid !== 'undefined') {
-            console.log('🚀 ~ file: wp.ts:161 ~ typeof child?.pid:', typeof child?.pid);
-            console.log('im here');
             treeKill(child.pid, 'SIGKILL');
             exitOnWpEnd = true;
         } else {
             // send signal to `exitTheApp` function
-            console.log('🚀 ~ file: wp.ts:167 ~ ipcMain:');
             ipcMain.emit('exit');
         }
     } catch (error) {
