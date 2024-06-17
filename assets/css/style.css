@@ -1365,8 +1365,11 @@ html[data-bs-theme="dark"] .shimmer {
     color: #1c1c1c;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel .item.disabled {
-    opacity: 0.2;
+    opacity: 0.3;
     cursor: default;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel .item.disabled:hover {
+    background: #fff;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel .item small {
     font-size: 12px;
