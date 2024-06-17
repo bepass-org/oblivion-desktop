@@ -50,7 +50,7 @@ const persian: Language = {
         endpoint: 'اندپوینت',
         endpoint_desc: 'ترکیبی از IP یا نام دامنه، به\u200Cهمراه پورت',
         license: 'لایسنس',
-        license_desc: 'اگر لایسنس دارید (هر لایسنس 2x می\u200Cشود)',
+        license_desc: 'لایسنس ۲ برابر مصرف می‌شود',
         option: 'تنظیمات برنامه',
         network: 'تنظیمات شبکه',
         proxy_mode: 'پیکربندی',

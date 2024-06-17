@@ -50,7 +50,7 @@ const chinese: Language = {
         endpoint: '端点',
         endpoint_desc: 'IP 或域名与端口的组合',
         license: '许可证',
-        license_desc: '如果您有许可证（每个许可证为 2x）',
+        license_desc: '许可证消耗翻倍',
         option: '应用设置',
         network: '网络设置',
         proxy_mode: '代理模式',

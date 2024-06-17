@@ -52,7 +52,7 @@ const deutsch: Language = {
         endpoint: 'Endpunkt',
         endpoint_desc: 'Combination of IP or domain name, along with port',
         license: 'Lizenz',
-        license_desc: 'Wenn Sie eine Lizenz haben (jede Lizenz ist 2x)',
+        license_desc: 'Der Lizenzverbrauch verdoppelt sich',
         option: 'Anwendungseinstellungen',
         network: 'Netzwerkeinstellungen',
         proxy_mode: 'Konfiguration',

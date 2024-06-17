@@ -50,7 +50,7 @@ const english: Language = {
         endpoint: 'Endpoint',
         endpoint_desc: 'Combination of IP or domain name, along with port',
         license: 'License',
-        license_desc: 'If you have a license (each license is 2x)',
+        license_desc: 'The license consumption is doubled',
         option: 'Application Settings',
         network: 'Network Settings',
         proxy_mode: 'Configuration',
