@@ -201,10 +201,7 @@ const macOSNetworkSetup = (args: string[]) => {
     });
 };
 
-
-const getMacOSActiveNetworkHardwarePorts = async (
-    isIpSet: boolean = false
-): Promise<string[]> => {
+const getMacOSActiveNetworkHardwarePorts = async (isIpSet: boolean = false): Promise<string[]> => {
     console.log('getMacOSActiveNetworkHardwarePorts');
     try {
         const { stdout } = await execPromise('networksetup -listallnetworkservices');
