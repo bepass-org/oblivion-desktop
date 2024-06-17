@@ -102,7 +102,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                     setShowSuggestion(false);
                                                 }}
                                             >
-                                                <small>S</small>
+                                                <small>E</small>
                                                 {key + 1}
                                             </div>
                                         </>
