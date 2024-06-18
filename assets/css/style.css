@@ -1340,7 +1340,7 @@ html[data-bs-theme="dark"] .shimmer {
     border-radius: 3px;
     direction: ltr;
     float: left;
-    width: 65px;
+    width: 80px;
     height: 90px;
     overflow: hidden;
     overflow-y: auto;
@@ -1354,6 +1354,7 @@ html[data-bs-theme="dark"] .shimmer {
     width: 100%;
     padding: 7px 15px;
     font-size: 12px;
+    font-weight: 400;
     color: #2c2c2c;
     cursor: pointer;
     border-radius: 3px;
@@ -1374,7 +1375,8 @@ html[data-bs-theme="dark"] .shimmer {
 .dialog .dialogBox .labels .label .dropDownInLabel .item small {
     font-size: 12px;
     padding-right: 1px;
-    opacity: 0.5;
+    opacity: 0.7;
+    font-weight: normal;
 }
 
 [data-bs-theme="dark"] .dialog .dialogBox .labels .label.label-warning {

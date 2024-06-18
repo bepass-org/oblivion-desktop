@@ -92,24 +92,45 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                         showSuggestion ? '' : 'hidden'
                                     )}
                                 >
-                                    {[...suggestion.keys()].map((key) => (
+                                    {[...suggestion.ipv4.keys()].map((key) => (
                                         <>
                                             <div
                                                 className={classNames(
                                                     'item',
-                                                    suggestion[key] === endpointInput
+                                                    suggestion.ipv4[key] === endpointInput
                                                         ? 'disabled'
                                                         : ''
                                                 )}
                                                 role='presentation'
                                                 key={key}
                                                 onClick={() => {
-                                                    setEndpointSuggestion(suggestion[key]);
+                                                    setEndpointSuggestion(suggestion.ipv4[key]);
                                                     setShowSuggestion(false);
                                                 }}
                                             >
-                                                <small>E</small>
-                                                {key + 1}
+                                                #{key + 1}
+                                                <small> IPv4</small>
+                                            </div>
+                                        </>
+                                    ))}
+                                    {[...suggestion.ipv6.keys()].map((key) => (
+                                        <>
+                                            <div
+                                                className={classNames(
+                                                    'item',
+                                                    suggestion.ipv6[key] === endpointInput
+                                                        ? 'disabled'
+                                                        : ''
+                                                )}
+                                                role='presentation'
+                                                key={key}
+                                                onClick={() => {
+                                                    setEndpointSuggestion(suggestion.ipv6[key]);
+                                                    setShowSuggestion(false);
+                                                }}
+                                            >
+                                                #{key + suggestion.ipv4.length + 1}
+                                                <small> IPv6</small>
                                             </div>
                                         </>
                                     ))}
@@ -126,8 +147,16 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                     setShowSuggestion(false);
                                                 }}
                                             >
-                                                <small>E</small>
-                                                {suggestion.length + 1}
+                                                #
+                                                {suggestion.ipv4.length +
+                                                    suggestion.ipv6.length +
+                                                    1}
+                                                <small>
+                                                    {' '}
+                                                    {scanResult.match(/^[0-9a-fA-F:]+$/) !== null
+                                                        ? 'IPv6'
+                                                        : 'IPv4'}
+                                                </small>
                                             </div>
                                         </>
                                     )}
