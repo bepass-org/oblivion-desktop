@@ -71,3 +71,22 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'ubuntu-latest'
               run: npm exec electron-builder -- --publish always
+
+            - name: Set version environment variable
+              run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+            - name: env test
+              run: |
+                  echo $RELEASE_VERSION
+                  echo ${{ env.RELEASE_VERSION }}
+                  echo ${{ github.ref_name }}
+
+            - name: Delete unwanted files
+              uses: mknejp/delete-release-assets@v1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  tag: ${{ github.ref_name }}
+                  assets: |
+                      oblivion-desktop-win.exe
+                      oblivion-desktop-mac-arm64.zip.blockmap
+                      oblivion-desktop-mac-x64.zip.blockmap
