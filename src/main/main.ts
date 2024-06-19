@@ -453,6 +453,7 @@ if (!gotTheLock) {
                     ' is available. Do you want to update now?',
                 buttons: ['Yes', 'No']
             })
+            // eslint-disable-next-line promise/no-nesting
             .then(async (result) => {
                 if (result.response === 0) {
                     try {
@@ -493,6 +494,13 @@ if (!gotTheLock) {
                     autoUpdater.quitAndInstall();
                 }
             });
+    });
+
+    autoUpdater.on('error', (error) => {
+        console.error('Update error:', error);
+        if (mainWindow) {
+            mainWindow.setProgressBar(0);
+        }
     });
 
     const startAtLogin = async () => {
