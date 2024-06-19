@@ -284,10 +284,7 @@
             "repo": "oblivion-desktop",
             "publishAutoUpdate": false,
             "private": false,
-            "releaseType": [
-                "release",
-                "prerelease"
-            ]
+            "releaseType": "prerelease"
         }
     },
     "devEngines": {
