@@ -51,6 +51,7 @@ export const binAssetsPath = path.join(
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
 autoUpdater.allowPrerelease = true;
+autoUpdater.autoDownload = false;
 autoUpdater.autoRunAppAfterInstall = true;
 
 if (!gotTheLock) {
@@ -436,66 +437,63 @@ if (!gotTheLock) {
             });
 
             autoUpdater.checkForUpdatesAndNotify();
-            autoUpdater.on('update-available', () => {
-                dialog
-                    .showMessageBox({
-                        type: 'info',
-                        title: 'Update Available',
-                        message:
-                            'A new version of the ' +
-                            appTitle +
-                            ' is available. Do you want to update now?',
-                        buttons: ['Yes', 'No']
-                    })
-                    .then((result) => {
-                        if (result.response === 0) {
-                            autoUpdater.downloadUpdate();
-                            if (mainWindow) {
-                                mainWindow.setProgressBar(100);
-                            }
-                        }
-                    });
-            });
-
-            autoUpdater.on('download-progress', (progressObj) => {
-                let logMessage: any = 'Download speed: ' + progressObj.bytesPerSecond;
-                logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%';
-                logMessage =
-                    logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')';
-                log.info(logMessage);
-                if (mainWindow) {
-                    mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
-                }
-            });
-
-            autoUpdater.on('update-downloaded', () => {
-                if (mainWindow) {
-                    mainWindow.setProgressBar(1);
-                }
-                dialog
-                    .showMessageBox({
-                        type: 'info',
-                        title: 'Update Ready',
-                        message:
-                            'A new version of the ' +
-                            appTitle +
-                            ' is ready. It will be installed after a restart. Do you want to restart now?',
-                        buttons: ['Yes', 'Later']
-                    })
-                    // eslint-disable-next-line promise/no-nesting
-                    .then((result) => {
-                        if (result.response === 0) {
-                            autoUpdater.quitAndInstall();
-                        }
-                    });
-            });
         });
 
-        // Remove this if your app does not use auto updates
-        // eslint-disable-next-line
-        // new AppUpdater();
         log.info('od is ready!');
     };
+
+    autoUpdater.on('update-available', () => {
+        dialog
+            .showMessageBox({
+                type: 'info',
+                title: 'Update Available',
+                message:
+                    'A new version of the ' +
+                    appTitle +
+                    ' is available. Do you want to update now?',
+                buttons: ['Yes', 'No']
+            })
+            .then(async (result) => {
+                if (result.response === 0) {
+                    try {
+                        await autoUpdater.downloadUpdate();
+                        if (mainWindow) {
+                            mainWindow.setProgressBar(100);
+                        }
+                    } catch (error) {
+                        console.error('Error downloading update:', error);
+                    }
+                }
+            });
+    });
+
+    autoUpdater.on('download-progress', (progressObj) => {
+        if (mainWindow) {
+            mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
+        }
+    });
+
+    autoUpdater.on('update-downloaded', () => {
+        if (mainWindow) {
+            mainWindow.setProgressBar(1);
+        }
+        dialog
+            .showMessageBox({
+                type: 'info',
+                title: 'Update Ready',
+                message:
+                    'A new version of the ' +
+                    appTitle +
+                    ' is ready. It will be installed after a restart. Do you want to restart now?',
+                buttons: ['Yes', 'Later']
+            })
+            // eslint-disable-next-line promise/no-nesting
+            .then((result) => {
+                if (result.response === 0) {
+                    autoUpdater.quitAndInstall();
+                }
+            });
+    });
 
     const startAtLogin = async () => {
         if (process.env.NODE_ENV !== 'development') {

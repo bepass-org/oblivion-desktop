@@ -15,8 +15,8 @@ let cachedIpInfo: any = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
-let canCheckNewVer = true;
-let hasNewUpdate = false;
+//let canCheckNewVer = true;
+const hasNewUpdate = false;
 
 const useLanding = () => {
     const appLang = useTranslate();
@@ -77,7 +77,7 @@ const useLanding = () => {
         }
     }, [online, isLoading, isConnected, setIsLoading, proxyMode, setProxyStatus]);
 
-    const fetchReleaseVersion = async () => {
+    /*const fetchReleaseVersion = async () => {
         if (!isDev()) {
             try {
                 const response = await fetch(
@@ -99,7 +99,7 @@ const useLanding = () => {
         } else {
             hasNewUpdate = false;
         }
-    };
+    };*/
 
     useEffect(() => {
         /*settings.get('theme').then((value) => {
@@ -125,10 +125,10 @@ const useLanding = () => {
         });
 
         cachedIpInfo = null;
-        if (canCheckNewVer) {
+        /*if (canCheckNewVer) {
             fetchReleaseVersion();
             canCheckNewVer = false;
-        }
+        }*/
 
         ipcRenderer.on('guide-toast', (message: any) => {
             defaultToast(message, 'GUIDE', 7000);
