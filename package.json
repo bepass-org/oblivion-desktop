@@ -284,7 +284,7 @@
             "repo": "oblivion-desktop",
             "publishAutoUpdate": false,
             "private": false,
-            "releaseType": "prerelease"
+            "releaseType": "draft"
         }
     },
     "devEngines": {
