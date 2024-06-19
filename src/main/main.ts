@@ -36,6 +36,7 @@ import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
+import packageJsonData from '../../package.json';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -436,6 +437,8 @@ if (!gotTheLock) {
                 );
             });
 
+            const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
+            autoUpdater.setFeedURL(autoUpdateFeed);
             autoUpdater.checkForUpdatesAndNotify();
         });
 
