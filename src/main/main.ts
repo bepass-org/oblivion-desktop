@@ -26,7 +26,6 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import { autoUpdater } from 'electron-updater';
-import ProgressBar from 'electron-progressbar';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
@@ -51,7 +50,6 @@ export const binAssetsPath = path.join(
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
-let progressBar: any;
 autoUpdater.allowPrerelease = true;
 autoUpdater.autoRunAppAfterInstall = true;
 
@@ -451,21 +449,10 @@ if (!gotTheLock) {
                     })
                     .then((result) => {
                         if (result.response === 0) {
-                            // Runs the update if 'Yes' is clicked
                             autoUpdater.downloadUpdate();
-                            progressBar = new ProgressBar({
-                                text: 'Downloading update...',
-                                detail: 'Please wait...'
-                            });
-
-                            progressBar
-                                .on('completed', () => {
-                                    log.info('Download completed');
-                                    progressBar.detail = 'Download completed.';
-                                })
-                                .on('aborted', () => {
-                                    log.info('Download aborted');
-                                });
+                            if (mainWindow) {
+                                mainWindow.setProgressBar(100);
+                            }
                         }
                     });
             });
@@ -476,15 +463,14 @@ if (!gotTheLock) {
                 logMessage =
                     logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')';
                 log.info(logMessage);
-                if (progressBar) {
-                    progressBar.value = progressObj.percent;
-                    progressBar.detail = `Downloaded ${Math.round(progressObj.percent)}%`;
+                if (mainWindow) {
+                    mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
                 }
             });
 
             autoUpdater.on('update-downloaded', () => {
-                if (progressBar) {
-                    progressBar.setCompleted();
+                if (mainWindow) {
+                    mainWindow.setProgressBar(1);
                 }
                 dialog
                     .showMessageBox({
