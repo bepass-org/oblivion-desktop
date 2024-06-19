@@ -19,14 +19,11 @@ import {
     Tray,
     nativeImage,
     IpcMainEvent,
-    dialog,
     globalShortcut
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
-import { autoUpdater } from 'electron-updater';
-import ProgressBar from 'electron-progressbar';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
@@ -50,10 +47,6 @@ export const binAssetsPath = path.join(
     'bin'
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
-
-let progressBar: any;
-autoUpdater.allowPrerelease = true;
-autoUpdater.autoRunAppAfterInstall = true;
 
 if (!gotTheLock) {
     log.info('did not create new instance since there was already one running.');
@@ -435,72 +428,6 @@ if (!gotTheLock) {
                         )
                     )
                 );
-            });
-
-            autoUpdater.checkForUpdatesAndNotify();
-            autoUpdater.on('update-available', () => {
-                dialog
-                    .showMessageBox({
-                        type: 'info',
-                        title: 'Update Available',
-                        message:
-                            'A new version of the ' +
-                            appTitle +
-                            ' is available. Do you want to update now?',
-                        buttons: ['Yes', 'No']
-                    })
-                    .then((result) => {
-                        if (result.response === 0) {
-                            // Runs the update if 'Yes' is clicked
-                            autoUpdater.downloadUpdate();
-                            progressBar = new ProgressBar({
-                                text: 'Downloading update...',
-                                detail: 'Please wait...'
-                            });
-
-                            progressBar
-                                .on('completed', () => {
-                                    log.info('Download completed');
-                                    progressBar.detail = 'Download completed.';
-                                })
-                                .on('aborted', () => {
-                                    log.info('Download aborted');
-                                });
-                        }
-                    });
-            });
-
-            autoUpdater.on('download-progress', (progressObj) => {
-                let logMessage: any = 'Download speed: ' + progressObj.bytesPerSecond;
-                logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%';
-                logMessage =
-                    logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')';
-                log.info(logMessage);
-                if (progressBar) {
-                    progressBar.value = progressObj.percent;
-                    progressBar.detail = `Downloaded ${Math.round(progressObj.percent)}%`;
-                }
-            });
-
-            autoUpdater.on('update-downloaded', () => {
-                if (progressBar) {
-                    progressBar.setCompleted();
-                }
-                dialog
-                    .showMessageBox({
-                        type: 'info',
-                        title: 'Update Ready',
-                        message:
-                            'A new version of the ' +
-                            appTitle +
-                            ' is ready. It will be installed after a restart. Do you want to restart now?',
-                        buttons: ['Yes', 'Later']
-                    })
-                    .then((result) => {
-                        if (result.response === 0) {
-                            autoUpdater.quitAndInstall();
-                        }
-                    });
             });
         });
 
