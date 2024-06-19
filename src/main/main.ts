@@ -439,72 +439,86 @@ if (!gotTheLock) {
 
             const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
             autoUpdater.setFeedURL(autoUpdateFeed);
+            /*autoUpdater.setFeedURL({
+                provider: 'github',
+                owner: `${packageJsonData.build.publish.owner}`,
+                repo: `${packageJsonData.build.publish.repo}`
+            });*/
             autoUpdater.checkForUpdatesAndNotify();
+        });
+
+        autoUpdater.on('update-available', () => {
+            dialog
+                .showMessageBox({
+                    type: 'info',
+                    title: 'Update Available',
+                    message:
+                        'A new version of the ' +
+                        appTitle +
+                        ' is available. Do you want to update now?',
+                    buttons: ['Yes', 'No']
+                })
+                // eslint-disable-next-line promise/no-nesting
+                .then(async (result) => {
+                    if (result.response === 0) {
+                        try {
+                            await autoUpdater.downloadUpdate();
+                            if (mainWindow) {
+                                mainWindow.setProgressBar(100);
+                            }
+                        } catch (error) {
+                            console.error('Error downloading update:', error);
+                        }
+                    }
+                });
+        });
+
+        autoUpdater.on('download-progress', (progressObj) => {
+            if (mainWindow) {
+                mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
+            }
+        });
+
+        autoUpdater.on('update-downloaded', () => {
+            if (mainWindow) {
+                mainWindow.setProgressBar(1);
+            }
+            dialog
+                .showMessageBox({
+                    type: 'info',
+                    title: 'Update Ready',
+                    message:
+                        'A new version of the ' +
+                        appTitle +
+                        ' is ready. It will be installed after a restart. Do you want to restart now?',
+                    buttons: ['Yes', 'Later']
+                })
+                // eslint-disable-next-line promise/no-nesting
+                .then((result) => {
+                    if (result.response === 0) {
+                        autoUpdater.quitAndInstall();
+                    }
+                });
+        });
+
+        autoUpdater.on('error', (error) => {
+            console.error('Update error:', error);
+            if (mainWindow) {
+                mainWindow.setProgressBar(0);
+            }
+        });
+
+        process.on('uncaughtException', (error) => {
+            console.error('Unhandled Exception:', error);
+            const errorMessage = `A JavaScript error occurred in the main process.
+        Error message: ${error.message}
+        Stack trace: ${error.stack}`;
+            dialog.showErrorBox('Error', errorMessage);
+            app.quit();
         });
 
         log.info('od is ready!');
     };
-
-    autoUpdater.on('update-available', () => {
-        dialog
-            .showMessageBox({
-                type: 'info',
-                title: 'Update Available',
-                message:
-                    'A new version of the ' +
-                    appTitle +
-                    ' is available. Do you want to update now?',
-                buttons: ['Yes', 'No']
-            })
-            // eslint-disable-next-line promise/no-nesting
-            .then(async (result) => {
-                if (result.response === 0) {
-                    try {
-                        await autoUpdater.downloadUpdate();
-                        if (mainWindow) {
-                            mainWindow.setProgressBar(100);
-                        }
-                    } catch (error) {
-                        console.error('Error downloading update:', error);
-                    }
-                }
-            });
-    });
-
-    autoUpdater.on('download-progress', (progressObj) => {
-        if (mainWindow) {
-            mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
-        }
-    });
-
-    autoUpdater.on('update-downloaded', () => {
-        if (mainWindow) {
-            mainWindow.setProgressBar(1);
-        }
-        dialog
-            .showMessageBox({
-                type: 'info',
-                title: 'Update Ready',
-                message:
-                    'A new version of the ' +
-                    appTitle +
-                    ' is ready. It will be installed after a restart. Do you want to restart now?',
-                buttons: ['Yes', 'Later']
-            })
-            // eslint-disable-next-line promise/no-nesting
-            .then((result) => {
-                if (result.response === 0) {
-                    autoUpdater.quitAndInstall();
-                }
-            });
-    });
-
-    autoUpdater.on('error', (error) => {
-        console.error('Update error:', error);
-        if (mainWindow) {
-            mainWindow.setProgressBar(0);
-        }
-    });
 
     const startAtLogin = async () => {
         if (process.env.NODE_ENV !== 'development') {
@@ -514,10 +528,6 @@ if (!gotTheLock) {
             });
         }
     };
-
-    /**
-     * Add event listeners...
-     */
 
     app.on('window-all-closed', async () => {
         await startAtLogin();
