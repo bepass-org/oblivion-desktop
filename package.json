@@ -282,7 +282,9 @@
             "provider": "github",
             "owner": "bepass-org",
             "repo": "oblivion-desktop",
-            "publishAutoUpdate": false
+            "publishAutoUpdate": false,
+            "private": false,
+            "releaseType": ["release", "prerelease"]
         }
     },
     "devEngines": {
