@@ -19,12 +19,14 @@ import {
     Tray,
     nativeImage,
     IpcMainEvent,
-    globalShortcut
+    globalShortcut,
+    dialog
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
+import { autoUpdater } from 'electron-updater';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -47,6 +49,9 @@ export const binAssetsPath = path.join(
     'bin'
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
+
+autoUpdater.allowPrerelease = true;
+autoUpdater.autoRunAppAfterInstall = true;
 
 if (!gotTheLock) {
     log.info('did not create new instance since there was already one running.');
@@ -428,6 +433,61 @@ if (!gotTheLock) {
                         )
                     )
                 );
+            });
+
+            autoUpdater.checkForUpdatesAndNotify();
+            autoUpdater.on('update-available', () => {
+                dialog
+                    .showMessageBox({
+                        type: 'info',
+                        title: 'Update Available',
+                        message:
+                            'A new version of the ' +
+                            appTitle +
+                            ' is available. Do you want to update now?',
+                        buttons: ['Yes', 'No']
+                    })
+                    .then((result) => {
+                        if (result.response === 0) {
+                            autoUpdater.downloadUpdate();
+                            if (mainWindow) {
+                                mainWindow.setProgressBar(100);
+                            }
+                        }
+                    });
+            });
+
+            autoUpdater.on('download-progress', (progressObj) => {
+                let logMessage: any = 'Download speed: ' + progressObj.bytesPerSecond;
+                logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%';
+                logMessage =
+                    logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')';
+                log.info(logMessage);
+                if (mainWindow) {
+                    mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
+                }
+            });
+
+            autoUpdater.on('update-downloaded', () => {
+                if (mainWindow) {
+                    mainWindow.setProgressBar(1);
+                }
+                dialog
+                    .showMessageBox({
+                        type: 'info',
+                        title: 'Update Ready',
+                        message:
+                            'A new version of the ' +
+                            appTitle +
+                            ' is ready. It will be installed after a restart. Do you want to restart now?',
+                        buttons: ['Yes', 'Later']
+                    })
+                    // eslint-disable-next-line promise/no-nesting
+                    .then((result) => {
+                        if (result.response === 0) {
+                            autoUpdater.quitAndInstall();
+                        }
+                    });
             });
         });
 

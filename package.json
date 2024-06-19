@@ -11,7 +11,7 @@
         "url": "https://github.com/bepass-org/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "0.23.13-beta",
+    "version": "0.23.8-beta",
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
@@ -96,6 +96,7 @@
         "electron-debug": "^3.2.0",
         "electron-log": "^4.4.8",
         "electron-settings": "^4.0.3",
+        "electron-updater": "^6.2.1",
         "lottie-react": "^2.4.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
