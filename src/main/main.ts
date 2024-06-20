@@ -244,14 +244,18 @@ if (!gotTheLock) {
         let appIcon: any = null;
         //let contextMenu: any = null;
 
-        const trayIconChanger = (status: string) => {
-            const nativeImageIcon = nativeImage.createFromPath(
-                getAssetPath(`img/status/${status}.png`)
-            );
-            if (process.platform === 'darwin') {
-                return nativeImageIcon.resize({ width: 16, height: 16 });
+        const trayIconChanger = (status: string): any => {
+            const iconPath = getAssetPath(`img/status/${status}.png`);
+            const nativeImageIcon = nativeImage.createFromPath(iconPath);
+            if (!nativeImageIcon.isEmpty()) {
+                if (process.platform === 'darwin') {
+                    return nativeImageIcon.resize({ width: 16, height: 16 });
+                } else {
+                    return nativeImageIcon;
+                }
             } else {
-                return nativeImageIcon;
+                console.error(`Failed to load trayIcon: ${iconPath}`);
+                return null;
             }
         };
 
@@ -429,7 +433,10 @@ if (!gotTheLock) {
             });*/
             customEvent.on('tray-icon', (newStatus) => {
                 if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
-                    appIcon.setImage(trayIconChanger(newStatus));
+                    const newIcon = trayIconChanger(newStatus);
+                    if (newIcon) {
+                        appIcon.setImage(newIcon);
+                    }
                 }
                 appIcon.setContextMenu(
                     Menu.buildFromTemplate(
