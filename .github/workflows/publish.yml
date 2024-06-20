@@ -46,7 +46,7 @@ jobs:
               if: matrix.os == 'macos-13'
               run: npm exec electron-builder -- --mac dmg zip --x64 --publish always
 
-            - name: Publish releases mac arm64
+            - name: Publish releases mac arm64e
               env:
                   # These values are used for auto updates signing
                   #   APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -82,3 +82,15 @@ jobs:
                       oblivion-desktop-win.exe
                       oblivion-desktop-mac-arm64.zip.blockmap
                       oblivion-desktop-mac-x64.zip.blockmap
+
+            - name: Prepare Release Message
+              run: |
+                  sed 's|RELEASE_TAG|${{ github.ref_name }}|g' ./.github/release_message.md >> release.md
+
+            - name: Set Release Message
+              uses: softprops/action-gh-release@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  body_path: './release.md'
