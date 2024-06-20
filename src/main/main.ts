@@ -229,6 +229,11 @@ if (!gotTheLock) {
                     shell.openExternal(e.url);
                     return { action: 'deny' };
                 });
+
+                // Fixing the Issue of Applications Closing on a macOS
+                app.on('before-quit', () => {
+                    mainWindow?.removeAllListeners('close');
+                });
             } else {
                 mainWindow.show();
             }
