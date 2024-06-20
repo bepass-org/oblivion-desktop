@@ -19,18 +19,6 @@ jobs:
             - name: Checkout git repo
               uses: actions/checkout@v4
 
-            - name: Prepare Release Message
-              run: |
-                  sed 's|RELEASE_TAG|${{ github.ref_name }}|g' ./.github/release_message.md >> release.md
-
-            - name: Set Release Message
-              uses: softprops/action-gh-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  tag_name: ${{ github.ref_name }}
-                  body_path: './release.md'
-
             - name: Install Node and NPM
               uses: actions/setup-node@v4
               with:
@@ -94,3 +82,15 @@ jobs:
                       oblivion-desktop-win.exe
                       oblivion-desktop-mac-arm64.zip.blockmap
                       oblivion-desktop-mac-x64.zip.blockmap
+
+            - name: Prepare Release Message
+              run: |
+                  sed 's|RELEASE_TAG|${{ github.ref_name }}|g' ./.github/release_message.md >> release.md
+
+            - name: Set Release Message
+              uses: softprops/action-gh-release@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  body_path: './release.md'
