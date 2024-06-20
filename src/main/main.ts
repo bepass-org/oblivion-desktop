@@ -245,13 +245,13 @@ if (!gotTheLock) {
         //let contextMenu: any = null;
 
         const trayIconChanger = (status: string) => {
+            const nativeImageIcon = nativeImage.createFromPath(
+                getAssetPath(`img/status/${status}.png`)
+            );
             if (process.platform === 'darwin') {
-                const nativeImageIcon = nativeImage.createFromPath(
-                    getAssetPath(`img/status/${status}.png`)
-                );
                 return nativeImageIcon.resize({ width: 16, height: 16 });
             } else {
-                return getAssetPath(`img/status/${status}.png`);
+                return nativeImageIcon;
             }
         };
 
