@@ -225,7 +225,7 @@ Cloudflare Warp فراهم می‌کند.
 
 این پروژه بر شانه‌های اشخاصی ایستاده است و ما از کمک‌ها و الهام‌بخشی دوستان زیر به‌ شدت سپاسگزاریم:
 
--   Cloudflare Warp
+-   [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 -   [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
 -   [Oblivion](https://github.com/bepass-org/oblivion)
 -   [Electron](https://www.electronjs.org/)

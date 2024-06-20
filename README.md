@@ -213,7 +213,7 @@ and [Developer Docs](DOCS.md).
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
 provided by the following friends:
 
-- Cloudflare Warp
+- [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
 - [Oblivion](https://github.com/bepass-org/oblivion)
 - [Electron](https://www.electronjs.org/)
