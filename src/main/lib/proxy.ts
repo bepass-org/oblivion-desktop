@@ -303,22 +303,25 @@ export const checkProxyState = async (): Promise<boolean> => {
     }
 };
 
-const appLang = getTranslate('en');
+let appLang = getTranslate('en');
+
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
-    if (!shouldProxySystem(proxyMode)) {
-        log.info('skipping set system proxy');
-        return;
-    }
-
-    log.info('trying to set system proxy...');
-
     //const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
     const method = (await settings.get('method')) || defaultSettings.method;
     //const proxyMode = (await settings.get('proxyMode')) || defaultSettings.proxyMode;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     const port = (await settings.get('port')) || defaultSettings.port;
     const routingRules = await settings.get('routingRules');
+    const lang = await settings.get('lang');
+    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+
+    if (!shouldProxySystem(proxyMode)) {
+        log.info('skipping set system proxy');
+        return;
+    }
+
+    log.info('trying to set system proxy...');
 
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
@@ -456,12 +459,14 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
 
 export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
+    const method = (await settings.get('method')) || defaultSettings.method;
+    const lang = await settings.get('lang');
+    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+
     if (!shouldProxySystem(proxyMode)) {
         log.info('skipping system proxy disable.');
         return;
     }
-
-    const method = (await settings.get('method')) || defaultSettings.method;
 
     log.info('trying to disable system proxy...');
 
