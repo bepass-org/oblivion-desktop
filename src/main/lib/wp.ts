@@ -4,7 +4,7 @@ import fs from 'fs';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { doesDirectoryExist, removeDirIfExists } from './utils';
 import { stuffPath } from '../ipcListeners/wp';
-import { getTranslateElectron } from '../../localization/electron';
+//import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
 
 export const getUserSettings = async () => {

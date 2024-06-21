@@ -2,12 +2,12 @@ import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'reac
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
-import { checkNewUpdate } from '../../lib/checkNewUpdate';
+//import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer, isDev, onEscapeKeyPressed } from '../../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
-import packageJsonData from '../../../../package.json';
+//import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 

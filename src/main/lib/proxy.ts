@@ -7,7 +7,7 @@ import { promisify } from 'util';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
-import { getTranslateElectron } from '../../localization/electron';
+//import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
 
 const execPromise = promisify(exec);
