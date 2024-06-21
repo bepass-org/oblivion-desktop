@@ -7,6 +7,8 @@ import { stuffPath } from '../ipcListeners/wp';
 //import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
 
+let appLang = getTranslate('en');
+
 export const getUserSettings = async () => {
     const randomCountry = () => {
         const randomIndex = Math.floor(Math.random() * countries.length);
@@ -27,6 +29,8 @@ export const getUserSettings = async () => {
     const hostIP = await settings.get('hostIP');
     const rtt = await settings.get('rtt');
     const reserved = await settings.get('reserved');
+    const lang = await settings.get('lang');
+    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
@@ -105,7 +109,6 @@ export const setStuffPath = (args: string[]) => {
 };
 
 // ! make sure you get the args like ({ port = '' })
-const appLang = getTranslate('en');
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
         return appLang.log.error_port_already_in_use(port);
