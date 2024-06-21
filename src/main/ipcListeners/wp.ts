@@ -55,7 +55,10 @@ ipcMain.on('wp-start', async (event) => {
         customEvent.emit('tray-icon', 'connecting');
         if (connectedFlags[0] && connectedFlags[1]) {
             event.reply('wp-start', true);
-            customEvent.emit('tray-icon', `connected-${proxyMode}`);
+            customEvent.emit(
+                'tray-icon',
+                `connected-${typeof proxyMode !== 'undefined' ? proxyMode : defaultSettings.proxyMode}`
+            );
             toast.remove('GUIDE');
         }
     };
