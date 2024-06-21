@@ -151,6 +151,13 @@ const chinese: Language = {
         about: '关于',
         log: '日志',
         exit: '退出'
+    },
+    update: {
+        available: '有更新',
+        available_message: (value) => `新的 ${value} 版本可用。您想现在更新吗？`,
+        ready: '更新已准备好',
+        ready_message: (value) =>
+            `新的 ${value} 版本已准备好。它将在重新启动后安装。您想现在重新启动吗？`
     }
 };
 export default chinese;

@@ -127,7 +127,7 @@ const persian: Language = {
         error_script_failed: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_object_null: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_port_already_in_use: (value) =>
-            `پورت {value}$ توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`,
+            `پورت ${value} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`,
         error_port_socket: 'از یک پورت دیگر استفاده نمایید.',
         error_unknown_flag: 'یک دستور نادرست در پس‌زمینه اجرا شده است.',
         error_deadline_exceeded: 'مهلت اتصال پایان یافت؛ دوباره تلاش کنید.',
@@ -155,6 +155,13 @@ const persian: Language = {
         about: 'درباره',
         log: 'لاگ',
         exit: 'خروج'
+    },
+    update: {
+        available: 'بروزرسانی جدید',
+        available_message: (value) => `بروزرسانی جدیدی از ${value} در دسترس است. دریافت می‌کنید؟`,
+        ready: 'دریافت شد',
+        ready_message: (value) =>
+            `برنامه ${value} برای آغاز فرایند بروزرسانی آماده است. راه‌اندازی شود؟`
     }
 };
 export default persian;

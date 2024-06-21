@@ -156,6 +156,13 @@ export interface SystemTray {
     exit: string;
 }
 
+export interface Update {
+    available: string;
+    available_message: (value: string) => string;
+    ready: string;
+    ready_message: (value: string) => string;
+}
+
 export interface Language {
     global: Global;
     status: Status;
@@ -167,4 +174,5 @@ export interface Language {
     log: Log;
     about: About;
     systemTray: SystemTray;
+    update: Update;
 }

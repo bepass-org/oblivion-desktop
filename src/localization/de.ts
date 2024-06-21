@@ -156,6 +156,14 @@ const deutsch: Language = {
         about: 'Über',
         log: 'Protokoll',
         exit: 'Beenden'
+    },
+    update: {
+        available: 'Update verfügbar',
+        available_message: (value) =>
+            `Eine neue Version von ${value} ist verfügbar. Möchten Sie jetzt aktualisieren?`,
+        ready: 'Update bereit',
+        ready_message: (value) =>
+            `Eine neue Version von ${value} ist bereit. Sie wird nach einem Neustart installiert. Möchten Sie jetzt neu starten?`
     }
 };
 export default deutsch;

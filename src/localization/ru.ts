@@ -155,6 +155,13 @@ const russian: Language = {
         about: 'О программе',
         log: 'Журнал',
         exit: 'Выход'
+    },
+    update: {
+        available: 'Доступно обновление',
+        available_message: (value) => `Доступна новая версия ${value}. Хотите обновить сейчас?`,
+        ready: 'Обновление готово',
+        ready_message: (value) =>
+            `Новая версия ${value} готова. Она будет установлена после перезагрузки. Хотите перезагрузить сейчас?`
     }
 };
 export default russian;

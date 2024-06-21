@@ -153,6 +153,14 @@ const english: Language = {
         about: 'About',
         log: 'Log',
         exit: 'Exit'
+    },
+    update: {
+        available: 'Update Available',
+        available_message: (value) =>
+            `A new version of the ${value} is available. Do you want to update now?`,
+        ready: 'Update Ready',
+        ready_message: (value) =>
+            `A new version of the ${value} is ready. It will be installed after a restart. Do you want to restart now?`
     }
 };
 export default english;

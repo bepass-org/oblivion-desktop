@@ -493,11 +493,8 @@ if (!gotTheLock) {
             dialog
                 .showMessageBox({
                     type: 'info',
-                    title: 'Update Available',
-                    message:
-                        'A new version of the ' +
-                        appTitle +
-                        ' is available. Do you want to update now?',
+                    title: appLang.update.available,
+                    message: appLang.update.available_message(appTitle),
                     buttons: ['Yes', 'No']
                 })
                 // eslint-disable-next-line promise/no-nesting
@@ -528,11 +525,8 @@ if (!gotTheLock) {
             dialog
                 .showMessageBox({
                     type: 'info',
-                    title: 'Update Ready',
-                    message:
-                        'A new version of the ' +
-                        appTitle +
-                        ' is ready. It will be installed after a restart. Do you want to restart now?',
+                    title: appLang.update.ready,
+                    message: appLang.update.ready_message(appTitle),
                     buttons: ['Yes', 'Later']
                 })
                 // eslint-disable-next-line promise/no-nesting
