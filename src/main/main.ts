@@ -37,10 +37,14 @@ import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import packageJsonData from '../../package.json';
+import { defaultSettings } from '../defaultSettings';
 
 let mainWindow: BrowserWindow | null = null;
 
-const appLang = getTranslate('en');
+let getUserLang: any = 'en';
+let appLang = getTranslate(getUserLang);
+let connectionStatus = 'disconnected';
+
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
 
@@ -162,6 +166,8 @@ if (!gotTheLock) {
             }
         };
 
+        getUserLang = await settings.get('lang');
+
         if (isDev()) {
             const primaryDisplay = screen.getPrimaryDisplay();
             const displayWidth = primaryDisplay.workAreaSize.width;
@@ -245,6 +251,7 @@ if (!gotTheLock) {
         //let contextMenu: any = null;
 
         const trayIconChanger = (status: string): any => {
+            connectionStatus = String(status);
             const iconPath = getAssetPath(`img/status/${status}.png`);
             const nativeImageIcon = nativeImage.createFromPath(iconPath);
             if (!nativeImageIcon.isEmpty()) {
@@ -303,6 +310,7 @@ if (!gotTheLock) {
             connectStatus: string,
             connectEnable: boolean
         ) => {
+            appLang = getTranslate(getUserLang);
             return [
                 {
                     label: appTitle,
@@ -402,6 +410,7 @@ if (!gotTheLock) {
 
         const connectionLabel = (status: string) => {
             let text = '';
+            appLang = getTranslate(getUserLang);
             if (status.startsWith('connected')) {
                 text = `✓ ${appLang.systemTray.connected}`;
             } else if (status === 'disconnected') {
@@ -426,6 +435,27 @@ if (!gotTheLock) {
         };
 
         app?.whenReady().then(() => {
+            if (typeof getUserLang === 'undefined') {
+                getUserLang = defaultSettings.lang;
+            }
+            ipcMain.on('localization', async (event, newLang) => {
+                getUserLang = newLang;
+                appIcon.setContextMenu(
+                    Menu.buildFromTemplate(
+                        trayMenuContext(
+                            connectionLabel(connectionStatus),
+                            connectionStatus,
+                            !(
+                                connectionStatus === 'disconnecting' ||
+                                connectionStatus === 'connecting'
+                            )
+                        )
+                    )
+                );
+                appIcon.focus();
+            });
+
+            connectionStatus = 'disconnected';
             systemTrayMenu('disconnected');
             autoConnect();
             /*ipcMain.on('tray-icon', async (event, newStatus) => {

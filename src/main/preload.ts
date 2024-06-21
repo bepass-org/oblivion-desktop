@@ -9,7 +9,8 @@ export type Channels =
     | 'settings'
     | 'guide-toast'
     | 'tray-icon'
-    | 'tray-menu';
+    | 'tray-menu'
+    | 'localization';
 
 const electronHandler = {
     ipcRenderer: {

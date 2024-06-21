@@ -98,6 +98,7 @@ const useOptions = () => {
         settings.set('lang', language);
         document.documentElement.setAttribute('lang', language);
         document.documentElement.setAttribute('dir', getDirectionByLang(language as LanguageType));
+        ipcRenderer.sendMessage('localization', language);
     }, []);
 
     const onClickAutoStartButton = useCallback(() => {
