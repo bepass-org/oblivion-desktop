@@ -45,8 +45,8 @@ const useScanner = () => {
 
     const onCloseEndpointModal = useCallback(() => {
         setShowEndpointModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
 
@@ -64,18 +64,18 @@ const useScanner = () => {
         (event: ChangeEvent<HTMLSelectElement>) => {
             setIpType(event.target.value);
             settings.set('ipType', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
-        [isConnected, isLoading]
+        [isConnected, isLoading, appLang]
     );
 
     const onChangeRTT = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
             setRtt(event.target.value);
             settings.set('rtt', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
-        [isConnected, isLoading]
+        [isConnected, isLoading, appLang]
     );
 
     const onClickReservedButton = useCallback(() => {

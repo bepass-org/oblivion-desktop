@@ -79,19 +79,19 @@ const useOptions = () => {
 
     const onClosePortModal = useCallback(() => {
         setShowPortModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onCloseRoutingRulesModal = useCallback(() => {
         setShowRoutingRulesModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onChangeProxyMode = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
             setProxyMode(event.target.value);
             settings.set('proxyMode', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
             setTimeout(function () {
                 if (event.target.value === 'none') {
                     setIpData(false);
@@ -99,7 +99,7 @@ const useOptions = () => {
                 }
             }, 1000);
         },
-        [isConnected, isLoading]
+        [isConnected, isLoading, appLang]
     );
 
     const onClickPort = useCallback(() => setShowPortModal(true), []);
@@ -132,11 +132,11 @@ const useOptions = () => {
     const handleShareVPNOnClick = useCallback(() => {
         setShareVPN(!shareVPN);
         settings.set('shareVPN', !shareVPN);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         setTimeout(function () {
             settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
         }, 1000);
-    }, [isConnected, isLoading, shareVPN]);
+    }, [isConnected, isLoading, shareVPN, appLang]);
 
     const handleShareVPNOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

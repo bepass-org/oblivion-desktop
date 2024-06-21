@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import { getTranslate } from '../../localization';
 
-const appLang = getTranslate('en');
 const defaultToastStyle = {
     fontSize: '13px',
     borderRadius: '10px',
@@ -58,10 +57,12 @@ export const checkInternetToast = (msg: string) => {
 let doNotShowSettingsHaveChangedToastInCurrentSession = false;
 export const settingsHaveChangedToast = ({
     isConnected,
-    isLoading
+    isLoading,
+    appLang
 }: {
     isConnected: boolean;
     isLoading: boolean;
+    appLang: any;
 }) => {
     if (doNotShowSettingsHaveChangedToastInCurrentSession) return;
     if (isConnected || isLoading) {
@@ -77,10 +78,11 @@ export const settingsHaveChangedToast = ({
     }
 };
 
+/*const appLang = getTranslate('en');
 export const loadingToast = () => {
     toast.loading(appLang?.toast?.please_wait, {
         id: 'LOADING',
         duration: Infinity,
         style: defaultToastStyle
     });
-};
+};*/

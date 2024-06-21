@@ -68,8 +68,8 @@ const useSettings = () => {
 
     const onCloseLicenseModal = useCallback(() => {
         setShowLicenseModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
 
@@ -86,8 +86,8 @@ const useSettings = () => {
     const onEnableWarp = useCallback(() => {
         setMethod('');
         settings.set('method', '');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onKeyDownWarp = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -102,8 +102,8 @@ const useSettings = () => {
     const onEnableGool = useCallback(() => {
         setMethod('gool');
         settings.set('method', 'gool');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onKeyDownGool = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -118,8 +118,8 @@ const useSettings = () => {
     const onEnablePsiphon = useCallback(() => {
         setMethod('psiphon');
         settings.set('method', 'psiphon');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-    }, [isConnected, isLoading]);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
 
     const onKeyDownPsiphon = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -135,9 +135,9 @@ const useSettings = () => {
         (event: ChangeEvent<HTMLSelectElement>) => {
             setLocation(event.target.value);
             settings.set('location', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
-        [isConnected, isLoading]
+        [isConnected, isLoading, appLang]
     );
 
     return {
