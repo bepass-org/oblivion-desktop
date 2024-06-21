@@ -238,6 +238,7 @@ if (!gotTheLock) {
 
                 // Fixing the Issue of Applications Closing on a macOS
                 app.on('before-quit', () => {
+                    connectionStatus = 'disconnected';
                     mainWindow?.removeAllListeners('close');
                 });
             } else {
