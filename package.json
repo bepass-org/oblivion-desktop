@@ -215,7 +215,7 @@
             "identity": null
         },
         "dmg": {
-            "writeUpdateInfo": false
+            "writeUpdateInfo": true
         },
         "win": {
             "target": [
@@ -282,7 +282,7 @@
             "provider": "github",
             "owner": "bepass-org",
             "repo": "oblivion-desktop",
-            "publishAutoUpdate": false,
+            "publishAutoUpdate": true,
             "private": false,
             "releaseType": "draft"
         }
