@@ -135,7 +135,8 @@ const russian: Language = {
         error_desktop_not_supported: 'Среда рабочего стола не поддерживается!',
         error_configuration_not_supported:
             'Конфигурация прокси-сервера не поддерживается в вашей операционной системе, но вы можете использовать Warp Proxy вручную.',
-        error_configuring_proxy: (value) => `Ошибка настройки прокси-сервера для ${value}!`
+        error_configuring_proxy: (value) => `Ошибка настройки прокси-сервера для ${value}!`,
+        error_wp_not_found: 'Файл warp-plus не находится рядом с пакетом приложения.'
     },
     about: {
         title: 'О приложении',

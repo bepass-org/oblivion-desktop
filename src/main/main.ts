@@ -74,11 +74,17 @@ if (!gotTheLock) {
         }
     });
 
-    // coping wp binary from assets dir to userData dir, so it can run without sudo/administrator privilege
-    fs.copyFile(wpAssetPath, wpBinPath, (err) => {
-        if (err) throw err;
-        log.info('wp binary was copied to userData directory.');
-    });
+    if (fs.existsSync(wpAssetPath)) {
+        // coping wp binary from assets dir to userData dir, so it can run without sudo/administrator privilege
+        fs.copyFile(wpAssetPath, wpBinPath, (err) => {
+            if (err) throw err;
+            log.info('wp binary was copied to userData directory.');
+        });
+    } else {
+        log.info(
+            'The process of copying the wp binary was halted due to the absence of the wp file.'
+        );
+    }
 
     if (!isDev()) {
         const sourceMapSupport = require('source-map-support');

@@ -133,7 +133,8 @@ const english: Language = {
         error_desktop_not_supported: 'Desktop environment is not supported!',
         error_configuration_not_supported:
             'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
-        error_configuring_proxy: (value) => `Error configuring proxy for ${value}!`
+        error_configuring_proxy: (value) => `Error configuring proxy for ${value}!`,
+        error_wp_not_found: 'The warp-plus file is not located alongside the application package!'
     },
     about: {
         title: 'About App',

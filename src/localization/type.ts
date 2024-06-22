@@ -133,6 +133,7 @@ export interface Log {
     error_desktop_not_supported: string;
     error_configuration_not_supported: string;
     error_configuring_proxy: (value: string) => string;
+    error_wp_not_found: string;
 }
 
 export interface About {

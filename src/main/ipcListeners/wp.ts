@@ -6,7 +6,8 @@ import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import fs from 'fs';
+import { doesDirectoryExist, isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -14,6 +15,7 @@ import { defaultSettings } from '../../defaultSettings';
 import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
 import { showWpLogs } from '../dxConfig';
+import { getTranslate } from '../../localization';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -39,17 +41,27 @@ export const stuffPath = path.join(wpDirPath, 'stuff');
 
 let exitOnWpEnd = false;
 
+let appLang = getTranslate('en');
+
 let connectedFlags: boolean[];
 let disconnectedFlags: boolean[];
 ipcMain.on('wp-start', async (event) => {
-    exitOnWpEnd = false;
-    connectedFlags = [false, false];
-    disconnectedFlags = [false, false];
-
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     //const autoSetProxy = await settings.get('autoSetProxy');
     const proxyMode = await settings.get('proxyMode');
+    const lang = await settings.get('lang');
+    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+
+    if (!fs.existsSync(wpDirPath)) {
+        event.reply('guide-toast', appLang.log.error_wp_not_found);
+        event.reply('wp-end', true);
+        return;
+    }
+
+    exitOnWpEnd = false;
+    connectedFlags = [false, false];
+    disconnectedFlags = [false, false];
 
     const sendConnectedSignalToRenderer = () => {
         customEvent.emit('tray-icon', 'connecting');

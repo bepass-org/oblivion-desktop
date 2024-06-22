@@ -135,7 +135,8 @@ const persian: Language = {
         error_desktop_not_supported: 'محیط دسکتاپ پشتیبانی نمی‌شود!',
         error_configuration_not_supported:
             'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
-        error_configuring_proxy: (value) => `خطای پیکربندی پروکسی برای ${value}!`
+        error_configuring_proxy: (value) => `خطای پیکربندی پروکسی برای ${value}!`,
+        error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`
     },
     about: {
         title: 'درباره برنامه',

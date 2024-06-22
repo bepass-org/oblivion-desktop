@@ -136,7 +136,8 @@ const deutsch: Language = {
         error_desktop_not_supported: 'Desktop-Umgebung wird nicht unterstützt!',
         error_configuration_not_supported:
             'Proxy-Konfiguration wird in Ihrem Betriebssystem nicht unterstützt, aber Sie können Warp Proxy manuell verwenden.',
-        error_configuring_proxy: (value) => `Fehler beim Konfigurieren des Proxys für ${value}!`
+        error_configuring_proxy: (value) => `Fehler beim Konfigurieren des Proxys für ${value}!`,
+        error_wp_not_found: 'Die Datei warp-plus befindet sich nicht neben dem Anwendungspaket.'
     },
     about: {
         title: 'Über',
