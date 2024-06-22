@@ -261,7 +261,7 @@ if (!gotTheLock) {
             const iconPath = getAssetPath(`img/status/${status}.png`);
             const nativeImageIcon = nativeImage.createFromPath(iconPath);
             if (!nativeImageIcon.isEmpty()) {
-                if (process.platform === 'darwin') {
+                if (process.platform !== 'win32') {
                     return nativeImageIcon.resize({ width: 16, height: 16 });
                 } else {
                     return nativeImageIcon;
