@@ -55,7 +55,6 @@ export const binAssetsPath = path.join(
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
-autoUpdater.allowPrerelease = true;
 autoUpdater.autoDownload = false;
 autoUpdater.autoRunAppAfterInstall = true;
 
@@ -480,14 +479,17 @@ if (!gotTheLock) {
                 );
             });
 
-            const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
-            autoUpdater.setFeedURL(autoUpdateFeed);
-            /*autoUpdater.setFeedURL({
+            /*const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
+            console.log(autoUpdateFeed);
+            autoUpdater.setFeedURL(autoUpdateFeed);*/
+            autoUpdater.setFeedURL({
                 provider: 'github',
                 owner: `${packageJsonData.build.publish.owner}`,
                 repo: `${packageJsonData.build.publish.repo}`
-            });*/
-            autoUpdater.checkForUpdatesAndNotify();
+            });
+            setTimeout(() => {
+                autoUpdater.checkForUpdates();
+            }, 30000);
         });
 
         autoUpdater.on('update-available', () => {
