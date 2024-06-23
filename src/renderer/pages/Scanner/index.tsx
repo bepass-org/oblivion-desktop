@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
-// import { motion } from 'framer-motion';
 
 import Nav from '../../components/Nav';
 import { defaultSettings } from '../../../defaultSettings';
