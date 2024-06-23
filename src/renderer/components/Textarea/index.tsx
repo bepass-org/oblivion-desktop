@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState, useEffect, useRef } from 'react';
+import React, { ChangeEvent, FC, useState, useEffect, useRef, useCallback } from 'react';
 
 interface InputProps {
     id?: string;
@@ -7,11 +7,14 @@ interface InputProps {
     tabIndex?: number;
 }
 
+type ContextMenuStyleType = {
+    left: number;
+    top: number;
+};
+
 const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
-    const [contextMenuStyle, setContextMenuStyle] = useState<{ left: number; top: number } | null>(
-        null
-    );
-    const inputRef = useRef<any>(null);
+    const [contextMenuStyle, setContextMenuStyle] = useState<ContextMenuStyleType | null>(null);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -26,7 +29,7 @@ const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
         };
     }, []);
 
-    const handleContextMenu = (event: React.MouseEvent<HTMLTextAreaElement>) => {
+    const handleContextMenu = useCallback((event: React.MouseEvent<HTMLTextAreaElement>) => {
         event.preventDefault();
         event.stopPropagation();
         /*const inputElement = event.currentTarget;
@@ -42,9 +45,9 @@ const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
         const top = Math.min(positionY, maxY);
 
         setContextMenuStyle({ left, top });
-    };
+    }, []);
 
-    const handleCopy = async () => {
+    const handleCopy = useCallback(async () => {
         try {
             const selectedText = inputRef.current?.value.substring(
                 inputRef?.current.selectionStart,
@@ -57,32 +60,30 @@ const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
             console.error('Failed to copy:', err);
         }
         setContextMenuStyle(null);
-    };
+    }, [inputRef]);
 
-    const handleCut = async () => {
+    const handleCut = useCallback(async () => {
         try {
-            const selectedText = inputRef.current?.value.substring(
-                inputRef.current.selectionStart,
-                inputRef.current.selectionEnd
-            );
+            const selectionStart = inputRef.current?.selectionStart || 0;
+            const selectionEnd = inputRef.current?.selectionEnd || 0;
+            const selectedText = inputRef.current?.value.substring(selectionStart, selectionEnd);
             if (selectedText) {
                 await navigator.clipboard.writeText(selectedText);
-                const newValue =
-                    value.substring(0, inputRef.current.selectionStart) +
-                    value.substring(inputRef.current.selectionEnd);
+                const newValue = value.substring(0, selectionStart) + value.substring(selectionEnd);
                 onChange({ target: { value: newValue } } as ChangeEvent<HTMLTextAreaElement>);
             }
         } catch (err) {
             console.error('Failed to cut:', err);
         }
         setContextMenuStyle(null);
-    };
+    }, [value, onChange, inputRef]);
 
-    const handlePaste = async () => {
+    const handlePaste = useCallback(async () => {
         try {
+            const selectionStart = inputRef.current?.selectionStart || 0;
+            const selectionEnd = inputRef.current?.selectionEnd || 0;
+
             const text = await navigator.clipboard.readText();
-            const selectionStart = inputRef.current.selectionStart;
-            const selectionEnd = inputRef.current.selectionEnd;
             const newValue =
                 value.substring(0, selectionStart) + text + value.substring(selectionEnd);
             onChange({ target: { value: newValue } } as ChangeEvent<HTMLTextAreaElement>);
@@ -90,11 +91,11 @@ const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
             console.error('Failed to paste:', err);
         }
         setContextMenuStyle(null);
-    };
+    }, [value, onChange, inputRef]);
 
-    const handleCloseContextMenu = () => {
+    const handleCloseContextMenu = useCallback(() => {
         setContextMenuStyle(null);
-    };
+    }, []);
 
     return (
         <>
@@ -110,6 +111,7 @@ const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
             />
             {contextMenuStyle && (
                 <div
+                    role='presentation'
                     className='contextMenu'
                     style={{
                         position: 'fixed',
@@ -118,13 +120,13 @@ const Textarea: FC<InputProps> = ({ id, onChange, value, tabIndex = 0 }) => {
                     }}
                     onClick={handleCloseContextMenu}
                 >
-                    <div className='menuItem' onClick={handleCopy}>
+                    <div className='menuItem' onClick={handleCopy} role='presentation'>
                         Copy
                     </div>
-                    <div className='menuItem' onClick={handleCut}>
+                    <div className='menuItem' onClick={handleCut} role='presentation'>
                         Cut
                     </div>
-                    <div className='menuItem' onClick={handlePaste}>
+                    <div className='menuItem' onClick={handlePaste} role='presentation'>
                         Paste
                     </div>
                 </div>
