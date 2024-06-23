@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState, useEffect, useRef } from 'react';
+import React, { ChangeEvent, FC, useState, useEffect, useRef, useCallback } from 'react';
 
 interface InputProps {
     id?: string;
@@ -8,11 +8,14 @@ interface InputProps {
     type?: string;
 }
 
+type ContextMenuStyleType = {
+    left: number;
+    top: number;
+};
+
 const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text' }) => {
-    const [contextMenuStyle, setContextMenuStyle] = useState<{ left: number; top: number } | null>(
-        null
-    );
-    const inputRef = useRef<any>(null);
+    const [contextMenuStyle, setContextMenuStyle] = useState<ContextMenuStyleType | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -27,7 +30,7 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
         };
     }, []);
 
-    const handleContextMenu = (event: React.MouseEvent<HTMLInputElement>) => {
+    const handleContextMenu = useCallback((event: React.MouseEvent<HTMLInputElement>) => {
         event.preventDefault();
         event.stopPropagation();
         /*const inputElement = event.currentTarget;
@@ -43,13 +46,13 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
         const top = Math.min(positionY, maxY);
 
         setContextMenuStyle({ left, top });
-    };
+    }, []);
 
-    const handleCopy = async () => {
+    const handleCopy = useCallback(async () => {
         try {
             const selectedText = inputRef.current?.value.substring(
-                inputRef?.current.selectionStart,
-                inputRef.current.selectionEnd
+                inputRef.current?.selectionStart || 0,
+                inputRef.current?.selectionEnd || 0
             );
             if (selectedText) {
                 await navigator.clipboard.writeText(selectedText);
@@ -58,32 +61,30 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
             console.error('Failed to copy:', err);
         }
         setContextMenuStyle(null);
-    };
+    }, [inputRef]);
 
-    const handleCut = async () => {
+    const handleCut = useCallback(async () => {
         try {
-            const selectedText = inputRef.current?.value.substring(
-                inputRef.current.selectionStart,
-                inputRef.current.selectionEnd
-            );
+            const selectionStart = inputRef.current?.selectionStart || 0;
+            const selectionEnd = inputRef.current?.selectionEnd || 0;
+
+            const selectedText = inputRef.current?.value.substring(selectionStart, selectionEnd);
             if (selectedText) {
                 await navigator.clipboard.writeText(selectedText);
-                const newValue =
-                    value.substring(0, inputRef.current.selectionStart) +
-                    value.substring(inputRef.current.selectionEnd);
+                const newValue = value.substring(0, selectionStart) + value.substring(selectionEnd);
                 onChange({ target: { value: newValue } } as ChangeEvent<HTMLInputElement>);
             }
         } catch (err) {
             console.error('Failed to cut:', err);
         }
         setContextMenuStyle(null);
-    };
+    }, [value, onChange, inputRef]);
 
-    const handlePaste = async () => {
+    const handlePaste = useCallback(async () => {
         try {
             const text = await navigator.clipboard.readText();
-            const selectionStart = inputRef.current.selectionStart;
-            const selectionEnd = inputRef.current.selectionEnd;
+            const selectionStart = inputRef.current?.selectionStart || 0;
+            const selectionEnd = inputRef.current?.selectionEnd || 0;
             const newValue =
                 value.substring(0, selectionStart) + text + value.substring(selectionEnd);
             onChange({ target: { value: newValue } } as ChangeEvent<HTMLInputElement>);
@@ -91,11 +92,11 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
             console.error('Failed to paste:', err);
         }
         setContextMenuStyle(null);
-    };
+    }, [value, onChange, inputRef]);
 
-    const handleCloseContextMenu = () => {
+    const handleCloseContextMenu = useCallback(() => {
         setContextMenuStyle(null);
-    };
+    }, []);
 
     return (
         <>
@@ -112,6 +113,7 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
             />
             {contextMenuStyle && (
                 <div
+                    role='presentation'
                     className='contextMenu'
                     style={{
                         position: 'fixed',
@@ -120,13 +122,13 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
                     }}
                     onClick={handleCloseContextMenu}
                 >
-                    <div className='menuItem' onClick={handleCopy}>
+                    <div className='menuItem' onClick={handleCopy} role='presentation'>
                         Copy
                     </div>
-                    <div className='menuItem' onClick={handleCut}>
+                    <div className='menuItem' onClick={handleCut} role='presentation'>
                         Cut
                     </div>
-                    <div className='menuItem' onClick={handlePaste}>
+                    <div className='menuItem' onClick={handlePaste} role='presentation'>
                         Paste
                     </div>
                 </div>
