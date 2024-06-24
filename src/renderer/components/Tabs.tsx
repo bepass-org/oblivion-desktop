@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { getTranslate } from '../../localization';
 import useTranslate from '../../localization/useTranslate';
 
 interface TabsProps {
