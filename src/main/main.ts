@@ -185,6 +185,15 @@ if (!gotTheLock) {
             config.webPreferences.devToolsKeyCombination = true;
         }
 
+        const startAtLogin = async () => {
+            if (process.env.NODE_ENV !== 'development') {
+                const checkOpenAtLogin = await settings.get('openAtLogin');
+                app.setLoginItemSettings({
+                    openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
+                });
+            }
+        };
+
         function createMainWindow() {
             if (!mainWindow) {
                 mainWindow = new BrowserWindow(config);
@@ -243,6 +252,7 @@ if (!gotTheLock) {
 
                 // Fixing the Issue of Applications Closing on a macOS
                 app.on('before-quit', () => {
+                    startAtLogin();
                     connectionStatus = 'disconnected';
                     mainWindow?.removeAllListeners('close');
                 });
@@ -299,7 +309,7 @@ if (!gotTheLock) {
                         key: 'connectToggle',
                         msg: 'Connect Tray Click!'
                     });*/
-                    ipcMain.on('tray-menu', (event) => {
+                    ipcMain.on('tray-menu', (event: any) => {
                         event.reply('tray-menu', {
                             key: 'connect',
                             msg: 'Connect Tray Click!'
@@ -467,7 +477,7 @@ if (!gotTheLock) {
             /*ipcMain.on('tray-icon', async (event, newStatus) => {
                 appIcon.setImage(trayIconChanger(newStatus));
             });*/
-            customEvent.on('tray-icon', (newStatus) => {
+            customEvent.on('tray-icon', (newStatus: any) => {
                 if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
                     const newIcon = trayIconChanger(newStatus);
                     if (newIcon) {
@@ -518,7 +528,7 @@ if (!gotTheLock) {
                 });
         });
 
-        autoUpdater.on('download-progress', (progressObj) => {
+        autoUpdater.on('download-progress', (progressObj: any) => {
             if (mainWindow) {
                 mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
             }
@@ -543,14 +553,14 @@ if (!gotTheLock) {
                 });
         });
 
-        autoUpdater.on('error', (error) => {
+        autoUpdater.on('error', (error: any) => {
             console.error('Update error:', error);
             if (mainWindow) {
                 mainWindow.setProgressBar(0);
             }
         });
 
-        process.on('uncaughtException', (error) => {
+        process.on('uncaughtException', (error: any) => {
             console.error('Unhandled Exception:', error);
             const errorMessage = `A JavaScript error occurred in the main process.
         Error message: ${error.message}
@@ -562,17 +572,8 @@ if (!gotTheLock) {
         log.info('od is ready!');
     };
 
-    const startAtLogin = async () => {
-        if (process.env.NODE_ENV !== 'development') {
-            const checkOpenAtLogin = await settings.get('openAtLogin');
-            app.setLoginItemSettings({
-                openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
-            });
-        }
-    };
-
     app.on('window-all-closed', async () => {
-        await startAtLogin();
+        //await startAtLogin();
         await exitTheApp(mainWindow);
         console.log('window-all-closed');
     });
