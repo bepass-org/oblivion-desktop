@@ -23,7 +23,7 @@ Cloudflare Warp فراهم می‌کند.
 
 <p dir="rtl" align="center">
 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest">
-    <img src="https://img.shields.io/github/package-json/v/bepass-org/oblivion-desktop?label=Version&color=blue" alt="Version">
+    <img src="https://img.shields.io/github/v/release/bepass-org/oblivion-desktop?label=Version&color=blue" alt="Version">
 </a>
 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest">
     <img src="https://img.shields.io/github/downloads/bepass-org/oblivion-desktop/total?label=Downloads" alt="Downloads">
