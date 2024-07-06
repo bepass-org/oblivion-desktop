@@ -25,14 +25,11 @@ export default function Scanner() {
         ipType,
         reserved,
         rtt,
-        showEndpointModal
+        showEndpointModal,
+        loading
     } = useScanner();
-    if (
-        typeof endpoint === 'undefined' ||
-        typeof ipType === 'undefined' ||
-        typeof rtt === 'undefined' ||
-        typeof reserved === 'undefined'
-    )
+
+    if (loading)
         return (
             <div className='settings'>
                 <div className='lottie'>
@@ -45,25 +42,13 @@ export default function Scanner() {
         <>
             <Nav title={appLang?.settings?.scanner} />
             <EndpointModal
-                endpoint={endpoint}
+                endpoint={endpoint || ''}
                 setEndpoint={setEndpoint}
                 title={appLang?.modal?.endpoint_title}
                 isOpen={showEndpointModal}
                 onClose={onCloseEndpointModal}
             />
-            <div
-                // initial={{
-                //     opacity: 0
-                // }}
-
-                // animate={{
-                //     opacity: 1
-                // }}
-                // exit={{
-                //     opacity: 0
-                // }}
-                className={classNames('myApp', 'normalPage')}
-            >
+            <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='scanner' />
                 <div className='settings' role='menu'>
                     <div
@@ -76,7 +61,7 @@ export default function Scanner() {
                         <Dropdown
                             id='id-type-select'
                             onChange={onChangeType}
-                            value={ipType}
+                            value={ipType || ''}
                             label={appLang?.settings?.scanner_ip_type}
                             tabIndex={0}
                             disabled={endpoint !== defaultSettings.endpoint}
@@ -105,7 +90,7 @@ export default function Scanner() {
                             label={appLang?.settings?.scanner_rtt}
                             id='rtt-select'
                             onChange={onChangeRTT}
-                            value={rtt}
+                            value={rtt || ''}
                             disabled={endpoint !== defaultSettings.endpoint}
                             tabIndex={0}
                             items={[
@@ -155,11 +140,7 @@ export default function Scanner() {
                         onClick={onOpenEndpointModal}
                         onKeyDown={onKeyDownEndpoint}
                     >
-                        <label
-                            className='key'
-                            htmlFor='endpoint'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='endpoint'>
                             {appLang?.settings?.endpoint}
                         </label>
                         <div className='value'>
@@ -188,11 +169,7 @@ export default function Scanner() {
                         onClick={onClickReservedButton}
                         onKeyDown={onKeyDownReservedButton}
                     >
-                        <label
-                            className='key'
-                            htmlFor='reserved'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='reserved'>
                             {appLang?.settings?.scanner_reserved}
                         </label>
                         <div className='value'>

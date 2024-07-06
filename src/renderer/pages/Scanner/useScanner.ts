@@ -92,6 +92,13 @@ const useScanner = () => {
         },
         [onClickReservedButton]
     );
+
+    const loading =
+        typeof endpoint === 'undefined' ||
+        typeof ipType === 'undefined' ||
+        typeof rtt === 'undefined' ||
+        typeof reserved === 'undefined';
+
     return {
         endpoint,
         ipType,
@@ -99,6 +106,7 @@ const useScanner = () => {
         reserved,
         appLang,
         showEndpointModal,
+        loading,
         onCloseEndpointModal,
         onOpenEndpointModal,
         onKeyDownEndpoint,
