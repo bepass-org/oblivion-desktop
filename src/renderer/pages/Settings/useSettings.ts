@@ -96,7 +96,7 @@ const useSettings = () => {
                 onEnableWarp();
             }
         },
-        [isConnected, isLoading]
+        [onEnableWarp]
     );
 
     const onEnableGool = useCallback(() => {
@@ -112,7 +112,7 @@ const useSettings = () => {
                 onEnableGool();
             }
         },
-        [isConnected, isLoading]
+        [onEnableGool]
     );
 
     const onEnablePsiphon = useCallback(() => {
@@ -140,12 +140,18 @@ const useSettings = () => {
         [isConnected, isLoading, appLang]
     );
 
+    const loading =
+        typeof location === 'undefined' ||
+        typeof license === 'undefined' ||
+        typeof method === 'undefined';
+
     return {
         location,
         license,
         showLicenseModal,
         method,
         appLang,
+        loading,
         setLicense,
         onCloseLicenseModal,
         onOpenLicenseModal,
