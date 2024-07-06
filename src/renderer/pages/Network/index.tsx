@@ -18,7 +18,7 @@ const proxyModes = [
         value: 'system',
         label: 'System Proxy'
     }
-]
+];
 
 export default function Options() {
     const {
@@ -124,10 +124,7 @@ export default function Options() {
                         onClick={onClickRoutingRoles}
                         onKeyDown={onKeyDownRoutingRoles}
                     >
-                        <label
-                            className='key'
-                            htmlFor='routing-rules'
-                        >
+                        <label className='key' htmlFor='routing-rules'>
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
@@ -146,10 +143,7 @@ export default function Options() {
                             handleShareVPNOnKeyDown
                         }
                     >
-                        <label
-                            className='key'
-                            htmlFor='share-vpn'
-                        >
+                        <label className='key' htmlFor='share-vpn'>
                             {appLang?.settings?.share_vpn}
                         </label>
                         <div className='value' id='share-vpn'>
@@ -187,10 +181,7 @@ export default function Options() {
                             handleCheckIpDataOnKeyDown
                         }
                     >
-                        <label
-                            className='key'
-                            htmlFor='ip-data'
-                        >
+                        <label className='key' htmlFor='ip-data'>
                             {appLang?.settings?.ip_data}
                         </label>
                         <div className='value' id='ip-data'>

@@ -19,29 +19,24 @@ export default function Options() {
         onClickAutoConnectButton,
         onClickChangeTheme,
         onClickRestore,
-        // onClickSystemTrayButton,
         onCloseRestoreModal,
         onKeyDownAutoStartButton,
         onKeyDownAutoConnectButton,
         onKeyDownChangeTheme,
         onKeyDownRestore,
-        // onKeyDownSystemTrayButton,
         openAtLogin,
         autoConnect,
         showRestoreModal,
         setTheme,
-        //setSystemTray,
         setLang,
         setOpenAtLogin,
         setAutoConnect,
-        //systemTray,
         theme
     } = useOptions();
 
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
-        //typeof systemTray === 'undefined' ||
         typeof openAtLogin === 'undefined' ||
         typeof autoConnect === 'undefined'
     )
