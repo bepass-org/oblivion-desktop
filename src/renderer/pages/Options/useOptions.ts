@@ -18,7 +18,6 @@ const useOptions = () => {
 
     const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState<string>('');
-    const [systemTray, setSystemTray] = useState<undefined | boolean>();
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
@@ -51,9 +50,6 @@ const useOptions = () => {
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? getLanguageName() : value);
-        });
-        settings.get('systemTray').then((value) => {
-            setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
         });
         settings.get('openAtLogin').then((value) => {
             setOpenAtLogin(typeof value === 'undefined' ? defaultSettings.openAtLogin : value);
@@ -131,21 +127,6 @@ const useOptions = () => {
         [onClickAutoConnectButton]
     );
 
-    const onClickSystemTrayButton = useCallback(() => {
-        setSystemTray(!systemTray);
-        settings.set('systemTray', !systemTray);
-    }, [systemTray]);
-
-    const onKeyDownSystemTrayButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickSystemTrayButton();
-            }
-        },
-        [onClickSystemTrayButton]
-    );
-
     const onClickRestore = useCallback(() => setShowRestoreModal(true), []);
 
     const onKeyDownRestore = useCallback(
@@ -161,7 +142,6 @@ const useOptions = () => {
     return {
         theme,
         lang,
-        //systemTray,
         openAtLogin,
         autoConnect,
         showRestoreModal,
@@ -175,12 +155,9 @@ const useOptions = () => {
         onClickAutoConnectButton,
         onKeyDownAutoStartButton,
         onKeyDownAutoConnectButton,
-        //onClickSystemTrayButton,
-        //onKeyDownSystemTrayButton,
         onClickRestore,
         onKeyDownRestore,
         setTheme,
-        //setSystemTray,
         setLang,
         setOpenAtLogin,
         setAutoConnect

@@ -9,6 +9,17 @@ import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 
+const proxyModes = [
+    {
+        value: 'none',
+        label: 'None'
+    },
+    {
+        value: 'system',
+        label: 'System Proxy'
+    }
+]
+
 export default function Options() {
     const {
         countRoutingRules,
@@ -83,16 +94,7 @@ export default function Options() {
                     <div className='item' role='presentation'>
                         <Dropdown
                             id='proxy-mode-selector'
-                            items={[
-                                {
-                                    value: 'none',
-                                    label: 'None'
-                                },
-                                {
-                                    value: 'system',
-                                    label: 'System Proxy'
-                                }
-                            ]}
+                            items={proxyModes}
                             onChange={onChangeProxyMode}
                             value={proxyMode}
                             label={appLang?.settings?.proxy_mode}
@@ -125,7 +127,6 @@ export default function Options() {
                         <label
                             className='key'
                             htmlFor='routing-rules'
-                            //  role='label'
                         >
                             {appLang?.settings?.routing_rules}
                         </label>
@@ -148,7 +149,6 @@ export default function Options() {
                         <label
                             className='key'
                             htmlFor='share-vpn'
-                            // role='label'
                         >
                             {appLang?.settings?.share_vpn}
                         </label>
@@ -190,7 +190,6 @@ export default function Options() {
                         <label
                             className='key'
                             htmlFor='ip-data'
-                            // role='label'
                         >
                             {appLang?.settings?.ip_data}
                         </label>
