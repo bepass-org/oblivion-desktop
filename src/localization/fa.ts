@@ -111,6 +111,7 @@ const persian: Language = {
         routing_rules_sample: 'نمونه',
         endpoint_default: 'پیشفرض',
         endpoint_suggested: 'پیشنهادی',
+        endpoint_latest: 'اخیر',
         confirm: 'تایید می\u200Cکنم',
         update: 'بروزرسانی',
         cancel: 'انصراف'

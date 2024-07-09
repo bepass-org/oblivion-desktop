@@ -109,7 +109,8 @@ const english: Language = {
             'By confirming the operation of restoring the changes, all program settings will return to the default state and your connection will be disconnected.',
         routing_rules_sample: 'Sample',
         endpoint_default: 'Default',
-        endpoint_suggested: 'suggested',
+        endpoint_suggested: 'Suggested',
+        endpoint_latest: 'Latest',
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'

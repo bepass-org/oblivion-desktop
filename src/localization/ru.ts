@@ -111,6 +111,7 @@ const russian: Language = {
         routing_rules_sample: 'Пример',
         endpoint_default: 'По умолчанию',
         endpoint_suggested: 'предложено',
+        endpoint_latest: 'Последний',
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'

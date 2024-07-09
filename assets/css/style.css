@@ -1349,6 +1349,17 @@ html[data-bs-theme="dark"] .shimmer {
     left: inherit;
     right: 5px;
 }
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter {
+    float: left;
+    width: 170px;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter .split {
+    float: left;
+    width: 80px;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter .split:first-child {
+    border-right: 1px solid #ededed;
+}
 .dialog .dialogBox .labels .label .dropDownInLabel .item {
     float: right;
     width: 100%;

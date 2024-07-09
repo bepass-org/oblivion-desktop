@@ -109,6 +109,7 @@ const chinese: Language = {
         routing_rules_sample: '示例',
         endpoint_default: '默认',
         endpoint_suggested: '建议',
+        endpoint_latest: '最新的',
         confirm: '确认',
         update: '更新',
         cancel: '取消'

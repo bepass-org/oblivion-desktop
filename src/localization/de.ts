@@ -111,7 +111,8 @@ const deutsch: Language = {
             'Durch die Bestätigung des Vorgangs werden alle Programmeinstellungen auf den Standard zurückgesetzt und Ihre Verbindung wird getrennt.',
         routing_rules_sample: 'Beispiel',
         endpoint_default: 'Standard',
-        endpoint_suggested: 'empfohlen',
+        endpoint_suggested: 'Empfohlen',
+        endpoint_latest: 'Neueste',
         confirm: 'Ich bestätige',
         update: 'Update',
         cancel: 'Abbrechen'

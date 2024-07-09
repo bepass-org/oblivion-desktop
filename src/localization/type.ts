@@ -110,6 +110,7 @@ export interface Modal {
     routing_rules_sample: string;
     endpoint_default: string;
     endpoint_suggested: string;
+    endpoint_latest: string;
     confirm: string;
     update: string;
     cancel: string;
