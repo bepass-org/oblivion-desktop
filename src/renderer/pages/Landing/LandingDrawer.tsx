@@ -73,19 +73,19 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                     </li>
                     <li className='divider' />
                     {/*<li>
-                <Link to='/speed'>
-                    <i className={'material-icons'}>&#xe9e4;</i>
-                    <span>{appLang?.home?.drawer_speed_test}</span>
-                </Link>
-            </li>*/}
+                        <Link to='/speed'>
+                            <i className={'material-icons'}>&#xe9e4;</i>
+                            <span>{appLang?.home?.drawer_speed_test}</span>
+                        </Link>
+                    </li>*/}
                     <li className={hasNewUpdate ? '' : 'hidden'} role='presentation'>
                         <a
-                            href='https://github.com/bepass-org/oblivion-desktop/releases/latest'
+                            href='https://github.com/bepass-org/oblivion-desktop/releases/latest#download'
                             target='_blank'
                             rel='noreferrer'
                             role='menuitem'
                         >
-                            <i className={'material-icons'}>&#xe923;</i>
+                            <i className='material-icons'>&#xe923;</i>
                             <span>{appLang?.home?.drawer_update}</span>
                             <div className='label label-warning label-xs'>
                                 {appLang?.home?.drawer_update_label}

@@ -2,12 +2,12 @@ import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'reac
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
-//import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
+import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
-//import packageJsonData from '../../../../package.json';
+import { checkNewUpdate } from '../../lib/checkNewUpdate';
+import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 
@@ -15,8 +15,8 @@ let cachedIpInfo: any = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
-//let canCheckNewVer = true;
-const hasNewUpdate = false;
+let canCheckNewVer = true;
+let hasNewUpdate = false;
 
 const useLanding = () => {
     const appLang = useTranslate();
@@ -77,16 +77,19 @@ const useLanding = () => {
         }
     }, [online, isLoading, isConnected, setIsLoading, proxyMode, setProxyStatus]);
 
-    /*const fetchReleaseVersion = async () => {
+    const fetchReleaseVersion = async () => {
         if (!isDev()) {
             try {
                 const response = await fetch(
                     'https://api.github.com/repos/bepass-org/oblivion-desktop/releases'
                 );
+                console.log(response)
                 if (response.ok) {
                     const data = await response.json();
                     const latestVersion = String(data[0]?.name);
                     const appVersion = String(packageJsonData?.version);
+                    console.log(latestVersion)
+                    console.log(appVersion)
                     if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
                         hasNewUpdate = true;
                     }
@@ -99,7 +102,7 @@ const useLanding = () => {
         } else {
             hasNewUpdate = false;
         }
-    };*/
+    };
 
     useEffect(() => {
         /*settings.get('theme').then((value) => {
@@ -125,10 +128,10 @@ const useLanding = () => {
         });
 
         cachedIpInfo = null;
-        /*if (canCheckNewVer) {
+        if (canCheckNewVer) {
             fetchReleaseVersion();
             canCheckNewVer = false;
-        }*/
+        }
 
         ipcRenderer.on('guide-toast', (message: any) => {
             defaultToast(message, 'GUIDE', 7000);

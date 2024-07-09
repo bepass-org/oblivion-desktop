@@ -1,5 +1,4 @@
 import { Toaster } from 'react-hot-toast';
-
 import 'react-modern-drawer/dist/index.css';
 import useLanding from './useLanding';
 import LandingDrawer from './LandingDrawer';
