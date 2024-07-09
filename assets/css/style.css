@@ -1352,10 +1352,25 @@ html[data-bs-theme="dark"] .shimmer {
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter {
     float: left;
     width: 170px;
+    overflow: hidden;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split {
     float: left;
     width: 80px;
+    height: 90px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter .split::-webkit-scrollbar-thumb {
+    background: rgba(190, 190, 190, 0.9);
+}
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter .split::-webkit-scrollbar {
+    background: #fff;
+    width: 4px;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split::-webkit-scrollbar {
+    background: #fff;
+    width: 4px;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split:first-child {
     border-right: 1px solid #ededed;
