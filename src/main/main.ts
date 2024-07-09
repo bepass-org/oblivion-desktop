@@ -252,7 +252,7 @@ if (!gotTheLock) {
 
                 // Fixing the Issue of Applications Closing on a macOS
                 app.on('before-quit', () => {
-                    startAtLogin();
+                    //startAtLogin();
                     connectionStatus = 'disconnected';
                     mainWindow?.removeAllListeners('close');
                 });
@@ -469,6 +469,14 @@ if (!gotTheLock) {
                     )
                 );
                 appIcon.focus();
+            });
+
+            ipcMain.on('startup', async (event, newStatus) => {
+                if (process.env.NODE_ENV !== 'development') {
+                    app.setLoginItemSettings({
+                        openAtLogin: newStatus
+                    });
+                }
             });
 
             connectionStatus = 'disconnected';

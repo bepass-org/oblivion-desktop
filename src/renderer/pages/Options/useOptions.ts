@@ -100,6 +100,7 @@ const useOptions = () => {
     const onClickAutoStartButton = useCallback(() => {
         setOpenAtLogin(!openAtLogin);
         settings.set('openAtLogin', !openAtLogin);
+        ipcRenderer.sendMessage('startup', !openAtLogin);
     }, [openAtLogin]);
 
     const onClickAutoConnectButton = useCallback(() => {
