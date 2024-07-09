@@ -26,13 +26,11 @@ export default function Settings() {
         onKeyDownWarp,
         onOpenLicenseModal,
         setLicense,
-        showLicenseModal
+        showLicenseModal,
+        loading
     } = useSettings();
-    if (
-        typeof location === 'undefined' ||
-        typeof license === 'undefined' ||
-        typeof method === 'undefined'
-    )
+
+    if (loading)
         return (
             <div className='settings'>
                 <div className='lottie'>
@@ -57,7 +55,7 @@ export default function Settings() {
                 }}
             />*/}
             <LicenseModal
-                license={license}
+                license={license || ''}
                 setLicense={setLicense}
                 title={appLang?.modal?.license_title}
                 isOpen={showLicenseModal}
@@ -175,7 +173,7 @@ export default function Settings() {
                         <Dropdown
                             id='flex-switch-check-checked-psiphon-location'
                             onChange={onChangeLocation}
-                            value={location}
+                            value={location || ''}
                             label={appLang?.settings?.method_psiphon_location}
                             tabIndex={-1}
                             disabled={method !== 'psiphon'}

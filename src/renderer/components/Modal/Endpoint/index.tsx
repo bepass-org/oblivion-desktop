@@ -1,9 +1,8 @@
 import classNames from 'classnames';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 import Input from '../../Input';
-import { settings } from '../../../lib/settings';
 
 interface EndpointModalProps {
     title: string;
@@ -33,8 +32,12 @@ const EndpointModal: FC<EndpointModalProps> = ({
         onUpdateKeyDown,
         setEndpointDefault,
         setEndpointSuggestion,
+        setShowSuggestion,
         showModal,
-        suggestion
+        scanResult,
+        showSuggestion,
+        suggestion,
+        suggestionRef
     } = useEndpointModal({
         isOpen,
         onClose,
@@ -42,26 +45,6 @@ const EndpointModal: FC<EndpointModalProps> = ({
         endpoint,
         setEndpoint
     });
-
-    const suggestionRef = useRef<any>(null);
-    const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
-    const [scanResult, setScanResult] = useState<string>('');
-
-    useEffect(() => {
-        settings.get('scanResult').then((value) => {
-            setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
-        });
-
-        const handleClickOutside = (event: MouseEvent) => {
-            if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
-                setShowSuggestion(false);
-            }
-        };
-        document.addEventListener('click', handleClickOutside);
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, []);
 
     if (!isOpen) return <></>;
 
@@ -80,7 +63,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 role='presentation'
                                 className={classNames('label', 'label-danger')}
                                 onClick={() => {
-                                    setShowSuggestion(!showSuggestion);
+                                    setShowSuggestion((pre) => !pre);
                                 }}
                                 ref={suggestionRef}
                             >

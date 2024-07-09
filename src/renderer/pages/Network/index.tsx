@@ -9,6 +9,17 @@ import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 
+const proxyModes = [
+    {
+        value: 'none',
+        label: 'None'
+    },
+    {
+        value: 'system',
+        label: 'System Proxy'
+    }
+];
+
 export default function Options() {
     const {
         countRoutingRules,
@@ -83,16 +94,7 @@ export default function Options() {
                     <div className='item' role='presentation'>
                         <Dropdown
                             id='proxy-mode-selector'
-                            items={[
-                                {
-                                    value: 'none',
-                                    label: 'None'
-                                },
-                                {
-                                    value: 'system',
-                                    label: 'System Proxy'
-                                }
-                            ]}
+                            items={proxyModes}
                             onChange={onChangeProxyMode}
                             value={proxyMode}
                             label={appLang?.settings?.proxy_mode}
@@ -122,11 +124,7 @@ export default function Options() {
                         onClick={onClickRoutingRoles}
                         onKeyDown={onKeyDownRoutingRoles}
                     >
-                        <label
-                            className='key'
-                            htmlFor='routing-rules'
-                            //  role='label'
-                        >
+                        <label className='key' htmlFor='routing-rules'>
                             {appLang?.settings?.routing_rules}
                         </label>
                         <div className='value' id='routing-rules'>
@@ -145,11 +143,7 @@ export default function Options() {
                             handleShareVPNOnKeyDown
                         }
                     >
-                        <label
-                            className='key'
-                            htmlFor='share-vpn'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='share-vpn'>
                             {appLang?.settings?.share_vpn}
                         </label>
                         <div className='value' id='share-vpn'>
@@ -187,11 +181,7 @@ export default function Options() {
                             handleCheckIpDataOnKeyDown
                         }
                     >
-                        <label
-                            className='key'
-                            htmlFor='ip-data'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='ip-data'>
                             {appLang?.settings?.ip_data}
                         </label>
                         <div className='value' id='ip-data'>

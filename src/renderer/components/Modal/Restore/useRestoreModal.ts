@@ -9,7 +9,6 @@ interface RestoreModalProps {
     isOpen: boolean;
     onClose: () => void;
     setTheme: (value: string) => void;
-    //setSystemTray: (value: boolean) => void;
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;

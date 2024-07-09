@@ -1,6 +1,15 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+    ChangeEvent,
+    KeyboardEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
+import { defaultSettings } from '../../../../defaultSettings';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -12,8 +21,28 @@ type EndpointModalProps = {
 const useEndpointModal = (props: EndpointModalProps) => {
     const { endpoint, isOpen, onClose, setEndpoint, defValue } = props;
 
+    const suggestionRef = useRef<HTMLDivElement>(null);
+
     const [endpointInput, setEndpointInput] = useState<string>(endpoint);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
+    const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
+    const [scanResult, setScanResult] = useState<string>('');
+
+    useEffect(() => {
+        settings.get('scanResult').then((value) => {
+            setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
+        });
+
+        const handleClickOutside = (event: MouseEvent) => {
+            if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
+                setShowSuggestion(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
@@ -96,6 +125,9 @@ const useEndpointModal = (props: EndpointModalProps) => {
         showModal,
         appLang,
         suggestion,
+        showSuggestion,
+        scanResult,
+        suggestionRef,
         onSaveModal,
         onUpdateKeyDown,
         setEndpointSuggestion,
@@ -103,7 +135,8 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleCancelButtonClick,
         handleCancelButtonKeyDown,
         handleEndpointInputChange,
-        handleOnClose
+        handleOnClose,
+        setShowSuggestion
     };
 };
 
