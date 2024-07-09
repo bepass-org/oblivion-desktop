@@ -255,6 +255,7 @@ if (!gotTheLock) {
                     //startAtLogin();
                     connectionStatus = 'disconnected';
                     mainWindow?.removeAllListeners('close');
+                    //await exitTheApp(mainWindow);
                 });
             } else {
                 mainWindow.show();
