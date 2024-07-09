@@ -20,13 +20,14 @@ import {
     nativeImage,
     IpcMainEvent,
     globalShortcut,
-    dialog
+    //dialog
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import { autoUpdater } from 'electron-updater';
+//import { autoUpdater } from 'electron-updater';
+//import packageJsonData from '../../package.json';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -36,7 +37,6 @@ import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
-import packageJsonData from '../../package.json';
 import { defaultSettings } from '../defaultSettings';
 
 let mainWindow: BrowserWindow | null = null;
@@ -55,8 +55,8 @@ export const binAssetsPath = path.join(
 );
 export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
-autoUpdater.autoDownload = false;
-autoUpdater.autoRunAppAfterInstall = true;
+// autoUpdater.autoDownload = false;
+// autoUpdater.autoRunAppAfterInstall = true;
 
 if (!gotTheLock) {
     log.info('did not create new instance since there was already one running.');
@@ -503,17 +503,17 @@ if (!gotTheLock) {
                 );
             });
 
-            const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
+            /*const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
             autoUpdater.setFeedURL(autoUpdateFeed);
-            /*autoUpdater.setFeedURL({
+            autoUpdater.setFeedURL({
                 provider: 'github',
                 owner: `${packageJsonData.build.publish.owner}`,
                 repo: `${packageJsonData.build.publish.repo}`
-            });*/
-            autoUpdater.checkForUpdatesAndNotify();
+            });
+            autoUpdater.checkForUpdatesAndNotify();*/
         });
 
-        autoUpdater.on('update-available', () => {
+        /*autoUpdater.on('update-available', () => {
             dialog
                 .showMessageBox({
                     type: 'info',
@@ -566,16 +566,16 @@ if (!gotTheLock) {
             if (mainWindow) {
                 mainWindow.setProgressBar(0);
             }
-        });
+        });*/
 
-        process.on('uncaughtException', (error: any) => {
+        /*process.on('uncaughtException', (error: any) => {
             console.error('Unhandled Exception:', error);
             const errorMessage = `A JavaScript error occurred in the main process.
         Error message: ${error.message}
         Stack trace: ${error.stack}`;
             dialog.showErrorBox('Error', errorMessage);
             app.quit();
-        });
+        });*/
 
         log.info('od is ready!');
     };
