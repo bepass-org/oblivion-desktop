@@ -100,10 +100,11 @@ export default function Settings() {
                     </div>*/}
                     <div className='grouped' role='radiogroup'>
                         <div
-                            role='presentation'
+                            role='button'
                             className={classNames('item')}
                             onClick={onEnableWarp}
                             onKeyDown={onKeyDownWarp}
+                            tabIndex={0}
                         >
                             <label
                                 className='key'
@@ -121,10 +122,11 @@ export default function Settings() {
                             <div className='info'>{appLang?.settings?.method_warp_desc}</div>
                         </div>
                         <div
-                            role='presentation'
+                            role='button'
                             className={classNames('item')}
                             onClick={onEnableGool}
                             onKeyDown={onKeyDownGool}
+                            tabIndex={0}
                         >
                             <label
                                 className='key'
@@ -145,10 +147,11 @@ export default function Settings() {
                             <div className='info'>{appLang?.settings?.method_gool_desc}</div>
                         </div>
                         <div
-                            role='presentation'
+                            role='button'
                             className={classNames('item')}
                             onClick={onEnablePsiphon}
                             onKeyDown={onKeyDownPsiphon}
+                            tabIndex={0}
                         >
                             <label
                                 className='key'
@@ -194,7 +197,7 @@ export default function Settings() {
                     <i className='material-icons'>&#xe313;</i>
                     {appLang?.settings?.more}
                 </div>
-                <div className='settings' role='menu'>
+                <div className='settings' role='menu' tabIndex={0}>
                     {/*<div
                         className={classNames('item')}
                         onClick={() => {
@@ -208,10 +211,11 @@ export default function Settings() {
                         <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                     </div>*/}
                     <div
-                        role='presentation'
+                        role='button'
                         className='item'
                         onClick={onOpenLicenseModal}
                         onKeyDown={onKeyDownLicense}
+                        tabIndex={0}
                     >
                         <label
                             className='key'

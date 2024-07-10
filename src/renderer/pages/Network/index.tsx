@@ -103,10 +103,11 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className='item'
                         onClick={onClickPort}
                         onKeyDown={onKeyDownClickPort}
+                        tabIndex={0}
                     >
                         <label className='key' htmlFor='port'>
                             {appLang?.settings?.port}
@@ -119,10 +120,11 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={onClickRoutingRoles}
                         onKeyDown={onKeyDownRoutingRoles}
+                        tabIndex={0}
                     >
                         <label className='key' htmlFor='routing-rules'>
                             {appLang?.settings?.routing_rules}
@@ -135,13 +137,14 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('item', shareVPN ? 'checked' : '')}
                         onClick={handleShareVPNOnClick}
                         onKeyDown={
                             // TODO: The code needs refactoring
                             handleShareVPNOnKeyDown
                         }
+                        tabIndex={0}
                     >
                         <label className='key' htmlFor='share-vpn'>
                             {appLang?.settings?.share_vpn}
@@ -173,13 +176,14 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.dns_desc}</div>
                     </div>*/}
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={handleCheckIpDataOnClick}
                         onKeyDown={
                             // TODO: The code needs refactoring
                             handleCheckIpDataOnKeyDown
                         }
+                        tabIndex={0}
                     >
                         <label className='key' htmlFor='ip-data'>
                             {appLang?.settings?.ip_data}

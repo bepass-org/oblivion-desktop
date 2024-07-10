@@ -67,10 +67,11 @@ export default function Options() {
                 <Tabs active='options' />
                 <div className='settings' role='menu'>
                     <div
-                        role='presentation'
+                        role='button'
                         className='item'
                         onClick={onClickChangeTheme}
                         onKeyDown={onKeyDownChangeTheme}
+                        tabIndex={0}
                     >
                         <label
                             className='key'
@@ -106,10 +107,11 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className='item'
                         onClick={onClickAutoStartButton}
                         onKeyDown={onKeyDownAutoStartButton}
+                        tabIndex={0}
                     >
                         <label
                             className='key'
@@ -130,10 +132,11 @@ export default function Options() {
                         <div className='info'>{appLang?.settings?.open_login_desc}</div>
                     </div>
                     <div
-                        role='presentation'
+                        role='button'
                         className='item'
                         onClick={onClickAutoConnectButton}
                         onKeyDown={onKeyDownAutoConnectButton}
+                        tabIndex={0}
                     >
                         <label
                             className='key'
@@ -184,10 +187,11 @@ export default function Options() {
                 </div>
                 <div className='settings' role='menu'>
                     <div
-                        role='presentation'
+                        role='button'
                         className={'item'}
                         onClick={onClickRestore}
                         onKeyDown={onKeyDownRestore}
+                        tabIndex={0}
                     >
                         <label
                             className='key'

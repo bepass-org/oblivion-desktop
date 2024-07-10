@@ -135,10 +135,11 @@ export default function Scanner() {
                 </div>
                 <div className='settings'>
                     <div
-                        role='presentation'
+                        role='button'
                         className={classNames('item')}
                         onClick={onOpenEndpointModal}
                         onKeyDown={onKeyDownEndpoint}
+                        tabIndex={0}
                     >
                         <label className='key' htmlFor='endpoint'>
                             {appLang?.settings?.endpoint}
@@ -164,10 +165,11 @@ export default function Scanner() {
                 </div>
                 <div className='settings'>
                     <div
-                        role='presentation'
+                        role='button'
                         className={'item'}
                         onClick={onClickReservedButton}
                         onKeyDown={onKeyDownReservedButton}
+                        tabIndex={0}
                     >
                         <label className='key' htmlFor='reserved'>
                             {appLang?.settings?.scanner_reserved}
