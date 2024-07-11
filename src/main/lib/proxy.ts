@@ -88,6 +88,8 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
     const proxySettings = {
         mode: 'manual',
         socks: `socks5://${ip}:${port}`,
+        https: `https://${ip}:${port}`,
+        http: `http://${ip}:${port}`,
         host: ip,
         port: port
     };
@@ -98,6 +100,14 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
         await execPromise(`gsettings set org.gnome.system.proxy.socks host ${proxySettings.host}`);
 
         await execPromise(`gsettings set org.gnome.system.proxy.socks port ${proxySettings.port}`);
+
+        await execPromise(`gsettings set org.gnome.system.proxy.http host ${proxySettings.host}`);
+
+        await execPromise(`gsettings set org.gnome.system.proxy.http port ${proxySettings.port}`);
+
+        await execPromise(`gsettings set org.gnome.system.proxy.https host ${proxySettings.port}`);
+
+        await execPromise(`gsettings set org.gnome.system.proxy.https port ${proxySettings.port}`);
 
         // https://wiki.archlinux.org/title/Proxy_server#Proxy_settings_on_GNOME3
         const normalizeRoutingRules = (rules: any) => {
