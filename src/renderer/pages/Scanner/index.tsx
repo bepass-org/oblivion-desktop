@@ -38,11 +38,7 @@ export default function Scanner() {
 
     if (loading)
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop />
-                </div>
-            </div>
+            <div className='settings' />
         );
 
     return (

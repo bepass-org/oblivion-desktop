@@ -56,11 +56,7 @@ export default function Options() {
         typeof routingRules === 'undefined'
     )
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop={true} />
-                </div>
-            </div>
+            <div className='settings' />
         );
 
     return (

@@ -32,11 +32,7 @@ export default function Settings() {
 
     if (loading)
         return (
-            <div className='settings'>
-                <div className='lottie'>
-                    <Lottie animationData={LottieFile} loop={true} />
-                </div>
-            </div>
+            <div className='settings' />
         );
 
     return (
