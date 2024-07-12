@@ -88,7 +88,9 @@ const chinese: Language = {
         routing_rules: '黑名单',
         routing_rules_desc: '阻止 Warp 的流量通过',
         routing_rules_disabled: '已禁用',
-        routing_rules_items: '项目'
+        routing_rules_items: '项目',
+        profile: '个人资料',
+        profile_desc: '您保存的端点'
     },
     tabs: {
         home: '连接',
@@ -110,6 +112,9 @@ const chinese: Language = {
         endpoint_default: '默认',
         endpoint_suggested: '建议',
         endpoint_latest: '最新的',
+        profile_title: '个人资料',
+        profile_name: '标题',
+        profile_endpoint: '端点',
         confirm: '确认',
         update: '更新',
         cancel: '取消'

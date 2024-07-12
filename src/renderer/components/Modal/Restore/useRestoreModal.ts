@@ -83,6 +83,8 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('shareVPN', defaultSettings.shareVPN);
         await settings.set('routingRules', defaultSettings.routingRules);
         await settings.set('reserved', defaultSettings.reserved);
+        await settings.set('scanResult', defaultSettings.scanResult);
+        await settings.set('profiles', defaultSettings.profiles);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);

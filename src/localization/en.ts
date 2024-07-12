@@ -88,7 +88,9 @@ const english: Language = {
         routing_rules: 'Blacklist',
         routing_rules_desc: 'Prevent traffic from going through warp',
         routing_rules_disabled: 'Disabled',
-        routing_rules_items: 'Items'
+        routing_rules_items: 'Items',
+        profile: 'Profile',
+        profile_desc: 'Endpoints saved by you'
     },
     tabs: {
         home: 'Connect',
@@ -111,6 +113,9 @@ const english: Language = {
         endpoint_default: 'Default',
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',
+        profile_title: 'Profile',
+        profile_name: 'Title',
+        profile_endpoint: 'Endpoint',
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'

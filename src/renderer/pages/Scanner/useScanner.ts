@@ -7,16 +7,20 @@ import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
+import { toPersianNumber } from '../../lib/toPersianNumber';
 
 const useScanner = () => {
     const { isConnected, isLoading } = useStore();
     const appLang = useTranslate();
 
     const [endpoint, setEndpoint] = useState<string>();
+    const [profiles, setProfiles] = useState<any>([]);
     const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
+    const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
     const [ipType, setIpType] = useState<undefined | string>();
     const [rtt, setRtt] = useState<undefined | string>();
     const [reserved, setReserved] = useState<undefined | boolean>();
+    const [lang, setLang] = useState<string>('');
 
     const navigate = useNavigate();
 
@@ -34,6 +38,16 @@ const useScanner = () => {
         });
         settings.get('reserved').then((value) => {
             setReserved(typeof value === 'undefined' ? defaultSettings.reserved : value);
+        });
+        settings.get('profiles').then((value) => {
+            setProfiles(
+                typeof value === 'undefined'
+                    ? JSON.parse(defaultSettings.profiles)
+                    : JSON.parse(value)
+            );
+        });
+        settings.get('lang').then((value) => {
+            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -93,8 +107,44 @@ const useScanner = () => {
         [onClickReservedButton]
     );
 
+    const onCloseProfileModal = useCallback(() => {
+        setShowProfileModal(false);
+    }, []);
+
+    const onOpenProfileModal = useCallback(() => setShowProfileModal(true), []);
+
+    const onKeyDownProfile = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onOpenProfileModal();
+            }
+        },
+        [onOpenProfileModal]
+    );
+
+    const countProfiles = useCallback(
+        (value: string) => {
+            if (value === '') {
+                return appLang?.settings?.routing_rules_disabled;
+            }
+            return profiles.length > 0
+                ? (lang === 'fa' ? toPersianNumber(profiles.length) : profiles.length) +
+                      ' ' +
+                      (appLang?.settings?.routing_rules_items || '')
+                : appLang?.settings?.routing_rules_disabled;
+        },
+        [
+            appLang?.settings?.routing_rules_disabled,
+            appLang?.settings?.routing_rules_items,
+            lang,
+            profiles
+        ]
+    );
+
     const loading =
         typeof endpoint === 'undefined' ||
+        typeof profiles === 'undefined' ||
         typeof ipType === 'undefined' ||
         typeof rtt === 'undefined' ||
         typeof reserved === 'undefined';
@@ -114,7 +164,14 @@ const useScanner = () => {
         onChangeRTT,
         onClickReservedButton,
         onKeyDownReservedButton,
-        setEndpoint
+        setEndpoint,
+        profiles,
+        setProfiles,
+        showProfileModal,
+        onOpenProfileModal,
+        onCloseProfileModal,
+        onKeyDownProfile,
+        countProfiles
     };
 };
 export default useScanner;

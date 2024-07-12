@@ -21,7 +21,8 @@ export type settingsKeys =
     | 'openAtLogin'
     | 'autoConnect'
     | 'reserved'
-    | 'scanResult';
+    | 'scanResult'
+    | 'profiles';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -49,7 +50,8 @@ export const defaultSettings = {
     openAtLogin: false,
     autoConnect: false,
     reserved: true,
-    scanResult: ''
+    scanResult: '',
+    profiles: '[]'
 };
 
 export const countries: { value: string; label: string }[] = [

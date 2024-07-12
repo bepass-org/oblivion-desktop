@@ -17,6 +17,7 @@ type EndpointModalProps = {
     defValue: string;
     endpoint: string;
     setEndpoint: (value: string) => void;
+    profiles: any;
 };
 const useEndpointModal = (props: EndpointModalProps) => {
     const { endpoint, isOpen, onClose, setEndpoint, defValue } = props;
@@ -64,9 +65,16 @@ const useEndpointModal = (props: EndpointModalProps) => {
                 '188.114.97.47:4233',
                 '162.159.195.149:5279',
                 '162.159.192.173:7559',
-                '188.114.96.78:878'
+                '188.114.96.78:878',
+                '162.159.192.106:890'
             ],
-            ipv6: ['[2606:4700:d1::c993:5abb:1a22:99d9]:1002']
+            ipv6: [
+                '[2606:4700:d1::c993:5abb:1a22:99d9]:1002',
+                '[2606:4700:d0::52be:e711:53f6:a475]:4198',
+                '[2606:4700:d0::122b:2a97:9042:aa01]:4198',
+                '[2606:4700:d0::679e:04c8:97ab:cdd7]:1014',
+                '[2606:4700:d1::8765:7151:9816:d51f]:1014'
+            ]
         }),
         []
     );

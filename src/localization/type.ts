@@ -89,6 +89,8 @@ export interface Settings {
     routing_rules_desc: string;
     routing_rules_disabled: string;
     routing_rules_items: string;
+    profile: string;
+    profile_desc: string;
 }
 
 export interface Tabs {
@@ -111,6 +113,9 @@ export interface Modal {
     endpoint_default: string;
     endpoint_suggested: string;
     endpoint_latest: string;
+    profile_title: string;
+    profile_name: string;
+    profile_endpoint: string;
     confirm: string;
     update: string;
     cancel: string;

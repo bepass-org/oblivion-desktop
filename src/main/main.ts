@@ -19,7 +19,7 @@ import {
     Tray,
     nativeImage,
     IpcMainEvent,
-    globalShortcut,
+    globalShortcut
     //dialog
 } from 'electron';
 import path from 'path';

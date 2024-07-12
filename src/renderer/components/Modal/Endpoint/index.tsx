@@ -10,6 +10,7 @@ interface EndpointModalProps {
     onClose: () => void;
     defValue?: string;
     endpoint: string;
+    profiles: any;
     setEndpoint: (value: string) => void;
 }
 
@@ -19,7 +20,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
     onClose,
     defValue = defaultSettings.endpoint,
     endpoint,
-    setEndpoint
+    setEndpoint,
+    profiles
 }) => {
     const {
         appLang,
@@ -43,7 +45,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
         onClose,
         defValue,
         endpoint,
-        setEndpoint
+        setEndpoint,
+        profiles
     });
 
     if (!isOpen) return <></>;
@@ -97,6 +100,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                             ? 'splitter'
                                             : ''
                                     )}
+                                    data-list={profiles.length > 0 ? 3 : 2}
                                 >
                                     <div className='split'>
                                         {[...suggestion.ipv4.keys()].map((key) => (
@@ -144,6 +148,33 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                             </>
                                         ))}
                                     </div>
+                                    {profiles.length > 0 && (
+                                        <>
+                                            <div className='split'>
+                                                {profiles.map((item: any) => (
+                                                    <>
+                                                        <div
+                                                            className={classNames(
+                                                                'item',
+                                                                item.endpoint === endpointInput
+                                                                    ? 'disabled'
+                                                                    : ''
+                                                            )}
+                                                            role='presentation'
+                                                            onClick={() => {
+                                                                setEndpointSuggestion(
+                                                                    item.endpoint
+                                                                );
+                                                                //setShowSuggestion(false);
+                                                            }}
+                                                        >
+                                                            {item.name}
+                                                        </div>
+                                                    </>
+                                                ))}
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             <div

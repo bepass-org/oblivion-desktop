@@ -89,7 +89,9 @@ const russian: Language = {
         routing_rules: 'Черный список',
         routing_rules_desc: 'Предотвращать прохождение трафика через искажение',
         routing_rules_disabled: 'Отключено',
-        routing_rules_items: 'Предметы'
+        routing_rules_items: 'Предметы',
+        profile: 'Профиль',
+        profile_desc: 'Сохраненные вами конечные точки'
     },
     tabs: {
         home: 'Связь',
@@ -112,6 +114,9 @@ const russian: Language = {
         endpoint_default: 'По умолчанию',
         endpoint_suggested: 'предложено',
         endpoint_latest: 'Последний',
+        profile_title: 'Профиль',
+        profile_name: 'Название',
+        profile_endpoint: 'Конечная точка',
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'

@@ -89,7 +89,9 @@ const persian: Language = {
         routing_rules: 'لیست سیاه',
         routing_rules_desc: 'جلوگیری از عبور ترافیک از وارپ',
         routing_rules_disabled: 'غیرفعال',
-        routing_rules_items: 'مورد'
+        routing_rules_items: 'مورد',
+        profile: 'پروفایل',
+        profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما'
     },
     tabs: {
         home: 'اتصال',
@@ -112,6 +114,9 @@ const persian: Language = {
         endpoint_default: 'پیشفرض',
         endpoint_suggested: 'پیشنهادی',
         endpoint_latest: 'اخیر',
+        profile_title: 'پروفایل',
+        profile_name: 'عنوان',
+        profile_endpoint: 'اندپوینت',
         confirm: 'تایید می\u200Cکنم',
         update: 'بروزرسانی',
         cancel: 'انصراف'

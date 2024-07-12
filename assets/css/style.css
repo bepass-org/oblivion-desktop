@@ -941,6 +941,11 @@ html[data-bs-theme="dark"] .shimmer {
     font-weight: 200;
 }
 
+.settings .item[role="button"],
+.settings .item[role="button"].disabled {
+    cursor: default;
+}
+
 .moreSettings {
     float: right;
     width: 100%;
@@ -1291,6 +1296,49 @@ html[data-bs-theme="dark"] .shimmer {
     margin: 0;
 }
 
+.dialog .dialogBox .input-group {
+    float: left;
+    width: 100%;
+}
+.dialog .dialogBox .input-group input {
+    float: left;
+}
+.dialog .dialogBox .input-group input:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+    width: 30%;
+    border-right-width: 1px;
+}
+.dialog .dialogBox .input-group input:nth-child(2) {
+    border-radius: 0;
+    width: 55%;
+    border-left-width: 1px;
+    border-right-width: 1px;
+}
+.dialog .dialogBox .input-group .input-group-btn {
+    float: right;
+    width: 15%;
+}
+.dialog .dialogBox .input-group .input-group-btn button {
+    float: right;
+    width: 100%;
+    border-radius: 0 5px 5px 0;
+    margin: 0;
+    height: 54px;
+    background: #619fd3;
+    outline: none;
+    color: #fff;
+    font-size: 18px;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .input-group .input-group-btn button {
+    background: #316491;
+}
+.dialog .dialogBox .input-group .input-group-btn button[disabled] {
+    background: #cbcbcb;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .input-group .input-group-btn button[disabled] {
+    background: #5a6269;
+}
+
 [data-bs-theme="dark"] .dialog .dialogBox input,
 [data-bs-theme="dark"] .dialog .dialogBox textarea {
     background: #0A0E24;
@@ -1351,8 +1399,11 @@ html[data-bs-theme="dark"] .shimmer {
 }
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter {
     float: left;
-    width: 170px;
+    width: 162px;
     overflow: hidden;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter[data-list="3"] {
+    width: 240px;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split {
     float: left;
@@ -1390,6 +1441,11 @@ html[data-bs-theme="dark"] .shimmer {
 .dialog .dialogBox .labels .label .dropDownInLabel .item:hover {
     background: #f8f8f8;
     color: #1c1c1c;
+}
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter .split:nth-child(3) .item {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel .item.disabled {
     opacity: 0.3;
@@ -1430,6 +1486,47 @@ html[data-bs-theme="dark"] .shimmer {
 [dir="ltr"] .dialog .dialogBox .labels .label i {
     float: left;
     margin: -1px 3px 0 -2px;
+}
+
+.dialog .dialogBox .tagList {
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+.dialog .dialogBox .tagList .tagItem {
+    float: left;
+    border: 1px solid #d5d5d5;
+    padding: 4px 10px 2px 7px;
+    border-radius: 25px;
+    line-height: 18px;
+    cursor: default;
+    margin: 0 7px 7px 0;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .tagList .tagItem {
+    border-color: #337ab7;
+}
+.dialog .dialogBox .tagList .tagItem i {
+    float: left;
+    font-size: 16px;
+    margin: 0 5px 0 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: #adadad;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .tagList .tagItem i {
+    color: #7a7a7a;
+}
+.dialog .dialogBox .tagList .tagItem:hover i {
+    color: tomato;
+}
+.dialog .dialogBox .tagList .tagItem span {
+    float: left;
+    font-size: 13px;
+    font-weight: 300;
+    text-transform: capitalize;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .tagList .tagItem span {
+    font-weight: 200;
 }
 
 .dialog .dialogBox .btn {

@@ -90,7 +90,9 @@ const deutsch: Language = {
         routing_rules: 'Schwarze Liste',
         routing_rules_desc: 'Verhindern Sie, dass Datenverkehr durch Warp geleitet wird',
         routing_rules_disabled: 'Deaktiviert',
-        routing_rules_items: 'Elemente'
+        routing_rules_items: 'Elemente',
+        profile: 'Profil',
+        profile_desc: 'Von Ihnen gespeicherte Endpunkte'
     },
     tabs: {
         home: 'Verbinden',
@@ -113,6 +115,9 @@ const deutsch: Language = {
         endpoint_default: 'Standard',
         endpoint_suggested: 'Empfohlen',
         endpoint_latest: 'Neueste',
+        profile_title: 'Profil',
+        profile_name: 'Titel',
+        profile_endpoint: 'Endpunkt',
         confirm: 'Ich bestätige',
         update: 'Update',
         cancel: 'Abbrechen'
