@@ -81,11 +81,11 @@ const useLanding = () => {
         if (!isDev()) {
             try {
                 const response = await fetch(
-                    'https://api.github.com/repos/bepass-org/oblivion-desktop/releases'
+                    'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
                 );
                 if (response.ok) {
                     const data = await response.json();
-                    const latestVersion = String(data[0]?.name);
+                    const latestVersion = String(data[0]?.tag_name);
                     const appVersion = String(packageJsonData?.version);
                     if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
                         hasNewUpdate = true;
