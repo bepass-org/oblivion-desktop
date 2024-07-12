@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import { defaultSettings } from '../../../defaultSettings';
-import LottieFile from '../../../../assets/json/1713988096625.json';
+// import Lottie from 'lottie-react';
+// import LottieFile from '../../../../assets/json/1713988096625.json';
 import EndpointModal from '../../components/Modal/Endpoint';
 import ProfileModal from '../../components/Modal/Profile';
 import Tabs from '../../components/Tabs';

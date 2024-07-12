@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import Tabs from '../../components/Tabs';
 import LicenseModal from '../../components/Modal/License';
 import { countries } from '../../../defaultSettings';
-import LottieFile from '../../../../assets/json/1713988096625.json';
+// import Lottie from 'lottie-react';
+// import LottieFile from '../../../../assets/json/1713988096625.json';
 import useSettings from './useSettings';
 import Dropdown from '../../components/Dropdown';
 
