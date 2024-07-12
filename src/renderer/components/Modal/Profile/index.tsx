@@ -53,7 +53,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                             minLength={3}
                             maxLength={10}
                             value={profileName}
-                            disabled={profilesInput.length > 6}
+                            disabled={profilesInput?.length > 6}
                             onChange={(e) => {
                                 setProfileName(e.target.value);
                             }}
@@ -63,7 +63,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                             className='form-control'
                             placeholder={appLang?.modal?.profile_endpoint}
                             value={profileEndpoint}
-                            disabled={profilesInput.length > 6}
+                            disabled={profilesInput?.length > 6}
                             onChange={(e) => {
                                 setProfileEndpoint(e.target.value);
                             }}
@@ -71,7 +71,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                         <div className='input-group-btn'>
                             <button
                                 className='btn'
-                                disabled={checkValidEndpoint(profileEndpoint) === '' || profilesInput.length > 6}
+                                disabled={checkValidEndpoint(profileEndpoint) === '' || profilesInput?.length > 6}
                                 onClick={() => {
                                     handleAddProfile();
                                 }}
@@ -80,12 +80,13 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                             </button>
                         </div>
                     </div>
-                    {profilesInput.length > 0 && (
+                    {typeof profilesInput !== 'string' && profilesInput.length > 0 && (
                         <>
                             <div className='tagList'>
                                 {profilesInput.map((item: any, index: number) => (
                                     <div className='tagItem'>
                                         <i
+                                            role='presentation'
                                             className='material-icons'
                                             onClick={() => {
                                                 handleRemoveProfile(index);
