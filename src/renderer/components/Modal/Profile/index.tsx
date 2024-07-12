@@ -53,6 +53,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                             minLength={3}
                             maxLength={10}
                             value={profileName}
+                            disabled={profilesInput.length > 6}
                             onChange={(e) => {
                                 setProfileName(e.target.value);
                             }}
@@ -62,6 +63,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                             className='form-control'
                             placeholder={appLang?.modal?.profile_endpoint}
                             value={profileEndpoint}
+                            disabled={profilesInput.length > 6}
                             onChange={(e) => {
                                 setProfileEndpoint(e.target.value);
                             }}
@@ -69,7 +71,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                         <div className='input-group-btn'>
                             <button
                                 className='btn'
-                                disabled={checkValidEndpoint(profileEndpoint) === ''}
+                                disabled={checkValidEndpoint(profileEndpoint) === '' || profilesInput.length > 6}
                                 onClick={() => {
                                     handleAddProfile();
                                 }}
