@@ -55,9 +55,7 @@ export default function Options() {
         typeof dns === 'undefined' ||
         typeof routingRules === 'undefined'
     )
-        return (
-            <div className='settings' />
-        );
+        return <div className='settings' />;
 
     return (
         <>

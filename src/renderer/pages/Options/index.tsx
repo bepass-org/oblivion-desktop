@@ -40,9 +40,7 @@ export default function Options() {
         typeof openAtLogin === 'undefined' ||
         typeof autoConnect === 'undefined'
     )
-        return (
-            <div className='settings' />
-        );
+        return <div className='settings' />;
 
     return (
         <>

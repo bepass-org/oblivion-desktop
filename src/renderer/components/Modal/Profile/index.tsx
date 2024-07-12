@@ -71,7 +71,10 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                         <div className='input-group-btn'>
                             <button
                                 className='btn'
-                                disabled={checkValidEndpoint(profileEndpoint) === '' || profilesInput?.length > 6}
+                                disabled={
+                                    checkValidEndpoint(profileEndpoint) === '' ||
+                                    profilesInput?.length > 6
+                                }
                                 onClick={() => {
                                     handleAddProfile();
                                 }}

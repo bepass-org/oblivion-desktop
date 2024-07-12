@@ -30,10 +30,7 @@ export default function Settings() {
         loading
     } = useSettings();
 
-    if (loading)
-        return (
-            <div className='settings' />
-        );
+    if (loading) return <div className='settings' />;
 
     return (
         <>

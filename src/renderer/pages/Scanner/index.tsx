@@ -36,10 +36,7 @@ export default function Scanner() {
         countProfiles
     } = useScanner();
 
-    if (loading)
-        return (
-            <div className='settings' />
-        );
+    if (loading) return <div className='settings' />;
 
     return (
         <>
