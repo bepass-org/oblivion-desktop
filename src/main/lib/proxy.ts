@@ -95,8 +95,16 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
     try {
         await execPromise(`gsettings set org.gnome.system.proxy mode '${proxySettings.mode}'`);
 
-        await execPromise(`gsettings set org.gnome.system.proxy.socks host ${proxySettings.host}`);
+        // reset other proxies in case user set it
+        await execPromise(`gsettings set org.gnome.system.proxy.http host ""`);
+        await execPromise(`gsettings set org.gnome.system.proxy.http port 0`);
+        await execPromise(`gsettings set org.gnome.system.proxy.https host ""`);
+        await execPromise(`gsettings set org.gnome.system.proxy.https port 0`);
+        await execPromise(`gsettings set org.gnome.system.proxy.ftp host ""`);
+        await execPromise(`gsettings set org.gnome.system.proxy.ftp port 0`);
 
+        // set socks proxy
+        await execPromise(`gsettings set org.gnome.system.proxy.socks host ${proxySettings.host}`);
         await execPromise(`gsettings set org.gnome.system.proxy.socks port ${proxySettings.port}`);
 
         // https://wiki.archlinux.org/title/Proxy_server#Proxy_settings_on_GNOME3
@@ -146,6 +154,19 @@ const enableKDEProxy = async (
         await execPromise(
             `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key ProxyType 1`
         );
+
+        // reset other proxies in case user set it
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key httpProxy '':0`
+        );
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key httpsProxy '':0`
+        );
+        await execPromise(
+            `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key ftpProxy '':0`
+        );
+
+        // set socks proxy
         await execPromise(
             `kwriteconfig${v} --file kioslaverc --group "Proxy Settings" --key socksProxy "${host}:${port}"`
         );
