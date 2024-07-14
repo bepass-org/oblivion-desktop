@@ -151,7 +151,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     {profiles?.length > 0 && (
                                         <>
                                             <div className='split'>
-                                                {profiles.map((item: any, key:number) => (
+                                                {profiles.map((item: any, key: number) => (
                                                     <>
                                                         <div
                                                             key={Number(key)}

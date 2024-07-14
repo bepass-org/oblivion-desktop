@@ -63,11 +63,10 @@ const useProfileModal = (props: ProfileModalProps) => {
         setTimeout(onClose, 300);
     }, [onClose]);
 
-    const onSaveModal = useCallback( () => {
-        if ( profileName !== '' && checkValidEndpoint(profileEndpoint) ) {
+    const onSaveModal = useCallback(() => {
+        if (profileName !== '' && checkValidEndpoint(profileEndpoint)) {
             handleAddProfile();
-        }
-        else {
+        } else {
             settings.set('profiles', JSON.stringify(profilesInput));
             setProfilesInput(profilesInput);
             setProfiles(profilesInput);
