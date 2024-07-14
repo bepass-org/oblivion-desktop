@@ -148,12 +148,13 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                             </>
                                         ))}
                                     </div>
-                                    {profiles.length > 0 && (
+                                    {profiles?.length > 0 && (
                                         <>
                                             <div className='split'>
-                                                {profiles.map((item: any) => (
+                                                {profiles.map((item: any, key:number) => (
                                                     <>
                                                         <div
+                                                            key={Number(key)}
                                                             className={classNames(
                                                                 'item',
                                                                 item.endpoint === endpointInput
