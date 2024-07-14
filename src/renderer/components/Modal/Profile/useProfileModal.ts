@@ -28,7 +28,7 @@ const useProfileModal = (props: ProfileModalProps) => {
     };
 
     const handleAddProfile = () => {
-        if (checkValidEndpoint(profileEndpoint) !== '') {
+        if (profileName !== '' && checkValidEndpoint(profileEndpoint) !== '') {
             const newProfile = { name: profileName, endpoint: profileEndpoint };
             const isDuplicate = profilesInput.some(
                 (item: any) => item?.name === profileName && item?.endpoint === profileEndpoint
@@ -63,20 +63,29 @@ const useProfileModal = (props: ProfileModalProps) => {
         setTimeout(onClose, 300);
     }, [onClose]);
 
-    const onSaveModal = useCallback(() => {
-        settings.set('profiles', JSON.stringify(profilesInput));
-        setProfilesInput(profilesInput);
-        setProfiles(profilesInput);
-        setProfileName('');
-        setProfileEndpoint('');
-        handleOnClose();
+    const onSaveModal = useCallback( () => {
+        if ( profileName !== '' && checkValidEndpoint(profileEndpoint) ) {
+            handleAddProfile();
+        }
+        else {
+            settings.set('profiles', JSON.stringify(profilesInput));
+            setProfilesInput(profilesInput);
+            setProfiles(profilesInput);
+            setProfileName('');
+            setProfileEndpoint('');
+            handleOnClose();
+        }
     }, [
         profilesInput,
         setProfilesInput,
         setProfiles,
         handleOnClose,
-        setProfileName,
-        setProfileEndpoint
+        //setProfileName,
+        //setProfileEndpoint,
+        handleAddProfile,
+        checkValidEndpoint,
+        profileName,
+        profileEndpoint
     ]);
 
     const onUpdateKeyDown = useCallback(
