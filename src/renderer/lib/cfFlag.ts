@@ -1,5 +1,5 @@
 import xx from '../../../assets/img/flags/xx.svg';
-import ir from '../../../assets/img/flags/ir.svg';
+import ir from '../../../assets/img/flags/iran.svg';
 import at from '../../../assets/img/flags/at.svg';
 import be from '../../../assets/img/flags/be.svg';
 import bg from '../../../assets/img/flags/bg.svg';
