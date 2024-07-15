@@ -103,7 +103,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     data-list={profiles.length > 0 ? 3 : 2}
                                 >
                                     <div className='split'>
-                                        {[...suggestion.ipv4.keys()].slice(0, 15).map((key) => (
+                                        {[...suggestion.ipv4.keys()].sort((a, b) => b - a).slice(0, 15).map((key, index) => (
                                             <>
                                                 <div
                                                     className={classNames(
@@ -119,14 +119,14 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                         //setShowSuggestion(false);
                                                     }}
                                                 >
-                                                    #{key + 1}
+                                                    #{index + 1}
                                                     <small> IPv4</small>
                                                 </div>
                                             </>
                                         ))}
                                     </div>
                                     <div className='split'>
-                                        {[...suggestion.ipv6.keys()].slice(0, 15).map((key) => (
+                                        {[...suggestion.ipv6.keys()].sort((a, b) => b - a).slice(0, 15).map((key, index) => (
                                             <>
                                                 <div
                                                     className={classNames(
@@ -142,7 +142,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                         //setShowSuggestion(false);
                                                     }}
                                                 >
-                                                    #{key + 1}
+                                                    #{index + 1}
                                                     <small> IPv6</small>
                                                 </div>
                                             </>
