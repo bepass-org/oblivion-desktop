@@ -185,14 +185,14 @@ if (!gotTheLock) {
             config.webPreferences.devToolsKeyCombination = true;
         }
 
-        const startAtLogin = async () => {
+        /*const startAtLogin = async () => {
             if (process.env.NODE_ENV !== 'development') {
                 const checkOpenAtLogin = await settings.get('openAtLogin');
                 app.setLoginItemSettings({
                     openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
                 });
             }
-        };
+        };*/
 
         function createMainWindow() {
             if (!mainWindow) {
