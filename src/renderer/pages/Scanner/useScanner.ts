@@ -124,12 +124,9 @@ const useScanner = () => {
     );
 
     const countProfiles = useCallback(
-        (value: string) => {
-            if (value === '') {
-                return appLang?.settings?.routing_rules_disabled;
-            }
-            return profiles.length > 0
-                ? (lang === 'fa' ? toPersianNumber(profiles.length) : profiles.length) +
+        (value: number) => {
+            return value > 0
+                ? (lang === 'fa' ? toPersianNumber(value) : value) +
                       ' ' +
                       (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
@@ -137,8 +134,7 @@ const useScanner = () => {
         [
             appLang?.settings?.routing_rules_disabled,
             appLang?.settings?.routing_rules_items,
-            lang,
-            profiles
+            lang
         ]
     );
 
