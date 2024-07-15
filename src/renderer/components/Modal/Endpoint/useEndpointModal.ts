@@ -1,11 +1,4 @@
-import {
-    ChangeEvent,
-    KeyboardEvent,
-    useCallback,
-    useEffect,
-    useRef,
-    useState
-} from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
@@ -27,7 +20,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showModal, setShowModal] = useState<boolean>(isOpen);
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
-    
+
     const defEndpoint = {
         ipv4: [
             //'188.114.98.224:2408',
@@ -35,12 +28,12 @@ const useEndpointModal = (props: EndpointModalProps) => {
             '162.159.192.36:908',
             '162.159.195.55:908',
             '188.114.97.159:942',
-            '188.114.97.47:4233',
+            '188.114.97.47:4233'
         ],
         ipv6: [
             '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
             '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
-            '[2606:4700:d0:0:799c:392:47ed:bf4e]:955',
+            '[2606:4700:d0:0:799c:392:47ed:bf4e]:955'
         ]
     };
     const [suggestion, setSuggestion] = useState<any>(defEndpoint);
