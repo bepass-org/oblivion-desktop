@@ -3,7 +3,6 @@ import {
     KeyboardEvent,
     useCallback,
     useEffect,
-    useMemo,
     useRef,
     useState
 } from 'react';
@@ -28,11 +27,50 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showModal, setShowModal] = useState<boolean>(isOpen);
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
+    
+    const defEndpoint = {
+        ipv4: [
+            //'188.114.98.224:2408',
+            '162.159.192.175:891',
+            '162.159.192.36:908',
+            '162.159.195.55:908',
+            '188.114.97.159:942',
+            '188.114.97.47:4233',
+        ],
+        ipv6: [
+            '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
+            '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
+            '[2606:4700:d0:0:799c:392:47ed:bf4e]:955',
+        ]
+    };
+    const [suggestion, setSuggestion] = useState<any>(defEndpoint);
+
+    const fetchEndpoints = async () => {
+        try {
+            const response = await fetch(
+                'https://raw.githubusercontent.com/ircfspace/endpoint/main/ip.json'
+            );
+            if (response.ok) {
+                const data = await response.json();
+                if (data?.ipv4 && data?.ipv6) {
+                    setSuggestion(data);
+                }
+            } else {
+                setSuggestion(defEndpoint);
+                console.error('Failed to fetch Endpoints:', response.statusText);
+            }
+        } catch (error) {
+            setSuggestion(defEndpoint);
+            console.error('Failed to fetch Endpoints:', error);
+        }
+    };
 
     useEffect(() => {
         settings.get('scanResult').then((value) => {
             setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
         });
+
+        fetchEndpoints();
 
         const handleClickOutside = (event: MouseEvent) => {
             if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
@@ -53,32 +91,6 @@ const useEndpointModal = (props: EndpointModalProps) => {
         setShowModal(false);
         setTimeout(onClose, 300);
     }, [onClose]);
-
-    const suggestion = useMemo(
-        () => ({
-            ipv4: [
-                '188.114.98.224:2408',
-                '162.159.192.175:891',
-                '162.159.192.36:908',
-                '162.159.195.55:908',
-                '188.114.97.159:942',
-                '188.114.97.47:4233',
-                '162.159.195.149:5279',
-                '162.159.192.173:7559',
-                '188.114.96.78:878',
-                '162.159.192.106:890',
-                '188.114.98.138:7103'
-            ],
-            ipv6: [
-                '[2606:4700:d1::c993:5abb:1a22:99d9]:1002',
-                '[2606:4700:d0::52be:e711:53f6:a475]:4198',
-                '[2606:4700:d0::122b:2a97:9042:aa01]:4198',
-                '[2606:4700:d0::679e:04c8:97ab:cdd7]:1014',
-                '[2606:4700:d1::8765:7151:9816:d51f]:1014'
-            ]
-        }),
-        []
-    );
 
     const onSaveModal = useCallback(() => {
         const endpointInputModified = endpointInput.replace(/^https?:\/\//, '').replace(/\/$/, '');
