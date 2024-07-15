@@ -142,7 +142,8 @@ const persian: Language = {
         error_configuration_not_supported:
             'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
         error_configuring_proxy: (value) => `خطای پیکربندی پروکسی برای ${value}!`,
-        error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`
+        error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`,
+        error_connection_failed: 'اتصال به 1.1.1.1 امکان‌پذیر نبود.'
     },
     about: {
         title: 'درباره برنامه',

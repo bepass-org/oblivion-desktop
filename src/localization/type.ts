@@ -140,6 +140,7 @@ export interface Log {
     error_configuration_not_supported: string;
     error_configuring_proxy: (value: string) => string;
     error_wp_not_found: string;
+    error_connection_failed: string;
 }
 
 export interface About {

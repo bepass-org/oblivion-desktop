@@ -142,6 +142,9 @@ export const wpErrorTranslation: any = {
     },
     'context deadline exceeded': () => {
         return appLang.log.error_deadline_exceeded;
+    },
+    'connection test failed': () => {
+        return appLang.log.error_connection_failed;
     }
 };
 
