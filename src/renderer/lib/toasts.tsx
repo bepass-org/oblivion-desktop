@@ -1,5 +1,5 @@
 import toast from 'react-hot-toast';
-import { getTranslate } from '../../localization';
+//import { getTranslate } from '../../localization';
 
 const defaultToastStyle = {
     fontSize: '13px',
