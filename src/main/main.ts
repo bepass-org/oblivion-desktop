@@ -160,6 +160,7 @@ if (!gotTheLock) {
             frame: true,
             resizable: false,
             fullscreenable: false,
+            //minimizable: process.platform !== 'linux',
             icon: getAssetPath('oblivion.png'),
             webPreferences: {
                 nativeWindowOpen: false,
