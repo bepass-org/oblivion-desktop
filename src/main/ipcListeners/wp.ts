@@ -7,7 +7,7 @@ import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import { doesDirectoryExist, isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -52,6 +52,12 @@ ipcMain.on('wp-start', async (event) => {
     const proxyMode = await settings.get('proxyMode');
     const lang = await settings.get('lang');
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+
+    /*if (! net.isOnline()) {
+        event.reply('guide-toast', appLang.toast.offline);
+        event.reply('wp-end', true);
+        return;
+    }*/
 
     if (!fs.existsSync(wpDirPath)) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);

@@ -37,7 +37,7 @@ const useLanding = () => {
         countryCode: false,
         ip: ''
     });
-    const [online, setOnline] = useState<boolean>(true);
+    const [online, setOnline] = useState<boolean>(navigator?.onLine);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
@@ -56,8 +56,9 @@ const useLanding = () => {
     const navigate = useNavigate();
 
     const onChange = useCallback(() => {
-        if (!online) {
-            checkInternetToast(appLang?.toast?.offline);
+        if (!navigator.onLine) {
+            //checkInternetToast(appLang?.toast?.offline);
+            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
         } else {
             if (isLoading) {
                 ipcRenderer.sendMessage('wp-end');
@@ -75,7 +76,7 @@ const useLanding = () => {
                 setPing(0);
             }
         }
-    }, [online, isLoading, isConnected, setIsLoading, proxyMode, setProxyStatus]);
+    }, [appLang?.toast?.offline, isLoading, isConnected, setIsLoading, setProxyStatus, proxyMode]);
 
     const fetchReleaseVersion = async () => {
         if (!isDev()) {
@@ -166,9 +167,10 @@ const useLanding = () => {
         if (online) {
             toast.remove('ONLINE_STATUS');
         } else {
-            checkInternetToast(appLang?.toast?.offline);
+            //checkInternetToast(appLang?.toast?.offline);
+            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
         }
-    }, [online]);
+    }, [appLang?.toast?.offline, online]);
 
     const ipToast = async () => {
         if (connectedToIrIPOnceDisplayed) {
