@@ -103,7 +103,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     data-list={profiles.length > 0 ? 3 : 2}
                                 >
                                     <div className='split'>
-                                        {[...suggestion.ipv4.keys()].map((key) => (
+                                        {[...suggestion.ipv4.keys()].slice(0, 15).map((key) => (
                                             <>
                                                 <div
                                                     className={classNames(
@@ -126,7 +126,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                         ))}
                                     </div>
                                     <div className='split'>
-                                        {[...suggestion.ipv6.keys()].map((key) => (
+                                        {[...suggestion.ipv6.keys()].slice(0, 15).map((key) => (
                                             <>
                                                 <div
                                                     className={classNames(
