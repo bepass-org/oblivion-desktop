@@ -26,6 +26,7 @@ node_modules
 
 release/app/dist
 release/build
+.github/release_message.md
 .erb/dll
 
 .idea
