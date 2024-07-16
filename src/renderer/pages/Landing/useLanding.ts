@@ -86,7 +86,7 @@ const useLanding = () => {
                 );
                 if (response.ok) {
                     const data = await response.json();
-                    const latestVersion = String(data[0]?.tag_name);
+                    const latestVersion = String(data?.tag_name);
                     const appVersion = String(packageJsonData?.version);
                     if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
                         hasNewUpdate = true;
