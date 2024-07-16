@@ -1588,6 +1588,21 @@ html[data-bs-theme="dark"] .shimmer {
     color: #dadada;
 }
 
+.dialog .dialogBox .updater {
+    float: right;
+    margin: 21px 1px 0 1px;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.5;
+    user-select: none;
+    cursor: pointer;
+}
+[dir="ltr"] .dialog .dialogBox .updater {
+    float: left;
+}
+.dialog .dialogBox .updater:hover {
+    opacity: 0.8;
+}
+
 .customToast {
     float: right;
     width: 100%;

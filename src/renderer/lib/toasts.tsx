@@ -78,11 +78,16 @@ export const settingsHaveChangedToast = ({
     }
 };
 
-/*const appLang = getTranslate('en');
-export const loadingToast = () => {
-    toast.loading(appLang?.toast?.please_wait, {
+export const loadingToast = (msg: string) => {
+    toast.loading(msg, {
         id: 'LOADING',
         duration: Infinity,
         style: defaultToastStyle
     });
-};*/
+};
+
+export const stopLoadingToast = () => {
+    setTimeout(() => {
+        toast.remove('LOADING');
+    }, 1000);
+};

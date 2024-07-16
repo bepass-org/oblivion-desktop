@@ -113,6 +113,7 @@ const english: Language = {
         endpoint_default: 'Default',
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',
+        endpoint_update: 'Receive suggested endpoints',
         profile_title: 'Profile',
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',

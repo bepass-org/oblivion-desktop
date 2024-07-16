@@ -114,6 +114,7 @@ const russian: Language = {
         endpoint_default: 'По умолчанию',
         endpoint_suggested: 'предложено',
         endpoint_latest: 'Последний',
+        endpoint_update: 'Получить предложенные конечные точки',
         profile_title: 'Профиль',
         profile_name: 'Название',
         profile_endpoint: 'Конечная точка',

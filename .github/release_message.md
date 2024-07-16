@@ -3,9 +3,11 @@
 ## نسخه RELEASE_TAG برای ویندوز، لینوکس و مک منتشر شد.
 
 ### برخی‌از تغییرات برنامه:
-- [x] رفع برخی‌از اشکالات جزئی
+
+-   [x] رفع برخی‌از اشکالات جزئی
 
 #### گزارش مشکل یا ارائه پیشنهاد:
+
 https://github.com/bepass-org/oblivion-desktop/issues
 
 </div>
@@ -13,9 +15,11 @@ https://github.com/bepass-org/oblivion-desktop/issues
 ## Version RELEASE_TAG has been released for Windows, Linux & macOs.
 
 ### Some software changes:
-- [x] Fixed some minor bugs
+
+-   [x] Fixed some minor bugs
 
 #### To report issues or provide suggestions:
+
 https://github.com/bepass-org/oblivion-desktop/issues
 
 <hr />

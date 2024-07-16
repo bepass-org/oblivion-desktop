@@ -2,6 +2,7 @@ import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } 
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
+import { loadingToast, stopLoadingToast } from '../../../lib/toasts';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -12,10 +13,10 @@ type EndpointModalProps = {
     profiles: any;
 };
 const useEndpointModal = (props: EndpointModalProps) => {
+    const appLang = useTranslate();
     const { endpoint, isOpen, onClose, setEndpoint, defValue } = props;
-
     const suggestionRef = useRef<HTMLDivElement>(null);
-
+    const updaterRef = useRef<HTMLDivElement>(null);
     const [endpointInput, setEndpointInput] = useState<string>(endpoint);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
@@ -39,6 +40,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [suggestion, setSuggestion] = useState<any>(defEndpoint);
 
     const fetchEndpoints = async () => {
+        loadingToast(appLang?.toast?.please_wait);
         try {
             const response = await fetch(
                 'https://raw.githubusercontent.com/ircfspace/endpoint/main/ip.json'
@@ -47,14 +49,23 @@ const useEndpointModal = (props: EndpointModalProps) => {
                 const data = await response.json();
                 if (data?.ipv4 && data?.ipv6) {
                     setSuggestion(data);
+                    setTimeout(() => {
+                        setShowSuggestion(true);
+                    }, 1000);
                 }
+                stopLoadingToast();
+                updaterRef.current?.classList.add('hidden');
             } else {
                 setSuggestion(defEndpoint);
                 console.error('Failed to fetch Endpoints:', response.statusText);
+                updaterRef.current?.classList.add('hidden');
+                stopLoadingToast();
             }
         } catch (error) {
             setSuggestion(defEndpoint);
             console.error('Failed to fetch Endpoints:', error);
+            updaterRef.current?.classList.add('hidden');
+            stopLoadingToast();
         }
     };
 
@@ -63,7 +74,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
             setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
         });
 
-        fetchEndpoints();
+        //fetchEndpoints();
 
         const handleClickOutside = (event: MouseEvent) => {
             if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
@@ -77,8 +88,6 @@ const useEndpointModal = (props: EndpointModalProps) => {
     }, []);
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
-
-    const appLang = useTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);
@@ -153,7 +162,9 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleCancelButtonKeyDown,
         handleEndpointInputChange,
         handleOnClose,
-        setShowSuggestion
+        setShowSuggestion,
+        fetchEndpoints,
+        updaterRef
     };
 };
 

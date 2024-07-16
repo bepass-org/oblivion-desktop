@@ -35,6 +35,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
         setEndpointDefault,
         setEndpointSuggestion,
         setShowSuggestion,
+        fetchEndpoints,
+        updaterRef,
         showModal,
         scanResult,
         showSuggestion,
@@ -228,6 +230,15 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     >
                         {appLang?.modal?.update}
                     </div>
+                    <i
+                        role='presentation'
+                        ref={updaterRef}
+                        className='material-icons updater'
+                        title={appLang?.modal?.endpoint_update}
+                        onClick={fetchEndpoints}
+                    >
+                        &#xeb5a;
+                    </i>
                 </div>
             </div>
         </div>

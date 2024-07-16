@@ -112,6 +112,7 @@ const chinese: Language = {
         endpoint_default: '默认',
         endpoint_suggested: '建议',
         endpoint_latest: '最新的',
+        endpoint_update: '接收建议的端点',
         profile_title: '个人资料',
         profile_name: '标题',
         profile_endpoint: '端点',
