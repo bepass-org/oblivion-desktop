@@ -95,3 +95,9 @@ jobs:
                       oblivion-desktop-win.exe
                       oblivion-desktop-mac-arm64.zip.blockmap
                       oblivion-desktop-mac-x64.zip.blockmap
+                      latest-linux-arm64.yml
+                      latest-linux.yml
+                      latest-mac.yml
+                      latest.yml
+                      oblivion-desktop-mac-arm64.dmg.blockmap
+                      oblivion-desktop-mac-x64.dmg.blockmap
