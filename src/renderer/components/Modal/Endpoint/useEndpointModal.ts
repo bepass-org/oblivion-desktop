@@ -1,4 +1,12 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import {
+    ChangeEvent,
+    KeyboardEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
@@ -22,22 +30,27 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
 
-    const defEndpoint = {
-        ipv4: [
-            //'188.114.98.224:2408',
-            '162.159.192.175:891',
-            '162.159.192.36:908',
-            '162.159.195.55:908',
-            '188.114.97.159:942',
-            '188.114.97.47:4233'
-        ],
-        ipv6: [
-            '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
-            '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
-            '[2606:4700:d0:0:799c:392:47ed:bf4e]:955'
-        ]
-    };
-    const [suggestion, setSuggestion] = useState<any>(defEndpoint);
+    const initSuggestion = useMemo(() => {
+        const defEndpoint = {
+            ipv4: [
+                //'188.114.98.224:2408',
+                '162.159.192.175:891',
+                '162.159.192.36:908',
+                '162.159.195.55:908',
+                '188.114.97.159:942',
+                '188.114.97.47:4233'
+            ],
+            ipv6: [
+                '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
+                '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
+                '[2606:4700:d0:0:799c:392:47ed:bf4e]:955'
+            ]
+        };
+        const storedSuggestion = localStorage?.getItem('OBLIVION_SUGGESTION');
+        return storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
+    }, []);
+
+    const [suggestion, setSuggestion] = useState<any>(initSuggestion);
 
     const fetchEndpoints = async () => {
         loadingToast(appLang?.toast?.please_wait);
@@ -52,17 +65,16 @@ const useEndpointModal = (props: EndpointModalProps) => {
                     setTimeout(() => {
                         setShowSuggestion(true);
                     }, 1000);
+                    localStorage.setItem('OBLIVION_SUGGESTION', JSON.stringify(data));
                 }
                 stopLoadingToast();
                 updaterRef.current?.classList.add('hidden');
             } else {
-                setSuggestion(defEndpoint);
                 console.error('Failed to fetch Endpoints:', response.statusText);
                 updaterRef.current?.classList.add('hidden');
                 stopLoadingToast();
             }
         } catch (error) {
-            setSuggestion(defEndpoint);
             console.error('Failed to fetch Endpoints:', error);
             updaterRef.current?.classList.add('hidden');
             stopLoadingToast();
