@@ -131,11 +131,7 @@ const useScanner = () => {
                       (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
         },
-        [
-            appLang?.settings?.routing_rules_disabled,
-            appLang?.settings?.routing_rules_items,
-            lang
-        ]
+        [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]
     );
 
     const loading =
