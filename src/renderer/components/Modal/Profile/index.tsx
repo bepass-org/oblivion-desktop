@@ -97,7 +97,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                                         >
                                             &#xe5cd;
                                         </i>
-                                        <span>{item.name}</span>
+                                        <span title={item.endpoint}>{item.name}</span>
                                     </div>
                                 ))}
                             </div>
