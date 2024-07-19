@@ -20,7 +20,7 @@
         "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
         "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
-        "prepare": "ts-node script/dlWp.ts && husky",
+        "prepare": "ts-node script/dlBins.ts && husky",
         "postinstall": "ts-node ./script/postinstall.ts",
         "postinstall:darwin-linux": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
         "postinstall:windows": "ts-node script/makeRegeditVBSAvailable.ts && ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",

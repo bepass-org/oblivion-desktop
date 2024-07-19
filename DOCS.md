@@ -56,5 +56,6 @@ checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example
 -   (after wp updates) to get the latest wp version, that app is using. run: `npm i`.
 -   `wp` refers to `warp-plus` in source.
 -   `od` refers to `oblivion desktop` in source.
+-   `sb` refers to `sing-box` in source.
 
 happy hacking 😉
