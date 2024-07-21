@@ -22,11 +22,14 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
         setProfileEndpoint,
         handleAddProfile,
         handleRemoveProfile,
+        handleEditProfile,
         checkValidEndpoint,
         handleOnClose,
         onSaveModal,
         onUpdateKeyDown,
-        showModal
+        showModal,
+        isEditing,
+        cancelEdit
     } = useProfileModal({
         isOpen,
         onClose,
@@ -73,29 +76,47 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                                 className='btn'
                                 disabled={
                                     checkValidEndpoint(profileEndpoint) === '' ||
-                                    profilesInput?.length > 6
+                                    profilesInput?.length > 6 ||
+                                    profileName.length < 1
                                 }
                                 onClick={() => {
                                     handleAddProfile();
                                 }}
                             >
-                                +
+                                {isEditing ? (
+                                    <>
+                                        <i className='material-icons'>&#xe3c9;</i>
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className='material-icons'>&#xe145;</i>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
                     {typeof profilesInput !== 'string' && profilesInput.length > 0 && (
                         <>
                             <div className='tagList'>
-                                {profilesInput.map((item: any, index: number) => (
-                                    <div className='tagItem'>
+                                {profilesInput.map((item: any, index: any) => (
+                                    <div className='tagItem' key={Number(index)}>
                                         <i
                                             role='presentation'
-                                            className='material-icons'
+                                            className='material-icons closeIco'
                                             onClick={() => {
                                                 handleRemoveProfile(index);
                                             }}
                                         >
                                             &#xe5cd;
+                                        </i>
+                                        <i
+                                            role='presentation'
+                                            className='material-icons'
+                                            onClick={() => {
+                                                handleEditProfile(index);
+                                            }}
+                                        >
+                                            &#xe3c9;
                                         </i>
                                         <span title={item.endpoint}>{item.name}</span>
                                     </div>
@@ -106,8 +127,8 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                     <div className='clearfix' />
                     <div
                         className={classNames('btn', 'btn-cancel')}
-                        onClick={handleCancelButtonClick}
-                        onKeyDown={handleCancelButtonKeyDown}
+                        onClick={isEditing ? cancelEdit : handleCancelButtonClick}
+                        onKeyDown={isEditing ? cancelEdit : handleCancelButtonKeyDown}
                         role='button'
                         tabIndex={0}
                     >

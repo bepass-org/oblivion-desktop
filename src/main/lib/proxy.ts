@@ -14,8 +14,8 @@ const execPromise = promisify(exec);
 
 const { spawn } = require('child_process');
 
-let oldProxyHost = "";
-let oldProxyPort = "";
+let oldProxyHost = '';
+let oldProxyPort = '';
 
 const setRoutingRules = (value: any) => {
     const defValue =
