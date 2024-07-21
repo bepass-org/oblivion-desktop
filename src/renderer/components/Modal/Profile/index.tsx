@@ -76,25 +76,33 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                                 className='btn'
                                 disabled={
                                     checkValidEndpoint(profileEndpoint) === '' ||
-                                    profilesInput?.length > 6 || profileName.length < 1
+                                    profilesInput?.length > 6 ||
+                                    profileName.length < 1
                                 }
                                 onClick={() => {
                                     handleAddProfile();
                                 }}
                             >
-                                {isEditing ? '✓' : '+'}
+                                {isEditing ? (
+                                    <>
+                                        <i className='material-icons'>&#xe3c9;</i>
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className='material-icons'>&#xe145;</i>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
                     {typeof profilesInput !== 'string' && profilesInput.length > 0 && (
                         <>
                             <div className='tagList'>
-                                {profilesInput.map((item: any, index: number) => (
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    <div className='tagItem' key={index}>
+                                {profilesInput.map((item: any, index: any) => (
+                                    <div className='tagItem' key={Number(index)}>
                                         <i
                                             role='presentation'
-                                            className='material-icons'
+                                            className='material-icons closeIco'
                                             onClick={() => {
                                                 handleRemoveProfile(index);
                                             }}
