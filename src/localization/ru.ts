@@ -171,6 +171,16 @@ const russian: Language = {
         ready: 'Обновление готово',
         ready_message: (value) =>
             `Новая версия ${value} готова. Она будет установлена после перезагрузки. Хотите перезагрузить сейчас?`
+    },
+    speedTest: {
+        title: 'Тест скорости',
+        speedTestInitializing: 'Инициализация теста скорости ...',
+        clickToStart: 'Нажмите кнопку, чтобы начать тест скорости',
+        errorMessage: 'Произошла ошибка во время теста скорости. Пожалуйста, попробуйте снова.',
+        downloadSpeed: 'Скорость загрузки',
+        uploadSpeed: 'Скорость выгрузки',
+        latency: 'Задержка',
+        jitter: 'Джиттер',
     }
 };
 export default russian;

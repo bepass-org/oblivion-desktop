@@ -71,7 +71,7 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                             <span>{appLang?.home?.drawer_settings_app}</span>
                         </Link>
                     </li>
-                    <li className='divider' />
+                    <li className='divider'/>
                     {/*<li>
                         <Link to='/speed'>
                             <i className={'material-icons'}>&#xe9e4;</i>
@@ -102,6 +102,12 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                     <span>{appLang?.home?.drawer_lang}</span>
                 </a>
             </li>*/}
+                    <li role='presentation'>
+                        <Link to='/speed' role='menuitem'>
+                            <i className={'material-icons'}>speed</i>
+                            <span>{appLang?.speedTest?.title}</span>
+                        </Link>
+                    </li>
                     <li role='presentation'>
                         <Link to='/about' role='menuitem'>
                             <i className={'material-icons'}>&#xe88e;</i>

@@ -172,6 +172,17 @@ export interface Update {
     ready_message: (value: string) => string;
 }
 
+export interface SpeedTest {
+    title: string;
+    speedTestInitializing: string;
+    clickToStart: string;
+    errorMessage: string;
+    downloadSpeed: string;
+    uploadSpeed: string;
+    latency: string;
+    jitter: string;
+}
+
 export interface Language {
     global: Global;
     status: Status;
@@ -184,4 +195,5 @@ export interface Language {
     about: About;
     systemTray: SystemTray;
     update: Update;
+    speedTest: SpeedTest;
 }

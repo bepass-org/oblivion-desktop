@@ -173,6 +173,16 @@ const deutsch: Language = {
         ready: 'Update bereit',
         ready_message: (value) =>
             `Eine neue Version von ${value} ist bereit. Sie wird nach einem Neustart installiert. Möchten Sie jetzt neu starten?`
+    },
+    speedTest: {
+        title: 'Geschwindigkeitstest',
+        speedTestInitializing: 'Geschwindigkeitstest wird initialisiert ...',
+        clickToStart: 'Klicken Sie auf die Schaltfläche, um den Geschwindigkeitstest zu starten',
+        errorMessage: 'Während des Geschwindigkeitstests ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+        downloadSpeed: 'Download-Geschwindigkeit',
+        uploadSpeed: 'Upload-Geschwindigkeit',
+        latency: 'Latenz',
+        jitter: 'Jitter',
     }
 };
 export default deutsch;

@@ -7,6 +7,7 @@ import About from '../pages/About';
 import Debug from '../pages/Debug';
 import Scanner from '../pages/Scanner';
 import Network from '../pages/Network';
+import Speed from '../pages/SpeedTest';
 
 const AppRoutes = () => {
     return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
             <Route path='/debug' element={<Debug />} />
             <Route path='/scanner' element={<Scanner />} />
             <Route path='/network' element={<Network />} />
+            <Route path='/speed' element={<Speed />} />
         </Routes>
     );
 };

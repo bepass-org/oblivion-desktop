@@ -171,6 +171,16 @@ const persian: Language = {
         ready: 'دریافت شد',
         ready_message: (value) =>
             `برنامه ${value} برای آغاز فرایند بروزرسانی آماده است. راه‌اندازی شود؟`
+    },
+    speedTest: {
+        title: 'تست سرعت',
+        speedTestInitializing: 'تست سرعت در حال راه‌اندازی ...',
+        clickToStart: 'برای شروع تست سرعت، روی دکمه کلیک کنید',
+        errorMessage: 'در طی تست سرعت خطایی رخ داده است. لطفا دوباره تلاش کنید.',
+        downloadSpeed: 'سرعت دانلود',
+        uploadSpeed: 'سرعت آپلود',
+        latency: 'تاخیر',
+        jitter: 'نوسان',
     }
 };
 export default persian;

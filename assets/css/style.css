@@ -1962,3 +1962,132 @@ html[data-bs-theme="dark"] .shimmer {
     background: #f8f8f8;
     color: #1c1c1c;
 }
+
+/* SpeedTest Styles */
+/* General Styles */
+.speedtest-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.speedtest-container .status-message {
+    color: #ffa200;
+    font-size: 16px;
+    margin-top: 70px;
+    text-align: center;
+}
+
+.speedtest-container .error-message {
+    position: fixed;
+    bottom: 40px;
+    color: red;
+    margin: 0 40px;
+    text-align: center;
+}
+
+/* Start Button Styles */
+.speedtest-container .start-button {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-top: 100px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 64px;
+    font-weight: bold;
+    box-shadow: 0 0 5px 5px rgba(245, 156, 10, 0.38);
+    transition: all 0.5s ease;
+}
+
+.speedtest-container .start-button[id='disabled'] {
+    background: #b3b3b3;
+    box-shadow: 0 0 5px 5px rgba(117, 116, 116, 0.36);
+}
+
+.speedtest-container .start-button[id='enabled'] {
+    background: #ffa200;
+    cursor: pointer;
+}
+
+.speedtest-container .start-button[id='finished'] {
+    background: #247736;
+    box-shadow: 0 0 5px 5px rgba(36, 119, 54, 0.39);
+}
+
+.test-running .start-button::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top: 5px solid #ffa200;
+    border-right: 5px solid #ffa200;
+    animation: spinner 0.8s linear infinite;
+}
+
+.test-running .start-button,
+.test-done .start-button {
+    width: 80px;
+    height: 80px;
+    margin-top: 80px;
+    font-size: 36px;
+    transform: translateY(-80%);
+}
+
+/* Results Styles */
+.speedtest-container .results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.speedtest-container .result-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.speedtest-container .result-card {
+    width: 150px;
+    margin: 0 15px 25px;
+    padding: 12px;
+    text-align: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .speedtest-container .result-card {
+    background: #1b2337;
+    border: 1px solid rgba(234, 229, 229, 0.15);
+    box-shadow: 0 3px 4px rgba(234, 229, 229, 0.15);
+}
+
+.speedtest-container .result-card p {
+    color: #666;
+    font-size: 12px;
+}
+
+[data-bs-theme="dark"] .speedtest-container .result-card p {
+    color: #afaeae;
+}
+
+.speedtest-container .result-card h2 {
+    color: #333;
+    font-size: 16px;
+}
+
+[data-bs-theme="dark"] .speedtest-container .result-card h2 {
+    color: #e3e3e3;
+}
+
