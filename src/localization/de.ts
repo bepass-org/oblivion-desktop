@@ -176,13 +176,14 @@ const deutsch: Language = {
     },
     speedTest: {
         title: 'Geschwindigkeitstest',
-        speedTestInitializing: 'Geschwindigkeitstest wird initialisiert ...',
-        clickToStart: 'Klicken Sie auf die Schaltfläche, um den Geschwindigkeitstest zu starten',
-        errorMessage: 'Während des Geschwindigkeitstests ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
-        downloadSpeed: 'Download-Geschwindigkeit',
-        uploadSpeed: 'Upload-Geschwindigkeit',
+        initializing: 'Geschwindigkeitstest wird initialisiert ...',
+        click_start: 'Klicken Sie auf die Schaltfläche, um den Geschwindigkeitstest zu starten',
+        error_msg:
+            'Während des Geschwindigkeitstests ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+        download_speed: 'Download-Geschwindigkeit',
+        upload_speed: 'Upload-Geschwindigkeit',
         latency: 'Latenz',
-        jitter: 'Jitter',
+        jitter: 'Jitter'
     }
 };
 export default deutsch;

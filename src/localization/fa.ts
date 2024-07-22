@@ -174,13 +174,13 @@ const persian: Language = {
     },
     speedTest: {
         title: 'تست سرعت',
-        speedTestInitializing: 'تست سرعت در حال راه‌اندازی ...',
-        clickToStart: 'برای شروع تست سرعت، روی دکمه کلیک کنید',
-        errorMessage: 'در طی تست سرعت خطایی رخ داده است. لطفا دوباره تلاش کنید.',
-        downloadSpeed: 'سرعت دانلود',
-        uploadSpeed: 'سرعت آپلود',
+        initializing: 'درحال آماده‌سازی ...',
+        click_start: 'برای شروع تست کلیک کنید',
+        error_msg: 'هنگام تست سرعت خطایی رخ داده؛ لطفا دوباره تلاش کنید.',
+        download_speed: 'سرعت دانلود',
+        upload_speed: 'سرعت آپلود',
         latency: 'تاخیر',
-        jitter: 'نوسان',
+        jitter: 'نوسان'
     }
 };
 export default persian;

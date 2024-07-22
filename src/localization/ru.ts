@@ -174,13 +174,13 @@ const russian: Language = {
     },
     speedTest: {
         title: 'Тест скорости',
-        speedTestInitializing: 'Инициализация теста скорости ...',
-        clickToStart: 'Нажмите кнопку, чтобы начать тест скорости',
-        errorMessage: 'Произошла ошибка во время теста скорости. Пожалуйста, попробуйте снова.',
-        downloadSpeed: 'Скорость загрузки',
-        uploadSpeed: 'Скорость выгрузки',
+        initializing: 'Инициализация теста скорости ...',
+        click_start: 'Нажмите кнопку, чтобы начать тест скорости',
+        error_msg: 'Произошла ошибка во время теста скорости. Пожалуйста, попробуйте снова.',
+        download_speed: 'Скорость загрузки',
+        upload_speed: 'Скорость выгрузки',
         latency: 'Задержка',
-        jitter: 'Джиттер',
+        jitter: 'Джиттер'
     }
 };
 export default russian;

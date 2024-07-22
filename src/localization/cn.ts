@@ -170,13 +170,13 @@ const chinese: Language = {
     },
     speedTest: {
         title: '速度测试',
-        speedTestInitializing: '速度测试初始化中 ...',
-        clickToStart: '点击按钮开始速度测试',
-        errorMessage: '速度测试期间发生错误。请再试一次。',
-        downloadSpeed: '下载速度',
-        uploadSpeed: '上传速度',
+        initializing: '速度测试初始化中 ...',
+        click_start: '点击按钮开始速度测试',
+        error_msg: '速度测试期间发生错误。请再试一次。',
+        download_speed: '下载速度',
+        upload_speed: '上传速度',
         latency: '延迟',
-        jitter: '抖动',
+        jitter: '抖动'
     }
 };
 export default chinese;

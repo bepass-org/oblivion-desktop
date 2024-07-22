@@ -173,13 +173,13 @@ const english: Language = {
     },
     speedTest: {
         title: 'Speed Test',
-        speedTestInitializing: 'Speed test initializing ...',
-        clickToStart: 'Click the button to start the speed test',
-        errorMessage: 'An error occurred during the speed test. Please try again.',
-        downloadSpeed: 'Download Speed',
-        uploadSpeed: 'Upload Speed',
+        initializing: 'Speed test initializing ...',
+        click_start: 'Click the button to start the speed test',
+        error_msg: 'An error occurred during the speed test. Please try again.',
+        download_speed: 'Download Speed',
+        upload_speed: 'Upload Speed',
         latency: 'Latency',
-        jitter: 'Jitter',
+        jitter: 'Jitter'
     }
 };
 export default english;

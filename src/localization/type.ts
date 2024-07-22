@@ -174,11 +174,11 @@ export interface Update {
 
 export interface SpeedTest {
     title: string;
-    speedTestInitializing: string;
-    clickToStart: string;
-    errorMessage: string;
-    downloadSpeed: string;
-    uploadSpeed: string;
+    initializing: string;
+    click_start: string;
+    error_msg: string;
+    download_speed: string;
+    upload_speed: string;
     latency: string;
     jitter: string;
 }

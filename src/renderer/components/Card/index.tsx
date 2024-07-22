@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 interface ResultCardProps {
     label: string;
@@ -8,10 +8,10 @@ interface ResultCardProps {
 }
 
 const ResultCard: FC<ResultCardProps> = memo(({ label, value, unit }) => (
-    <div className='result-card'>
+    <div className='resultCard'>
         <p>{label}</p>
         <h2>
-            {value} {unit}
+            {value} <small>{unit}</small>
         </h2>
     </div>
 ));

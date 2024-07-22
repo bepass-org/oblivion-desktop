@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import classNames from 'classnames';
 import Nav from '../../components/Nav';
 import { useSpeedTest } from './useSpeedTest';
-import ResultCard from "../../components/Card";
+import ResultCard from '../../components/Card';
+import { defaultToast } from '../../lib/toasts';
 
 export default function Speed() {
     const {
@@ -11,7 +12,6 @@ export default function Speed() {
         isRunning,
         isFinished,
         testButtonText,
-        error,
         toggleTest,
         formatSpeed,
         formatValue
@@ -20,33 +20,44 @@ export default function Speed() {
     const renderResults = useMemo(
         () => (
             <div className='results'>
-                <div className='result-row'>
+                <div className='resultRow'>
                     <ResultCard
-                        label={appLang?.speedTest?.downloadSpeed}
+                        label={appLang?.speedTest?.download_speed}
                         value={formatSpeed(testResults?.download)}
                         unit='Mbps'
                     />
                     <ResultCard
-                        label={appLang?.speedTest?.uploadSpeed}
+                        label={appLang?.speedTest?.upload_speed}
                         value={formatSpeed(testResults?.upload)}
                         unit='Mbps'
                     />
                 </div>
-                <div className='result-row'>
+                <div className='resultRow'>
                     <ResultCard
                         label={appLang?.speedTest?.latency}
                         value={formatValue(testResults?.latency)}
-                        unit='ms'
+                        unit='Ms'
                     />
                     <ResultCard
                         label={appLang?.speedTest?.jitter}
                         value={formatValue(testResults?.jitter)}
-                        unit='ms' />
+                        unit='Ms'
+                    />
                 </div>
-
             </div>
         ),
-        [appLang?.speedTest?.downloadSpeed, appLang?.speedTest?.uploadSpeed, appLang?.speedTest?.latency, appLang?.speedTest?.jitter, formatSpeed, testResults?.download, testResults?.upload, testResults?.latency, testResults?.jitter, formatValue]
+        [
+            appLang?.speedTest?.download_speed,
+            appLang?.speedTest?.upload_speed,
+            appLang?.speedTest?.latency,
+            appLang?.speedTest?.jitter,
+            formatSpeed,
+            testResults?.download,
+            testResults?.upload,
+            testResults?.latency,
+            testResults?.jitter,
+            formatValue
+        ]
     );
 
     return (
@@ -54,28 +65,39 @@ export default function Speed() {
             <Nav title={appLang?.speedTest?.title} />
             <div className={classNames('myApp', 'normalPage')}>
                 <div
-                    className={classNames('speedtest-container', {
-                        'test-running': isRunning,
-                        'test-done': testResults || isFinished
+                    className={classNames('speedTest', {
+                        testRunning: isRunning,
+                        testDone: testResults || isFinished
                     })}
                 >
                     <button
-                        className={classNames('start-button', 'material-icons')}
-                        id={!navigator.onLine ? 'disabled' : !isFinished ? 'enabled' : 'finished'}
-                        onClick={toggleTest}
-                        disabled={!navigator.onLine || isFinished}
+                        className={classNames('startButton', 'material-icons')}
+                        data-type={
+                            !navigator.onLine ? 'disabled' : !isFinished ? 'enabled' : 'finished'
+                        }
+                        onClick={() => {
+                            if (!navigator.onLine) {
+                                defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
+                            } else {
+                                if (isFinished) {
+                                    // TODO: refresh
+                                } else {
+                                    toggleTest();
+                                }
+                            }
+                        }}
+                        disabled={!navigator.onLine}
                     >
                         {testButtonText}
                     </button>
                     {!testResults ? (
-                        <span className='status-message'>{isRunning ? appLang?.speedTest?.speedTestInitializing : appLang?.speedTest?.clickToStart} </span>
+                        <span className='statusMessage'>
+                            {isRunning
+                                ? appLang?.speedTest?.initializing
+                                : appLang?.speedTest?.click_start}{' '}
+                        </span>
                     ) : (
                         renderResults
-                    )}
-                    {error && (
-                        <div className='error-message' role='alert'>
-                            {error}
-                        </div>
                     )}
                 </div>
             </div>
