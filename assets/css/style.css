@@ -1338,6 +1338,12 @@ html[data-bs-theme="dark"] .shimmer {
 [data-bs-theme="dark"] .dialog .dialogBox .input-group .input-group-btn button[disabled] {
     background: #5a6269;
 }
+.dialog .dialogBox .input-group .input-group-btn button i {
+    float: right;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
 
 [data-bs-theme="dark"] .dialog .dialogBox input,
 [data-bs-theme="dark"] .dialog .dialogBox textarea {
@@ -1516,7 +1522,17 @@ html[data-bs-theme="dark"] .shimmer {
 [data-bs-theme="dark"] .dialog .dialogBox .tagList .tagItem i {
     color: #7a7a7a;
 }
-.dialog .dialogBox .tagList .tagItem:hover i {
+.dialog .dialogBox .tagList .tagItem i:hover {
+    color: #fff;
+}
+.dialog .dialogBox .tagList .tagItem i.closeIco {
+    border-right: 1px solid #d3d3d3;
+    padding-right: 5px;
+}
+[data-bs-theme="dark"] .dialog .dialogBox .tagList .tagItem i.closeIco {
+    border-color: #273643;
+}
+.dialog .dialogBox .tagList .tagItem i.closeIco:hover {
     color: tomato;
 }
 .dialog .dialogBox .tagList .tagItem span {

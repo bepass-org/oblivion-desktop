@@ -88,6 +88,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
+        ipcRenderer.sendMessage('startup', defaultSettings.openAtLogin);
     }, [detectingSystemTheme, setTheme, setLang, setOpenAtLogin, setAutoConnect, handleOnClose]);
 
     const onConfirmKeyDown = useCallback(

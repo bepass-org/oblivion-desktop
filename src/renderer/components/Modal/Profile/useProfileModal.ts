@@ -16,6 +16,7 @@ const useProfileModal = (props: ProfileModalProps) => {
     const [profileName, setProfileName] = useState<string>('');
     const [profileEndpoint, setProfileEndpoint] = useState<string>('');
     const [profilesInput, setProfilesInput] = useState<any>(profiles);
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     const checkValidEndpoint = (value: string) => {
         const endpoint = value.replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -30,11 +31,19 @@ const useProfileModal = (props: ProfileModalProps) => {
     const handleAddProfile = () => {
         if (profileName !== '' && checkValidEndpoint(profileEndpoint) !== '') {
             const newProfile = { name: profileName, endpoint: profileEndpoint };
-            const isDuplicate = profilesInput.some(
-                (item: any) => item?.name === profileName && item?.endpoint === profileEndpoint
-            );
-            if (!isDuplicate) {
-                setProfilesInput([...profilesInput, newProfile]);
+            if (editingIndex !== null) {
+                const updatedProfiles = profilesInput.map((profile: any, index: number) =>
+                    index === editingIndex ? newProfile : profile
+                );
+                setProfilesInput(updatedProfiles);
+                setEditingIndex(null);
+            } else {
+                const isDuplicate = profilesInput.some(
+                    (item: any) => item?.name === profileName && item?.endpoint === profileEndpoint
+                );
+                if (!isDuplicate) {
+                    setProfilesInput([...profilesInput, newProfile]);
+                }
             }
         }
         setProfileName('');
@@ -44,6 +53,19 @@ const useProfileModal = (props: ProfileModalProps) => {
     const handleRemoveProfile = (key: number) => {
         const updatedProfiles = profilesInput.filter((item: any, index: number) => index !== key);
         setProfilesInput(updatedProfiles);
+    };
+
+    const handleEditProfile = (index: number) => {
+        const profile = profilesInput[index];
+        setProfileName(profile.name);
+        setProfileEndpoint(profile.endpoint);
+        setEditingIndex(index);
+    };
+
+    const cancelEdit = () => {
+        setProfileName('');
+        setProfileEndpoint('');
+        setEditingIndex(null);
     };
 
     useEffect(() => {
@@ -127,8 +149,11 @@ const useProfileModal = (props: ProfileModalProps) => {
         setProfileEndpoint,
         handleAddProfile,
         handleRemoveProfile,
+        handleEditProfile,
+        cancelEdit,
         checkValidEndpoint,
-        handleOnClose
+        handleOnClose,
+        isEditing: editingIndex !== null
     };
 };
 
