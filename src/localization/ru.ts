@@ -118,6 +118,7 @@ const russian: Language = {
         profile_title: 'Профиль',
         profile_name: 'Название',
         profile_endpoint: 'Конечная точка',
+        profile_limitation: (value) => `Вы можете добавить максимум ${value} конечных точек.`,
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'

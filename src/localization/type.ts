@@ -117,6 +117,7 @@ export interface Modal {
     profile_title: string;
     profile_name: string;
     profile_endpoint: string;
+    profile_limitation: (value: string) => string;
     confirm: string;
     update: string;
     cancel: string;

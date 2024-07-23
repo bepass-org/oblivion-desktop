@@ -116,6 +116,7 @@ const chinese: Language = {
         profile_title: '个人资料',
         profile_name: '标题',
         profile_endpoint: '端点',
+        profile_limitation: (value) => `您最多可以添加 ${value} 个端点。`,
         confirm: '确认',
         update: '更新',
         cancel: '取消'
