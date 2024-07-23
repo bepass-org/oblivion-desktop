@@ -121,6 +121,23 @@ const LandingBody: FC<LandingBodyProps> = ({
                                     : 'timeout'}
                             </span>
                         </div>
+                        <div
+                            role='presentation'
+                            className={classNames('item', 'speed', 'hidden')}
+                        >
+                            <div className="download">
+                                <i className='material-icons'>&#xe2c0;</i>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                    0 <small>MB/s</small>
+                                </span>
+                            </div>
+                            <div className="upload">
+                                <i className='material-icons'>&#xe2c3;</i>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                    0 <small>KB/s</small>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
