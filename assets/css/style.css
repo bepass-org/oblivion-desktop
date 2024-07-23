@@ -2015,6 +2015,7 @@ html[data-bs-theme="dark"] .shimmer {
 .speedTest button.startButton[data-type='finished'] {
     background: #e1e1e1;
     box-shadow: 0 0 5px 5px rgba(68, 73, 69, 0.39);
+    cursor: pointer;
 }
 [data-bs-theme="dark"] .speedTest button.startButton[data-type='finished'] {
     background: #3d3d3d;
