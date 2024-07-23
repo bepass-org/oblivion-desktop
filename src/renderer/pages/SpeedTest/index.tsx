@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import classNames from 'classnames';
+import { Toaster } from "react-hot-toast";
 import Nav from '../../components/Nav';
 import { useSpeedTest } from './useSpeedTest';
 import ResultCard from '../../components/Card';
-import { defaultToast } from '../../lib/toasts';
 
-export default function Speed() {
+const Speed: FC = () => {
     const {
         appLang,
         testResults,
@@ -17,48 +17,38 @@ export default function Speed() {
         formatValue
     } = useSpeedTest();
 
-    const renderResults = useMemo(
-        () => (
+    const renderResults = useMemo(() => {
+        if (!testResults) return null;
+
+        return (
             <div className='results'>
                 <div className='resultRow'>
                     <ResultCard
                         label={appLang?.speedTest?.download_speed}
-                        value={formatSpeed(testResults?.download)}
+                        value={formatSpeed(testResults.download)}
                         unit='Mbps'
                     />
                     <ResultCard
                         label={appLang?.speedTest?.upload_speed}
-                        value={formatSpeed(testResults?.upload)}
+                        value={formatSpeed(testResults.upload)}
                         unit='Mbps'
                     />
                 </div>
                 <div className='resultRow'>
                     <ResultCard
                         label={appLang?.speedTest?.latency}
-                        value={formatValue(testResults?.latency)}
+                        value={formatValue(testResults.latency)}
                         unit='Ms'
                     />
                     <ResultCard
                         label={appLang?.speedTest?.jitter}
-                        value={formatValue(testResults?.jitter)}
+                        value={formatValue(testResults.jitter)}
                         unit='Ms'
                     />
                 </div>
             </div>
-        ),
-        [
-            appLang?.speedTest?.download_speed,
-            appLang?.speedTest?.upload_speed,
-            appLang?.speedTest?.latency,
-            appLang?.speedTest?.jitter,
-            formatSpeed,
-            testResults?.download,
-            testResults?.upload,
-            testResults?.latency,
-            testResults?.jitter,
-            formatValue
-        ]
-    );
+        );
+    }, [appLang?.speedTest, formatSpeed, formatValue, testResults]);
 
     return (
         <>
@@ -75,17 +65,7 @@ export default function Speed() {
                         data-type={
                             !navigator.onLine ? 'disabled' : !isFinished ? 'enabled' : 'finished'
                         }
-                        onClick={() => {
-                            if (!navigator.onLine) {
-                                defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
-                            } else {
-                                if (isFinished) {
-                                    // TODO: refresh
-                                } else {
-                                    toggleTest();
-                                }
-                            }
-                        }}
+                        onClick={toggleTest}
                         disabled={!navigator.onLine}
                     >
                         {testButtonText}
@@ -94,13 +74,16 @@ export default function Speed() {
                         <span className='statusMessage'>
                             {isRunning
                                 ? appLang?.speedTest?.initializing
-                                : appLang?.speedTest?.click_start}{' '}
+                                : appLang?.speedTest?.click_start}
                         </span>
                     ) : (
                         renderResults
                     )}
                 </div>
             </div>
+            <Toaster position='bottom-center' reverseOrder={false} />
         </>
     );
-}
+};
+
+export default Speed;

@@ -12,17 +12,29 @@ interface TestResults {
 
 const MB_CONVERSION = 1_000_000;
 
+const testMeasurements = [
+    { type: 'latency', numPackets: 1 },
+    { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true,  },
+    { type: 'latency', numPackets: 20 },
+    { type: 'download', bytes: 1e5, count: 9 },
+    { type: 'download', bytes: 1e6, count: 8 },
+    { type: 'upload', bytes: 1e5, count: 8 },
+    { type: 'upload', bytes: 1e6, count: 6 },
+    { type: 'download', bytes: 1e7, count: 6 },
+] as const;
+
 export const useSpeedTest = () => {
     const appLang = useTranslate();
     const [testResults, setTestResults] = useState<TestResults | undefined>(undefined);
-    const [isRunning, setIsRunning] = useState<boolean>(false);
-    const [isFinished, setIsFinished] = useState<boolean>(false);
-    const [testButtonText, setTestButtonText] = useState<string>('play_arrow');
+    const [isRunning, setIsRunning] = useState(false);
+    const [isFinished, setIsFinished] = useState(false);
+    const [testButtonText, setTestButtonText] = useState('play_arrow');
     const speedTestRef = useRef<SpeedTest | null>(null);
     const rafIdRef = useRef<number | null>(null);
 
     useEffect(() => {
-        speedTestRef.current = new SpeedTest({ autoStart: false });
+        // @ts-ignore
+        speedTestRef.current = new SpeedTest({ autoStart: false, measurements: testMeasurements });
         const speedTest = speedTestRef.current;
 
         speedTest.onFinish = (results) => {
@@ -35,6 +47,10 @@ export const useSpeedTest = () => {
             setTestButtonText('replay');
         };
 
+        speedTest.onError = (err) => {
+            defaultToast(err, 'SPEED_TEST', 5000);
+        };
+
         return () => {
             if (rafIdRef.current) {
                 cancelAnimationFrame(rafIdRef.current);
@@ -45,34 +61,46 @@ export const useSpeedTest = () => {
 
     const toggleTest = useCallback(() => {
         const speedTest = speedTestRef.current;
+        if (!speedTest) return;
 
-        if (speedTest) {
-            try {
-                if (isRunning) {
-                    speedTest?.pause();
-                    setIsRunning(false);
-                    setTestButtonText('play_arrow');
-                    if (rafIdRef.current) {
-                        cancelAnimationFrame(rafIdRef.current);
-                    }
-                } else {
-                    speedTest?.play();
-                    setIsRunning(true);
-                    setTestButtonText('pause');
-                    rafIdRef.current = requestAnimationFrame(function updateResults() {
-                        setTestResults(speedTest.results?.getSummary());
-                        if (speedTest.isRunning) {
-                            rafIdRef.current = requestAnimationFrame(updateResults);
-                        }
-                    });
-                }
-            } catch (err) {
-                defaultToast(appLang?.speedTest?.error_msg, 'SPEED_TEST', 7000);
+        if (!navigator.onLine) {
+            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 3000);
+            return;
+        }
+
+        try {
+            if (isRunning) {
+                speedTest.pause();
                 setIsRunning(false);
                 setTestButtonText('play_arrow');
+                if (rafIdRef.current) {
+                    cancelAnimationFrame(rafIdRef.current);
+                }
+            } else {
+                if (isFinished) {
+                    setIsFinished(false);
+                    speedTest.restart();
+                } else {
+                    speedTest.play();
+                }
+                setTestResults(undefined);
+                setIsRunning(true);
+                setTestButtonText('pause');
+
+                const updateResults = () => {
+                    setTestResults(speedTest.results?.getSummary());
+                    if (speedTest.isRunning) {
+                        rafIdRef.current = requestAnimationFrame(updateResults);
+                    }
+                };
+                rafIdRef.current = requestAnimationFrame(updateResults);
             }
+        } catch (err) {
+            defaultToast(appLang?.speedTest?.error_msg, 'SPEED_TEST', 5000);
+            setIsRunning(false);
+            setTestButtonText('play_arrow');
         }
-    }, [appLang?.speedTest?.error_msg, isRunning]);
+    }, [appLang?.speedTest?.error_msg, appLang?.toast?.offline, isFinished, isRunning]);
 
     const formatSpeed = useCallback(
         (speed?: number) => (speed ? (speed / MB_CONVERSION).toFixed(2) : 'N/A'),
