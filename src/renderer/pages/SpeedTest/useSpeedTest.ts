@@ -14,13 +14,13 @@ const MB_CONVERSION = 1_000_000;
 
 const testMeasurements = [
     { type: 'latency', numPackets: 1 },
-    { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true,  },
+    { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
     { type: 'latency', numPackets: 20 },
     { type: 'download', bytes: 1e5, count: 9 },
     { type: 'download', bytes: 1e6, count: 8 },
     { type: 'upload', bytes: 1e5, count: 8 },
     { type: 'upload', bytes: 1e6, count: 6 },
-    { type: 'download', bytes: 1e7, count: 6 },
+    { type: 'download', bytes: 1e7, count: 6 }
 ] as const;
 
 export const useSpeedTest = () => {
@@ -66,7 +66,7 @@ export const useSpeedTest = () => {
 
             await fetch('https://speed.cloudflare.com', {
                 mode: 'no-cors',
-                signal: controller.signal,
+                signal: controller.signal
             });
 
             clearTimeout(timeoutId);
@@ -127,7 +127,13 @@ export const useSpeedTest = () => {
             setIsRunning(false);
             setTestButtonText('play_arrow');
         }
-    }, [appLang?.speedTest?.error_msg, appLang?.toast?.offline, checkServerAvailability, isFinished, isRunning]);
+    }, [
+        appLang?.speedTest?.error_msg,
+        appLang?.toast?.offline,
+        checkServerAvailability,
+        isFinished,
+        isRunning
+    ]);
 
     const formatSpeed = useCallback(
         (speed?: number) => (speed ? (speed / MB_CONVERSION).toFixed(2) : 'N/A'),

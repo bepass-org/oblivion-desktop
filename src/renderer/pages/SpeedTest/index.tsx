@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 import classNames from 'classnames';
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import { useSpeedTest } from './useSpeedTest';
 import ResultCard from '../../components/Card';
