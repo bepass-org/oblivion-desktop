@@ -227,7 +227,13 @@ if (!gotTheLock) {
                         );
                         await exitTheApp(mainWindow);
                     } else {
-                        mainWindow?.hide();
+                        const forceClose = await settings.get('forceClose');
+                        if (typeof forceClose === 'boolean' && forceClose) {
+                            await exitTheApp(mainWindow);
+                        }
+                        else {
+                            mainWindow?.hide();
+                        }
                     }
                 });
 

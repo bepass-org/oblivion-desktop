@@ -73,6 +73,8 @@ const persian: Language = {
         auto_connect_desc: 'متصل‌شدن هنگام بازشدن برنامه',
         system_tray: 'مخفی\u200Cسازی',
         system_tray_desc: 'قرار نگرفتن آیکون برنامه در تسک\u200Cبار',
+        force_close: 'بستن اجباری',
+        force_close_desc: 'با خروج در نوار اعلان قرار نگیرد',
         restore: 'بازگردانی',
         restore_desc: 'اعمال تنظیمات پیشفرض برنامه',
         scanner: 'تنظیمات اسکنر',

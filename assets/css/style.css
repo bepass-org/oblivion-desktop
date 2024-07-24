@@ -228,6 +228,9 @@ nav.header .navMenu .indicator {
     z-index: 1;
     position: relative;
 }
+.myApp.normalPage.withScroll {
+    margin: 80px 0;
+}
 
 .myApp.normalPage p {
     float: right;
@@ -1916,6 +1919,13 @@ html[data-bs-theme="dark"] .shimmer {
 
 [data-bs-theme="dark"] .tabs {
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+.normalPage.withScroll .tabs {
+    background: #fff;
+}
+[data-bs-theme="dark"] .normalPage.withScroll .tabs {
+    background: #0A0E24;
 }
 
 .tabs ul {

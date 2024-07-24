@@ -73,6 +73,8 @@ export interface Settings {
     auto_connect_desc: string;
     system_tray: string;
     system_tray_desc: string;
+    force_close: string;
+    force_close_desc: string;
     restore: string;
     restore_desc: string;
     scanner: string;

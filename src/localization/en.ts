@@ -73,6 +73,8 @@ const english: Language = {
         auto_connect_desc: 'Connect when app opens',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
+        force_close: 'Force Close',
+        force_close_desc: 'Do not stay in the system tray upon exit',
         restore: 'Restore',
         restore_desc: 'Apply default application settings',
         scanner: 'Scanner Settings',

@@ -12,10 +12,11 @@ interface RestoreModalProps {
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
+    setForceClose: (value: boolean) => void;
 }
 
 const useRestoreModal = (props: RestoreModalProps) => {
-    const { isOpen, onClose, setTheme, setLang, setOpenAtLogin, setAutoConnect } = props;
+    const { isOpen, onClose, setTheme, setLang, setOpenAtLogin, setAutoConnect, setForceClose } = props;
     const detectingSystemTheme = useMemo(
         () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
         []
@@ -44,7 +45,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
 
     const onSaveModal = useCallback(async () => {
         // in this page
-        //setSystemTray(defaultSettings.systemTray);
+        setForceClose(defaultSettings.forceClose);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
         setAutoConnect(defaultSettings.autoConnect);
@@ -55,7 +56,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
             'data-bs-theme',
             detectingSystemTheme ? 'dark' : 'light'
         );
-        //await settings.set('systemTray', defaultSettings.systemTray);
+        await settings.set('forceClose', defaultSettings.forceClose);
         await settings.set('lang', defaultSettings.lang);
         changeLang(defaultSettings.lang);
         document.documentElement.setAttribute('lang', defaultSettings.lang);
@@ -89,7 +90,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
         ipcRenderer.sendMessage('startup', defaultSettings.openAtLogin);
-    }, [detectingSystemTheme, setTheme, setLang, setOpenAtLogin, setAutoConnect, handleOnClose]);
+    }, [setForceClose, setLang, setOpenAtLogin, setAutoConnect, detectingSystemTheme, setTheme, handleOnClose]);
 
     const onConfirmKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

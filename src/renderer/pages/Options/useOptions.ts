@@ -20,6 +20,7 @@ const useOptions = () => {
     const [lang, setLang] = useState<string>('');
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
+    const [forceClose, setForceClose] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const appLang = useTranslate();
 
@@ -56,6 +57,9 @@ const useOptions = () => {
         });
         settings.get('autoConnect').then((value) => {
             setAutoConnect(typeof value === 'undefined' ? defaultSettings.autoConnect : value);
+        });
+        settings.get('forceClose').then((value) => {
+            setForceClose(typeof value === 'undefined' ? defaultSettings.forceClose : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -103,11 +107,6 @@ const useOptions = () => {
         ipcRenderer.sendMessage('startup', !openAtLogin);
     }, [openAtLogin]);
 
-    const onClickAutoConnectButton = useCallback(() => {
-        setAutoConnect(!autoConnect);
-        settings.set('autoConnect', !autoConnect);
-    }, [autoConnect]);
-
     const onKeyDownAutoStartButton = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
             if (e.key === 'Enter') {
@@ -118,6 +117,11 @@ const useOptions = () => {
         [onClickAutoStartButton]
     );
 
+    const onClickAutoConnectButton = useCallback(() => {
+        setAutoConnect(!autoConnect);
+        settings.set('autoConnect', !autoConnect);
+    }, [autoConnect]);
+
     const onKeyDownAutoConnectButton = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
             if (e.key === 'Enter') {
@@ -126,6 +130,21 @@ const useOptions = () => {
             }
         },
         [onClickAutoConnectButton]
+    );
+
+    const onClickForceCloseButton = useCallback(() => {
+        setForceClose(!forceClose);
+        settings.set('forceClose', !forceClose);
+    }, [forceClose]);
+
+    const onKeyDownForceCloseButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickForceCloseButton();
+            }
+        },
+        [onClickForceCloseButton]
     );
 
     const onClickRestore = useCallback(() => setShowRestoreModal(true), []);
@@ -145,6 +164,7 @@ const useOptions = () => {
         lang,
         openAtLogin,
         autoConnect,
+        forceClose,
         showRestoreModal,
         appLang,
         langRef,
@@ -156,12 +176,15 @@ const useOptions = () => {
         onClickAutoConnectButton,
         onKeyDownAutoStartButton,
         onKeyDownAutoConnectButton,
+        onClickForceCloseButton,
+        onKeyDownForceCloseButton,
         onClickRestore,
         onKeyDownRestore,
         setTheme,
         setLang,
         setOpenAtLogin,
-        setAutoConnect
+        setAutoConnect,
+        setForceClose
     };
 };
 

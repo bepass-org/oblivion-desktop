@@ -75,6 +75,8 @@ const deutsch: Language = {
         auto_connect_desc: 'Verbinden, wenn App geöffnet wird',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
+        force_close: 'Erzwungenes Schließen',
+        force_close_desc: 'Nach dem Beenden nicht im System Tray bleiben',
         restore: 'Wiederherstellen',
         restore_desc: 'Einstellungen auf Standard zurücksetzen',
         scanner: 'Scannereinstellungen',
