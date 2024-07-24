@@ -230,8 +230,7 @@ if (!gotTheLock) {
                         const forceClose = await settings.get('forceClose');
                         if (typeof forceClose === 'boolean' && forceClose) {
                             await exitTheApp(mainWindow);
-                        }
-                        else {
+                        } else {
                             mainWindow?.hide();
                         }
                     }

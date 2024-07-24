@@ -53,7 +53,7 @@ export const defaultSettings = {
     reserved: true,
     scanResult: '',
     profiles: '[]',
-    forceClose: false,
+    forceClose: false
 };
 
 export const countries: { value: string; label: string }[] = [

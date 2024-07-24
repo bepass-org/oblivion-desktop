@@ -16,7 +16,8 @@ interface RestoreModalProps {
 }
 
 const useRestoreModal = (props: RestoreModalProps) => {
-    const { isOpen, onClose, setTheme, setLang, setOpenAtLogin, setAutoConnect, setForceClose } = props;
+    const { isOpen, onClose, setTheme, setLang, setOpenAtLogin, setAutoConnect, setForceClose } =
+        props;
     const detectingSystemTheme = useMemo(
         () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
         []
@@ -90,7 +91,15 @@ const useRestoreModal = (props: RestoreModalProps) => {
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
         ipcRenderer.sendMessage('startup', defaultSettings.openAtLogin);
-    }, [setForceClose, setLang, setOpenAtLogin, setAutoConnect, detectingSystemTheme, setTheme, handleOnClose]);
+    }, [
+        setForceClose,
+        setLang,
+        setOpenAtLogin,
+        setAutoConnect,
+        detectingSystemTheme,
+        setTheme,
+        handleOnClose
+    ]);
 
     const onConfirmKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
