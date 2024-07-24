@@ -59,7 +59,26 @@ export const useSpeedTest = () => {
         };
     }, []);
 
-    const toggleTest = useCallback(() => {
+    const checkServerAvailability = useCallback(async () => {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            await fetch('https://speed.cloudflare.com', {
+                mode: 'no-cors',
+                signal: controller.signal,
+            });
+
+            clearTimeout(timeoutId);
+            return true;
+        } catch (error) {
+            console.error('Server availability check failed:', error);
+            defaultToast(appLang?.speedTest?.server_unavailable, 'SPEED_TEST', 5000);
+            return false;
+        }
+    }, [appLang?.speedTest?.server_unavailable]);
+
+    const toggleTest = useCallback(async () => {
         const speedTest = speedTestRef.current;
         if (!speedTest) return;
 
@@ -68,39 +87,47 @@ export const useSpeedTest = () => {
             return;
         }
 
-        try {
-            if (isRunning) {
-                speedTest.pause();
-                setIsRunning(false);
-                setTestButtonText('play_arrow');
-                if (rafIdRef.current) {
-                    cancelAnimationFrame(rafIdRef.current);
-                }
-            } else {
-                if (isFinished) {
-                    setIsFinished(false);
-                    speedTest.restart();
-                } else {
-                    speedTest.play();
-                }
-                setTestResults(undefined);
-                setIsRunning(true);
-                setTestButtonText('pause');
-
-                const updateResults = () => {
-                    setTestResults(speedTest.results?.getSummary());
-                    if (speedTest.isRunning) {
-                        rafIdRef.current = requestAnimationFrame(updateResults);
-                    }
-                };
-                rafIdRef.current = requestAnimationFrame(updateResults);
+        if (isRunning) {
+            speedTest.pause();
+            setIsRunning(false);
+            setTestButtonText('play_arrow');
+            if (rafIdRef.current) {
+                cancelAnimationFrame(rafIdRef.current);
             }
+            return;
+        }
+
+        try {
+            setTestButtonText('pause');
+            setIsRunning(true);
+            const serverAvailable = await checkServerAvailability();
+            if (!serverAvailable) {
+                setTestButtonText('play_arrow');
+                setIsRunning(false);
+                return;
+            }
+            setTestResults(undefined);
+
+            if (isFinished) {
+                setIsFinished(false);
+                speedTest.restart();
+            } else {
+                speedTest.play();
+            }
+
+            const updateResults = () => {
+                setTestResults(speedTest.results?.getSummary());
+                if (speedTest.isRunning) {
+                    rafIdRef.current = requestAnimationFrame(updateResults);
+                }
+            };
+            rafIdRef.current = requestAnimationFrame(updateResults);
         } catch (err) {
             defaultToast(appLang?.speedTest?.error_msg, 'SPEED_TEST', 5000);
             setIsRunning(false);
             setTestButtonText('play_arrow');
         }
-    }, [appLang?.speedTest?.error_msg, appLang?.toast?.offline, isFinished, isRunning]);
+    }, [appLang?.speedTest?.error_msg, appLang?.toast?.offline, checkServerAvailability, isFinished, isRunning]);
 
     const formatSpeed = useCallback(
         (speed?: number) => (speed ? (speed / MB_CONVERSION).toFixed(2) : 'N/A'),

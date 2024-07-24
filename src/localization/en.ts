@@ -176,6 +176,7 @@ const english: Language = {
         initializing: 'Speed test initializing ...',
         click_start: 'Click the button to start the speed test',
         error_msg: 'An error occurred during the speed test. Please try again.',
+        server_unavailable: 'Speed test server unavailable',
         download_speed: 'Download Speed',
         upload_speed: 'Upload Speed',
         latency: 'Latency',

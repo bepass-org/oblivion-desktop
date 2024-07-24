@@ -173,6 +173,7 @@ const chinese: Language = {
         initializing: '速度测试初始化中 ...',
         click_start: '点击按钮开始速度测试',
         error_msg: '速度测试期间发生错误。请再试一次。',
+        server_unavailable: '速度测试服务器不可用',
         download_speed: '下载速度',
         upload_speed: '上传速度',
         latency: '延迟',

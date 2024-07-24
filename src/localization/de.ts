@@ -180,6 +180,7 @@ const deutsch: Language = {
         click_start: 'Klicken Sie auf die Schaltfläche, um den Geschwindigkeitstest zu starten',
         error_msg:
             'Während des Geschwindigkeitstests ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+        server_unavailable: 'Geschwindigkeitstest-Server nicht verfügbar',
         download_speed: 'Download-Geschwindigkeit',
         upload_speed: 'Upload-Geschwindigkeit',
         latency: 'Latenz',

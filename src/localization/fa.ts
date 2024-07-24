@@ -177,6 +177,7 @@ const persian: Language = {
         initializing: 'درحال آماده‌سازی ...',
         click_start: 'برای شروع تست کلیک کنید',
         error_msg: 'هنگام تست سرعت خطایی رخ داده؛ لطفا دوباره تلاش کنید.',
+        server_unavailable: 'سرور تست سرعت در دسترس نیست',
         download_speed: 'سرعت دانلود',
         upload_speed: 'سرعت آپلود',
         latency: 'تاخیر',
