@@ -36,7 +36,6 @@ export const wpAssetPath = path.join(
 
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
-
 export const stuffPath = path.join(wpDirPath, 'stuff');
 
 let exitOnWpEnd = false;
@@ -59,7 +58,7 @@ ipcMain.on('wp-start', async (event) => {
         return;
     }*/
 
-    if (!fs.existsSync(wpDirPath)) {
+    if (!fs.existsSync(wpBinPath)) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
         event.reply('wp-end', true);
         return;
