@@ -6,7 +6,7 @@
     <p>
         <a href="README-fa.md">
             <small>فارسی</small>
-            <img src='assets/img/flags/ir.svg' alt='persian' style='width: 20px;height: 15px;border-radius: 3px;' />
+            <img src='assets/img/flags/iran.svg' alt='persian' style='width: 20px;height: 15px;border-radius: 3px;' />
         </a>
         | 
        <img src='assets/img/flags/gb.svg' alt='English' style='width: 20px;height: 15px;border-radius: 3px;' />
