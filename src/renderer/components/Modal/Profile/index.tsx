@@ -2,6 +2,7 @@ import { FC } from 'react';
 import classNames from 'classnames';
 import useProfileModal from './useProfileModal';
 import { defaultSettings } from '../../../../defaultSettings';
+import Input from '../../Input';
 
 interface ProfileModalProps {
     title: string;
@@ -69,14 +70,14 @@ const ProfileModal: FC<ProfileModalProps> = ({
                                 setProfileName(e.target.value);
                             }}
                         />
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder={appLang?.modal?.profile_endpoint}
+                        <Input
+                            id='modal_profile_input'
                             value={profileEndpoint}
                             onChange={(e) => {
                                 setProfileEndpoint(e.target.value);
                             }}
+                            type='text'
+                            placeholder={appLang?.modal?.profile_endpoint}
                         />
                         <div className='input-group-btn'>
                             <button

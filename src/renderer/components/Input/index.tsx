@@ -7,9 +7,10 @@ interface InputProps {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     tabIndex?: number;
     type?: string;
+    placeholder?: string;
 }
 
-const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text' }) => {
+const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text', placeholder='' }) => {
     const {
         contextMenuStyle,
         handleCloseContextMenu,
@@ -30,6 +31,7 @@ const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text
                 className='form-control'
                 onChange={onChange}
                 onContextMenu={handleContextMenu}
+                placeholder={placeholder}
                 type={type}
             />
             {contextMenuStyle && (

@@ -1975,6 +1975,7 @@ html[data-bs-theme="dark"] .shimmer {
     border-radius: 3px;
     width: 75px;
     direction: ltr;
+    z-index: 3;
 }
 .contextMenu .menuItem {
     float: right;
