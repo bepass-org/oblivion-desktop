@@ -118,6 +118,7 @@ const persian: Language = {
         profile_title: 'پروفایل',
         profile_name: 'عنوان',
         profile_endpoint: 'اندپوینت',
+        profile_limitation: (value) => `حداکثر می‌توانید ${value} اندپوینت اضافه نمایید.`,
         confirm: 'تایید می\u200Cکنم',
         update: 'بروزرسانی',
         cancel: 'انصراف'

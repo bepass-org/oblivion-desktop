@@ -607,6 +607,34 @@ html[data-bs-theme="dark"] .shimmer {
     width: auto;
 }
 
+.homeScreen .inFoot .item.speed {
+    margin: 1px 0 5px 0;
+    cursor: default;
+}
+.homeScreen .inFoot .item.speed .upload {
+    float: right;
+    margin-right: 4px;
+}
+.homeScreen .inFoot .item.speed .download i,
+.homeScreen .inFoot .item.speed .upload i {
+    cursor: default;
+    font-size: 17px;
+    margin: -3px 0px 0 6px;
+}
+.homeScreen .inFoot .item.speed .download span,
+.homeScreen .inFoot .item.speed .upload span {
+    opacity: 0.8;
+    font-size: 13px;
+    height: 13px;
+    min-width: auto;
+    width: auto;
+    cursor: default;
+}
+.homeScreen .inFoot .item.speed .download span small,
+.homeScreen .inFoot .item.speed .upload span small {
+    cursor: default;
+}
+
 .logPage .logText {
     font-size: 14px !important;
     line-height: 24px !important;

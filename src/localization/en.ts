@@ -117,6 +117,7 @@ const english: Language = {
         profile_title: 'Profile',
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',
+        profile_limitation: (value) => `You can add a maximum of ${value} endpoints.`,
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'
