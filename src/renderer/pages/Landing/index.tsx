@@ -25,7 +25,8 @@ export default function Landing() {
         ping,
         statusText,
         toggleDrawer,
-        proxyStatus
+        proxyStatus,
+        appVersion
     } = useLanding();
 
     return (
@@ -41,6 +42,7 @@ export default function Landing() {
                 lang={lang}
                 toggleDrawer={toggleDrawer}
                 hasNewUpdate={hasNewUpdate}
+                appVersion={appVersion}
             />
             <LandingBody
                 appLang={appLang}
@@ -57,6 +59,7 @@ export default function Landing() {
                 proxyMode={proxyMode}
                 statusText={statusText}
                 proxyStatus={proxyStatus}
+                appVersion={appVersion}
             />
             <Toaster position='bottom-center' reverseOrder={false} />
         </>

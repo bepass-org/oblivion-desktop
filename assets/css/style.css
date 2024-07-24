@@ -284,11 +284,8 @@ nav.header .navMenu .indicator {
     justify-content: space-evenly;
     flex-wrap: nowrap;
     align-content: center;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
+    position: relative;
 }
 
 .homeScreen .title {
@@ -328,6 +325,30 @@ nav.header .navMenu .indicator {
 
 [dir="ltr"] .homeScreen .title h2 {
     text-align: left;
+}
+
+.homeScreen .title h2 .badge {
+    font-weight: 100;
+    margin: 6px 3px 0 3px;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 4px 5px 2px 5px;
+    background: rgba(203, 203, 203, 0.3);
+    transition: all 0.2s ease-in-out;
+    color: #858585;
+    float: left;
+    opacity: 0;
+}
+.homeScreen .title:hover h2 .badge {
+    opacity: 1;
+}
+[data-bs-theme="dark"] .homeScreen .title h2 .badge {
+    background: rgba(107, 107, 107, 0.3);
+    color: #a5a5a5;
+}
+[dir="ltr"] .homeScreen .title h2 .badge {
+    float: right;
+    margin: 3px 3px 0 3px;
 }
 
 @media screen and (min-width: 600px) {

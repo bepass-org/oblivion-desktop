@@ -10,7 +10,14 @@ interface InputProps {
     placeholder?: string;
 }
 
-const Input: FC<InputProps> = ({ id, onChange, value, tabIndex = 0, type = 'text', placeholder='' }) => {
+const Input: FC<InputProps> = ({
+    id,
+    onChange,
+    value,
+    tabIndex = 0,
+    type = 'text',
+    placeholder = ''
+}) => {
     const {
         contextMenuStyle,
         handleCloseContextMenu,

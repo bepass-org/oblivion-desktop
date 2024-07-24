@@ -409,7 +409,8 @@ const useLanding = () => {
         handleOnSwipedRight,
         handleOnClickIp,
         handleOnClickPing,
-        proxyStatus
+        proxyStatus,
+        appVersion: packageJsonData?.version
     };
 };
 export default useLanding;

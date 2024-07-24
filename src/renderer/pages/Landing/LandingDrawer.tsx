@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import Drawer from 'react-modern-drawer';
 import appIco from '../../../../assets/oblivion.png';
-import packageJsonData from '../../../../package.json';
 
 interface LandingDrawerProps {
     appLang: any;
@@ -11,6 +10,7 @@ interface LandingDrawerProps {
     lang?: string;
     hasNewUpdate: boolean;
     toggleDrawer: () => void;
+    appVersion: string;
 }
 
 const LandingDrawer: FC<LandingDrawerProps> = ({
@@ -18,7 +18,8 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
     drawerIsOpen,
     hasNewUpdate,
     lang,
-    toggleDrawer
+    toggleDrawer,
+    appVersion
 }) => {
     return (
         <Drawer
@@ -116,7 +117,7 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                     </li>
                 </ul>
                 <div className='appVersion' role='note'>
-                    v<b>{packageJsonData.version}</b>
+                    v<b>{appVersion}</b>
                 </div>
             </div>
         </Drawer>
