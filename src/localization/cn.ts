@@ -169,6 +169,17 @@ const chinese: Language = {
         ready: '更新已准备好',
         ready_message: (value) =>
             `新的 ${value} 版本已准备好。它将在重新启动后安装。您想现在重新启动吗？`
+    },
+    speedTest: {
+        title: '速度测试',
+        initializing: '速度测试初始化中 ...',
+        click_start: '点击按钮开始速度测试',
+        error_msg: '速度测试期间发生错误。请再试一次。',
+        server_unavailable: '速度测试服务器不可用',
+        download_speed: '下载速度',
+        upload_speed: '上传速度',
+        latency: '延迟',
+        jitter: '抖动'
     }
 };
 export default chinese;

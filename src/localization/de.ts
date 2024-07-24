@@ -175,6 +175,18 @@ const deutsch: Language = {
         ready: 'Update bereit',
         ready_message: (value) =>
             `Eine neue Version von ${value} ist bereit. Sie wird nach einem Neustart installiert. Möchten Sie jetzt neu starten?`
+    },
+    speedTest: {
+        title: 'Geschwindigkeitstest',
+        initializing: 'Geschwindigkeitstest wird initialisiert ...',
+        click_start: 'Klicken Sie auf die Schaltfläche, um den Geschwindigkeitstest zu starten',
+        error_msg:
+            'Während des Geschwindigkeitstests ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+        server_unavailable: 'Geschwindigkeitstest-Server nicht verfügbar',
+        download_speed: 'Download-Geschwindigkeit',
+        upload_speed: 'Upload-Geschwindigkeit',
+        latency: 'Latenz',
+        jitter: 'Jitter'
     }
 };
 export default deutsch;

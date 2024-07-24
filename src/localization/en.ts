@@ -172,6 +172,17 @@ const english: Language = {
         ready: 'Update Ready',
         ready_message: (value) =>
             `A new version of the ${value} is ready. It will be installed after a restart. Do you want to restart now?`
+    },
+    speedTest: {
+        title: 'Speed Test',
+        initializing: 'Speed test initializing ...',
+        click_start: 'Click the button to start the speed test',
+        error_msg: 'An error occurred during the speed test. Please try again.',
+        server_unavailable: 'Speed test server unavailable',
+        download_speed: 'Download Speed',
+        upload_speed: 'Upload Speed',
+        latency: 'Latency',
+        jitter: 'Jitter'
     }
 };
 export default english;

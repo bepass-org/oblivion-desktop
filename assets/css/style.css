@@ -176,7 +176,7 @@ nav.header .navMenu .indicator {
     animation: indicator 1s linear infinite;
 }
 
-@-webkit-keyframes indicator {
+@keyframes indicator {
     0% {
         opacity: 1;
     }
@@ -406,7 +406,7 @@ nav.header .navMenu .indicator {
     height: 55px;
 }
 
-@-webkit-keyframes spinner {
+@keyframes spinner {
     from {
         transform: rotate(0deg);
     }
@@ -1314,9 +1314,9 @@ html[data-bs-theme="dark"] .shimmer {
     resize: vertical;
 }
 
-.dialog .dialogBox input[type=number] {
+/* .dialog .dialogBox input[type=number] {
     -moz-appearance: textfield;
-}
+} */
 
 .dialog .dialogBox input::-webkit-outer-spin-button,
 .dialog .dialogBox input::-webkit-inner-spin-button {
@@ -1990,4 +1990,158 @@ html[data-bs-theme="dark"] .shimmer {
 .contextMenu .menuItem:hover {
     background: #f8f8f8;
     color: #1c1c1c;
+}
+
+.speedTest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.speedTest button.startButton {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-top: 100px;
+    border: none;
+    border-radius: 50%;
+    color: #757575;
+    font-size: 55px;
+    font-weight: bold;
+    border: 1px solid #ffa200;
+    transition: all 0.5s ease;
+    animation-name: startButton;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+}
+[data-bs-theme="dark"] .speedTest button.startButton {
+    color: #fff;
+}
+@keyframes startButton {
+    0% {box-shadow: 0 0 0 rgba(245, 156, 10, 0.4);}
+    50% {box-shadow: -1px 0px 0 12px rgba(245, 156, 10, 0.15);}
+    100% {box-shadow: 0 0 0 rgba(245, 156, 10, 0.4);}
+}
+.speedTest button.startButton:hover {
+    color: #535353;
+}
+[data-bs-theme="dark"] .speedTest button.startButton:hover {
+   color: #ffa200;
+}
+
+.speedTest button.startButton[data-type='disabled'] {
+    background: #b3b3b3;
+    box-shadow: 0 0 5px 5px rgba(117, 116, 116, 0.36);
+}
+
+.speedTest button.startButton[data-type='enabled'] {
+    background: transparent;
+    cursor: pointer;
+}
+
+.speedTest button.startButton[data-type='finished'] {
+    background: #e1e1e1;
+    box-shadow: 0 0 5px 5px rgba(68, 73, 69, 0.39);
+    cursor: pointer;
+}
+[data-bs-theme="dark"] .speedTest button.startButton[data-type='finished'] {
+    background: #3d3d3d;
+}
+
+.testRunning button.startButton::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top: 5px solid #ffa200;
+    border-right: 5px solid #ffa200;
+    animation: spinner 0.8s linear infinite;
+}
+
+.speedTest.testRunning button.startButton,
+.speedTest.testDone button.startButton {
+    width: 80px;
+    height: 80px;
+    margin-top: 80px;
+    transform: translateY(-80%);
+    box-shadow: none;
+    animation-name: inherit;
+    border-color: #e3e3e3;
+    font-size: 33px;
+}
+.speedTest.testDone button.startButton {
+    border-color: #bfbfbf;
+}
+[data-bs-theme="dark"] .speedTest.testRunning button.startButton,
+[data-bs-theme="dark"] .speedTest.testDone button.startButton {
+    border-color: #757575;
+}
+
+.speedTest span.statusMessage {
+    font-size: 15px;
+    margin-top: 70px;
+    font-weight: 200;
+    text-align: center;
+    color: #303030;
+}
+[data-bs-theme="dark"] .speedTest span.statusMessage {
+    color: #DCDCDC;
+}
+
+.speedTest .results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.speedTest .results .resultRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.speedTest .results .resultCard {
+    width: 150px;
+    margin: 7px;
+    padding: 12px;
+    text-align: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .speedTest .results .resultCard {
+    background: #1b2337;
+    border: 1px solid rgba(234, 229, 229, 0.15);
+}
+
+.speedTest .results .resultCard p {
+    color: #666;
+    font-size: 13px;
+}
+
+[data-bs-theme="dark"] .speedTest .results .resultCard p {
+    color: #afaeae;
+}
+
+.speedTest .results .resultCard h2 {
+    color: #333;
+    font-size: 16px;
+    direction: ltr;
+    margin-bottom: 5px;
+}
+[data-bs-theme="dark"] .speedTest .results .resultCard h2 {
+    color: #e3e3e3;
+}
+
+.speedTest .results .resultCard h2 small {
+    font-size: 14px;
 }
