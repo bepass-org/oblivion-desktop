@@ -7,10 +7,11 @@ interface ProfileModalProps {
     isOpen: boolean;
     onClose: () => void;
     profiles: any;
+    endpoint: string;
     setProfiles: (value: any) => void;
 }
 
-const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles, setProfiles }) => {
+const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles, endpoint, setProfiles }) => {
     const {
         appLang,
         handleCancelButtonClick,
@@ -45,7 +46,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
             <div className='dialogBox'>
                 <div className='container'>
                     <div className='line'>
-                        <div className='miniLine' />
+                        <div className='miniLine'/>
                     </div>
                     <h3>{title}</h3>
                     <div className='input-group'>
@@ -121,7 +122,7 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                             </div>
                         </>
                     )}
-                    <div className='clearfix' />
+                    <div className='clearfix'/>
                     <div
                         className={classNames('btn', 'btn-cancel')}
                         onClick={isEditing ? cancelEdit : handleCancelButtonClick}
@@ -140,6 +141,14 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                     >
                         {appLang?.modal?.update}
                     </div>
+                    <i
+                        role='presentation'
+                        className='material-icons updater'
+                        title={appLang?.modal?.endpoint_paste}
+                        onClick={() => {setProfileEndpoint(endpoint);}}
+                    >
+                        &#xe14f;
+                    </i>
                 </div>
             </div>
         </div>

@@ -114,6 +114,7 @@ const english: Language = {
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',
         endpoint_update: 'Receive suggested endpoints',
+        endpoint_paste: 'Paste active endpoint',
         profile_title: 'Profile',
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',

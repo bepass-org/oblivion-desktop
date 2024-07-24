@@ -114,6 +114,7 @@ export interface Modal {
     endpoint_suggested: string;
     endpoint_latest: string;
     endpoint_update: string;
+    endpoint_paste: string;
     profile_title: string;
     profile_name: string;
     profile_endpoint: string;
