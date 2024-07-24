@@ -2074,6 +2074,9 @@ html[data-bs-theme="dark"] .shimmer {
     border-color: #e3e3e3;
     font-size: 33px;
 }
+.speedTest.testDone button.startButton {
+    border-color: #bfbfbf;
+}
 [data-bs-theme="dark"] .speedTest.testRunning button.startButton,
 [data-bs-theme="dark"] .speedTest.testDone button.startButton {
     border-color: #757575;

@@ -12,17 +12,6 @@ interface TestResults {
 
 const MB_CONVERSION = 1_000_000;
 
-const testMeasurements = [
-    { type: 'latency', numPackets: 1 },
-    { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
-    { type: 'latency', numPackets: 20 },
-    { type: 'download', bytes: 1e5, count: 9 },
-    { type: 'download', bytes: 1e6, count: 8 },
-    { type: 'upload', bytes: 1e5, count: 8 },
-    { type: 'upload', bytes: 1e6, count: 6 },
-    { type: 'download', bytes: 1e7, count: 6 }
-] as const;
-
 export const useSpeedTest = () => {
     const appLang = useTranslate();
     const [testResults, setTestResults] = useState<TestResults | undefined>(undefined);
@@ -32,8 +21,15 @@ export const useSpeedTest = () => {
     const speedTestRef = useRef<SpeedTest | null>(null);
     const rafIdRef = useRef<number | null>(null);
 
+    const testMeasurements: any = [
+        { type: 'latency', numPackets: 1 },
+        { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
+        { type: 'latency', numPackets: 20 },
+        { type: 'download', bytes: 1e5, count: 9 },
+        { type: 'upload', bytes: 1e5, count: 8 }
+    ] as const;
+
     useEffect(() => {
-        // @ts-ignore
         speedTestRef.current = new SpeedTest({ autoStart: false, measurements: testMeasurements });
         const speedTest = speedTestRef.current;
 
