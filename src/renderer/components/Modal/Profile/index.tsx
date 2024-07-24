@@ -1,16 +1,26 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 import useProfileModal from './useProfileModal';
+import { defaultSettings } from '../../../../defaultSettings';
+import Input from '../../Input';
 
 interface ProfileModalProps {
     title: string;
     isOpen: boolean;
     onClose: () => void;
     profiles: any;
+    endpoint: string;
     setProfiles: (value: any) => void;
 }
 
-const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles, setProfiles }) => {
+const ProfileModal: FC<ProfileModalProps> = ({
+    title,
+    isOpen,
+    onClose,
+    profiles,
+    endpoint,
+    setProfiles
+}) => {
     const {
         appLang,
         handleCancelButtonClick,
@@ -60,14 +70,14 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                                 setProfileName(e.target.value);
                             }}
                         />
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder={appLang?.modal?.profile_endpoint}
+                        <Input
+                            id='modal_profile_input'
                             value={profileEndpoint}
                             onChange={(e) => {
                                 setProfileEndpoint(e.target.value);
                             }}
+                            type='text'
+                            placeholder={appLang?.modal?.profile_endpoint}
                         />
                         <div className='input-group-btn'>
                             <button
@@ -140,6 +150,20 @@ const ProfileModal: FC<ProfileModalProps> = ({ title, isOpen, onClose, profiles,
                     >
                         {appLang?.modal?.update}
                     </div>
+                    <i
+                        role='presentation'
+                        className={classNames(
+                            'material-icons',
+                            'updater',
+                            defaultSettings.endpoint === endpoint ? 'hidden' : ''
+                        )}
+                        title={appLang?.modal?.endpoint_paste}
+                        onClick={() => {
+                            setProfileEndpoint(endpoint);
+                        }}
+                    >
+                        &#xea8e;
+                    </i>
                 </div>
             </div>
         </div>

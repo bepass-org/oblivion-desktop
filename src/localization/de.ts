@@ -116,6 +116,7 @@ const deutsch: Language = {
         endpoint_suggested: 'Empfohlen',
         endpoint_latest: 'Neueste',
         endpoint_update: 'Empfohlene Endpunkte erhalten',
+        endpoint_paste: 'aktiven Endpunkt einfügen',
         profile_title: 'Profil',
         profile_name: 'Titel',
         profile_endpoint: 'Endpunkt',

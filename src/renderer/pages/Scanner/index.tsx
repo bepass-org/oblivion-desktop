@@ -50,6 +50,7 @@ export default function Scanner() {
                 onClose={onCloseEndpointModal}
             />
             <ProfileModal
+                endpoint={endpoint || ''}
                 profiles={profiles}
                 setProfiles={setProfiles}
                 title={appLang?.modal?.profile_title}

@@ -115,6 +115,7 @@ const persian: Language = {
         endpoint_suggested: 'پیشنهادی',
         endpoint_latest: 'اخیر',
         endpoint_update: 'دریافت اندپوینت‌های پیشنهادی',
+        endpoint_paste: 'جایگذاری اندپوینت فعال',
         profile_title: 'پروفایل',
         profile_name: 'عنوان',
         profile_endpoint: 'اندپوینت',
