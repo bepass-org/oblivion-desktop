@@ -1,4 +1,12 @@
-import { KeyboardEvent, MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+    KeyboardEvent,
+    MouseEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ipcRenderer, username } from '../../lib/utils';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -13,9 +21,11 @@ const useDebug = () => {
     const navigate = useNavigate();
 
     const initAutoScroll = useMemo(() => {
-        return localStorage?.getItem('OBLIVION_SCROLLER') ? localStorage.getItem('OBLIVION_SCROLLER') : '0';
+        return localStorage?.getItem('OBLIVION_SCROLLER')
+            ? localStorage.getItem('OBLIVION_SCROLLER')
+            : '0';
     }, []);
-    const [autoScroll, setAutoScroll] = useState<boolean>( initAutoScroll === '1' ? true : false);
+    const [autoScroll, setAutoScroll] = useState<boolean>(initAutoScroll === '1' ? true : false);
 
     useEffect(() => {
         ipcRenderer.on('tray-menu', (args: any) => {
