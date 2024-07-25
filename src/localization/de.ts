@@ -170,6 +170,7 @@ const deutsch: Language = {
         settings_app: 'Anwendung',
         about: 'Über',
         log: 'Protokoll',
+        speed_test: 'Geschwindigkeitstest',
         exit: 'Beenden'
     },
     update: {

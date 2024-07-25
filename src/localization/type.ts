@@ -168,6 +168,7 @@ export interface SystemTray {
     settings_app: string;
     about: string;
     log: string;
+    speed_test: string;
     exit: string;
 }
 

@@ -165,6 +165,7 @@ const chinese: Language = {
         settings_app: '应用程序',
         about: '关于',
         log: '日志',
+        speed_test: '速度测试',
         exit: '退出'
     },
     update: {

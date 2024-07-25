@@ -169,6 +169,7 @@ const persian: Language = {
         settings_app: '   برنامه   ',
         about: 'درباره',
         log: 'لاگ',
+        speed_test: 'تست سرعت',
         exit: 'خروج'
     },
     update: {

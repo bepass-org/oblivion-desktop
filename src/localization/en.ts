@@ -167,6 +167,7 @@ const english: Language = {
         settings_app: 'Application',
         about: 'About',
         log: 'Log',
+        speed_test: 'Speed test',
         exit: 'Exit'
     },
     update: {

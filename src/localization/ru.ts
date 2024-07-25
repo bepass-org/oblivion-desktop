@@ -169,6 +169,7 @@ const russian: Language = {
         settings_app: 'Приложение',
         about: 'О программе',
         log: 'Журнал',
+        speed_test: 'Тест скорости',
         exit: 'Выход'
     },
     update: {
