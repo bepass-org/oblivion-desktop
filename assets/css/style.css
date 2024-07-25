@@ -1915,23 +1915,22 @@ html[data-bs-theme='dark'] .shimmer {
     width: 100%;
     margin: 0;
     z-index: 2;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
     padding: 1px 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    --webkit-backdrop-filter: blur(5px);
     user-select: none;
 }
 
 [data-bs-theme='dark'] .tabs {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
+    background: rgba(10, 14, 36, 0.8);
 }
 
-.normalPage.withScroll .tabs {
-    background: #fff;
+.tabs.inSettings {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
-[data-bs-theme='dark'] .normalPage.withScroll .tabs {
-    background: #0a0e24;
+[data-bs-theme='dark'] .tabs.inSettings {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
 }
 
 .tabs ul {

@@ -24,17 +24,21 @@ export default function Options() {
         onKeyDownAutoConnectButton,
         onClickForceCloseButton,
         onKeyDownForceCloseButton,
+        onClickShortcutButton,
+        onKeyDownShortcutButton,
         onKeyDownChangeTheme,
         onKeyDownRestore,
         openAtLogin,
         autoConnect,
         forceClose,
+        shortcut,
         showRestoreModal,
         setTheme,
         setLang,
         setOpenAtLogin,
         setAutoConnect,
         setForceClose,
+        setShortcut,
         theme
     } = useOptions();
 
@@ -43,6 +47,7 @@ export default function Options() {
         typeof lang === 'undefined' ||
         typeof openAtLogin === 'undefined' ||
         typeof forceClose === 'undefined' ||
+        typeof shortcut === 'undefined' ||
         typeof autoConnect === 'undefined'
     )
         return <div className='settings' />;
@@ -56,7 +61,8 @@ export default function Options() {
                     setForceClose,
                     setLang,
                     setOpenAtLogin,
-                    setAutoConnect
+                    setAutoConnect,
+                    setShortcut
                 }}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
@@ -105,6 +111,37 @@ export default function Options() {
                         />
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
+                    <div
+                        role='button'
+                        className='item'
+                        onClick={onClickShortcutButton}
+                        onKeyDown={onKeyDownShortcutButton}
+                        tabIndex={0}
+                    >
+                        <label
+                            className='key'
+                            htmlFor='shortcut'
+                            // role='label'
+                        >
+                            {appLang?.settings?.shortcut}
+                        </label>
+                        <div className='value'>
+                            <div
+                                tabIndex={-1}
+                                id='shortcut'
+                                className={classNames('checkbox', shortcut ? 'checked' : '')}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.shortcut_desc}</div>
+                    </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    {appLang?.settings?.more}
+                </div>
+                <div className='settings' role='menu'>
                     <div
                         role='button'
                         className='item'
@@ -164,7 +201,7 @@ export default function Options() {
                     >
                         <label
                             className='key'
-                            htmlFor='system-tray'
+                            htmlFor='force-close'
                             // role='label'
                         >
                             {appLang?.settings?.force_close}
@@ -172,7 +209,7 @@ export default function Options() {
                         <div className='value'>
                             <div
                                 tabIndex={-1}
-                                id='system-tray'
+                                id='force-close'
                                 className={classNames('checkbox', forceClose ? 'checked' : '')}
                             >
                                 <i className='material-icons'>&#xe876;</i>
@@ -180,12 +217,12 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.force_close_desc}</div>
                     </div>
-                </div>
+                    {/* </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
                     {appLang?.settings?.more}
                 </div>
-                <div className='settings' role='menu'>
+                <div className='settings' role='menu'> */}
                     <div
                         role='button'
                         className={'item'}

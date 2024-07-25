@@ -75,6 +75,8 @@ const chinese: Language = {
         system_tray_desc: '不在任务栏显示应用图标',
         force_close: '强制关闭',
         force_close_desc: '退出时不要停留在系统托盘中',
+        shortcut: '导航器',
+        shortcut_desc: '主页上的快捷方式',
         restore: '恢复默认设置',
         restore_desc: '将应用设置还原为默认值',
         scanner: '扫描仪设置',

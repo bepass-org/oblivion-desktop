@@ -4,6 +4,7 @@ import useLanding from './useLanding';
 import LandingDrawer from './LandingDrawer';
 import LandingHeader from './LandingHeader';
 import LandingBody from './LandingBody';
+import Tabs from '../../components/Tabs';
 
 export default function Landing() {
     const {
@@ -26,7 +27,8 @@ export default function Landing() {
         statusText,
         toggleDrawer,
         proxyStatus,
-        appVersion
+        appVersion,
+        shortcut
     } = useLanding();
 
     return (
@@ -61,6 +63,7 @@ export default function Landing() {
                 proxyStatus={proxyStatus}
                 appVersion={appVersion}
             />
+            {!isConnected && shortcut && <Tabs active='landing' />}
             <Toaster position='bottom-center' reverseOrder={false} />
         </>
     );

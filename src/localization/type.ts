@@ -75,6 +75,8 @@ export interface Settings {
     system_tray_desc: string;
     force_close: string;
     force_close_desc: string;
+    shortcut: string;
+    shortcut_desc: string;
     restore: string;
     restore_desc: string;
     scanner: string;

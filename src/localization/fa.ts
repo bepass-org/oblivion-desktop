@@ -75,6 +75,8 @@ const persian: Language = {
         system_tray_desc: 'قرار نگرفتن آیکون برنامه در تسک\u200Cبار',
         force_close: 'بستن اجباری',
         force_close_desc: 'با خروج در نوار اعلان قرار نگیرد',
+        shortcut: 'پیمایشگر',
+        shortcut_desc: 'میانبرها در صفحه نخست',
         restore: 'بازگردانی',
         restore_desc: 'اعمال تنظیمات پیشفرض برنامه',
         scanner: 'تنظیمات اسکنر',

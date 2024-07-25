@@ -22,6 +22,7 @@ const useOptions = () => {
     const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
     const [forceClose, setForceClose] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
+    const [shortcut, setShortcut] = useState<boolean>(false);
     const appLang = useTranslate();
 
     const { state } = useLocation();
@@ -60,6 +61,9 @@ const useOptions = () => {
         });
         settings.get('forceClose').then((value) => {
             setForceClose(typeof value === 'undefined' ? defaultSettings.forceClose : value);
+        });
+        settings.get('shortcut').then((value) => {
+            setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -147,6 +151,21 @@ const useOptions = () => {
         [onClickForceCloseButton]
     );
 
+    const onClickShortcutButton = useCallback(() => {
+        setShortcut(!shortcut);
+        settings.set('shortcut', !shortcut);
+    }, [shortcut]);
+
+    const onKeyDownShortcutButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickShortcutButton();
+            }
+        },
+        [onClickShortcutButton]
+    );
+
     const onClickRestore = useCallback(() => setShowRestoreModal(true), []);
 
     const onKeyDownRestore = useCallback(
@@ -165,6 +184,7 @@ const useOptions = () => {
         openAtLogin,
         autoConnect,
         forceClose,
+        shortcut,
         showRestoreModal,
         appLang,
         langRef,
@@ -178,13 +198,16 @@ const useOptions = () => {
         onKeyDownAutoConnectButton,
         onClickForceCloseButton,
         onKeyDownForceCloseButton,
+        onClickShortcutButton,
+        onKeyDownShortcutButton,
         onClickRestore,
         onKeyDownRestore,
         setTheme,
         setLang,
         setOpenAtLogin,
         setAutoConnect,
-        setForceClose
+        setForceClose,
+        setShortcut
     };
 };
 

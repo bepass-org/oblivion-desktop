@@ -23,7 +23,8 @@ export type settingsKeys =
     | 'reserved'
     | 'scanResult'
     | 'profiles'
-    | 'forceClose';
+    | 'forceClose'
+    | 'shortcut';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -53,7 +54,8 @@ export const defaultSettings = {
     reserved: true,
     scanResult: '',
     profiles: '[]',
-    forceClose: false
+    forceClose: false,
+    shortcut: false
 };
 
 export const countries: { value: string; label: string }[] = [

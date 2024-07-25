@@ -52,6 +52,7 @@ const useLanding = () => {
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
+    const [shortcut, setShortcut] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -129,6 +130,9 @@ const useLanding = () => {
         });
         settings.get('proxyMode').then((value) => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
+        });
+        settings.get('shortcut').then((value) => {
+            setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
         });
 
         cachedIpInfo = null;
@@ -410,7 +414,8 @@ const useLanding = () => {
         handleOnClickIp,
         handleOnClickPing,
         proxyStatus,
-        appVersion: packageJsonData?.version
+        appVersion: packageJsonData?.version,
+        shortcut
     };
 };
 export default useLanding;

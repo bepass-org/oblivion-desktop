@@ -75,6 +75,8 @@ const english: Language = {
         system_tray_desc: 'Not placing the program icon in the taskbar',
         force_close: 'Force Close',
         force_close_desc: 'Do not stay in the system tray upon exit',
+        shortcut: 'Navigator',
+        shortcut_desc: 'Shortcuts on the home page',
         restore: 'Restore',
         restore_desc: 'Apply default application settings',
         scanner: 'Scanner Settings',

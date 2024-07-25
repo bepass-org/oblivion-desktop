@@ -13,11 +13,20 @@ interface RestoreModalProps {
     setOpenAtLogin: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
     setForceClose: (value: boolean) => void;
+    setShortcut: (value: boolean) => void;
 }
 
 const useRestoreModal = (props: RestoreModalProps) => {
-    const { isOpen, onClose, setTheme, setLang, setOpenAtLogin, setAutoConnect, setForceClose } =
-        props;
+    const {
+        isOpen,
+        onClose,
+        setTheme,
+        setLang,
+        setOpenAtLogin,
+        setAutoConnect,
+        setForceClose,
+        setShortcut
+    } = props;
     const detectingSystemTheme = useMemo(
         () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
         []
@@ -47,6 +56,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
     const onSaveModal = useCallback(async () => {
         // in this page
         setForceClose(defaultSettings.forceClose);
+        setShortcut(defaultSettings.shortcut);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
         setAutoConnect(defaultSettings.autoConnect);
@@ -58,6 +68,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
             detectingSystemTheme ? 'dark' : 'light'
         );
         await settings.set('forceClose', defaultSettings.forceClose);
+        await settings.set('shortcut', defaultSettings.shortcut);
         await settings.set('lang', defaultSettings.lang);
         changeLang(defaultSettings.lang);
         document.documentElement.setAttribute('lang', defaultSettings.lang);
@@ -93,6 +104,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         ipcRenderer.sendMessage('startup', defaultSettings.openAtLogin);
     }, [
         setForceClose,
+        setShortcut,
         setLang,
         setOpenAtLogin,
         setAutoConnect,
