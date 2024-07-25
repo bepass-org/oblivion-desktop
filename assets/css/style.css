@@ -2074,8 +2074,15 @@ html[data-bs-theme='dark'] .shimmer {
 }
 
 .speedTest button.startButton[data-type='disabled'] {
-    background: #b3b3b3;
+    background: #fdfdfd;
     box-shadow: 0 0 5px 5px rgba(117, 116, 116, 0.36);
+    animation: inherit;
+    box-shadow: none;
+    color: #757575 !important;
+}
+[data-bs-theme='dark'] .speedTest button.startButton[data-type='disabled'] {
+    background: #0a0e24;
+    color: #fff !important;
 }
 
 .speedTest button.startButton[data-type='enabled'] {
