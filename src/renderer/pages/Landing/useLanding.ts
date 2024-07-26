@@ -5,7 +5,7 @@ import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
-import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
+import { defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
@@ -32,7 +32,7 @@ const formatSpeed = (
         index++;
     }
 
-    return { value: speed.toFixed(precision), unit: units[index] };
+    return { value: parseFloat(speed.toFixed(precision)).toString(), unit: units[index] };
 };
 
 const useLanding = () => {

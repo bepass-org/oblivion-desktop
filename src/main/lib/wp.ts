@@ -112,7 +112,7 @@ export const setStuffPath = (args: string[]) => {
 // ! make sure you get the args like ({ port = '' })
 export const wpErrorTranslation: any = {
     'bind: address already in use': ({ port = '' }) => {
-        return appLang.log.error_port_already_in_use(port); 
+        return appLang.log.error_port_already_in_use(port);
     },
     'Only one usage of each socket address': () => {
         //customEvent.emit('wp-end', true);
