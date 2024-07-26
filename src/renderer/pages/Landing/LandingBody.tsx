@@ -140,13 +140,23 @@ const LandingBody: FC<LandingBodyProps> = ({
                         <div role='presentation' className={classNames('item', 'speed')}>
                             <div className='download'>
                                 <i className='material-icons'>&#xe2c0;</i>
-                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.download.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
+                                    }
+                                >
                                     {speeds.download.value} <small>{speeds.download.unit}</small>
                                 </span>
                             </div>
                             <div className='upload'>
                                 <i className='material-icons'>&#xe2c3;</i>
-                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.upload.unit === 'N/A' ? 'shimmer' : ''
+                                    }
+                                >
                                     {speeds.upload.value} <small>{speeds.upload.unit}</small>
                                 </span>
                             </div>
