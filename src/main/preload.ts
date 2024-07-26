@@ -11,7 +11,10 @@ export type Channels =
     | 'tray-icon'
     | 'tray-menu'
     | 'localization'
-    | 'startup';
+    | 'startup'
+    | 'check-speed'
+    | 'download-speed'
+    | 'upload-speed';
 
 const electronHandler = {
     ipcRenderer: {

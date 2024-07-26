@@ -18,6 +18,23 @@ let connectedToIrIPOnceDisplayed = false;
 let canCheckNewVer = true;
 let hasNewUpdate = false;
 
+const formatSpeed = (
+    speed: number | null,
+    precision: number = 2
+): { value: string; unit: string } => {
+    if (speed == null || speed < 0) return { value: 'N/A', unit: 'N/A' };
+
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let index = 0;
+
+    while (speed >= 1024 && index < units.length - 1) {
+        speed /= 1024;
+        index++;
+    }
+
+    return { value: speed.toFixed(precision), unit: units[index] };
+};
+
 const useLanding = () => {
     const appLang = useTranslate();
     const {
@@ -53,6 +70,10 @@ const useLanding = () => {
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
+    const [speeds, setSpeeds] = useState({
+        download: { value: 'N/A', unit: 'N/A' },
+        upload: { value: 'N/A', unit: 'N/A' }
+    });
 
     const navigate = useNavigate();
 
@@ -163,6 +184,22 @@ const useLanding = () => {
             if (args.key === 'changePage') {
                 navigate(args.msg);
             }
+        });
+
+        ipcRenderer.on('download-speed', function (event) {
+            const formattedDownloadSpeed = formatSpeed(event as number);
+            setSpeeds((prevSpeeds) => ({
+                ...prevSpeeds,
+                download: formattedDownloadSpeed
+            }));
+        });
+
+        ipcRenderer.on('upload-speed', function (event) {
+            const formattedUploadSpeed = formatSpeed(event as number);
+            setSpeeds((prevSpeeds) => ({
+                ...prevSpeeds,
+                upload: formattedUploadSpeed
+            }));
         });
 
         window.addEventListener('online', () => setOnline(true));
@@ -342,6 +379,8 @@ const useLanding = () => {
                 }*/
             }
         });
+
+        ipcRenderer.sendMessage('check-speed', isConnected && ipData);
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
@@ -415,7 +454,8 @@ const useLanding = () => {
         handleOnClickPing,
         proxyStatus,
         appVersion: packageJsonData?.version,
-        shortcut
+        shortcut,
+        speeds
     };
 };
 export default useLanding;
