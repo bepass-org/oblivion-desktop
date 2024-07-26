@@ -13,7 +13,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+                os: [ubuntu-22.04, ubuntu-24.04, windows-latest, macos-13, macos-14]
 
         steps:
             - name: Checkout git repo
@@ -51,25 +51,31 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'macos-13'
-              run: npm exec electron-builder -- --mac dmg zip --x64 --publish always
+              run: npm exec electron-builder -- --mac dmg zip --x64 --publish onTagOrDraft
 
             - name: Publish releases mac arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'macos-14'
-              run: npm exec electron-builder -- --mac dmg zip --arm64 --publish always
+              run: npm exec electron-builder -- --mac dmg zip --arm64 --publish onTagOrDraft
 
             - name: Publish releases windows
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'windows-latest'
-              run: npm exec electron-builder -- --publish always
+              run: npm exec electron-builder -- --publish onTagOrDraft
 
-            - name: Publish releases GNU Linux
+            - name: Publish releases GNU Linux x64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'ubuntu-latest'
-              run: npm exec electron-builder -- --publish always
+              if: matrix.os == 'ubuntu-22.04'
+              run: npm exec electron-builder -- --linux deb rpm tar.xz --x64 --publish onTagOrDraft
+
+            - name: Publish releases GNU Linux arm64
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'ubuntu-24.04'
+              run: npm exec electron-builder -- --linux deb rpm tar.xz --arm64 --publish onTagOrDraft
 
             - name: Delete unwanted files
               uses: mknejp/delete-release-assets@v1
