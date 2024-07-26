@@ -1,7 +1,9 @@
 import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
+import { defaultToast } from '../../../lib/toasts';
 
 type ProfileModalProps = {
     isOpen: boolean;
@@ -18,7 +20,9 @@ const useProfileModal = (props: ProfileModalProps) => {
     const [profilesInput, setProfilesInput] = useState<any>(profiles);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-    const checkValidEndpoint = (value: string) => {
+    const appLang = useTranslate();
+
+    const checkValidEndpoint = useCallback((value: string) => {
         const endpoint = value.replace(/^https?:\/\//, '').replace(/\/$/, '');
         let regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
         if (endpoint.startsWith('[')) {
@@ -26,10 +30,12 @@ const useProfileModal = (props: ProfileModalProps) => {
                 /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))/;
         }
         return regex.test(endpoint) ? endpoint : '';
-    };
+    }, []);
 
-    const handleAddProfile = () => {
-        if (profileName !== '' && checkValidEndpoint(profileEndpoint) !== '') {
+    const handleAddProfile = useCallback(() => {
+        if (editingIndex === null && profilesInput?.length > 6) {
+            defaultToast(appLang.modal.profile_limitation('7'), 'PROFILE_LIMITATION', 5000);
+        } else if (profileName !== '' && checkValidEndpoint(profileEndpoint) !== '') {
             const newProfile = { name: profileName, endpoint: profileEndpoint };
             if (editingIndex !== null) {
                 const updatedProfiles = profilesInput.map((profile: any, index: number) =>
@@ -45,10 +51,18 @@ const useProfileModal = (props: ProfileModalProps) => {
                     setProfilesInput([...profilesInput, newProfile]);
                 }
             }
+            toast.remove('PROFILE_LIMITATION');
         }
         setProfileName('');
         setProfileEndpoint('');
-    };
+    }, [
+        appLang.modal,
+        checkValidEndpoint,
+        editingIndex,
+        profileEndpoint,
+        profileName,
+        profilesInput
+    ]);
 
     const handleRemoveProfile = (key: number) => {
         const updatedProfiles = profilesInput.filter((item: any, index: number) => index !== key);
@@ -77,8 +91,6 @@ const useProfileModal = (props: ProfileModalProps) => {
     }, []);
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
-
-    const appLang = useTranslate();
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);

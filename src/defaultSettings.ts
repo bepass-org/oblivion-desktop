@@ -22,7 +22,9 @@ export type settingsKeys =
     | 'autoConnect'
     | 'reserved'
     | 'scanResult'
-    | 'profiles';
+    | 'profiles'
+    | 'forceClose'
+    | 'shortcut';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -51,7 +53,9 @@ export const defaultSettings = {
     autoConnect: false,
     reserved: true,
     scanResult: '',
-    profiles: '[]'
+    profiles: '[]',
+    forceClose: false,
+    shortcut: false
 };
 
 export const countries: { value: string; label: string }[] = [

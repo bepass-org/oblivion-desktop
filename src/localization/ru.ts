@@ -73,6 +73,10 @@ const russian: Language = {
         auto_connect_desc: 'Подключаться при открытии приложения',
         system_tray: 'Системный трей',
         system_tray_desc: 'Не размещать значок программы на панели задач',
+        force_close: 'Принудительное закрытие',
+        force_close_desc: 'Не оставаться в системном трее после выхода',
+        shortcut: 'Навигатор',
+        shortcut_desc: 'Ярлыки на главной странице',
         restore: 'Восстановить',
         restore_desc: 'Применить настройки приложения по умолчанию',
         scanner: 'Настройки сканера',
@@ -115,9 +119,11 @@ const russian: Language = {
         endpoint_suggested: 'предложено',
         endpoint_latest: 'Последний',
         endpoint_update: 'Получить предложенные конечные точки',
+        endpoint_paste: 'вставить активный endpoint',
         profile_title: 'Профиль',
         profile_name: 'Название',
         profile_endpoint: 'Конечная точка',
+        profile_limitation: (value) => `Вы можете добавить максимум ${value} конечных точек.`,
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'
@@ -163,6 +169,7 @@ const russian: Language = {
         settings_app: 'Приложение',
         about: 'О программе',
         log: 'Журнал',
+        speed_test: 'Тест скорости',
         exit: 'Выход'
     },
     update: {
@@ -171,6 +178,17 @@ const russian: Language = {
         ready: 'Обновление готово',
         ready_message: (value) =>
             `Новая версия ${value} готова. Она будет установлена после перезагрузки. Хотите перезагрузить сейчас?`
+    },
+    speedTest: {
+        title: 'Тест скорости',
+        initializing: 'Инициализация теста скорости ...',
+        click_start: 'Нажмите кнопку, чтобы начать тест скорости',
+        error_msg: 'Произошла ошибка во время теста скорости. Пожалуйста, попробуйте снова.',
+        server_unavailable: 'Сервер проверки скорости недоступен',
+        download_speed: 'Скорость загрузки',
+        upload_speed: 'Скорость выгрузки',
+        latency: 'Задержка',
+        jitter: 'Джиттер'
     }
 };
 export default russian;

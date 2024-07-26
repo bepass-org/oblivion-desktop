@@ -75,6 +75,10 @@ const deutsch: Language = {
         auto_connect_desc: 'Verbinden, wenn App geöffnet wird',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
+        force_close: 'Erzwungenes Schließen',
+        force_close_desc: 'Nach dem Beenden nicht im System Tray bleiben',
+        shortcut: 'Navigator',
+        shortcut_desc: 'Verknüpfungen auf der Startseite',
         restore: 'Wiederherstellen',
         restore_desc: 'Einstellungen auf Standard zurücksetzen',
         scanner: 'Scannereinstellungen',
@@ -116,9 +120,11 @@ const deutsch: Language = {
         endpoint_suggested: 'Empfohlen',
         endpoint_latest: 'Neueste',
         endpoint_update: 'Empfohlene Endpunkte erhalten',
+        endpoint_paste: 'aktiven Endpunkt einfügen',
         profile_title: 'Profil',
         profile_name: 'Titel',
         profile_endpoint: 'Endpunkt',
+        profile_limitation: (value) => `Sie können maximal ${value} Endpunkte hinzufügen.`,
         confirm: 'Ich bestätige',
         update: 'Update',
         cancel: 'Abbrechen'
@@ -164,6 +170,7 @@ const deutsch: Language = {
         settings_app: 'Anwendung',
         about: 'Über',
         log: 'Protokoll',
+        speed_test: 'Geschwindigkeitstest',
         exit: 'Beenden'
     },
     update: {
@@ -173,6 +180,18 @@ const deutsch: Language = {
         ready: 'Update bereit',
         ready_message: (value) =>
             `Eine neue Version von ${value} ist bereit. Sie wird nach einem Neustart installiert. Möchten Sie jetzt neu starten?`
+    },
+    speedTest: {
+        title: 'Geschwindigkeitstest',
+        initializing: 'Geschwindigkeitstest wird initialisiert ...',
+        click_start: 'Klicken Sie auf die Schaltfläche, um den Geschwindigkeitstest zu starten',
+        error_msg:
+            'Während des Geschwindigkeitstests ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+        server_unavailable: 'Geschwindigkeitstest-Server nicht verfügbar',
+        download_speed: 'Download-Geschwindigkeit',
+        upload_speed: 'Upload-Geschwindigkeit',
+        latency: 'Latenz',
+        jitter: 'Jitter'
     }
 };
 export default deutsch;

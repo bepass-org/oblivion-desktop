@@ -9,9 +9,9 @@ interface TabsProps {
 export default function Tabs({ active }: TabsProps) {
     const appLang = useTranslate();
     return (
-        <div className={classNames('tabs', 'inSettings')}>
+        <div className={classNames('tabs', active !== 'landing' ? 'inSettings' : '')}>
             <ul role='menubar' aria-orientation='horizontal'>
-                <li>
+                <li className={active === 'landing' ? 'active' : ''}>
                     <Link to={'/'} role='tab'>
                         <i className={'material-icons'}>&#xe9f6;</i>
                         <span>{appLang?.tabs?.home}</span>

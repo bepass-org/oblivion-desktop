@@ -22,15 +22,23 @@ export default function Options() {
         onCloseRestoreModal,
         onKeyDownAutoStartButton,
         onKeyDownAutoConnectButton,
+        onClickForceCloseButton,
+        onKeyDownForceCloseButton,
+        onClickShortcutButton,
+        onKeyDownShortcutButton,
         onKeyDownChangeTheme,
         onKeyDownRestore,
         openAtLogin,
         autoConnect,
+        forceClose,
+        shortcut,
         showRestoreModal,
         setTheme,
         setLang,
         setOpenAtLogin,
         setAutoConnect,
+        setForceClose,
+        setShortcut,
         theme
     } = useOptions();
 
@@ -38,6 +46,8 @@ export default function Options() {
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
         typeof openAtLogin === 'undefined' ||
+        typeof forceClose === 'undefined' ||
+        typeof shortcut === 'undefined' ||
         typeof autoConnect === 'undefined'
     )
         return <div className='settings' />;
@@ -48,16 +58,17 @@ export default function Options() {
             <RestoreModal
                 {...{
                     setTheme,
-                    //setSystemTray,
+                    setForceClose,
                     setLang,
                     setOpenAtLogin,
-                    setAutoConnect
+                    setAutoConnect,
+                    setShortcut
                 }}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
                 onClose={onCloseRestoreModal}
             />
-            <div className={classNames('myApp', 'normalPage')}>
+            <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <Tabs active='options' />
                 <div className='settings' role='menu'>
                     <div
@@ -100,6 +111,37 @@ export default function Options() {
                         />
                         <div className='info'>{appLang?.settings?.lang_desc}</div>
                     </div>
+                    <div
+                        role='button'
+                        className='item'
+                        onClick={onClickShortcutButton}
+                        onKeyDown={onKeyDownShortcutButton}
+                        tabIndex={0}
+                    >
+                        <label
+                            className='key'
+                            htmlFor='shortcut'
+                            // role='label'
+                        >
+                            {appLang?.settings?.shortcut}
+                        </label>
+                        <div className='value'>
+                            <div
+                                tabIndex={-1}
+                                id='shortcut'
+                                className={classNames('checkbox', shortcut ? 'checked' : '')}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.shortcut_desc}</div>
+                    </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    {appLang?.settings?.more}
+                </div>
+                <div className='settings' role='menu'>
                     <div
                         role='button'
                         className='item'
@@ -150,36 +192,37 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.auto_connect_desc}</div>
                     </div>
-                    {/*<div
-                        role='presentation'
+                    <div
+                        role='button'
                         className='item'
-                        onClick={onClickSystemTrayButton}
-                        onKeyDown={onKeyDownSystemTrayButton}
+                        onClick={onClickForceCloseButton}
+                        onKeyDown={onKeyDownForceCloseButton}
+                        tabIndex={0}
                     >
                         <label
                             className='key'
-                            htmlFor='system-tray'
+                            htmlFor='force-close'
                             // role='label'
                         >
-                            {appLang?.settings?.system_tray}
+                            {appLang?.settings?.force_close}
                         </label>
                         <div className='value'>
                             <div
                                 tabIndex={-1}
-                                id='system-tray'
-                                className={classNames('checkbox', systemTray ? 'checked' : '')}
+                                id='force-close'
+                                className={classNames('checkbox', forceClose ? 'checked' : '')}
                             >
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>{appLang?.settings?.system_tray_desc}</div>
-                    </div>*/}
-                </div>
+                        <div className='info'>{appLang?.settings?.force_close_desc}</div>
+                    </div>
+                    {/* </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
                     {appLang?.settings?.more}
                 </div>
-                <div className='settings' role='menu'>
+                <div className='settings' role='menu'> */}
                     <div
                         role='button'
                         className={'item'}

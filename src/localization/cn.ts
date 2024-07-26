@@ -73,6 +73,10 @@ const chinese: Language = {
         auto_connect_desc: '应用程序打开时连接',
         system_tray: '隐藏系统托盘',
         system_tray_desc: '不在任务栏显示应用图标',
+        force_close: '强制关闭',
+        force_close_desc: '退出时不要停留在系统托盘中',
+        shortcut: '导航器',
+        shortcut_desc: '主页上的快捷方式',
         restore: '恢复默认设置',
         restore_desc: '将应用设置还原为默认值',
         scanner: '扫描仪设置',
@@ -113,9 +117,11 @@ const chinese: Language = {
         endpoint_suggested: '建议',
         endpoint_latest: '最新的',
         endpoint_update: '接收建议的端点',
+        endpoint_paste: '粘贴活动端点',
         profile_title: '个人资料',
         profile_name: '标题',
         profile_endpoint: '端点',
+        profile_limitation: (value) => `您最多可以添加 ${value} 个端点。`,
         confirm: '确认',
         update: '更新',
         cancel: '取消'
@@ -159,6 +165,7 @@ const chinese: Language = {
         settings_app: '应用程序',
         about: '关于',
         log: '日志',
+        speed_test: '速度测试',
         exit: '退出'
     },
     update: {
@@ -167,6 +174,17 @@ const chinese: Language = {
         ready: '更新已准备好',
         ready_message: (value) =>
             `新的 ${value} 版本已准备好。它将在重新启动后安装。您想现在重新启动吗？`
+    },
+    speedTest: {
+        title: '速度测试',
+        initializing: '速度测试初始化中 ...',
+        click_start: '点击按钮开始速度测试',
+        error_msg: '速度测试期间发生错误。请再试一次。',
+        server_unavailable: '速度测试服务器不可用',
+        download_speed: '下载速度',
+        upload_speed: '上传速度',
+        latency: '延迟',
+        jitter: '抖动'
     }
 };
 export default chinese;

@@ -1,4 +1,12 @@
-import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import {
+    KeyboardEvent,
+    MouseEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ipcRenderer, username } from '../../lib/utils';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -7,11 +15,17 @@ import useTranslate from '../../../localization/useTranslate';
 
 const useDebug = () => {
     const [log, setLog] = useState<string>('');
-    const [autoScroll, setAutoScroll] = useState<boolean>(false);
     const logRef = useRef<HTMLParagraphElement>(null);
     //const [isBottom, setIsBottom] = useState(true);
     const appLang = useTranslate();
     const navigate = useNavigate();
+
+    const initAutoScroll = useMemo(() => {
+        return localStorage?.getItem('OBLIVION_SCROLLER')
+            ? localStorage.getItem('OBLIVION_SCROLLER')
+            : '0';
+    }, []);
+    const [autoScroll, setAutoScroll] = useState<boolean>(initAutoScroll === '1' ? true : false);
 
     useEffect(() => {
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -19,7 +33,6 @@ const useDebug = () => {
                 navigate(args.msg);
             }
         });
-
         // asking for log every 1.5sec
         ipcRenderer.sendMessage('get-logs');
         const intervalId = setInterval(() => {
@@ -36,6 +49,7 @@ const useDebug = () => {
                 block: 'end'
             });
         }
+        localStorage.setItem('OBLIVION_SCROLLER', autoScroll ? '1' : '0');
     }, [autoScroll]);
 
     useEffect(() => {

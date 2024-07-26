@@ -9,7 +9,7 @@
             <img src='assets/img/flags/gb.svg' alt='English' style='width: 20px;height: 15px;border-radius: 3px;' />
         </a>
         | 
-       <img src='assets/img/flags/ir.svg' alt='Persian' style='width: 20px;height: 15px;border-radius: 3px;' />
+       <img src='assets/img/flags/iran.svg' alt='Persian' style='width: 20px;height: 15px;border-radius: 3px;' />
         <small>فارسی</small>
     </p>
 </div>
@@ -119,7 +119,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: پینگ<br>
                 :white_check_mark: دسترس‌پذیری<br>
                 :white_large_square: بروزرسانی داخلی<br>
-                :white_large_square: تست سرعت
+                :white_check_mark: تست سرعت
             </td>
         </tr>
     </tbody>

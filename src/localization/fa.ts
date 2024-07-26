@@ -73,6 +73,10 @@ const persian: Language = {
         auto_connect_desc: 'متصل‌شدن هنگام بازشدن برنامه',
         system_tray: 'مخفی\u200Cسازی',
         system_tray_desc: 'قرار نگرفتن آیکون برنامه در تسک\u200Cبار',
+        force_close: 'بستن اجباری',
+        force_close_desc: 'با خروج در نوار اعلان قرار نگیرد',
+        shortcut: 'پیمایشگر',
+        shortcut_desc: 'میانبرها در صفحه نخست',
         restore: 'بازگردانی',
         restore_desc: 'اعمال تنظیمات پیشفرض برنامه',
         scanner: 'تنظیمات اسکنر',
@@ -115,9 +119,11 @@ const persian: Language = {
         endpoint_suggested: 'پیشنهادی',
         endpoint_latest: 'اخیر',
         endpoint_update: 'دریافت اندپوینت‌های پیشنهادی',
+        endpoint_paste: 'جایگذاری اندپوینت فعال',
         profile_title: 'پروفایل',
         profile_name: 'عنوان',
         profile_endpoint: 'اندپوینت',
+        profile_limitation: (value) => `حداکثر می‌توانید ${value} اندپوینت اضافه نمایید.`,
         confirm: 'تایید می\u200Cکنم',
         update: 'بروزرسانی',
         cancel: 'انصراف'
@@ -163,6 +169,7 @@ const persian: Language = {
         settings_app: '   برنامه   ',
         about: 'درباره',
         log: 'لاگ',
+        speed_test: 'تست سرعت',
         exit: 'خروج'
     },
     update: {
@@ -171,6 +178,17 @@ const persian: Language = {
         ready: 'دریافت شد',
         ready_message: (value) =>
             `برنامه ${value} برای آغاز فرایند بروزرسانی آماده است. راه‌اندازی شود؟`
+    },
+    speedTest: {
+        title: 'تست سرعت',
+        initializing: 'درحال آماده‌سازی ...',
+        click_start: 'برای شروع تست کلیک کنید',
+        error_msg: 'هنگام تست سرعت خطایی رخ داده؛ لطفا دوباره تلاش کنید.',
+        server_unavailable: 'سرور تست سرعت در دسترس نیست',
+        download_speed: 'سرعت دانلود',
+        upload_speed: 'سرعت آپلود',
+        latency: 'تاخیر',
+        jitter: 'نوسان'
     }
 };
 export default persian;

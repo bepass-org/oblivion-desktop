@@ -73,6 +73,10 @@ const english: Language = {
         auto_connect_desc: 'Connect when app opens',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
+        force_close: 'Force Close',
+        force_close_desc: 'Do not stay in the system tray upon exit',
+        shortcut: 'Navigator',
+        shortcut_desc: 'Shortcuts on the home page',
         restore: 'Restore',
         restore_desc: 'Apply default application settings',
         scanner: 'Scanner Settings',
@@ -114,9 +118,11 @@ const english: Language = {
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',
         endpoint_update: 'Receive suggested endpoints',
+        endpoint_paste: 'Paste active endpoint',
         profile_title: 'Profile',
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',
+        profile_limitation: (value) => `You can add a maximum of ${value} endpoints.`,
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'
@@ -161,6 +167,7 @@ const english: Language = {
         settings_app: 'Application',
         about: 'About',
         log: 'Log',
+        speed_test: 'Speed test',
         exit: 'Exit'
     },
     update: {
@@ -170,6 +177,17 @@ const english: Language = {
         ready: 'Update Ready',
         ready_message: (value) =>
             `A new version of the ${value} is ready. It will be installed after a restart. Do you want to restart now?`
+    },
+    speedTest: {
+        title: 'Speed Test',
+        initializing: 'Speed test initializing ...',
+        click_start: 'Click the button to start the speed test',
+        error_msg: 'An error occurred during the speed test. Please try again.',
+        server_unavailable: 'Speed test server unavailable',
+        download_speed: 'Download Speed',
+        upload_speed: 'Upload Speed',
+        latency: 'Latency',
+        jitter: 'Jitter'
     }
 };
 export default english;

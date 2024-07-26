@@ -21,6 +21,7 @@ interface LandingBodyProps {
     handleOnClickIp: () => void;
     handleOnClickPing: () => void;
     proxyStatus: string;
+    appVersion: string;
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
@@ -37,7 +38,8 @@ const LandingBody: FC<LandingBodyProps> = ({
     ping,
     proxyMode,
     statusText,
-    proxyStatus
+    proxyStatus,
+    appVersion
 }) => {
     return (
         <div className={classNames('myApp', 'verticalAlign')}>
@@ -45,7 +47,10 @@ const LandingBody: FC<LandingBodyProps> = ({
                 <div className='homeScreen'>
                     <div className='title'>
                         <h1>OBLIVION</h1>
-                        <h2>{appLang?.home?.title_warp_based}</h2>
+                        <h2>
+                            {appLang?.home?.title_warp_based}{' '}
+                            <span className='badge'>v{appVersion.replace('-beta', '')}</span>
+                        </h2>
                     </div>
                     <form action='' onSubmit={onSubmit}>
                         <div className='connector'>
@@ -120,6 +125,20 @@ const LandingBody: FC<LandingBodyProps> = ({
                                     ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
                                     : 'timeout'}
                             </span>
+                        </div>
+                        <div role='presentation' className={classNames('item', 'speed', 'hidden')}>
+                            <div className='download'>
+                                <i className='material-icons'>&#xe2c0;</i>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                    0 <small>MB/s</small>
+                                </span>
+                            </div>
+                            <div className='upload'>
+                                <i className='material-icons'>&#xe2c3;</i>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                    0 <small>KB/s</small>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

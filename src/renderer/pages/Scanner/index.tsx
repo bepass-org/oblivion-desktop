@@ -50,6 +50,7 @@ export default function Scanner() {
                 onClose={onCloseEndpointModal}
             />
             <ProfileModal
+                endpoint={endpoint || ''}
                 profiles={profiles}
                 setProfiles={setProfiles}
                 title={appLang?.modal?.profile_title}
@@ -204,7 +205,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <span className='dirLeft' id='profile' dir='auto' tabIndex={-1}>
-                                {countProfiles(profiles.length)}
+                                {countProfiles(profiles?.length ? profiles.length : 0)}
                             </span>
                         </div>
                         <div className='info'>{appLang?.settings?.profile_desc}</div>

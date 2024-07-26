@@ -227,7 +227,12 @@ if (!gotTheLock) {
                         );
                         await exitTheApp(mainWindow);
                     } else {
-                        mainWindow?.hide();
+                        const forceClose = await settings.get('forceClose');
+                        if (typeof forceClose === 'boolean' && forceClose) {
+                            await exitTheApp(mainWindow);
+                        } else {
+                            mainWindow?.hide();
+                        }
                     }
                 });
 
@@ -401,6 +406,13 @@ if (!gotTheLock) {
                     ]
                 },
                 { label: '', type: 'separator' },
+                {
+                    label: appLang.systemTray.speed_test,
+                    type: 'normal',
+                    click: () => {
+                        redirectTo('/speed');
+                    }
+                },
                 {
                     label: appLang.systemTray.about,
                     type: 'normal',

@@ -73,6 +73,10 @@ export interface Settings {
     auto_connect_desc: string;
     system_tray: string;
     system_tray_desc: string;
+    force_close: string;
+    force_close_desc: string;
+    shortcut: string;
+    shortcut_desc: string;
     restore: string;
     restore_desc: string;
     scanner: string;
@@ -114,9 +118,11 @@ export interface Modal {
     endpoint_suggested: string;
     endpoint_latest: string;
     endpoint_update: string;
+    endpoint_paste: string;
     profile_title: string;
     profile_name: string;
     profile_endpoint: string;
+    profile_limitation: (value: string) => string;
     confirm: string;
     update: string;
     cancel: string;
@@ -162,6 +168,7 @@ export interface SystemTray {
     settings_app: string;
     about: string;
     log: string;
+    speed_test: string;
     exit: string;
 }
 
@@ -170,6 +177,18 @@ export interface Update {
     available_message: (value: string) => string;
     ready: string;
     ready_message: (value: string) => string;
+}
+
+export interface SpeedTest {
+    title: string;
+    initializing: string;
+    click_start: string;
+    error_msg: string;
+    server_unavailable: string;
+    download_speed: string;
+    upload_speed: string;
+    latency: string;
+    jitter: string;
 }
 
 export interface Language {
@@ -184,4 +203,5 @@ export interface Language {
     about: About;
     systemTray: SystemTray;
     update: Update;
+    speedTest: SpeedTest;
 }
