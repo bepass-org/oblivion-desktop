@@ -22,6 +22,16 @@ interface LandingBodyProps {
     handleOnClickPing: () => void;
     proxyStatus: string;
     appVersion: string;
+    speeds: {
+        download: {
+            value: string;
+            unit: string;
+        };
+        upload: {
+            value: string;
+            unit: string;
+        };
+    };
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
@@ -39,7 +49,8 @@ const LandingBody: FC<LandingBodyProps> = ({
     proxyMode,
     statusText,
     proxyStatus,
-    appVersion
+    appVersion,
+    speeds
 }) => {
     return (
         <div className={classNames('myApp', 'verticalAlign')}>
@@ -126,17 +137,27 @@ const LandingBody: FC<LandingBodyProps> = ({
                                     : 'timeout'}
                             </span>
                         </div>
-                        <div role='presentation' className={classNames('item', 'speed', 'hidden')}>
+                        <div role='presentation' className={classNames('item', 'speed')}>
                             <div className='download'>
                                 <i className='material-icons'>&#xe2c0;</i>
-                                <span className={ping === 0 ? 'shimmer' : ''}>
-                                    0 <small>MB/s</small>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.download.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
+                                    }
+                                >
+                                    {speeds.download.value} <small>{speeds.download.unit}</small>
                                 </span>
                             </div>
                             <div className='upload'>
                                 <i className='material-icons'>&#xe2c3;</i>
-                                <span className={ping === 0 ? 'shimmer' : ''}>
-                                    0 <small>KB/s</small>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.upload.unit === 'N/A' ? 'shimmer' : ''
+                                    }
+                                >
+                                    {speeds.upload.value} <small>{speeds.upload.unit}</small>
                                 </span>
                             </div>
                         </div>
