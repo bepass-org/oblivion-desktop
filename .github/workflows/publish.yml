@@ -13,8 +13,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [ubuntu-22.04, ubuntu-24.04]
-                # os: [ubuntu-22.04, ubuntu-24.04, windows-latest, macos-13, macos-14]
+                os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
         steps:
             - name: Checkout git repo
@@ -66,20 +65,11 @@ jobs:
               if: matrix.os == 'windows-latest'
               run: npm exec electron-builder -- --publish always
 
-            - name: Publish releases GNU Linux x64
+            - name: Publish releases GNU Linux
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'ubuntu-22.04'
-              # TODO rm --dir
-              run: npm exec electron-builder -- --linux deb rpm tar.xz --x64 --dir --publish always
-
-            - name: Publish releases GNU Linux arm64
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'ubuntu-22.04'
-              # TODO rm --dir
-              run: npm exec electron-builder -- --linux deb rpm tar.xz --arm64 --dir --publish always
-
+              if: matrix.os == 'ubuntu-latest'
+              run: npm exec electron-builder -- --publish always
 
             - name: Delete unwanted files
               uses: mknejp/delete-release-assets@v1
