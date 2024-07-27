@@ -117,12 +117,12 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 {ipInfo.ip ? ipInfo.ip : '127.0.0.1'}
                             </span>
                         </div>
-                        <div
-                            role='presentation'
-                            className={classNames('item', 'speed')}
-                            onClick={handleOnClickPing}
-                        >
-                            <div className='download'>
+                        <div className={classNames('item', 'speed')}>
+                            <div
+                                className='download isPing'
+                                role='presentation'
+                                onClick={handleOnClickPing}
+                            >
                                 <i className='material-icons'>&#xebca;</i>
                                 <span className={ping === 0 ? 'shimmer' : ''}>
                                     {ping > 0
@@ -130,30 +130,33 @@ const LandingBody: FC<LandingBodyProps> = ({
                                         : 'timeout'}
                                 </span>
                             </div>
-                            <div
-                                className='upload'
-                                title={
-                                    'Download: ' +
-                                    speeds.totalDownload.value +
-                                    ' ' +
-                                    speeds.totalDownload.unit +
-                                    '\nUpload: ' +
-                                    speeds.totalUpload.value +
-                                    ' ' +
-                                    speeds.totalUpload.unit
-                                }
-                            >
+                            <div className={classNames('upload', 'hasTooltip')}>
                                 <i className='material-icons'>&#xe1af;</i>
-                                <span
-                                    className={
-                                        ping === 0 || speeds.totalUsage.unit === 'N/A'
-                                            ? 'shimmer'
-                                            : ''
-                                    }
-                                >
+                                <span className={speeds.totalUsage.unit === 'N/A' ? 'shimmer' : ''}>
                                     {speeds.totalUsage.value}{' '}
                                     <small>{speeds.totalUsage.unit}</small>
                                 </span>
+                                <div
+                                    className={classNames(
+                                        'isTooltip',
+                                        speeds.totalUpload.value === 'N/A' ||
+                                            speeds.totalDownload.value === 'N/A'
+                                            ? 'hidden'
+                                            : ''
+                                    )}
+                                >
+                                    <i className='material-icons'>&#xe5d8;</i>
+                                    <span>
+                                        {speeds.totalUpload.value}{' '}
+                                        <small>{speeds.totalUpload.unit}</small>
+                                    </span>
+                                    <div className='clearfix' />
+                                    <i className='material-icons latest'>&#xe5db;</i>
+                                    <span>
+                                        {speeds.totalDownload.value}{' '}
+                                        <small>{speeds.totalDownload.unit}</small>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div role='presentation' className={classNames('item', 'speed')}>
