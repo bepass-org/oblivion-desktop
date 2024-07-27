@@ -47,6 +47,8 @@ let speedMonitorInterval: NodeJS.Timeout | null = null;
 let getUserLang: any = 'en';
 let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
+let initialDownloadUsage = 0;
+let initialUploadUsage = 0;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -472,21 +474,31 @@ if (!gotTheLock) {
                 const networkStats = await si.networkStats();
                 const mainInterface = networkStats[0];
 
-                const downloadSpeed = mainInterface.rx_sec;
-                const uploadSpeed = mainInterface.tx_sec;
+                const currentDownload = mainInterface.rx_sec;
+                const currentUpload = mainInterface.tx_sec;
+                const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
+                const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
+                const totalUsage = totalDownload + totalUpload;
 
                 if (mainWindow) {
-                    mainWindow.webContents.send('download-speed', downloadSpeed);
-                    mainWindow.webContents.send('upload-speed', uploadSpeed);
+                    mainWindow.webContents.send('speed-stats', {currentDownload, currentUpload, totalDownload, totalUpload, totalUsage});
                 }
             } catch (error) {
                 console.error('Error measuring network speed:', error);
             }
         };
 
+        const initializeNetworkUsage = async () => {
+            const networkStats = await si.networkStats();
+            const mainInterface = networkStats[0];
+            initialDownloadUsage = mainInterface.rx_bytes;
+            initialUploadUsage = mainInterface.tx_bytes;
+        }
+
         const startNetworkSpeedMonitoring = () => {
             if (speedMonitorInterval) return;
 
+            initializeNetworkUsage();
             speedMonitorInterval = setInterval(measureNetworkSpeed, 1000);
         };
 
@@ -494,6 +506,8 @@ if (!gotTheLock) {
             if (speedMonitorInterval) {
                 clearInterval(speedMonitorInterval);
                 speedMonitorInterval = null;
+                initialDownloadUsage = 0;
+                initialUploadUsage = 0;
             }
         };
 

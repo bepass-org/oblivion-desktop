@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { FC, FormEvent } from 'react';
 import { Swipe } from 'react-swipe-component';
 import { cfFlag } from '../../lib/cfFlag';
+import {SpeedStats} from "./useLanding";
 
 interface LandingBodyProps {
     appLang: any;
@@ -22,16 +23,7 @@ interface LandingBodyProps {
     handleOnClickPing: () => void;
     proxyStatus: string;
     appVersion: string;
-    speeds: {
-        download: {
-            value: string;
-            unit: string;
-        };
-        upload: {
-            value: string;
-            unit: string;
-        };
-    };
+    speeds: SpeedStats;
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
@@ -127,37 +119,50 @@ const LandingBody: FC<LandingBodyProps> = ({
                         </div>
                         <div
                             role='presentation'
-                            className={classNames('item', 'ping')}
+                            className={classNames('item', 'speed')}
                             onClick={handleOnClickPing}
                         >
-                            <i className='material-icons'>&#xebca;</i>
-                            <span className={ping === 0 ? 'shimmer' : ''}>
+                            <div className='download'>
+                                <i className='material-icons'>&#xebca;</i>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
                                 {ping > 0
                                     ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
                                     : 'timeout'}
-                            </span>
+                                </span>
+                            </div>
+                            <div className='upload'
+                                 title={'Download: ' + speeds.totalDownload.value + ' ' + speeds.totalDownload.unit + '\nUpload: ' + speeds.totalUpload.value + ' ' + speeds.totalUpload.unit}>
+                                <i className='material-icons'>&#xe1af;</i>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.totalUsage.unit === 'N/A' ? 'shimmer' : ''
+                                    }
+                                >
+                                    {speeds.totalUsage.value} <small>{speeds.totalUsage.unit}</small>
+                                </span>
+                            </div>
                         </div>
                         <div role='presentation' className={classNames('item', 'speed')}>
                             <div className='download'>
                                 <i className='material-icons'>&#xe2c0;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.download.unit === 'N/A'
+                                        ping === 0 || speeds.currentDownload.unit === 'N/A'
                                             ? 'shimmer'
                                             : ''
                                     }
                                 >
-                                    {speeds.download.value} <small>{speeds.download.unit}</small>
+                                    {speeds.currentDownload.value} <small>{speeds.currentDownload.unit}</small>
                                 </span>
                             </div>
                             <div className='upload'>
                                 <i className='material-icons'>&#xe2c3;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.upload.unit === 'N/A' ? 'shimmer' : ''
+                                        ping === 0 || speeds.currentUpload.unit === 'N/A' ? 'shimmer' : ''
                                     }
                                 >
-                                    {speeds.upload.value} <small>{speeds.upload.unit}</small>
+                                    {speeds.currentUpload.value} <small>{speeds.currentUpload.unit}</small>
                                 </span>
                             </div>
                         </div>

@@ -13,8 +13,7 @@ export type Channels =
     | 'localization'
     | 'startup'
     | 'check-speed'
-    | 'download-speed'
-    | 'upload-speed';
+    | 'speed-stats';
 
 const electronHandler = {
     ipcRenderer: {
