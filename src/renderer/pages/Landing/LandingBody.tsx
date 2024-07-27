@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FC, FormEvent } from 'react';
 import { Swipe } from 'react-swipe-component';
 import { cfFlag } from '../../lib/cfFlag';
-import {SpeedStats} from "./useLanding";
+import { SpeedStats } from './useLanding';
 
 interface LandingBodyProps {
     appLang: any;
@@ -125,20 +125,34 @@ const LandingBody: FC<LandingBodyProps> = ({
                             <div className='download'>
                                 <i className='material-icons'>&#xebca;</i>
                                 <span className={ping === 0 ? 'shimmer' : ''}>
-                                {ping > 0
-                                    ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
-                                    : 'timeout'}
+                                    {ping > 0
+                                        ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
+                                        : 'timeout'}
                                 </span>
                             </div>
-                            <div className='upload'
-                                 title={'Download: ' + speeds.totalDownload.value + ' ' + speeds.totalDownload.unit + '\nUpload: ' + speeds.totalUpload.value + ' ' + speeds.totalUpload.unit}>
+                            <div
+                                className='upload'
+                                title={
+                                    'Download: ' +
+                                    speeds.totalDownload.value +
+                                    ' ' +
+                                    speeds.totalDownload.unit +
+                                    '\nUpload: ' +
+                                    speeds.totalUpload.value +
+                                    ' ' +
+                                    speeds.totalUpload.unit
+                                }
+                            >
                                 <i className='material-icons'>&#xe1af;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.totalUsage.unit === 'N/A' ? 'shimmer' : ''
+                                        ping === 0 || speeds.totalUsage.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
                                     }
                                 >
-                                    {speeds.totalUsage.value} <small>{speeds.totalUsage.unit}</small>
+                                    {speeds.totalUsage.value}{' '}
+                                    <small>{speeds.totalUsage.unit}</small>
                                 </span>
                             </div>
                         </div>
@@ -152,17 +166,21 @@ const LandingBody: FC<LandingBodyProps> = ({
                                             : ''
                                     }
                                 >
-                                    {speeds.currentDownload.value} <small>{speeds.currentDownload.unit}</small>
+                                    {speeds.currentDownload.value}{' '}
+                                    <small>{speeds.currentDownload.unit}</small>
                                 </span>
                             </div>
                             <div className='upload'>
                                 <i className='material-icons'>&#xe2c3;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.currentUpload.unit === 'N/A' ? 'shimmer' : ''
+                                        ping === 0 || speeds.currentUpload.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
                                     }
                                 >
-                                    {speeds.currentUpload.value} <small>{speeds.currentUpload.unit}</small>
+                                    {speeds.currentUpload.value}{' '}
+                                    <small>{speeds.currentUpload.unit}</small>
                                 </span>
                             </div>
                         </div>

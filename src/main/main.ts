@@ -481,7 +481,13 @@ if (!gotTheLock) {
                 const totalUsage = totalDownload + totalUpload;
 
                 if (mainWindow) {
-                    mainWindow.webContents.send('speed-stats', {currentDownload, currentUpload, totalDownload, totalUpload, totalUsage});
+                    mainWindow.webContents.send('speed-stats', {
+                        currentDownload,
+                        currentUpload,
+                        totalDownload,
+                        totalUpload,
+                        totalUsage
+                    });
                 }
             } catch (error) {
                 console.error('Error measuring network speed:', error);
@@ -493,7 +499,7 @@ if (!gotTheLock) {
             const mainInterface = networkStats[0];
             initialDownloadUsage = mainInterface.rx_bytes;
             initialUploadUsage = mainInterface.tx_bytes;
-        }
+        };
 
         const startNetworkSpeedMonitoring = () => {
             if (speedMonitorInterval) return;

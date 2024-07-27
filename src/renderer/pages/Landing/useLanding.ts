@@ -19,11 +19,11 @@ let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 export interface SpeedStats {
-    currentDownload: { value: string; unit: string; };
-    currentUpload: { value: string; unit: string; };
-    totalDownload: { value: string; unit: string; };
-    totalUpload: { value: string; unit: string; };
-    totalUsage: { value: string; unit: string; };
+    currentDownload: { value: string; unit: string };
+    currentUpload: { value: string; unit: string };
+    totalDownload: { value: string; unit: string };
+    totalUpload: { value: string; unit: string };
+    totalUsage: { value: string; unit: string };
 }
 
 export const defaultSpeedStats: SpeedStats = {
@@ -199,7 +199,7 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('speed-stats', (event:any) => {
+        ipcRenderer.on('speed-stats', (event: any) => {
             const formattedCurrentDownload = formatSpeed(event?.currentDownload);
             const formattedCurrentUpload = formatSpeed(event?.currentUpload);
             const formattedTotalDownload = formatSpeed(event?.totalDownload);
