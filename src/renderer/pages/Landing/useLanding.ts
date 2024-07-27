@@ -199,17 +199,12 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('speed-stats', (event) => {
-            // @ts-ignore
-            const formattedCurrentDownload = formatSpeed(event.currentDownload);
-            // @ts-ignore
-            const formattedCurrentUpload = formatSpeed(event.currentUpload);
-            // @ts-ignore
-            const formattedTotalDownload = formatSpeed(event.totalDownload);
-            // @ts-ignore
-            const formattedTotalUpload = formatSpeed(event.totalUpload);
-            // @ts-ignore
-            const formattedTotalUsage = formatSpeed(event.totalUsage);
+        ipcRenderer.on('speed-stats', (event:any) => {
+            const formattedCurrentDownload = formatSpeed(event?.currentDownload);
+            const formattedCurrentUpload = formatSpeed(event?.currentUpload);
+            const formattedTotalDownload = formatSpeed(event?.totalDownload);
+            const formattedTotalUpload = formatSpeed(event?.totalUpload);
+            const formattedTotalUsage = formatSpeed(event?.totalUsage);
 
             setSpeeds((prevSpeeds) => ({
                 ...prevSpeeds,
