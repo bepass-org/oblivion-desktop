@@ -146,7 +146,9 @@ const LandingBody: FC<LandingBodyProps> = ({
                                     className={classNames(
                                         'isTooltip',
                                         speeds.totalUpload.value === 'N/A' ||
-                                            speeds.totalDownload.value === 'N/A'
+                                            speeds.totalDownload.value === 'N/A' ||
+                                            ping === 0 ||
+                                            speeds.totalUsage.unit === 'N/A'
                                             ? 'hidden'
                                             : ''
                                     )}
