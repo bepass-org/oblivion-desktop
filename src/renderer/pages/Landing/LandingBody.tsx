@@ -132,7 +132,13 @@ const LandingBody: FC<LandingBodyProps> = ({
                             </div>
                             <div className={classNames('upload', 'hasTooltip')}>
                                 <i className='material-icons'>&#xe1af;</i>
-                                <span className={speeds.totalUsage.unit === 'N/A' ? 'shimmer' : ''}>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.totalUsage.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
+                                    }
+                                >
                                     {speeds.totalUsage.value}{' '}
                                     <small>{speeds.totalUsage.unit}</small>
                                 </span>
