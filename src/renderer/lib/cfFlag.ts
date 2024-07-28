@@ -79,7 +79,7 @@ export const cfFlag = (code: any) => {
             return ie;
         } else if (code === 'id') {
             return id;
-        } else if (code === 'in') { 
+        } else if (code === 'in') {
             return ind;
         } else if (code === 'it') {
             return it;
