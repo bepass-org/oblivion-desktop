@@ -1,5 +1,6 @@
 import xx from '../../../assets/img/flags/xx.svg';
 import ir from '../../../assets/img/flags/iran.svg';
+import au from '../../../assets/img/flags/au.svg';
 import at from '../../../assets/img/flags/at.svg';
 import be from '../../../assets/img/flags/be.svg';
 import bg from '../../../assets/img/flags/bg.svg';
@@ -18,6 +19,7 @@ import gb from '../../../assets/img/flags/gb.svg';
 import hu from '../../../assets/img/flags/hu.svg';
 import ie from '../../../assets/img/flags/ie.svg';
 import ind from '../../../assets/img/flags/in.svg';
+import id from '../../../assets/img/flags/id.svg';
 import it from '../../../assets/img/flags/it.svg';
 import jp from '../../../assets/img/flags/jp.svg';
 import lv from '../../../assets/img/flags/lv.svg';
@@ -39,6 +41,8 @@ export const cfFlag = (code: any) => {
             return ir;
         } else if (code === 'xx') {
             return xx;
+        } else if (code === 'au') {
+            return au;
         } else if (code === 'at') {
             return at;
         } else if (code === 'be') {
@@ -73,7 +77,9 @@ export const cfFlag = (code: any) => {
             return hu;
         } else if (code === 'ie') {
             return ie;
-        } else if (code === 'in') {
+        } else if (code === 'id') {
+            return id;
+        } else if (code === 'in') { 
             return ind;
         } else if (code === 'it') {
             return it;
