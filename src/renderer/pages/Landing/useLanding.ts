@@ -394,7 +394,7 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.sendMessage('check-speed', isConnected && ipData);
+        ipcRenderer.sendMessage('check-speed', isConnected && proxyStatus !== 'none');
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
