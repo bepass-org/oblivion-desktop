@@ -542,9 +542,8 @@ html[data-bs-theme='dark'] .homeScreen .inFoot small {
 .homeScreen .inFoot .item {
     float: left;
     width: 100%;
-    margin: 5px 0;
+    margin: 5px 0 6px 0;
 }
-
 .homeScreen .inFoot .item img {
     float: left;
     width: 17px;
@@ -635,6 +634,9 @@ html[data-bs-theme='dark'] .shimmer {
     margin: 1px 0 5px 0;
     cursor: default;
 }
+.homeScreen .inFoot .item.speed .download {
+    float: left;
+}
 .homeScreen .inFoot .item.speed .upload {
     float: right;
     margin-right: 4px;
@@ -654,9 +656,68 @@ html[data-bs-theme='dark'] .shimmer {
     width: auto;
     cursor: default;
 }
+.homeScreen .inFoot .item.speed .isPing span {
+    cursor: pointer;
+}
 .homeScreen .inFoot .item.speed .download span small,
 .homeScreen .inFoot .item.speed .upload span small {
     cursor: default;
+}
+
+.homeScreen .inFoot .item .hasTooltip {
+    position: relative;
+}
+.homeScreen .inFoot .item .hasTooltip .isTooltip {
+    position: absolute;
+    content: '';
+    background: #fff;
+    border-radius: 5px;
+    color: #000;
+    min-width: 105px;
+    padding: 7px;
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 17px;
+    bottom: 20px;
+    right: -3px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+}
+[data-bs-theme='dark'] .homeScreen .inFoot .item .hasTooltip .isTooltip {
+    background: #01030a;
+    color: #c3c3c3;
+}
+.homeScreen .inFoot .item .hasTooltip:hover .isTooltip {
+    opacity: 1;
+}
+.homeScreen .inFoot .item .hasTooltip .isTooltip i {
+    float: left;
+    font-style: normal;
+    opacity: 0.3;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    margin: 0;
+}
+.homeScreen .inFoot .item .hasTooltip .isTooltip i.latest {
+    top: inherit;
+    bottom: 6px;
+}
+.homeScreen .inFoot .item .hasTooltip .isTooltip span {
+    direction: ltr;
+    float: right;
+    width: auto;
+    text-align: left;
+    overflow: inherit;
+    white-space: inherit;
+    text-overflow: inherit;
+    margin: 0;
+}
+.homeScreen .inFoot .item .hasTooltip .isTooltip .clearfix {
+    float: left;
+    width: 100%;
+    height: 4px;
 }
 
 .logPage .logText {

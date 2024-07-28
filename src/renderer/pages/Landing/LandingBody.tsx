@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { FC, FormEvent } from 'react';
 import { Swipe } from 'react-swipe-component';
 import { cfFlag } from '../../lib/cfFlag';
+import { SpeedStats } from './useLanding';
 
 interface LandingBodyProps {
     appLang: any;
@@ -22,16 +23,7 @@ interface LandingBodyProps {
     handleOnClickPing: () => void;
     proxyStatus: string;
     appVersion: string;
-    speeds: {
-        download: {
-            value: string;
-            unit: string;
-        };
-        upload: {
-            value: string;
-            unit: string;
-        };
-    };
+    speeds: SpeedStats;
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
@@ -125,39 +117,79 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 {ipInfo.ip ? ipInfo.ip : '127.0.0.1'}
                             </span>
                         </div>
-                        <div
-                            role='presentation'
-                            className={classNames('item', 'ping')}
-                            onClick={handleOnClickPing}
-                        >
-                            <i className='material-icons'>&#xebca;</i>
-                            <span className={ping === 0 ? 'shimmer' : ''}>
-                                {ping > 0
-                                    ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
-                                    : 'timeout'}
-                            </span>
+                        <div className={classNames('item', 'speed')}>
+                            <div
+                                className='download isPing'
+                                role='presentation'
+                                onClick={handleOnClickPing}
+                            >
+                                <i className='material-icons'>&#xebca;</i>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                    {ping > 0
+                                        ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
+                                        : 'timeout'}
+                                </span>
+                            </div>
+                            <div className={classNames('upload', 'hasTooltip')}>
+                                <i className='material-icons'>&#xe1af;</i>
+                                <span
+                                    className={
+                                        ping === 0 || speeds.totalUsage.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
+                                    }
+                                >
+                                    {speeds.totalUsage.value}{' '}
+                                    <small>{speeds.totalUsage.unit}</small>
+                                </span>
+                                <div
+                                    className={classNames(
+                                        'isTooltip',
+                                        speeds.totalUpload.value === 'N/A' ||
+                                            speeds.totalDownload.value === 'N/A'
+                                            ? 'hidden'
+                                            : ''
+                                    )}
+                                >
+                                    <i className='material-icons'>&#xe5d8;</i>
+                                    <span>
+                                        {speeds.totalUpload.value}{' '}
+                                        <small>{speeds.totalUpload.unit}</small>
+                                    </span>
+                                    <div className='clearfix' />
+                                    <i className='material-icons latest'>&#xe5db;</i>
+                                    <span>
+                                        {speeds.totalDownload.value}{' '}
+                                        <small>{speeds.totalDownload.unit}</small>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div role='presentation' className={classNames('item', 'speed')}>
                             <div className='download'>
                                 <i className='material-icons'>&#xe2c0;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.download.unit === 'N/A'
+                                        ping === 0 || speeds.currentDownload.unit === 'N/A'
                                             ? 'shimmer'
                                             : ''
                                     }
                                 >
-                                    {speeds.download.value} <small>{speeds.download.unit}</small>
+                                    {speeds.currentDownload.value}{' '}
+                                    <small>{speeds.currentDownload.unit}</small>
                                 </span>
                             </div>
                             <div className='upload'>
                                 <i className='material-icons'>&#xe2c3;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.upload.unit === 'N/A' ? 'shimmer' : ''
+                                        ping === 0 || speeds.currentUpload.unit === 'N/A'
+                                            ? 'shimmer'
+                                            : ''
                                     }
                                 >
-                                    {speeds.upload.value} <small>{speeds.upload.unit}</small>
+                                    {speeds.currentUpload.value}{' '}
+                                    <small>{speeds.currentUpload.unit}</small>
                                 </span>
                             </div>
                         </div>

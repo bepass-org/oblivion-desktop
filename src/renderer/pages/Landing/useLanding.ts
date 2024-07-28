@@ -18,6 +18,22 @@ let connectedToIrIPOnceDisplayed = false;
 let canCheckNewVer = true;
 let hasNewUpdate = false;
 
+export interface SpeedStats {
+    currentDownload: { value: string; unit: string };
+    currentUpload: { value: string; unit: string };
+    totalDownload: { value: string; unit: string };
+    totalUpload: { value: string; unit: string };
+    totalUsage: { value: string; unit: string };
+}
+
+export const defaultSpeedStats: SpeedStats = {
+    currentDownload: { value: 'N/A', unit: 'N/A' },
+    currentUpload: { value: 'N/A', unit: 'N/A' },
+    totalDownload: { value: 'N/A', unit: 'N/A' },
+    totalUpload: { value: 'N/A', unit: 'N/A' },
+    totalUsage: { value: 'N/A', unit: 'N/A' }
+};
+
 const formatSpeed = (
     speed: number | null,
     precision: number = 2
@@ -70,10 +86,7 @@ const useLanding = () => {
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
-    const [speeds, setSpeeds] = useState({
-        download: { value: 'N/A', unit: 'N/A' },
-        upload: { value: 'N/A', unit: 'N/A' }
-    });
+    const [speeds, setSpeeds] = useState<SpeedStats>(defaultSpeedStats);
 
     const navigate = useNavigate();
 
@@ -186,19 +199,20 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('download-speed', function (event) {
-            const formattedDownloadSpeed = formatSpeed(event as number);
-            setSpeeds((prevSpeeds) => ({
-                ...prevSpeeds,
-                download: formattedDownloadSpeed
-            }));
-        });
+        ipcRenderer.on('speed-stats', (event: any) => {
+            const formattedCurrentDownload = formatSpeed(event?.currentDownload);
+            const formattedCurrentUpload = formatSpeed(event?.currentUpload);
+            const formattedTotalDownload = formatSpeed(event?.totalDownload);
+            const formattedTotalUpload = formatSpeed(event?.totalUpload);
+            const formattedTotalUsage = formatSpeed(event?.totalUsage);
 
-        ipcRenderer.on('upload-speed', function (event) {
-            const formattedUploadSpeed = formatSpeed(event as number);
             setSpeeds((prevSpeeds) => ({
                 ...prevSpeeds,
-                upload: formattedUploadSpeed
+                currentDownload: formattedCurrentDownload,
+                currentUpload: formattedCurrentUpload,
+                totalDownload: formattedTotalDownload,
+                totalUpload: formattedTotalUpload,
+                totalUsage: formattedTotalUsage
             }));
         });
 
@@ -380,7 +394,7 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.sendMessage('check-speed', isConnected && ipData);
+        ipcRenderer.sendMessage('check-speed', isConnected && proxyStatus !== 'none');
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
