@@ -31,6 +31,7 @@ export const getUserSettings = async () => {
     const rtt = await settings.get('rtt');
     const reserved = await settings.get('reserved');
     const lang = await settings.get('lang');
+    const dns = await settings.get('dns');
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     // ! push one arg(flag) at a time
@@ -91,6 +92,16 @@ export const getUserSettings = async () => {
     if (typeof reserved === 'boolean' && !reserved) {
         args.push('--reserved');
         args.push('0,0,0');
+    }
+
+    if (typeof method === 'string') {
+        if (method !== 'psiphon') {
+            args.push('--dns');
+            args.push(dns);
+        }
+    } else {
+        args.push('--dns');
+        args.push(dns);
     }
 
     return args;

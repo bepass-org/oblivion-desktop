@@ -1,5 +1,5 @@
 import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { defaultSettings } from '../../../../defaultSettings';
+import { defaultSettings, dnsServers } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
@@ -98,6 +98,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('reserved', defaultSettings.reserved);
         await settings.set('scanResult', defaultSettings.scanResult);
         await settings.set('profiles', defaultSettings.profiles);
+        await settings.set('dns', dnsServers[0]);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
