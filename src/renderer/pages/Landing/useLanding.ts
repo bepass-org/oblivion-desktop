@@ -5,7 +5,7 @@ import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
-import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
+import { defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
@@ -17,6 +17,39 @@ const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
 let canCheckNewVer = true;
 let hasNewUpdate = false;
+
+export interface SpeedStats {
+    currentDownload: { value: string; unit: string };
+    currentUpload: { value: string; unit: string };
+    totalDownload: { value: string; unit: string };
+    totalUpload: { value: string; unit: string };
+    totalUsage: { value: string; unit: string };
+}
+
+export const defaultSpeedStats: SpeedStats = {
+    currentDownload: { value: 'N/A', unit: 'N/A' },
+    currentUpload: { value: 'N/A', unit: 'N/A' },
+    totalDownload: { value: 'N/A', unit: 'N/A' },
+    totalUpload: { value: 'N/A', unit: 'N/A' },
+    totalUsage: { value: 'N/A', unit: 'N/A' }
+};
+
+const formatSpeed = (
+    speed: number | null,
+    precision: number = 2
+): { value: string; unit: string } => {
+    if (speed == null || speed < 0) return { value: 'N/A', unit: 'N/A' };
+
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let index = 0;
+
+    while (speed >= 1024 && index < units.length - 1) {
+        speed /= 1024;
+        index++;
+    }
+
+    return { value: parseFloat(speed.toFixed(precision)).toString(), unit: units[index] };
+};
 
 const useLanding = () => {
     const appLang = useTranslate();
@@ -53,6 +86,7 @@ const useLanding = () => {
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
+    const [speeds, setSpeeds] = useState<SpeedStats>(defaultSpeedStats);
 
     const navigate = useNavigate();
 
@@ -163,6 +197,23 @@ const useLanding = () => {
             if (args.key === 'changePage') {
                 navigate(args.msg);
             }
+        });
+
+        ipcRenderer.on('speed-stats', (event: any) => {
+            const formattedCurrentDownload = formatSpeed(event?.currentDownload);
+            const formattedCurrentUpload = formatSpeed(event?.currentUpload);
+            const formattedTotalDownload = formatSpeed(event?.totalDownload);
+            const formattedTotalUpload = formatSpeed(event?.totalUpload);
+            const formattedTotalUsage = formatSpeed(event?.totalUsage);
+
+            setSpeeds((prevSpeeds) => ({
+                ...prevSpeeds,
+                currentDownload: formattedCurrentDownload,
+                currentUpload: formattedCurrentUpload,
+                totalDownload: formattedTotalDownload,
+                totalUpload: formattedTotalUpload,
+                totalUsage: formattedTotalUsage
+            }));
         });
 
         window.addEventListener('online', () => setOnline(true));
@@ -342,6 +393,8 @@ const useLanding = () => {
                 }*/
             }
         });
+
+        ipcRenderer.sendMessage('check-speed', isConnected && proxyStatus !== 'none');
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
@@ -415,7 +468,8 @@ const useLanding = () => {
         handleOnClickPing,
         proxyStatus,
         appVersion: packageJsonData?.version,
-        shortcut
+        shortcut,
+        speeds
     };
 };
 export default useLanding;

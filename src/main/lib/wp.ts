@@ -6,6 +6,7 @@ import { doesDirectoryExist, removeDirIfExists } from './utils';
 import { stuffPath } from '../ipcListeners/wp';
 //import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
+//import { customEvent } from './customEvent';
 
 let appLang = getTranslate('en');
 
@@ -114,6 +115,7 @@ export const wpErrorTranslation: any = {
         return appLang.log.error_port_already_in_use(port);
     },
     'Only one usage of each socket address': () => {
+        //customEvent.emit('wp-end', true);
         return appLang.log.error_port_socket;
     },
     'Invalid license': () => {

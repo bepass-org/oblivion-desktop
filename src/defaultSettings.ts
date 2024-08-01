@@ -59,6 +59,7 @@ export const defaultSettings = {
 };
 
 export const countries: { value: string; label: string }[] = [
+    //{ value: 'AU', label: 'Australia' },
     { value: 'AT', label: 'Austria' },
     { value: 'BE', label: 'Belgium' },
     { value: 'BG', label: 'Bulgaria' },
@@ -77,6 +78,7 @@ export const countries: { value: string; label: string }[] = [
     { value: 'HU', label: 'Hungary' },
     { value: 'IE', label: 'Ireland' },
     { value: 'IN', label: 'India' },
+    //{ value: 'ID', label: 'Indonesia' },
     { value: 'IT', label: 'Italy' },
     { value: 'JP', label: 'Japan' },
     { value: 'LV', label: 'Latvia' },

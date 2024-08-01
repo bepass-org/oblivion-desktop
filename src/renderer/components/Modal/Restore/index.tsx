@@ -10,6 +10,7 @@ interface RestoreModalProps {
     setOpenAtLogin: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
     setForceClose: (value: boolean) => void;
+    setShortcut: (value: boolean) => void;
 }
 
 export default function RestoreModal({
@@ -20,7 +21,8 @@ export default function RestoreModal({
     setLang,
     setOpenAtLogin,
     setAutoConnect,
-    setForceClose
+    setForceClose,
+    setShortcut
 }: RestoreModalProps) {
     const { appLang, handleOnClose, onSaveModal, onCancelKeyDown, onConfirmKeyDown, showModal } =
         useRestoreModal({
@@ -30,7 +32,8 @@ export default function RestoreModal({
             setLang,
             setOpenAtLogin,
             setAutoConnect,
-            setForceClose
+            setForceClose,
+            setShortcut
         });
 
     if (!isOpen) return null;

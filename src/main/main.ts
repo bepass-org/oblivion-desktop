@@ -28,6 +28,7 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
+import si from 'systeminformation';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -40,10 +41,14 @@ import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
 
 let mainWindow: BrowserWindow | null = null;
+// eslint-disable-next-line no-undef
+let speedMonitorInterval: NodeJS.Timeout | null = null;
 
 let getUserLang: any = 'en';
 let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
+let initialDownloadUsage = 0;
+let initialUploadUsage = 0;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -406,13 +411,13 @@ if (!gotTheLock) {
                     ]
                 },
                 { label: '', type: 'separator' },
-                {
+                /*{
                     label: appLang.systemTray.speed_test,
                     type: 'normal',
                     click: () => {
                         redirectTo('/speed');
                     }
-                },
+                },*/
                 {
                     label: appLang.systemTray.about,
                     type: 'normal',
@@ -463,6 +468,62 @@ if (!gotTheLock) {
                 Menu.buildFromTemplate(trayMenuContext(connectionLabel(status), status, true))
             );
         };
+
+        const measureNetworkSpeed = async () => {
+            try {
+                const networkStats = await si.networkStats();
+                const mainInterface = networkStats[0];
+
+                const currentDownload = mainInterface.rx_sec;
+                const currentUpload = mainInterface.tx_sec;
+                const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
+                const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
+                const totalUsage = totalDownload + totalUpload;
+
+                if (mainWindow) {
+                    mainWindow.webContents.send('speed-stats', {
+                        currentDownload,
+                        currentUpload,
+                        totalDownload,
+                        totalUpload,
+                        totalUsage
+                    });
+                }
+            } catch (error) {
+                console.error('Error measuring network speed:', error);
+            }
+        };
+
+        const initializeNetworkUsage = async () => {
+            const networkStats = await si.networkStats();
+            const mainInterface = networkStats[0];
+            initialDownloadUsage = mainInterface.rx_bytes;
+            initialUploadUsage = mainInterface.tx_bytes;
+        };
+
+        const startNetworkSpeedMonitoring = () => {
+            if (speedMonitorInterval) return;
+
+            initializeNetworkUsage();
+            speedMonitorInterval = setInterval(measureNetworkSpeed, 1000);
+        };
+
+        const stopNetworkSpeedMonitoring = () => {
+            if (speedMonitorInterval) {
+                clearInterval(speedMonitorInterval);
+                speedMonitorInterval = null;
+                initialDownloadUsage = 0;
+                initialUploadUsage = 0;
+            }
+        };
+
+        ipcMain.on('check-speed', (event, arg) => {
+            if (arg) {
+                startNetworkSpeedMonitoring();
+            } else {
+                stopNetworkSpeedMonitoring();
+            }
+        });
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {

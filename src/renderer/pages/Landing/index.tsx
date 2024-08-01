@@ -28,7 +28,8 @@ export default function Landing() {
         toggleDrawer,
         proxyStatus,
         appVersion,
-        shortcut
+        shortcut,
+        speeds
     } = useLanding();
 
     return (
@@ -62,6 +63,7 @@ export default function Landing() {
                 statusText={statusText}
                 proxyStatus={proxyStatus}
                 appVersion={appVersion}
+                speeds={speeds}
             />
             {!isConnected && shortcut && <Tabs active='landing' />}
             <Toaster position='bottom-center' reverseOrder={false} />
