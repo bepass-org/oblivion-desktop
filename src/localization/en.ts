@@ -63,6 +63,8 @@ const english: Language = {
         dns_desc: 'Select the desired DNS',
         ip_data: 'IP Check',
         ip_data_desc: 'Display IP & location after connection',
+        data_usage: 'Data Usage',
+        data_usage_desc: 'Display data usage & real-time speed',
         dark_mode: 'Dark Mode',
         dark_mode_desc: 'Specify the display mode of the application',
         lang: 'Language',

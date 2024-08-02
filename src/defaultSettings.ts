@@ -24,7 +24,8 @@ export type settingsKeys =
     | 'scanResult'
     | 'profiles'
     | 'forceClose'
-    | 'shortcut';
+    | 'shortcut'
+    | 'dataUsage';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -55,7 +56,8 @@ export const defaultSettings = {
     scanResult: '',
     profiles: '[]',
     forceClose: false,
-    shortcut: false
+    shortcut: false,
+    dataUsage: true
 };
 
 export const countries: { value: string; label: string }[] = [
@@ -107,5 +109,5 @@ export const dnsServers: { value: string; label: string }[] = [
     { value: '1.1.1.1', label: 'Cloudflare' },
     { value: '8.8.8.8', label: 'Google' },
     { value: '94.140.14.14', label: 'Adguard' },
-    { value: '94.140.14.15', label: 'Adguard Family' },
+    { value: '94.140.14.15', label: 'Adguard Family' }
 ];

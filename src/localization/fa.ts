@@ -63,6 +63,8 @@ const persian: Language = {
         dns_desc: 'انتخاب DNS موردنظر',
         ip_data: 'بررسی IP',
         ip_data_desc: 'نمایش آی\u200Cپی و لوکیشن پس\u200Cاز اتصال',
+        data_usage: 'مصرف داده',
+        data_usage_desc: 'نمایش مصرف داده و سرعت بلادرنگ',
         dark_mode: 'حالت تیره',
         dark_mode_desc: 'مشخص\u200Cکردن حالت نمایش برنامه',
         lang: 'زبان برنامه',

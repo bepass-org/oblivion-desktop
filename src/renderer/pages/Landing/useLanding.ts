@@ -26,7 +26,7 @@ export interface SpeedStats {
     totalUsage: { value: string; unit: string };
 }
 
-export const defaultSpeedStats: SpeedStats = {
+const defaultSpeedStats: SpeedStats = {
     currentDownload: { value: 'N/A', unit: 'N/A' },
     currentUpload: { value: 'N/A', unit: 'N/A' },
     totalDownload: { value: 'N/A', unit: 'N/A' },
@@ -87,6 +87,7 @@ const useLanding = () => {
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [speeds, setSpeeds] = useState<SpeedStats>(defaultSpeedStats);
+    const [dataUsage, setDataUsage] = useState<boolean>(true);
 
     const navigate = useNavigate();
 
@@ -167,6 +168,9 @@ const useLanding = () => {
         });
         settings.get('shortcut').then((value) => {
             setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
+        });
+        settings.get('dataUsage').then((value) => {
+            setDataUsage(typeof value === 'undefined' ? defaultSettings.dataUsage : value);
         });
 
         cachedIpInfo = null;
@@ -374,6 +378,7 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
+                ipcRenderer.sendMessage('check-speed', proxyStatus !== 'none' && dataUsage && ipData);
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
                 }*/
@@ -388,13 +393,13 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
+                ipcRenderer.sendMessage('check-speed', false);
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', 'disconnected');
                 }*/
             }
         });
 
-        ipcRenderer.sendMessage('check-speed', isConnected && proxyStatus !== 'none');
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
@@ -469,7 +474,8 @@ const useLanding = () => {
         proxyStatus,
         appVersion: packageJsonData?.version,
         shortcut,
-        speeds
+        speeds,
+        dataUsage
     };
 };
 export default useLanding;

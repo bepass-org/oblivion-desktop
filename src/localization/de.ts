@@ -65,6 +65,8 @@ const deutsch: Language = {
         dns_desc: 'Wählen Sie den gewünschten DNS',
         ip_data: 'IP Check',
         ip_data_desc: 'IP & Standort nach herstellen der Verbindung anzeigen',
+        data_usage: 'Datennutzung',
+        data_usage_desc: 'Anzeige der Datennutzung und Echtzeitgeschwindigkeit',
         dark_mode: 'Dunkler Modus',
         dark_mode_desc: 'Anzeigemodus der Anwendung angeben',
         lang: 'Sprache',

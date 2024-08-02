@@ -24,6 +24,7 @@ interface LandingBodyProps {
     proxyStatus: string;
     appVersion: string;
     speeds: SpeedStats;
+    dataUsage: boolean;
 }
 
 const LandingBody: FC<LandingBodyProps> = ({
@@ -42,7 +43,8 @@ const LandingBody: FC<LandingBodyProps> = ({
     statusText,
     proxyStatus,
     appVersion,
-    speeds
+    speeds,
+    dataUsage
 }) => {
     return (
         <div className={classNames('myApp', 'verticalAlign')}>
@@ -130,7 +132,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                         : 'timeout'}
                                 </span>
                             </div>
-                            <div className={classNames('upload', 'hasTooltip')}>
+                            <div className={classNames('upload', 'hasTooltip', dataUsage ? '' : 'hidden')}>
                                 <i className='material-icons'>&#xe1af;</i>
                                 <span
                                     className={
@@ -167,7 +169,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 </div>
                             </div>
                         </div>
-                        <div role='presentation' className={classNames('item', 'speed')}>
+                        <div role='presentation' className={classNames('item', 'speed', dataUsage ? '' : 'hidden')}>
                             <div className='download'>
                                 <i className='material-icons'>&#xe2c0;</i>
                                 <span

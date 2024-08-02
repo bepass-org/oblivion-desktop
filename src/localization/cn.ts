@@ -63,6 +63,8 @@ const chinese: Language = {
         dns_desc: '选择所需的DNS',
         ip_data: '解析目标地址',
         ip_data_desc: '连接后显示 IP 和位置',
+        data_usage: '数据使用量',
+        data_usage_desc: '显示数据使用量和实时速度',
         dark_mode: '深色模式',
         dark_mode_desc: '定义应用主题模式',
         lang: '语言',

@@ -8,7 +8,7 @@ import Tabs from '../../components/Tabs';
 import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
-import {dnsServers} from "../../../defaultSettings";
+import { dnsServers } from '../../../defaultSettings';
 
 const proxyModes = [
     {
@@ -31,6 +31,7 @@ export default function Options() {
         handleCheckIpDataOnKeyDown,
         handleShareVPNOnClick,
         handleShareVPNOnKeyDown,
+        handleDataUsageOnClick,
         ipData,
         onChangeProxyMode,
         onChangeDNS,
@@ -40,6 +41,7 @@ export default function Options() {
         onCloseRoutingRulesModal,
         onKeyDownClickPort,
         onKeyDownRoutingRoles,
+        handleDataUsageOnKeyDown,
         port,
         proxyMode,
         routingRules,
@@ -47,7 +49,8 @@ export default function Options() {
         showPortModal,
         showRoutingRulesModal,
         appLang,
-        method
+        method,
+        dataUsage,
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -56,7 +59,8 @@ export default function Options() {
         typeof proxyMode === 'undefined' ||
         typeof shareVPN === 'undefined' ||
         typeof dns === 'undefined' ||
-        typeof routingRules === 'undefined'
+        typeof routingRules === 'undefined' ||
+        typeof dataUsage === 'undefined'
     )
         return <div className='settings' />;
 
@@ -141,13 +145,9 @@ export default function Options() {
                             label={appLang?.settings?.dns}
                             tabIndex={-1}
                             disabled={method === 'psiphon'}
-                            items={[
-                                ...dnsServers
-                            ]}
+                            items={[...dnsServers]}
                         />
-                        <div className='info'>
-                            {appLang?.settings?.dns_desc}
-                        </div>
+                        <div className='info'>{appLang?.settings?.dns_desc}</div>
                     </div>
                     <div
                         role='button'
@@ -194,6 +194,28 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.ip_data_desc}</div>
+                    </div>
+                    <div
+                        role='button'
+                        className={classNames('item', proxyMode === 'none' || !ipData ? 'disabled' : '')}
+                        onClick={handleDataUsageOnClick}
+                        onKeyDown={
+                            handleDataUsageOnKeyDown
+                        }
+                        tabIndex={0}
+                    >
+                        <label className='key' htmlFor='data-usage'>
+                            {appLang?.settings?.data_usage}
+                        </label>
+                        <div className='value' id='data-usage'>
+                            <div
+                                className={classNames('checkbox', dataUsage ? 'checked' : '')}
+                                tabIndex={-1}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.data_usage_desc}</div>
                     </div>
                 </div>
             </div>

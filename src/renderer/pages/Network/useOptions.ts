@@ -27,6 +27,7 @@ const useOptions = () => {
     const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
     const [method, setMethod] = useState<undefined | string>('');
+    const [dataUsage, setDataUsage] = useState<boolean>();
 
     const navigate = useNavigate();
 
@@ -57,6 +58,9 @@ const useOptions = () => {
         });
         settings.get('method').then((value) => {
             setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
+        });
+        settings.get('dataUsage').then((value) => {
+            setDataUsage(typeof value === 'undefined' ? defaultSettings.dataUsage : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -166,7 +170,8 @@ const useOptions = () => {
             setIpData(!ipData);
             settings.set('ipData', !ipData);
         }
-    }, [ipData, proxyMode]);
+        ipcRenderer.sendMessage('check-speed', isConnected && dataUsage && !ipData);
+    }, [dataUsage, ipData, isConnected, proxyMode]);
 
     const handleCheckIpDataOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -176,6 +181,22 @@ const useOptions = () => {
             }
         },
         [handleCheckIpDataOnClick]
+    );
+
+    const handleDataUsageOnClick = useCallback(() => {
+        setDataUsage(!dataUsage);
+        settings.set('dataUsage', !dataUsage);
+        ipcRenderer.sendMessage('check-speed', isConnected && !dataUsage && ipData);
+    }, [dataUsage, ipData, isConnected]);
+
+    const handleDataUsageOnKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleDataUsageOnClick();
+            }
+        },
+        [handleDataUsageOnClick]
     );
 
     return {
@@ -189,6 +210,7 @@ const useOptions = () => {
         showRoutingRulesModal,
         appLang,
         method,
+        dataUsage,
         setPort,
         setRoutingRules,
         countRoutingRules,
@@ -203,7 +225,9 @@ const useOptions = () => {
         handleShareVPNOnClick,
         handleShareVPNOnKeyDown,
         handleCheckIpDataOnClick,
-        handleCheckIpDataOnKeyDown
+        handleCheckIpDataOnKeyDown,
+        handleDataUsageOnClick,
+        handleDataUsageOnKeyDown
     };
 };
 export default useOptions;
