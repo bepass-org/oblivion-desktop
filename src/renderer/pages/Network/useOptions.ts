@@ -48,7 +48,7 @@ const useOptions = () => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
         settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? dnsServers[0] : value);
+            setDns(typeof value === 'undefined' ? dnsServers[0].value : value);
         });
         settings.get('routingRules').then((value) => {
             setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
