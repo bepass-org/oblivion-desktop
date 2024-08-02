@@ -68,7 +68,11 @@ export default function Landing() {
                 dataUsage={dataUsage}
             />
             {!isConnected && shortcut && <Tabs active='landing' />}
-            <Toaster position='bottom-center' reverseOrder={false} />
+            <Toaster
+                position='bottom-center'
+                reverseOrder={false}
+                containerStyle={{ bottom: shortcut ? '70px' : '16px' }}
+            />
         </>
     );
 }
