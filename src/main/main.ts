@@ -501,11 +501,18 @@ if (!gotTheLock) {
             initialUploadUsage = mainInterface.tx_bytes;
         };
 
-        const startNetworkSpeedMonitoring = () => {
+        const startNetworkSpeedMonitoring = async () => {
             if (speedMonitorInterval) return;
 
-            initializeNetworkUsage();
-            speedMonitorInterval = setInterval(measureNetworkSpeed, 1000);
+            const dataUsage = await settings.get('dataUsage');
+            if (typeof dataUsage === 'boolean' && !dataUsage) {
+                return;
+            }
+
+            await initializeNetworkUsage();
+            speedMonitorInterval = setInterval(async () => {
+                await measureNetworkSpeed();
+            }, 1500);
         };
 
         const stopNetworkSpeedMonitoring = () => {

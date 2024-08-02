@@ -87,7 +87,7 @@ const useLanding = () => {
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [speeds, setSpeeds] = useState<SpeedStats>(defaultSpeedStats);
-    const [dataUsage, setDataUsage] = useState<boolean>(true);
+    const [dataUsage, setDataUsage] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -203,23 +203,6 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('speed-stats', (event: any) => {
-            const formattedCurrentDownload = formatSpeed(event?.currentDownload);
-            const formattedCurrentUpload = formatSpeed(event?.currentUpload);
-            const formattedTotalDownload = formatSpeed(event?.totalDownload);
-            const formattedTotalUpload = formatSpeed(event?.totalUpload);
-            const formattedTotalUsage = formatSpeed(event?.totalUsage);
-
-            setSpeeds((prevSpeeds) => ({
-                ...prevSpeeds,
-                currentDownload: formattedCurrentDownload,
-                currentUpload: formattedCurrentUpload,
-                totalDownload: formattedTotalDownload,
-                totalUpload: formattedTotalUpload,
-                totalUsage: formattedTotalUsage
-            }));
-        });
-
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
         return () => {
@@ -236,6 +219,21 @@ const useLanding = () => {
             defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
         }
     }, [appLang?.toast?.offline, online]);
+
+    useEffect(() => {
+        if ( dataUsage ) {
+            ipcRenderer.on('speed-stats', (event: any) => {
+                setSpeeds((prevSpeeds) => ({
+                    ...prevSpeeds,
+                    currentDownload: formatSpeed(event?.currentDownload),
+                    currentUpload: formatSpeed(event?.currentUpload),
+                    totalDownload: formatSpeed(event?.totalDownload),
+                    totalUpload: formatSpeed(event?.totalUpload),
+                    totalUsage: formatSpeed(event?.totalUsage)
+                }));
+            });
+        }
+    }, [dataUsage]);
 
     const ipToast = async () => {
         if (connectedToIrIPOnceDisplayed) {
