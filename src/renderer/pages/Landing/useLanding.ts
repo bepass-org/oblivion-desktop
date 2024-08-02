@@ -378,7 +378,10 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
-                ipcRenderer.sendMessage('check-speed', proxyStatus !== 'none' && dataUsage && ipData);
+                ipcRenderer.sendMessage(
+                    'check-speed',
+                    proxyStatus !== 'none' && dataUsage && ipData
+                );
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
                 }*/
@@ -399,7 +402,6 @@ const useLanding = () => {
                 }*/
             }
         });
-
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {

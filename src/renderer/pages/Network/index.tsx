@@ -50,7 +50,7 @@ export default function Options() {
         showRoutingRulesModal,
         appLang,
         method,
-        dataUsage,
+        dataUsage
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -197,11 +197,12 @@ export default function Options() {
                     </div>
                     <div
                         role='button'
-                        className={classNames('item', proxyMode === 'none' || !ipData ? 'disabled' : '')}
+                        className={classNames(
+                            'item',
+                            proxyMode === 'none' || !ipData ? 'disabled' : ''
+                        )}
                         onClick={handleDataUsageOnClick}
-                        onKeyDown={
-                            handleDataUsageOnKeyDown
-                        }
+                        onKeyDown={handleDataUsageOnKeyDown}
                         tabIndex={0}
                     >
                         <label className='key' htmlFor='data-usage'>
@@ -236,7 +237,7 @@ export default function Options() {
             <Toaster
                 position='bottom-center'
                 reverseOrder={false}
-                containerStyle={{bottom: '70px'}}
+                containerStyle={{ bottom: '70px' }}
             />
         </>
     );

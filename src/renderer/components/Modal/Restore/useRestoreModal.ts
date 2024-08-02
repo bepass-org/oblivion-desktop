@@ -99,6 +99,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('scanResult', defaultSettings.scanResult);
         await settings.set('profiles', defaultSettings.profiles);
         await settings.set('dns', dnsServers[0]);
+        await settings.set('dataUsage', defaultSettings.dataUsage);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
