@@ -221,7 +221,7 @@ const useLanding = () => {
     }, [appLang?.toast?.offline, online]);
 
     useEffect(() => {
-        if ( dataUsage ) {
+        if ( isConnected && dataUsage ) {
             ipcRenderer.on('speed-stats', (event: any) => {
                 setSpeeds((prevSpeeds) => ({
                     ...prevSpeeds,
@@ -232,8 +232,10 @@ const useLanding = () => {
                     totalUsage: formatSpeed(event?.totalUsage)
                 }));
             });
+        } else {
+            ipcRenderer.sendMessage('check-speed', false);
         }
-    }, [dataUsage]);
+    }, [dataUsage, isConnected]);
 
     const ipToast = async () => {
         if (connectedToIrIPOnceDisplayed) {

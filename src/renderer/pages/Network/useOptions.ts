@@ -178,8 +178,7 @@ const useOptions = () => {
                 settings.set('dataUsage', false);
             }
         }, 1000);
-        ipcRenderer.sendMessage('check-speed', isConnected && dataUsage && !ipData);
-    }, [dataUsage, ipData, isConnected, proxyMode]);
+    }, [ipData, proxyMode]);
 
     const handleCheckIpDataOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
