@@ -57,7 +57,7 @@ export const defaultSettings = {
     profiles: '[]',
     forceClose: false,
     shortcut: false,
-    dataUsage: true
+    dataUsage: false
 };
 
 export const countries: { value: string; label: string }[] = [
