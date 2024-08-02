@@ -60,7 +60,7 @@ const english: Language = {
         share_vpn: 'Share (LAN)',
         share_vpn_desc: 'Share a proxy on the network',
         dns: 'DNS',
-        dns_desc: 'Select the desired DNS',
+        dns_desc: 'Block ads & adult content',
         ip_data: 'IP Check',
         ip_data_desc: 'Display IP & location after connection',
         data_usage: 'Data Usage',

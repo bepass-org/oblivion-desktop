@@ -62,7 +62,7 @@ const deutsch: Language = {
         share_vpn: 'Freigeben (LAN)',
         share_vpn_desc: 'Proxy im Netzwerk freigeben',
         dns: 'DNS',
-        dns_desc: 'Wählen Sie den gewünschten DNS',
+        dns_desc: 'Werbung und Inhalte für Erwachsene blockieren',
         ip_data: 'IP Check',
         ip_data_desc: 'IP & Standort nach herstellen der Verbindung anzeigen',
         data_usage: 'Datennutzung',
