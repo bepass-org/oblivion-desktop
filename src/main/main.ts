@@ -49,6 +49,7 @@ let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
 let initialDownloadUsage = 0;
 let initialUploadUsage = 0;
+let isMonitoringInProgress = false;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -470,6 +471,8 @@ if (!gotTheLock) {
         };
 
         const measureNetworkSpeed = async () => {
+            if (isMonitoringInProgress) return;
+            isMonitoringInProgress = true;
             try {
                 const networkStats = await si.networkStats();
                 const mainInterface = networkStats[0];
@@ -491,6 +494,8 @@ if (!gotTheLock) {
                 }
             } catch (error) {
                 console.error('Error measuring network speed:', error);
+            } finally {
+                isMonitoringInProgress = false;
             }
         };
 
