@@ -6,9 +6,10 @@ import ruRU from './ru';
 import cnCN from './cn';
 import deDE from './de';
 import trTR from './tr';
+import idID from './id';
 import { Language } from './type';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id';
 
 const useTranslate = () => {
     const getLanguage = () => {
@@ -23,7 +24,8 @@ const useTranslate = () => {
         ru: ruRU,
         cn: cnCN,
         de: deDE,
-        tr: trTR
+        tr: trTR,
+        id: idID
     };
 
     useEffect(() => {

@@ -86,8 +86,9 @@ technology
                 :white_check_mark:  English <br>
                 :white_check_mark:  Chinese <br>
                 :white_check_mark:  Russian <br>
-                :white_check_mark:  Deutsch  <br>
-                :white_check_mark:  Turkish
+                :white_check_mark:  Deutsch <br>
+                :white_check_mark:  Turkish <br>
+                :white_check_mark:  Indonesia
             </td>
         </tr>
         <tr>

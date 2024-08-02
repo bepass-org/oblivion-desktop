@@ -6,9 +6,10 @@ import ruRU from './ru';
 import cnCN from './cn';
 import deDE from './de';
 import trTR from './tr';
+import idID from './id';
 import { defaultSettings } from '../defaultSettings';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id';
 
 const translate = {
     fa: faIR,
@@ -16,7 +17,8 @@ const translate = {
     ru: ruRU,
     cn: cnCN,
     de: deDE,
-    tr: trTR
+    tr: trTR,
+    id: idID
 };
 
 export const getTranslateElectron = () => {
