@@ -104,6 +104,8 @@ const useOptions = () => {
                 if (event.target.value === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
+                    setDataUsage(false);
+                    settings.set('dataUsage', false);
                 }
             }, 1000);
         },
@@ -170,6 +172,12 @@ const useOptions = () => {
             setIpData(!ipData);
             settings.set('ipData', !ipData);
         }
+        setTimeout(function () {
+            if (ipData) {
+                setDataUsage(false);
+                settings.set('dataUsage', false);
+            }
+        }, 1000);
         ipcRenderer.sendMessage('check-speed', isConnected && dataUsage && !ipData);
     }, [dataUsage, ipData, isConnected, proxyMode]);
 
@@ -184,8 +192,10 @@ const useOptions = () => {
     );
 
     const handleDataUsageOnClick = useCallback(() => {
-        setDataUsage(!dataUsage);
-        settings.set('dataUsage', !dataUsage);
+        if (ipData) {
+            setDataUsage(!dataUsage);
+            settings.set('dataUsage', !dataUsage);
+        }
         ipcRenderer.sendMessage('check-speed', isConnected && !dataUsage && ipData);
     }, [dataUsage, ipData, isConnected]);
 
