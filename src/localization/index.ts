@@ -3,9 +3,10 @@ import faIR from './fa';
 import ruRU from './ru';
 import cnCN from './cn';
 import deDE from './de';
+import trTR from './tr';
 import { defaultSettings } from '../defaultSettings';
 
-export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
+export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr';
 type directionType = 'rtl' | 'ltr';
 
 const lang = defaultSettings.lang as LanguageType;
@@ -16,7 +17,8 @@ const direction = {
     en: 'ltr',
     ru: 'ltr',
     cn: 'ltr',
-    de: 'ltr'
+    de: 'ltr',
+    tr: 'ltr'
 };
 
 const getDirection = () => {
@@ -39,7 +41,8 @@ const translate = {
     en: enUS,
     ru: ruRU,
     cn: cnCN,
-    de: deDE
+    de: deDE,
+    tr: trTR
 };
 
 const getTranslate = (forceLang?: string) => {

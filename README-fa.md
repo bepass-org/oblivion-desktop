@@ -99,7 +99,8 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark:  انگلیسی<br>
                 :white_check_mark:  چینی<br>
                 :white_check_mark:  روسی<br>
-                :white_check_mark:  آلمانی
+                :white_check_mark:  آلمانی<br>
+                :white_check_mark:  ترکی
             </td>
         </tr>
         <tr>

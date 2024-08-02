@@ -102,7 +102,8 @@ export const languages: { value: string; label: string }[] = [
     { value: 'en', label: 'English' },
     { value: 'cn', label: '中文' },
     { value: 'ru', label: 'Русский' },
-    { value: 'de', label: 'Deutsch' }
+    { value: 'de', label: 'Deutsch' },
+    { value: 'tr', label: 'Türkçe' }
 ];
 
 export const dnsServers: { value: string; label: string }[] = [

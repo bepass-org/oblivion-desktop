@@ -5,16 +5,18 @@ import faIR from './fa';
 import ruRU from './ru';
 import cnCN from './cn';
 import deDE from './de';
+import trTR from './tr';
 import { defaultSettings } from '../defaultSettings';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr';
 
 const translate = {
     fa: faIR,
     en: enUS,
     ru: ruRU,
     cn: cnCN,
-    de: deDE
+    de: deDE,
+    tr: trTR
 };
 
 export const getTranslateElectron = () => {
