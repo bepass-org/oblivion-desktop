@@ -8,6 +8,7 @@ import Tabs from '../../components/Tabs';
 import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
+import {dnsServers} from "../../../defaultSettings";
 
 const proxyModes = [
     {
@@ -32,6 +33,7 @@ export default function Options() {
         handleShareVPNOnKeyDown,
         ipData,
         onChangeProxyMode,
+        onChangeDNS,
         onClickPort,
         onClickRoutingRoles,
         onClosePortModal,
@@ -44,7 +46,8 @@ export default function Options() {
         shareVPN,
         showPortModal,
         showRoutingRulesModal,
-        appLang
+        appLang,
+        method
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -60,7 +63,7 @@ export default function Options() {
     return (
         <>
             <Nav title={appLang?.settings?.network} />
-            <div className={classNames('myApp', 'normalPage')}>
+            <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <Tabs active='network' />
                 <div className='settings' role='menu'>
                     {/*<div
@@ -130,6 +133,22 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                     </div>
+                    <div className={classNames('item', method !== 'psiphon' ? '' : 'disabled')}>
+                        <Dropdown
+                            id='flex-switch-check-checked-dns'
+                            onChange={onChangeDNS}
+                            value={dns || '1.1.1.1'}
+                            label={appLang?.settings?.dns}
+                            tabIndex={-1}
+                            disabled={method === 'psiphon'}
+                            items={[
+                                ...dnsServers
+                            ]}
+                        />
+                        <div className='info'>
+                            {appLang?.settings?.dns_desc}
+                        </div>
+                    </div>
                     <div
                         role='button'
                         className={classNames('item', shareVPN ? 'checked' : '')}
@@ -153,22 +172,6 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                     </div>
-                    {/*<div
-                        className={classNames('item')}
-                        onClick={() => {
-                            setDns(!dns);
-                            settings.set('dns', !dns);
-                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                        }}
-                    >
-                        <label className='key' role='label'>{appLang?.settings?.dns}</label>
-                        <div className='value'>
-                            <div className={'checkbox'}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang?.settings?.dns_desc}</div>
-                    </div>*/}
                     <div
                         role='button'
                         className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
@@ -211,7 +214,7 @@ export default function Options() {
             <Toaster
                 position='bottom-center'
                 reverseOrder={false}
-                containerStyle={{ bottom: '70px' }}
+                containerStyle={{bottom: '70px'}}
             />
         </>
     );

@@ -106,9 +106,6 @@ export const languages: { value: string; label: string }[] = [
 export const dnsServers: { value: string; label: string }[] = [
     { value: '1.1.1.1', label: 'Cloudflare' },
     { value: '8.8.8.8', label: 'Google' },
-    //{ value: '208.67.222.222', label: 'OpenDNS' },
-    //{ value: '9.9.9.9', label: 'Quad9' },
-    //{ value: '8.26.56.26', label: 'Comodo' },
     { value: '94.140.14.14', label: 'Adguard' },
     { value: '94.140.14.15', label: 'Adguard Family' },
 ];

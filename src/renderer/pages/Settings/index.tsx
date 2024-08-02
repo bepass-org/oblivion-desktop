@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import Tabs from '../../components/Tabs';
 import LicenseModal from '../../components/Modal/License';
-import { countries, dnsServers } from '../../../defaultSettings';
+import { countries } from '../../../defaultSettings';
 // import Lottie from 'lottie-react';
 // import LottieFile from '../../../../assets/json/1713988096625.json';
 import useSettings from './useSettings';
@@ -15,7 +15,6 @@ export default function Settings() {
         license,
         location,
         method,
-        dns,
         onChangeLocation,
         onCloseLicenseModal,
         onEnableGool,
@@ -28,8 +27,7 @@ export default function Settings() {
         onOpenLicenseModal,
         setLicense,
         showLicenseModal,
-        loading,
-        onChangeDNS
+        loading
     } = useSettings();
 
     if (loading) return <div className='settings' />;
@@ -56,7 +54,7 @@ export default function Settings() {
                 isOpen={showLicenseModal}
                 onClose={onCloseLicenseModal}
             />
-            <div className={classNames('myApp', 'normalPage', 'withScroll')}>
+            <div className={classNames('myApp', 'normalPage')}>
                 <Tabs active='settings' />
                 <div className='settings' role='menu'>
                     {/*<div
@@ -185,22 +183,6 @@ export default function Settings() {
                         />
                         <div className='info'>
                             {appLang?.settings?.method_psiphon_location_desc}
-                        </div>
-                    </div>
-                    <div className={classNames('item', method !== 'psiphon' ? '' : 'disabled')}>
-                        <Dropdown
-                            id='flex-switch-check-checked-dns'
-                            onChange={onChangeDNS}
-                            value={dns || '1.1.1.1'}
-                            label={appLang?.settings?.dns}
-                            tabIndex={-1}
-                            disabled={method === 'psiphon'}
-                            items={[
-                                ...dnsServers
-                            ]}
-                        />
-                        <div className='info'>
-                            {appLang?.settings?.dns_desc}
                         </div>
                     </div>
                 </div>

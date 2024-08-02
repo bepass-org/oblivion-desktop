@@ -5,7 +5,7 @@ import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 import { settingsHaveChangedToast } from '../../lib/toasts';
-import { defaultSettings } from '../../../defaultSettings';
+import { defaultSettings, dnsServers } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 
@@ -23,9 +23,10 @@ const useOptions = () => {
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const appLang = useTranslate();
     const [ipData, setIpData] = useState<undefined | boolean>();
-    const [dns, setDns] = useState<undefined | boolean>();
+    const [dns, setDns] = useState<undefined | string>();
     const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
+    const [method, setMethod] = useState<undefined | string>('');
 
     const navigate = useNavigate();
 
@@ -46,13 +47,16 @@ const useOptions = () => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
         settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? defaultSettings.dns : value);
+            setDns(typeof value === 'undefined' ? dnsServers[0] : value);
         });
         settings.get('routingRules').then((value) => {
             setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+        });
+        settings.get('method').then((value) => {
+            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -98,6 +102,15 @@ const useOptions = () => {
                     settings.set('ipData', false);
                 }
             }, 1000);
+        },
+        [isConnected, isLoading, appLang]
+    );
+
+    const onChangeDNS = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setDns(event.target.value);
+            settings.set('dns', event.target.value);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
         [isConnected, isLoading, appLang]
     );
@@ -175,12 +188,14 @@ const useOptions = () => {
         routingRules,
         showRoutingRulesModal,
         appLang,
+        method,
         setPort,
         setRoutingRules,
         countRoutingRules,
         onClosePortModal,
         onCloseRoutingRulesModal,
         onChangeProxyMode,
+        onChangeDNS,
         onClickPort,
         onKeyDownClickPort,
         onClickRoutingRoles,

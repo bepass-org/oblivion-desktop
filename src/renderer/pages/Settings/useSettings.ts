@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
-import { defaultSettings, dnsServers } from '../../../defaultSettings';
+import { defaultSettings} from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
@@ -22,7 +22,6 @@ const useSettings = () => {
     const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
-    const [dns, setDns] = useState<undefined | string>();
 
     const navigate = useNavigate();
 
@@ -58,9 +57,6 @@ const useSettings = () => {
         });*/
         settings.get('method').then((value) => {
             setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
-        });
-        settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? dnsServers[0] : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -144,21 +140,10 @@ const useSettings = () => {
         [isConnected, isLoading, appLang]
     );
 
-    const onChangeDNS = useCallback(
-        (event: ChangeEvent<HTMLSelectElement>) => {
-            console.log(event);
-            setDns(event.target.value);
-            settings.set('dns', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-        },
-        [isConnected, isLoading, appLang]
-    );
-
     const loading =
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
-        typeof method === 'undefined' ||
-        typeof dns === 'undefined';
+        typeof method === 'undefined';
 
     return {
         location,
@@ -167,7 +152,6 @@ const useSettings = () => {
         method,
         appLang,
         loading,
-        dns,
         setLicense,
         onCloseLicenseModal,
         onOpenLicenseModal,
@@ -178,8 +162,7 @@ const useSettings = () => {
         onKeyDownGool,
         onEnablePsiphon,
         onKeyDownPsiphon,
-        onChangeLocation,
-        onChangeDNS
+        onChangeLocation
     };
 };
 
