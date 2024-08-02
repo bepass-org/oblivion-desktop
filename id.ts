@@ -27,7 +27,7 @@ const indonesia: Language = {
     toast: {
         ip_check_please_wait: 'Mohon tunggu beberapa detik untuk mencoba kembali pemeriksaan!',
         ir_location:
-            'Cloudflare telah tersambung ke IP dengan lokasi Iran, yang berbeda dengan IP Anda yang sebenarnya. Anda bisa menggunakannya untuk melewati penyaringan, tetapi tidak untuk sanksi. Jangan khawatir! Anda bisa mengubah lokasi dalam pengaturan menggunakan opsi "Gool" atau "psiphon".',
+            'Cloudflare telah tersambung ke IP dengan lokasi Iran, yang berbeda dengan IP Anda yang sebenarnya. Anda bisa menggunakannya untuk melewati penyaringan, tetapi tidak untuk sanksi. \nJangan khawatir! Anda bisa mengubah lokasi dalam pengaturan menggunakan opsi "Gool" atau "psiphon".',
         btn_submit: 'Mengerti',
         copied: 'Tersalin!',
         cleared: 'Log telah dibersihkan!',
