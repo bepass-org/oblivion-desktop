@@ -524,6 +524,7 @@ if (!gotTheLock) {
             if (speedMonitorInterval) {
                 clearInterval(speedMonitorInterval);
                 speedMonitorInterval = null;
+                isMonitoringInProgress = false;
                 initialDownloadUsage = 0;
                 initialUploadUsage = 0;
             }
