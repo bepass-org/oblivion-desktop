@@ -48,7 +48,7 @@ export const defaultSettings = {
     shareVPN: false,
     hostIP: '127.0.0.1',
     method: 'gool',
-    dns: true,
+    dns: '',
     rtt: '1s',
     openAtLogin: false,
     autoConnect: false,

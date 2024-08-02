@@ -94,14 +94,11 @@ export const getUserSettings = async () => {
         args.push('0,0,0');
     }
 
-    if (typeof method === 'string') {
-        if (method !== 'psiphon') {
+    if (typeof dns === 'string' && dns !== '') {
+        if (typeof method === 'string' && method !== 'psiphon') {
             args.push('--dns');
             args.push(dns);
         }
-    } else {
-        args.push('--dns');
-        args.push(dns);
     }
 
     return args;
