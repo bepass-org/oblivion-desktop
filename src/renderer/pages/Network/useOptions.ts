@@ -5,7 +5,7 @@ import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 import { settingsHaveChangedToast } from '../../lib/toasts';
-import { defaultSettings } from '../../../defaultSettings';
+import { defaultSettings, dnsServers } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 
@@ -23,9 +23,11 @@ const useOptions = () => {
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const appLang = useTranslate();
     const [ipData, setIpData] = useState<undefined | boolean>();
-    const [dns, setDns] = useState<undefined | boolean>();
+    const [dns, setDns] = useState<undefined | string>();
     const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
+    const [method, setMethod] = useState<undefined | string>('');
+    const [dataUsage, setDataUsage] = useState<boolean>();
 
     const navigate = useNavigate();
 
@@ -46,13 +48,19 @@ const useOptions = () => {
             setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
         });
         settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? defaultSettings.dns : value);
+            setDns(typeof value === 'undefined' ? dnsServers[0].value : value);
         });
         settings.get('routingRules').then((value) => {
             setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+        });
+        settings.get('method').then((value) => {
+            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
+        });
+        settings.get('dataUsage').then((value) => {
+            setDataUsage(typeof value === 'undefined' ? defaultSettings.dataUsage : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -96,8 +104,19 @@ const useOptions = () => {
                 if (event.target.value === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
+                    setDataUsage(false);
+                    settings.set('dataUsage', false);
                 }
             }, 1000);
+        },
+        [isConnected, isLoading, appLang]
+    );
+
+    const onChangeDNS = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setDns(event.target.value);
+            settings.set('dns', event.target.value);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
         [isConnected, isLoading, appLang]
     );
@@ -153,7 +172,14 @@ const useOptions = () => {
             setIpData(!ipData);
             settings.set('ipData', !ipData);
         }
-    }, [ipData, proxyMode]);
+        setTimeout(function () {
+            if (ipData) {
+                setDataUsage(false);
+                settings.set('dataUsage', false);
+            }
+        }, 1000);
+        ipcRenderer.sendMessage('check-speed', isConnected && dataUsage && !ipData);
+    }, [dataUsage, ipData, isConnected, proxyMode]);
 
     const handleCheckIpDataOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -163,6 +189,24 @@ const useOptions = () => {
             }
         },
         [handleCheckIpDataOnClick]
+    );
+
+    const handleDataUsageOnClick = useCallback(() => {
+        if (ipData) {
+            setDataUsage(!dataUsage);
+            settings.set('dataUsage', !dataUsage);
+        }
+        ipcRenderer.sendMessage('check-speed', isConnected && !dataUsage && ipData);
+    }, [dataUsage, ipData, isConnected]);
+
+    const handleDataUsageOnKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleDataUsageOnClick();
+            }
+        },
+        [handleDataUsageOnClick]
     );
 
     return {
@@ -175,12 +219,15 @@ const useOptions = () => {
         routingRules,
         showRoutingRulesModal,
         appLang,
+        method,
+        dataUsage,
         setPort,
         setRoutingRules,
         countRoutingRules,
         onClosePortModal,
         onCloseRoutingRulesModal,
         onChangeProxyMode,
+        onChangeDNS,
         onClickPort,
         onKeyDownClickPort,
         onClickRoutingRoles,
@@ -188,7 +235,9 @@ const useOptions = () => {
         handleShareVPNOnClick,
         handleShareVPNOnKeyDown,
         handleCheckIpDataOnClick,
-        handleCheckIpDataOnKeyDown
+        handleCheckIpDataOnKeyDown,
+        handleDataUsageOnClick,
+        handleDataUsageOnKeyDown
     };
 };
 export default useOptions;

@@ -63,6 +63,8 @@ export interface Settings {
     dns_desc: string;
     ip_data: string;
     ip_data_desc: string;
+    data_usage: string;
+    data_usage_desc: string;
     dark_mode: string;
     dark_mode_desc: string;
     lang: string;
