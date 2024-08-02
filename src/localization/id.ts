@@ -139,8 +139,7 @@ const indonesia: Language = {
         error_warp_identity: 'Kesalahan otentikasi di cloudflare; Coba lagi.',
         error_script_failed: 'Program mengalami kesalahan; Coba lagi.',
         error_object_null: 'Program mengalami kesalahan; Coba lagi.',
-        error_port_already_in_use: (value) =>
-            `Port ${value} sedang digunakan program lain.`,
+        error_port_already_in_use: (value) => `Port ${value} sedang digunakan program lain.`,
         error_port_socket: 'Gunakan port lain.',
         error_unknown_flag: 'Perintah yang tidak valid dieksekusi di latar belakang.',
         error_deadline_exceeded: 'Waktu koneksi habis; Coba Lagi.',
