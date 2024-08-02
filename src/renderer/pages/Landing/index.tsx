@@ -67,7 +67,7 @@ export default function Landing() {
                 speeds={speeds}
                 dataUsage={dataUsage}
             />
-            {!isConnected && shortcut && <Tabs active='landing' />}
+            {(!isConnected || (isConnected && !ipData)) && shortcut && <Tabs active='landing' />}
             <Toaster
                 position='bottom-center'
                 reverseOrder={false}
