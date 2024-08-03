@@ -195,7 +195,7 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.ip_data_desc}</div>
                     </div>
-                    <div
+                    {/* <div
                         role='button'
                         className={classNames(
                             'item',
@@ -217,7 +217,7 @@ export default function Options() {
                             </div>
                         </div>
                         <div className='info'>{appLang?.settings?.data_usage_desc}</div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <PortModal
