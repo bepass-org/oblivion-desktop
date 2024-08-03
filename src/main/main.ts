@@ -19,7 +19,8 @@ import {
     Tray,
     nativeImage,
     IpcMainEvent,
-    globalShortcut
+    globalShortcut,
+    powerMonitor
     //dialog
 } from 'electron';
 import path from 'path';
@@ -268,6 +269,20 @@ if (!gotTheLock) {
                     connectionStatus = 'disconnected';
                     mainWindow?.removeAllListeners('close');
                     //await exitTheApp(mainWindow);
+                });
+
+                powerMonitor.on('shutdown', async (event: any) => {
+                    event.preventDefault();
+                    const shutdownTimeout = setTimeout(() => {
+                        app?.quit();
+                    }, 2500);
+                    try {
+                        await exitTheApp(mainWindow);
+                        clearTimeout(shutdownTimeout);
+                        app?.quit();
+                    } catch (error) {
+                        app?.quit();
+                    }
                 });
             } else {
                 mainWindow.show();
