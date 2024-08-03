@@ -108,7 +108,7 @@ technology
                 :white_check_mark: Ping<br>
                 :white_check_mark: Accessibility<br>
                 :white_large_square: Inline Update<br>
-                :white_check_mark: SpeedTest
+                :white_large_square: SpeedTest
             </td>
         </tr>
     </tbody>
