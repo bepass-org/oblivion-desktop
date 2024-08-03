@@ -539,10 +539,12 @@ if (!gotTheLock) {
         };
 
         ipcMain.on('check-speed', (event, arg) => {
-            if (arg) {
-                startNetworkSpeedMonitoring();
-            } else {
-                stopNetworkSpeedMonitoring();
+            if (process.platform !== 'win32') {
+                if (arg) {
+                    startNetworkSpeedMonitoring();
+                } else {
+                    stopNetworkSpeedMonitoring();
+                }
             }
         });
 
