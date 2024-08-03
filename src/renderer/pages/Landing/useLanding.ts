@@ -10,6 +10,7 @@ import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
+import { platform } from '../../lib/utils';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -221,7 +222,7 @@ const useLanding = () => {
     }, [appLang?.toast?.offline, online]);
 
     useEffect(() => {
-        if (isConnected && dataUsage) {
+        if (isConnected && dataUsage && platform !== 'win32') {
             ipcRenderer.on('speed-stats', (event: any) => {
                 setSpeeds((prevSpeeds) => ({
                     ...prevSpeeds,
@@ -232,8 +233,6 @@ const useLanding = () => {
                     totalUsage: formatSpeed(event?.totalUsage)
                 }));
             });
-        } else {
-            ipcRenderer.sendMessage('check-speed', false);
         }
     }, [dataUsage, isConnected]);
 

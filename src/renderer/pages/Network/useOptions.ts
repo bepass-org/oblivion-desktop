@@ -176,6 +176,7 @@ const useOptions = () => {
             if (ipData) {
                 setDataUsage(false);
                 settings.set('dataUsage', false);
+                ipcRenderer.sendMessage('check-speed', false);
             }
         }, 1000);
     }, [ipData, proxyMode]);
