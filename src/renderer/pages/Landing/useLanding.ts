@@ -232,8 +232,6 @@ const useLanding = () => {
                     totalUsage: formatSpeed(event?.totalUsage)
                 }));
             });
-        } else {
-            ipcRenderer.sendMessage('check-speed', false);
         }
     }, [dataUsage, isConnected]);
 

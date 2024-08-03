@@ -78,8 +78,8 @@ const useOptions = () => {
             const lines = value.split('\n');
             return lines?.length > 0
                 ? (lang === 'fa' ? toPersianNumber(lines.length) : lines.length) +
-                      ' ' +
-                      (appLang?.settings?.routing_rules_items || '')
+                ' ' +
+                (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;
         },
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]
@@ -176,6 +176,7 @@ const useOptions = () => {
             if (ipData) {
                 setDataUsage(false);
                 settings.set('dataUsage', false);
+                ipcRenderer.sendMessage('check-speed', false);
             }
         }, 1000);
     }, [ipData, proxyMode]);

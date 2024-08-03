@@ -50,7 +50,6 @@ let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
 let initialDownloadUsage = 0;
 let initialUploadUsage = 0;
-let isMonitoringInProgress = false;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -485,9 +484,14 @@ if (!gotTheLock) {
             );
         };
 
+        const initializeNetworkUsage = async () => {
+            const networkStats = await si.networkStats();
+            const mainInterface = networkStats[0];
+            initialDownloadUsage = mainInterface.rx_bytes;
+            initialUploadUsage = mainInterface.tx_bytes;
+        };
+
         const measureNetworkSpeed = async () => {
-            if (isMonitoringInProgress) return;
-            isMonitoringInProgress = true;
             try {
                 const networkStats = await si.networkStats();
                 const mainInterface = networkStats[0];
@@ -509,39 +513,28 @@ if (!gotTheLock) {
                 }
             } catch (error) {
                 console.error('Error measuring network speed:', error);
-            } finally {
-                isMonitoringInProgress = false;
             }
         };
 
-        const initializeNetworkUsage = async () => {
-            const networkStats = await si.networkStats();
-            const mainInterface = networkStats[0];
-            initialDownloadUsage = mainInterface.rx_bytes;
-            initialUploadUsage = mainInterface.tx_bytes;
-        };
-
-        const startNetworkSpeedMonitoring = async () => {
+        const startNetworkSpeedMonitoring = () => {
             if (speedMonitorInterval) return;
 
-            const dataUsage = await settings.get('dataUsage');
-            if (typeof dataUsage === 'boolean' && !dataUsage) {
-                return;
+            if (process.platform === 'win32') {
+                si.powerShellStart();
             }
-
-            await initializeNetworkUsage();
-            speedMonitorInterval = setInterval(async () => {
-                await measureNetworkSpeed();
-            }, 1500);
+            initializeNetworkUsage();
+            speedMonitorInterval = setInterval(measureNetworkSpeed, 1000);
         };
 
         const stopNetworkSpeedMonitoring = () => {
             if (speedMonitorInterval) {
                 clearInterval(speedMonitorInterval);
                 speedMonitorInterval = null;
-                isMonitoringInProgress = false;
                 initialDownloadUsage = 0;
                 initialUploadUsage = 0;
+                if (process.platform === 'win32') {
+                    si.powerShellRelease();
+                }
             }
         };
 
