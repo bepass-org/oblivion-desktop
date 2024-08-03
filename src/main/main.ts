@@ -523,7 +523,7 @@ if (!gotTheLock) {
                 si.powerShellStart();
             }
             initializeNetworkUsage();
-            speedMonitorInterval = setInterval(measureNetworkSpeed, 1000);
+            speedMonitorInterval = setInterval(measureNetworkSpeed, 1500);
         };
 
         const stopNetworkSpeedMonitoring = () => {
