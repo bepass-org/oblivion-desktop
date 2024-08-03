@@ -9,7 +9,7 @@ import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
-import { platform } from '../../lib/utils';
+//import { platform } from '../../lib/utils';
 
 const proxyModes = [
     {
