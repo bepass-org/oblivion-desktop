@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
+import { isDev, ipcRenderer, onEscapeKeyPressed, formatNetworkStat } from '../../lib/utils';
 import { defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
-import { platform } from '../../lib/utils';
 
 let cachedIpInfo: any = null;
 let lastFetchTime = 0;
@@ -33,23 +32,6 @@ const defaultSpeedStats: SpeedStats = {
     totalDownload: { value: 'N/A', unit: 'N/A' },
     totalUpload: { value: 'N/A', unit: 'N/A' },
     totalUsage: { value: 'N/A', unit: 'N/A' }
-};
-
-const formatSpeed = (
-    speed: number | null,
-    precision: number = 2
-): { value: string; unit: string } => {
-    if (speed == null || speed < 0) return { value: 'N/A', unit: 'N/A' };
-
-    const units = ['B', 'KB', 'MB', 'GB'];
-    let index = 0;
-
-    while (speed >= 1024 && index < units.length - 1) {
-        speed /= 1024;
-        index++;
-    }
-
-    return { value: parseFloat(speed.toFixed(precision)).toString(), unit: units[index] };
 };
 
 const useLanding = () => {
@@ -222,15 +204,15 @@ const useLanding = () => {
     }, [appLang?.toast?.offline, online]);
 
     useEffect(() => {
-        if (isConnected && dataUsage && platform !== 'win32') {
+        if (isConnected && dataUsage) {
             ipcRenderer.on('speed-stats', (event: any) => {
                 setSpeeds((prevSpeeds) => ({
                     ...prevSpeeds,
-                    currentDownload: formatSpeed(event?.currentDownload),
-                    currentUpload: formatSpeed(event?.currentUpload),
-                    totalDownload: formatSpeed(event?.totalDownload),
-                    totalUpload: formatSpeed(event?.totalUpload),
-                    totalUsage: formatSpeed(event?.totalUsage)
+                    currentDownload: formatNetworkStat(event?.currentDownload),
+                    currentUpload: formatNetworkStat(event?.currentUpload),
+                    totalDownload: formatNetworkStat(event?.totalDownload),
+                    totalUpload: formatNetworkStat(event?.totalUpload),
+                    totalUsage: formatNetworkStat(event?.totalUsage)
                 }));
             });
         }

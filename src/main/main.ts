@@ -29,7 +29,7 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
-import si from 'systeminformation';
+import { networkStats, powerShellStart } from 'systeminformation';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -50,6 +50,8 @@ let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
 let initialDownloadUsage = 0;
 let initialUploadUsage = 0;
+let isSpeedMonitoring: boolean = false;
+let isUsageInitialized: boolean = false;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -484,18 +486,17 @@ if (!gotTheLock) {
             );
         };
 
-        const initializeNetworkUsage = async () => {
-            const networkStats = await si.networkStats();
-            const mainInterface = networkStats[0];
-            initialDownloadUsage = mainInterface.rx_bytes;
-            initialUploadUsage = mainInterface.tx_bytes;
-        };
+        const measureNetworkSpeed = () => {
+            if(isSpeedMonitoring) return;
 
-        const measureNetworkSpeed = async () => {
-            try {
-                const networkStats = await si.networkStats();
-                const mainInterface = networkStats[0];
-
+            isSpeedMonitoring = true;
+            networkStats().then(data => {
+                const mainInterface = data[0];
+                if(!isUsageInitialized) {
+                    initialDownloadUsage = mainInterface.rx_bytes;
+                    initialUploadUsage = mainInterface.tx_bytes;
+                    isUsageInitialized = true;
+                }
                 const currentDownload = mainInterface.rx_sec;
                 const currentUpload = mainInterface.tx_sec;
                 const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
@@ -511,18 +512,18 @@ if (!gotTheLock) {
                         totalUsage
                     });
                 }
-            } catch (error) {
+            }).catch( error => {
                 console.error('Error measuring network speed:', error);
-            }
+            }).finally(() => {
+                isSpeedMonitoring = false;
+            });
         };
 
         const startNetworkSpeedMonitoring = () => {
             if (speedMonitorInterval) return;
-
             if (process.platform === 'win32') {
-                si.powerShellStart();
+                powerShellStart();
             }
-            initializeNetworkUsage();
             speedMonitorInterval = setInterval(measureNetworkSpeed, 1500);
         };
 
@@ -530,21 +531,18 @@ if (!gotTheLock) {
             if (speedMonitorInterval) {
                 clearInterval(speedMonitorInterval);
                 speedMonitorInterval = null;
+                isSpeedMonitoring = false;
+                isUsageInitialized = false;
                 initialDownloadUsage = 0;
                 initialUploadUsage = 0;
-                if (process.platform === 'win32') {
-                    si.powerShellRelease();
-                }
             }
         };
 
         ipcMain.on('check-speed', (event, arg) => {
-            if (process.platform !== 'win32') {
-                if (arg) {
-                    startNetworkSpeedMonitoring();
-                } else {
-                    stopNetworkSpeedMonitoring();
-                }
+            if (arg) {
+                startNetworkSpeedMonitoring();
+            } else {
+                stopNetworkSpeedMonitoring();
             }
         });
 
