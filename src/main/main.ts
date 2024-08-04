@@ -527,7 +527,7 @@ if (!gotTheLock) {
             if (process.platform === 'win32') {
                 powerShellStart();
             }
-            speedMonitorInterval = setInterval(measureNetworkSpeed, 1500);
+            speedMonitorInterval = setInterval(measureNetworkSpeed, 2000);
         };
 
         const stopNetworkSpeedMonitoring = () => {
