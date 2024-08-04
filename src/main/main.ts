@@ -487,36 +487,39 @@ if (!gotTheLock) {
         };
 
         const measureNetworkSpeed = () => {
-            if(isSpeedMonitoring) return;
+            if (isSpeedMonitoring) return;
 
             isSpeedMonitoring = true;
-            networkStats().then(data => {
-                const mainInterface = data[0];
-                if(!isUsageInitialized) {
-                    initialDownloadUsage = mainInterface.rx_bytes;
-                    initialUploadUsage = mainInterface.tx_bytes;
-                    isUsageInitialized = true;
-                }
-                const currentDownload = mainInterface.rx_sec;
-                const currentUpload = mainInterface.tx_sec;
-                const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
-                const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
-                const totalUsage = totalDownload + totalUpload;
+            networkStats()
+                .then((data) => {
+                    const mainInterface = data[0];
+                    if (!isUsageInitialized) {
+                        initialDownloadUsage = mainInterface.rx_bytes;
+                        initialUploadUsage = mainInterface.tx_bytes;
+                        isUsageInitialized = true;
+                    }
+                    const currentDownload = mainInterface.rx_sec;
+                    const currentUpload = mainInterface.tx_sec;
+                    const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
+                    const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
+                    const totalUsage = totalDownload + totalUpload;
 
-                if (mainWindow) {
-                    mainWindow.webContents.send('speed-stats', {
-                        currentDownload,
-                        currentUpload,
-                        totalDownload,
-                        totalUpload,
-                        totalUsage
-                    });
-                }
-            }).catch( error => {
-                console.error('Error measuring network speed:', error);
-            }).finally(() => {
-                isSpeedMonitoring = false;
-            });
+                    if (mainWindow) {
+                        mainWindow.webContents.send('speed-stats', {
+                            currentDownload,
+                            currentUpload,
+                            totalDownload,
+                            totalUpload,
+                            totalUsage
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error measuring network speed:', error);
+                })
+                .finally(() => {
+                    isSpeedMonitoring = false;
+                });
         };
 
         const startNetworkSpeedMonitoring = () => {
