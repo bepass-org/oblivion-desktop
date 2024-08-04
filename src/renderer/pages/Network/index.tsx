@@ -196,31 +196,29 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.ip_data_desc}</div>
                     </div>
-                    {platform !== 'win32' && (
-                        <div
-                            role='button'
-                            className={classNames(
-                                'item',
-                                proxyMode === 'none' || !ipData ? 'disabled' : ''
-                            )}
-                            onClick={handleDataUsageOnClick}
-                            onKeyDown={handleDataUsageOnKeyDown}
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='data-usage'>
-                                {appLang?.settings?.data_usage}
-                            </label>
-                            <div className='value' id='data-usage'>
-                                <div
-                                    className={classNames('checkbox', dataUsage ? 'checked' : '')}
-                                    tabIndex={-1}
-                                >
-                                    <i className='material-icons'>&#xe876;</i>
-                                </div>
+                    <div
+                        role='button'
+                        className={classNames(
+                            'item',
+                            proxyMode === 'none' || !ipData ? 'disabled' : ''
+                        )}
+                        onClick={handleDataUsageOnClick}
+                        onKeyDown={handleDataUsageOnKeyDown}
+                        tabIndex={0}
+                    >
+                        <label className='key' htmlFor='data-usage'>
+                            {appLang?.settings?.data_usage}
+                        </label>
+                        <div className='value' id='data-usage'>
+                            <div
+                                className={classNames('checkbox', dataUsage ? 'checked' : '')}
+                                tabIndex={-1}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
                             </div>
-                            <div className='info'>{appLang?.settings?.data_usage_desc}</div>
                         </div>
-                    )}
+                        <div className='info'>{appLang?.settings?.data_usage_desc}</div>
+                    </div>
                 </div>
             </div>
             <PortModal

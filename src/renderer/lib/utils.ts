@@ -9,3 +9,20 @@ export const onEscapeKeyPressed = (callback = () => {}) => {
         }
     });
 };
+
+export const formatNetworkStat = (
+    speed: number | null,
+    precision: number = 2
+): { value: string; unit: string } => {
+    if (speed == null || speed < 0) return { value: 'N/A', unit: 'N/A' };
+
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let index = 0;
+
+    while (speed >= 1024 && index < units.length - 1) {
+        speed /= 1024;
+        index++;
+    }
+
+    return { value: parseFloat(speed.toFixed(precision)).toString(), unit: units[index] };
+};
