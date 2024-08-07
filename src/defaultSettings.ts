@@ -61,11 +61,11 @@ export const defaultSettings = {
 };
 
 export const countries: { value: string; label: string }[] = [
-    //{ value: 'AU', label: 'Australia' },
+    { value: 'AU', label: 'Australia' },
     { value: 'AT', label: 'Austria' },
     { value: 'BE', label: 'Belgium' },
     { value: 'BG', label: 'Bulgaria' },
-    { value: 'BR', label: 'Brazil' },
+    //{ value: 'BR', label: 'Brazil' },
     { value: 'CA', label: 'Canada' },
     { value: 'HR', label: 'Croatia' },
     { value: 'CH', label: 'Switzerland' },
@@ -93,7 +93,7 @@ export const countries: { value: string; label: string }[] = [
     { value: 'SE', label: 'Sweden' },
     { value: 'SG', label: 'Singapore' },
     { value: 'SK', label: 'Slovakia' },
-    { value: 'UA', label: 'Ukraine' },
+    //{ value: 'UA', label: 'Ukraine' },
     { value: 'US', label: 'United States' }
 ];
 
