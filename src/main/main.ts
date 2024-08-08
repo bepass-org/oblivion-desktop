@@ -29,7 +29,7 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
-import { networkStats, powerShellStart } from 'systeminformation';
+import { networkInterfaces, networkStats, powerShellStart } from 'systeminformation';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -486,11 +486,27 @@ if (!gotTheLock) {
             );
         };
 
-        const measureNetworkSpeed = () => {
+        const findLoopbackInterface = async () => {
+            try {
+                const interfaces = await networkInterfaces();
+                const loopbackInterface = Object.values(interfaces).find(
+                    (iface) => iface.ip4 === defaultSettings.hostIP
+                );
+
+                if (loopbackInterface) {
+                    return loopbackInterface.iface;
+                }
+            } catch (error) {
+                console.error('Error fetching network interfaces:', error);
+            }
+            return '';
+        };
+
+        const measureNetworkSpeed = (loopbackInterface: string) => {
             if (isSpeedMonitoring) return;
 
             isSpeedMonitoring = true;
-            networkStats()
+            networkStats(loopbackInterface)
                 .then((data) => {
                     const mainInterface = data[0];
                     if (!isUsageInitialized) {
@@ -522,12 +538,13 @@ if (!gotTheLock) {
                 });
         };
 
-        const startNetworkSpeedMonitoring = () => {
+        const startNetworkSpeedMonitoring = async () => {
             if (speedMonitorInterval) return;
             if (process.platform === 'win32') {
                 powerShellStart();
             }
-            speedMonitorInterval = setInterval(measureNetworkSpeed, 2000);
+            const loopbackInterface = await findLoopbackInterface();
+            speedMonitorInterval = setInterval(() => measureNetworkSpeed(loopbackInterface), 2000);
         };
 
         const stopNetworkSpeedMonitoring = () => {
