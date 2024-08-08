@@ -28,8 +28,26 @@ const useOptions = () => {
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
     const [method, setMethod] = useState<undefined | string>('');
     const [dataUsage, setDataUsage] = useState<boolean>();
-
+    const [localIp, setLocalIp] = useState('0.0.0.0');
     const navigate = useNavigate();
+
+    const getLocalIP = async () => {
+        const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
+        const pc = new RTCPeerConnection({
+            iceServers: []
+        });
+        pc.createDataChannel('');
+        pc.createOffer().then((offer) => pc.setLocalDescription(offer));
+        pc.onicecandidate = (ice) => {
+            if (ice && ice.candidate && ice.candidate.candidate) {
+                const ipMatch = ipRegex.exec(ice.candidate.candidate);
+                if (ipMatch) {
+                    setLocalIp(ipMatch[0]);
+                    pc.onicecandidate = null;
+                }
+            }
+        };
+    };
 
     useEffect(() => {
         settings.get('ipData').then((value) => {
@@ -68,6 +86,8 @@ const useOptions = () => {
                 navigate(args.msg);
             }
         });
+
+        getLocalIP();
     }, []);
 
     const countRoutingRules = useCallback(
@@ -153,9 +173,9 @@ const useOptions = () => {
         settings.set('shareVPN', !shareVPN);
         settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         setTimeout(function () {
-            settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
+            settings.set('hostIP', !shareVPN ? localIp : '127.0.0.1');
         }, 1000);
-    }, [isConnected, isLoading, shareVPN, appLang]);
+    }, [isConnected, isLoading, shareVPN, appLang, localIp]);
 
     const handleShareVPNOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
