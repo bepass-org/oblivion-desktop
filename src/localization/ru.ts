@@ -152,7 +152,8 @@ const russian: Language = {
             'Конфигурация прокси-сервера не поддерживается в вашей операционной системе, но вы можете использовать Warp Proxy вручную.',
         error_configuring_proxy: (value) => `Ошибка настройки прокси-сервера для ${value}!`,
         error_wp_not_found: 'Файл warp-plus не находится рядом с пакетом приложения.',
-        error_connection_failed: 'Подключение к 1.1.1.1 невозможно.'
+        error_connection_failed: 'Подключение к 1.1.1.1 невозможно.',
+        error_country_failed: 'Невозможно подключиться к выбранной стране.'
     },
     about: {
         title: 'О приложении',
