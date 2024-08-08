@@ -490,7 +490,7 @@ if (!gotTheLock) {
             try {
                 const interfaces = await networkInterfaces();
                 const loopbackInterface = Object.values(interfaces).find(
-                    (iface) => iface.ip4 === '127.0.0.1'
+                    (iface) => iface.ip4 === defaultSettings.hostIP
                 );
 
                 if (loopbackInterface) {
