@@ -150,7 +150,8 @@ const english: Language = {
             'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
         error_configuring_proxy: (value) => `Error configuring proxy for ${value}!`,
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
-        error_connection_failed: 'Connection to 1.1.1.1 was not possible.'
+        error_connection_failed: 'Connection to 1.1.1.1 was not possible.',
+        error_country_failed: 'Cannot connect to the selected country.'
     },
     about: {
         title: 'About App',

@@ -90,7 +90,8 @@ const wpErrorTranslation: Record<string, (params: { [key: string]: string }) => 
     'object null is not iterable': () => appLang.log.error_object_null,
     'parse args: unknown flag': () => appLang.log.error_unknown_flag,
     'context deadline exceeded': () => appLang.log.error_deadline_exceeded,
-    'connection test failed': () => appLang.log.error_connection_failed
+    'connection test failed': () => appLang.log.error_connection_failed,
+    'parse args: --country': () => appLang.log.error_country_failed
 };
 
 export const handleWpErrors = (strData: string, ipcEvent: IpcMainEvent, port: string) => {

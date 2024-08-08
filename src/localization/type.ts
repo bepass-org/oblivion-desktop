@@ -143,6 +143,7 @@ export interface Log {
     error_port_already_in_use: (value: string) => string;
     error_port_socket: string;
     error_unknown_flag: string;
+    error_country_failed: string;
     error_deadline_exceeded: string;
     error_configuration_encountered: string;
     error_desktop_not_supported: string;
