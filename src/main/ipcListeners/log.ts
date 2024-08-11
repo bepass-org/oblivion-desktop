@@ -10,7 +10,8 @@ import {
     checkRoutingRules,
     doesFileExist,
     hasLicense,
-    shouldProxySystem
+    shouldProxySystem,
+    checkAsn
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetsPath } from '../main';
@@ -37,8 +38,9 @@ export const logMetadata = () => {
     const license = settings.get('license');
     const endpoint = settings.get('endpoint');
     const routingRules = settings.get('routingRules');
+    const asn = settings.get('asn');
 
-    Promise.all([method, proxyMode, license, endpoint, routingRules])
+    Promise.all([method, proxyMode, license, endpoint, routingRules, asn])
         .then((data) => {
             log.info('------------------------MetaData------------------------');
             log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
@@ -50,6 +52,7 @@ export const logMetadata = () => {
             log.info('proxyMode:', shouldProxySystem(data[1]));
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
+            log.info('asn:', data[5] ? data[5] : 'UNK');
             log.info('license:', hasLicense(data[2]));
             log.info(`exe: ${app.getPath('exe')}`);
             log.info(`userData: ${app.getPath('userData')}`);

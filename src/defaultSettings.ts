@@ -25,7 +25,8 @@ export type settingsKeys =
     | 'profiles'
     | 'forceClose'
     | 'shortcut'
-    | 'dataUsage';
+    | 'dataUsage'
+    | 'asn';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -57,7 +58,8 @@ export const defaultSettings = {
     profiles: '[]',
     forceClose: false,
     shortcut: false,
-    dataUsage: false
+    dataUsage: false,
+    asn: ''
 };
 
 export const countries: { value: string; label: string }[] = [
