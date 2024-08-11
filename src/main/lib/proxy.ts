@@ -97,12 +97,10 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
 
     exec(`gsettings get org.gnome.system.proxy.socks host`, (err, stdout) => {
         oldProxyHost = stdout;
-        log.info(`Gnome old proxy host : ` + stdout);
     });
 
     exec(`gsettings get org.gnome.system.proxy.socks port`, (err, stdout) => {
         oldProxyPort = stdout;
-        log.info(`Gnome old proxy port : ` + stdout);
     });
 
     try {

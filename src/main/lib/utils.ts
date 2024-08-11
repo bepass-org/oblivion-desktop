@@ -59,6 +59,10 @@ export function shouldProxySystem(proxyMode: any) {
     );
 }
 
+export function shouldTunSystem(proxyMode: any) {
+    return typeof proxyMode === 'string' && proxyMode === 'tun-sb';
+}
+
 export function hasLicense(license: any) {
     return typeof license !== 'undefined' && license !== '';
 }
@@ -99,4 +103,15 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
     });
 
     ipcMain.emit('end-wp-and-exit-app');
+};
+
+export const copy = (source: string, dest: string) => {
+    if (fs.existsSync(source)) {
+        fs.copyFile(source, dest, (err) => {
+            if (err) throw err;
+            log.info(`${source} was copied to ${dest}.`);
+        });
+    } else {
+        log.info(`The process of copying the ${source} was halted due to the absence of the file.`);
+    }
 };

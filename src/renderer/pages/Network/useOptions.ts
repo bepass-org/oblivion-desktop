@@ -89,13 +89,17 @@ const useOptions = () => {
 
     const onChangeProxyMode = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
-            setProxyMode(event.target.value);
-            settings.set('proxyMode', event.target.value);
+            const value = event.target.value;
+            setProxyMode(value);
+            settings.set('proxyMode', value);
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
             setTimeout(function () {
-                if (event.target.value === 'none') {
+                if (value === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
+                } else {
+                    setIpData(true);
+                    settings.set('ipData', true);
                 }
             }, 1000);
         },

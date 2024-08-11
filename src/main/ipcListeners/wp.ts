@@ -7,7 +7,7 @@ import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { isDev, removeFileIfExists, shouldProxySystem, shouldTunSystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -16,6 +16,7 @@ import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
+import { enableTune } from '../lib/tun';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -26,17 +27,23 @@ const { spawn } = require('child_process');
 let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
 
-export const wpAssetPath = path.join(
+const assetsPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
     'assets',
-    'bin',
-    wpFileName
+    'bin'
 );
 
-export const wpDirPath = path.join(app.getPath('userData'));
-export const wpBinPath = path.join(wpDirPath, wpFileName);
-export const stuffPath = path.join(wpDirPath, 'stuff');
+export const wpAssetPath = path.join(assetsPath, wpFileName);
+export const sbAssetPath = path.join(assetsPath, sbFileName);
+export const sbTunDefaultConfigAssetPath = path.join(assetsPath, 'sb-tun-default.json');
+
+export const userDataPath = path.join(app.getPath('userData'));
+export const wpBinPath = path.join(userDataPath, wpFileName);
+export const sbBinPath = path.join(userDataPath, sbFileName);
+export const sbTunDefaultConfigPath = path.join(userDataPath, 'sb-tun-default.json');
+export const stuffPath = path.join(userDataPath, 'stuff');
 
 let exitOnWpEnd = false;
 
@@ -108,6 +115,9 @@ ipcMain.on('wp-start', async (event) => {
                 disconnectedFlags[0] = true;
                 sendDisconnectedSignalToRenderer();
             });
+        } else if (shouldTunSystem(proxyMode)) {
+            // tun
+            console.log('disableTun');
         } else {
             disconnectedFlags[0] = true;
             sendDisconnectedSignalToRenderer();
@@ -123,17 +133,26 @@ ipcMain.on('wp-start', async (event) => {
             .catch(() => {
                 handleSystemProxyDisconnect();
             });
+    } else if (shouldTunSystem(proxyMode)) {
+        enableTune({
+            ...{ userDataPath, sbFileName },
+            onSuccess: () => {
+                connectedFlags[0] = true;
+                sendConnectedSignalToRenderer();
+            }
+        });
+        console.log('enableTune');
     } else {
         connectedFlags[0] = true;
         sendConnectedSignalToRenderer();
     }
 
-    const command = path.join(wpDirPath, wpFileName);
+    const command = path.join(userDataPath, wpFileName);
 
     log.info('starting wp process...');
     log.info(`${command + ' ' + args.join(' ')}`);
 
-    child = spawn(command, args, { cwd: wpDirPath });
+    child = spawn(command, args, { cwd: userDataPath });
 
     const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
     // const successTunMessage = `level=INFO msg="serving tun"`;

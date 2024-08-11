@@ -17,6 +17,15 @@ const proxyModes = [
     {
         value: 'system',
         label: 'System Proxy'
+    },
+    // TODO
+    // {
+    //     value: 'system-sb',
+    //     label: 'System Proxy(2)'
+    // },
+    {
+        value: 'tun-sb',
+        label: 'Tun'
     }
 ];
 
@@ -113,9 +122,10 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.port_desc}</div>
                     </div>
+                    {/* TODO geoip.db for tun-sb / system-sb */}
                     <div
                         role='button'
-                        className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
+                        className={classNames('item', proxyMode !== 'system' ? 'disabled' : '')}
                         onClick={onClickRoutingRoles}
                         onKeyDown={onKeyDownRoutingRoles}
                         tabIndex={0}

@@ -29,9 +29,10 @@ npm-debug.log.*
 *.scss.d.ts
 
 log.txt
-warp-plus*.zip
-assets/bin
 stuff
 ca.psiphon.PsiphonTunnel.tunnel-core
-sing-box*.tar.gz
-sing-box*.zip
+vbs
+assets/bin/LICENSE
+assets/bin/README.md
+sing-box*
+warp-plus*

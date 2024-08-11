@@ -23,17 +23,23 @@ import {
     //dialog
 } from 'electron';
 import path from 'path';
-import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
 import si from 'systeminformation';
 import MenuBuilder from './menu';
-import { exitTheApp, isDev } from './lib/utils';
+import { copy, exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
+import {
+    sbAssetPath,
+    sbBinPath,
+    sbTunDefaultConfigAssetPath,
+    sbTunDefaultConfigPath,
+    wpAssetPath,
+    wpBinPath
+} from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
@@ -79,17 +85,10 @@ if (!gotTheLock) {
         }
     });
 
-    if (fs.existsSync(wpAssetPath)) {
-        // coping wp binary from assets dir to userData dir, so it can run without sudo/administrator privilege
-        fs.copyFile(wpAssetPath, wpBinPath, (err) => {
-            if (err) throw err;
-            log.info('wp binary was copied to userData directory.');
-        });
-    } else {
-        log.info(
-            'The process of copying the wp binary was halted due to the absence of the wp file.'
-        );
-    }
+    // coping binary files from assets dir to userData dir, to run from there(avoid antivirus alerts)
+    copy(wpAssetPath, wpBinPath);
+    copy(sbAssetPath, sbBinPath);
+    copy(sbTunDefaultConfigAssetPath, sbTunDefaultConfigPath);
 
     if (!isDev()) {
         const sourceMapSupport = require('source-map-support');

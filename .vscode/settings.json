@@ -93,5 +93,5 @@
     "وارد",
     "یافت"
   ],
-  "editor.formatOnSave": false
+  "editor.formatOnSave": true
 }
