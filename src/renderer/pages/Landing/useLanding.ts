@@ -235,7 +235,7 @@ const useLanding = () => {
 
     const getPing = async () => {
         try {
-            if ( !ipInfo?.countryCode ) {
+            if (!ipInfo?.countryCode) {
                 setPing(-1);
                 return;
             }
