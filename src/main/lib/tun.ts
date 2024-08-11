@@ -41,6 +41,15 @@ export const handleSbErrors = (
     });
 };
 
+// TODO whitList only allowedSbLogs but have the option to DEBUG mode on prod and dev
+// cause it's too verbose
+const allowedSbLogs = [
+    'tcp server started at',
+    'started at od-tun',
+    'sing-box started',
+    'Access is denied'
+];
+
 export const enableTun = ({
     onSuccess,
     onError,
@@ -76,7 +85,7 @@ export const enableTun = ({
         handleSbErrors(strData, ipcEvent, 'P0RT', onError);
 
         if (!showSbLogs && isDev()) return;
-        simpleLog.info(strData, typeof strData);
+        simpleLog.info(strData);
     });
 };
 
