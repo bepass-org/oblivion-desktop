@@ -86,7 +86,9 @@ technology
                 :white_check_mark:  English <br>
                 :white_check_mark:  Chinese <br>
                 :white_check_mark:  Russian <br>
-                :white_check_mark:  Deutsch
+                :white_check_mark:  Deutsch <br>
+                :white_check_mark:  Turkish <br>
+                :white_check_mark:  Indonesia
             </td>
         </tr>
         <tr>
@@ -106,7 +108,7 @@ technology
                 :white_check_mark: Ping<br>
                 :white_check_mark: Accessibility<br>
                 :white_large_square: Inline Update<br>
-                :white_check_mark: SpeedTest
+                :white_large_square: SpeedTest
             </td>
         </tr>
     </tbody>

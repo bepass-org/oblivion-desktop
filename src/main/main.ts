@@ -19,7 +19,8 @@ import {
     Tray,
     nativeImage,
     IpcMainEvent,
-    globalShortcut
+    globalShortcut,
+    powerMonitor
     //dialog
 } from 'electron';
 import path from 'path';
@@ -27,7 +28,7 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
-import si from 'systeminformation';
+import { networkInterfaces, networkStats, powerShellStart } from 'systeminformation';
 import MenuBuilder from './menu';
 import { copy, exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -55,6 +56,8 @@ let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
 let initialDownloadUsage = 0;
 let initialUploadUsage = 0;
+let isSpeedMonitoring: boolean = false;
+let isUsageInitialized: boolean = false;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -267,6 +270,20 @@ if (!gotTheLock) {
                     mainWindow?.removeAllListeners('close');
                     //await exitTheApp(mainWindow);
                 });
+
+                powerMonitor.on('shutdown', async (event: any) => {
+                    event.preventDefault();
+                    const shutdownTimeout = setTimeout(() => {
+                        app?.quit();
+                    }, 2500);
+                    try {
+                        await exitTheApp(mainWindow);
+                        clearTimeout(shutdownTimeout);
+                        app?.quit();
+                    } catch (error) {
+                        app?.quit();
+                    }
+                });
             } else {
                 mainWindow.show();
             }
@@ -468,49 +485,73 @@ if (!gotTheLock) {
             );
         };
 
-        const measureNetworkSpeed = async () => {
+        const findLoopbackInterface = async () => {
             try {
-                const networkStats = await si.networkStats();
-                const mainInterface = networkStats[0];
+                const interfaces = await networkInterfaces();
+                const loopbackInterface = Object.values(interfaces).find(
+                    (iface) => iface.ip4 === defaultSettings.hostIP
+                );
 
-                const currentDownload = mainInterface.rx_sec;
-                const currentUpload = mainInterface.tx_sec;
-                const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
-                const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
-                const totalUsage = totalDownload + totalUpload;
-
-                if (mainWindow) {
-                    mainWindow.webContents.send('speed-stats', {
-                        currentDownload,
-                        currentUpload,
-                        totalDownload,
-                        totalUpload,
-                        totalUsage
-                    });
+                if (loopbackInterface) {
+                    return loopbackInterface.iface;
                 }
             } catch (error) {
-                console.error('Error measuring network speed:', error);
+                console.error('Error fetching network interfaces:', error);
             }
+            return '';
         };
 
-        const initializeNetworkUsage = async () => {
-            const networkStats = await si.networkStats();
-            const mainInterface = networkStats[0];
-            initialDownloadUsage = mainInterface.rx_bytes;
-            initialUploadUsage = mainInterface.tx_bytes;
+        const measureNetworkSpeed = (loopbackInterface: string) => {
+            if (isSpeedMonitoring) return;
+
+            isSpeedMonitoring = true;
+            networkStats(loopbackInterface)
+                .then((data) => {
+                    const mainInterface = data[0];
+                    if (!isUsageInitialized) {
+                        initialDownloadUsage = mainInterface.rx_bytes;
+                        initialUploadUsage = mainInterface.tx_bytes;
+                        isUsageInitialized = true;
+                    }
+                    const currentDownload = mainInterface.rx_sec;
+                    const currentUpload = mainInterface.tx_sec;
+                    const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
+                    const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
+                    const totalUsage = totalDownload + totalUpload;
+
+                    if (mainWindow) {
+                        mainWindow.webContents.send('speed-stats', {
+                            currentDownload,
+                            currentUpload,
+                            totalDownload,
+                            totalUpload,
+                            totalUsage
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error measuring network speed:', error);
+                })
+                .finally(() => {
+                    isSpeedMonitoring = false;
+                });
         };
 
-        const startNetworkSpeedMonitoring = () => {
+        const startNetworkSpeedMonitoring = async () => {
             if (speedMonitorInterval) return;
-
-            initializeNetworkUsage();
-            speedMonitorInterval = setInterval(measureNetworkSpeed, 1000);
+            if (process.platform === 'win32') {
+                powerShellStart();
+            }
+            const loopbackInterface = await findLoopbackInterface();
+            speedMonitorInterval = setInterval(() => measureNetworkSpeed(loopbackInterface), 2000);
         };
 
         const stopNetworkSpeedMonitoring = () => {
             if (speedMonitorInterval) {
                 clearInterval(speedMonitorInterval);
                 speedMonitorInterval = null;
+                isSpeedMonitoring = false;
+                isUsageInitialized = false;
                 initialDownloadUsage = 0;
                 initialUploadUsage = 0;
             }

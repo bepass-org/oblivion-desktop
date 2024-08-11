@@ -63,6 +63,8 @@ export interface Settings {
     dns_desc: string;
     ip_data: string;
     ip_data_desc: string;
+    data_usage: string;
+    data_usage_desc: string;
     dark_mode: string;
     dark_mode_desc: string;
     lang: string;
@@ -142,6 +144,7 @@ export interface Log {
     error_port_socket: string;
     error_tun_access_denied: string;
     error_unknown_flag: string;
+    error_country_failed: string;
     error_deadline_exceeded: string;
     error_configuration_encountered: string;
     error_desktop_not_supported: string;

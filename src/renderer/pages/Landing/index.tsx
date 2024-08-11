@@ -29,7 +29,8 @@ export default function Landing() {
         proxyStatus,
         appVersion,
         shortcut,
-        speeds
+        speeds,
+        dataUsage
     } = useLanding();
 
     return (
@@ -64,9 +65,14 @@ export default function Landing() {
                 proxyStatus={proxyStatus}
                 appVersion={appVersion}
                 speeds={speeds}
+                dataUsage={dataUsage}
             />
-            {!isConnected && shortcut && <Tabs active='landing' />}
-            <Toaster position='bottom-center' reverseOrder={false} />
+            {(!isConnected || (isConnected && !ipData)) && shortcut && <Tabs active='landing' />}
+            <Toaster
+                position='bottom-center'
+                reverseOrder={false}
+                containerStyle={{ bottom: shortcut ? '70px' : '16px' }}
+            />
         </>
     );
 }

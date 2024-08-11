@@ -59,10 +59,12 @@ const english: Language = {
         port_desc: 'Define application proxy port',
         share_vpn: 'Share (LAN)',
         share_vpn_desc: 'Share a proxy on the network',
-        dns: 'Change DNS',
-        dns_desc: 'Use Google Public DNS',
+        dns: 'DNS',
+        dns_desc: 'Block ads & adult content',
         ip_data: 'IP Check',
         ip_data_desc: 'Display IP & location after connection',
+        data_usage: 'Data Usage',
+        data_usage_desc: 'Display data usage & real-time speed',
         dark_mode: 'Dark Mode',
         dark_mode_desc: 'Specify the display mode of the application',
         lang: 'Language',
@@ -150,7 +152,8 @@ const english: Language = {
             'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
         error_configuring_proxy: (value) => `Error configuring proxy for ${value}!`,
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
-        error_connection_failed: 'Connection to 1.1.1.1 was not possible.'
+        error_connection_failed: 'Connection to 1.1.1.1 was not possible.',
+        error_country_failed: 'Cannot connect to the selected country.'
     },
     about: {
         title: 'About App',

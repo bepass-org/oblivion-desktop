@@ -59,10 +59,12 @@ const chinese: Language = {
         port_desc: '定义应用的代理端口',
         share_vpn: '允许局域网连接',
         share_vpn_desc: '在局域网上共享代理',
-        dns: '更改 DNS',
-        dns_desc: '使用 Google 公共 DNS',
+        dns: 'DNS',
+        dns_desc: '屏蔽广告和成人内容',
         ip_data: '解析目标地址',
         ip_data_desc: '连接后显示 IP 和位置',
+        data_usage: '数据使用量',
+        data_usage_desc: '显示数据使用量和实时速度',
         dark_mode: '深色模式',
         dark_mode_desc: '定义应用主题模式',
         lang: '语言',
@@ -148,7 +150,8 @@ const chinese: Language = {
             '您的操作系统不支持代理配置，但您可以手动使用 Warp 代理。',
         error_configuring_proxy: (value) => `为 ${value} 配置代理时出错！`,
         error_wp_not_found: 'warp-plus 文件不在应用程序包旁边。',
-        error_connection_failed: '无法连接到1.1.1.1。'
+        error_connection_failed: '无法连接到1.1.1.1。',
+        error_country_failed: '无法连接到所选国家.'
     },
     about: {
         title: '关于应用',

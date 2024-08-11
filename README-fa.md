@@ -99,7 +99,9 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark:  انگلیسی<br>
                 :white_check_mark:  چینی<br>
                 :white_check_mark:  روسی<br>
-                :white_check_mark:  آلمانی
+                :white_check_mark:  آلمانی<br>
+                :white_check_mark:  ترکی<br>
+                :white_check_mark:  اندونزیایی
             </td>
         </tr>
         <tr>
@@ -119,7 +121,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: پینگ<br>
                 :white_check_mark: دسترس‌پذیری<br>
                 :white_large_square: بروزرسانی داخلی<br>
-                :white_check_mark: تست سرعت
+                :white_large_square: تست سرعت
             </td>
         </tr>
     </tbody>

@@ -61,10 +61,12 @@ const deutsch: Language = {
         port_desc: 'Proxy-Port der Anwendungs festlegen',
         share_vpn: 'Freigeben (LAN)',
         share_vpn_desc: 'Proxy im Netzwerk freigeben',
-        dns: 'DNS ändern',
-        dns_desc: 'Google Public DNS verwenden',
+        dns: 'DNS',
+        dns_desc: 'Werbung und Inhalte für Erwachsene blockieren',
         ip_data: 'IP Check',
         ip_data_desc: 'IP & Standort nach herstellen der Verbindung anzeigen',
+        data_usage: 'Datennutzung',
+        data_usage_desc: 'Anzeige der Datennutzung und Echtzeitgeschwindigkeit',
         dark_mode: 'Dunkler Modus',
         dark_mode_desc: 'Anzeigemodus der Anwendung angeben',
         lang: 'Sprache',
@@ -153,7 +155,8 @@ const deutsch: Language = {
             'Proxy-Konfiguration wird in Ihrem Betriebssystem nicht unterstützt, aber Sie können Warp Proxy manuell verwenden.',
         error_configuring_proxy: (value) => `Fehler beim Konfigurieren des Proxys für ${value}!`,
         error_wp_not_found: 'Die Datei warp-plus befindet sich nicht neben dem Anwendungspaket.',
-        error_connection_failed: 'Verbindung zu 1.1.1.1 war nicht möglich.'
+        error_connection_failed: 'Verbindung zu 1.1.1.1 war nicht möglich.',
+        error_country_failed: 'Verbindung zum ausgewählten Land nicht möglich.'
     },
     about: {
         title: 'Über',

@@ -24,7 +24,8 @@ export type settingsKeys =
     | 'scanResult'
     | 'profiles'
     | 'forceClose'
-    | 'shortcut';
+    | 'shortcut'
+    | 'dataUsage';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -47,7 +48,7 @@ export const defaultSettings = {
     shareVPN: false,
     hostIP: '127.0.0.1',
     method: 'gool',
-    dns: true,
+    dns: '',
     rtt: '1s',
     openAtLogin: false,
     autoConnect: false,
@@ -55,15 +56,16 @@ export const defaultSettings = {
     scanResult: '',
     profiles: '[]',
     forceClose: false,
-    shortcut: false
+    shortcut: false,
+    dataUsage: false
 };
 
 export const countries: { value: string; label: string }[] = [
-    //{ value: 'AU', label: 'Australia' },
+    { value: 'AU', label: 'Australia' },
     { value: 'AT', label: 'Austria' },
     { value: 'BE', label: 'Belgium' },
     { value: 'BG', label: 'Bulgaria' },
-    { value: 'BR', label: 'Brazil' },
+    //{ value: 'BR', label: 'Brazil' },
     { value: 'CA', label: 'Canada' },
     { value: 'HR', label: 'Croatia' },
     { value: 'CH', label: 'Switzerland' },
@@ -91,7 +93,7 @@ export const countries: { value: string; label: string }[] = [
     { value: 'SE', label: 'Sweden' },
     { value: 'SG', label: 'Singapore' },
     { value: 'SK', label: 'Slovakia' },
-    { value: 'UA', label: 'Ukraine' },
+    //{ value: 'UA', label: 'Ukraine' },
     { value: 'US', label: 'United States' }
 ];
 
@@ -100,5 +102,14 @@ export const languages: { value: string; label: string }[] = [
     { value: 'en', label: 'English' },
     { value: 'cn', label: '中文' },
     { value: 'ru', label: 'Русский' },
-    { value: 'de', label: 'Deutsch' }
+    { value: 'de', label: 'Deutsch' },
+    { value: 'tr', label: 'Türkçe' },
+    { value: 'id', label: 'Indonesia' }
+];
+
+export const dnsServers: { value: string; label: string }[] = [
+    { value: '1.1.1.1', label: 'Cloudflare' },
+    { value: '8.8.8.8', label: 'Google' },
+    { value: '94.140.14.14', label: 'Adguard' },
+    { value: '94.140.14.15', label: 'Adguard Family' }
 ];

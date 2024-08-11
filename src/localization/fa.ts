@@ -59,10 +59,12 @@ const persian: Language = {
         port_desc: 'تعیین پورت پروکسی برنامه',
         share_vpn: 'اتصال از LAN',
         share_vpn_desc: 'اشتراک\u200Cگذاری پروکسی بر روی شبکه',
-        dns: 'تغییر DNS',
-        dns_desc: 'استفاده از DNS عمومی گوگل',
+        dns: 'انتخاب DNS',
+        dns_desc: 'محدودسازی تبلیغات و محتوای بزرگسال',
         ip_data: 'بررسی IP',
         ip_data_desc: 'نمایش آی\u200Cپی و لوکیشن پس\u200Cاز اتصال',
+        data_usage: 'مصرف داده',
+        data_usage_desc: 'نمایش لحظه‌ای سرعت و مصرف داده',
         dark_mode: 'حالت تیره',
         dark_mode_desc: 'مشخص\u200Cکردن حالت نمایش برنامه',
         lang: 'زبان برنامه',
@@ -152,7 +154,8 @@ const persian: Language = {
             'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
         error_configuring_proxy: (value) => `خطای پیکربندی پروکسی برای ${value}!`,
         error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`,
-        error_connection_failed: 'اتصال به 1.1.1.1 امکان‌پذیر نبود.'
+        error_connection_failed: 'اتصال به 1.1.1.1 امکان‌پذیر نبود.',
+        error_country_failed: 'امکان اتصال به کشور انتخابی وجود ندارد.'
     },
     about: {
         title: 'درباره برنامه',

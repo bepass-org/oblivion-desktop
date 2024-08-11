@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
+import { isDev, ipcRenderer, onEscapeKeyPressed, formatNetworkStat } from '../../lib/utils';
 import { defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
 import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
@@ -26,29 +26,12 @@ export interface SpeedStats {
     totalUsage: { value: string; unit: string };
 }
 
-export const defaultSpeedStats: SpeedStats = {
+const defaultSpeedStats: SpeedStats = {
     currentDownload: { value: 'N/A', unit: 'N/A' },
     currentUpload: { value: 'N/A', unit: 'N/A' },
     totalDownload: { value: 'N/A', unit: 'N/A' },
     totalUpload: { value: 'N/A', unit: 'N/A' },
     totalUsage: { value: 'N/A', unit: 'N/A' }
-};
-
-const formatSpeed = (
-    speed: number | null,
-    precision: number = 2
-): { value: string; unit: string } => {
-    if (speed == null || speed < 0) return { value: 'N/A', unit: 'N/A' };
-
-    const units = ['B', 'KB', 'MB', 'GB'];
-    let index = 0;
-
-    while (speed >= 1024 && index < units.length - 1) {
-        speed /= 1024;
-        index++;
-    }
-
-    return { value: parseFloat(speed.toFixed(precision)).toString(), unit: units[index] };
 };
 
 const useLanding = () => {
@@ -87,6 +70,7 @@ const useLanding = () => {
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [speeds, setSpeeds] = useState<SpeedStats>(defaultSpeedStats);
+    const [dataUsage, setDataUsage] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -168,6 +152,9 @@ const useLanding = () => {
         settings.get('shortcut').then((value) => {
             setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
         });
+        settings.get('dataUsage').then((value) => {
+            setDataUsage(typeof value === 'undefined' ? defaultSettings.dataUsage : value);
+        });
 
         cachedIpInfo = null;
         if (canCheckNewVer) {
@@ -199,23 +186,6 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('speed-stats', (event: any) => {
-            const formattedCurrentDownload = formatSpeed(event?.currentDownload);
-            const formattedCurrentUpload = formatSpeed(event?.currentUpload);
-            const formattedTotalDownload = formatSpeed(event?.totalDownload);
-            const formattedTotalUpload = formatSpeed(event?.totalUpload);
-            const formattedTotalUsage = formatSpeed(event?.totalUsage);
-
-            setSpeeds((prevSpeeds) => ({
-                ...prevSpeeds,
-                currentDownload: formattedCurrentDownload,
-                currentUpload: formattedCurrentUpload,
-                totalDownload: formattedTotalDownload,
-                totalUpload: formattedTotalUpload,
-                totalUsage: formattedTotalUsage
-            }));
-        });
-
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
         return () => {
@@ -232,6 +202,21 @@ const useLanding = () => {
             defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
         }
     }, [appLang?.toast?.offline, online]);
+
+    useEffect(() => {
+        if (isConnected && dataUsage) {
+            ipcRenderer.on('speed-stats', (event: any) => {
+                setSpeeds((prevSpeeds) => ({
+                    ...prevSpeeds,
+                    currentDownload: formatNetworkStat(event?.currentDownload),
+                    currentUpload: formatNetworkStat(event?.currentUpload),
+                    totalDownload: formatNetworkStat(event?.totalDownload),
+                    totalUpload: formatNetworkStat(event?.totalUpload),
+                    totalUsage: formatNetworkStat(event?.totalUsage)
+                }));
+            });
+        }
+    }, [dataUsage, isConnected]);
 
     const ipToast = async () => {
         if (connectedToIrIPOnceDisplayed) {
@@ -374,6 +359,10 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
+                ipcRenderer.sendMessage(
+                    'check-speed',
+                    proxyStatus !== 'none' && dataUsage && ipData
+                );
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
                 }*/
@@ -388,13 +377,12 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
+                ipcRenderer.sendMessage('check-speed', false);
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', 'disconnected');
                 }*/
             }
         });
-
-        ipcRenderer.sendMessage('check-speed', isConnected && proxyStatus !== 'none');
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
@@ -469,7 +457,8 @@ const useLanding = () => {
         proxyStatus,
         appVersion: packageJsonData?.version,
         shortcut,
-        speeds
+        speeds,
+        dataUsage
     };
 };
 export default useLanding;

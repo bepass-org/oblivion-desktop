@@ -35,84 +35,47 @@ import sk from '../../../assets/img/flags/sk.svg';
 import ua from '../../../assets/img/flags/ua.svg';
 import us from '../../../assets/img/flags/us.svg';
 
-export const cfFlag = (code: any) => {
-    try {
-        if (code === 'ir') {
-            return ir;
-        } else if (code === 'xx') {
-            return xx;
-        } else if (code === 'au') {
-            return au;
-        } else if (code === 'at') {
-            return at;
-        } else if (code === 'be') {
-            return be;
-        } else if (code === 'bg') {
-            return bg;
-        } else if (code === 'br') {
-            return br;
-        } else if (code === 'ca') {
-            return ca;
-        } else if (code === 'hr') {
-            return hr;
-        } else if (code === 'ch') {
-            return ch;
-        } else if (code === 'cz') {
-            return cz;
-        } else if (code === 'de') {
-            return de;
-        } else if (code === 'dk') {
-            return dk;
-        } else if (code === 'ee') {
-            return ee;
-        } else if (code === 'es') {
-            return es;
-        } else if (code === 'fi') {
-            return fi;
-        } else if (code === 'fr') {
-            return fr;
-        } else if (code === 'gb') {
-            return gb;
-        } else if (code === 'hu') {
-            return hu;
-        } else if (code === 'ie') {
-            return ie;
-        } else if (code === 'id') {
-            return id;
-        } else if (code === 'in') {
-            return ind;
-        } else if (code === 'it') {
-            return it;
-        } else if (code === 'jp') {
-            return jp;
-        } else if (code === 'lv') {
-            return lv;
-        } else if (code === 'nl') {
-            return nl;
-        } else if (code === 'no') {
-            return no;
-        } else if (code === 'pl') {
-            return pl;
-        } else if (code === 'pt') {
-            return pt;
-        } else if (code === 'ro') {
-            return ro;
-        } else if (code === 'rs') {
-            return rs;
-        } else if (code === 'se') {
-            return se;
-        } else if (code === 'sg') {
-            return sg;
-        } else if (code === 'sk') {
-            return sk;
-        } else if (code === 'ua') {
-            return ua;
-        } else if (code === 'us') {
-            return us;
-        } else {
-            return xx;
-        }
-    } catch (error) {
+const flagMap: { [key: string]: string } = {
+    ir,
+    au,
+    at,
+    be,
+    bg,
+    br,
+    ca,
+    hr,
+    ch,
+    cz,
+    de,
+    dk,
+    ee,
+    es,
+    fi,
+    fr,
+    gb,
+    hu,
+    ie,
+    id,
+    it,
+    jp,
+    lv,
+    nl,
+    no,
+    pl,
+    pt,
+    ro,
+    rs,
+    se,
+    sg,
+    sk,
+    ua,
+    us,
+    in: ind
+};
+
+export const cfFlag = (code: any): string => {
+    if (typeof code !== 'string') {
         return xx;
     }
+    return flagMap[code.toLowerCase()] || xx;
 };
