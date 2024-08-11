@@ -1,6 +1,6 @@
-import { settings } from "./settings";
+import { settings } from './settings';
 
-const getAsnCode = (name:string) => {
+const getAsnCode = (name: string) => {
     switch (true) {
         case name?.includes('Mobin Net Communication Company'):
             return 'MBN';
