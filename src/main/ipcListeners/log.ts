@@ -47,7 +47,7 @@ export const logMetadata = () => {
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
             log.info('method:', calculateMethod(data[0]));
             // TODO rename to network configuration when tun comes
-            log.info('proxyMode:', shouldProxySystem(data[1]));
+            log.info('proxyMode:', data[1]);
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
             log.info('license:', hasLicense(data[2]));

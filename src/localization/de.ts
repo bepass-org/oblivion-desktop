@@ -143,6 +143,8 @@ const deutsch: Language = {
         error_port_already_in_use: (value) =>
             `Port ${value} wird von einem anderen Programm verwendet; Ändern Sie es.`,
         error_port_socket: 'Anderen Port verwenden.',
+        error_tun_access_denied:
+            'For TUN to work, close and reopen the app with Admin/Sudo privilage.',
         error_unknown_flag: 'Im Hintergrund wurde ein ungültiger Befehl ausgeführt.',
         error_deadline_exceeded: 'Zeitüberschreitung bei der Verbindung; Versuchen Sie es erneut.',
         error_configuration_encountered: 'Proxy-Konfiguration hat einen Fehler festgestellt!',

@@ -142,6 +142,8 @@ const russian: Language = {
         error_port_already_in_use: (value) =>
             `Порт ${value} используется другой программой; Измени это.`,
         error_port_socket: 'Использовать другой порт.',
+        error_tun_access_denied:
+            'For TUN to work, close and reopen the app with Admin/Sudo privilage.',
         error_unknown_flag: 'В фоновом режиме была выполнена недопустимая команда.',
         error_deadline_exceeded: 'Время ожидания соединения истекло; Попробуйте еще раз.',
         error_configuration_encountered: 'В конфигурации прокси произошла ошибка!',

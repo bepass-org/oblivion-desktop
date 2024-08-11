@@ -16,7 +16,7 @@ import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
-import { enableTune } from '../lib/tun';
+import { disableTun, enableTun } from '../lib/tun';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -109,21 +109,27 @@ ipcMain.on('wp-start', async (event) => {
         setStuffPath(args);
     }*/
 
-    const handleSystemProxyDisconnect = () => {
+    const handleDisconnect = () => {
         if (shouldProxySystem(proxyMode)) {
             disableSystemProxy(regeditVbsDirPath, event).then(() => {
                 disconnectedFlags[0] = true;
                 sendDisconnectedSignalToRenderer();
             });
         } else if (shouldTunSystem(proxyMode)) {
-            // tun
-            console.log('disableTun');
+            ipcMain.emit('wp-end');
+            disableTun({
+                onExit: () => {
+                    disconnectedFlags[0] = true;
+                    sendDisconnectedSignalToRenderer();
+                }
+            });
         } else {
             disconnectedFlags[0] = true;
             sendDisconnectedSignalToRenderer();
         }
     };
 
+    // TODO fix: map function to function not acting based on proxyMode(cause use might start with tun but end with proxy or...)
     if (shouldProxySystem(proxyMode)) {
         enableSystemProxy(regeditVbsDirPath, event)
             .then(() => {
@@ -131,15 +137,19 @@ ipcMain.on('wp-start', async (event) => {
                 sendConnectedSignalToRenderer();
             })
             .catch(() => {
-                handleSystemProxyDisconnect();
+                handleDisconnect();
             });
     } else if (shouldTunSystem(proxyMode)) {
-        enableTune({
-            ...{ userDataPath, sbFileName },
+        enableTun({
             onSuccess: () => {
                 connectedFlags[0] = true;
                 sendConnectedSignalToRenderer();
-            }
+            },
+            onError: () => {
+                handleDisconnect();
+            },
+            ...{ userDataPath, sbFileName },
+            ipcEvent: event
         });
         console.log('enableTune');
     } else {
@@ -189,7 +199,7 @@ ipcMain.on('wp-start', async (event) => {
         log.info('wp process exited.');
         // manually setting pid to undefined
         child.pid = undefined;
-        handleSystemProxyDisconnect();
+        handleDisconnect();
     });
 });
 

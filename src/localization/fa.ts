@@ -142,6 +142,8 @@ const persian: Language = {
         error_port_already_in_use: (value) =>
             `پورت ${value} توسط برنامه دیگری درحال استفاده است؛ آن‌را تغییر دهید.`,
         error_port_socket: 'از یک پورت دیگر استفاده نمایید.',
+        error_tun_access_denied:
+            'For TUN to work, close and reopen the app with Admin/Sudo privilage.',
         error_unknown_flag: 'یک دستور نادرست در پس‌زمینه اجرا شده است.',
         error_deadline_exceeded: 'مهلت اتصال پایان یافت؛ دوباره تلاش کنید.',
         error_configuration_encountered: 'پیکربندی پروکسی با خطا مواجه شد!',

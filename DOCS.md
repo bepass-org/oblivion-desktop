@@ -3,9 +3,7 @@
 this is a [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
 ](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
-in a nutshell its a GUI that interacts with [warp-plus](https://github.com/bepass-org/warp-plus/) binary and changes system proxy setting.
-
-<!-- and [sing-box](https://sing-box.sagernet.org/alig) binaries. -->
+in a nutshell its a GUI that interacts with [warp-plus](https://github.com/bepass-org/warp-plus/) and [sing-box](https://sing-box.sagernet.org/) binaries.
 
 ## Getting Started
 
@@ -53,9 +51,9 @@ checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example
 
 ## Notes
 
+-   `wp` refers to `warp-plus`
+-   `od` refers to `oblivion desktop`
+-   `sb` refers to `sing-box`
 -   (after wp updates) to get the latest wp version, that app is using. run: `npm i`.
--   `wp` refers to `warp-plus` in source.
--   `od` refers to `oblivion desktop` in source.
--   `sb` refers to `sing-box` in source.
 
 happy hacking 😉

@@ -140,6 +140,7 @@ export interface Log {
     error_object_null: string;
     error_port_already_in_use: (value: string) => string;
     error_port_socket: string;
+    error_tun_access_denied: string;
     error_unknown_flag: string;
     error_deadline_exceeded: string;
     error_configuration_encountered: string;
