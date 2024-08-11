@@ -235,6 +235,10 @@ const useLanding = () => {
 
     const getPing = async () => {
         try {
+            if ( !ipInfo?.countryCode ) {
+                setPing(-1);
+                return;
+            }
             const started = window.performance.now();
             const http = new XMLHttpRequest();
             http.open('GET', 'http://cp.cloudflare.com', true);
