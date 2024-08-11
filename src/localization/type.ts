@@ -61,6 +61,7 @@ export interface Settings {
     share_vpn_desc: string;
     dns: string;
     dns_desc: string;
+    dns_error: string;
     ip_data: string;
     ip_data_desc: string;
     data_usage: string;

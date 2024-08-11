@@ -61,6 +61,7 @@ const indonesia: Language = {
         share_vpn_desc: 'Bagikan proxy di jaringan',
         dns: 'DNS',
         dns_desc: 'Blokir iklan & konten dewasa',
+        dns_error: 'Ini berlaku untuk metode Warp dan Gool',
         ip_data: 'Cek IP',
         ip_data_desc: 'Tampilkan IP & Lokasi setelah koneksi',
         data_usage: 'Penggunaan Data',

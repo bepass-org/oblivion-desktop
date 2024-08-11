@@ -61,6 +61,7 @@ const english: Language = {
         share_vpn_desc: 'Share a proxy on the network',
         dns: 'DNS',
         dns_desc: 'Block ads & adult content',
+        dns_error: 'It is applicable to the Warp & Gool methods',
         ip_data: 'IP Check',
         ip_data_desc: 'Display IP & location after connection',
         data_usage: 'Data Usage',

@@ -61,6 +61,7 @@ const turkish: Language = {
         share_vpn_desc: 'Ağda proxy paylaşımı',
         dns: 'DNS',
         dns_desc: 'Reklamları ve yetişkin içeriklerini engelle',
+        dns_error: 'Warp ve Gool yöntemlerine uygulanabilir',
         ip_data: 'IP Kontrolü',
         ip_data_desc: 'Bağlantı sonrası IP ve konumu göster',
         data_usage: 'Veri Kullanımı',

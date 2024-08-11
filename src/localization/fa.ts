@@ -61,6 +61,7 @@ const persian: Language = {
         share_vpn_desc: 'اشتراک\u200Cگذاری پروکسی بر روی شبکه',
         dns: 'انتخاب DNS',
         dns_desc: 'محدودسازی تبلیغات و محتوای بزرگسال',
+        dns_error: 'برای متدهای Warp و Gool کاربرد دارد',
         ip_data: 'بررسی IP',
         ip_data_desc: 'نمایش آی\u200Cپی و لوکیشن پس\u200Cاز اتصال',
         data_usage: 'مصرف داده',

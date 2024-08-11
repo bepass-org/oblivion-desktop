@@ -9,7 +9,7 @@ import RoutingRulesModal from '../../components/Modal/RoutingRules';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
-import { platform } from '../../lib/utils';
+//import { platform } from '../../lib/utils';
 
 const proxyModes = [
     {
@@ -148,7 +148,11 @@ export default function Options() {
                             disabled={method === 'psiphon'}
                             items={[...dnsServers]}
                         />
-                        <div className='info'>{appLang?.settings?.dns_desc}</div>
+                        <div className='info'>
+                            {method !== 'psiphon'
+                                ? appLang?.settings?.dns_desc
+                                : appLang?.settings?.dns_error}
+                        </div>
                     </div>
                     <div
                         role='button'

@@ -63,6 +63,7 @@ const deutsch: Language = {
         share_vpn_desc: 'Proxy im Netzwerk freigeben',
         dns: 'DNS',
         dns_desc: 'Werbung und Inhalte für Erwachsene blockieren',
+        dns_error: 'Es ist auf die Warp- und Gool-Methoden anwendbar',
         ip_data: 'IP Check',
         ip_data_desc: 'IP & Standort nach herstellen der Verbindung anzeigen',
         data_usage: 'Datennutzung',

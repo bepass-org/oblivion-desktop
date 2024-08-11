@@ -61,6 +61,7 @@ const chinese: Language = {
         share_vpn_desc: '在局域网上共享代理',
         dns: 'DNS',
         dns_desc: '屏蔽广告和成人内容',
+        dns_error: '适用于 Warp 和 Gool 方法',
         ip_data: '解析目标地址',
         ip_data_desc: '连接后显示 IP 和位置',
         data_usage: '数据使用量',
