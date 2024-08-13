@@ -150,6 +150,7 @@ const indonesia: Language = {
             'Konfigurasi proxy tidak didukung pada sistem operasi Anda, tetapi Anda dapat menggunakan Warp Proxy secara manual.',
         error_configuring_proxy: (value) => `Kesalahan mengkonfigurasi proxy untuk ${value}!`,
         error_wp_not_found: 'File warp-plus tidak terletak di samping paket aplikasi!',
+        error_wp_stopped: 'File warp-plus mengalami masalah saat dijalankan!',
         error_connection_failed: 'Koneksi ke 1.1.1.1 tidak berhasil.',
         error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.'
     },

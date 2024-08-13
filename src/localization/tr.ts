@@ -152,6 +152,7 @@ const turkish: Language = {
             'Proxy yapılandırması işletim sisteminizde desteklenmiyor, ancak manuel olarak Warp Proxy kullanabilirsiniz.',
         error_configuring_proxy: (value) => `${value} için proxy yapılandırılırken hata oluştu!`,
         error_wp_not_found: 'Warp-plus dosyası uygulama paketiyle birlikte yer almıyor!',
+        error_wp_stopped: 'warp-plus dosyası çalışırken bir sorunla karşılaştı!',
         error_connection_failed: '1.1.1.1 ile bağlantı sağlanamadı.',
         error_country_failed: 'Seçilen ülkeye bağlanılamıyor.'
     },

@@ -133,45 +133,49 @@ ipcMain.on('wp-start', async (event) => {
     log.info('starting wp process...');
     log.info(`${command + ' ' + args.join(' ')}`);
 
-    child = spawn(command, args, { cwd: wpDirPath });
+    try {
+        child = spawn(command, args, { cwd: wpDirPath });
+        const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
+        // const successTunMessage = `level=INFO msg="serving tun"`;
 
-    const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-    // const successTunMessage = `level=INFO msg="serving tun"`;
+        child.stdout.on('data', async (data: any) => {
+            const strData = data.toString();
+            if (strData.includes(successMessage)) {
+                connectedFlags[1] = true;
+                sendConnectedSignalToRenderer();
+            }
 
-    child.stdout.on('data', async (data: any) => {
-        const strData = data.toString();
-        if (strData.includes(successMessage)) {
-            connectedFlags[1] = true;
-            sendConnectedSignalToRenderer();
-        }
+            // Save the last endpoint that was successfully connected
+            const endpointRegex =
+                /msg="scan results" endpoints="\[\{AddrPort:(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})/;
+            const match = strData.match(endpointRegex);
+            if (match) {
+                await settings.set('scanResult', match[1]);
+            }
 
-        // Save the last endpoint that was successfully connected
-        const endpointRegex =
-            /msg="scan results" endpoints="\[\{AddrPort:(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})/;
-        const match = strData.match(endpointRegex);
-        if (match) {
-            await settings.set('scanResult', match[1]);
-        }
+            handleWpErrors(strData, event, String(port));
 
-        handleWpErrors(strData, event, String(port));
+            if (!showWpLogs && isDev()) return;
+            simpleLog.info(strData);
+        });
 
-        if (!showWpLogs && isDev()) return;
-        simpleLog.info(strData);
-    });
+        child.stderr.on('data', (err: any) => {
+            if (!showWpLogs && isDev()) return;
+            simpleLog.error(`err: ${err.toString()}`);
+        });
 
-    child.stderr.on('data', (err: any) => {
-        if (!showWpLogs && isDev()) return;
-        simpleLog.error(`err: ${err.toString()}`);
-    });
-
-    child.on('exit', async () => {
-        disconnectedFlags[1] = true;
-        sendDisconnectedSignalToRenderer();
-        log.info('wp process exited.');
-        // manually setting pid to undefined
-        child.pid = undefined;
-        handleSystemProxyDisconnect();
-    });
+        child.on('exit', async () => {
+            disconnectedFlags[1] = true;
+            sendDisconnectedSignalToRenderer();
+            log.info('wp process exited.');
+            // manually setting pid to undefined
+            child.pid = undefined;
+            handleSystemProxyDisconnect();
+        });
+    } catch (error) {
+        event.reply('guide-toast', appLang.log.error_wp_not_found);
+        event.reply('wp-end', true);
+    }
 });
 
 ipcMain.on('wp-end', async (event) => {

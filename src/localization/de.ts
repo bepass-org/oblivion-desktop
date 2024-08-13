@@ -154,6 +154,7 @@ const deutsch: Language = {
             'Proxy-Konfiguration wird in Ihrem Betriebssystem nicht unterstützt, aber Sie können Warp Proxy manuell verwenden.',
         error_configuring_proxy: (value) => `Fehler beim Konfigurieren des Proxys für ${value}!`,
         error_wp_not_found: 'Die Datei warp-plus befindet sich nicht neben dem Anwendungspaket.',
+        error_wp_stopped: 'Die Datei warp-plus hat ein Problem beim Ausführen!',
         error_connection_failed: 'Verbindung zu 1.1.1.1 war nicht möglich.',
         error_country_failed: 'Verbindung zum ausgewählten Land nicht möglich.'
     },
