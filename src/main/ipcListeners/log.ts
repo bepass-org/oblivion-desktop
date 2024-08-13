@@ -10,8 +10,7 @@ import {
     checkRoutingRules,
     doesFileExist,
     hasLicense,
-    shouldProxySystem,
-    checkAsn
+    shouldProxySystem
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetsPath } from '../main';
