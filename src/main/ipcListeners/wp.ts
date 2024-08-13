@@ -59,7 +59,7 @@ ipcMain.on('wp-start', async (event) => {
     }*/
 
     if (!fs.existsSync(wpBinPath)) {
-        event.reply('guide-toast', appLang.log.error_wp_not_found);
+        event.reply('guide-toast', appLang.log.error_wp_stopped);
         event.reply('wp-end', true);
         return;
     }
