@@ -59,7 +59,7 @@ export const defaultSettings = {
     forceClose: false,
     shortcut: false,
     dataUsage: false,
-    asn: ''
+    asn: 'UNK'
 };
 
 export const countries: { value: string; label: string }[] = [
