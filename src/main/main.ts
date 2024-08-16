@@ -203,6 +203,18 @@ if (!gotTheLock) {
             }
         };*/
 
+        const checkStartUp = async () => {
+            if (process.env.NODE_ENV !== 'development') {
+                const checkOpenAtLogin = await settings.get('openAtLogin');
+                const loginItemSettings = app.getLoginItemSettings();
+                if ( typeof checkOpenAtLogin === 'boolean' && checkOpenAtLogin && !loginItemSettings.openAtLogin ) {
+                    app.setLoginItemSettings({
+                        openAtLogin: true
+                    }); 
+                }
+            }
+        };
+
         function createMainWindow() {
             if (!mainWindow) {
                 mainWindow = new BrowserWindow(config);
@@ -587,6 +599,7 @@ if (!gotTheLock) {
                 appIcon.focus();
             });
 
+            checkStartUp();
             ipcMain.on('startup', async (event, newStatus) => {
                 if (process.env.NODE_ENV !== 'development') {
                     app.setLoginItemSettings({
