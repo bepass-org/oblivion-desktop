@@ -184,7 +184,7 @@
         "webpack-merge": "^5.9.0"
     },
     "build": {
-        "productName": "Oblivion Desktop",
+        "productName": "oblivion-desktop",
         "executableName": "oblivion-desktop",
         "appId": "org.desktop.oblivion",
         "artifactName": "oblivion-desktop-${os}-${arch}.${ext}",
@@ -221,6 +221,8 @@
             "writeUpdateInfo": true
         },
         "win": {
+            "productName": "Oblivion Desktop",
+            "executableName": "OblivionDesktop",
             "target": [
                 {
                     "target": "nsis",
