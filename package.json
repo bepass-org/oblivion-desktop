@@ -243,7 +243,9 @@
         "nsis": {
             "oneClick": false,
             "allowToChangeInstallationDirectory": true,
-            "differentialPackage": false
+            "differentialPackage": false,
+            "createDesktopShortcut": true,
+            "shortcutName": "Oblivion Desktop"
         },
         "linux": {
             "target": [
