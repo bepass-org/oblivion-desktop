@@ -207,10 +207,14 @@ if (!gotTheLock) {
             if (process.env.NODE_ENV !== 'development') {
                 const checkOpenAtLogin = await settings.get('openAtLogin');
                 const loginItemSettings = app.getLoginItemSettings();
-                if ( typeof checkOpenAtLogin === 'boolean' && checkOpenAtLogin && !loginItemSettings.openAtLogin ) {
+                if (
+                    typeof checkOpenAtLogin === 'boolean' &&
+                    checkOpenAtLogin &&
+                    !loginItemSettings.openAtLogin
+                ) {
                     app.setLoginItemSettings({
                         openAtLogin: true
-                    }); 
+                    });
                 }
             }
         };
