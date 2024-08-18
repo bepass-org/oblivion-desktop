@@ -221,8 +221,6 @@
             "writeUpdateInfo": true
         },
         "win": {
-            "productName": "Oblivion Desktop",
-            "executableName": "OblivionDesktop",
             "target": [
                 {
                     "target": "nsis",
