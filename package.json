@@ -185,7 +185,7 @@
     },
     "build": {
         "productName": "Oblivion Desktop",
-        "executableName": "OblivionDesktop",
+        "executableName": "oblivion-desktop",
         "appId": "org.desktop.oblivion",
         "artifactName": "oblivion-desktop-${os}-${arch}.${ext}",
         "asar": true,
