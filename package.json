@@ -11,7 +11,7 @@
         "url": "https://github.com/bepass-org/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "1.6.4",
+    "version": "1.6.13",
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
@@ -90,7 +90,7 @@
     },
     "dependencies": {
         "@cloudflare/speedtest": "^1.3.0",
-        "axios": "^1.6.8",
+        "axios": "^1.7.4",
         "classnames": "^2.5.1",
         "decompress": "^4.2.1",
         "electron": "^26.2.1",
@@ -184,8 +184,8 @@
         "webpack-merge": "^5.9.0"
     },
     "build": {
-        "productName": "Oblivion Desktop",
-        "executableName": "OblivionDesktop",
+        "productName": "oblivion-desktop",
+        "executableName": "oblivion-desktop",
         "appId": "org.desktop.oblivion",
         "artifactName": "oblivion-desktop-${os}-${arch}.${ext}",
         "asar": true,
@@ -243,7 +243,9 @@
         "nsis": {
             "oneClick": false,
             "allowToChangeInstallationDirectory": true,
-            "differentialPackage": false
+            "differentialPackage": false,
+            "createDesktopShortcut": true,
+            "shortcutName": "Oblivion Desktop"
         },
         "linux": {
             "target": [

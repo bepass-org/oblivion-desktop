@@ -1508,7 +1508,7 @@ html[data-bs-theme='dark'] .shimmer {
     direction: ltr;
     float: left;
     width: 80px;
-    height: 90px;
+    height: 120px;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -1527,7 +1527,7 @@ html[data-bs-theme='dark'] .shimmer {
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split {
     float: left;
     width: 80px;
-    height: 90px;
+    height: 120px;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -1536,7 +1536,7 @@ html[data-bs-theme='dark'] .shimmer {
 }
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split::-webkit-scrollbar {
     background: #fff;
-    width: 4px;
+    width: 5px;
 }
 [data-bs-theme='dark']
     .dialog
@@ -1546,7 +1546,6 @@ html[data-bs-theme='dark'] .shimmer {
     .dropDownInLabel.splitter
     .split::-webkit-scrollbar {
     background: #fff;
-    width: 4px;
 }
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter .split:first-child {
     border-right: 1px solid #ededed;
@@ -1554,7 +1553,7 @@ html[data-bs-theme='dark'] .shimmer {
 .dialog .dialogBox .labels .label .dropDownInLabel .item {
     float: right;
     width: 100%;
-    padding: 7px 15px;
+    padding: 9px 15px;
     font-size: 12px;
     font-weight: 400;
     color: #2c2c2c;
