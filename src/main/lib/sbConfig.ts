@@ -1,6 +1,5 @@
 import fs from 'fs';
-import path from 'path';
-import { wpDirPath } from '../ipcListeners/wp';
+import { sbConfigPath } from '../ipcListeners/wp';
 
 export function createOrUpdateSbConfig(socksServerPort: number, method: any) {
     if (socksServerPort === undefined) {
@@ -72,7 +71,6 @@ export function createOrUpdateSbConfig(socksServerPort: number, method: any) {
               }
             : commonConfig;
 
-    const filePath = path.join(wpDirPath, 'sbConfig.json');
-    fs.writeFileSync(filePath, JSON.stringify(config, null, 2), 'utf-8');
-    console.log(`✅ sbConfig.json has been created/updated at ${filePath}`);
+    fs.writeFileSync(sbConfigPath, JSON.stringify(config, null, 2), 'utf-8');
+    console.log(`✅ sbConfig.json has been created/updated at ${sbConfigPath}`);
 }
