@@ -9,6 +9,7 @@ export function createOrUpdateSbConfig(socksServerPort: number, method: any) {
 
     const commonConfig = {
         log: {
+            disabled: true,
             level: 'warn',
             timestamp: true
         },
