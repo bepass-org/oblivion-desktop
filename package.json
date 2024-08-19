@@ -97,6 +97,7 @@
         "electron-debug": "^3.2.0",
         "electron-log": "^4.4.8",
         "electron-settings": "^4.0.3",
+        "electron-sudo": "github:mullvad/electron-sudo",
         "electron-updater": "^6.2.1",
         "lottie-react": "^2.4.0",
         "react": "^18.2.0",

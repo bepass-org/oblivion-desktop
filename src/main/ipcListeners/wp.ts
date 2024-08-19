@@ -7,15 +7,15 @@ import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
-import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
+import { isDev, removeFileIfExists } from '../lib/utils';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
-import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
+import SingBoxManager from '../lib/sbManager';
+import { createOrUpdateSbConfig } from '../lib/sbConfig';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -26,6 +26,8 @@ const { spawn } = require('child_process');
 let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbConfigName = 'sbConfig.json';
 
 export const wpAssetPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -33,10 +35,21 @@ export const wpAssetPath = path.join(
     'bin',
     wpFileName
 );
+export const sbAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    'sing-box',
+    sbFileName
+);
 
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 export const stuffPath = path.join(wpDirPath, 'stuff');
+export const sbBinPath = path.join(wpDirPath, sbFileName);
+export const sbConfigPath = path.join(wpDirPath, sbConfigName);
+
+const singBoxManager = new SingBoxManager(sbBinPath, sbFileName, sbConfigPath, wpDirPath);
 
 let exitOnWpEnd = false;
 
@@ -102,36 +115,26 @@ ipcMain.on('wp-start', async (event) => {
         setStuffPath(args);
     }*/
 
-    const handleSystemProxyDisconnect = () => {
-        if (shouldProxySystem(proxyMode)) {
-            disableSystemProxy(regeditVbsDirPath, event).then(() => {
-                disconnectedFlags[0] = true;
-                sendDisconnectedSignalToRenderer();
-            });
-        } else {
-            disconnectedFlags[0] = true;
-            sendDisconnectedSignalToRenderer();
+    const handleSystemProxyDisconnect = async () => {
+        if (proxyMode !== 'none') {
+            await singBoxManager.stopSingBox(proxyMode);
         }
+        disconnectedFlags[0] = true;
+        sendDisconnectedSignalToRenderer();
     };
 
-    if (shouldProxySystem(proxyMode)) {
-        enableSystemProxy(regeditVbsDirPath, event)
-            .then(() => {
-                connectedFlags[0] = true;
-                sendConnectedSignalToRenderer();
-            })
-            .catch(() => {
-                handleSystemProxyDisconnect();
-            });
-    } else {
-        connectedFlags[0] = true;
-        sendConnectedSignalToRenderer();
+    if (proxyMode !== 'none') {
+        createOrUpdateSbConfig(Number(port), proxyMode);
     }
+    connectedFlags[0] = true;
+    sendConnectedSignalToRenderer();
 
     const command = path.join(wpDirPath, wpFileName);
 
     log.info('starting wp process...');
     log.info(`${command + ' ' + args.join(' ')}`);
+
+    console.log(proxyMode);
 
     try {
         child = spawn(command, args, { cwd: wpDirPath });
@@ -141,6 +144,9 @@ ipcMain.on('wp-start', async (event) => {
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
             if (strData.includes(successMessage)) {
+                if (proxyMode !== 'none') {
+                    await singBoxManager.startSingBox(proxyMode);
+                }
                 connectedFlags[1] = true;
                 sendConnectedSignalToRenderer();
             }
@@ -170,7 +176,7 @@ ipcMain.on('wp-start', async (event) => {
             log.info('wp process exited.');
             // manually setting pid to undefined
             child.pid = undefined;
-            handleSystemProxyDisconnect();
+            await handleSystemProxyDisconnect();
         });
     } catch (error) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
@@ -179,7 +185,11 @@ ipcMain.on('wp-start', async (event) => {
 });
 
 ipcMain.on('wp-end', async (event) => {
+    const proxyMode = await settings.get('proxyMode');
     try {
+        if (proxyMode !== 'none') {
+            await singBoxManager.stopSingBox(proxyMode);
+        }
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
         }
@@ -190,7 +200,11 @@ ipcMain.on('wp-end', async (event) => {
 });
 
 ipcMain.on('end-wp-and-exit-app', async (event) => {
+    const proxyMode = await settings.get('proxyMode');
     try {
+        if (proxyMode !== 'none') {
+            await singBoxManager.stopSingBox(proxyMode);
+        }
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
             exitOnWpEnd = true;

@@ -34,7 +34,7 @@ import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
+import { wpAssetPath, wpBinPath, sbAssetPath, sbBinPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
@@ -91,6 +91,17 @@ if (!gotTheLock) {
     } else {
         log.info(
             'The process of copying the wp binary was halted due to the absence of the wp file.'
+        );
+    }
+
+    if (fs.existsSync(sbAssetPath)) {
+        fs.copyFile(sbAssetPath, sbBinPath, (err) => {
+            if (err) throw err;
+            log.info('sb binary was copied to userData directory.');
+        });
+    } else {
+        log.info(
+            'The process of copying the sb binary was halted due to the absence of the sb file.'
         );
     }
 

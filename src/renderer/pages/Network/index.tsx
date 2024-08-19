@@ -19,6 +19,10 @@ const proxyModes = [
     {
         value: 'system',
         label: 'System Proxy'
+    },
+    {
+        value: 'tun',
+        label: 'Tun'
     }
 ];
 
