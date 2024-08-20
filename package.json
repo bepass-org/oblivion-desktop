@@ -247,7 +247,6 @@
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true,
             "runAfterFinish": true,
-            "title": "Oblivion Desktop",
             "shortcutName": "Oblivion Desktop"
         },
         "linux": {
