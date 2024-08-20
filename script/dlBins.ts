@@ -68,7 +68,7 @@ async function dlUnzipMove(url: string, binPath: string, zipFileName: string) {
 }
 
 const warpPlusUrlBase = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}/warp-plus_`;
-const singBoxUrlBase = `https://github.com/SagerNet/sing-box/releases/download/${sbVersion}/sing-box-1.9.3-`;
+const singBoxUrlBase = `https://github.com/SagerNet/sing-box/releases/download/${sbVersion}/sing-box-${sbVersion}-`;
 
 const warpPlusUrls: Record<string, Record<string, string>> = {
     linux: {
