@@ -1,7 +1,6 @@
 import path from 'path';
 import { app } from 'electron';
-// @ts-ignore
-import Sudoer from 'electron-sudo';
+import Sudoer from '@o/electron-sudo';
 import { ChildProcess, spawn } from 'child_process';
 
 class SingBoxManager {
@@ -15,7 +14,7 @@ class SingBoxManager {
 
     private readonly wpDirPath: string;
 
-    private readonly sudoer: Sudoer;
+    private readonly sudoer: typeof Sudoer.prototype;
 
     private readonly icon: string;
 
