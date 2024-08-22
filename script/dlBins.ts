@@ -92,9 +92,9 @@ const singBoxUrls: Record<string, Record<string, string>> = {
         arm64: singBoxUrlBase + 'linux-arm64.tar.gz'
     },
     win32: {
-        x64: singBoxUrlBase + 'windows-amd64.tar.gz',
-        arm64: singBoxUrlBase + 'windows-arm64.tar.gz',
-        ia32: singBoxUrlBase + 'windows-386.tar.gz'
+        x64: singBoxUrlBase + 'windows-amd64.zip',
+        arm64: singBoxUrlBase + 'windows-arm64.zip',
+        ia32: singBoxUrlBase + 'windows-386.zip'
     },
     darwin: {
         x64: singBoxUrlBase + 'darwin-amd64.tar.gz',
