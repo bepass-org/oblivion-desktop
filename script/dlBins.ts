@@ -67,7 +67,7 @@ async function dlUnzipMove(url: string, binPath: string, zipFileName: string) {
     }
 }
 
-const warpPlusUrlBase = `https://github.com/bepass-org/warp-plus/releases/download/${wpVersion}/warp-plus_`;
+const warpPlusUrlBase = `https://github.com/bepass-org/warp-plus/releases/download/v${wpVersion}/warp-plus_`;
 const singBoxUrlBase = `https://github.com/SagerNet/sing-box/releases/download/v${sbVersion}/sing-box-${sbVersion}-`;
 
 const warpPlusUrls: Record<string, Record<string, string>> = {
@@ -112,7 +112,7 @@ const removeFile = async (filePath: string) => {
 };
 
 async function handleDownload() {
-    await dlUnzipMove(warpPlusUrls[platform][arch], './assets/bin', `warp-plus-${wpVersion}.zip`);
+    await dlUnzipMove(warpPlusUrls[platform][arch], './assets/bin', `warp-plus-v${wpVersion}.zip`);
     await removeFile('./assets/bin/wintun.dll');
 
     await dlUnzipMove(
