@@ -7,11 +7,14 @@ import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import { isDev, removeFileIfExists } from '../lib/utils';
+import { spawn } from 'child_process';
+import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
 import { customEvent } from '../lib/customEvent';
+import { regeditVbsDirPath } from '../main';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
 import SingBoxManager from '../lib/sbManager';
@@ -20,8 +23,6 @@ import { createOrUpdateSbConfig } from '../lib/sbConfig';
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
 simpleLog.transports.file.format = '{text}';
-
-const { spawn } = require('child_process');
 
 let child: any;
 
@@ -49,9 +50,10 @@ export const stuffPath = path.join(wpDirPath, 'stuff');
 export const sbBinPath = path.join(wpDirPath, sbFileName);
 export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 
-const singBoxManager = new SingBoxManager(sbBinPath, sbFileName, sbConfigPath, wpDirPath);
+const singBoxManager = new SingBoxManager(sbBinPath, sbConfigPath, wpDirPath);
 
 let exitOnWpEnd = false;
+let isSingBoxRunning: boolean = false;
 
 let appLang = getTranslate('en');
 
@@ -115,19 +117,45 @@ ipcMain.on('wp-start', async (event) => {
         setStuffPath(args);
     }*/
 
-    const handleSystemProxyDisconnect = async () => {
-        if (proxyMode !== 'none') {
-            await singBoxManager.stopSingBox(proxyMode);
+    const handleSystemProxyDisconnect = () => {
+        if (shouldProxySystem(proxyMode)) {
+            disableSystemProxy(regeditVbsDirPath, event).then(async () => {
+                if (proxyMode === 'tun' && isSingBoxRunning) {
+                    isSingBoxRunning = await singBoxManager.stopSingBox();
+                    if (isSingBoxRunning) {
+                        await enableSystemProxy(regeditVbsDirPath, event);
+                        event.reply('guide-toast', 'Failed to stop Sing-Box');
+                    } else {
+                        disconnectedFlags[0] = true;
+                        sendDisconnectedSignalToRenderer();
+                    }
+                } else {
+                    disconnectedFlags[0] = true;
+                    sendDisconnectedSignalToRenderer();
+                }
+            });
+        } else {
+            disconnectedFlags[0] = true;
+            sendDisconnectedSignalToRenderer();
         }
-        disconnectedFlags[0] = true;
-        sendDisconnectedSignalToRenderer();
     };
 
-    if (proxyMode !== 'none') {
-        createOrUpdateSbConfig(Number(port), proxyMode);
+    if (shouldProxySystem(proxyMode)) {
+        enableSystemProxy(regeditVbsDirPath, event)
+            .then(() => {
+                connectedFlags[0] = true;
+                sendConnectedSignalToRenderer();
+                if (proxyMode === 'tun' && !isSingBoxRunning) {
+                    createOrUpdateSbConfig(Number(port));
+                }
+            })
+            .catch(() => {
+                handleSystemProxyDisconnect();
+            });
+    } else {
+        connectedFlags[0] = true;
+        sendConnectedSignalToRenderer();
     }
-    connectedFlags[0] = true;
-    sendConnectedSignalToRenderer();
 
     const command = path.join(wpDirPath, wpFileName);
 
@@ -144,11 +172,23 @@ ipcMain.on('wp-start', async (event) => {
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
             if (strData.includes(successMessage)) {
-                if (proxyMode !== 'none') {
-                    await singBoxManager.startSingBox(proxyMode);
+                if (proxyMode === 'tun' && !isSingBoxRunning) {
+                    isSingBoxRunning = await singBoxManager.startSingBox();
+                    if (isSingBoxRunning) {
+                        connectedFlags[1] = true;
+                        sendConnectedSignalToRenderer();
+                    } else {
+                        event.reply('guide-toast', 'Failed to start Sing-Box');
+                        event.reply('wp-end', true);
+                        if (typeof child?.pid !== 'undefined') {
+                            treeKill(child.pid, 'SIGKILL');
+                            exitOnWpEnd = true;
+                        }
+                    }
+                } else {
+                    connectedFlags[1] = true;
+                    sendConnectedSignalToRenderer();
                 }
-                connectedFlags[1] = true;
-                sendConnectedSignalToRenderer();
             }
 
             // Save the last endpoint that was successfully connected
@@ -176,7 +216,7 @@ ipcMain.on('wp-start', async (event) => {
             log.info('wp process exited.');
             // manually setting pid to undefined
             child.pid = undefined;
-            await handleSystemProxyDisconnect();
+            handleSystemProxyDisconnect();
         });
     } catch (error) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
@@ -187,11 +227,21 @@ ipcMain.on('wp-start', async (event) => {
 ipcMain.on('wp-end', async (event) => {
     const proxyMode = await settings.get('proxyMode');
     try {
-        if (proxyMode !== 'none') {
-            await singBoxManager.stopSingBox(proxyMode);
-        }
-        if (typeof child?.pid !== 'undefined') {
-            treeKill(child.pid, 'SIGKILL');
+        if (proxyMode === 'tun' && isSingBoxRunning) {
+            isSingBoxRunning = await singBoxManager.stopSingBox();
+            if (isSingBoxRunning) {
+                event.reply('guide-toast', 'Failed to stop Sing-Box');
+                event.reply('wp-end', false);
+                event.reply('wp-start', true);
+            } else {
+                if (typeof child?.pid !== 'undefined') {
+                    treeKill(child.pid, 'SIGKILL');
+                }
+            }
+        } else {
+            if (typeof child?.pid !== 'undefined') {
+                treeKill(child.pid, 'SIGKILL');
+            }
         }
     } catch (error) {
         log.error(error);
@@ -202,15 +252,29 @@ ipcMain.on('wp-end', async (event) => {
 ipcMain.on('end-wp-and-exit-app', async (event) => {
     const proxyMode = await settings.get('proxyMode');
     try {
-        if (proxyMode !== 'none') {
-            await singBoxManager.stopSingBox(proxyMode);
-        }
-        if (typeof child?.pid !== 'undefined') {
-            treeKill(child.pid, 'SIGKILL');
-            exitOnWpEnd = true;
+        if (proxyMode === 'tune' && isSingBoxRunning) {
+            isSingBoxRunning = await singBoxManager.stopSingBox();
+            if (isSingBoxRunning) {
+                event.reply('guide-toast', 'Failed to stop Sing-Box');
+                event.reply('wp-end', false);
+                event.reply('wp-start', true);
+            } else {
+                if (typeof child?.pid !== 'undefined') {
+                    treeKill(child.pid, 'SIGKILL');
+                    exitOnWpEnd = true;
+                } else {
+                    // send signal to `exitTheApp` function
+                    ipcMain.emit('exit');
+                }
+            }
         } else {
-            // send signal to `exitTheApp` function
-            ipcMain.emit('exit');
+            if (typeof child?.pid !== 'undefined') {
+                treeKill(child.pid, 'SIGKILL');
+                exitOnWpEnd = true;
+            } else {
+                // send signal to `exitTheApp` function
+                ipcMain.emit('exit');
+            }
         }
     } catch (error) {
         log.error(error);
