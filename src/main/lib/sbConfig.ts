@@ -1,12 +1,12 @@
 import fs from 'fs';
 import { sbConfigPath } from '../ipcListeners/wp';
 
-export function createOrUpdateSbConfig(socksServerPort: number, method: any) {
+export function createOrUpdateSbConfig(socksServerPort: number) {
     if (socksServerPort === undefined) {
         throw new Error('socksServerPort and method are required parameters');
     }
 
-    const commonConfig = {
+    const config = {
         log: {
             disabled: true,
             level: 'warn',
@@ -14,11 +14,13 @@ export function createOrUpdateSbConfig(socksServerPort: number, method: any) {
         },
         inbounds: [
             {
-                type: 'mixed',
-                tag: 'mixed-in',
-                listen: '::',
-                listen_port: 7890,
-                set_system_proxy: true
+                type: 'tun',
+                tag: 'tun-in',
+                mtu: 9000,
+                inet4_address: '172.18.0.1/30',
+                inet6_address: 'fdfe:dcba:9876::1/126',
+                auto_route: true,
+                strict_route: true
             }
         ],
         outbounds: [
@@ -44,32 +46,10 @@ export function createOrUpdateSbConfig(socksServerPort: number, method: any) {
                     outbound: 'direct-out'
                 }
             ],
-            final: 'socks-out'
+            final: 'socks-out',
+            auto_detect_interface: true
         }
     };
-
-    const config =
-        method === 'tun'
-            ? {
-                  ...commonConfig,
-                  inbounds: [
-                      {
-                          type: 'tun',
-                          tag: 'tun-in',
-                          mtu: 9000,
-                          inet4_address: '172.18.0.1/30',
-                          inet6_address: 'fdfe:dcba:9876::1/126',
-                          auto_route: true,
-                          strict_route: true
-                      },
-                      ...commonConfig.inbounds
-                  ],
-                  route: {
-                      ...commonConfig.route,
-                      auto_detect_interface: true
-                  }
-              }
-            : commonConfig;
 
     fs.writeFileSync(sbConfigPath, JSON.stringify(config, null, 2), 'utf-8');
     console.log(`✅ sbConfig.json has been created/updated at ${sbConfigPath}`);
