@@ -1,129 +1,164 @@
-import path from 'path';
-import { app } from 'electron';
-import Sudoer from '@o/electron-sudo';
 import { ChildProcess, spawn } from 'child_process';
+
+type PlatformCommands = {
+    start: (binPath: string, configPath: string) => [string, string[]];
+    kill: (pid: string) => [string, string[]];
+    findPid: string;
+};
 
 class SingBoxManager {
     private sbProcess: ChildProcess | null = null;
 
     private readonly sbBinPath: string;
 
-    private readonly sbFileName: string;
-
     private readonly sbConfigPath: string;
 
     private readonly wpDirPath: string;
 
-    private readonly sudoer: typeof Sudoer.prototype;
-
-    private readonly icon: string;
-
-    constructor(sbBinPath: string, sbFileName: string, sbConfigPath: string, wpDirPath: string) {
+    constructor(sbBinPath: string, sbConfigPath: string, wpDirPath: string) {
         this.sbBinPath = sbBinPath;
-        this.sbFileName = sbFileName;
         this.sbConfigPath = sbConfigPath;
         this.wpDirPath = wpDirPath;
-        this.icon = path.join(
-            app.getAppPath().replace(/[/\\]app\.asar$/, ''),
-            'assets',
-            'icon.icns'
-        );
-        const options = { name: 'Oblivion Desktop', icns: this.icon };
-        this.sudoer = new Sudoer(options);
     }
 
-    public async startSingBox(method: any): Promise<void> {
-        if (this.sbProcess) {
-            return;
-        }
-
-        try {
-            this.sbProcess =
-                method === 'tun'
-                    ? await this.sudoer.spawn(`"${this.sbBinPath}"`, [
-                          'run',
-                          '-c',
-                          `"${this.sbConfigPath}"`
-                      ])
-                    : spawn(this.sbBinPath, ['run', '-c', this.sbConfigPath], {
-                          cwd: this.wpDirPath
-                      });
-
-            this.sbProcess?.on('close', (code: number | null) => {
-                console.log(`Sing-Box process exited with code ${code}`);
-                this.sbProcess = null;
-            });
-        } catch (error) {
-            console.error('Failed to start Sing-Box:', error);
-            this.sbProcess = null;
-        }
-    }
-
-    public async stopSingBox(method: any): Promise<void> {
-        if (!this.sbProcess) {
-            return;
-        }
-
-        try {
-            if (method === 'tun') {
-                await this.killProcessCrossPlatform();
-            } else {
-                this.sbProcess.kill();
+    private getPlatformCommands(): PlatformCommands {
+        const commands: { [key: string]: PlatformCommands } = {
+            darwin: {
+                start: (binPath, configPath) => [
+                    'osascript',
+                    [
+                        '-e',
+                        `do shell script "\\"${binPath}\\" run -c \\"${configPath}\\"" with administrator privileges`
+                    ]
+                ],
+                kill: (pid) => [
+                    'osascript',
+                    ['-e', `do shell script "kill ${pid}" with administrator privileges`]
+                ],
+                findPid: `pgrep -f "BINPATH" | xargs ps -o pid= -o user= -p | grep root | awk '{print $1}'`
+            },
+            win32: {
+                start: (binPath, configPath) => [
+                    'powershell.exe',
+                    [
+                        '-Command',
+                        `Start-Process -FilePath '${binPath}' -ArgumentList 'run -c ${configPath}' -Credential (Get-Credential) -WindowStyle Hidden`
+                    ]
+                ],
+                kill: (pid) => ['powershell.exe', ['-Command', `Stop-Process -Id ${pid}`]],
+                findPid: `Get-WmiObject Win32_Process | Where-Object { $_.ExecutablePath -like 'BINPATH' } | Select-Object -ExpandProperty ProcessId`
+            },
+            linux: {
+                start: (binPath, configPath) => [
+                    'pkexec',
+                    [binPath, 'run', '-c', configPath, '--disable-internal-agent']
+                ],
+                kill: (pid) => ['sh', ['-c', `pkexec kill ${pid}`]],
+                findPid: `pgrep -f "BINPATH" | xargs ps -o pid= -o user= -p | grep root | awk '{print $1}'`
             }
+        };
 
-            await this.waitForProcessToClose(5000);
+        return (
+            commands[process.platform] || {
+                start: () => ['', []],
+                kill: () => ['', []],
+                findPid: ''
+            }
+        );
+    }
+
+    public async startSingBox(): Promise<boolean> {
+        if (this.sbProcess) return true;
+
+        return new Promise<boolean>((resolve) => {
+            try {
+                const { start } = this.getPlatformCommands();
+                const [command, args] = start(this.sbBinPath, this.sbConfigPath);
+                this.sbProcess = spawn(command, args, { cwd: this.wpDirPath });
+
+                this.monitorProcessStart(resolve);
+            } catch (error) {
+                console.error('Failed to start Sing-Box:', error);
+                this.sbProcess = null;
+                resolve(false);
+            }
+        });
+    }
+
+    private monitorProcessStart(resolve: (value: boolean) => void): void {
+        const checkInterval = setInterval(
+            async () => {
+                try {
+                    const pid = await this.findProcessId(this.sbBinPath);
+                    if (pid) {
+                        clearInterval(checkInterval);
+                        resolve(true);
+                    }
+                } catch (error) {
+                    console.error('Error checking process ID:', error);
+                    clearInterval(checkInterval);
+                    resolve(false);
+                }
+            },
+            process.platform === 'linux' ? 10000 : 1000
+        );
+
+        this.sbProcess?.stderr?.on('data', (err: Buffer) => {
+            const errorMessage = err.toString();
+            console.error(`Sing-Box error: ${errorMessage}`);
+            clearInterval(checkInterval);
+            this.sbProcess = null;
+            resolve(false);
+        });
+
+        this.sbProcess?.on('close', () => {
+            clearInterval(checkInterval);
+        });
+    }
+
+    public async stopSingBox(): Promise<boolean> {
+        if (!this.sbProcess) return false;
+
+        try {
+            const pid = await this.findProcessId(this.sbBinPath);
+            if (pid) {
+                const { kill } = this.getPlatformCommands();
+                const [command, args] = kill(pid);
+                const killProcess = spawn(command, args);
+
+                return new Promise<boolean>((resolve) => {
+                    killProcess.stderr?.on('data', () => resolve(true));
+                    killProcess.on('close', (code: number | null) => {
+                        console.log(`Sing-Box process exited with code ${code}`);
+                        this.sbProcess = null;
+                        resolve(false);
+                    });
+                });
+            }
         } catch (error) {
             console.error('Failed to stop Sing-Box:', error);
-        } finally {
-            this.sbProcess = null;
         }
+
+        return false;
     }
 
-    private async killProcessCrossPlatform(): Promise<void> {
-        const platform = process.platform;
+    private async findProcessId(processName: string): Promise<string | null> {
+        const { findPid } = this.getPlatformCommands();
+        const command = findPid.replace('BINPATH', processName);
 
-        let command: string;
-        if (platform === 'win32') {
-            command = `taskkill /F /IM "${this.sbFileName}"`;
-        } else if (platform === 'darwin' || platform === 'linux') {
-            command = `pkill "${this.sbFileName}"`;
-        } else {
-            throw new Error(`Unsupported platform: ${platform}`);
-        }
+        return new Promise<string | null>((resolve) => {
+            const findPidProcess =
+                process.platform === 'win32'
+                    ? spawn('powershell.exe', ['-Command', command])
+                    : spawn('sh', ['-c', command]);
 
-        try {
-            await this.sudoer.exec(command);
-        } catch (error) {
-            console.error('Error executing kill command:', error);
-            // If the kill command fails, try a more aggressive approach
-            if (platform === 'darwin' || platform === 'linux') {
-                try {
-                    await this.sudoer.exec(`killall -9 "${this.sbFileName}"`);
-                } catch (innerError) {
-                    console.error('Error executing killall command:', innerError);
-                    throw innerError;
-                }
-            } else {
-                throw error;
-            }
-        }
-    }
-
-    private waitForProcessToClose(timeout: number): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            if (!this.sbProcess) {
-                resolve();
-                return;
-            }
-
-            const timer = setTimeout(() => {
-                reject(new Error('Timeout waiting for Sing-Box to stop'));
-            }, timeout);
-
-            this.sbProcess.on('close', () => {
-                clearTimeout(timer);
-                resolve();
+            let pid = '';
+            findPidProcess.stdout?.on('data', (data: Buffer) => {
+                pid += data.toString();
             });
+
+            findPidProcess.on('close', () => resolve(pid.trim() || null));
+            findPidProcess.on('error', () => resolve(null));
         });
     }
 }
