@@ -1,9 +1,9 @@
 import fs from 'fs';
 import { sbConfigPath } from '../ipcListeners/wp';
 
-export function createOrUpdateSbConfig(socksServerPort: number) {
+export function createOrUpdateSbConfig(socksServerPort: number, endpointPorts: number[]) {
     if (socksServerPort === undefined) {
-        throw new Error('socksServerPort and method are required parameters');
+        throw new Error('socksServerPort is a required parameter');
     }
 
     const config = {
@@ -43,6 +43,7 @@ export function createOrUpdateSbConfig(socksServerPort: number) {
                 },
                 {
                     network: 'udp',
+                    port: endpointPorts,
                     outbound: 'direct-out'
                 }
             ],

@@ -8,7 +8,12 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
 import { spawn } from 'child_process';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import {
+    isDev,
+    removeFileIfExists,
+    shouldProxySystem,
+    extractPortsFromEndpoints
+} from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -145,9 +150,6 @@ ipcMain.on('wp-start', async (event) => {
             .then(() => {
                 connectedFlags[0] = true;
                 sendConnectedSignalToRenderer();
-                if (proxyMode === 'tun' && !isSingBoxRunning) {
-                    createOrUpdateSbConfig(Number(port));
-                }
             })
             .catch(() => {
                 handleSystemProxyDisconnect();
@@ -167,10 +169,22 @@ ipcMain.on('wp-start', async (event) => {
     try {
         child = spawn(command, args, { cwd: wpDirPath });
         const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
+        const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
+
+            if (strData.includes(endpointMessage) && proxyMode === 'tun' && !isSingBoxRunning) {
+                const uniquePorts = extractPortsFromEndpoints(strData);
+
+                if (uniquePorts.length > 0) {
+                    createOrUpdateSbConfig(Number(port), uniquePorts);
+                } else {
+                    console.log('No ports found in the endpoints.');
+                }
+            }
+
             if (strData.includes(successMessage)) {
                 if (proxyMode === 'tun' && !isSingBoxRunning) {
                     isSingBoxRunning = await singBoxManager.startSingBox();
