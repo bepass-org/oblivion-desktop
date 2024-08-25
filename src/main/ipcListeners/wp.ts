@@ -177,12 +177,7 @@ ipcMain.on('wp-start', async (event) => {
 
             if (strData.includes(endpointMessage) && proxyMode === 'tun' && !isSingBoxRunning) {
                 const uniquePorts = extractPortsFromEndpoints(strData);
-
-                if (uniquePorts.length > 0) {
-                    createOrUpdateSbConfig(Number(port), uniquePorts);
-                } else {
-                    console.log('No ports found in the endpoints.');
-                }
+                createOrUpdateSbConfig(Number(port), uniquePorts);
             }
 
             if (strData.includes(successMessage)) {

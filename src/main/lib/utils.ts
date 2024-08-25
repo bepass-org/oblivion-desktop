@@ -70,7 +70,7 @@ export function checkRoutingRules(value: any) {
 
 export function checkEndpoint(endpoint: any) {
     return typeof endpoint === 'undefined' ||
-    (typeof endpoint === 'string' && endpoint === defaultSettings.endpoint)
+        (typeof endpoint === 'string' && endpoint === defaultSettings.endpoint)
         ? 'default'
         : 'custom';
 }
