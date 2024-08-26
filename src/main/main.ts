@@ -50,8 +50,10 @@ let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
 let initialDownloadUsage = 0;
 let initialUploadUsage = 0;
-let isSpeedMonitoring: boolean = false;
+let isUsageMeasuring: boolean = false;
 let isUsageInitialized: boolean = false;
+let isUsageMonitoringActive: boolean = false;
+let isWindowsPowerShellStarted: boolean = false;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -502,29 +504,21 @@ if (!gotTheLock) {
             );
         };
 
-        const findLoopbackInterface = async () => {
-            try {
-                const interfaces = await networkInterfaces();
-                const loopbackInterface = Object.values(interfaces).find(
-                    (iface) => iface.ip4 === defaultSettings.hostIP
-                );
-
-                if (loopbackInterface) {
-                    return loopbackInterface.iface;
-                }
-            } catch (error) {
-                console.error('Error fetching network interfaces:', error);
-            }
-            return '';
+        const findLoopBackInterface = async () => {
+            const interfaces = await networkInterfaces();
+            const loopBackInterface = Object.values(interfaces).find(
+                (lbInterface) => lbInterface.ip4 === defaultSettings.hostIP
+            );
+            return loopBackInterface.iface || '';
         };
 
-        const measureNetworkSpeed = (loopbackInterface: string) => {
-            if (isSpeedMonitoring) return;
+        const measureNetworkSpeed = (loopBackInterface: string) => {
+            if (isUsageMeasuring) return;
 
-            isSpeedMonitoring = true;
-            networkStats(loopbackInterface)
-                .then((data) => {
-                    const mainInterface = data[0];
+            isUsageMeasuring = true;
+            networkStats(loopBackInterface)
+                .then((stats) => {
+                    const mainInterface = stats[0];
                     if (!isUsageInitialized) {
                         initialDownloadUsage = mainInterface.rx_bytes;
                         initialUploadUsage = mainInterface.tx_bytes;
@@ -550,25 +544,47 @@ if (!gotTheLock) {
                     console.error('Error measuring network speed:', error);
                 })
                 .finally(() => {
-                    isSpeedMonitoring = false;
+                    isUsageMeasuring = false;
                 });
         };
 
-        const startNetworkSpeedMonitoring = async () => {
-            if (speedMonitorInterval) return;
+        const startNetworkSpeedMonitoring = () => {
+            if (speedMonitorInterval || isUsageMonitoringActive) return;
+            isUsageMonitoringActive = true;
+
             if (process.platform === 'win32') {
-                powerShellStart();
+                if (!isWindowsPowerShellStarted) {
+                    powerShellStart();
+                    isWindowsPowerShellStarted = true;
+                }
+                speedMonitorInterval = setInterval(() => measureNetworkSpeed(''), 2000);
+            } else {
+                let interfaceToMonitor = '';
+                findLoopBackInterface()
+                    .then((interfaceName) => {
+                        if (interfaceName) {
+                            interfaceToMonitor = interfaceName;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error finding loopBack interface:', error);
+                    })
+                    .finally(() => {
+                        speedMonitorInterval = setInterval(
+                            () => measureNetworkSpeed(interfaceToMonitor),
+                            2000
+                        );
+                    });
             }
-            const loopbackInterface = await findLoopbackInterface();
-            speedMonitorInterval = setInterval(() => measureNetworkSpeed(loopbackInterface), 2000);
         };
 
         const stopNetworkSpeedMonitoring = () => {
-            if (speedMonitorInterval) {
+            if (speedMonitorInterval && isUsageMonitoringActive) {
                 clearInterval(speedMonitorInterval);
                 speedMonitorInterval = null;
-                isSpeedMonitoring = false;
                 isUsageInitialized = false;
+                isUsageMeasuring = false;
+                isUsageMonitoringActive = false;
                 initialDownloadUsage = 0;
                 initialUploadUsage = 0;
             }
