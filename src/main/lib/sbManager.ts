@@ -2,8 +2,7 @@ import { ChildProcess, spawn } from 'child_process';
 
 type PlatformCommands = {
     start: (binPath: string, configPath: string) => [string, string[]];
-    kill: (pid: string) => [string, string[]];
-    findPid: string;
+    stop: (pid: string) => [string, string[]];
 };
 
 class SingBoxManager {
@@ -14,6 +13,8 @@ class SingBoxManager {
     private readonly sbConfigPath: string;
 
     private readonly wpDirPath: string;
+
+    private pid: string = '';
 
     constructor(sbBinPath: string, sbConfigPath: string, wpDirPath: string) {
         this.sbBinPath = sbBinPath;
@@ -28,41 +29,46 @@ class SingBoxManager {
                     'osascript',
                     [
                         '-e',
-                        `do shell script "\\"${binPath}\\" run -c \\"${configPath}\\"" with administrator privileges`
+                        `set processID to do shell script "\\"${binPath}\\" run -c \\"${configPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges` // Running the process in the background and capturing the PID
                     ]
                 ],
-                kill: (pid) => [
+                stop: (pid) => [
                     'osascript',
                     ['-e', `do shell script "kill ${pid}" with administrator privileges`]
-                ],
-                findPid: `pgrep -f "BINPATH" | xargs ps -o pid= -o user= -p | grep root | awk '{print $1}'`
+                ]
             },
             win32: {
                 start: (binPath, configPath) => [
                     'powershell.exe',
                     [
                         '-Command',
-                        `Start-Process -FilePath '${binPath}' -ArgumentList 'run -c ${configPath}' -Credential (Get-Credential) -WindowStyle Hidden`
+                        `$process = Start-Process -FilePath '${binPath}' -ArgumentList 'run -c ${configPath}' -Verb RunAs -WindowStyle Hidden -PassThru; $process.Id`
                     ]
                 ],
-                kill: (pid) => ['powershell.exe', ['-Command', `Stop-Process -Id ${pid}`]],
-                findPid: `Get-WmiObject Win32_Process | Where-Object { $_.ExecutablePath -like 'BINPATH' } | Select-Object -ExpandProperty ProcessId`
+                stop: (pid) => [
+                    'powershell.exe',
+                    [
+                        '-Command',
+                        `Start-Process powershell -ArgumentList 'Stop-Process -Id ${pid}' -Verb RunAs -WindowStyle Hidden`
+                    ]
+                ]
             },
             linux: {
                 start: (binPath, configPath) => [
-                    'pkexec',
-                    [binPath, 'run', '-c', configPath, '--disable-internal-agent']
+                    'sh',
+                    [
+                        '-c',
+                        `nohup pkexec '${binPath}' run -c '${configPath}' > /dev/null 2>&1 & echo $!`
+                    ]
                 ],
-                kill: (pid) => ['sh', ['-c', `pkexec kill ${pid}`]],
-                findPid: `pgrep -f "BINPATH" | xargs ps -o pid= -o user= -p | grep root | awk '{print $1}'`
+                stop: (pid) => ['sh', ['-c', `pkexec kill ${pid}`]]
             }
         };
 
         return (
             commands[process.platform] || {
                 start: () => ['', []],
-                kill: () => ['', []],
-                findPid: ''
+                stop: () => ['', []]
             }
         );
     }
@@ -76,90 +82,102 @@ class SingBoxManager {
                 const [command, args] = start(this.sbBinPath, this.sbConfigPath);
                 this.sbProcess = spawn(command, args, { cwd: this.wpDirPath });
 
-                this.monitorProcessStart(resolve);
+                let output = '';
+                let hasErrors: boolean = false;
+
+                this.sbProcess.stdout?.on('data', (data: Buffer) => {
+                    output += data.toString();
+                });
+
+                this.sbProcess.stderr?.on('data', (err: Buffer) => {
+                    console.error(`Sing-Box error: ${err.toString()}`);
+                    hasErrors = true;
+                });
+
+                this.sbProcess.on('close', () => {
+                    if (output.trim() && !hasErrors) {
+                        if (process.platform === 'linux') {
+                            this.findLinuxProcessId(resolve);
+                        } else {
+                            const pid = output.trim();
+                            this.pid = pid;
+                            console.log(`Started Sing-Box process with PID: ${pid}`);
+                            resolve(true);
+                        }
+                    } else {
+                        console.error('Failed to start Sing-Box: No PID received');
+                        this.pid = '';
+                        this.sbProcess = null;
+                        resolve(false);
+                    }
+                });
             } catch (error) {
                 console.error('Failed to start Sing-Box:', error);
+                this.pid = '';
                 this.sbProcess = null;
                 resolve(false);
             }
         });
     }
 
-    private monitorProcessStart(resolve: (value: boolean) => void): void {
-        const checkInterval = setInterval(
-            async () => {
-                try {
-                    const pid = await this.findProcessId(this.sbBinPath);
-                    if (pid) {
-                        clearInterval(checkInterval);
-                        resolve(true);
+    public async stopSingBox(): Promise<boolean> {
+        if (!this.sbProcess || this.pid === '') return false;
+
+        let hasErrors: boolean = false;
+
+        return new Promise<boolean>((resolve) => {
+            try {
+                const { stop } = this.getPlatformCommands();
+                const [command, args] = stop(this.pid);
+                const killProcess = spawn(command, args);
+                killProcess.stderr?.on('data', (err: Buffer) => {
+                    console.error(`Sing-Box error: ${err.toString()}`);
+                    hasErrors = true;
+                    resolve(true);
+                });
+                killProcess.on('close', (code: number | null) => {
+                    if (!hasErrors) {
+                        console.log(`Sing-Box process exited with code ${code}`);
+                        this.sbProcess?.kill();
+                        this.sbProcess = null;
+                        this.pid = '';
+                        resolve(false);
                     }
-                } catch (error) {
-                    console.error('Error checking process ID:', error);
-                    clearInterval(checkInterval);
-                    resolve(false);
-                }
-            },
-            process.platform === 'linux' ? 10000 : 1000
-        );
-
-        this.sbProcess?.stderr?.on('data', (err: Buffer) => {
-            const errorMessage = err.toString();
-            console.error(`Sing-Box error: ${errorMessage}`);
-            clearInterval(checkInterval);
-            this.sbProcess = null;
-            resolve(false);
-        });
-
-        this.sbProcess?.on('close', () => {
-            clearInterval(checkInterval);
+                });
+            } catch (error) {
+                console.error('Failed to stop Sing-Box:', error);
+                resolve(true);
+            }
         });
     }
 
-    public async stopSingBox(): Promise<boolean> {
-        if (!this.sbProcess) return false;
-
-        try {
-            const pid = await this.findProcessId(this.sbBinPath);
-            if (pid) {
-                const { kill } = this.getPlatformCommands();
-                const [command, args] = kill(pid);
-                const killProcess = spawn(command, args);
-
-                return new Promise<boolean>((resolve) => {
-                    killProcess.stderr?.on('data', () => resolve(true));
-                    killProcess.on('close', (code: number | null) => {
-                        console.log(`Sing-Box process exited with code ${code}`);
+    private findLinuxProcessId(resolve: (value: boolean) => void): void {
+        const command = `pgrep -f "${this.sbBinPath}" | xargs ps -o pid= -o user= -p | grep root | awk '{print $1}'`;
+        const checkTimeout = setTimeout(() => {
+            try {
+                const findPidProcess = spawn('sh', ['-c', command]);
+                findPidProcess.stdout?.on('data', (data: Buffer) => {
+                    if (data.toString() !== '') {
+                        this.pid = data.toString();
+                    }
+                });
+                findPidProcess.on('close', () => {
+                    clearTimeout(checkTimeout);
+                    if (this.pid !== '') {
+                        console.log(`Started Sing-Box process with PID: ${this.pid}`);
+                        resolve(true);
+                    } else {
+                        console.error('Failed to start Sing-Box: No PID received');
                         this.sbProcess = null;
                         resolve(false);
-                    });
+                    }
                 });
+            } catch (error) {
+                console.error('Error checking process ID:', error);
+                clearTimeout(checkTimeout);
+                resolve(false);
             }
-        } catch (error) {
-            console.error('Failed to stop Sing-Box:', error);
-        }
-
-        return false;
-    }
-
-    private async findProcessId(processName: string): Promise<string | null> {
-        const { findPid } = this.getPlatformCommands();
-        const command = findPid.replace('BINPATH', processName);
-
-        return new Promise<string | null>((resolve) => {
-            const findPidProcess =
-                process.platform === 'win32'
-                    ? spawn('powershell.exe', ['-Command', command])
-                    : spawn('sh', ['-c', command]);
-
-            let pid = '';
-            findPidProcess.stdout?.on('data', (data: Buffer) => {
-                pid += data.toString();
-            });
-
-            findPidProcess.on('close', () => resolve(pid.trim() || null));
-            findPidProcess.on('error', () => resolve(null));
-        });
+        }, 10000);
     }
 }
 
