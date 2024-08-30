@@ -69,7 +69,15 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         }
         settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [validateRules, routingRulesInput, isConnected, isLoading, appLang, handleOnClose, setRoutingRules]);
+    }, [
+        validateRules,
+        routingRulesInput,
+        isConnected,
+        isLoading,
+        appLang,
+        handleOnClose,
+        setRoutingRules
+    ]);
 
     const onUpdateKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
