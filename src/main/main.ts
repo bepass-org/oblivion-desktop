@@ -29,7 +29,6 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
-import { networkInterfaces, networkStats, powerShellStart } from 'systeminformation';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -40,18 +39,13 @@ import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
+import NetworkMonitor from './networkMonitor';
 
 let mainWindow: BrowserWindow | null = null;
-// eslint-disable-next-line no-undef
-let speedMonitorInterval: NodeJS.Timeout | null = null;
 
 let getUserLang: any = 'en';
 let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
-let initialDownloadUsage = 0;
-let initialUploadUsage = 0;
-let isSpeedMonitoring: boolean = false;
-let isUsageInitialized: boolean = false;
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
@@ -502,85 +496,8 @@ if (!gotTheLock) {
             );
         };
 
-        const findLoopbackInterface = async () => {
-            try {
-                const interfaces = await networkInterfaces();
-                const loopbackInterface = Object.values(interfaces).find(
-                    (iface) => iface.ip4 === defaultSettings.hostIP
-                );
-
-                if (loopbackInterface) {
-                    return loopbackInterface.iface;
-                }
-            } catch (error) {
-                console.error('Error fetching network interfaces:', error);
-            }
-            return '';
-        };
-
-        const measureNetworkSpeed = (loopbackInterface: string) => {
-            if (isSpeedMonitoring) return;
-
-            isSpeedMonitoring = true;
-            networkStats(loopbackInterface)
-                .then((data) => {
-                    const mainInterface = data[0];
-                    if (!isUsageInitialized) {
-                        initialDownloadUsage = mainInterface.rx_bytes;
-                        initialUploadUsage = mainInterface.tx_bytes;
-                        isUsageInitialized = true;
-                    }
-                    const currentDownload = mainInterface.rx_sec;
-                    const currentUpload = mainInterface.tx_sec;
-                    const totalDownload = mainInterface.rx_bytes - initialDownloadUsage;
-                    const totalUpload = mainInterface.tx_bytes - initialUploadUsage;
-                    const totalUsage = totalDownload + totalUpload;
-
-                    if (mainWindow) {
-                        mainWindow.webContents.send('speed-stats', {
-                            currentDownload,
-                            currentUpload,
-                            totalDownload,
-                            totalUpload,
-                            totalUsage
-                        });
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error measuring network speed:', error);
-                })
-                .finally(() => {
-                    isSpeedMonitoring = false;
-                });
-        };
-
-        const startNetworkSpeedMonitoring = async () => {
-            if (speedMonitorInterval) return;
-            if (process.platform === 'win32') {
-                powerShellStart();
-            }
-            const loopbackInterface = await findLoopbackInterface();
-            speedMonitorInterval = setInterval(() => measureNetworkSpeed(loopbackInterface), 2000);
-        };
-
-        const stopNetworkSpeedMonitoring = () => {
-            if (speedMonitorInterval) {
-                clearInterval(speedMonitorInterval);
-                speedMonitorInterval = null;
-                isSpeedMonitoring = false;
-                isUsageInitialized = false;
-                initialDownloadUsage = 0;
-                initialUploadUsage = 0;
-            }
-        };
-
-        ipcMain.on('check-speed', (event, arg) => {
-            if (arg) {
-                startNetworkSpeedMonitoring();
-            } else {
-                stopNetworkSpeedMonitoring();
-            }
-        });
+        const networkMonitor = new NetworkMonitor(mainWindow);
+        networkMonitor.initializeIpcEvents();
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {
