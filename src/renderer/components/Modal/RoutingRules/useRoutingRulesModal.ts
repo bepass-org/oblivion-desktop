@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
+import { useStore } from '../../../store';
+import { settingsHaveChangedToast } from '../../../lib/toasts';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -10,6 +12,7 @@ interface RoutingRulesModalProps {
 }
 
 const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
+    const { isConnected, isLoading } = useStore();
     const { isOpen, onClose, routingRules, setRoutingRules } = props;
     const [routingRulesInput, setRoutingRulesInput] = useState<string>(routingRules);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
@@ -64,8 +67,9 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
             setRoutingRulesInput('');
             settings.set('routingRules', '');
         }
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [routingRulesInput, validateRules, handleOnClose, setRoutingRules, setRoutingRulesInput]);
+    }, [validateRules, routingRulesInput, isConnected, isLoading, appLang, handleOnClose, setRoutingRules]);
 
     const onUpdateKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

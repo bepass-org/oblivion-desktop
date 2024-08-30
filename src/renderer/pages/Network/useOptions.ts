@@ -112,8 +112,7 @@ const useOptions = () => {
 
     const onCloseRoutingRulesModal = useCallback(() => {
         setShowRoutingRulesModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onChangeProxyMode = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
