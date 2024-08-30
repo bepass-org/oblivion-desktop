@@ -59,8 +59,7 @@ const useScanner = () => {
 
     const onCloseEndpointModal = useCallback(() => {
         setShowEndpointModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
 
