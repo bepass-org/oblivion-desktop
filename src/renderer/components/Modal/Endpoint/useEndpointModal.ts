@@ -7,10 +7,11 @@ import {
     useRef,
     useState
 } from 'react';
+import { useStore } from '../../../store';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
-import { loadingToast, stopLoadingToast } from '../../../lib/toasts';
+import { loadingToast, settingsHaveChangedToast, stopLoadingToast } from '../../../lib/toasts';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -20,7 +21,9 @@ type EndpointModalProps = {
     setEndpoint: (value: string) => void;
     profiles: any;
 };
+
 const useEndpointModal = (props: EndpointModalProps) => {
+    const { isConnected, isLoading } = useStore();
     const appLang = useTranslate();
     const { endpoint, isOpen, onClose, setEndpoint, defValue } = props;
     const suggestionRef = useRef<HTMLDivElement>(null);
@@ -117,8 +120,9 @@ const useEndpointModal = (props: EndpointModalProps) => {
         setEndpointInput(tmp);
         setEndpoint(tmp);
         settings.set('endpoint', tmp);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [defValue, endpointInput, handleOnClose, setEndpoint]);
+    }, [endpointInput, defValue, setEndpoint, isConnected, isLoading, appLang, handleOnClose]);
 
     const onUpdateKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

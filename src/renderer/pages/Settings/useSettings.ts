@@ -68,8 +68,7 @@ const useSettings = () => {
 
     const onCloseLicenseModal = useCallback(() => {
         setShowLicenseModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
 
