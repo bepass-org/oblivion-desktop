@@ -23,7 +23,7 @@ import { regeditVbsDirPath } from '../main';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
 import SingBoxManager from '../lib/sbManager';
-import { createOrUpdateSbConfig } from '../lib/sbConfig';
+import { createSbConfig } from '../lib/sbConfig';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -122,26 +122,25 @@ ipcMain.on('wp-start', async (event) => {
         setStuffPath(args);
     }*/
 
-    const handleSystemProxyDisconnect = () => {
+    const handleSystemProxyDisconnect = async () => {
         if (shouldProxySystem(proxyMode)) {
-            disableSystemProxy(regeditVbsDirPath, event).then(async () => {
-                if (proxyMode === 'tun' && isSingBoxRunning) {
-                    isSingBoxRunning = await singBoxManager.stopSingBox();
-                    if (isSingBoxRunning) {
-                        await enableSystemProxy(regeditVbsDirPath, event);
-                        event.reply('guide-toast', 'Failed to stop Sing-Box');
-                    } else {
-                        disconnectedFlags[0] = true;
-                        sendDisconnectedSignalToRenderer();
-                    }
+            disableSystemProxy(regeditVbsDirPath, event).then(() => {
+                disconnectedFlags[0] = true;
+                sendDisconnectedSignalToRenderer();
+            });
+        } else {
+            if (proxyMode === 'tun' && isSingBoxRunning) {
+                isSingBoxRunning = await singBoxManager.stopSingBox();
+                if (isSingBoxRunning) {
+                    event.reply('guide-toast', 'Failed to stop Sing-Box');
                 } else {
                     disconnectedFlags[0] = true;
                     sendDisconnectedSignalToRenderer();
                 }
-            });
-        } else {
-            disconnectedFlags[0] = true;
-            sendDisconnectedSignalToRenderer();
+            } else {
+                disconnectedFlags[0] = true;
+                sendDisconnectedSignalToRenderer();
+            }
         }
     };
 
@@ -177,7 +176,7 @@ ipcMain.on('wp-start', async (event) => {
 
             if (strData.includes(endpointMessage) && proxyMode === 'tun' && !isSingBoxRunning) {
                 const uniquePorts = extractPortsFromEndpoints(strData);
-                createOrUpdateSbConfig(Number(port), uniquePorts);
+                createSbConfig(Number(port), uniquePorts);
             }
 
             if (strData.includes(successMessage)) {
@@ -225,7 +224,7 @@ ipcMain.on('wp-start', async (event) => {
             log.info('wp process exited.');
             // manually setting pid to undefined
             child.pid = undefined;
-            handleSystemProxyDisconnect();
+            await handleSystemProxyDisconnect();
         });
     } catch (error) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);

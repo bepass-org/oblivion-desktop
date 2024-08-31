@@ -1,4 +1,5 @@
 import { ChildProcess, spawn } from 'child_process';
+import log from 'electron-log';
 
 type PlatformCommands = {
     start: (binPath: string, configPath: string) => [string, string[]];
@@ -90,29 +91,31 @@ class SingBoxManager {
                 });
 
                 this.sbProcess.stderr?.on('data', (err: Buffer) => {
-                    console.error(`Sing-Box error: ${err.toString()}`);
+                    log.error(`Sing-Box error: ${err.toString()}`);
                     hasErrors = true;
                 });
 
-                this.sbProcess.on('close', () => {
+                this.sbProcess.on('close', async () => {
                     if (output.trim() && !hasErrors) {
                         if (process.platform === 'linux') {
                             this.findLinuxProcessId(resolve);
                         } else {
-                            const pid = output.trim();
-                            this.pid = pid;
-                            console.log(`Started Sing-Box process with PID: ${pid}`);
-                            resolve(true);
+                            setTimeout(() => {
+                                const pid = output.trim();
+                                this.pid = pid;
+                                log.info(`Started Sing-Box process with PID: ${pid}`);
+                                resolve(true);
+                            }, 5000);
                         }
                     } else {
-                        console.error('Failed to start Sing-Box: No PID received');
+                        log.error('Failed to start Sing-Box: No PID received');
                         this.pid = '';
                         this.sbProcess = null;
                         resolve(false);
                     }
                 });
             } catch (error) {
-                console.error('Failed to start Sing-Box:', error);
+                log.error('Failed to start Sing-Box:', error);
                 this.pid = '';
                 this.sbProcess = null;
                 resolve(false);
@@ -131,13 +134,13 @@ class SingBoxManager {
                 const [command, args] = stop(this.pid);
                 const killProcess = spawn(command, args);
                 killProcess.stderr?.on('data', (err: Buffer) => {
-                    console.error(`Sing-Box error: ${err.toString()}`);
+                    log.error(`Sing-Box error: ${err.toString()}`);
                     hasErrors = true;
                     resolve(true);
                 });
                 killProcess.on('close', (code: number | null) => {
                     if (!hasErrors) {
-                        console.log(`Sing-Box process exited with code ${code}`);
+                        log.info(`Sing-Box process exited with code ${code}`);
                         this.sbProcess?.kill();
                         this.sbProcess = null;
                         this.pid = '';
@@ -145,7 +148,7 @@ class SingBoxManager {
                     }
                 });
             } catch (error) {
-                console.error('Failed to stop Sing-Box:', error);
+                log.error('Failed to stop Sing-Box:', error);
                 resolve(true);
             }
         });
@@ -164,16 +167,16 @@ class SingBoxManager {
                 findPidProcess.on('close', () => {
                     clearTimeout(checkTimeout);
                     if (this.pid !== '') {
-                        console.log(`Started Sing-Box process with PID: ${this.pid}`);
+                        log.info(`Started Sing-Box process with PID: ${this.pid}`);
                         resolve(true);
                     } else {
-                        console.error('Failed to start Sing-Box: No PID received');
+                        log.error('Failed to start Sing-Box: No PID received');
                         this.sbProcess = null;
                         resolve(false);
                     }
                 });
             } catch (error) {
-                console.error('Error checking process ID:', error);
+                log.error('Error checking process ID:', error);
                 clearTimeout(checkTimeout);
                 resolve(false);
             }

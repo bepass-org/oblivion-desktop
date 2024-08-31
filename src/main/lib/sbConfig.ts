@@ -1,7 +1,8 @@
 import fs from 'fs';
+import log from 'electron-log';
 import { sbConfigPath } from '../ipcListeners/wp';
 
-export function createOrUpdateSbConfig(socksServerPort: number, endpointPorts: number[]) {
+export function createSbConfig(socksServerPort: number, endpointPorts: number[]) {
     if (socksServerPort === undefined) {
         throw new Error('socksServerPort is a required parameter');
     }
@@ -17,10 +18,14 @@ export function createOrUpdateSbConfig(socksServerPort: number, endpointPorts: n
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: 9000,
-                inet4_address: '172.18.0.1/30',
+                inet4_address: '172.19.0.1/28',
                 inet6_address: 'fdfe:dcba:9876::1/126',
                 auto_route: true,
-                strict_route: true
+                strict_route: true,
+                endpoint_independent_nat: true,
+                stack: 'mixed',
+                sniff: true,
+                sniff_override_destination: true
             }
         ],
         outbounds: [
@@ -53,5 +58,5 @@ export function createOrUpdateSbConfig(socksServerPort: number, endpointPorts: n
     };
 
     fs.writeFileSync(sbConfigPath, JSON.stringify(config, null, 2), 'utf-8');
-    console.log(`✅ sbConfig.json has been created/updated at ${sbConfigPath}`);
+    log.info(`✅ sbConfig.json has been created at ${sbConfigPath}`);
 }

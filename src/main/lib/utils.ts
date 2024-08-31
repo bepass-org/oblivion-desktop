@@ -56,7 +56,7 @@ export function removeDirIfExists(dirPath: string) {
 export function shouldProxySystem(proxyMode: any) {
     return (
         typeof proxyMode === 'undefined' ||
-        (typeof proxyMode === 'string' && (proxyMode === 'system' || proxyMode === 'tun'))
+        (typeof proxyMode === 'string' && proxyMode === 'system')
     );
 }
 
