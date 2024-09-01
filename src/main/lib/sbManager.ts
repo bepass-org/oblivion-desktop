@@ -1,6 +1,5 @@
 import { ChildProcess, spawn } from 'child_process';
 import log from 'electron-log';
-import { clearInterval } from 'node:timers';
 
 type PlatformCommands = {
     start: (binPath: string, configPath: string) => [string, string[]];
