@@ -1,5 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import log from 'electron-log';
+import { clearInterval } from 'node:timers';
 
 type PlatformCommands = {
     start: (binPath: string, configPath: string) => [string, string[]];
@@ -100,12 +101,7 @@ class SingBoxManager {
                         if (process.platform === 'linux') {
                             this.findLinuxProcessId(resolve);
                         } else {
-                            setTimeout(() => {
-                                const pid = output.trim();
-                                this.pid = pid;
-                                log.info(`Started Sing-Box process with PID: ${pid}`);
-                                resolve(true);
-                            }, 5000);
+                            this.checkConnectionStatus(output, resolve);
                         }
                     } else {
                         log.error('Failed to start Sing-Box: No PID received');
@@ -167,8 +163,7 @@ class SingBoxManager {
                 findPidProcess.on('close', () => {
                     clearTimeout(checkTimeout);
                     if (this.pid !== '') {
-                        log.info(`Started Sing-Box process with PID: ${this.pid}`);
-                        resolve(true);
+                        this.checkConnectionStatus(this.pid, resolve);
                     } else {
                         log.error('Failed to start Sing-Box: No PID received');
                         this.sbProcess = null;
@@ -181,6 +176,37 @@ class SingBoxManager {
                 resolve(false);
             }
         }, 10000);
+    }
+
+    private checkConnectionStatus(output: string, resolve: (value: boolean) => void): void {
+        let isChecking: boolean = false;
+        const pingInterval = setInterval(async () => {
+            if (isChecking) return;
+            isChecking = true;
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            try {
+                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                    method: 'HEAD',
+                    signal
+                });
+                if (response.ok) {
+                    const pid = output.trim();
+                    this.pid = pid;
+                    log.info(`Started Sing-Box process with PID: ${pid}`);
+                    clearInterval(pingInterval);
+                    clearTimeout(timeoutId);
+                    resolve(true);
+                }
+            } catch (error) {
+                log.info('The Sing-Box connection has not been established yet. Please wait...');
+            } finally {
+                clearTimeout(timeoutId);
+                isChecking = false;
+            }
+        }, 2000);
     }
 }
 

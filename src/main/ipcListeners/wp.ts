@@ -154,6 +154,9 @@ ipcMain.on('wp-start', async (event) => {
                 handleSystemProxyDisconnect();
             });
     } else {
+        if (proxyMode === 'tun') {
+            createSbConfig(Number(port));
+        }
         connectedFlags[0] = true;
         sendConnectedSignalToRenderer();
     }
@@ -168,16 +171,16 @@ ipcMain.on('wp-start', async (event) => {
     try {
         child = spawn(command, args, { cwd: wpDirPath });
         const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-        const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
+        //const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
 
-            if (strData.includes(endpointMessage) && proxyMode === 'tun' && !isSingBoxRunning) {
+            /*if (strData.includes(endpointMessage) && proxyMode === 'tun' && !isSingBoxRunning) {
                 const uniquePorts = extractPortsFromEndpoints(strData);
                 createSbConfig(Number(port), uniquePorts);
-            }
+            }*/
 
             if (strData.includes(successMessage)) {
                 if (proxyMode === 'tun' && !isSingBoxRunning) {

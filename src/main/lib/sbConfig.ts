@@ -2,7 +2,7 @@ import fs from 'fs';
 import log from 'electron-log';
 import { sbConfigPath } from '../ipcListeners/wp';
 
-export function createSbConfig(socksServerPort: number, endpointPorts: number[]) {
+export function createSbConfig(socksServerPort: number) {
     if (socksServerPort === undefined) {
         throw new Error('socksServerPort is a required parameter');
     }
@@ -21,8 +21,7 @@ export function createSbConfig(socksServerPort: number, endpointPorts: number[])
                 inet4_address: '172.19.0.1/28',
                 inet6_address: 'fdfe:dcba:9876::1/126',
                 auto_route: true,
-                strict_route: true,
-                endpoint_independent_nat: true,
+                strict_route: false,
                 stack: 'mixed',
                 sniff: true,
                 sniff_override_destination: true
@@ -48,7 +47,6 @@ export function createSbConfig(socksServerPort: number, endpointPorts: number[])
                 },
                 {
                     network: 'udp',
-                    port: endpointPorts,
                     outbound: 'direct-out'
                 }
             ],
