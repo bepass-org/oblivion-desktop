@@ -43,7 +43,7 @@ class SingBoxManager {
                     'powershell.exe',
                     [
                         '-Command',
-                        `$process = Start-Process -FilePath '${binPath}' -ArgumentList 'run -c ${configPath}' -Verb RunAs -WindowStyle Hidden -PassThru; $process.Id`
+                        `$process = Start-Process -FilePath '${binPath.replace(/'/g, "''")}' -ArgumentList 'run -c "${configPath.replace(/'/g, "''")}"' -Verb RunAs -WindowStyle Hidden -PassThru; $process.Id`
                     ]
                 ],
                 stop: (pid) => [
