@@ -17,6 +17,10 @@ class SingBoxManager {
 
     private pid: string = '';
 
+    private readonly startCommandDesc: string = `Oblivion Desktop requires administrator privileges to run Sing-Box in TUN mode.`;
+
+    private readonly stopCommandDesc: string = `Oblivion Desktop requires administrator privileges to stop Sing-Box gracefully.`;
+
     constructor(sbBinPath: string, sbConfigPath: string, wpDirPath: string) {
         this.sbBinPath = sbBinPath;
         this.sbConfigPath = sbConfigPath;
@@ -30,12 +34,15 @@ class SingBoxManager {
                     'osascript',
                     [
                         '-e',
-                        `set processID to do shell script "\\"${binPath}\\" run -c \\"${configPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges`
+                        `set processID to do shell script "\\"${binPath}\\" run -c \\"${configPath}\\" > /dev/null 2>&1 & echo $! &" with prompt "${this.startCommandDesc}" with administrator privileges`
                     ]
                 ],
                 stop: (pid) => [
                     'osascript',
-                    ['-e', `do shell script "kill ${pid}" with administrator privileges`]
+                    [
+                        '-e',
+                        `do shell script "kill ${pid}" with prompt "${this.stopCommandDesc}" with administrator privileges`
+                    ]
                 ]
             },
             win32: {
