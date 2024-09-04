@@ -228,6 +228,7 @@ class SingBoxManager {
                     log.error('The Sing-Box connection has not been established.');
                     clearInterval(pingInterval);
                     await this.stopSingBox();
+                    resolve(false);
                 }
             }
         }, 2000);
