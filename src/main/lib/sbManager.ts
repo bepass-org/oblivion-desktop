@@ -30,7 +30,7 @@ class SingBoxManager {
                     'osascript',
                     [
                         '-e',
-                        `set processID to do shell script "\\"${binPath}\\" run -c \\"${configPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges` // Running the process in the background and capturing the PID
+                        `set processID to do shell script "\\"${binPath}\\" run -c \\"${configPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges`
                     ]
                 ],
                 stop: (pid) => [
@@ -75,10 +75,14 @@ class SingBoxManager {
     }
 
     public async startSingBox(): Promise<boolean> {
-        if (this.sbProcess) return true;
+        if (this.sbProcess) {
+            log.info('Sing-Box is already running.');
+            return true;
+        }
 
         return new Promise<boolean>((resolve) => {
             try {
+                log.info('Starting Sing-Box...');
                 const { start } = this.getPlatformCommands();
                 const [command, args] = start(this.sbBinPath, this.sbConfigPath);
                 this.sbProcess = spawn(command, args, { cwd: this.wpDirPath });
@@ -91,7 +95,7 @@ class SingBoxManager {
                 });
 
                 this.sbProcess.stderr?.on('data', (err: Buffer) => {
-                    log.error(`Sing-Box error: ${err.toString()}`);
+                    log.error(`Error starting Sing-Box: ${err.toString()}`);
                     hasErrors = true;
                 });
 
@@ -100,7 +104,8 @@ class SingBoxManager {
                         if (process.platform === 'linux') {
                             this.findLinuxProcessId(resolve);
                         } else {
-                            this.checkConnectionStatus(output, resolve);
+                            this.pid = output;
+                            this.checkConnectionStatus(resolve);
                         }
                     } else {
                         log.error('Failed to start Sing-Box: No PID received');
@@ -119,32 +124,36 @@ class SingBoxManager {
     }
 
     public async stopSingBox(): Promise<boolean> {
-        if (!this.sbProcess || this.pid === '') return false;
+        if (this.pid === '') {
+            log.info('Sing-Box is not running.');
+            return true;
+        }
 
         let hasErrors: boolean = false;
 
         return new Promise<boolean>((resolve) => {
             try {
+                log.info('Stopping Sing-Box...');
                 const { stop } = this.getPlatformCommands();
                 const [command, args] = stop(this.pid);
                 const killProcess = spawn(command, args);
                 killProcess.stderr?.on('data', (err: Buffer) => {
-                    log.error(`Sing-Box error: ${err.toString()}`);
+                    log.error(`Error stopping Sing-Box: ${err.toString()}`);
                     hasErrors = true;
-                    resolve(true);
                 });
-                killProcess.on('close', (code: number | null) => {
+                killProcess.on('close', () => {
                     if (!hasErrors) {
-                        log.info(`Sing-Box process exited with code ${code}`);
-                        this.sbProcess?.kill();
+                        log.info('Sing-Box stopped successfully.');
                         this.sbProcess = null;
                         this.pid = '';
+                        resolve(true);
+                    } else {
                         resolve(false);
                     }
                 });
             } catch (error) {
                 log.error('Failed to stop Sing-Box:', error);
-                resolve(true);
+                resolve(false);
             }
         });
     }
@@ -154,6 +163,7 @@ class SingBoxManager {
         const checkTimeout = setTimeout(() => {
             try {
                 const findPidProcess = spawn('sh', ['-c', command]);
+
                 findPidProcess.stdout?.on('data', (data: Buffer) => {
                     if (data.toString() !== '') {
                         this.pid = data.toString();
@@ -162,7 +172,7 @@ class SingBoxManager {
                 findPidProcess.on('close', () => {
                     clearTimeout(checkTimeout);
                     if (this.pid !== '') {
-                        this.checkConnectionStatus(this.pid, resolve);
+                        this.checkConnectionStatus(resolve);
                     } else {
                         log.error('Failed to start Sing-Box: No PID received');
                         this.sbProcess = null;
@@ -177,11 +187,14 @@ class SingBoxManager {
         }, 10000);
     }
 
-    private checkConnectionStatus(output: string, resolve: (value: boolean) => void): void {
+    private checkConnectionStatus(resolve: (value: boolean) => void): void {
         let isChecking: boolean = false;
+        let attemptCounter = 0;
+        log.info('Sing-Box started successfully. Establishing connection...');
         const pingInterval = setInterval(async () => {
             if (isChecking) return;
             isChecking = true;
+            attemptCounter++;
             const controller = new AbortController();
             const signal = controller.signal;
             const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -192,18 +205,23 @@ class SingBoxManager {
                     signal
                 });
                 if (response.ok) {
-                    const pid = output.trim();
-                    this.pid = pid;
-                    log.info(`Started Sing-Box process with PID: ${pid}`);
+                    log.info('Sing-Box has connected successfully.');
                     clearInterval(pingInterval);
                     clearTimeout(timeoutId);
                     resolve(true);
                 }
             } catch (error) {
-                log.info('The Sing-Box connection has not been established yet. Please wait...');
+                log.info(
+                    `Attempt ${attemptCounter}/10: The Sing-Box connection has not been established yet. Please wait...`
+                );
             } finally {
                 clearTimeout(timeoutId);
                 isChecking = false;
+                if (attemptCounter > 9) {
+                    log.error('The Sing-Box connection has not been established.');
+                    clearInterval(pingInterval);
+                    await this.stopSingBox();
+                }
             }
         }, 2000);
     }

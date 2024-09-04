@@ -130,7 +130,7 @@ ipcMain.on('wp-start', async (event) => {
             });
         } else {
             if (proxyMode === 'tun' && isSingBoxRunning) {
-                isSingBoxRunning = await singBoxManager.stopSingBox();
+                isSingBoxRunning = !(await singBoxManager.stopSingBox());
                 if (isSingBoxRunning) {
                     event.reply('guide-toast', 'Failed to stop Sing-Box');
                 } else {
@@ -239,7 +239,7 @@ ipcMain.on('wp-end', async (event) => {
     const proxyMode = await settings.get('proxyMode');
     try {
         if (proxyMode === 'tun' && isSingBoxRunning) {
-            isSingBoxRunning = await singBoxManager.stopSingBox();
+            isSingBoxRunning = !(await singBoxManager.stopSingBox());
             if (isSingBoxRunning) {
                 event.reply('guide-toast', 'Failed to stop Sing-Box');
                 event.reply('wp-end', false);
@@ -264,7 +264,7 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
     const proxyMode = await settings.get('proxyMode');
     try {
         if (proxyMode === 'tune' && isSingBoxRunning) {
-            isSingBoxRunning = await singBoxManager.stopSingBox();
+            isSingBoxRunning = !(await singBoxManager.stopSingBox());
             if (isSingBoxRunning) {
                 event.reply('guide-toast', 'Failed to stop Sing-Box');
                 event.reply('wp-end', false);
