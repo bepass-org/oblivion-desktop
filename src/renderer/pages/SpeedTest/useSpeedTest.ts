@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import SpeedTest from '@cloudflare/speedtest';
+import SpeedTest, { MeasurementConfig } from '@cloudflare/speedtest';
 import useTranslate from '../../../localization/useTranslate';
 import { defaultToast } from '../../lib/toasts';
 
@@ -21,7 +21,7 @@ export const useSpeedTest = () => {
     const speedTestRef = useRef<SpeedTest | null>(null);
     const rafIdRef = useRef<number | null>(null);
 
-    const testMeasurements: any = [
+    const testMeasurements: MeasurementConfig[] = [
         { type: 'latency', numPackets: 1 },
         { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
         { type: 'latency', numPackets: 20 },

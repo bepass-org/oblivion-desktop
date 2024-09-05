@@ -2,16 +2,14 @@ import classNames from 'classnames';
 import { FC, FormEvent } from 'react';
 import { Swipe } from 'react-swipe-component';
 import { cfFlag } from '../../lib/cfFlag';
-import { SpeedStats } from './useLanding';
+import { IpConfig, SpeedStats } from './useLanding';
+import { Language } from '../../../localization/type';
 
 interface LandingBodyProps {
-    appLang: any;
+    appLang: Language;
     isConnected: boolean;
     isLoading: boolean;
-    ipInfo: {
-        countryCode: string | boolean;
-        ip: string;
-    };
+    ipInfo: IpConfig;
     ipData?: boolean;
     proxyMode: string;
     ping: number;
@@ -46,6 +44,7 @@ const LandingBody: FC<LandingBodyProps> = ({
     speeds,
     dataUsage
 }) => {
+    const pingIsZero = ping === 0;
     return (
         <div className={classNames('myApp', 'verticalAlign')}>
             <div className='container'>
@@ -112,11 +111,11 @@ const LandingBody: FC<LandingBodyProps> = ({
                             onClick={handleOnClickIp}
                         >
                             <img
-                                src={cfFlag(ipInfo.countryCode ? ipInfo?.countryCode : 'xx')}
+                                src={cfFlag(ipInfo.countryCode || 'xx')}
                                 alt={`${ipInfo?.countryCode} Flag`}
                             />
                             <span className={ipInfo?.countryCode ? '' : 'shimmer'}>
-                                {ipInfo.ip ? ipInfo.ip : '127.0.0.1'}
+                                {ipInfo.ip || '127.0.0.1'}
                             </span>
                         </div>
                         <div className={classNames('item', 'speed')}>
@@ -126,7 +125,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 onClick={handleOnClickPing}
                             >
                                 <i className='material-icons'>&#xebca;</i>
-                                <span className={ping === 0 ? 'shimmer' : ''}>
+                                <span className={pingIsZero ? 'shimmer' : ''}>
                                     {ping > 0
                                         ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
                                         : 'timeout'}
@@ -142,7 +141,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 <i className='material-icons'>&#xe1af;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.totalUsage.unit === 'N/A'
+                                        pingIsZero || speeds.totalUsage.unit === 'N/A'
                                             ? 'shimmer'
                                             : ''
                                     }
@@ -155,7 +154,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                         'isTooltip',
                                         speeds.totalUpload.value === 'N/A' ||
                                             speeds.totalDownload.value === 'N/A' ||
-                                            ping === 0 ||
+                                            pingIsZero ||
                                             speeds.totalUsage.unit === 'N/A'
                                             ? 'hidden'
                                             : ''
@@ -183,7 +182,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 <i className='material-icons'>&#xe2c0;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.currentDownload.unit === 'N/A'
+                                        pingIsZero || speeds.currentDownload.unit === 'N/A'
                                             ? 'shimmer'
                                             : ''
                                     }
@@ -196,7 +195,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 <i className='material-icons'>&#xe2c3;</i>
                                 <span
                                     className={
-                                        ping === 0 || speeds.currentUpload.unit === 'N/A'
+                                        pingIsZero || speeds.currentUpload.unit === 'N/A'
                                             ? 'shimmer'
                                             : ''
                                     }

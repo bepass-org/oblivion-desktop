@@ -4,12 +4,13 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
 import { defaultToast } from '../../../lib/toasts';
+import { Profile } from '../../../pages/Scanner/useScanner';
 
 type ProfileModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    profiles: any;
-    setProfiles: (value: any) => void;
+    profiles: Profile[];
+    setProfiles: (value: Profile[]) => void;
 };
 const useProfileModal = (props: ProfileModalProps) => {
     const { isOpen, onClose, profiles, setProfiles } = props;
@@ -17,7 +18,7 @@ const useProfileModal = (props: ProfileModalProps) => {
 
     const [profileName, setProfileName] = useState<string>('');
     const [profileEndpoint, setProfileEndpoint] = useState<string>('');
-    const [profilesInput, setProfilesInput] = useState<any>(profiles);
+    const [profilesInput, setProfilesInput] = useState<Profile[]>(profiles);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     const appLang = useTranslate();
@@ -38,14 +39,15 @@ const useProfileModal = (props: ProfileModalProps) => {
         } else if (profileName !== '' && checkValidEndpoint(profileEndpoint) !== '') {
             const newProfile = { name: profileName, endpoint: profileEndpoint };
             if (editingIndex !== null) {
-                const updatedProfiles = profilesInput.map((profile: any, index: number) =>
+                const updatedProfiles = profilesInput.map((profile: Profile, index: number) =>
                     index === editingIndex ? newProfile : profile
                 );
                 setProfilesInput(updatedProfiles);
                 setEditingIndex(null);
             } else {
                 const isDuplicate = profilesInput.some(
-                    (item: any) => item?.name === profileName && item?.endpoint === profileEndpoint
+                    (item: Profile) =>
+                        item?.name === profileName && item?.endpoint === profileEndpoint
                 );
                 if (!isDuplicate) {
                     setProfilesInput([...profilesInput, newProfile]);
@@ -65,7 +67,7 @@ const useProfileModal = (props: ProfileModalProps) => {
     ]);
 
     const handleRemoveProfile = (key: number) => {
-        const updatedProfiles = profilesInput.filter((item: any, index: number) => index !== key);
+        const updatedProfiles = profilesInput.filter((_, index: number) => index !== key);
         setProfilesInput(updatedProfiles);
     };
 

@@ -121,11 +121,15 @@ const useDebug = () => {
             window.removeEventListener('scroll', onScroll);
         };
     }, []);*/
+
+    const logIsEmpty = log === '';
+
     return {
         log,
         autoScroll,
         logRef,
         appLang,
+        logIsEmpty,
         handleCopy,
         handleKeyDown,
         setAuthScrollEnabled,

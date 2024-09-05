@@ -1,5 +1,5 @@
 import toast from 'react-hot-toast';
-//import { getTranslate } from '../../localization';
+import { Language } from '../../localization/type';
 
 const defaultToastStyle = {
     fontSize: '13px',
@@ -28,19 +28,17 @@ export const defaultToastWithSubmitButton = (
 ) => {
     toast(
         (currentToast) => (
-            <>
-                <div className='customToast'>
-                    <p>{msg}</p>
-                    <button
-                        onClick={() => {
-                            toast.remove(currentToast?.id);
-                            onSubmitCallBack();
-                        }}
-                    >
-                        {submitTitle}
-                    </button>
-                </div>
-            </>
+            <div className='customToast'>
+                <p>{msg}</p>
+                <button
+                    onClick={() => {
+                        toast.remove(currentToast?.id);
+                        onSubmitCallBack();
+                    }}
+                >
+                    {submitTitle}
+                </button>
+            </div>
         ),
         {
             id: id,
@@ -62,7 +60,7 @@ export const settingsHaveChangedToast = ({
 }: {
     isConnected: boolean;
     isLoading: boolean;
-    appLang: any;
+    appLang: Language;
 }) => {
     if (doNotShowSettingsHaveChangedToastInCurrentSession) return;
     if (isConnected || isLoading) {
