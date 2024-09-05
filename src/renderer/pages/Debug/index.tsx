@@ -11,6 +11,7 @@ export default function Debug() {
         handleKeyDown,
         log,
         logRef,
+        logIsEmpty,
         setAuthScrollDisabled,
         setAuthScrollEnabled
     } = useDebug();
@@ -20,7 +21,7 @@ export default function Debug() {
             <div className={classNames('myApp', 'normalPage', 'logPage')}>
                 <div className='container'>
                     <div
-                        className={classNames('logOptions', log === '' ? 'hidden' : '')}
+                        className={classNames('logOptions', logIsEmpty ? 'hidden' : '')}
                         role='menubar'
                     >
                         {/*<i
@@ -31,62 +32,28 @@ export default function Debug() {
                                 );
                             }}
                         >&#xf0ff;</i>*/}
-                        {log?.length > 1000 && (
-                            <>
-                                {autoScroll ? (
-                                    <>
-                                        <div
-                                            onClick={setAuthScrollDisabled}
-                                            role='presentation'
-                                            tabIndex={-1}
-                                        >
-                                            <i className='material-icons' role='link'>
-                                                &#xe1a2;
-                                            </i>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div
-                                        role='presentation'
-                                        onClick={setAuthScrollEnabled}
-                                        tabIndex={-1}
-                                    >
-                                        <i className='material-icons' role='link'>
-                                            &#xe038;
-                                        </i>
-                                    </div>
-                                )}
-                                {/*{isBottom ? (
-                                    <>
-                                        <i
-                                            className='material-icons'
-                                            onClick={() => {
-                                                logRef?.current?.scrollIntoView({
-                                                    behavior: 'smooth',
-                                                    block: 'end'
-                                                });
-                                            }}
-                                        >
-                                            &#xeb53;
-                                        </i>
-                                    </>
-                                ) : (
-                                    <>
-                                        <i
-                                            className='material-icons'
-                                            onClick={() => {
-                                                logRef?.current?.scrollIntoView({
-                                                    behavior: 'smooth',
-                                                    block: 'start'
-                                                });
-                                            }}
-                                        >
-                                            &#xeb2e;
-                                        </i>
-                                    </>
-                                )}*/}
-                            </>
-                        )}
+                        {log?.length > 1000 &&
+                            (autoScroll ? (
+                                <div
+                                    onClick={setAuthScrollDisabled}
+                                    role='presentation'
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons' role='link'>
+                                        &#xe1a2;
+                                    </i>
+                                </div>
+                            ) : (
+                                <div
+                                    role='presentation'
+                                    onClick={setAuthScrollEnabled}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons' role='link'>
+                                        &#xe038;
+                                    </i>
+                                </div>
+                            ))}
                         <div
                             role='button'
                             onClick={handleCopy}
@@ -99,12 +66,12 @@ export default function Debug() {
                         </div>
                     </div>
                     <p
-                        className={classNames(log === '' ? 'dirRight' : 'dirLeft', 'logText')}
+                        className={classNames(logIsEmpty ? 'dirRight' : 'dirLeft', 'logText')}
                         ref={logRef}
                         role='log'
                         aria-live='assertive'
                     >
-                        {log === '' ? appLang?.log?.desc : log}
+                        {logIsEmpty ? appLang?.log?.desc : log}
                     </p>
                 </div>
             </div>

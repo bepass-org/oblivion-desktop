@@ -50,8 +50,8 @@ export default function Options() {
         showPortModal,
         showRoutingRulesModal,
         appLang,
-        method,
-        dataUsage
+        dataUsage,
+        methodIsPsiphon
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -138,18 +138,18 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                     </div>
-                    <div className={classNames('item', method !== 'psiphon' ? '' : 'disabled')}>
+                    <div className={classNames('item', !methodIsPsiphon ? '' : 'disabled')}>
                         <Dropdown
                             id='flex-switch-check-checked-dns'
                             onChange={onChangeDNS}
                             value={dns || '1.1.1.1'}
                             label={appLang?.settings?.dns}
                             tabIndex={-1}
-                            disabled={method === 'psiphon'}
-                            items={[...dnsServers]}
+                            disabled={methodIsPsiphon}
+                            items={dnsServers}
                         />
                         <div className='info'>
-                            {method !== 'psiphon'
+                            {!methodIsPsiphon
                                 ? appLang?.settings?.dns_desc
                                 : appLang?.settings?.dns_error}
                         </div>

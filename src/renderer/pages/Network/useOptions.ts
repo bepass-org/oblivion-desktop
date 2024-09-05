@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { useStore } from '../../store';
@@ -227,6 +227,8 @@ const useOptions = () => {
         [handleDataUsageOnClick]
     );
 
+    const methodIsPsiphon = useMemo(() => method === 'psiphon', [method]);
+
     return {
         proxyMode,
         shareVPN,
@@ -237,8 +239,8 @@ const useOptions = () => {
         routingRules,
         showRoutingRulesModal,
         appLang,
-        method,
         dataUsage,
+        methodIsPsiphon,
         setPort,
         setRoutingRules,
         countRoutingRules,

@@ -56,14 +56,12 @@ export default function Options() {
         <>
             <Nav title={appLang?.settings?.option} />
             <RestoreModal
-                {...{
-                    setTheme,
-                    setForceClose,
-                    setLang,
-                    setOpenAtLogin,
-                    setAutoConnect,
-                    setShortcut
-                }}
+                setTheme={setTheme}
+                setForceClose={setForceClose}
+                setLang={setLang}
+                setOpenAtLogin={setOpenAtLogin}
+                setAutoConnect={setAutoConnect}
+                setShortcut={setShortcut}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
                 onClose={onCloseRestoreModal}
@@ -78,11 +76,7 @@ export default function Options() {
                         onKeyDown={onKeyDownChangeTheme}
                         tabIndex={0}
                     >
-                        <label
-                            className='key'
-                            htmlFor='flexSwitchCheckChecked'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='flexSwitchCheckChecked'>
                             {appLang?.settings?.dark_mode}
                         </label>
                         <div className='value'>
@@ -118,11 +112,7 @@ export default function Options() {
                         onKeyDown={onKeyDownShortcutButton}
                         tabIndex={0}
                     >
-                        <label
-                            className='key'
-                            htmlFor='shortcut'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='shortcut'>
                             {appLang?.settings?.shortcut}
                         </label>
                         <div className='value'>
@@ -174,11 +164,7 @@ export default function Options() {
                         onKeyDown={onKeyDownAutoConnectButton}
                         tabIndex={0}
                     >
-                        <label
-                            className='key'
-                            htmlFor='auto-connect'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='auto-connect'>
                             {appLang?.settings?.auto_connect}
                         </label>
                         <div className='value'>
@@ -199,11 +185,7 @@ export default function Options() {
                         onKeyDown={onKeyDownForceCloseButton}
                         tabIndex={0}
                     >
-                        <label
-                            className='key'
-                            htmlFor='force-close'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='force-close'>
                             {appLang?.settings?.force_close}
                         </label>
                         <div className='value'>
