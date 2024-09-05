@@ -1,9 +1,9 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
-import { defaultSettings } from '../../../defaultSettings';
+import { countries, defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
@@ -68,8 +68,7 @@ const useSettings = () => {
 
     const onCloseLicenseModal = useCallback(() => {
         setShowLicenseModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
 
@@ -140,6 +139,21 @@ const useSettings = () => {
         [isConnected, isLoading, appLang]
     );
 
+    const locationItems = useMemo(
+        () => [
+            {
+                value: '',
+                label: appLang?.settings?.method_psiphon_location_auto
+            },
+            ...countries
+        ],
+        [appLang?.settings?.method_psiphon_location_auto]
+    );
+
+    const methodIsWarp = useMemo(() => method === '', [method]);
+    const methodIsGool = useMemo(() => method === 'gool', [method]);
+    const methodIsPsiphon = useMemo(() => method === 'psiphon', [method]);
+
     const loading =
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
@@ -150,8 +164,12 @@ const useSettings = () => {
         license,
         showLicenseModal,
         method,
+        methodIsWarp,
+        methodIsGool,
+        methodIsPsiphon,
         appLang,
         loading,
+        locationItems,
         setLicense,
         onCloseLicenseModal,
         onOpenLicenseModal,

@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -9,12 +9,17 @@ import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 
+export type Profile = {
+    endpoint: string;
+    name: string;
+};
+
 const useScanner = () => {
     const { isConnected, isLoading } = useStore();
     const appLang = useTranslate();
 
     const [endpoint, setEndpoint] = useState<string>();
-    const [profiles, setProfiles] = useState<any>([]);
+    const [profiles, setProfiles] = useState<Profile[]>([]);
     const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
     const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
     const [ipType, setIpType] = useState<undefined | string>();
@@ -59,8 +64,7 @@ const useScanner = () => {
 
     const onCloseEndpointModal = useCallback(() => {
         setShowEndpointModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
 
@@ -134,6 +138,57 @@ const useScanner = () => {
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]
     );
 
+    const ipSelectorItems = useMemo(
+        () => [
+            {
+                value: '',
+                label: appLang?.settings?.scanner_ip_type_auto
+            },
+            { value: '-4', label: 'IPv4' },
+            {
+                value: '-6',
+                label: 'IPv6'
+            }
+        ],
+        [appLang?.settings?.scanner_ip_type_auto]
+    );
+
+    const rttSelectorItems = useMemo(
+        () => [
+            {
+                value: '1s',
+                label: appLang?.settings?.scanner_rtt_default
+            },
+            {
+                value: '300ms',
+                label: '300ms'
+            },
+            {
+                value: '500ms',
+                label: '500ms'
+            },
+            {
+                value: '750ms',
+                label: '750ms'
+            },
+            {
+                value: '1s',
+                label: '1s'
+            },
+            {
+                value: '2s',
+                label: '2s'
+            },
+            {
+                value: '3s',
+                label: '3s'
+            }
+        ],
+        [appLang?.settings?.scanner_rtt_default]
+    );
+
+    const isDefaultEndpoint = useMemo(() => endpoint === defaultSettings.endpoint, [endpoint]);
+
     const loading =
         typeof endpoint === 'undefined' ||
         typeof profiles === 'undefined' ||
@@ -149,6 +204,9 @@ const useScanner = () => {
         appLang,
         showEndpointModal,
         loading,
+        ipSelectorItems,
+        rttSelectorItems,
+        isDefaultEndpoint,
         onCloseEndpointModal,
         onOpenEndpointModal,
         onKeyDownEndpoint,

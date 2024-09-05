@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { useStore } from '../../store';
@@ -107,13 +107,11 @@ const useOptions = () => {
 
     const onClosePortModal = useCallback(() => {
         setShowPortModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onCloseRoutingRulesModal = useCallback(() => {
         setShowRoutingRulesModal(false);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-    }, [isConnected, isLoading, appLang]);
+    }, []);
 
     const onChangeProxyMode = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
@@ -229,6 +227,8 @@ const useOptions = () => {
         [handleDataUsageOnClick]
     );
 
+    const methodIsPsiphon = useMemo(() => method === 'psiphon', [method]);
+
     return {
         proxyMode,
         shareVPN,
@@ -239,8 +239,8 @@ const useOptions = () => {
         routingRules,
         showRoutingRulesModal,
         appLang,
-        method,
         dataUsage,
+        methodIsPsiphon,
         setPort,
         setRoutingRules,
         countRoutingRules,

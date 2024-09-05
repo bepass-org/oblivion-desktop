@@ -3,14 +3,15 @@ import classNames from 'classnames';
 import useProfileModal from './useProfileModal';
 import { defaultSettings } from '../../../../defaultSettings';
 import Input from '../../Input';
+import { Profile } from '../../../pages/Scanner/useScanner';
 
 interface ProfileModalProps {
     title: string;
     isOpen: boolean;
     onClose: () => void;
-    profiles: any;
+    profiles: Profile[];
     endpoint: string;
-    setProfiles: (value: any) => void;
+    setProfiles: (value: Profile[]) => void;
 }
 
 const ProfileModal: FC<ProfileModalProps> = ({
@@ -105,7 +106,7 @@ const ProfileModal: FC<ProfileModalProps> = ({
                     {typeof profilesInput !== 'string' && profilesInput.length > 0 && (
                         <>
                             <div className='tagList'>
-                                {profilesInput.map((item: any, index: any) => (
+                                {profilesInput.map((item: Profile, index: number) => (
                                     <div className='tagItem' key={Number(index)}>
                                         <i
                                             role='presentation'

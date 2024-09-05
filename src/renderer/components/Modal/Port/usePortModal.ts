@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
+import { useStore } from '../../../store';
+import { settingsHaveChangedToast } from '../../../lib/toasts';
 
 interface PortModalProps {
     isOpen: boolean;
@@ -11,6 +13,7 @@ interface PortModalProps {
 }
 
 const usePortModal = (props: PortModalProps) => {
+    const { isConnected, isLoading } = useStore();
     const { isOpen, onClose, port, setPort, defValue } = props;
     const [portInput, setPortInput] = useState<number>(port);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
@@ -33,8 +36,9 @@ const usePortModal = (props: PortModalProps) => {
         setPortInput(tmp);
         setPort(tmp);
         settings.set('port', tmp);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [defValue, portInput, handleOnClose, setPort, isValidPort]);
+    }, [isValidPort, portInput, defValue, setPort, isConnected, isLoading, appLang, handleOnClose]);
 
     const onSaveModalKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

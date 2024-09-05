@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
+import { useStore } from '../../../store';
 import useTranslate from '../../../../localization/useTranslate';
+import { settingsHaveChangedToast } from '../../../lib/toasts';
 
 interface LicenseModalProps {
     isOpen: boolean;
@@ -16,6 +18,7 @@ const useLicenseModal = (props: LicenseModalProps) => {
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
+    const { isConnected, isLoading } = useStore();
     const appLang = useTranslate();
 
     const handleOnClose = useCallback(() => {
@@ -29,8 +32,9 @@ const useLicenseModal = (props: LicenseModalProps) => {
         setLicenseInput(tmp);
         setLicense(tmp);
         settings.set('license', tmp);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [handleOnClose, licenseInput, setLicense]);
+    }, [handleOnClose, licenseInput, setLicense, isConnected, isLoading, appLang]);
 
     const onSaveModalKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -68,8 +72,9 @@ const useLicenseModal = (props: LicenseModalProps) => {
         setLicenseInput('');
         setLicense('');
         settings.set('license', '');
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [setLicenseInput, setLicense, handleOnClose]);
+    }, [setLicense, isConnected, isLoading, appLang, handleOnClose]);
 
     return {
         appLang,
