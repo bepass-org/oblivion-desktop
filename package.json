@@ -98,7 +98,6 @@
         "electron-log": "^4.4.8",
         "electron-settings": "^4.0.3",
         "electron-updater": "^6.2.1",
-        "lottie-react": "^2.4.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hot-toast": "^2.4.1",
