@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 
 import Drawer from 'react-modern-drawer';
 import appIco from '../../../../assets/oblivion.png';
+import { Language } from '../../../localization/type';
 
 interface LandingDrawerProps {
-    appLang: any;
+    appLang: Language;
     drawerIsOpen: boolean;
     lang?: string;
     hasNewUpdate: boolean;
