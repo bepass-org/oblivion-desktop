@@ -1,5 +1,4 @@
 import { FC, memo } from 'react';
-import PropTypes from 'prop-types';
 
 interface ResultCardProps {
     label: string;
@@ -7,7 +6,7 @@ interface ResultCardProps {
     unit: string;
 }
 
-const ResultCard: FC<ResultCardProps> = memo(({ label, value, unit }) => (
+const ResultCard: FC<ResultCardProps> = memo(({ label, value, unit }: ResultCardProps) => (
     <div className='resultCard'>
         <p>{label}</p>
         <h2>
@@ -15,11 +14,5 @@ const ResultCard: FC<ResultCardProps> = memo(({ label, value, unit }) => (
         </h2>
     </div>
 ));
-
-ResultCard.propTypes = {
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    unit: PropTypes.string.isRequired
-};
 
 export default ResultCard;
