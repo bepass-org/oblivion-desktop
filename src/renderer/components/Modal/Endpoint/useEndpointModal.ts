@@ -12,6 +12,7 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
 import { loadingToast, settingsHaveChangedToast, stopLoadingToast } from '../../../lib/toasts';
+import { Profile } from '../../../pages/Scanner/useScanner';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -19,7 +20,12 @@ type EndpointModalProps = {
     defValue: string;
     endpoint: string;
     setEndpoint: (value: string) => void;
-    profiles: any;
+    profiles: Profile[];
+};
+
+type Suggestion = {
+    ipv4: string[];
+    ipv6: string[];
 };
 
 const useEndpointModal = (props: EndpointModalProps) => {
@@ -53,7 +59,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
         return storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
     }, []);
 
-    const [suggestion, setSuggestion] = useState<any>(initSuggestion);
+    const [suggestion, setSuggestion] = useState<Suggestion>(initSuggestion);
 
     const fetchEndpoints = async () => {
         loadingToast(appLang?.toast?.please_wait);
