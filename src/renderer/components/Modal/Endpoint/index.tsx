@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { defaultSettings } from '../../../../defaultSettings';
 import useEndpointModal from './useEndpointModal';
 import Input from '../../Input';
+import { Profile } from '../../../pages/Scanner/useScanner';
 
 interface EndpointModalProps {
     title: string;
@@ -10,7 +11,7 @@ interface EndpointModalProps {
     onClose: () => void;
     defValue?: string;
     endpoint: string;
-    profiles: any;
+    profiles: Profile[];
     setEndpoint: (value: string) => void;
 }
 
@@ -137,56 +138,48 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                             .sort((a, b) => b - a)
                                             .slice(0, 15)
                                             .map((key, index) => (
+                                                <div
+                                                    className={classNames(
+                                                        'item',
+                                                        suggestion.ipv6[key] === endpointInput
+                                                            ? 'disabled'
+                                                            : ''
+                                                    )}
+                                                    role='presentation'
+                                                    key={key}
+                                                    onClick={() => {
+                                                        setEndpointSuggestion(suggestion.ipv6[key]);
+                                                        //setShowSuggestion(false);
+                                                    }}
+                                                >
+                                                    #{index + 1}
+                                                    <small> IPv6</small>
+                                                </div>
+                                            ))}
+                                    </div>
+                                    {profiles?.length > 0 && (
+                                        <div className='split'>
+                                            {profiles.map((item: Profile, key: number) => (
                                                 <>
                                                     <div
+                                                        key={Number(key)}
                                                         className={classNames(
                                                             'item',
-                                                            suggestion.ipv6[key] === endpointInput
+                                                            item.endpoint === endpointInput
                                                                 ? 'disabled'
                                                                 : ''
                                                         )}
                                                         role='presentation'
-                                                        key={key}
                                                         onClick={() => {
-                                                            setEndpointSuggestion(
-                                                                suggestion.ipv6[key]
-                                                            );
+                                                            setEndpointSuggestion(item.endpoint);
                                                             //setShowSuggestion(false);
                                                         }}
                                                     >
-                                                        #{index + 1}
-                                                        <small> IPv6</small>
+                                                        {item.name}
                                                     </div>
                                                 </>
                                             ))}
-                                    </div>
-                                    {profiles?.length > 0 && (
-                                        <>
-                                            <div className='split'>
-                                                {profiles.map((item: any, key: number) => (
-                                                    <>
-                                                        <div
-                                                            key={Number(key)}
-                                                            className={classNames(
-                                                                'item',
-                                                                item.endpoint === endpointInput
-                                                                    ? 'disabled'
-                                                                    : ''
-                                                            )}
-                                                            role='presentation'
-                                                            onClick={() => {
-                                                                setEndpointSuggestion(
-                                                                    item.endpoint
-                                                                );
-                                                                //setShowSuggestion(false);
-                                                            }}
-                                                        >
-                                                            {item.name}
-                                                        </div>
-                                                    </>
-                                                ))}
-                                            </div>
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                             </div>

@@ -1,9 +1,6 @@
 import classNames from 'classnames';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
-import { defaultSettings } from '../../../defaultSettings';
-// import Lottie from 'lottie-react';
-// import LottieFile from '../../../../assets/json/1713988096625.json';
 import EndpointModal from '../../components/Modal/Endpoint';
 import ProfileModal from '../../components/Modal/Profile';
 import Tabs from '../../components/Tabs';
@@ -25,9 +22,12 @@ export default function Scanner() {
         ipType,
         reserved,
         rtt,
+        ipSelectorItems,
+        rttSelectorItems,
         showEndpointModal,
         loading,
         profiles,
+        isDefaultEndpoint,
         setProfiles,
         showProfileModal,
         onOpenProfileModal,
@@ -79,10 +79,7 @@ export default function Scanner() {
                     </div>
                     <div
                         role='button'
-                        className={classNames(
-                            'item',
-                            endpoint === defaultSettings.endpoint ? '' : 'disabled'
-                        )}
+                        className={classNames('item', isDefaultEndpoint ? '' : 'disabled')}
                         tabIndex={0}
                     >
                         <Dropdown
@@ -91,65 +88,23 @@ export default function Scanner() {
                             value={ipType || ''}
                             label={appLang?.settings?.scanner_ip_type}
                             tabIndex={0}
-                            disabled={endpoint !== defaultSettings.endpoint}
-                            items={[
-                                {
-                                    value: '',
-                                    label: appLang?.settings?.scanner_ip_type_auto
-                                },
-                                { value: '-4', label: 'IPv4' },
-                                {
-                                    value: '-6',
-                                    label: 'IPv6'
-                                }
-                            ]}
+                            disabled={!isDefaultEndpoint}
+                            items={ipSelectorItems}
                         />
                         <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
                     </div>
                     <div
                         role='button'
-                        className={classNames(
-                            'item',
-                            endpoint === defaultSettings.endpoint ? '' : 'disabled'
-                        )}
+                        className={classNames('item', isDefaultEndpoint ? '' : 'disabled')}
                     >
                         <Dropdown
                             label={appLang?.settings?.scanner_rtt}
                             id='rtt-select'
                             onChange={onChangeRTT}
                             value={rtt || ''}
-                            disabled={endpoint !== defaultSettings.endpoint}
+                            disabled={!isDefaultEndpoint}
                             tabIndex={0}
-                            items={[
-                                {
-                                    value: '1s',
-                                    label: appLang?.settings?.scanner_rtt_default
-                                },
-                                {
-                                    value: '300ms',
-                                    label: '300ms'
-                                },
-                                {
-                                    value: '500ms',
-                                    label: '500ms'
-                                },
-                                {
-                                    value: '750ms',
-                                    label: '750ms'
-                                },
-                                {
-                                    value: '1s',
-                                    label: '1s'
-                                },
-                                {
-                                    value: '2s',
-                                    label: '2s'
-                                },
-                                {
-                                    value: '3s',
-                                    label: '3s'
-                                }
-                            ]}
+                            items={rttSelectorItems}
                         />
                         <div className='info' role='note'>
                             {appLang?.settings?.scanner_rtt_desc}
@@ -205,7 +160,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <span className='dirLeft' id='profile' dir='auto' tabIndex={-1}>
-                                {countProfiles(profiles?.length ? profiles.length : 0)}
+                                {countProfiles(profiles?.length || 0)}
                             </span>
                         </div>
                         <div className='info'>{appLang?.settings?.profile_desc}</div>

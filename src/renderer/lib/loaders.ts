@@ -1,5 +1,4 @@
 import { getDirectionByLang } from '../../localization';
-import { getIspName } from './getIspName';
 import { settings } from './settings';
 
 export const loadTheme = () => {
