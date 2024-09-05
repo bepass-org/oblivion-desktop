@@ -11,7 +11,12 @@ import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 
-let cachedIpInfo: any = null;
+export type IpConfig = {
+    countryCode: string | boolean;
+    ip: string;
+};
+
+let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
@@ -46,10 +51,7 @@ const useLanding = () => {
         proxyStatus,
         setProxyStatus
     } = useStore();
-    const [ipInfo, setIpInfo] = useState<{
-        countryCode: string | boolean;
-        ip: string;
-    }>({
+    const [ipInfo, setIpInfo] = useState<IpConfig>({
         countryCode: false,
         ip: ''
     });
