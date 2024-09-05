@@ -3,9 +3,6 @@ import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import Tabs from '../../components/Tabs';
 import LicenseModal from '../../components/Modal/License';
-import { countries } from '../../../defaultSettings';
-// import Lottie from 'lottie-react';
-// import LottieFile from '../../../../assets/json/1713988096625.json';
 import useSettings from './useSettings';
 import Dropdown from '../../components/Dropdown';
 
@@ -15,6 +12,9 @@ export default function Settings() {
         license,
         location,
         method,
+        methodIsGool,
+        methodIsPsiphon,
+        methodIsWarp,
         onChangeLocation,
         onCloseLicenseModal,
         onEnableGool,
@@ -27,7 +27,8 @@ export default function Settings() {
         onOpenLicenseModal,
         setLicense,
         showLicenseModal,
-        loading
+        loading,
+        locationItems
     } = useSettings();
 
     if (loading) return <div className='settings' />;
@@ -99,17 +100,13 @@ export default function Settings() {
                             onKeyDown={onKeyDownWarp}
                             tabIndex={0}
                         >
-                            <label
-                                className='key'
-                                htmlFor='flex-switch-check-checked'
-                                // role='label'
-                            >
+                            <label className='key' htmlFor='flex-switch-check-checked'>
                                 {appLang?.settings?.method_warp}
                             </label>
                             <div className='value' id='flex-switch-check-checked'>
                                 <div
                                     tabIndex={-1}
-                                    className={classNames('switch', method === '' ? 'checked' : '')}
+                                    className={classNames('switch', methodIsWarp ? 'checked' : '')}
                                 />
                             </div>
                             <div className='info'>{appLang?.settings?.method_warp_desc}</div>
@@ -121,20 +118,13 @@ export default function Settings() {
                             onKeyDown={onKeyDownGool}
                             tabIndex={0}
                         >
-                            <label
-                                className='key'
-                                htmlFor='flex-switch-check-checked-gool'
-                                // role='label'
-                            >
+                            <label className='key' htmlFor='flex-switch-check-checked-gool'>
                                 {appLang?.settings?.method_gool}
                             </label>
                             <div className='value' id='flex-switch-check-checked-gool'>
                                 <div
                                     tabIndex={-1}
-                                    className={classNames(
-                                        'switch',
-                                        method === 'gool' ? 'checked' : ''
-                                    )}
+                                    className={classNames('switch', methodIsGool ? 'checked' : '')}
                                 />
                             </div>
                             <div className='info'>{appLang?.settings?.method_gool_desc}</div>
@@ -146,11 +136,7 @@ export default function Settings() {
                             onKeyDown={onKeyDownPsiphon}
                             tabIndex={0}
                         >
-                            <label
-                                className='key'
-                                htmlFor='flex-switch-check-checked-psiphon'
-                                // role='label'
-                            >
+                            <label className='key' htmlFor='flex-switch-check-checked-psiphon'>
                                 {appLang?.settings?.method_psiphon}
                             </label>
                             <div className='value' id='flex-switch-check-checked-psiphon'>
@@ -158,14 +144,14 @@ export default function Settings() {
                                     tabIndex={-1}
                                     className={classNames(
                                         'switch',
-                                        method === 'psiphon' ? 'checked' : ''
+                                        methodIsPsiphon ? 'checked' : ''
                                     )}
                                 />
                             </div>
                             <div className='info'>{appLang?.settings?.method_psiphon_desc}</div>
                         </div>
                     </div>
-                    <div className={classNames('item', method === 'psiphon' ? '' : 'disabled')}>
+                    <div className={classNames('item', methodIsPsiphon ? '' : 'disabled')}>
                         <Dropdown
                             id='flex-switch-check-checked-psiphon-location'
                             onChange={onChangeLocation}
@@ -173,13 +159,7 @@ export default function Settings() {
                             label={appLang?.settings?.method_psiphon_location}
                             tabIndex={-1}
                             disabled={method !== 'psiphon'}
-                            items={[
-                                {
-                                    value: '',
-                                    label: appLang?.settings?.method_psiphon_location_auto
-                                },
-                                ...countries
-                            ]}
+                            items={locationItems}
                         />
                         <div className='info'>
                             {appLang?.settings?.method_psiphon_location_desc}
@@ -210,11 +190,7 @@ export default function Settings() {
                         onKeyDown={onKeyDownLicense}
                         tabIndex={0}
                     >
-                        <label
-                            className='key'
-                            htmlFor='flex-switch-check-checked-license'
-                            // role='label'
-                        >
+                        <label className='key' htmlFor='flex-switch-check-checked-license'>
                             {appLang?.settings?.license}
                         </label>
                         <div className='value' role='link'>
