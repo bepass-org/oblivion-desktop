@@ -20,7 +20,7 @@ const proxyModes = [
     },
     {
         value: 'tun',
-        label: 'Tun'
+        label: 'Tun 🧪'
     }
 ];
 
