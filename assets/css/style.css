@@ -1164,14 +1164,14 @@ html[data-bs-theme='dark'] .shimmer {
     z-index: 4;
     position: absolute;
 }
-html:not([lang="fa"]) .splashScreen .splashScreenImg {
+html:not([lang='fa']) .splashScreen .splashScreenImg {
     background-image: url('../img/splashScreen/light-en.png');
 }
 
 [data-bs-theme='dark'] .splashScreen .splashScreenImg {
     background-image: url('../img/splashScreen/dark.png');
 }
-html:not([lang="fa"])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
+html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     background-image: url('../img/splashScreen/dark-en.png');
 }
 
