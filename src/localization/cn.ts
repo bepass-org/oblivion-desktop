@@ -151,7 +151,9 @@ const chinese: Language = {
         error_wp_not_found: 'warp-plus 文件不在应用程序包旁边。',
         error_wp_stopped: 'warp-plus 文件在运行时遇到了问题！',
         error_connection_failed: '无法连接到1.1.1.1。',
-        error_country_failed: '无法连接到所选国家.'
+        error_country_failed: '无法连接到所选国家.',
+        error_singbox_failed_stop: '停止 Sing-Box 失败!',
+        error_singbox_failed_start: '启动 Sing-Box 失败!'
     },
     about: {
         title: '关于应用',

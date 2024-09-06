@@ -154,7 +154,9 @@ const turkish: Language = {
         error_wp_not_found: 'Warp-plus dosyası uygulama paketiyle birlikte yer almıyor!',
         error_wp_stopped: 'warp-plus dosyası çalışırken bir sorunla karşılaştı!',
         error_connection_failed: '1.1.1.1 ile bağlantı sağlanamadı.',
-        error_country_failed: 'Seçilen ülkeye bağlanılamıyor.'
+        error_country_failed: 'Seçilen ülkeye bağlanılamıyor.',
+        error_singbox_failed_stop: 'Sing-Box durdurulamadı!',
+        error_singbox_failed_start: 'Sing-Box başlatılamadı!'
     },
     about: {
         title: 'Uygulama Hakkında',

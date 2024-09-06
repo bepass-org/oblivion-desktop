@@ -132,7 +132,7 @@ ipcMain.on('wp-start', async (event) => {
             if (proxyMode === 'tun' && isSingBoxRunning) {
                 isSingBoxRunning = !(await singBoxManager.stopSingBox());
                 if (isSingBoxRunning) {
-                    event.reply('guide-toast', 'Failed to stop Sing-Box');
+                    event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
                 } else {
                     disconnectedFlags[0] = true;
                     sendDisconnectedSignalToRenderer();
@@ -189,7 +189,7 @@ ipcMain.on('wp-start', async (event) => {
                         connectedFlags[1] = true;
                         sendConnectedSignalToRenderer();
                     } else {
-                        event.reply('guide-toast', 'Failed to start Sing-Box');
+                        event.reply('guide-toast', appLang.log.error_singbox_failed_start);
                         event.reply('wp-end', true);
                         if (typeof child?.pid !== 'undefined') {
                             treeKill(child.pid, 'SIGKILL');
@@ -241,7 +241,7 @@ ipcMain.on('wp-end', async (event) => {
         if (proxyMode === 'tun' && isSingBoxRunning) {
             isSingBoxRunning = !(await singBoxManager.stopSingBox());
             if (isSingBoxRunning) {
-                event.reply('guide-toast', 'Failed to stop Sing-Box');
+                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
                 event.reply('wp-end', false);
                 event.reply('wp-start', true);
             } else {
@@ -266,7 +266,7 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
         if (proxyMode === 'tune' && isSingBoxRunning) {
             isSingBoxRunning = !(await singBoxManager.stopSingBox());
             if (isSingBoxRunning) {
-                event.reply('guide-toast', 'Failed to stop Sing-Box');
+                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
                 event.reply('wp-end', false);
                 event.reply('wp-start', true);
             } else {

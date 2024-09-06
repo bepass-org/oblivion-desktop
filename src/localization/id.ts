@@ -152,7 +152,9 @@ const indonesia: Language = {
         error_wp_not_found: 'File warp-plus tidak terletak di samping paket aplikasi!',
         error_wp_stopped: 'File warp-plus mengalami masalah saat dijalankan!',
         error_connection_failed: 'Koneksi ke 1.1.1.1 tidak berhasil.',
-        error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.'
+        error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.',
+        error_singbox_failed_stop: 'Gagal menghentikan Sing-Box!',
+        error_singbox_failed_start: 'Gagal memulai Sing-Box!'
     },
     about: {
         title: 'Tentang Aplikasi',

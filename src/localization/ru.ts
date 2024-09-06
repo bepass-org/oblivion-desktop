@@ -155,7 +155,9 @@ const russian: Language = {
         error_wp_not_found: 'Файл warp-plus не находится рядом с пакетом приложения.',
         error_wp_stopped: 'Файл warp-plus столкнулся с проблемой при запуске!',
         error_connection_failed: 'Подключение к 1.1.1.1 невозможно.',
-        error_country_failed: 'Невозможно подключиться к выбранной стране.'
+        error_country_failed: 'Невозможно подключиться к выбранной стране.',
+        error_singbox_failed_stop: 'Не удалось остановить Sing-Box!',
+        error_singbox_failed_start: 'Не удалось запустить Sing-Box!'
     },
     about: {
         title: 'О приложении',
