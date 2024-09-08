@@ -96,12 +96,12 @@ if (!gotTheLock) {
     if (fs.existsSync(wpAssetPath) && !fs.existsSync(wpBinPath)) {
         fs.copyFile(wpAssetPath, wpBinPath, (err) => {
             if (err) throw err;
-            log.info('sb binary was copied to userData directory.');
+            log.info('wp binary was copied to userData directory.');
         });
     } else {
         if (!fs.existsSync(wpAssetPath)) {
             log.info(
-                'The process of copying the sb binary was halted due to the absence of the sb file.'
+                'The process of copying the wp binary was halted due to the absence of the wp file.'
             );
         }
     }
