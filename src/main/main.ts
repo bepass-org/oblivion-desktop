@@ -76,27 +76,30 @@ if (!gotTheLock) {
         }
     });
 
-    if (fs.existsSync(wpAssetPath)) {
-        // coping wp binary from assets dir to userData dir, so it can run without sudo/administrator privilege
+    if (fs.existsSync(wpAssetPath) && !fs.existsSync(wpBinPath)) {
         fs.copyFile(wpAssetPath, wpBinPath, (err) => {
             if (err) throw err;
-            log.info('wp binary was copied to userData directory.');
+            log.info('sb binary was copied to userData directory.');
         });
     } else {
-        log.info(
-            'The process of copying the wp binary was halted due to the absence of the wp file.'
-        );
+        if (!fs.existsSync(wpAssetPath)) {
+            log.info(
+                'The process of copying the sb binary was halted due to the absence of the sb file.'
+            );
+        }
     }
 
-    if (fs.existsSync(sbAssetPath)) {
+    if (fs.existsSync(sbAssetPath) && !fs.existsSync(sbBinPath)) {
         fs.copyFile(sbAssetPath, sbBinPath, (err) => {
             if (err) throw err;
             log.info('sb binary was copied to userData directory.');
         });
     } else {
-        log.info(
-            'The process of copying the sb binary was halted due to the absence of the sb file.'
-        );
+        if (!fs.existsSync(sbAssetPath)) {
+            log.info(
+                'The process of copying the sb binary was halted due to the absence of the sb file.'
+            );
+        }
     }
 
     if (!isDev()) {
