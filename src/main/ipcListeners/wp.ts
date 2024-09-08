@@ -8,12 +8,7 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
 import { spawn } from 'child_process';
-import {
-    isDev,
-    removeFileIfExists,
-    shouldProxySystem,
-    extractPortsFromEndpoints
-} from '../lib/utils';
+import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
