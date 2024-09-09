@@ -295,9 +295,11 @@ class SingBoxManager {
     private async stopSingBoxDarwinLinux(): Promise<boolean> {
         if (!this.singBoxProcess) return false;
 
+        log.info('Stopping Sing-Box. Please wait...');
         try {
             this.singBoxProcess?.kill();
             await this.waitForDarwinLinuxProcessExit();
+            log.info('Sing-Box stopped successfully.');
             return true;
         } catch (error) {
             log.error('Failed to stop Sing-Box:', error);
