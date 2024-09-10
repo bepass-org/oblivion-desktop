@@ -1,10 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import log from 'electron-log';
 
-type PlatformCommands = {
-    getPlatformCommand: (binPath: string) => [string, string[]];
-};
-
 enum WindowsTaskStatus {
     NotCreated,
     Ready,
@@ -14,6 +10,8 @@ enum WindowsTaskStatus {
 
 class SingBoxManager {
     private singBoxProcess: ChildProcess | null = null;
+
+    private watchdogProcess: ChildProcess | null = null;
 
     private readonly isWindows: boolean;
 
@@ -141,12 +139,12 @@ class SingBoxManager {
             const taskStatus = await this.checkWindowsTaskStatus();
             if (taskStatus === WindowsTaskStatus.Failed) return false;
 
-            if (taskStatus === WindowsTaskStatus.NotCreated) {
+            if (taskStatus === WindowsTaskStatus.Running) {
+                log.info('Sing-Box task is already running.');
+                return false;
+            } else if (taskStatus === WindowsTaskStatus.NotCreated) {
                 log.info('Creating Sing-Box task...');
                 if (!(await this.createWindowsTask())) return false;
-            } else if (taskStatus === WindowsTaskStatus.Running) {
-                log.info('Sing-Box task is already running.');
-                return true;
             }
 
             log.info('Starting Sing-Box task...');
@@ -156,6 +154,7 @@ class SingBoxManager {
             }
 
             log.info('Sing-Box task started successfully.');
+            this.startWindowsWatchdog();
             return this.checkConnectionStatus();
         } catch (error) {
             log.error('Failed to start Sing-Box:', error);
@@ -181,7 +180,7 @@ class SingBoxManager {
         const isTaskStopped = await this.setWindowsTaskState('stop');
         if (isTaskStopped) {
             log.info('Sing-Box task stopped successfully.');
-            this.singBoxProcess = null;
+            this.stopWindowsWatchdog();
         } else {
             log.error('Failed to stop Sing-Box task.');
         }
@@ -196,10 +195,8 @@ class SingBoxManager {
      */
     private async checkWindowsTaskStatus(): Promise<WindowsTaskStatus> {
         try {
-            const output = await this.runProcess('powershell.exe', [
-                '-Command',
-                'Get-ScheduledTask -TaskName "OblivionDesktop"'
-            ]);
+            const { command, args } = this.windowsCommands.checkTaskStatus;
+            const output = await this.runProcess(command, args);
             if (output.includes('Ready')) return WindowsTaskStatus.Ready;
             if (output.includes('Running')) return WindowsTaskStatus.Running;
             return WindowsTaskStatus.Failed;
@@ -216,8 +213,10 @@ class SingBoxManager {
      */
     private async createWindowsTask(): Promise<boolean> {
         try {
-            const { getPlatformCommand } = this.getPlatformCommands();
-            const [command, args] = getPlatformCommand(this.binPath);
+            const { command, args } = this.windowsCommands.createTask(
+                this.binPath,
+                this.configPath
+            );
             const output = await this.runProcess(command, args);
             if (output.trim()) {
                 log.info('Sing-Box task created successfully.');
@@ -243,12 +242,46 @@ class SingBoxManager {
      */
     private async setWindowsTaskState(action: string): Promise<boolean> {
         try {
-            const command = `${action === 'start' ? 'Start' : 'Stop'}-ScheduledTask -TaskName "OblivionDesktop"`;
-            await this.runProcess('powershell.exe', ['-Command', command]);
+            const { command, args } =
+                action === 'start' ? this.windowsCommands.startTask : this.windowsCommands.stopTask;
+            await this.runProcess(command, args);
             return true;
         } catch (error) {
             log.error(`Failed to ${action} Sing-Box task:`, error);
             return false;
+        }
+    }
+
+    /**
+     * Starts the watchdog process on Windows to monitor the "warp-plus" process.
+     * The watchdog checks every 10 seconds if "warp-plus" is still running.
+     * If "warp-plus" is no longer running, the watchdog will stop the OblivionDesktop task
+     * and terminate itself.
+     *
+     * @private
+     */
+    private startWindowsWatchdog(): void {
+        const { command, args } = this.windowsCommands.startWatchdog;
+        this.watchdogProcess = spawn(command, args, { cwd: this.workingDir });
+
+        if (this.watchdogProcess.pid) {
+            log.info('Watchdog started successfully.');
+        } else {
+            log.error('Failed to start watchdog.');
+        }
+    }
+
+    /**
+     * Stops the watchdog process on Windows.
+     * If the watchdog is still running, it will be killed, and its state will be reset.
+     *
+     * @private
+     */
+    private stopWindowsWatchdog(): void {
+        if (this.watchdogProcess && !this.watchdogProcess.killed) {
+            this.watchdogProcess.kill();
+            log.info('Watchdog stopped.');
+            this.watchdogProcess = null;
         }
     }
 
@@ -259,15 +292,17 @@ class SingBoxManager {
      * @returns {Promise<boolean>} - Resolves to true if the process starts successfully and the connection is established, otherwise false.
      */
     private async startSingBoxDarwinLinux(): Promise<boolean> {
-        if (this.singBoxProcess) return true;
+        if (this.singBoxProcess) return false;
 
         try {
             if (!(await this.ensureDarwinLinuxPermissions())) return false;
 
             log.info('Starting Sing-Box...');
-            this.singBoxProcess = spawn(this.binPath, ['run', '-c', this.configPath], {
-                cwd: this.workingDir
-            });
+            const { command, args } = this.macosLinuxCommands.startSingBox(
+                this.binPath,
+                this.configPath
+            );
+            this.singBoxProcess = spawn(command, args, { cwd: this.workingDir });
 
             this.singBoxProcess?.stdout?.on('data', (data: Buffer) =>
                 log.info(`Sing-Box output: ${data.toString()}`)
@@ -349,7 +384,8 @@ class SingBoxManager {
      */
     private async checkDarwinLinuxPermissions(): Promise<boolean> {
         try {
-            const output = await this.runProcess('ls', ['-l', this.binPath]);
+            const { command, args } = this.macosLinuxCommands.checkPermissions(this.binPath);
+            const output = await this.runProcess(command, args);
             return output.includes('root');
         } catch (error) {
             log.error('Failed to check Sing-Box permissions:', error);
@@ -364,8 +400,10 @@ class SingBoxManager {
      */
     private async setDarwinLinuxPermissions(): Promise<boolean> {
         try {
-            const { getPlatformCommand } = this.getPlatformCommands();
-            const [command, args] = getPlatformCommand(this.binPath);
+            const platform = process.platform as 'darwin' | 'linux';
+            const { command, args } = this.macosLinuxCommands.setPermissions[platform](
+                this.binPath
+            );
             await this.runProcess(command, args);
             log.info('Sing-Box permissions set successfully');
             return true;
@@ -377,40 +415,88 @@ class SingBoxManager {
 
     // Platform-specific commands
     /**
-     * Returns the platform-specific commands for Sing-Box management.
-     * Includes the logic for invoking `pkexec` on Linux, `powershell` on Windows and `osascript` on macOS.
-     * @returns {PlatformCommands} - The platform commands including binaries and arguments.
+     * macosLinuxCommands contains platform-specific command structures for macOS and Linux.
+     *
+     * It provides the necessary commands for:
+     * - Checking permissions of the Sing-Box binary (`checkPermissions`).
+     * - Setting the required permissions (`setPermissions`) for both macOS and Linux using `osascript` or `pkexec`.
+     * - Starting the Sing-Box process with the proper configuration (`startSingBox`).
+     *
+     * The methods within this object are responsible for generating the correct commands based on the platform.
+     * The command functions return an object containing the command to execute and any required arguments.
      */
-    private getPlatformCommands(): PlatformCommands {
-        const commands: { [key: string]: PlatformCommands } = {
-            darwin: {
-                getPlatformCommand: (binPath) => [
-                    'osascript',
-                    [
-                        '-e',
-                        `do shell script "chown root:admin \\"${binPath}\\" && chmod +s \\"${binPath}\\"" with prompt "Oblivion Desktop requires administrator privileges to set Sing-Box permissions." with administrator privileges`
-                    ]
+    private macosLinuxCommands = {
+        checkPermissions: (binPath: string) => ({
+            command: 'ls',
+            args: ['-l', binPath]
+        }),
+        setPermissions: {
+            darwin: (binPath: string) => ({
+                command: 'osascript',
+                args: [
+                    '-e',
+                    `do shell script "chown root:admin \\"${binPath}\\" && chmod +s \\"${binPath}\\"" with prompt "Oblivion Desktop requires administrator privileges to set Sing-Box permissions." with administrator privileges`
                 ]
-            },
-            win32: {
-                getPlatformCommand: (binPath) => [
-                    'powershell.exe',
-                    [
-                        '-Command',
-                        `Start-Process powershell -ArgumentList 'Register-ScheduledTask "OblivionDesktop" -InputObject (New-ScheduledTask -Action (New-ScheduledTaskAction -Execute "${binPath.replace(/'/g, "''")}" -Argument "\\"run -c ${this.configPath.replace(/'/g, "''")}\\"") -Principal (New-ScheduledTaskPrincipal -UserId $env:UserDomain\\$env:UserName -LogonType S4U -RunLevel Highest) -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DisallowStartOnRemoteAppSession -DontStopIfGoingOnBatteries -DisallowHardTerminate -Compatibility Win8 -ExecutionTimeLimit (New-TimeSpan -Seconds 0)));' -Verb RunAs -WindowStyle Hidden -PassThru`
-                    ]
-                ]
-            },
-            linux: {
-                getPlatformCommand: (binPath) => [
-                    'pkexec',
-                    ['sh', '-c', `chown root:root "${binPath}" && chmod +s "${binPath}"`]
-                ]
-            }
-        };
+            }),
+            linux: (binPath: string) => ({
+                command: 'pkexec',
+                args: ['sh', '-c', `chown root:root "${binPath}" && chmod +s "${binPath}"`]
+            })
+        },
+        startSingBox: (binPath: string, configPath: string) => ({
+            command: binPath,
+            args: ['run', '-c', configPath]
+        })
+    };
 
-        return commands[process.platform] || { getPlatformCommand: () => ['', []] };
-    }
+    /**
+     * windowsCommands contains platform-specific command structures for Windows.
+     *
+     * It provides the necessary commands for:
+     * - Checking the status of the Windows scheduled task (`checkTaskStatus`).
+     * - Creating a new scheduled task (`createTask`) to run Sing-Box.
+     * - Starting and stopping the scheduled task (`startTask`, `stopTask`).
+     * - Starting a watchdog process (`startWatchdog`) to monitor the Sing-Box process.
+     *
+     * The methods within this object are responsible for generating the correct commands to interact with the Windows Task Scheduler.
+     */
+    private windowsCommands = {
+        checkTaskStatus: {
+            command: 'powershell.exe',
+            args: ['-Command', 'Get-ScheduledTask -TaskName "OblivionDesktop"']
+        },
+        createTask: (binPath: string, configPath: string) => ({
+            command: 'powershell.exe',
+            args: [
+                '-Command',
+                `Start-Process powershell -ArgumentList 'Register-ScheduledTask "OblivionDesktop" -InputObject (New-ScheduledTask -Action (New-ScheduledTaskAction -Execute "${binPath.replace(/'/g, "''")}" -Argument "\\"run -c ${configPath.replace(/'/g, "''")}\\"") -Principal (New-ScheduledTaskPrincipal -UserId $env:UserDomain\\$env:UserName -LogonType S4U -RunLevel Highest) -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DisallowStartOnRemoteAppSession -DontStopIfGoingOnBatteries -DisallowHardTerminate -Compatibility Win8 -ExecutionTimeLimit (New-TimeSpan -Seconds 0)));' -Verb RunAs -WindowStyle Hidden -PassThru`
+            ]
+        }),
+        startTask: {
+            command: 'powershell.exe',
+            args: ['-Command', 'Start-ScheduledTask -TaskName "OblivionDesktop"']
+        },
+        stopTask: {
+            command: 'powershell.exe',
+            args: ['-Command', 'Stop-ScheduledTask -TaskName "OblivionDesktop"']
+        },
+        startWatchdog: {
+            command: 'powershell.exe',
+            args: [
+                '-Command',
+                `Start-Process powershell -ArgumentList '
+                while ($true) {
+                    $process = Get-Process -Name "warp-plus" -ErrorAction SilentlyContinue
+                    if (-not $process) {
+                        Stop-ScheduledTask -TaskName "OblivionDesktop"
+                        break
+                    }
+                    Start-Sleep -Seconds 10
+                }
+            ' -WindowStyle Hidden -PassThru`
+            ]
+        }
+    };
 }
 
 export default SingBoxManager;
