@@ -263,7 +263,7 @@ ipcMain.on('wp-end', async (event) => {
 ipcMain.on('end-wp-and-exit-app', async (event) => {
     const proxyMode = await settings.get('proxyMode');
     try {
-        if (proxyMode === 'tune' && isSingBoxRunning) {
+        if (proxyMode === 'tun' && isSingBoxRunning) {
             isSingBoxRunning = !(await singBoxManager.stopSingBox());
             if (isSingBoxRunning) {
                 event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
