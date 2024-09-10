@@ -85,13 +85,12 @@ class SingBoxManager {
                 } finally {
                     clearTimeout(timeoutId);
                     isChecking = false;
-                    if (attemptCounter > 9) {
+                    if (attemptCounter > 1) {
                         log.error(
                             `Failed to establish Sing-Box connection after ${attemptCounter} attempts.`
                         );
                         clearInterval(pingInterval);
-                        await this.stopSingBox();
-                        resolve(false);
+                        resolve(!(await this.stopSingBox()));
                     }
                 }
             }, 2000);
