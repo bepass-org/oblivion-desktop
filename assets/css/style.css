@@ -921,6 +921,7 @@ html[data-bs-theme='dark'] .shimmer {
     line-height: 24px;
     padding: 0;
     margin: 4px 0 -2px 0;
+    font-family: 'Noto Color Emoji', 'shabnam';
 }
 
 [dir='ltr'] .settings .item .value select {

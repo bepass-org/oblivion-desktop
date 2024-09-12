@@ -5,6 +5,7 @@ import 'assets/css/bootstrap.min.css';
 import 'assets/css/bootstrap-rtl.min.css';
 import 'assets/css/shabnam.css';
 import 'assets/css/materialIcons.css';
+import 'assets/css/noto.css';
 import 'assets/css/style.css';
 
 import SplashScreen from './pages/SplashScreen';
