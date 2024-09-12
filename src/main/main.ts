@@ -27,13 +27,14 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
+import { rimrafSync } from 'rimraf';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import { wpAssetPath, wpBinPath, sbAssetPath, sbBinPath } from './ipcListeners/wp';
+import { wpAssetPath, wpBinPath, sbAssetPath, sbBinPath, wpDirPath } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
@@ -76,28 +77,49 @@ if (!gotTheLock) {
         }
     });
 
-    if (fs.existsSync(wpAssetPath)) {
-        // coping wp binary from assets dir to userData dir, so it can run without sudo/administrator privilege
+    const versionFilePath = path.join(wpDirPath, 'ver.txt');
+    const appVersion = app.getVersion();
+
+    if (fs.existsSync(versionFilePath)) {
+        const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
+
+        if (savedVersion !== appVersion) {
+            if (fs.existsSync(wpBinPath)) {
+                rimrafSync(wpBinPath);
+            }
+            if (fs.existsSync(sbBinPath)) {
+                rimrafSync(sbBinPath);
+            }
+        }
+    }
+
+    if (fs.existsSync(wpAssetPath) && !fs.existsSync(wpBinPath)) {
         fs.copyFile(wpAssetPath, wpBinPath, (err) => {
             if (err) throw err;
             log.info('wp binary was copied to userData directory.');
         });
     } else {
-        log.info(
-            'The process of copying the wp binary was halted due to the absence of the wp file.'
-        );
+        if (!fs.existsSync(wpAssetPath)) {
+            log.info(
+                'The process of copying the wp binary was halted due to the absence of the wp file.'
+            );
+        }
     }
 
-    if (fs.existsSync(sbAssetPath)) {
+    if (fs.existsSync(sbAssetPath) && !fs.existsSync(sbBinPath)) {
         fs.copyFile(sbAssetPath, sbBinPath, (err) => {
             if (err) throw err;
             log.info('sb binary was copied to userData directory.');
         });
     } else {
-        log.info(
-            'The process of copying the sb binary was halted due to the absence of the sb file.'
-        );
+        if (!fs.existsSync(sbAssetPath)) {
+            log.info(
+                'The process of copying the sb binary was halted due to the absence of the sb file.'
+            );
+        }
     }
+
+    fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
 
     if (!isDev()) {
         const sourceMapSupport = require('source-map-support');
