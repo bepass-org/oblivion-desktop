@@ -137,7 +137,7 @@ class SingBoxManager {
             log.info('Checking Sing-Box task status...');
             let taskStatus = await this.checkWindowsTaskStatus();
             if (taskStatus === WindowsTaskStatus.Failed) return false;
-    
+
             if (taskStatus === WindowsTaskStatus.Running) {
                 log.info('Sing-Box task is already running.');
                 return false;
@@ -145,13 +145,13 @@ class SingBoxManager {
                 log.info('Creating Sing-Box task...');
                 if (!(await this.createWindowsTask())) return false;
             }
-    
+
             log.info('Starting Sing-Box task...');
             if (!(await this.setWindowsTaskState('start'))) {
                 log.error('Failed to start Sing-Box task.');
                 //return false;
             }
-    
+
             taskStatus = await this.checkWindowsTaskStatus();
             if (taskStatus === WindowsTaskStatus.Running) {
                 log.info('Sing-Box task started successfully.');
