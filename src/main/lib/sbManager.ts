@@ -135,9 +135,9 @@ class SingBoxManager {
     private async startSingBoxWindows(): Promise<boolean> {
         try {
             log.info('Checking Sing-Box task status...');
-            const taskStatus = await this.checkWindowsTaskStatus();
+            let taskStatus = await this.checkWindowsTaskStatus();
             if (taskStatus === WindowsTaskStatus.Failed) return false;
-
+    
             if (taskStatus === WindowsTaskStatus.Running) {
                 log.info('Sing-Box task is already running.');
                 return false;
@@ -145,16 +145,22 @@ class SingBoxManager {
                 log.info('Creating Sing-Box task...');
                 if (!(await this.createWindowsTask())) return false;
             }
-
+    
             log.info('Starting Sing-Box task...');
             if (!(await this.setWindowsTaskState('start'))) {
                 log.error('Failed to start Sing-Box task.');
+                //return false;
+            }
+    
+            taskStatus = await this.checkWindowsTaskStatus();
+            if (taskStatus === WindowsTaskStatus.Running) {
+                log.info('Sing-Box task started successfully.');
+                this.startWindowsWatchdog();
+                return this.checkConnectionStatus();
+            } else {
+                log.error('Failed to start Sing-Box task.');
                 return false;
             }
-
-            log.info('Sing-Box task started successfully.');
-            this.startWindowsWatchdog();
-            return this.checkConnectionStatus();
         } catch (error) {
             log.error('Failed to start Sing-Box:', error);
             return false;
@@ -172,7 +178,7 @@ class SingBoxManager {
 
         if (taskStatus === WindowsTaskStatus.Ready) {
             log.info('Sing-Box task is not running.');
-            return false;
+            return true;
         }
 
         log.info('Stopping Sing-Box task. Please wait...');
