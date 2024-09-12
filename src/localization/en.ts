@@ -153,7 +153,9 @@ const english: Language = {
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
         error_wp_stopped: 'The warp-plus file has encountered an issue running!',
         error_connection_failed: 'Connection to 1.1.1.1 was not possible.',
-        error_country_failed: 'Cannot connect to the selected country.'
+        error_country_failed: 'Cannot connect to the selected country.',
+        error_singbox_failed_stop: 'Failed to stop Sing-Box!',
+        error_singbox_failed_start: 'Failed to start Sing-Box!'
     },
     about: {
         title: 'About App',

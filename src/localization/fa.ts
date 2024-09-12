@@ -155,7 +155,9 @@ const persian: Language = {
         error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`,
         error_wp_stopped: `فایل warp-plus برای اجرا با مشکل مواجه است!`,
         error_connection_failed: 'اتصال به 1.1.1.1 امکان‌پذیر نبود.',
-        error_country_failed: 'امکان اتصال به کشور انتخابی وجود ندارد.'
+        error_country_failed: 'امکان اتصال به کشور انتخابی وجود ندارد.',
+        error_singbox_failed_stop: 'متوقف‌کردن سینگ‌باکس با خطا مواجه شد!',
+        error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!'
     },
     about: {
         title: 'درباره برنامه',

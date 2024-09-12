@@ -153,6 +153,8 @@ export interface Log {
     error_wp_not_found: string;
     error_wp_stopped: string;
     error_connection_failed: string;
+    error_singbox_failed_stop: string;
+    error_singbox_failed_start: string;
 }
 
 export interface About {
