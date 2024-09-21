@@ -2,7 +2,7 @@ import fs from 'fs';
 import axios from 'axios';
 import decompress from 'decompress';
 import { doesDirectoryExist, doesFileExist } from '../src/main/lib/utils';
-import { sbVersion, wpVersion } from '../src/main/config';
+import { sbVersion, wpVersion, helperVersion } from '../src/main/config';
 
 const forceDownload = process.argv[2] === 'force';
 const platform = process.argv[3] || process.platform;
@@ -69,6 +69,7 @@ async function dlUnzipMove(url: string, binPath: string, zipFileName: string) {
 
 const warpPlusUrlBase = `https://github.com/bepass-org/warp-plus/releases/download/v${wpVersion}/warp-plus_`;
 const singBoxUrlBase = `https://github.com/SagerNet/sing-box/releases/download/v${sbVersion}/sing-box-${sbVersion}-`;
+const helperUrlBase = `https://github.com/ShadowZagrosDev/oblivion-helper/releases/download/v${helperVersion}/oblivion-helper-`;
 
 const warpPlusUrls: Record<string, Record<string, string>> = {
     linux: {
@@ -102,6 +103,22 @@ const singBoxUrls: Record<string, Record<string, string>> = {
     }
 };
 
+const helperUrls: Record<string, Record<string, string>> = {
+    linux: {
+        x64: helperUrlBase + 'linux-amd64.zip',
+        arm64: helperUrlBase + 'linux-arm64.zip'
+    },
+    win32: {
+        x64: helperUrlBase + 'windows-amd64.zip',
+        arm64: helperUrlBase + 'windows-arm64.zip',
+        ia32: helperUrlBase + 'windows-386.zip'
+    },
+    darwin: {
+        x64: helperUrlBase + 'darwin-amd64.zip',
+        arm64: helperUrlBase + 'darwin-arm64.zip'
+    }
+};
+
 const removeFile = async (filePath: string) => {
     const isExist = await doesFileExist(filePath);
     if (isExist) {
@@ -119,6 +136,12 @@ async function handleDownload() {
         singBoxUrls[platform][arch],
         './assets/bin/sing-box',
         `sing-box-v${sbVersion}.${platform === 'win32' ? 'zip' : 'tar.gz'}`
+    );
+
+    await dlUnzipMove(
+        helperUrls[platform][arch],
+        './assets/bin',
+        `oblivion-helper-v${helperVersion}.zip`
     );
 }
 
