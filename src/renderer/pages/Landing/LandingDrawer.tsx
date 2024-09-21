@@ -79,7 +79,7 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                             <span>SingBox Settings</span>
                         </Link>
                     </li>
-                    <li className='divider'/>
+                    <li className='divider' />
                     <li className={hasNewUpdate ? '' : 'hidden'} role='presentation'>
                         <a
                             href='https://github.com/bepass-org/oblivion-desktop/releases/latest#download'
