@@ -27,7 +27,9 @@ simpleLog.transports.file.format = '{text}';
 let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
-export const sbFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbAssetFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbWDFileName = `oblivion-sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const helperFileName = `oblivion-helper${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbConfigName = 'sbConfig.json';
 
 export const wpAssetPath = path.join(
@@ -41,14 +43,21 @@ export const sbAssetPath = path.join(
     'assets',
     'bin',
     'sing-box',
-    sbFileName
+    sbAssetFileName
+);
+export const helperAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    helperFileName
 );
 
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 export const stuffPath = path.join(wpDirPath, 'stuff');
-export const sbBinPath = path.join(wpDirPath, sbFileName);
+export const sbBinPath = path.join(wpDirPath, sbWDFileName);
 export const sbConfigPath = path.join(wpDirPath, sbConfigName);
+export const helperPath = path.join(wpDirPath, helperFileName);
 
 const singBoxManager = new SingBoxManager(sbBinPath, sbConfigPath, wpDirPath);
 
