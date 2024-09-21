@@ -59,10 +59,15 @@ export const sbBinPath = path.join(wpDirPath, sbWDFileName);
 export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
 
-const singBoxManager = new SingBoxManager(sbBinPath, sbConfigPath, wpDirPath);
+const singBoxManager = new SingBoxManager(
+    helperPath,
+    helperFileName,
+    sbWDFileName,
+    sbConfigName,
+    wpDirPath
+);
 
 let exitOnWpEnd = false;
-let isSingBoxRunning: boolean = false;
 
 let appLang = getTranslate('en');
 
@@ -133,18 +138,8 @@ ipcMain.on('wp-start', async (event) => {
                 sendDisconnectedSignalToRenderer();
             });
         } else {
-            if (proxyMode === 'tun' && isSingBoxRunning) {
-                isSingBoxRunning = !(await singBoxManager.stopSingBox());
-                if (isSingBoxRunning) {
-                    event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
-                } else {
-                    disconnectedFlags[0] = true;
-                    sendDisconnectedSignalToRenderer();
-                }
-            } else {
-                disconnectedFlags[0] = true;
-                sendDisconnectedSignalToRenderer();
-            }
+            disconnectedFlags[0] = true;
+            sendDisconnectedSignalToRenderer();
         }
     };
 
@@ -178,6 +173,15 @@ ipcMain.on('wp-start', async (event) => {
         //const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
+        if (proxyMode === 'tun' && !(await singBoxManager.startSingBox())) {
+            event.reply('guide-toast', appLang.log.error_singbox_failed_start);
+            event.reply('wp-end', true);
+            if (typeof child?.pid !== 'undefined') {
+                treeKill(child.pid, 'SIGKILL');
+                exitOnWpEnd = true;
+            }
+        }
+
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
 
@@ -187,18 +191,12 @@ ipcMain.on('wp-start', async (event) => {
             }*/
 
             if (strData.includes(successMessage)) {
-                if (proxyMode === 'tun' && !isSingBoxRunning) {
-                    isSingBoxRunning = await singBoxManager.startSingBox();
-                    if (isSingBoxRunning) {
-                        connectedFlags[1] = true;
-                        sendConnectedSignalToRenderer();
-                    } else {
-                        event.reply('guide-toast', appLang.log.error_singbox_failed_start);
-                        event.reply('wp-end', true);
-                        if (typeof child?.pid !== 'undefined') {
-                            treeKill(child.pid, 'SIGKILL');
-                            exitOnWpEnd = true;
-                        }
+                if (proxyMode === 'tun' && !(await singBoxManager.checkConnectionStatus())) {
+                    event.reply('guide-toast', appLang.log.error_singbox_failed_start);
+                    event.reply('wp-end', true);
+                    if (typeof child?.pid !== 'undefined') {
+                        treeKill(child.pid, 'SIGKILL');
+                        exitOnWpEnd = true;
                     }
                 } else {
                     connectedFlags[1] = true;
@@ -226,6 +224,11 @@ ipcMain.on('wp-start', async (event) => {
         });
 
         child.on('exit', async () => {
+            if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
+                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
+                event.reply('wp-end', false);
+                event.reply('wp-start', true);
+            }
             disconnectedFlags[1] = true;
             sendDisconnectedSignalToRenderer();
             log.info('wp process exited.');
@@ -240,23 +243,9 @@ ipcMain.on('wp-start', async (event) => {
 });
 
 ipcMain.on('wp-end', async (event) => {
-    const proxyMode = await settings.get('proxyMode');
     try {
-        if (proxyMode === 'tun' && isSingBoxRunning) {
-            isSingBoxRunning = !(await singBoxManager.stopSingBox());
-            if (isSingBoxRunning) {
-                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
-                event.reply('wp-end', false);
-                event.reply('wp-start', true);
-            } else {
-                if (typeof child?.pid !== 'undefined') {
-                    treeKill(child.pid, 'SIGKILL');
-                }
-            }
-        } else {
-            if (typeof child?.pid !== 'undefined') {
-                treeKill(child.pid, 'SIGKILL');
-            }
+        if (typeof child?.pid !== 'undefined') {
+            treeKill(child.pid, 'SIGKILL');
         }
     } catch (error) {
         log.error(error);
@@ -265,31 +254,14 @@ ipcMain.on('wp-end', async (event) => {
 });
 
 ipcMain.on('end-wp-and-exit-app', async (event) => {
-    const proxyMode = await settings.get('proxyMode');
     try {
-        if (proxyMode === 'tun' && isSingBoxRunning) {
-            isSingBoxRunning = !(await singBoxManager.stopSingBox());
-            if (isSingBoxRunning) {
-                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
-                event.reply('wp-end', false);
-                event.reply('wp-start', true);
-            } else {
-                if (typeof child?.pid !== 'undefined') {
-                    treeKill(child.pid, 'SIGKILL');
-                    exitOnWpEnd = true;
-                } else {
-                    // send signal to `exitTheApp` function
-                    ipcMain.emit('exit');
-                }
-            }
+        await singBoxManager.stopHelper();
+        if (typeof child?.pid !== 'undefined') {
+            treeKill(child.pid, 'SIGKILL');
+            exitOnWpEnd = true;
         } else {
-            if (typeof child?.pid !== 'undefined') {
-                treeKill(child.pid, 'SIGKILL');
-                exitOnWpEnd = true;
-            } else {
-                // send signal to `exitTheApp` function
-                ipcMain.emit('exit');
-            }
+            // send signal to `exitTheApp` function
+            ipcMain.emit('exit');
         }
     } catch (error) {
         log.error(error);
