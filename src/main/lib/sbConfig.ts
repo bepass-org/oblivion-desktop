@@ -2,9 +2,9 @@ import fs from 'fs';
 import log from 'electron-log';
 import { sbConfigPath } from '../ipcListeners/wp';
 
-export function createSbConfig(socksServerPort: number) {
-    if (socksServerPort === undefined) {
-        throw new Error('socksServerPort is a required parameter');
+export function createSbConfig(socksServerPort: number, mtu: number) {
+    if (socksServerPort === undefined || mtu === undefined) {
+        throw new Error('socksServerPort and mtu are required parameters');
     }
 
     const config = {
@@ -17,7 +17,7 @@ export function createSbConfig(socksServerPort: number) {
             {
                 type: 'tun',
                 tag: 'tun-in',
-                mtu: 9000,
+                mtu: mtu,
                 inet4_address: '172.19.0.1/28',
                 inet6_address: 'fdfe:dcba:9876::1/126',
                 auto_route: true,
