@@ -18,7 +18,6 @@ import { regeditVbsDirPath } from '../main';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
 import SingBoxManager from '../lib/sbManager';
-import { createSbConfig } from '../lib/sbConfig';
 
 const simpleLog = log.create('simpleLog');
 simpleLog.transports.console.format = '{text}';
@@ -153,9 +152,6 @@ ipcMain.on('wp-start', async (event) => {
                 handleSystemProxyDisconnect();
             });
     } else {
-        if (proxyMode === 'tun') {
-            createSbConfig(Number(port));
-        }
         connectedFlags[0] = true;
         sendConnectedSignalToRenderer();
     }
