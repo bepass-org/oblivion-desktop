@@ -255,7 +255,6 @@ ipcMain.on('wp-end', async (event) => {
 
 ipcMain.on('end-wp-and-exit-app', async (event) => {
     try {
-        await singBoxManager.stopHelper();
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
             exitOnWpEnd = true;
@@ -263,6 +262,7 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
             // send signal to `exitTheApp` function
             ipcMain.emit('exit');
         }
+        await singBoxManager.stopHelper();
     } catch (error) {
         log.error(error);
         event.reply('wp-end', false);
