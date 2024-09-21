@@ -34,7 +34,15 @@ import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import { wpAssetPath, wpBinPath, sbAssetPath, sbBinPath, wpDirPath } from './ipcListeners/wp';
+import {
+    wpAssetPath,
+    wpBinPath,
+    sbAssetPath,
+    sbBinPath,
+    helperAssetPath,
+    helperPath,
+    wpDirPath
+} from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
@@ -90,6 +98,9 @@ if (!gotTheLock) {
             if (fs.existsSync(sbBinPath)) {
                 rimrafSync(sbBinPath);
             }
+            if (fs.existsSync(helperPath)) {
+                rimrafSync(helperPath);
+            }
         }
     }
 
@@ -115,6 +126,19 @@ if (!gotTheLock) {
         if (!fs.existsSync(sbAssetPath)) {
             log.info(
                 'The process of copying the sb binary was halted due to the absence of the sb file.'
+            );
+        }
+    }
+
+    if (fs.existsSync(helperAssetPath) && !fs.existsSync(helperPath)) {
+        fs.copyFile(helperAssetPath, helperPath, (err) => {
+            if (err) throw err;
+            log.info('helper binary was copied to userData directory.');
+        });
+    } else {
+        if (!fs.existsSync(helperAssetPath)) {
+            log.info(
+                'The process of copying the helper binary was halted due to the absence of the helper file.'
             );
         }
     }
