@@ -26,7 +26,10 @@ export type settingsKeys =
     | 'forceClose'
     | 'shortcut'
     | 'dataUsage'
-    | 'asn';
+    | 'asn'
+    | 'closeSingBox'
+    | 'closeHelper'
+    | 'singBoxMTU';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -59,7 +62,10 @@ export const defaultSettings = {
     forceClose: false,
     shortcut: false,
     dataUsage: false,
-    asn: 'UNK'
+    asn: 'UNK',
+    closeSingBox: true,
+    closeHelper: true,
+    singBoxMTU: 9000
 };
 
 export const countries: { value: string; label: string }[] = [
