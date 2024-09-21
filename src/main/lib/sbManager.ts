@@ -2,7 +2,10 @@ import { spawn } from 'child_process';
 import log from 'electron-log';
 import fs from 'fs';
 import path from 'path';
+import settings from 'electron-settings';
 import { isDev } from './utils';
+import { defaultSettings } from '../../defaultSettings';
+import { createSbConfig } from './sbConfig';
 
 type PlatformCommands = {
     start: (helperPath: string) => [string, string[]];
@@ -14,9 +17,9 @@ class SingBoxManager {
 
     private readonly configPath;
 
-    private readonly monitorWarpPlus: boolean = true;
+    private monitorWarpPlus: boolean | null = null;
 
-    private readonly monitorOblivionDesktop: boolean = true;
+    private monitorOblivionDesktop: boolean | null = null;
 
     constructor(
         private readonly helperPath: string,
@@ -27,11 +30,16 @@ class SingBoxManager {
     ) {
         this.cmdPath = path.join(this.workingDirPath, 'cmd.obv');
         this.configPath = path.join(this.workingDirPath, 'config.obv');
-        this.initialize();
+        if (!fs.existsSync(this.cmdPath)) {
+            log.info(`Creating new cmd file at ${this.cmdPath}`);
+            fs.writeFileSync(this.cmdPath, '');
+        }
     }
 
     public async startSingBox(): Promise<boolean> {
         if (await this.isProcessRunning(this.sbWDFileName)) return true;
+
+        await this.initialize();
 
         try {
             if (!(await this.isProcessRunning(this.helperFileName))) {
@@ -129,9 +137,17 @@ class SingBoxManager {
         return checkStatus(1);
     }
 
-    private initialize(): void {
-        log.info(`Creating new cmd file at ${this.cmdPath}`);
-        fs.writeFileSync(this.cmdPath, '');
+    private async initialize(): Promise<void> {
+        const port = (await settings.get('port')) || defaultSettings.port;
+        const mtu = (await settings.get('singBoxMTU')) || defaultSettings.singBoxMTU;
+        createSbConfig(Number(port), Number(mtu));
+
+        const closeSingBox = await settings.get('closeSingBox');
+        const closeHelper = await settings.get('closeHelper');
+        this.monitorWarpPlus =
+            typeof closeSingBox === 'boolean' ? closeSingBox : defaultSettings.closeSingBox;
+        this.monitorOblivionDesktop =
+            typeof closeHelper === 'boolean' ? closeHelper : defaultSettings.closeHelper;
 
         const config = {
             sbConfig: this.sbConfigName,
