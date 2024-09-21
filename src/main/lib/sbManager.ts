@@ -284,7 +284,7 @@ class SingBoxManager {
                     'powershell.exe',
                     [
                         '-Command',
-                        `Start-Process -FilePath '${helperPath.replace(/'/g, "''")}' -Verb RunAs;`
+                        `Start-Process -FilePath '${helperPath.replace(/'/g, "''")}' -Verb RunAs -WindowStyle Hidden;`
                     ]
                 ],
                 running: (processName) => [
