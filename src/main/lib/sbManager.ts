@@ -1,507 +1,297 @@
-import { ChildProcess, spawn } from 'child_process';
+import { spawn } from 'child_process';
 import log from 'electron-log';
+import fs from 'fs';
+import path from 'path';
+import { isDev } from './utils';
 
-enum WindowsTaskStatus {
-    NotCreated,
-    Ready,
-    Running,
-    Failed
-}
+type PlatformCommands = {
+    start: (helperPath: string) => [string, string[]];
+    running: (processName: string) => [string, string[]];
+};
 
 class SingBoxManager {
-    private singBoxProcess: ChildProcess | null = null;
+    private readonly cmdPath;
 
-    private watchdogProcess: ChildProcess | null = null;
+    private readonly configPath;
 
-    private readonly isWindows: boolean;
+    private readonly monitorWarpPlus: boolean = true;
 
-    /**
-     * Initializes the SingBoxManager instance.
-     * @param {string} binPath - Path to the Sing-Box binary.
-     * @param {string} configPath - Path to the configuration file.
-     * @param {string} workingDir - Working directory for Sing-Box.
-     */
+    private readonly monitorOblivionDesktop: boolean = true;
+
     constructor(
-        private readonly binPath: string,
-        private readonly configPath: string,
-        private readonly workingDir: string
+        private readonly helperPath: string,
+        private readonly helperFileName: string,
+        private readonly sbWDFileName: string,
+        private readonly sbConfigName: string,
+        private readonly workingDirPath: string
     ) {
-        this.isWindows = process.platform === 'win32';
+        this.cmdPath = path.join(this.workingDirPath, 'cmd.obv');
+        this.configPath = path.join(this.workingDirPath, 'config.obv');
+        this.initialize();
     }
 
-    // Common Methods
-    /**
-     * Starts the Sing-Box process for the current platform.
-     * Chooses the appropriate method for Windows or Darwin/Linux.
-     * @returns {Promise<boolean>} - Resolves to true if the process starts successfully, otherwise false.
-     */
     public async startSingBox(): Promise<boolean> {
-        return this.isWindows ? this.startSingBoxWindows() : this.startSingBoxDarwinLinux();
-    }
+        if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
-    /**
-     * Stops the Sing-Box process for the current platform.
-     * Chooses the appropriate method for Windows or Darwin/Linux.
-     * @returns {Promise<boolean>} - Resolves to true if the process stops successfully, otherwise false.
-     */
-    public async stopSingBox(): Promise<boolean> {
-        return this.isWindows ? this.stopSingBoxWindows() : this.stopSingBoxDarwinLinux();
-    }
-
-    /**
-     * Monitors the Sing-Box connection status.
-     * Makes up to 10 attempts, each with a 5-second timeout, to establish a connection.
-     * If the connection fails after 10 attempts, it stops the Sing-Box process.
-     * @returns {Promise<boolean>} - Resolves to true if the connection is established, otherwise false.
-     */
-    private async checkConnectionStatus(): Promise<boolean> {
-        let isChecking = false;
-        let attemptCounter = 0;
-        log.info('Sing-Box started successfully, waiting for connection...');
-        return new Promise((resolve) => {
-            const pingInterval = setInterval(async () => {
-                if (isChecking) return;
-                isChecking = true;
-                attemptCounter++;
-                const controller = new AbortController();
-                const signal = controller.signal;
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-                try {
-                    const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
-                        signal
-                    });
-                    if (response.ok) {
-                        log.info(
-                            `Sing-Box connected successfully after ${attemptCounter} attempts.`
-                        );
-                        clearInterval(pingInterval);
-                        resolve(true);
-                    }
-                } catch {
-                    log.info(
-                        `Connection not yet established. Retry attempt ${attemptCounter}/10...`
-                    );
-                } finally {
-                    clearTimeout(timeoutId);
-                    isChecking = false;
-                    if (attemptCounter > 9) {
-                        log.error(
-                            `Failed to establish Sing-Box connection after ${attemptCounter} attempts.`
-                        );
-                        clearInterval(pingInterval);
-                        resolve(!(await this.stopSingBox()));
-                    }
+        try {
+            if (!(await this.isProcessRunning(this.helperFileName))) {
+                await this.startHelper();
+                if (
+                    !(await this.processCheck(
+                        this.helperFileName,
+                        'Oblivion-Helper started successfully.',
+                        'Failed to start Oblivion-Helper.',
+                        true
+                    ))
+                ) {
+                    return false;
                 }
-            }, 2000);
-        });
-    }
-
-    /**
-     * Executes a system process with the specified command and arguments.
-     * Captures output and errors from the process.
-     * @param {string} command - Command to be executed.
-     * @param {string[]} args - Arguments for the command.
-     * @returns {Promise<string>} - Resolves with the process output if successful, rejects on errors.
-     */
-    private async runProcess(command: string, args: string[]): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            let output = '';
-            let hasErrors = false;
-            const process = spawn(command, args, { cwd: this.workingDir });
-
-            process.stdout?.on('data', (data: Buffer) => {
-                output += data.toString();
-            });
-
-            process.stderr?.on('data', (err: Buffer) => {
-                hasErrors = true;
-                log.error(`Process error: ${err.toString()}`);
-            });
-
-            process.on('close', () => {
-                if (hasErrors) reject(new Error('Process encountered errors.'));
-                else resolve(output);
-            });
-        });
-    }
-
-    // Windows-specific Methods
-    /**
-     * Starts the Sing-Box process on Windows by managing scheduled tasks.
-     * Creates the task if not already present, starts it if it isn't running, and verifies the connection.
-     * @returns {Promise<boolean>} - Resolves to true if the task starts and the connection is established, otherwise false.
-     */
-    private async startSingBoxWindows(): Promise<boolean> {
-        try {
-            log.info('Checking Sing-Box task status...');
-            let taskStatus = await this.checkWindowsTaskStatus();
-            if (taskStatus === WindowsTaskStatus.Failed) return false;
-
-            if (taskStatus === WindowsTaskStatus.Running) {
-                log.info('Sing-Box task is already running.');
-                return false;
-            } else if (taskStatus === WindowsTaskStatus.NotCreated) {
-                log.info('Creating Sing-Box task...');
-                if (!(await this.createWindowsTask())) return false;
             }
-
-            log.info('Starting Sing-Box task...');
-            if (!(await this.setWindowsTaskState('start'))) {
-                log.error('Failed to start Sing-Box task.');
-                //return false;
-            }
-
-            taskStatus = await this.checkWindowsTaskStatus();
-            if (taskStatus === WindowsTaskStatus.Running) {
-                log.info('Sing-Box task started successfully.');
-                this.startWindowsWatchdog();
-                return this.checkConnectionStatus();
-            } else {
-                log.error('Failed to start Sing-Box task.');
-                return false;
-            }
-        } catch (error) {
-            log.error('Failed to start Sing-Box:', error);
-            return false;
-        }
-    }
-
-    /**
-     * Stops the Sing-Box process on Windows by controlling the scheduled task.
-     * Stops the task if it's running.
-     * @returns {Promise<boolean>} - Resolves to true if the task is stopped successfully, otherwise false.
-     */
-    private async stopSingBoxWindows(): Promise<boolean> {
-        const taskStatus = await this.checkWindowsTaskStatus();
-        if (taskStatus === WindowsTaskStatus.Failed) return false;
-
-        if (taskStatus === WindowsTaskStatus.Ready) {
-            log.info('Sing-Box task is not running.');
-            return true;
-        }
-
-        log.info('Stopping Sing-Box task. Please wait...');
-        const isTaskStopped = await this.setWindowsTaskState('stop');
-        if (isTaskStopped) {
-            log.info('Sing-Box task stopped successfully.');
-            this.stopWindowsWatchdog();
-        } else {
-            log.error('Failed to stop Sing-Box task.');
-        }
-
-        return isTaskStopped;
-    }
-
-    /**
-     * Checks the status of the Sing-Box scheduled task on Windows.
-     * Uses PowerShell to determine if the task exists and whether it is running.
-     * @returns {Promise<WindowsTaskStatus>} - Resolves with the current task status.
-     */
-    private async checkWindowsTaskStatus(): Promise<WindowsTaskStatus> {
-        try {
-            const { command, args } = this.windowsCommands.checkTaskStatus;
-            const output = await this.runProcess(command, args);
-            if (output.includes('Ready')) return WindowsTaskStatus.Ready;
-            if (output.includes('Running')) return WindowsTaskStatus.Running;
-            return WindowsTaskStatus.Failed;
-        } catch (error) {
-            return WindowsTaskStatus.NotCreated;
-        }
-    }
-
-    /**
-     * Creates a new scheduled task for running Sing-Box on Windows.
-     * The task is created to run with elevated privileges.
-     * Waits for 3 seconds after the task creation before resolving.
-     * @returns {Promise<boolean>} - Resolves to true if the task is created successfully, otherwise false.
-     */
-    private async createWindowsTask(): Promise<boolean> {
-        try {
-            const { command, args } = this.windowsCommands.createTask(
-                this.binPath,
-                this.configPath
-            );
-            const output = await this.runProcess(command, args);
-            if (output.trim()) {
-                log.info('Sing-Box task created successfully.');
-                await new Promise((resolve) => {
-                    setTimeout(() => resolve(null), 3000);
-                });
-                return true;
-            } else {
-                log.error('Failed to create Sing-Box task.');
-                return false;
-            }
-        } catch (error) {
-            log.error('Failed to create Sing-Box task:', error);
-            return false;
-        }
-    }
-
-    /**
-     * Sets the state of the Sing-Box scheduled task on Windows.
-     * The action can be 'start' or 'stop', controlling whether the task runs or is stopped.
-     * @param {string} action - The desired task action ('start' or 'stop').
-     * @returns {Promise<boolean>} - Resolves to true if the action is performed successfully, otherwise false.
-     */
-    private async setWindowsTaskState(action: string): Promise<boolean> {
-        try {
-            const { command, args } =
-                action === 'start' ? this.windowsCommands.startTask : this.windowsCommands.stopTask;
-            await this.runProcess(command, args);
-            return true;
-        } catch (error) {
-            log.error(`Failed to ${action} Sing-Box task:`, error);
-            return false;
-        }
-    }
-
-    /**
-     * Starts the watchdog process on Windows to monitor the "warp-plus" process.
-     * The watchdog checks every 10 seconds if "warp-plus" is still running.
-     * If "warp-plus" is no longer running, the watchdog will stop the OblivionDesktop task
-     * and terminate itself.
-     *
-     * @private
-     */
-    private startWindowsWatchdog(): void {
-        const { command, args } = this.windowsCommands.startWatchdog;
-        this.watchdogProcess = spawn(command, args, { cwd: this.workingDir });
-
-        if (this.watchdogProcess.pid) {
-            log.info('Watchdog started successfully.');
-        } else {
-            log.error('Failed to start watchdog.');
-        }
-    }
-
-    /**
-     * Stops the watchdog process on Windows.
-     * If the watchdog is still running, it will be killed, and its state will be reset.
-     *
-     * @private
-     */
-    private stopWindowsWatchdog(): void {
-        if (this.watchdogProcess && !this.watchdogProcess.killed) {
-            this.watchdogProcess.kill();
-            log.info('Watchdog stopped.');
-            this.watchdogProcess = null;
-        }
-    }
-
-    // Darwin/Linux-specific Methods
-    /**
-     * Starts the Sing-Box process on macOS/Linux.
-     * Ensures necessary permissions are set before starting the process.
-     * @returns {Promise<boolean>} - Resolves to true if the process starts successfully and the connection is established, otherwise false.
-     */
-    private async startSingBoxDarwinLinux(): Promise<boolean> {
-        if (this.singBoxProcess) return false;
-
-        try {
-            if (!(await this.ensureDarwinLinuxPermissions())) return false;
 
             log.info('Starting Sing-Box...');
-            const { command, args } = this.macosLinuxCommands.startSingBox(
-                this.binPath,
-                this.configPath
-            );
-            this.singBoxProcess = spawn(command, args, { cwd: this.workingDir });
+            if (!(await this.writeCommand('start'))) {
+                return false;
+            }
 
-            this.singBoxProcess?.stdout?.on('data', (data: Buffer) =>
-                log.info(`Sing-Box output: ${data.toString()}`)
+            return this.processCheck(
+                this.sbWDFileName,
+                'Sing-Box started successfully, waiting for connection...',
+                'Failed to start Sing-Box.',
+                true
             );
-            this.singBoxProcess?.stderr?.on('data', (err: Buffer) =>
-                log.error(`Sing-Box error: ${err.toString()}`)
-            );
-            this.singBoxProcess?.on('close', (code) => {
-                log.info(`Sing-Box process exited with code ${code}`);
-                this.singBoxProcess = null;
-            });
-
-            return await this.checkConnectionStatus();
         } catch (error) {
             log.error('Failed to start Sing-Box:', error);
-            this.singBoxProcess = null;
             return false;
         }
     }
 
-    /**
-     * Stops the Sing-Box process on macOS/Linux by killing the process if it's running.
-     * @returns {Promise<boolean>} - Resolves to true if the process is killed successfully, otherwise false.
-     */
-    private async stopSingBoxDarwinLinux(): Promise<boolean> {
-        if (!this.singBoxProcess) return false;
+    public async stopSingBox(): Promise<boolean> {
+        if (!(await this.isProcessRunning(this.sbWDFileName))) return true;
 
-        log.info('Stopping Sing-Box. Please wait...');
-        try {
-            this.singBoxProcess?.kill();
-            await this.waitForDarwinLinuxProcessExit();
-            log.info('Sing-Box stopped successfully.');
-            return true;
-        } catch (error) {
-            log.error('Failed to stop Sing-Box:', error);
+        log.info('Stopping Sing-Box...');
+        if (!this.monitorWarpPlus && !(await this.writeCommand('stop'))) {
             return false;
         }
+
+        return this.processCheck(
+            this.sbWDFileName,
+            'Sing-Box stopped successfully.',
+            'Failed to stop Sing-Box.',
+            false
+        );
     }
 
-    /**
-     * Waits for the Sing-Box process to exit on macOS/Linux.
-     * It checks every second if the process has been terminated.
-     * @returns {Promise<void>} - Resolves when the process has exited.
-     */
-    private waitForDarwinLinuxProcessExit(): Promise<void> {
-        return new Promise((resolve) => {
-            const killInterval = setInterval(() => {
-                if (!this.singBoxProcess) {
-                    clearInterval(killInterval);
-                    resolve();
-                }
-            }, 1000);
-        });
-    }
+    public async stopHelper(): Promise<boolean> {
+        if (!(await this.isProcessRunning(this.helperFileName))) return true;
 
-    /**
-     * Ensures necessary permissions are set for Sing-Box on macOS/Linux.
-     * If the binary is not owned by root or lacks suid, it will attempt to change ownership
-     * and permissions using `pkexec` on Linux or `osascript` on macOS.
-     * @returns {Promise<boolean>} - Resolves to true if permissions are successfully ensured, otherwise false.
-     * If permissions cannot be set, it logs the failure and returns false.
-     */
-    private async ensureDarwinLinuxPermissions(): Promise<boolean> {
-        log.info('Checking Sing-Box permissions...');
-        const isAdministrator = await this.checkDarwinLinuxPermissions();
-
-        if (!isAdministrator) {
-            log.info('Setting Sing-Box permissions...');
-            return this.setDarwinLinuxPermissions();
+        if (this.monitorOblivionDesktop) {
+            log.info('Stopping Oblivion-Helper...');
+            return this.processCheck(
+                this.helperFileName,
+                'Oblivion-Helper stopped successfully.',
+                'Failed to stop Oblivion-Helper.',
+                false
+            );
         }
 
         return true;
     }
 
-    /**
-     * Checks if the current user has the necessary permissions for Sing-Box on macOS/Linux.
-     * Verifies whether the binary has the correct ownership and suid permissions.
-     * @returns {Promise<boolean>} - Resolves to true if permissions are correct, otherwise false.
-     */
-    private async checkDarwinLinuxPermissions(): Promise<boolean> {
-        try {
-            const { command, args } = this.macosLinuxCommands.checkPermissions(this.binPath);
-            const output = await this.runProcess(command, args);
-            return output.includes('root');
-        } catch (error) {
-            log.error('Failed to check Sing-Box permissions:', error);
-            return false;
-        }
-    }
-
-    /**
-     * Sets the necessary permissions for Sing-Box on macOS/Linux.
-     * Changes ownership and permissions of the binary using `pkexec` or `osascript`.
-     * @returns {Promise<boolean>} - Resolves to true if permissions are set successfully, otherwise false.
-     */
-    private async setDarwinLinuxPermissions(): Promise<boolean> {
-        try {
-            const platform = process.platform as 'darwin' | 'linux';
-            const { command, args } = this.macosLinuxCommands.setPermissions[platform](
-                this.binPath
-            );
-            await this.runProcess(command, args);
-            log.info('Sing-Box permissions set successfully');
-            return true;
-        } catch (error) {
-            log.error('Failed to set Sing-Box permissions:', error);
-            return false;
-        }
-    }
-
-    // Platform-specific commands
-    /**
-     * macosLinuxCommands contains platform-specific command structures for macOS and Linux.
-     *
-     * It provides the necessary commands for:
-     * - Checking permissions of the Sing-Box binary (`checkPermissions`).
-     * - Setting the required permissions (`setPermissions`) for both macOS and Linux using `osascript` or `pkexec`.
-     * - Starting the Sing-Box process with the proper configuration (`startSingBox`).
-     *
-     * The methods within this object are responsible for generating the correct commands based on the platform.
-     * The command functions return an object containing the command to execute and any required arguments.
-     */
-    private macosLinuxCommands = {
-        checkPermissions: (binPath: string) => ({
-            command: 'ls',
-            args: ['-l', binPath]
-        }),
-        setPermissions: {
-            darwin: (binPath: string) => ({
-                command: 'osascript',
-                args: [
-                    '-e',
-                    `do shell script "chown root:admin \\"${binPath}\\" && chmod +s \\"${binPath}\\"" with prompt "Oblivion Desktop requires administrator privileges to set Sing-Box permissions." with administrator privileges`
-                ]
-            }),
-            linux: (binPath: string) => ({
-                command: 'pkexec',
-                args: ['sh', '-c', `chown root:root "${binPath}" && chmod +s "${binPath}"`]
-            })
-        },
-        startSingBox: (binPath: string, configPath: string) => ({
-            command: binPath,
-            args: ['run', '-c', configPath]
-        })
-    };
-
-    /**
-     * windowsCommands contains platform-specific command structures for Windows.
-     *
-     * It provides the necessary commands for:
-     * - Checking the status of the Windows scheduled task (`checkTaskStatus`).
-     * - Creating a new scheduled task (`createTask`) to run Sing-Box.
-     * - Starting and stopping the scheduled task (`startTask`, `stopTask`).
-     * - Starting a watchdog process (`startWatchdog`) to monitor the Sing-Box process.
-     *
-     * The methods within this object are responsible for generating the correct commands to interact with the Windows Task Scheduler.
-     */
-    private windowsCommands = {
-        checkTaskStatus: {
-            command: 'powershell.exe',
-            args: ['-Command', 'Get-ScheduledTask -TaskName "OblivionDesktop"']
-        },
-        createTask: (binPath: string, configPath: string) => ({
-            command: 'powershell.exe',
-            args: [
-                '-Command',
-                `Start-Process powershell -ArgumentList 'Register-ScheduledTask "OblivionDesktop" -InputObject (New-ScheduledTask -Action (New-ScheduledTaskAction -Execute "${binPath.replace(/'/g, "''")}" -Argument "\\"run -c ${configPath.replace(/'/g, "''")}\\"") -Principal (New-ScheduledTaskPrincipal -UserId $env:UserDomain\\$env:UserName -LogonType S4U -RunLevel Highest) -Settings (New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DisallowStartOnRemoteAppSession -DontStopIfGoingOnBatteries -DisallowHardTerminate -Compatibility Win8 -ExecutionTimeLimit (New-TimeSpan -Seconds 0)));' -Verb RunAs -WindowStyle Hidden -PassThru`
-            ]
-        }),
-        startTask: {
-            command: 'powershell.exe',
-            args: ['-Command', 'Start-ScheduledTask -TaskName "OblivionDesktop"']
-        },
-        stopTask: {
-            command: 'powershell.exe',
-            args: ['-Command', 'Stop-ScheduledTask -TaskName "OblivionDesktop"']
-        },
-        startWatchdog: {
-            command: 'powershell.exe',
-            args: [
-                '-Command',
-                `Start-Process powershell -ArgumentList '
-                while ($true) {
-                    $process = Get-Process -Name "warp-plus" -ErrorAction SilentlyContinue
-                    if (-not $process) {
-                        Stop-ScheduledTask -TaskName "OblivionDesktop"
-                        break
-                    }
-                    Start-Sleep -Seconds 10
+    public async checkConnectionStatus(): Promise<boolean> {
+        const maxAttempts = 10;
+        const checkStatus = async (attempt: number): Promise<boolean> => {
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            try {
+                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                    signal
+                });
+                if (response.ok) {
+                    log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
+                    return true;
                 }
-            ' -WindowStyle Hidden -PassThru`
-            ]
-        }
-    };
+            } catch {
+                log.info(`Connection not yet established. Retry attempt ${attempt}/10...`);
+            } finally {
+                clearTimeout(timeoutId);
+            }
+
+            if (attempt >= maxAttempts) {
+                log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
+                return false;
+            }
+
+            await this.delay(2000);
+            return checkStatus(attempt + 1);
+        };
+
+        return checkStatus(1);
+    }
+
+    private initialize(): void {
+        log.info(`Creating new cmd file at ${this.cmdPath}`);
+        fs.writeFileSync(this.cmdPath, '');
+
+        const config = {
+            sbConfig: this.sbConfigName,
+            sbBin: this.sbWDFileName,
+            wpBin: 'warp-plus',
+            obBin: isDev() ? 'electron' : 'oblivion-desktop',
+            monitorWp: this.monitorWarpPlus,
+            monitorOb: this.monitorOblivionDesktop
+        };
+
+        log.info(`Creating new config file at ${this.configPath}`);
+        fs.writeFileSync(this.configPath, JSON.stringify(config, null, 1), 'utf-8');
+    }
+
+    private async startHelper(): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            log.info('Starting Oblivion-Helper...');
+
+            const { start } = this.getPlatformCommands();
+            const [command, args] = start(this.helperPath);
+
+            const helperProcess = spawn(command, args, { cwd: this.workingDirPath });
+
+            helperProcess.stdout?.on('data', (data: Buffer) => {
+                if (
+                    process.platform === 'linux' &&
+                    data.toString().includes('Oblivion helper started.')
+                ) {
+                    resolve(true);
+                }
+            });
+
+            helperProcess.stderr?.on('data', (err: Buffer) => {
+                if (err.toString().includes('dismissed') || err.toString().includes('canceled')) {
+                    if (process.platform === 'darwin') {
+                        log.error('The operation was canceled by the user.');
+                    }
+                    reject('The operation was canceled by the user.');
+                } else {
+                    reject(new Error(err.toString()));
+                }
+            });
+
+            helperProcess.on('close', (code) => {
+                if (process.platform !== 'linux' && code === 0) {
+                    resolve(true);
+                }
+            });
+        });
+    }
+
+    private writeCommand(command: string): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            fs.writeFile(this.cmdPath, command, (err) => {
+                if (err) {
+                    log.error('Error sending command to Oblivion-Helper:', err);
+                    resolve(false);
+                } else {
+                    log.info('Command sent to Oblivion-Helper:', command);
+                    resolve(true);
+                }
+            });
+        });
+    }
+
+    private async isProcessRunning(processPath: string): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            let isRunning = false;
+            const { running } = this.getPlatformCommands();
+            const [command, args] = running(processPath);
+            const checkProcess = spawn(command, args);
+
+            checkProcess.stdout?.on('data', (data: Buffer) => {
+                const output = data.toString().trim();
+                if (output.length > 0) {
+                    isRunning = true;
+                }
+            });
+
+            checkProcess.on('close', () => {
+                resolve(isRunning);
+            });
+        });
+    }
+
+    private async processCheck(
+        processPath: string,
+        successMessage: string,
+        errorMessage: string,
+        processShouldBeRunning: boolean
+    ): Promise<boolean> {
+        const maxAttempts = 10;
+        const checkProcess = async (attempt: number): Promise<boolean> => {
+            const isRunning = await this.isProcessRunning(processPath);
+            const conditionMet = processShouldBeRunning ? isRunning : !isRunning;
+
+            if (conditionMet) {
+                log.info(successMessage);
+                return true;
+            }
+
+            if (attempt >= maxAttempts) {
+                log.error(errorMessage);
+                return false;
+            }
+
+            await this.delay(1000);
+            return checkProcess(attempt + 1);
+        };
+
+        return checkProcess(1);
+    }
+
+    private delay(ms: number): Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
+    }
+
+    private getPlatformCommands(): PlatformCommands {
+        const commands: { [key: string]: PlatformCommands } = {
+            darwin: {
+                start: (helperPath) => [
+                    'osascript',
+                    [
+                        '-e',
+                        `do shell script "\\"${helperPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges`
+                    ]
+                ],
+                running: (processName) => ['pgrep', ['-f', processName]]
+            },
+            win32: {
+                start: (helperPath) => [
+                    'powershell.exe',
+                    [
+                        '-Command',
+                        `Start-Process -FilePath '${helperPath.replace(/'/g, "''")}' -Verb RunAs;`
+                    ]
+                ],
+                running: (processName) => [
+                    'powershell.exe',
+                    [
+                        '-Command',
+                        `Get-CimInstance Win32_Process | Where-Object { $_.Name -like '${processName}'}`
+                    ]
+                ]
+            },
+            linux: {
+                start: (helperPath) => ['pkexec', [helperPath]],
+                running: (processName) => ['pgrep', ['-f', processName]]
+            }
+        };
+
+        return (
+            commands[process.platform] || {
+                start: () => ['', []],
+                running: () => ['', []]
+            }
+        );
+    }
 }
 
 export default SingBoxManager;
