@@ -98,7 +98,13 @@ const russian: Language = {
         routing_rules_disabled: 'Отключено',
         routing_rules_items: 'Предметы',
         profile: 'Профиль',
-        profile_desc: 'Сохраненные вами конечные точки'
+        profile_desc: 'Сохраненные вами конечные точки',
+        close_singbox: 'Остановить Singbox',
+        close_singbox_desc: 'Автоматически закрывать Singbox при отключении',
+        close_helper: 'Остановить Helper',
+        close_helper_desc: 'Автоматически закрывать помощник при выходе',
+        mtu: 'Значение MTU',
+        mtu_desc: 'Установить максимальную единицу передачи'
     },
     tabs: {
         home: 'Связь',
@@ -127,6 +133,9 @@ const russian: Language = {
         profile_name: 'Название',
         profile_endpoint: 'Конечная точка',
         profile_limitation: (value) => `Вы можете добавить максимум ${value} конечных точек.`,
+        mtu_title: 'Значение MTU',
+        mtu_desc:
+            'Максимальная единица передачи (MTU) относится к максимальному размеру пакетов данных, который должен быть установлен в пределах от 1000 до 9999.',
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'

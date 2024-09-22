@@ -1,10 +1,12 @@
 import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
+import useTranslate from '../../../localization/useTranslate';
 import { defaultSettings } from '../../../defaultSettings';
 
 const useSingBox = () => {
     useGoBackOnEscape();
+    const appLang = useTranslate();
     const [closeSingBox, setCloseSingBox] = useState<boolean>();
     const [closeHelper, setCloseSHelper] = useState<boolean>();
     const [mtu, setMtu] = useState<number>();
@@ -63,6 +65,7 @@ const useSingBox = () => {
     );
 
     return {
+        appLang,
         closeSingBox,
         closeHelper,
         mtu,

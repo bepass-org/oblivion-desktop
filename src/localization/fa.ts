@@ -98,7 +98,13 @@ const persian: Language = {
         routing_rules_disabled: 'غیرفعال',
         routing_rules_items: 'مورد',
         profile: 'پروفایل',
-        profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما'
+        profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما',
+        close_singbox: 'توقف Singbox',
+        close_singbox_desc: 'بستن خودکار سینگ‌باکس هنگام لغو اتصال',
+        close_helper: 'توقف Helper',
+        close_helper_desc: 'بستن خودکار دستیار سینگ‌باکس هنگام خروج',
+        mtu: 'مقدار MTU',
+        mtu_desc: 'تعیین حداکثر واحد انتقال'
     },
     tabs: {
         home: 'اتصال',
@@ -128,6 +134,9 @@ const persian: Language = {
         profile_endpoint: 'اندپوینت',
         profile_limitation: (value) => `حداکثر می‌توانید ${value} اندپوینت اضافه نمایید.`,
         confirm: 'تایید می\u200Cکنم',
+        mtu_title: 'مقدار MTU',
+        mtu_desc:
+            'حداکثر واحد انتقال یا MTU، به حداکثر اندازه بسته‌های داده اشاره دارد، که باید بین ۱۰۰۰ تا ۹۹۹۹ تنظیم شوند.',
         update: 'بروزرسانی',
         cancel: 'انصراف'
     },

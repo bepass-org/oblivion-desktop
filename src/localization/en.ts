@@ -97,7 +97,13 @@ const english: Language = {
         routing_rules_disabled: 'Disabled',
         routing_rules_items: 'Items',
         profile: 'Profile',
-        profile_desc: 'Endpoints saved by you'
+        profile_desc: 'Endpoints saved by you',
+        close_singbox: 'Stop Singbox',
+        close_singbox_desc: 'Automatically close sing-box on disconnect',
+        close_helper: 'Stop Helper',
+        close_helper_desc: 'Automatically close helper on exit',
+        mtu: 'MTU Value',
+        mtu_desc: 'Set the Maximum Transmission Unit'
     },
     tabs: {
         home: 'Connect',
@@ -126,6 +132,9 @@ const english: Language = {
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',
         profile_limitation: (value) => `You can add a maximum of ${value} endpoints.`,
+        mtu_title: 'MTU Value',
+        mtu_desc:
+            'Maximum Transmission Unit (MTU) refers to the maximum size of data packets, which should be set between 1000 and 9999.',
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'

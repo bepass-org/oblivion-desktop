@@ -97,7 +97,13 @@ const indonesia: Language = {
         routing_rules_disabled: 'Dimatikan',
         routing_rules_items: 'Item',
         profile: 'Profil',
-        profile_desc: 'Titik akhir yang disimpan oleh Anda'
+        profile_desc: 'Titik akhir yang disimpan oleh Anda',
+        close_singbox: 'Hentikan Singbox',
+        close_singbox_desc: 'Tutup otomatis Singbox saat terputus',
+        close_helper: 'Hentikan Helper',
+        close_helper_desc: 'Tutup otomatis pembantu saat keluar',
+        mtu: 'Nilai MTU',
+        mtu_desc: 'Atur Maximum Transmission Unit'
     },
     tabs: {
         home: 'Hubungkan',
@@ -126,6 +132,9 @@ const indonesia: Language = {
         profile_name: 'Judul',
         profile_endpoint: 'Titik Akhir',
         profile_limitation: (value) => `Anda dapat menambahkan maksimal ${value} titik akhir.`,
+        mtu_title: 'Nilai MTU',
+        mtu_desc:
+            'Maximum Transmission Unit (MTU) mengacu pada ukuran maksimum paket data, yang harus diatur antara 1000 hingga 9999.',
         confirm: 'Saya mengerti',
         update: 'Perbarui',
         cancel: 'Batalkan'

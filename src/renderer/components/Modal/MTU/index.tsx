@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { defaultSettings } from '../../../../defaultSettings';
 import useMTUModal from './useMTUModal';
+import { lang } from '../../../../localization';
 
 interface MTUModalProps {
     title: string;
@@ -47,6 +48,8 @@ export default function MTUModal({
                         <div className='miniLine' />
                     </div>
                     <h3>{title}</h3>
+                    <p className='withMargin'>{appLang.modal.mtu_desc}</p>
+                    <div className='clearfix' />
                     <input
                         type='number'
                         spellCheck={false}
@@ -55,7 +58,6 @@ export default function MTUModal({
                         onChange={handleMtuInputChange}
                         tabIndex={0}
                     />
-                    <div className='clearfix' />
                     <div
                         role='button'
                         className={classNames('btn', 'btn-cancel')}

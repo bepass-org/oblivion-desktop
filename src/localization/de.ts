@@ -99,7 +99,13 @@ const deutsch: Language = {
         routing_rules_disabled: 'Deaktiviert',
         routing_rules_items: 'Elemente',
         profile: 'Profil',
-        profile_desc: 'Von Ihnen gespeicherte Endpunkte'
+        profile_desc: 'Von Ihnen gespeicherte Endpunkte',
+        close_singbox: 'Singbox stoppen',
+        close_singbox_desc: 'Singbox bei Trennung automatisch schließen',
+        close_helper: 'Helper stoppen',
+        close_helper_desc: 'Helper beim Beenden automatisch schließen',
+        mtu: 'MTU-Wert',
+        mtu_desc: 'Die maximale Übertragungseinheit festlegen'
     },
     tabs: {
         home: 'Verbinden',
@@ -128,6 +134,9 @@ const deutsch: Language = {
         profile_name: 'Titel',
         profile_endpoint: 'Endpunkt',
         profile_limitation: (value) => `Sie können maximal ${value} Endpunkte hinzufügen.`,
+        mtu_title: 'MTU-Wert',
+        mtu_desc:
+            'Die maximale Übertragungseinheit (MTU) bezieht sich auf die maximale Größe von Datenpaketen, die zwischen 1000 und 9999 eingestellt werden sollte.',
         confirm: 'Ich bestätige',
         update: 'Update',
         cancel: 'Abbrechen'

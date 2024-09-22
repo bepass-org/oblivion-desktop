@@ -6,6 +6,7 @@ import MTUModal from '../../components/Modal/MTU';
 
 export default function SingBox() {
     const {
+        appLang,
         closeSingBox,
         closeHelper,
         mtu,
@@ -39,7 +40,7 @@ export default function SingBox() {
                         tabIndex={0}
                     >
                         <label className='key' htmlFor='sing-box'>
-                            Close SingBox
+                            {appLang.settings.close_singbox}
                         </label>
                         <div className='value'>
                             <div
@@ -49,7 +50,7 @@ export default function SingBox() {
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>Automatically close sing-box on disconnect</div>
+                        <div className='info'>{appLang.settings.close_singbox_desc}</div>
                     </div>
                     <div
                         role='button'
@@ -59,7 +60,7 @@ export default function SingBox() {
                         tabIndex={0}
                     >
                         <label className='key' htmlFor='sing-box'>
-                            Close Helper
+                            {appLang.settings.close_helper}
                         </label>
                         <div className='value'>
                             <div
@@ -69,7 +70,7 @@ export default function SingBox() {
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>Automatically close helper on exit</div>
+                        <div className='info'>{appLang.settings.close_helper_desc}</div>
                     </div>
                     <div
                         role='button'
@@ -79,21 +80,21 @@ export default function SingBox() {
                         tabIndex={0}
                     >
                         <label className='key' htmlFor='port'>
-                            MTU
+                            {appLang.settings.mtu}
                         </label>
                         <div className='value' id='port'>
                             <span className='dirLeft' tabIndex={-1}>
                                 {mtu}
                             </span>
                         </div>
-                        <div className='info'>Define MTU</div>
+                        <div className='info'>{appLang.settings.mtu_desc}</div>
                     </div>
                 </div>
             </div>
             <MTUModal
                 mtu={mtu}
                 setMtu={setMtu}
-                title={'Set MTU'}
+                title={appLang.modal.mtu_title}
                 isOpen={showPortModal}
                 onClose={onClickMtu}
             />

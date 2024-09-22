@@ -97,7 +97,13 @@ const turkish: Language = {
         routing_rules_disabled: 'Devre Dışı',
         routing_rules_items: 'Öğeler',
         profile: 'Profil',
-        profile_desc: "Tarafınızdan kaydedilen endpoint'ler"
+        profile_desc: "Tarafınızdan kaydedilen endpoint'ler",
+        close_singbox: "Singbox'ı Durdur",
+        close_singbox_desc: "Bağlantı kesildiğinde Singbox'ı otomatik olarak kapat",
+        close_helper: "Helper'ı Durdur",
+        close_helper_desc: 'Çıkışta yardımcıyı otomatik olarak kapat',
+        mtu: 'MTU Değeri',
+        mtu_desc: 'Maksimum İletim Birimini Ayarla'
     },
     tabs: {
         home: 'Bağlan',
@@ -126,6 +132,9 @@ const turkish: Language = {
         profile_name: 'Başlık',
         profile_endpoint: 'Endpoint',
         profile_limitation: (value) => `En fazla ${value} endpoint ekleyebilirsiniz.`,
+        mtu_title: 'MTU Değeri',
+        mtu_desc:
+            'Maksimum İletim Birimi (MTU), veri paketlerinin maksimum boyutunu ifade eder ve 1000 ile 9999 arasında ayarlanmalıdır.',
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
         cancel: 'İptal'
