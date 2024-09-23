@@ -315,6 +315,9 @@ const useLanding = () => {
         if (ipInfo?.countryCode) {
             if (method === '' && ipInfo?.countryCode === 'ir') {
                 ipToast();
+            } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
+                ipcRenderer.sendMessage('wp-end');
+                setIsLoading(true);
             } else {
                 toast.remove('ipChangedToIR');
             }
