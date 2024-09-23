@@ -114,6 +114,7 @@ export interface Tabs {
     network: string;
     scanner: string;
     app: string;
+    singbox: string;
 }
 
 export interface Modal {

@@ -114,7 +114,8 @@ const deutsch: Language = {
         warp: 'Warp',
         network: 'Netzwerk',
         scanner: 'Scanner',
-        app: 'App'
+        app: 'App',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpunkt',

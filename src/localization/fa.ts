@@ -113,7 +113,8 @@ const persian: Language = {
         warp: 'وارپ',
         network: 'شبکه',
         scanner: 'اسکنر',
-        app: 'برنامه'
+        app: 'برنامه',
+        singbox: 'سینگ‌باکس'
     },
     modal: {
         endpoint_title: 'اندپوینت',

@@ -33,7 +33,8 @@ export default function Scanner() {
         onOpenProfileModal,
         onCloseProfileModal,
         onKeyDownProfile,
-        countProfiles
+        countProfiles,
+        proxyMode
     } = useScanner();
 
     if (loading) return <div className='settings' />;
@@ -58,7 +59,7 @@ export default function Scanner() {
                 onClose={onCloseProfileModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
-                <Tabs active='scanner' />
+                <Tabs active='scanner' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     <div
                         role='button'

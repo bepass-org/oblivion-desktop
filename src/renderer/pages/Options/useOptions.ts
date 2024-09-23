@@ -23,6 +23,8 @@ const useOptions = () => {
     const [forceClose, setForceClose] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
+    const [proxyMode, setProxyMode] = useState<string>('');
+
     const appLang = useTranslate();
 
     const { state } = useLocation();
@@ -64,6 +66,9 @@ const useOptions = () => {
         });
         settings.get('shortcut').then((value) => {
             setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
+        });
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -207,7 +212,8 @@ const useOptions = () => {
         setOpenAtLogin,
         setAutoConnect,
         setForceClose,
-        setShortcut
+        setShortcut,
+        proxyMode
     };
 };
 

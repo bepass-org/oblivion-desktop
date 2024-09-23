@@ -71,7 +71,7 @@ export default function Options() {
         <>
             <Nav title={appLang?.settings?.network} />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
-                <Tabs active='network' />
+                <Tabs active='network' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     {/*<div
                         className={classNames('item', autoSetProxy ? 'checked' : '')}

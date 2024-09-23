@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import useSingBox from './useSingBox';
 import MTUModal from '../../components/Modal/MTU';
+import Tabs from '../../components/Tabs';
 
 export default function SingBox() {
     const {
@@ -17,7 +18,8 @@ export default function SingBox() {
         handleCloseHelperOnKeyDown,
         onClickMtu,
         onKeyDownClickMtu,
-        showPortModal
+        showPortModal,
+        proxyMode
     } = useSingBox();
 
     if (
@@ -31,6 +33,7 @@ export default function SingBox() {
         <>
             <Nav title={appLang.settings.singbox} />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
+                <Tabs active='singbox' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     <div
                         role='button'

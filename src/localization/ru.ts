@@ -113,7 +113,8 @@ const russian: Language = {
         warp: 'Warp',
         network: 'Сеть',
         scanner: 'Сканер',
-        app: 'заявка'
+        app: 'заявка',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Конечная точка',

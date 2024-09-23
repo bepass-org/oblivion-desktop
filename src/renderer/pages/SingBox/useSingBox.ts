@@ -11,6 +11,7 @@ const useSingBox = () => {
     const [closeHelper, setCloseSHelper] = useState<boolean>();
     const [mtu, setMtu] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
+    const [proxyMode, setProxyMode] = useState<string>('');
 
     useEffect(() => {
         settings.get('closeSingBox').then((value) => {
@@ -21,6 +22,9 @@ const useSingBox = () => {
         });
         settings.get('singBoxMTU').then((value) => {
             setMtu(typeof value === 'undefined' ? defaultSettings.singBoxMTU : value);
+        });
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
     }, []);
 
@@ -76,7 +80,8 @@ const useSingBox = () => {
         handleCloseHelperOnKeyDown,
         onClickMtu,
         onKeyDownClickMtu,
-        showPortModal
+        showPortModal,
+        proxyMode
     };
 };
 export default useSingBox;

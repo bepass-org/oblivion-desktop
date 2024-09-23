@@ -112,7 +112,8 @@ const chinese: Language = {
         warp: 'Warp',
         network: '网络',
         scanner: '扫描仪',
-        app: '应用'
+        app: '应用',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: '端点',

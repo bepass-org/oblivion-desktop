@@ -112,7 +112,8 @@ const turkish: Language = {
         warp: 'Warp',
         network: 'Ağ',
         scanner: 'Tarayıcı',
-        app: 'Uygulama'
+        app: 'Uygulama',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpoint',
