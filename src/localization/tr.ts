@@ -101,7 +101,7 @@ const turkish: Language = {
         profile_desc: "Tarafınızdan kaydedilen endpoint'ler",
         singbox: 'Singbox Ayarları',
         close_singbox: 'İşlemi durdur',
-        close_singbox_desc: 'Bağlantı kesildiğinde sing-box\'ı otomatik olarak kapat',
+        close_singbox_desc: "Bağlantı kesildiğinde sing-box'ı otomatik olarak kapat",
         close_helper: 'Yardımcıyı durdur',
         close_helper_desc: 'Çıkışta yardımcıyı otomatik olarak kapat',
         mtu: 'MTU Değeri',

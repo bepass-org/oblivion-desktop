@@ -47,6 +47,7 @@ export default function Landing() {
                 toggleDrawer={toggleDrawer}
                 hasNewUpdate={hasNewUpdate}
                 appVersion={appVersion}
+                proxyMode={proxyMode}
             />
             <LandingBody
                 appLang={appLang}

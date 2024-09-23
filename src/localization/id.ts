@@ -23,7 +23,7 @@ const indonesia: Language = {
         drawer_speed_test: 'Uji kecepatan',
         drawer_about: 'Tentang Aplikasi',
         drawer_lang: 'Ganti Bahasa',
-        drawer_singbox: 'Pengaturan Singbox',
+        drawer_singbox: 'Pengaturan Singbox'
     },
     toast: {
         ip_check_please_wait: 'Mohon tunggu beberapa detik untuk mencoba kembali pemeriksaan!',
