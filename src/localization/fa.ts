@@ -22,7 +22,8 @@ const persian: Language = {
         drawer_update_label: 'نسخه جدید',
         drawer_speed_test: 'تست سرعت',
         drawer_about: 'درباره برنامه',
-        drawer_lang: 'تغییر زبان'
+        drawer_lang: 'تغییر زبان',
+        drawer_singbox: 'تنظیمات سینگ‌باکس'
     },
     toast: {
         ip_check_please_wait: 'برای بررسی مجدد چندثانیه دیگر تلاش کنید!',
@@ -99,9 +100,10 @@ const persian: Language = {
         routing_rules_items: 'مورد',
         profile: 'پروفایل',
         profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما',
-        close_singbox: 'توقف Singbox',
+        singbox: 'تنظیمات سینگ‌باکس',
+        close_singbox: 'توقف عملیات',
         close_singbox_desc: 'بستن خودکار سینگ‌باکس هنگام لغو اتصال',
-        close_helper: 'توقف Helper',
+        close_helper: 'توقف دستیار',
         close_helper_desc: 'بستن خودکار دستیار سینگ‌باکس هنگام خروج',
         mtu: 'مقدار MTU',
         mtu_desc: 'تعیین حداکثر واحد انتقال'

@@ -22,7 +22,8 @@ const deutsch: Language = {
         drawer_update_label: 'Neues Update',
         drawer_speed_test: 'Geschwindigkeitstest',
         drawer_about: 'Über',
-        drawer_lang: 'Sprache ändern'
+        drawer_lang: 'Sprache ändern',
+        drawer_singbox: 'Singbox-Einstellungen'
     },
     toast: {
         ip_check_please_wait:
@@ -100,9 +101,10 @@ const deutsch: Language = {
         routing_rules_items: 'Elemente',
         profile: 'Profil',
         profile_desc: 'Von Ihnen gespeicherte Endpunkte',
-        close_singbox: 'Singbox stoppen',
+        singbox: 'Singbox-Einstellungen',
+        close_singbox: 'Betrieb stoppen',
         close_singbox_desc: 'Singbox bei Trennung automatisch schließen',
-        close_helper: 'Helper stoppen',
+        close_helper: 'Helfer stoppen',
         close_helper_desc: 'Helper beim Beenden automatisch schließen',
         mtu: 'MTU-Wert',
         mtu_desc: 'Die maximale Übertragungseinheit festlegen'

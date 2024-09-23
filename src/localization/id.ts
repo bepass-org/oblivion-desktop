@@ -22,7 +22,8 @@ const indonesia: Language = {
         drawer_update_label: 'Pembaruan Baru',
         drawer_speed_test: 'Uji kecepatan',
         drawer_about: 'Tentang Aplikasi',
-        drawer_lang: 'Ganti Bahasa'
+        drawer_lang: 'Ganti Bahasa',
+        drawer_singbox: 'Pengaturan Singbox',
     },
     toast: {
         ip_check_please_wait: 'Mohon tunggu beberapa detik untuk mencoba kembali pemeriksaan!',
@@ -98,9 +99,10 @@ const indonesia: Language = {
         routing_rules_items: 'Item',
         profile: 'Profil',
         profile_desc: 'Titik akhir yang disimpan oleh Anda',
-        close_singbox: 'Hentikan Singbox',
-        close_singbox_desc: 'Tutup otomatis Singbox saat terputus',
-        close_helper: 'Hentikan Helper',
+        singbox: 'Pengaturan Singbox',
+        close_singbox: 'Hentikan operasi',
+        close_singbox_desc: 'Otomatis tutup sing-box saat terputus',
+        close_helper: 'Hentikan pembantu',
         close_helper_desc: 'Tutup otomatis pembantu saat keluar',
         mtu: 'Nilai MTU',
         mtu_desc: 'Atur Maximum Transmission Unit'

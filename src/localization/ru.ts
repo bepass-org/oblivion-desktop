@@ -22,7 +22,8 @@ const russian: Language = {
         drawer_update_label: 'Новое обновление',
         drawer_speed_test: 'Тест скорости',
         drawer_about: 'О приложении',
-        drawer_lang: 'Изменить язык'
+        drawer_lang: 'Изменить язык',
+        drawer_singbox: 'Настройки Singbox'
     },
     toast: {
         ip_check_please_wait: 'Пожалуйста, подождите несколько секунд, чтобы повторить проверку!',
@@ -99,9 +100,10 @@ const russian: Language = {
         routing_rules_items: 'Предметы',
         profile: 'Профиль',
         profile_desc: 'Сохраненные вами конечные точки',
-        close_singbox: 'Остановить Singbox',
+        singbox: 'Настройки Singbox',
+        close_singbox: 'Остановка операции',
         close_singbox_desc: 'Автоматически закрывать Singbox при отключении',
-        close_helper: 'Остановить Helper',
+        close_helper: 'Остановка помощника',
         close_helper_desc: 'Автоматически закрывать помощник при выходе',
         mtu: 'Значение MTU',
         mtu_desc: 'Установить максимальную единицу передачи'

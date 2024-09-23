@@ -29,7 +29,7 @@ export default function SingBox() {
 
     return (
         <>
-            <Nav title='SingBox Settings' />
+            <Nav title={appLang.settings.singbox} />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <div className='settings' role='menu'>
                     <div

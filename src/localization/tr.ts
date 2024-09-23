@@ -22,7 +22,8 @@ const turkish: Language = {
         drawer_update_label: 'Yeni Güncelleme',
         drawer_speed_test: 'Hız Testi',
         drawer_about: 'Uygulama Hakkında',
-        drawer_lang: 'Dil Değişikliği'
+        drawer_lang: 'Dil Değişikliği',
+        drawer_singbox: 'Singbox Ayarları'
     },
     toast: {
         ip_check_please_wait: 'Lütfen kontrolü yeniden denemek için birkaç saniye bekleyin!',
@@ -98,9 +99,10 @@ const turkish: Language = {
         routing_rules_items: 'Öğeler',
         profile: 'Profil',
         profile_desc: "Tarafınızdan kaydedilen endpoint'ler",
-        close_singbox: "Singbox'ı Durdur",
-        close_singbox_desc: "Bağlantı kesildiğinde Singbox'ı otomatik olarak kapat",
-        close_helper: "Helper'ı Durdur",
+        singbox: 'Singbox Ayarları',
+        close_singbox: 'İşlemi durdur',
+        close_singbox_desc: 'Bağlantı kesildiğinde sing-box\'ı otomatik olarak kapat',
+        close_helper: 'Yardımcıyı durdur',
         close_helper_desc: 'Çıkışta yardımcıyı otomatik olarak kapat',
         mtu: 'MTU Değeri',
         mtu_desc: 'Maksimum İletim Birimini Ayarla'

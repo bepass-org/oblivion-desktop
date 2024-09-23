@@ -22,6 +22,7 @@ export interface Home {
     drawer_speed_test: string;
     drawer_about: string;
     drawer_lang: string;
+    drawer_singbox: string;
 }
 
 export interface Toast {
@@ -98,6 +99,7 @@ export interface Settings {
     routing_rules_items: string;
     profile: string;
     profile_desc: string;
+    singbox: string;
     close_singbox: string;
     close_singbox_desc: string;
     close_helper: string;

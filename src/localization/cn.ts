@@ -22,7 +22,8 @@ const chinese: Language = {
         drawer_update_label: '新版本',
         drawer_speed_test: '速度测试',
         drawer_about: '关于应用',
-        drawer_lang: '更改语言'
+        drawer_lang: '更改语言',
+        drawer_singbox: 'Singbox 设置'
     },
     toast: {
         ip_check_please_wait: '请等待几秒钟后重试检查！',
@@ -98,8 +99,9 @@ const chinese: Language = {
         routing_rules_items: '项目',
         profile: '个人资料',
         profile_desc: '您保存的端点',
-        close_singbox: '停止 Singbox',
-        close_singbox_desc: '断开连接时自动关闭 Singbox',
+        singbox: 'Singbox 设置',
+        close_singbox: '停止操作',
+        close_singbox_desc: '断开连接时自动关闭 sing-box',
         close_helper: '停止助手',
         close_helper_desc: '退出时自动关闭助手',
         mtu: 'MTU 值',

@@ -22,7 +22,8 @@ const english: Language = {
         drawer_update_label: 'New Update',
         drawer_speed_test: 'Speed Test',
         drawer_about: 'About App',
-        drawer_lang: 'Language Change'
+        drawer_lang: 'Language Change',
+        drawer_singbox: 'Singbox Settings'
     },
     toast: {
         ip_check_please_wait: 'Please wait a few seconds to retry the check!',
@@ -98,9 +99,10 @@ const english: Language = {
         routing_rules_items: 'Items',
         profile: 'Profile',
         profile_desc: 'Endpoints saved by you',
-        close_singbox: 'Stop Singbox',
+        singbox: 'Singbox Settings',
+        close_singbox: 'Stop operation',
         close_singbox_desc: 'Automatically close sing-box on disconnect',
-        close_helper: 'Stop Helper',
+        close_helper: 'Stop helper',
         close_helper_desc: 'Automatically close helper on exit',
         mtu: 'MTU Value',
         mtu_desc: 'Set the Maximum Transmission Unit'

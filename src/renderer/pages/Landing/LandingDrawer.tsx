@@ -62,6 +62,12 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                         </Link>
                     </li>
                     <li role='presentation'>
+                        <Link to={'/singBox'} role='menuitem'>
+                            <i className={'material-icons'}>&#xea25;</i>
+                            <span>{appLang?.home?.drawer_singbox}</span>
+                        </Link>
+                    </li>
+                    <li role='presentation'>
                         <Link to={'/scanner'} role='menuitem'>
                             <i className={'material-icons'}>&#xe2db;</i>
                             <span>{appLang?.home?.drawer_settings_scanner}</span>
@@ -71,12 +77,6 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                         <Link to={'/options'} role='menuitem'>
                             <i className={'material-icons'}>&#xe8b8;</i>
                             <span>{appLang?.home?.drawer_settings_app}</span>
-                        </Link>
-                    </li>
-                    <li role='presentation'>
-                        <Link to={'/singBox'} role='menuitem'>
-                            <i className={'material-icons'}>settings</i>
-                            <span>SingBox Settings</span>
                         </Link>
                     </li>
                     <li className='divider' />
