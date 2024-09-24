@@ -7,6 +7,7 @@ export interface Status {
     disconnecting: string;
     disconnected: string;
     ip_check: string;
+    keep_trying: string;
 }
 
 export interface Home {

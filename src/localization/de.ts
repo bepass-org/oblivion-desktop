@@ -8,7 +8,8 @@ const deutsch: Language = {
         connected_confirm: 'Verbunden',
         disconnecting: 'Trenne ...',
         disconnected: 'Getrennt',
-        ip_check: 'IP wird geprüft ...'
+        ip_check: 'IP wird geprüft ...',
+        keep_trying: 'Bitte warten Sie einen Moment, um es erneut zu versuchen...'
     },
     home: {
         title_warp_based: 'Warp',

@@ -8,7 +8,8 @@ const chinese: Language = {
         connected_confirm: '已连接',
         disconnecting: '断开连接中...',
         disconnected: '已断开连接',
-        ip_check: '检查 IP 中...'
+        ip_check: '检查 IP 中...',
+        keep_trying: '请稍等片刻，再次尝试...'
     },
     home: {
         title_warp_based: '基于 Warp',

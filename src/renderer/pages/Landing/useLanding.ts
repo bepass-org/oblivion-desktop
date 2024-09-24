@@ -5,7 +5,12 @@ import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { isDev, ipcRenderer, onEscapeKeyPressed, formatNetworkStat } from '../../lib/utils';
-import { defaultToast, defaultToastWithSubmitButton } from '../../lib/toasts';
+import {
+    defaultToast,
+    defaultToastWithSubmitButton,
+    loadingToast,
+    stopLoadingToast
+} from '../../lib/toasts';
 import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
@@ -318,6 +323,13 @@ const useLanding = () => {
             } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
                 ipcRenderer.sendMessage('wp-end');
                 setIsLoading(true);
+                loadingToast(appLang.status.keep_trying);
+                setTimeout(function () {
+                    stopLoadingToast();
+                    ipcRenderer.sendMessage('wp-start');
+                    setIsLoading(true);
+                    setPing(0);
+                }, 3500);
             } else {
                 toast.remove('ipChangedToIR');
             }

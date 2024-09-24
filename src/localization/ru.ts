@@ -8,7 +8,8 @@ const russian: Language = {
         connected_confirm: 'Подключено',
         disconnecting: 'Отключение ...',
         disconnected: 'Отключено',
-        ip_check: 'Проверка IP ...'
+        ip_check: 'Проверка IP ...',
+        keep_trying: 'Пожалуйста, подождите немного, чтобы попытаться снова...'
     },
     home: {
         title_warp_based: 'На основе Warp',
