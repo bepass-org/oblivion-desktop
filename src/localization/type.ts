@@ -7,6 +7,7 @@ export interface Status {
     disconnecting: string;
     disconnected: string;
     ip_check: string;
+    keep_trying: string;
 }
 
 export interface Home {
@@ -22,6 +23,7 @@ export interface Home {
     drawer_speed_test: string;
     drawer_about: string;
     drawer_lang: string;
+    drawer_singbox: string;
 }
 
 export interface Toast {
@@ -98,6 +100,13 @@ export interface Settings {
     routing_rules_items: string;
     profile: string;
     profile_desc: string;
+    singbox: string;
+    close_singbox: string;
+    close_singbox_desc: string;
+    close_helper: string;
+    close_helper_desc: string;
+    mtu: string;
+    mtu_desc: string;
 }
 
 export interface Tabs {
@@ -106,6 +115,7 @@ export interface Tabs {
     network: string;
     scanner: string;
     app: string;
+    singbox: string;
 }
 
 export interface Modal {
@@ -126,6 +136,8 @@ export interface Modal {
     profile_name: string;
     profile_endpoint: string;
     profile_limitation: (value: string) => string;
+    mtu_title: string;
+    mtu_desc: string;
     confirm: string;
     update: string;
     cancel: string;

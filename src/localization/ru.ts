@@ -8,7 +8,8 @@ const russian: Language = {
         connected_confirm: 'Подключено',
         disconnecting: 'Отключение ...',
         disconnected: 'Отключено',
-        ip_check: 'Проверка IP ...'
+        ip_check: 'Проверка IP ...',
+        keep_trying: 'Пожалуйста, подождите немного, чтобы попытаться снова...'
     },
     home: {
         title_warp_based: 'На основе Warp',
@@ -22,7 +23,8 @@ const russian: Language = {
         drawer_update_label: 'Новое обновление',
         drawer_speed_test: 'Тест скорости',
         drawer_about: 'О приложении',
-        drawer_lang: 'Изменить язык'
+        drawer_lang: 'Изменить язык',
+        drawer_singbox: 'Настройки Singbox'
     },
     toast: {
         ip_check_please_wait: 'Пожалуйста, подождите несколько секунд, чтобы повторить проверку!',
@@ -98,14 +100,22 @@ const russian: Language = {
         routing_rules_disabled: 'Отключено',
         routing_rules_items: 'Предметы',
         profile: 'Профиль',
-        profile_desc: 'Сохраненные вами конечные точки'
+        profile_desc: 'Сохраненные вами конечные точки',
+        singbox: 'Настройки Singbox',
+        close_singbox: 'Остановка операции',
+        close_singbox_desc: 'Автоматически закрывать Singbox при отключении',
+        close_helper: 'Остановка помощника',
+        close_helper_desc: 'Автоматически закрывать помощник при выходе',
+        mtu: 'Значение MTU',
+        mtu_desc: 'Установить максимальную единицу передачи'
     },
     tabs: {
         home: 'Связь',
         warp: 'Warp',
         network: 'Сеть',
         scanner: 'Сканер',
-        app: 'заявка'
+        app: 'заявка',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Конечная точка',
@@ -127,6 +137,9 @@ const russian: Language = {
         profile_name: 'Название',
         profile_endpoint: 'Конечная точка',
         profile_limitation: (value) => `Вы можете добавить максимум ${value} конечных точек.`,
+        mtu_title: 'Значение MTU',
+        mtu_desc:
+            'Максимальная единица передачи (MTU) относится к максимальному размеру пакетов данных, который должен быть установлен в пределах от 1000 до 9999.',
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'

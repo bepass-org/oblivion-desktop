@@ -8,6 +8,7 @@ import Debug from '../pages/Debug';
 import Scanner from '../pages/Scanner';
 import Network from '../pages/Network';
 import Speed from '../pages/SpeedTest';
+import SingBox from '../pages/SingBox';
 
 const AppRoutes = () => {
     return (
@@ -20,6 +21,7 @@ const AppRoutes = () => {
             <Route path='/scanner' element={<Scanner />} />
             <Route path='/network' element={<Network />} />
             <Route path='/speed' element={<Speed />} />
+            <Route path='/singBox' element={<SingBox />} />
         </Routes>
     );
 };

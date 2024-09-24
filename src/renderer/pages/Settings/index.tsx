@@ -28,7 +28,8 @@ export default function Settings() {
         setLicense,
         showLicenseModal,
         loading,
-        locationItems
+        locationItems,
+        proxyMode
     } = useSettings();
 
     if (loading) return <div className='settings' />;
@@ -56,7 +57,7 @@ export default function Settings() {
                 onClose={onCloseLicenseModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
-                <Tabs active='settings' />
+                <Tabs active='settings' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     {/*<div
                         className={'item'}

@@ -8,7 +8,8 @@ const deutsch: Language = {
         connected_confirm: 'Verbunden',
         disconnecting: 'Trenne ...',
         disconnected: 'Getrennt',
-        ip_check: 'IP wird geprüft ...'
+        ip_check: 'IP wird geprüft ...',
+        keep_trying: 'Bitte warten Sie einen Moment, um es erneut zu versuchen...'
     },
     home: {
         title_warp_based: 'Warp',
@@ -22,7 +23,8 @@ const deutsch: Language = {
         drawer_update_label: 'Neues Update',
         drawer_speed_test: 'Geschwindigkeitstest',
         drawer_about: 'Über',
-        drawer_lang: 'Sprache ändern'
+        drawer_lang: 'Sprache ändern',
+        drawer_singbox: 'Singbox-Einstellungen'
     },
     toast: {
         ip_check_please_wait:
@@ -99,14 +101,22 @@ const deutsch: Language = {
         routing_rules_disabled: 'Deaktiviert',
         routing_rules_items: 'Elemente',
         profile: 'Profil',
-        profile_desc: 'Von Ihnen gespeicherte Endpunkte'
+        profile_desc: 'Von Ihnen gespeicherte Endpunkte',
+        singbox: 'Singbox-Einstellungen',
+        close_singbox: 'Betrieb stoppen',
+        close_singbox_desc: 'Singbox bei Trennung automatisch schließen',
+        close_helper: 'Helfer stoppen',
+        close_helper_desc: 'Helper beim Beenden automatisch schließen',
+        mtu: 'MTU-Wert',
+        mtu_desc: 'Die maximale Übertragungseinheit festlegen'
     },
     tabs: {
         home: 'Verbinden',
         warp: 'Warp',
         network: 'Netzwerk',
         scanner: 'Scanner',
-        app: 'App'
+        app: 'App',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpunkt',
@@ -128,6 +138,9 @@ const deutsch: Language = {
         profile_name: 'Titel',
         profile_endpoint: 'Endpunkt',
         profile_limitation: (value) => `Sie können maximal ${value} Endpunkte hinzufügen.`,
+        mtu_title: 'MTU-Wert',
+        mtu_desc:
+            'Die maximale Übertragungseinheit (MTU) bezieht sich auf die maximale Größe von Datenpaketen, die zwischen 1000 und 9999 eingestellt werden sollte.',
         confirm: 'Ich bestätige',
         update: 'Update',
         cancel: 'Abbrechen'

@@ -8,7 +8,8 @@ const indonesia: Language = {
         connected_confirm: 'Berhasil Terhubung',
         disconnecting: 'Memutuskan ...',
         disconnected: 'Terputus',
-        ip_check: 'Mengecek IP ...'
+        ip_check: 'Mengecek IP ...',
+        keep_trying: 'Silakan tunggu sebentar untuk mencoba lagi...'
     },
     home: {
         title_warp_based: 'Berbasis Warp',
@@ -22,7 +23,8 @@ const indonesia: Language = {
         drawer_update_label: 'Pembaruan Baru',
         drawer_speed_test: 'Uji kecepatan',
         drawer_about: 'Tentang Aplikasi',
-        drawer_lang: 'Ganti Bahasa'
+        drawer_lang: 'Ganti Bahasa',
+        drawer_singbox: 'Pengaturan Singbox'
     },
     toast: {
         ip_check_please_wait: 'Mohon tunggu beberapa detik untuk mencoba kembali pemeriksaan!',
@@ -97,14 +99,22 @@ const indonesia: Language = {
         routing_rules_disabled: 'Dimatikan',
         routing_rules_items: 'Item',
         profile: 'Profil',
-        profile_desc: 'Titik akhir yang disimpan oleh Anda'
+        profile_desc: 'Titik akhir yang disimpan oleh Anda',
+        singbox: 'Pengaturan Singbox',
+        close_singbox: 'Hentikan operasi',
+        close_singbox_desc: 'Otomatis tutup sing-box saat terputus',
+        close_helper: 'Hentikan pembantu',
+        close_helper_desc: 'Tutup otomatis pembantu saat keluar',
+        mtu: 'Nilai MTU',
+        mtu_desc: 'Atur Maximum Transmission Unit'
     },
     tabs: {
         home: 'Hubungkan',
         warp: 'Warp',
         network: 'Network',
         scanner: 'Scanner',
-        app: 'App'
+        app: 'App',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -126,6 +136,9 @@ const indonesia: Language = {
         profile_name: 'Judul',
         profile_endpoint: 'Titik Akhir',
         profile_limitation: (value) => `Anda dapat menambahkan maksimal ${value} titik akhir.`,
+        mtu_title: 'Nilai MTU',
+        mtu_desc:
+            'Maximum Transmission Unit (MTU) mengacu pada ukuran maksimum paket data, yang harus diatur antara 1000 hingga 9999.',
         confirm: 'Saya mengerti',
         update: 'Perbarui',
         cancel: 'Batalkan'

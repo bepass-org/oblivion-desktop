@@ -8,7 +8,8 @@ const chinese: Language = {
         connected_confirm: '已连接',
         disconnecting: '断开连接中...',
         disconnected: '已断开连接',
-        ip_check: '检查 IP 中...'
+        ip_check: '检查 IP 中...',
+        keep_trying: '请稍等片刻，再次尝试...'
     },
     home: {
         title_warp_based: '基于 Warp',
@@ -22,7 +23,8 @@ const chinese: Language = {
         drawer_update_label: '新版本',
         drawer_speed_test: '速度测试',
         drawer_about: '关于应用',
-        drawer_lang: '更改语言'
+        drawer_lang: '更改语言',
+        drawer_singbox: 'Singbox 设置'
     },
     toast: {
         ip_check_please_wait: '请等待几秒钟后重试检查！',
@@ -97,14 +99,22 @@ const chinese: Language = {
         routing_rules_disabled: '已禁用',
         routing_rules_items: '项目',
         profile: '个人资料',
-        profile_desc: '您保存的端点'
+        profile_desc: '您保存的端点',
+        singbox: 'Singbox 设置',
+        close_singbox: '停止操作',
+        close_singbox_desc: '断开连接时自动关闭 sing-box',
+        close_helper: '停止助手',
+        close_helper_desc: '退出时自动关闭助手',
+        mtu: 'MTU 值',
+        mtu_desc: '设置最大传输单元'
     },
     tabs: {
         home: '连接',
         warp: 'Warp',
         network: '网络',
         scanner: '扫描仪',
-        app: '应用'
+        app: '应用',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: '端点',
@@ -125,6 +135,8 @@ const chinese: Language = {
         profile_name: '标题',
         profile_endpoint: '端点',
         profile_limitation: (value) => `您最多可以添加 ${value} 个端点。`,
+        mtu_title: 'MTU 值',
+        mtu_desc: '最大传输单元 (MTU) 是指数据包的最大大小，应设置在 1000 到 9999 之间。',
         confirm: '确认',
         update: '更新',
         cancel: '取消'

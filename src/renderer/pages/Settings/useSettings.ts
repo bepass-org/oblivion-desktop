@@ -22,6 +22,7 @@ const useSettings = () => {
     const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
+    const [proxyMode, setProxyMode] = useState<string>('');
 
     const navigate = useNavigate();
 
@@ -57,6 +58,9 @@ const useSettings = () => {
         });*/
         settings.get('method').then((value) => {
             setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
+        });
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -180,7 +184,8 @@ const useSettings = () => {
         onKeyDownGool,
         onEnablePsiphon,
         onKeyDownPsiphon,
-        onChangeLocation
+        onChangeLocation,
+        proxyMode
     };
 };
 
