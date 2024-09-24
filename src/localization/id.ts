@@ -8,7 +8,8 @@ const indonesia: Language = {
         connected_confirm: 'Berhasil Terhubung',
         disconnecting: 'Memutuskan ...',
         disconnected: 'Terputus',
-        ip_check: 'Mengecek IP ...'
+        ip_check: 'Mengecek IP ...',
+        keep_trying: 'Silakan tunggu sebentar untuk mencoba lagi...'
     },
     home: {
         title_warp_based: 'Berbasis Warp',

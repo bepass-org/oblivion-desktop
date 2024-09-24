@@ -8,7 +8,8 @@ const persian: Language = {
         connected_confirm: 'متصل هستید',
         disconnecting: 'قطع ارتباط ...',
         disconnected: 'متصل نیستید',
-        ip_check: 'دریافت اطلاعات ...'
+        ip_check: 'دریافت اطلاعات ...',
+        keep_trying: 'جهت تکرار تلاش، کمی صبر کنید ...'
     },
     home: {
         title_warp_based: 'بر پایه وارپ',

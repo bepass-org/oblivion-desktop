@@ -8,7 +8,8 @@ const turkish: Language = {
         connected_confirm: 'Bağlandı',
         disconnecting: 'Bağlantı kesiliyor ...',
         disconnected: 'Bağlantı kesildi',
-        ip_check: 'IP kontrol ediliyor ...'
+        ip_check: 'IP kontrol ediliyor ...',
+        keep_trying: 'Tekrar denemek için lütfen bir süre bekleyin...'
     },
     home: {
         title_warp_based: 'Warp Tabanlı',
