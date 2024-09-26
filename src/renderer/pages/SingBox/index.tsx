@@ -4,12 +4,15 @@ import Nav from '../../components/Nav';
 import useSingBox from './useSingBox';
 import MTUModal from '../../components/Modal/MTU';
 import Tabs from '../../components/Tabs';
+import { singBoxGeo } from '../../../defaultSettings';
 
 export default function SingBox() {
     const {
         appLang,
         closeSingBox,
         closeHelper,
+        geo,
+        onChangeGeo,
         mtu,
         setMtu,
         handleCloseSingBoxOnClick,
@@ -25,6 +28,7 @@ export default function SingBox() {
     if (
         typeof closeSingBox === 'undefined' ||
         typeof closeHelper === 'undefined' ||
+        typeof geo === 'undefined' ||
         typeof mtu === 'undefined'
     )
         return <div className='settings' />;
@@ -74,6 +78,24 @@ export default function SingBox() {
                             </div>
                         </div>
                         <div className='info'>{appLang.settings.close_helper_desc}</div>
+                    </div>
+                    <div className={classNames('item')}>
+                        <label className='key'>GeoIp & GeoSite</label>
+                        <div className='value'>
+                            <select
+                                tabIndex={-1}
+                                id='flex-switch-check-checked-dns'
+                                onChange={onChangeGeo}
+                                value={geo}
+                            >
+                                {singBoxGeo.map((option) => (
+                                    <option value={option.region} tabIndex={0} key={option.region}>
+                                        {option.region}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='info'>Change SingBox GeoIp & GeoSite</div>
                     </div>
                     <div
                         role='button'

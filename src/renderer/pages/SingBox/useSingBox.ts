@@ -1,8 +1,8 @@
-import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import useTranslate from '../../../localization/useTranslate';
-import { defaultSettings } from '../../../defaultSettings';
+import { defaultSettings, singBoxGeo } from '../../../defaultSettings';
 
 const useSingBox = () => {
     useGoBackOnEscape();
@@ -12,6 +12,7 @@ const useSingBox = () => {
     const [mtu, setMtu] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
+    const [geo, setGeo] = useState<undefined | string>();
 
     useEffect(() => {
         settings.get('closeSingBox').then((value) => {
@@ -25,6 +26,9 @@ const useSingBox = () => {
         });
         settings.get('proxyMode').then((value) => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
+        });
+        settings.get('singBoxGeo').then((value) => {
+            setGeo(typeof value === 'undefined' ? singBoxGeo[0].region : value);
         });
     }, []);
 
@@ -68,10 +72,17 @@ const useSingBox = () => {
         [onClickMtu]
     );
 
+    const onChangeGeo = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+        const newGeo = event.target.value;
+        settings.set('singBoxGeo', newGeo).then(() => setGeo(newGeo));
+    }, []);
+
     return {
         appLang,
         closeSingBox,
         closeHelper,
+        geo,
+        onChangeGeo,
         mtu,
         setMtu,
         handleCloseSingBoxOnClick,

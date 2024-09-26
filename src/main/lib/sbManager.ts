@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import settings from 'electron-settings';
 import { isDev } from './utils';
-import { defaultSettings } from '../../defaultSettings';
+import { defaultSettings, singBoxGeo } from '../../defaultSettings';
 import { createSbConfig } from './sbConfig';
 
 type PlatformCommands = {
@@ -139,8 +139,23 @@ class SingBoxManager {
 
     private async initialize(): Promise<void> {
         const port = (await settings.get('port')) || defaultSettings.port;
+        const geo = await settings.get('singBoxGeo');
         const mtu = (await settings.get('singBoxMTU')) || defaultSettings.singBoxMTU;
-        createSbConfig(Number(port), Number(mtu));
+
+        const selectedGeo = singBoxGeo.find((item) => item.region === geo) || singBoxGeo[0];
+        if (selectedGeo.region !== 'None') {
+            log.info(
+                `GeoRegion: ${selectedGeo.region}, GeoIP: ${selectedGeo.geoIp}, GeoSite: ${selectedGeo.geoSite}`
+            );
+        }
+
+        createSbConfig(
+            Number(port),
+            Number(mtu),
+            selectedGeo.region,
+            selectedGeo.geoIp,
+            selectedGeo.geoSite
+        );
 
         const closeSingBox = await settings.get('closeSingBox');
         const closeHelper = await settings.get('closeHelper');

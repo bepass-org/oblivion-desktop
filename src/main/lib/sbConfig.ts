@@ -2,9 +2,21 @@ import fs from 'fs';
 import log from 'electron-log';
 import { sbConfigPath } from '../ipcListeners/wp';
 
-export function createSbConfig(socksServerPort: number, mtu: number) {
-    if (socksServerPort === undefined || mtu === undefined) {
-        throw new Error('socksServerPort and mtu are required parameters');
+export function createSbConfig(
+    socksServerPort: number,
+    mtu: number,
+    geoRegion: string,
+    geoIp: string,
+    geoSite: string
+) {
+    if (
+        socksServerPort === undefined ||
+        mtu === undefined ||
+        geoRegion === undefined ||
+        geoIp === undefined ||
+        geoSite === undefined
+    ) {
+        throw new Error('some required parameters are undefined');
     }
 
     const config = {
@@ -48,7 +60,51 @@ export function createSbConfig(socksServerPort: number, mtu: number) {
                 {
                     network: 'udp',
                     outbound: 'direct-out'
-                }
+                },
+                {
+                    ip_is_private: true,
+                    outbound: 'direct-out'
+                },
+                ...(geoIp !== ''
+                    ? [
+                          {
+                              rule_set: `geoip-${geoRegion.toLowerCase()}`,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
+                ...(geoSite !== ''
+                    ? [
+                          {
+                              rule_set: `geosite-${geoRegion.toLowerCase()}`,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : [])
+            ],
+            rule_set: [
+                ...(geoIp !== ''
+                    ? [
+                          {
+                              tag: `geoip-${geoRegion.toLowerCase()}`,
+                              type: 'remote',
+                              format: 'binary',
+                              url: geoIp,
+                              download_detour: 'direct-out'
+                          }
+                      ]
+                    : []),
+                ...(geoSite !== ''
+                    ? [
+                          {
+                              tag: `geosite-${geoRegion.toLowerCase()}`,
+                              type: 'remote',
+                              format: 'binary',
+                              url: geoSite,
+                              download_detour: 'direct-out'
+                          }
+                      ]
+                    : [])
             ],
             final: 'socks-out',
             auto_detect_interface: true
