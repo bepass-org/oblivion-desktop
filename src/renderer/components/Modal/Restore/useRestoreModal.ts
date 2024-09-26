@@ -1,5 +1,5 @@
 import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { defaultSettings, dnsServers } from '../../../../defaultSettings';
+import { defaultSettings, dnsServers, singBoxGeo } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
@@ -104,6 +104,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('closeSingBox', defaultSettings.closeSingBox);
         await settings.set('closeHelper', defaultSettings.closeHelper);
         await settings.set('singBoxMTU', defaultSettings.singBoxMTU);
+        await settings.set('singBoxGeo', singBoxGeo[0].region);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
