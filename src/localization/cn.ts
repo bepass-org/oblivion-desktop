@@ -106,7 +106,11 @@ const chinese: Language = {
         close_helper: '停止助手',
         close_helper_desc: '退出时自动关闭助手',
         mtu: 'MTU 值',
-        mtu_desc: '设置最大传输单元'
+        mtu_desc: '设置最大传输单元',
+        geo_block: '阻止',
+        geo_block_desc: '广告、恶意软件、网络钓鱼和加密货币矿工',
+        geo_rules: '路由',
+        geo_rules_desc: '应用 GeoIP 和 GeoSite 规则'
     },
     tabs: {
         home: '连接',

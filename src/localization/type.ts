@@ -107,6 +107,10 @@ export interface Settings {
     close_helper_desc: string;
     mtu: string;
     mtu_desc: string;
+    geo_block: string;
+    geo_block_desc: string;
+    geo_rules: string;
+    geo_rules_desc: string;
 }
 
 export interface Tabs {

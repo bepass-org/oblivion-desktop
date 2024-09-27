@@ -108,7 +108,11 @@ const deutsch: Language = {
         close_helper: 'Helfer stoppen',
         close_helper_desc: 'Helper beim Beenden automatisch schließen',
         mtu: 'MTU-Wert',
-        mtu_desc: 'Die maximale Übertragungseinheit festlegen'
+        mtu_desc: 'Die maximale Übertragungseinheit festlegen',
+        geo_block: 'Blockierung',
+        geo_block_desc: 'Werbung, Malware, Phishing und Kryptowährungs-Miner',
+        geo_rules: 'Routing',
+        geo_rules_desc: 'Anwendung von GeoIP- und GeoSite-Regeln'
     },
     tabs: {
         home: 'Verbinden',

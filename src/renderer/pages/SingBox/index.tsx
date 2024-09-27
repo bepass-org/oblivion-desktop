@@ -43,7 +43,7 @@ export default function SingBox() {
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <Tabs active='singbox' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
-                <div
+                    <div
                         role='button'
                         className={classNames('item')}
                         onClick={handleSingBoxGeoBlockOnClick}
@@ -51,7 +51,7 @@ export default function SingBox() {
                         tabIndex={0}
                     >
                         <label className='key' htmlFor='sing-box'>
-                            GeoBlock
+                            {appLang.settings.geo_block}
                         </label>
                         <div className='value'>
                             <div
@@ -61,10 +61,10 @@ export default function SingBox() {
                                 <i className='material-icons'>&#xe876;</i>
                             </div>
                         </div>
-                        <div className='info'>Block Ads, Malware, Phishing, Crypto Miners</div>
+                        <div className='info'>{appLang.settings.geo_block_desc}</div>
                     </div>
                     <div className={classNames('item')}>
-                        <label className='key'>GeoIp & GeoSite</label>
+                        <label className='key'>{appLang.settings.geo_rules}</label>
                         <div className='value'>
                             <select
                                 tabIndex={-1}
@@ -79,7 +79,7 @@ export default function SingBox() {
                                 ))}
                             </select>
                         </div>
-                        <div className='info'>Change SingBox GeoIp & GeoSite</div>
+                        <div className='info'>{appLang.settings.geo_rules_desc}</div>
                     </div>
                     <div
                         role='button'

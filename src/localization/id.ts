@@ -106,7 +106,11 @@ const indonesia: Language = {
         close_helper: 'Hentikan pembantu',
         close_helper_desc: 'Tutup otomatis pembantu saat keluar',
         mtu: 'Nilai MTU',
-        mtu_desc: 'Atur Maximum Transmission Unit'
+        mtu_desc: 'Atur Maximum Transmission Unit',
+        geo_block: 'Pemblokiran',
+        geo_block_desc: 'Iklan, Malware, Phishing, dan Penambang Kripto',
+        geo_rules: 'Perutean',
+        geo_rules_desc: 'Penerapan aturan GeoIP dan GeoSite'
     },
     tabs: {
         home: 'Hubungkan',

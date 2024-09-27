@@ -106,7 +106,11 @@ const english: Language = {
         close_helper: 'Stop helper',
         close_helper_desc: 'Automatically close helper on exit',
         mtu: 'MTU Value',
-        mtu_desc: 'Set the Maximum Transmission Unit'
+        mtu_desc: 'Set the Maximum Transmission Unit',
+        geo_block: 'Blocking',
+        geo_block_desc: 'Ads, Malware, Phishing & Crypto Miners',
+        geo_rules: 'Routing rules',
+        geo_rules_desc: 'Applying GeoIP and GeoSite rules'
     },
     tabs: {
         home: 'Connect',
