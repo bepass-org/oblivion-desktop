@@ -88,7 +88,10 @@ technology
                 :white_check_mark:  Russian <br>
                 :white_check_mark:  Deutsch <br>
                 :white_check_mark:  Turkish <br>
-                :white_check_mark:  Indonesia
+                :white_check_mark:  Indonesian <br>
+                :white_check_mark:  Arabic <br>
+                :white_check_mark:  Portuguese (Brazil) <br>
+                :white_check_mark:  Vietnamese
             </td>
         </tr>
         <tr>
