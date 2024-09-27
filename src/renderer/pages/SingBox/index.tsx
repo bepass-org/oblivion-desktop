@@ -43,47 +43,7 @@ export default function SingBox() {
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <Tabs active='singbox' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
-                    <div
-                        role='button'
-                        className={classNames('item')}
-                        onClick={handleCloseSingBoxOnClick}
-                        onKeyDown={handleCloseSingBoxOnKeyDown}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='sing-box'>
-                            {appLang.settings.close_singbox}
-                        </label>
-                        <div className='value'>
-                            <div
-                                className={classNames('checkbox', closeSingBox ? 'checked' : '')}
-                                tabIndex={-1}
-                            >
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang.settings.close_singbox_desc}</div>
-                    </div>
-                    <div
-                        role='button'
-                        className={classNames('item')}
-                        onClick={handleCloseHelperOnClick}
-                        onKeyDown={handleCloseHelperOnKeyDown}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='sing-box'>
-                            {appLang.settings.close_helper}
-                        </label>
-                        <div className='value'>
-                            <div
-                                className={classNames('checkbox', closeHelper ? 'checked' : '')}
-                                tabIndex={-1}
-                            >
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang.settings.close_helper_desc}</div>
-                    </div>
-                    <div
+                <div
                         role='button'
                         className={classNames('item')}
                         onClick={handleSingBoxGeoBlockOnClick}
@@ -137,6 +97,52 @@ export default function SingBox() {
                             </span>
                         </div>
                         <div className='info'>{appLang.settings.mtu_desc}</div>
+                    </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    {appLang?.settings?.more}
+                </div>
+                <div className='settings' role='menu'>
+                    <div
+                        role='button'
+                        className={classNames('item')}
+                        onClick={handleCloseSingBoxOnClick}
+                        onKeyDown={handleCloseSingBoxOnKeyDown}
+                        tabIndex={0}
+                    >
+                        <label className='key' htmlFor='sing-box'>
+                            {appLang.settings.close_singbox}
+                        </label>
+                        <div className='value'>
+                            <div
+                                className={classNames('checkbox', closeSingBox ? 'checked' : '')}
+                                tabIndex={-1}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang.settings.close_singbox_desc}</div>
+                    </div>
+                    <div
+                        role='button'
+                        className={classNames('item')}
+                        onClick={handleCloseHelperOnClick}
+                        onKeyDown={handleCloseHelperOnKeyDown}
+                        tabIndex={0}
+                    >
+                        <label className='key' htmlFor='sing-box'>
+                            {appLang.settings.close_helper}
+                        </label>
+                        <div className='value'>
+                            <div
+                                className={classNames('checkbox', closeHelper ? 'checked' : '')}
+                                tabIndex={-1}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang.settings.close_helper_desc}</div>
                     </div>
                 </div>
             </div>
