@@ -39,18 +39,18 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
 
-    const removeDuplicates = (endpoints:any) => {
+    const removeDuplicates = (endpoints: any) => {
         if (!endpoints?.ipv4 && !endpoints?.ipv6) {
             return {
                 ipv4: [],
-                ipv6: [],
+                ipv6: []
             };
         }
         const uniqueIpv4 = Array.from(new Set(endpoints.ipv4));
         const uniqueIpv6 = Array.from(new Set(endpoints.ipv6));
         return {
             ipv4: uniqueIpv4,
-            ipv6: uniqueIpv6,
+            ipv6: uniqueIpv6
         };
     };
 
