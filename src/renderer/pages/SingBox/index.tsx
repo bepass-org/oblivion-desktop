@@ -114,7 +114,7 @@ export default function SingBox() {
                             >
                                 {singBoxGeo.map((option) => (
                                     <option value={option.region} tabIndex={0} key={option.region}>
-                                        {option.region}
+                                        {option.label}
                                     </option>
                                 ))}
                             </select>

@@ -126,15 +126,17 @@ export const dnsServers: { value: string; label: string }[] = [
     { value: '94.140.14.15', label: 'Adguard Family' }
 ];
 
-export const singBoxGeo: { region: string; geoIp: string; geoSite: string }[] = [
-    { region: 'None', geoIp: '', geoSite: '' },
+export const singBoxGeo: { label:string; region: string; geoIp: string; geoSite: string }[] = [
+    { label: 'None', region: 'None', geoIp: '', geoSite: '' },
     {
+        label: '🇮🇷 Iran',
         region: 'IR',
         geoIp: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs',
         geoSite:
             'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs'
     },
     {
+        label: '🇨🇳 China',
         region: 'CN',
         geoIp: 'https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs',
         geoSite: 'https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs'
