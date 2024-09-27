@@ -126,7 +126,7 @@ export const dnsServers: { value: string; label: string }[] = [
     { value: '94.140.14.15', label: 'Adguard Family' }
 ];
 
-export const singBoxGeo: { label:string; region: string; geoIp: string; geoSite: string }[] = [
+export const singBoxGeo: { label: string; region: string; geoIp: string; geoSite: string }[] = [
     { label: 'None', region: 'None', geoIp: '', geoSite: '' },
     {
         label: '🇮🇷 Iran',
