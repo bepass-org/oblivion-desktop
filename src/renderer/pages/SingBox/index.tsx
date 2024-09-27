@@ -44,14 +44,11 @@ export default function SingBox() {
                 <Tabs active='singbox' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     <div className={classNames('item')}>
-                        <label className='key'>{appLang.settings.geo_rules}</label>
+                        <label className='key' htmlFor='geo_rules'>
+                            {appLang.settings.geo_rules}
+                        </label>
                         <div className='value'>
-                            <select
-                                tabIndex={-1}
-                                id='flex-switch-check-checked-dns'
-                                onChange={onChangeGeo}
-                                value={geo}
-                            >
+                            <select tabIndex={-1} id='geo_rules' onChange={onChangeGeo} value={geo}>
                                 {singBoxGeo.map((option) => (
                                     <option value={option.region} tabIndex={0} key={option.region}>
                                         {option.label}
@@ -68,7 +65,7 @@ export default function SingBox() {
                         onKeyDown={handleSingBoxGeoBlockOnKeyDown}
                         tabIndex={0}
                     >
-                        <label className='key' htmlFor='sing-box'>
+                        <label className='key' htmlFor='geo_block'>
                             {appLang.settings.geo_block}
                         </label>
                         <div className='value'>
@@ -94,7 +91,7 @@ export default function SingBox() {
                         onKeyDown={handleCloseSingBoxOnKeyDown}
                         tabIndex={0}
                     >
-                        <label className='key' htmlFor='sing-box'>
+                        <label className='key' htmlFor='close_singbox'>
                             {appLang.settings.close_singbox}
                         </label>
                         <div className='value'>
@@ -114,7 +111,7 @@ export default function SingBox() {
                         onKeyDown={handleCloseHelperOnKeyDown}
                         tabIndex={0}
                     >
-                        <label className='key' htmlFor='sing-box'>
+                        <label className='key' htmlFor='close_helper'>
                             {appLang.settings.close_helper}
                         </label>
                         <div className='value'>
