@@ -43,6 +43,24 @@ export default function SingBox() {
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <Tabs active='singbox' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
+                    <div className={classNames('item')}>
+                        <label className='key'>{appLang.settings.geo_rules}</label>
+                        <div className='value'>
+                            <select
+                                tabIndex={-1}
+                                id='flex-switch-check-checked-dns'
+                                onChange={onChangeGeo}
+                                value={geo}
+                            >
+                                {singBoxGeo.map((option) => (
+                                    <option value={option.region} tabIndex={0} key={option.region}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='info'>{appLang.settings.geo_rules_desc}</div>
+                    </div>
                     <div
                         role='button'
                         className={classNames('item')}
@@ -62,24 +80,6 @@ export default function SingBox() {
                             </div>
                         </div>
                         <div className='info'>{appLang.settings.geo_block_desc}</div>
-                    </div>
-                    <div className={classNames('item')}>
-                        <label className='key'>{appLang.settings.geo_rules}</label>
-                        <div className='value'>
-                            <select
-                                tabIndex={-1}
-                                id='flex-switch-check-checked-dns'
-                                onChange={onChangeGeo}
-                                value={geo}
-                            >
-                                {singBoxGeo.map((option) => (
-                                    <option value={option.region} tabIndex={0} key={option.region}>
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className='info'>{appLang.settings.geo_rules_desc}</div>
                     </div>
                     <div
                         role='button'
@@ -103,7 +103,7 @@ export default function SingBox() {
                     <i className='material-icons'>&#xe313;</i>
                     {appLang?.settings?.more}
                 </div>
-                <div className='settings' role='menu'>
+                <div className='settings' role='menu' tabIndex={0}>
                     <div
                         role='button'
                         className={classNames('item')}
