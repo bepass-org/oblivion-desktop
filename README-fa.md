@@ -101,7 +101,10 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark:  روسی<br>
                 :white_check_mark:  آلمانی<br>
                 :white_check_mark:  ترکی<br>
-                :white_check_mark:  اندونزیایی
+                :white_check_mark:  اندونزیایی <br>
+                :white_check_mark:  عربی <br>
+                :white_check_mark:  پرتغالی (برزیل)  <br>
+                :white_check_mark:  ویتنامی
             </td>
         </tr>
         <tr>
@@ -234,10 +237,10 @@ Cloudflare Warp فراهم می‌کند.
 -   [React](https://github.com/facebook/react)
 -   [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 -   [electron-builder](https://github.com/electron-userland/electron-builder)
--   [GitHub](https://github.com/)
 -   [regedit](https://www.npmjs.com/package/regedit)
 -   [sing-box](https://github.com/SagerNet/sing-box)
--   [hiddify-next](https://github.com/hiddify/hiddify-next)
+-   [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
+-   [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 -   [و دیگران 🧡](package.json)
 
 ## مشارکت‌کنندگان

@@ -116,7 +116,10 @@ export const languages: { value: string; label: string }[] = [
     { value: 'ru', label: 'Русский' },
     { value: 'de', label: 'Deutsch' },
     { value: 'tr', label: 'Türkçe' },
-    { value: 'id', label: 'Indonesia' }
+    { value: 'id', label: 'Indonesia' },
+    { value: 'ar', label: 'العربية' },
+    { value: 'pt', label: 'Português (Brasil)' },
+    { value: 'vi', label: 'Tiếng Việt' }
 ];
 
 export const dnsServers: { value: string; label: string }[] = [
