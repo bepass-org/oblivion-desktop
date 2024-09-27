@@ -30,7 +30,8 @@ export type settingsKeys =
     | 'closeSingBox'
     | 'closeHelper'
     | 'singBoxMTU'
-    | 'singBoxGeo';
+    | 'singBoxGeo'
+    | 'singBoxGeoBlock';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -67,7 +68,8 @@ export const defaultSettings = {
     closeSingBox: true,
     closeHelper: true,
     singBoxMTU: 9000,
-    singBoxGeo: ''
+    singBoxGeo: '',
+    singBoxGeoBlock: true
 };
 
 export const countries: { value: string; label: string }[] = [

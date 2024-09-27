@@ -13,6 +13,7 @@ const useSingBox = () => {
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [geo, setGeo] = useState<undefined | string>();
+    const [geoBlock, setGeoBlock] = useState<undefined | boolean>();
 
     useEffect(() => {
         settings.get('closeSingBox').then((value) => {
@@ -29,6 +30,9 @@ const useSingBox = () => {
         });
         settings.get('singBoxGeo').then((value) => {
             setGeo(typeof value === 'undefined' ? singBoxGeo[0].region : value);
+        });
+        settings.get('singBoxGeoBlock').then((value) => {
+            setGeoBlock(typeof value === 'undefined' ? defaultSettings.singBoxGeoBlock : value);
         });
     }, []);
 
@@ -77,6 +81,20 @@ const useSingBox = () => {
         settings.set('singBoxGeo', newGeo).then(() => setGeo(newGeo));
     }, []);
 
+    const handleSingBoxGeoBlockOnClick = useCallback(() => {
+        settings.set('singBoxGeoBlock', !geoBlock).then(() => setGeoBlock(!geoBlock));
+    }, [geoBlock]);
+
+    const handleSingBoxGeoBlockOnKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSingBoxGeoBlockOnClick();
+            }
+        },
+        [handleSingBoxGeoBlockOnClick]
+    );
+
     return {
         appLang,
         closeSingBox,
@@ -92,7 +110,10 @@ const useSingBox = () => {
         onClickMtu,
         onKeyDownClickMtu,
         showPortModal,
-        proxyMode
+        proxyMode,
+        geoBlock,
+        handleSingBoxGeoBlockOnClick,
+        handleSingBoxGeoBlockOnKeyDown
     };
 };
 export default useSingBox;

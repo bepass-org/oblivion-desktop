@@ -22,14 +22,18 @@ export default function SingBox() {
         onClickMtu,
         onKeyDownClickMtu,
         showPortModal,
-        proxyMode
+        proxyMode,
+        geoBlock,
+        handleSingBoxGeoBlockOnClick,
+        handleSingBoxGeoBlockOnKeyDown
     } = useSingBox();
 
     if (
         typeof closeSingBox === 'undefined' ||
         typeof closeHelper === 'undefined' ||
         typeof geo === 'undefined' ||
-        typeof mtu === 'undefined'
+        typeof mtu === 'undefined' ||
+        typeof geoBlock === 'undefined'
     )
         return <div className='settings' />;
 
@@ -78,6 +82,26 @@ export default function SingBox() {
                             </div>
                         </div>
                         <div className='info'>{appLang.settings.close_helper_desc}</div>
+                    </div>
+                    <div
+                        role='button'
+                        className={classNames('item')}
+                        onClick={handleSingBoxGeoBlockOnClick}
+                        onKeyDown={handleSingBoxGeoBlockOnKeyDown}
+                        tabIndex={0}
+                    >
+                        <label className='key' htmlFor='sing-box'>
+                            GeoBlock
+                        </label>
+                        <div className='value'>
+                            <div
+                                className={classNames('checkbox', geoBlock ? 'checked' : '')}
+                                tabIndex={-1}
+                            >
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>Block Ads, Malware, Phishing, Crypto Miners</div>
                     </div>
                     <div className={classNames('item')}>
                         <label className='key'>GeoIp & GeoSite</label>

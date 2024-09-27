@@ -105,6 +105,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('closeHelper', defaultSettings.closeHelper);
         await settings.set('singBoxMTU', defaultSettings.singBoxMTU);
         await settings.set('singBoxGeo', singBoxGeo[0].region);
+        await settings.set('singBoxGeoBlock', defaultSettings.singBoxGeoBlock);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
