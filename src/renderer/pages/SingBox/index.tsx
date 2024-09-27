@@ -81,23 +81,6 @@ export default function SingBox() {
                         </div>
                         <div className='info'>{appLang.settings.geo_block_desc}</div>
                     </div>
-                    <div
-                        role='button'
-                        className='item'
-                        onClick={onClickMtu}
-                        onKeyDown={onKeyDownClickMtu}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='port'>
-                            {appLang.settings.mtu}
-                        </label>
-                        <div className='value' id='port'>
-                            <span className='dirLeft' tabIndex={-1}>
-                                {mtu}
-                            </span>
-                        </div>
-                        <div className='info'>{appLang.settings.mtu_desc}</div>
-                    </div>
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
@@ -143,6 +126,23 @@ export default function SingBox() {
                             </div>
                         </div>
                         <div className='info'>{appLang.settings.close_helper_desc}</div>
+                    </div>
+                    <div
+                        role='button'
+                        className='item'
+                        onClick={onClickMtu}
+                        onKeyDown={onKeyDownClickMtu}
+                        tabIndex={0}
+                    >
+                        <label className='key' htmlFor='mtu'>
+                            {appLang.settings.mtu}
+                        </label>
+                        <div className='value' id='mtu'>
+                            <span className='dirLeft' tabIndex={-1}>
+                                {mtu}
+                            </span>
+                        </div>
+                        <div className='info'>{appLang.settings.mtu_desc}</div>
                     </div>
                 </div>
             </div>
