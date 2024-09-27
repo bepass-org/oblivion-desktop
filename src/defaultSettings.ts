@@ -127,17 +127,17 @@ export const dnsServers: { value: string; label: string }[] = [
 ];
 
 export const singBoxGeo: { label: string; region: string; geoIp: string; geoSite: string }[] = [
-    { label: 'None', region: 'None', geoIp: '', geoSite: '' },
+    { label: 'None', region: 'none', geoIp: '', geoSite: '' },
     {
         label: '🇮🇷 Iran',
-        region: 'IR',
+        region: 'ir',
         geoIp: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs',
         geoSite:
             'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs'
     },
     {
         label: '🇨🇳 China',
-        region: 'CN',
+        region: 'cn',
         geoIp: 'https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs',
         geoSite: 'https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs'
     }

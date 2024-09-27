@@ -74,7 +74,7 @@ export function createSbConfig(
                 ...(geoIp !== ''
                     ? [
                           {
-                              rule_set: `geoip-${geoRegion.toLowerCase()}`,
+                              rule_set: `geoip-${geoRegion}`,
                               outbound: 'direct-out'
                           }
                       ]
@@ -82,7 +82,7 @@ export function createSbConfig(
                 ...(geoSite !== ''
                     ? [
                           {
-                              rule_set: `geosite-${geoRegion.toLowerCase()}`,
+                              rule_set: `geosite-${geoRegion}`,
                               outbound: 'direct-out'
                           }
                       ]
@@ -107,7 +107,7 @@ export function createSbConfig(
                 ...(geoIp !== ''
                     ? [
                           {
-                              tag: `geoip-${geoRegion.toLowerCase()}`,
+                              tag: `geoip-${geoRegion}`,
                               type: 'remote',
                               format: 'binary',
                               url: geoIp,
@@ -118,7 +118,7 @@ export function createSbConfig(
                 ...(geoSite !== ''
                     ? [
                           {
-                              tag: `geosite-${geoRegion.toLowerCase()}`,
+                              tag: `geosite-${geoRegion}`,
                               type: 'remote',
                               format: 'binary',
                               url: geoSite,
