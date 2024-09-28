@@ -23,7 +23,8 @@ const arabic: Language = {
         drawer_update_label: 'تحديث جديد',
         drawer_speed_test: 'اختبار السرعة',
         drawer_about: 'حول التطبيق',
-        drawer_lang: 'تغيير اللغة'
+        drawer_lang: 'تغيير اللغة',
+        drawer_singbox: 'إعدادات صندوق الغناء'
     },
     toast: {
         ip_check_please_wait: 'يرجى الانتظار بضع ثوانٍ لإعادة المحاولة!',
@@ -98,14 +99,27 @@ const arabic: Language = {
         routing_rules_disabled: 'معطل',
         routing_rules_items: 'العناصر',
         profile: 'الملف الشخصي',
-        profile_desc: 'نقاط النهاية المحفوظة من قبلك'
+        profile_desc: 'نقاط النهاية المحفوظة من قبلك',
+        singbox: 'إعدادات Singbox',
+        close_singbox: 'إيقاف العملية',
+        close_singbox_desc: 'إغلاق sing-box تلقائيًا عند قطع الاتصال',
+        close_helper: 'إيقاف المساعد',
+        close_helper_desc: 'إغلاق المساعد تلقائيًا عند الخروج',
+        mtu: 'قيمة MTU',
+        mtu_desc: 'تعيين وحدة الإرسال القصوى',
+        geo_block: 'الحظر',
+        geo_block_desc: 'إعلانات، برامج ضارة، تصيد وعمّال تعدين العملات الرقمية',
+        geo_rules: 'قواعد التوجيه',
+        geo_rules_desc: 'تطبيق قواعد GeoIP و GeoSite',
+        more_helper: 'إعدادات المساعد'
     },
     tabs: {
         home: 'اتصال',
         warp: 'Warp',
         network: 'الشبكة',
         scanner: 'الماسح الضوئي',
-        app: 'التطبيق'
+        app: 'التطبيق',
+        singbox: 'صندوق الغناء'
     },
     modal: {
         endpoint_title: 'نقطة النهاية',
@@ -127,6 +141,9 @@ const arabic: Language = {
         profile_name: 'العنوان',
         profile_endpoint: 'نقطة النهاية',
         profile_limitation: (value) => `يمكنك إضافة حد أقصى من ${value} نقاط النهاية.`,
+        mtu_title: 'قيمة MTU',
+        mtu_desc:
+            'تشير وحدة الإرسال القصوى (MTU) إلى الحد الأقصى لحجم حزم البيانات، والتي يجب تعيينها بين 1000 و 9999.',
         confirm: 'أؤكد',
         update: 'تحديث',
         cancel: 'إلغاء'
@@ -154,7 +171,9 @@ const arabic: Language = {
         error_wp_not_found: 'ملف warp-plus غير موجود بجانب حزمة التطبيق!',
         error_wp_stopped: 'واجه ملف warp-plus مشكلة في التشغيل!',
         error_connection_failed: 'لم يكن الاتصال بـ 1.1.1.1 ممكنًا.',
-        error_country_failed: 'لا يمكن الاتصال بالبلد المحدد.'
+        error_country_failed: 'لا يمكن الاتصال بالبلد المحدد.',
+        error_singbox_failed_stop: 'فشل في إيقاف صندوق الغناء!',
+        error_singbox_failed_start: 'فشل في بدء تشغيل صندوق الغناء!'
     },
     about: {
         title: 'حول التطبيق',

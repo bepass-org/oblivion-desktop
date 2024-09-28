@@ -110,7 +110,8 @@ const english: Language = {
         geo_block: 'Blocking',
         geo_block_desc: 'Ads, Malware, Phishing & Crypto Miners',
         geo_rules: 'Routing rules',
-        geo_rules_desc: 'Applying GeoIP and GeoSite rules'
+        geo_rules_desc: 'Applying GeoIP and GeoSite rules',
+        more_helper: 'Assistant Settings'
     },
     tabs: {
         home: 'Connect',

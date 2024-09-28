@@ -110,7 +110,8 @@ const indonesia: Language = {
         geo_block: 'Pemblokiran',
         geo_block_desc: 'Iklan, Malware, Phishing, dan Penambang Kripto',
         geo_rules: 'Perutean',
-        geo_rules_desc: 'Penerapan aturan GeoIP dan GeoSite'
+        geo_rules_desc: 'Penerapan aturan GeoIP dan GeoSite',
+        more_helper: 'Pengaturan Asisten'
     },
     tabs: {
         home: 'Hubungkan',

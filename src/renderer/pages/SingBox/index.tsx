@@ -81,7 +81,7 @@ export default function SingBox() {
                 </div>
                 <div className='moreSettings'>
                     <i className='material-icons'>&#xe313;</i>
-                    {appLang?.settings?.more}
+                    {appLang?.settings?.more_helper}
                 </div>
                 <div className='settings' role='menu' tabIndex={0}>
                     <div
@@ -124,6 +124,12 @@ export default function SingBox() {
                         </div>
                         <div className='info'>{appLang.settings.close_helper_desc}</div>
                     </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    {appLang?.settings?.more}
+                </div>
+                <div className='settings' role='menu' tabIndex={0}>
                     <div
                         role='button'
                         className='item'

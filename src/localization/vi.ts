@@ -23,7 +23,8 @@ const vietnamese: Language = {
         drawer_update_label: 'Cập nhật mới',
         drawer_speed_test: 'Kiểm tra tốc độ',
         drawer_about: 'Giới thiệu về ứng dụng',
-        drawer_lang: 'Thay đổi ngôn ngữ'
+        drawer_lang: 'Thay đổi ngôn ngữ',
+        drawer_singbox: 'Cài đặt Hộp hát'
     },
     toast: {
         ip_check_please_wait: 'Vui lòng đợi vài giây để kiểm tra lại!',
@@ -99,14 +100,27 @@ const vietnamese: Language = {
         routing_rules_disabled: 'Tắt',
         routing_rules_items: 'Các mục',
         profile: 'Hồ sơ',
-        profile_desc: 'Điểm kết thúc được bạn lưu'
+        profile_desc: 'Điểm kết thúc được bạn lưu',
+        singbox: 'Cài đặt Singbox',
+        close_singbox: 'Dừng hoạt động',
+        close_singbox_desc: 'Tự động đóng sing-box khi ngắt kết nối',
+        close_helper: 'Dừng trợ lý',
+        close_helper_desc: 'Tự động đóng trợ lý khi thoát',
+        mtu: 'Giá trị MTU',
+        mtu_desc: 'Đặt Đơn vị Truyền tối đa',
+        geo_block: 'Chặn',
+        geo_block_desc: 'Quảng cáo, Phần mềm độc hại, Lừa đảo & Đào tiền mã hóa',
+        geo_rules: 'Quy tắc định tuyến',
+        geo_rules_desc: 'Áp dụng quy tắc GeoIP và GeoSite',
+        more_helper: 'Đối tượng Phật'
     },
     tabs: {
         home: 'Kết nối',
         warp: 'Warp',
         network: 'Mạng',
         scanner: 'Máy quét',
-        app: 'Ứng dụng'
+        app: 'Ứng dụng',
+        singbox: 'Hộp hát'
     },
     modal: {
         endpoint_title: 'Điểm kết thúc',
@@ -128,6 +142,9 @@ const vietnamese: Language = {
         profile_name: 'Tiêu đề',
         profile_endpoint: 'Điểm kết thúc',
         profile_limitation: (value) => `Bạn có thể thêm tối đa ${value} điểm kết thúc.`,
+        mtu_title: 'Giá trị MTU',
+        mtu_desc:
+            'Đơn vị Truyền tối đa (MTU) đề cập đến kích thước tối đa của các gói dữ liệu, nên được đặt trong khoảng từ 1000 đến 9999.',
         confirm: 'Tôi xác nhận',
         update: 'Cập nhật',
         cancel: 'Hủy'
@@ -155,7 +172,9 @@ const vietnamese: Language = {
         error_wp_not_found: 'Tệp warp-plus không được tìm thấy cùng với gói ứng dụng!',
         error_wp_stopped: 'Tệp warp-plus gặp vấn đề khi chạy!',
         error_connection_failed: 'Không thể kết nối với 1.1.1.1.',
-        error_country_failed: 'Không thể kết nối với quốc gia đã chọn.'
+        error_country_failed: 'Không thể kết nối với quốc gia đã chọn.',
+        error_singbox_failed_stop: 'Không thể dừng Hộp hát!',
+        error_singbox_failed_start: 'Không thể khởi động Hộp hát!'
     },
     about: {
         title: 'Giới thiệu về ứng dụng',

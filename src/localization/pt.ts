@@ -23,7 +23,8 @@ const brazilianPortuguese: Language = {
         drawer_update_label: 'Nova Atualização',
         drawer_speed_test: 'Teste de Velocidade',
         drawer_about: 'Sobre o Aplicativo',
-        drawer_lang: 'Alterar Idioma'
+        drawer_lang: 'Alterar Idioma',
+        drawer_singbox: 'Configurações do Caixa de Canto'
     },
     toast: {
         ip_check_please_wait: 'Por favor, aguarde alguns segundos para tentar novamente!',
@@ -98,14 +99,27 @@ const brazilianPortuguese: Language = {
         routing_rules_disabled: 'Desativado',
         routing_rules_items: 'Itens',
         profile: 'Perfil',
-        profile_desc: 'Endpoints salvos por você'
+        profile_desc: 'Endpoints salvos por você',
+        singbox: 'Configurações do Singbox',
+        close_singbox: 'Parar operação',
+        close_singbox_desc: 'Fechar sing-box automaticamente ao desconectar',
+        close_helper: 'Parar assistente',
+        close_helper_desc: 'Fechar assistente automaticamente ao sair',
+        mtu: 'Valor MTU',
+        mtu_desc: 'Definir a Unidade Máxima de Transmissão',
+        geo_block: 'Bloqueio',
+        geo_block_desc: 'Anúncios, Malware, Phishing e Mineração de Criptomoedas',
+        geo_rules: 'Regras de roteamento',
+        geo_rules_desc: 'Aplicando regras GeoIP e GeoSite',
+        more_helper: 'Configurações do Assistente'
     },
     tabs: {
         home: 'Conectar',
         warp: 'Warp',
         network: 'Rede',
         scanner: 'Scanner',
-        app: 'Aplicativo'
+        app: 'Aplicativo',
+        singbox: 'Caixa de Canto'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -127,6 +141,9 @@ const brazilianPortuguese: Language = {
         profile_name: 'Título',
         profile_endpoint: 'Endpoint',
         profile_limitation: (value) => `Você pode adicionar no máximo ${value} endpoints.`,
+        mtu_title: 'Valor MTU',
+        mtu_desc:
+            'A Unidade Máxima de Transmissão (MTU) refere-se ao tamanho máximo dos pacotes de dados, que deve ser definido entre 1000 e 9999.',
         confirm: 'Confirmo',
         update: 'Atualizar',
         cancel: 'Cancelar'
@@ -156,7 +173,9 @@ const brazilianPortuguese: Language = {
             'O arquivo warp-plus não está localizado junto ao pacote do aplicativo!',
         error_wp_stopped: 'O arquivo warp-plus encontrou um problema ao rodar!',
         error_connection_failed: 'Não foi possível conectar-se a 1.1.1.1.',
-        error_country_failed: 'Não foi possível conectar-se ao país selecionado.'
+        error_country_failed: 'Não foi possível conectar-se ao país selecionado.',
+        error_singbox_failed_stop: 'Falha ao parar a Caixa de Canto!',
+        error_singbox_failed_start: 'Falha ao iniciar a Caixa de Canto!'
     },
     about: {
         title: 'Sobre o Aplicativo',

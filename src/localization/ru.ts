@@ -111,7 +111,8 @@ const russian: Language = {
         geo_block: 'Блокировка',
         geo_block_desc: 'Реклама, вредоносное ПО, фишинг и майнеры криптовалют',
         geo_rules: 'Маршрутизация',
-        geo_rules_desc: 'Применение правил GeoIP и GeoSite'
+        geo_rules_desc: 'Применение правил GeoIP и GeoSite',
+        more_helper: 'Настройки ассистента'
     },
     tabs: {
         home: 'Связь',

@@ -111,7 +111,8 @@ const persian: Language = {
         geo_block: 'مسدودسازی',
         geo_block_desc: 'تبلیغات، بدافزار، فیشینگ و ماینرهای رمزارز',
         geo_rules: 'مسیریابی',
-        geo_rules_desc: 'به‌کارگیری قوانین GeoIP و GeoSite'
+        geo_rules_desc: 'به‌کارگیری قوانین GeoIP و GeoSite',
+        more_helper: 'تنظیمات دستیار'
     },
     tabs: {
         home: 'اتصال',

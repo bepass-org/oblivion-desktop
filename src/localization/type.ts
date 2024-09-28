@@ -111,6 +111,7 @@ export interface Settings {
     geo_block_desc: string;
     geo_rules: string;
     geo_rules_desc: string;
+    more_helper: string;
 }
 
 export interface Tabs {
