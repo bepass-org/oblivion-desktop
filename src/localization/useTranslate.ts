@@ -7,9 +7,12 @@ import cnCN from './cn';
 import deDE from './de';
 import trTR from './tr';
 import idID from './id';
+import arSA from './ar';
+import viVN from './vi';
+import ptBR from './pt';
 import { Language } from './type';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt';
 
 const useTranslate = () => {
     const getLanguage = () => {
@@ -25,7 +28,10 @@ const useTranslate = () => {
         cn: cnCN,
         de: deDE,
         tr: trTR,
-        id: idID
+        id: idID,
+        ar: arSA,
+        vi: viVN,
+        pt: ptBR
     };
 
     useEffect(() => {

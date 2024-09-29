@@ -106,7 +106,12 @@ const turkish: Language = {
         close_helper: 'Yardımcıyı durdur',
         close_helper_desc: 'Çıkışta yardımcıyı otomatik olarak kapat',
         mtu: 'MTU Değeri',
-        mtu_desc: 'Maksimum İletim Birimini Ayarla'
+        mtu_desc: 'Maksimum İletim Birimini Ayarla',
+        geo_block: 'Engelleme',
+        geo_block_desc: 'Reklamlar, kötü amaçlı yazılımlar, kimlik avı ve kripto madencileri',
+        geo_rules: 'Yönlendirme',
+        geo_rules_desc: 'GeoIP ve GeoSite kurallarının uygulanması',
+        more_helper: 'Yardımcı Ayarları'
     },
     tabs: {
         home: 'Bağlan',

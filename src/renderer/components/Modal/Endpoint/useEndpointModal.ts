@@ -39,6 +39,21 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
 
+    const removeDuplicates = (endpoints: any) => {
+        if (!endpoints?.ipv4 && !endpoints?.ipv6) {
+            return {
+                ipv4: [],
+                ipv6: []
+            };
+        }
+        const uniqueIpv4 = Array.from(new Set(endpoints.ipv4));
+        const uniqueIpv6 = Array.from(new Set(endpoints.ipv6));
+        return {
+            ipv4: uniqueIpv4,
+            ipv6: uniqueIpv6
+        };
+    };
+
     const initSuggestion = useMemo(() => {
         const defEndpoint = {
             ipv4: [
@@ -56,7 +71,9 @@ const useEndpointModal = (props: EndpointModalProps) => {
             ]
         };
         const storedSuggestion = localStorage?.getItem('OBLIVION_SUGGESTION');
-        return storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
+        let data = storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
+        data = removeDuplicates(data);
+        return data;
     }, []);
 
     const [suggestion, setSuggestion] = useState<Suggestion>(initSuggestion);
@@ -68,8 +85,9 @@ const useEndpointModal = (props: EndpointModalProps) => {
                 'https://raw.githubusercontent.com/ircfspace/endpoint/main/ip.json'
             );
             if (response.ok) {
-                const data = await response.json();
+                let data = await response.json();
                 if (data?.ipv4 && data?.ipv6) {
+                    data = removeDuplicates(data);
                     setSuggestion(data);
                     setTimeout(() => {
                         setShowSuggestion(true);

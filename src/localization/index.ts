@@ -5,9 +5,12 @@ import cnCN from './cn';
 import deDE from './de';
 import trTR from './tr';
 import idID from './id';
+import arSA from './ar';
+import viVN from './vi';
+import ptBR from './pt';
 import { defaultSettings } from '../defaultSettings';
 
-export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id';
+export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt';
 type directionType = 'rtl' | 'ltr';
 
 const lang = defaultSettings.lang as LanguageType;
@@ -20,7 +23,10 @@ const direction = {
     cn: 'ltr',
     de: 'ltr',
     tr: 'ltr',
-    id: 'ltr'
+    id: 'ltr',
+    ar: 'rtl',
+    vi: 'ltr',
+    pt: 'ltr'
 };
 
 const getDirection = () => {
@@ -45,7 +51,10 @@ const translate = {
     cn: cnCN,
     de: deDE,
     tr: trTR,
-    id: idID
+    id: idID,
+    ar: arSA,
+    vi: viVN,
+    pt: ptBR
 };
 
 const getTranslate = (forceLang?: string) => {

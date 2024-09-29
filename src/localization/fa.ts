@@ -107,7 +107,12 @@ const persian: Language = {
         close_helper: 'توقف دستیار',
         close_helper_desc: 'بستن خودکار دستیار سینگ‌باکس هنگام خروج',
         mtu: 'مقدار MTU',
-        mtu_desc: 'تعیین حداکثر واحد انتقال'
+        mtu_desc: 'تعیین حداکثر واحد انتقال',
+        geo_block: 'مسدودسازی',
+        geo_block_desc: 'تبلیغات، بدافزار، فیشینگ و ماینرهای رمزارز',
+        geo_rules: 'مسیریابی',
+        geo_rules_desc: 'به‌کارگیری قوانین GeoIP و GeoSite',
+        more_helper: 'تنظیمات دستیار'
     },
     tabs: {
         home: 'اتصال',
