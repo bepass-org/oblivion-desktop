@@ -240,6 +240,7 @@ Cloudflare Warp فراهم می‌کند.
 -   [regedit](https://www.npmjs.com/package/regedit)
 -   [sing-box](https://github.com/SagerNet/sing-box)
 -   [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
+-   [hiddify-geo](https://github.com/hiddify/hiddify-geo)
 -   [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 -   [و دیگران 🧡](package.json)
 

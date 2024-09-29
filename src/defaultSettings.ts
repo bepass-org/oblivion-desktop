@@ -143,5 +143,40 @@ export const singBoxGeo: { label: string; region: string; geoIp: string; geoSite
         region: 'cn',
         geoIp: 'https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs',
         geoSite: 'https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs'
+    },
+    {
+        label: '🇷🇺 Russia',
+        region: 'ru',
+        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-ru.srs',
+        geoSite:
+            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-ru.srs'
+    },
+    {
+        label: '🇦🇫 Afghanistan',
+        region: 'af',
+        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-af.srs',
+        geoSite:
+            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-af.srs'
+    },
+    {
+        label: '🇹🇷 Turkey',
+        region: 'tr',
+        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-tr.srs',
+        geoSite:
+            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-tr.srs'
+    },
+    {
+        label: '🇮🇩 Indonesia',
+        region: 'id',
+        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-id.srs',
+        geoSite:
+            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-id.srs'
+    },
+    {
+        label: '🇧🇷 Brazil',
+        region: 'br',
+        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-br.srs',
+        geoSite:
+            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-br.srs'
     }
 ];
