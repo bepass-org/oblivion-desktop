@@ -3,15 +3,20 @@ import log from 'electron-log';
 import { sbConfigPath } from '../ipcListeners/wp';
 
 export function createSbConfig(
-    socksServerPort: number,
+    socksPort: number,
+    endpointPorts: number[],
     mtu: number,
     geoBlock: boolean,
     geoRegion: string,
     geoIp: string,
-    geoSite: string
+    geoSite: string,
+    ipSet: string[],
+    domainSet: string[],
+    domainSuffixSet: string[],
+    processSet: string[]
 ) {
     if (
-        socksServerPort === undefined ||
+        socksPort === undefined ||
         mtu === undefined ||
         geoBlock === undefined ||
         geoRegion === undefined ||
@@ -36,8 +41,9 @@ export function createSbConfig(
                 inet6_address: 'fdfe:dcba:9876::1/126',
                 auto_route: true,
                 strict_route: false,
-                stack: 'mixed',
+                stack: 'gvisor',
                 sniff: true,
+                endpoint_independent_nat: false,
                 sniff_override_destination: true
             }
         ],
@@ -46,7 +52,7 @@ export function createSbConfig(
                 type: 'socks',
                 tag: 'socks-out',
                 server: '127.0.0.1',
-                server_port: socksServerPort
+                server_port: socksPort
             },
             {
                 type: 'direct',
@@ -60,17 +66,50 @@ export function createSbConfig(
         route: {
             rules: [
                 {
-                    process_name: process.platform === 'win32' ? 'warp-plus.exe' : 'warp-plus',
+                    port: endpointPorts,
+                    network: 'udp',
                     outbound: 'direct-out'
                 },
                 {
                     network: 'udp',
-                    outbound: 'direct-out'
+                    outbound: 'block-out'
                 },
                 {
                     ip_is_private: true,
                     outbound: 'direct-out'
                 },
+                ...(ipSet.length > 0
+                    ? [
+                          {
+                              ip_cidr: ipSet,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
+                ...(domainSet.length > 0
+                    ? [
+                          {
+                              domain: domainSet,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
+                ...(domainSuffixSet.length > 0
+                    ? [
+                          {
+                              domain_suffix: domainSuffixSet,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
+                ...(processSet.length > 0
+                    ? [
+                          {
+                              process_name: processSet,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
                 ...(geoIp !== ''
                     ? [
                           {
@@ -185,5 +224,5 @@ export function createSbConfig(
     };
 
     fs.writeFileSync(sbConfigPath, JSON.stringify(config, null, 2), 'utf-8');
-    log.info(`✅ sbConfig.json has been created at ${sbConfigPath}`);
+    log.info(`Sing-Box config file has been created at ${sbConfigPath}`);
 }

@@ -125,7 +125,7 @@ export default function Options() {
                     </div>
                     <div
                         role='button'
-                        className={classNames('item', proxyMode !== 'system' ? 'disabled' : '')}
+                        className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                         onClick={onClickRoutingRoles}
                         onKeyDown={onKeyDownRoutingRoles}
                         tabIndex={0}

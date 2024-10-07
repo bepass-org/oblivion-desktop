@@ -30,16 +30,12 @@ class SingBoxManager {
     ) {
         this.cmdPath = path.join(this.workingDirPath, 'cmd.obv');
         this.configPath = path.join(this.workingDirPath, 'config.obv');
-        if (!fs.existsSync(this.cmdPath)) {
-            log.info(`Creating new cmd file at ${this.cmdPath}`);
-            fs.writeFileSync(this.cmdPath, '');
-        }
     }
 
-    public async startSingBox(): Promise<boolean> {
+    public async startSingBox(endpointPorts: number[]): Promise<boolean> {
         if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
-        await this.initialize();
+        await this.initialize(endpointPorts);
 
         try {
             if (!(await this.isProcessRunning(this.helperFileName))) {
@@ -61,12 +57,18 @@ class SingBoxManager {
                 return false;
             }
 
-            return this.processCheck(
-                this.sbWDFileName,
-                'Sing-Box started successfully, waiting for connection...',
-                'Failed to start Sing-Box.',
-                true
-            );
+            if (
+                !(await this.processCheck(
+                    this.sbWDFileName,
+                    'Sing-Box started successfully, waiting for connection...',
+                    'Failed to start Sing-Box.',
+                    true
+                ))
+            ) {
+                return false;
+            }
+
+            return this.checkConnectionStatus();
         } catch (error) {
             log.error('Failed to start Sing-Box:', error);
             return false;
@@ -105,65 +107,49 @@ class SingBoxManager {
         return true;
     }
 
-    public async checkConnectionStatus(): Promise<boolean> {
-        const maxAttempts = 10;
-        const checkStatus = async (attempt: number): Promise<boolean> => {
-            const controller = new AbortController();
-            const signal = controller.signal;
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            try {
-                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
-                    signal
-                });
-                if (response.ok) {
-                    log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
-                    return true;
-                }
-            } catch {
-                log.info(`Connection not yet established. Retry attempt ${attempt}/10...`);
-            } finally {
-                clearTimeout(timeoutId);
-            }
+    private async initialize(endpointPorts: number[]): Promise<void> {
+        const [port, geo, block, mtu, routingRules, closeSingBox, closeHelper] = await Promise.all([
+            settings.get('port') || defaultSettings.port,
+            settings.get('singBoxGeo'),
+            settings.get('singBoxGeoBlock'),
+            settings.get('singBoxMTU') || defaultSettings.singBoxMTU,
+            settings.get('routingRules'),
+            settings.get('closeSingBox'),
+            settings.get('closeHelper')
+        ]);
 
-            if (attempt >= maxAttempts) {
-                log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
-                return false;
-            }
-
-            await this.delay(2000);
-            return checkStatus(attempt + 1);
-        };
-
-        return checkStatus(1);
-    }
-
-    private async initialize(): Promise<void> {
-        const port = (await settings.get('port')) || defaultSettings.port;
-        const geo = await settings.get('singBoxGeo');
-        const block = await settings.get('singBoxGeoBlock');
-        const mtu = (await settings.get('singBoxMTU')) || defaultSettings.singBoxMTU;
+        const geoBlock = typeof block === 'boolean' ? block : defaultSettings.singBoxGeoBlock;
+        log.info(`GeoBlock(Ads, Malware, Phishing, Crypto Miners): ${geoBlock}`);
 
         const selectedGeo = singBoxGeo.find((item) => item.region === geo) || singBoxGeo[0];
-        if (selectedGeo.region !== 'None') {
+        if (selectedGeo.region !== 'none') {
             log.info(
                 `GeoRegion: ${selectedGeo.region}, GeoIP: ${selectedGeo.geoIp}, GeoSite: ${selectedGeo.geoSite}`
             );
         }
 
-        const geoBlock = typeof block === 'boolean' ? block : defaultSettings.singBoxGeoBlock;
-        log.info(`GeoBlock(Ads, Malware, Phishing, Crypto Miners): ${geoBlock}`);
+        const { ipSet, domainSet, domainSuffixSet, processSet } =
+            this.parseRoutingRules(routingRules);
 
         createSbConfig(
             Number(port),
+            endpointPorts,
             Number(mtu),
-            Boolean(geoBlock),
+            geoBlock,
             selectedGeo.region,
             selectedGeo.geoIp,
-            selectedGeo.geoSite
+            selectedGeo.geoSite,
+            ipSet,
+            domainSet,
+            domainSuffixSet,
+            processSet
         );
 
-        const closeSingBox = await settings.get('closeSingBox');
-        const closeHelper = await settings.get('closeHelper');
+        if (!fs.existsSync(this.cmdPath)) {
+            log.info(`Helper command file has been created at ${this.cmdPath}`);
+            fs.writeFileSync(this.cmdPath, '');
+        }
+
         this.monitorWarpPlus =
             typeof closeSingBox === 'boolean' ? closeSingBox : defaultSettings.closeSingBox;
         this.monitorOblivionDesktop =
@@ -178,7 +164,7 @@ class SingBoxManager {
             monitorOb: this.monitorOblivionDesktop
         };
 
-        log.info(`Creating new config file at ${this.configPath}`);
+        log.info(`Helper config file has been created at ${this.configPath}`);
         fs.writeFileSync(this.configPath, JSON.stringify(config, null, 1), 'utf-8');
     }
 
@@ -281,6 +267,38 @@ class SingBoxManager {
         return checkProcess(1);
     }
 
+    private async checkConnectionStatus(): Promise<boolean> {
+        const maxAttempts = 10;
+        const checkStatus = async (attempt: number): Promise<boolean> => {
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            try {
+                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                    signal
+                });
+                if (response.ok) {
+                    log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
+                    return true;
+                }
+            } catch {
+                log.info(`Connection not yet established. Retry attempt ${attempt}/10...`);
+            } finally {
+                clearTimeout(timeoutId);
+            }
+
+            if (attempt >= maxAttempts) {
+                log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
+                return false;
+            }
+
+            await this.delay(2000);
+            return checkStatus(attempt + 1);
+        };
+
+        return checkStatus(1);
+    }
+
     private delay(ms: number): Promise<void> {
         return new Promise((resolve) => {
             setTimeout(resolve, ms);
@@ -327,6 +345,56 @@ class SingBoxManager {
                 running: () => ['', []]
             }
         );
+    }
+
+    private parseRoutingRules(routingRules: any): {
+        ipSet: string[];
+        domainSet: string[];
+        domainSuffixSet: string[];
+        processSet: string[];
+    } {
+        const ipSet: string[] = [];
+        const domainSet: string[] = [];
+        const domainSuffixSet: string[] = [];
+        const processSet: string[] = [];
+
+        if (typeof routingRules === 'string' && routingRules.trim() !== '') {
+            const lines = routingRules
+                .split('\n')
+                .map((line) => line.trim().replace(/,$/, ''))
+                .filter((line) => line !== '');
+
+            const isWindows = process.platform === 'win32';
+
+            lines.forEach((line) => {
+                const [prefix, value] = line.split(':').map((part) => part.trim());
+                if (!value) return;
+
+                switch (prefix) {
+                    case 'ip': {
+                        ipSet.push(value);
+                        break;
+                    }
+                    case 'domain': {
+                        if (value.startsWith('*')) {
+                            domainSuffixSet.push(value.substring(1));
+                        } else {
+                            domainSet.push(value.replace('www.', ''));
+                        }
+                        break;
+                    }
+                    case 'app': {
+                        const app = isWindows && !value.endsWith('.exe') ? `${value}.exe` : value;
+                        processSet.push(app);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            });
+        }
+
+        return { ipSet, domainSet, domainSuffixSet, processSet };
     }
 }
 
