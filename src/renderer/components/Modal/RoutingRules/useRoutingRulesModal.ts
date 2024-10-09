@@ -39,7 +39,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         lines.forEach((line) => {
             const trimmedLine = line.trim();
             if (trimmedLine) {
-                const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '');
+                const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '').replace(/:\s+/g, ':').replace(/\s+,/g, ',');
                 const entry = lineWithoutQuotes.endsWith(',')
                     ? lineWithoutQuotes.slice(0, -1)
                     : lineWithoutQuotes;
