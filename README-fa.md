@@ -74,14 +74,14 @@ Cloudflare Warp فراهم می‌کند.
             <td>
                 :white_check_mark: پروکسی <small>(بدون تغییر)</small><br>
                 :white_check_mark: پروکسی سیستم <small>(با PAC)</small><br>
-                :white_large_square: TUN
+                :white_check_mark: TUN <small>(با سینگ‌باکس)</small>
             </td>
         </tr>
         <tr>
             <td>قوانین مسیریابی</td>
             <td>
                 :white_check_mark: پروکسی سیستم<br>
-                :white_check_mark: GeoDB
+                :white_check_mark: دیتابیس Geo
             </td>
         </tr>
         <tr>
@@ -123,6 +123,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: اسکنر<br>
                 :white_check_mark: پینگ<br>
                 :white_check_mark: دسترس‌پذیری<br>
+                :white_large_square: قطع اضطراری<br>
                 :white_large_square: بروزرسانی داخلی<br>
                 :white_large_square: تست سرعت
             </td>
