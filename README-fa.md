@@ -81,7 +81,7 @@ Cloudflare Warp فراهم می‌کند.
             <td>قوانین مسیریابی</td>
             <td>
                 :white_check_mark: پروکسی سیستم<br>
-                :white_large_square: GeoIP
+                :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>

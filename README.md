@@ -68,7 +68,7 @@ technology
             <td>Routing Rules</td>
             <td>
                 :white_check_mark: System Proxy<br>
-                :white_large_square: GeoIP
+                :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>
