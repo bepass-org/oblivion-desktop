@@ -132,6 +132,10 @@ const english: Language = {
         restore_desc:
             'By confirming the operation of restoring the changes, all program settings will return to the default state and your connection will be disconnected.',
         routing_rules_sample: 'Sample',
+        routing_rules_alert_tun:
+            'Only the routing rules for domain, ip & app will affect the Tun configuration.',
+        routing_rules_alert_system:
+            'Except for the app routing rule, other rules will affect the System Proxy configuration.',
         endpoint_default: 'Default',
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',

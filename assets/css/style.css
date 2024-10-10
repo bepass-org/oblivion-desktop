@@ -1099,6 +1099,10 @@ html[data-bs-theme='dark'] .shimmer {
     user-select: none;
     margin-bottom: 10px;
 }
+.appToast.inModal {
+    margin: 10px 0 0 0;
+    padding: 0;
+}
 
 .appToast div {
     float: right;

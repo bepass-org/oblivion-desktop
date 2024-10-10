@@ -237,6 +237,7 @@ export default function Options() {
             <RoutingRulesModal
                 routingRules={routingRules}
                 setRoutingRules={setRoutingRules}
+                proxyMode={proxyMode}
                 title={appLang?.settings?.routing_rules}
                 isOpen={showRoutingRulesModal}
                 onClose={onCloseRoutingRulesModal}

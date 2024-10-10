@@ -132,6 +132,8 @@ export interface Modal {
     restore_title: string;
     restore_desc: string;
     routing_rules_sample: string;
+    routing_rules_alert_system: string;
+    routing_rules_alert_tun: string;
     endpoint_default: string;
     endpoint_suggested: string;
     endpoint_latest: string;

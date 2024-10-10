@@ -132,6 +132,10 @@ const turkish: Language = {
         restore_desc:
             'Değişiklikleri geri yükleme işlemini onaylayarak, tüm program ayarları varsayılan duruma döner ve bağlantınız kesilir.',
         routing_rules_sample: 'Örnek',
+        routing_rules_alert_tun:
+            'Yalnızca etki alanı, ip ve uygulama için yönlendirme kuralları Tun yapılandırmasını etkileyecektir.',
+        routing_rules_alert_system:
+            'Uygulama yönlendirme kuralı dışında, diğer kurallar Sistem Proxy yapılandırmasını etkileyecektir.',
         endpoint_default: 'Varsayılan',
         endpoint_suggested: 'Önerilen',
         endpoint_latest: 'En Son',
