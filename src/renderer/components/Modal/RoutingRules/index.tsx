@@ -8,6 +8,7 @@ interface RoutingRulesModalProps {
     onClose: () => void;
     routingRules: string;
     setRoutingRules: (value: string) => void;
+    proxyMode: string;
 }
 
 export default function RoutingRulesModal({
@@ -15,7 +16,8 @@ export default function RoutingRulesModal({
     isOpen,
     onClose,
     routingRules,
-    setRoutingRules
+    setRoutingRules,
+    proxyMode
 }: RoutingRulesModalProps) {
     const {
         appLang,
@@ -32,7 +34,8 @@ export default function RoutingRulesModal({
         isOpen,
         onClose,
         routingRules,
-        setRoutingRules
+        setRoutingRules,
+        proxyMode
     });
 
     if (!isOpen) return <></>;
@@ -68,6 +71,19 @@ export default function RoutingRulesModal({
                         value={routingRulesInput}
                         onChange={handleRoutingRulesInput}
                     />
+                    {proxyMode !== '' && (
+                        <>
+                            <div className='clearfix' />
+                            <div className={classNames('appToast', 'inModal')}>
+                                <div>
+                                    <i className='material-icons'>&#xe0f0;</i>
+                                    {proxyMode === 'tun'
+                                        ? appLang?.modal?.routing_rules_alert_tun
+                                        : appLang?.modal?.routing_rules_alert_system}
+                                </div>
+                            </div>
+                        </>
+                    )}
                     <div className='clearfix' />
                     <div
                         role='button'

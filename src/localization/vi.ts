@@ -133,6 +133,10 @@ const vietnamese: Language = {
         restore_desc:
             'Xác nhận việc khôi phục sẽ đưa tất cả các cài đặt của chương trình trở về trạng thái mặc định và kết nối của bạn sẽ bị ngắt.',
         routing_rules_sample: 'Mẫu',
+        routing_rules_alert_tun:
+            'Chỉ các quy tắc định tuyến cho tên miền, ip và ứng dụng sẽ ảnh hưởng đến cấu hình Tun.',
+        routing_rules_alert_system:
+            'Ngoại trừ quy tắc định tuyến ứng dụng, các quy tắc khác sẽ ảnh hưởng đến cấu hình Proxy Hệ thống.',
         endpoint_default: 'Mặc định',
         endpoint_suggested: 'Đề xuất',
         endpoint_latest: 'Mới nhất',

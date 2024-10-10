@@ -133,6 +133,10 @@ const persian: Language = {
         restore_desc:
             'با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به\u200Cحالت پیشفرض بازگشته و اتصال شما قطع می\u200Cگردد.',
         routing_rules_sample: 'نمونه',
+        routing_rules_alert_tun:
+            'فقط قوانین مسیریابی domain, ip و app بر روی پیکربندی Tun اثرگذار خواهند بود.',
+        routing_rules_alert_system:
+            'به‌جز قانون مسیریابی app، سایر قوانین بر روی پیکربندی System Proxy اثرگذار هستند.',
         endpoint_default: 'پیشفرض',
         endpoint_suggested: 'پیشنهادی',
         endpoint_latest: 'اخیر',

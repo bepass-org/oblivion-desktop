@@ -61,14 +61,14 @@ technology
             <td>
                 :white_check_mark: Proxy <small>(No Change)</small><br>
                 :white_check_mark: System Proxy <small>(with PAC)</small><br>
-                :white_large_square: TUN
+                :white_check_mark: TUN <small>(with SingBox)</small>
             </td>
         </tr>
         <tr>
             <td>Routing Rules</td>
             <td>
                 :white_check_mark: System Proxy<br>
-                :white_large_square: GeoIP
+                :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>
@@ -110,6 +110,7 @@ technology
                 :white_check_mark: Scanner<br>
                 :white_check_mark: Ping<br>
                 :white_check_mark: Accessibility<br>
+                :white_large_square: Kill Switch<br>
                 :white_large_square: Inline Update<br>
                 :white_large_square: SpeedTest
             </td>

@@ -132,6 +132,10 @@ const brazilianPortuguese: Language = {
         restore_desc:
             'Ao confirmar a operação de restauração, todas as configurações do programa voltarão ao estado padrão e sua conexão será desconectada.',
         routing_rules_sample: 'Exemplo',
+        routing_rules_alert_tun:
+            'Apenas as regras de roteamento para domínio, ip e aplicativo afetarão a configuração do Tun.',
+        routing_rules_alert_system:
+            'Exceto pela regra de roteamento de aplicativo, as outras regras afetarão a configuração do Proxy do Sistema.',
         endpoint_default: 'Padrão',
         endpoint_suggested: 'Sugerido',
         endpoint_latest: 'Mais Recente',

@@ -8,7 +8,12 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
 import { spawn } from 'child_process';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import {
+    isDev,
+    removeFileIfExists,
+    shouldProxySystem,
+    extractPortsFromEndpoints
+} from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -161,33 +166,22 @@ ipcMain.on('wp-start', async (event) => {
     log.info('starting wp process...');
     log.info(`${command + ' ' + args.join(' ')}`);
 
-    console.log(proxyMode);
-
     try {
         child = spawn(command, args, { cwd: wpDirPath });
         const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-        //const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
+        const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
+        let endpointPorts: number[] = [];
         // const successTunMessage = `level=INFO msg="serving tun"`;
-
-        if (proxyMode === 'tun' && !(await singBoxManager.startSingBox())) {
-            event.reply('guide-toast', appLang.log.error_singbox_failed_start);
-            event.reply('wp-end', true);
-            if (typeof child?.pid !== 'undefined') {
-                treeKill(child.pid, 'SIGKILL');
-                exitOnWpEnd = true;
-            }
-        }
 
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
 
-            /*if (strData.includes(endpointMessage) && proxyMode === 'tun' && !isSingBoxRunning) {
-                const uniquePorts = extractPortsFromEndpoints(strData);
-                createSbConfig(Number(port), uniquePorts);
-            }*/
+            if (strData.includes(endpointMessage) && proxyMode === 'tun') {
+                endpointPorts = extractPortsFromEndpoints(strData);
+            }
 
             if (strData.includes(successMessage)) {
-                if (proxyMode === 'tun' && !(await singBoxManager.checkConnectionStatus())) {
+                if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(endpointPorts))) {
                     event.reply('guide-toast', appLang.log.error_singbox_failed_start);
                     event.reply('wp-end', true);
                     if (typeof child?.pid !== 'undefined') {

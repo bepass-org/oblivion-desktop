@@ -132,6 +132,9 @@ const arabic: Language = {
         restore_desc:
             'بتأكيد عملية استعادة التغييرات، ستعود جميع إعدادات البرنامج إلى حالتها الافتراضية وسيتم قطع الاتصال.',
         routing_rules_sample: 'عينة',
+        routing_rules_alert_tun: 'فقط قواعد التوجيه للدومين، ip والتطبيق ستؤثر على تكوين Tun.',
+        routing_rules_alert_system:
+            'باستثناء قاعدة توجيه التطبيق، ستؤثر القواعد الأخرى على تكوين نظام الوكيل.',
         endpoint_default: 'افتراضي',
         endpoint_suggested: 'مقترح',
         endpoint_latest: 'الأحدث',

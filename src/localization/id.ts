@@ -132,6 +132,10 @@ const indonesia: Language = {
         restore_desc:
             'Dengan mengonfirmasi operasi pemulihan perubahan, semua pengaturan program akan kembali ke kondisi bawaan dan koneksi Anda akan terputus.',
         routing_rules_sample: 'Sampel',
+        routing_rules_alert_tun:
+            'Hanya aturan perutean untuk domain, ip, dan aplikasi yang akan mempengaruhi konfigurasi Tun.',
+        routing_rules_alert_system:
+            'Kecuali aturan perutean aplikasi, aturan lainnya akan mempengaruhi konfigurasi Proxy Sistem.',
         endpoint_default: 'Bawaan',
         endpoint_suggested: 'Disarankan',
         endpoint_latest: 'Terkini',

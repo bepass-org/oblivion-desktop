@@ -131,6 +131,8 @@ const chinese: Language = {
         restore_title: '恢复更改',
         restore_desc: '确认恢复默认设置后，所有应用设置将恢复为默认值，并且您的连接将断开。',
         routing_rules_sample: '示例',
+        routing_rules_alert_tun: '只有域名、ip和应用的路由规则会影响Tun配置。',
+        routing_rules_alert_system: '除了应用路由规则，其他规则将影响系统代理配置。',
         endpoint_default: '默认',
         endpoint_suggested: '建议',
         endpoint_latest: '最新的',

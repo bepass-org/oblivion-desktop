@@ -134,6 +134,10 @@ const deutsch: Language = {
         restore_desc:
             'Durch die Bestätigung des Vorgangs werden alle Programmeinstellungen auf den Standard zurückgesetzt und Ihre Verbindung wird getrennt.',
         routing_rules_sample: 'Beispiel',
+        routing_rules_alert_tun:
+            'Nur die Routing-Regeln für Domain, ip und App wirken sich auf die Tun-Konfiguration aus.',
+        routing_rules_alert_system:
+            'Mit Ausnahme der App-Routing-Regel wirken sich andere Regeln auf die System-Proxy-Konfiguration aus.',
         endpoint_default: 'Standard',
         endpoint_suggested: 'Empfohlen',
         endpoint_latest: 'Neueste',
