@@ -31,6 +31,7 @@ npm-debug.log.*
 log.txt
 warp-plus*.zip
 assets/bin
+assets/dbs
 stuff
 ca.psiphon.PsiphonTunnel.tunnel-core
 sing-box*.tar.gz
