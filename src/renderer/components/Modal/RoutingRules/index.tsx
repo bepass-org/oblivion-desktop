@@ -16,8 +16,7 @@ export default function RoutingRulesModal({
     isOpen,
     onClose,
     routingRules,
-    setRoutingRules,
-    proxyMode
+    setRoutingRules
 }: RoutingRulesModalProps) {
     const {
         appLang,
@@ -29,13 +28,13 @@ export default function RoutingRulesModal({
         onSaveModal,
         onUpdateKeyDown,
         routingRulesInput,
-        showModal
+        showModal,
+        proxyMode
     } = useRoutingRulesModal({
         isOpen,
         onClose,
         routingRules,
-        setRoutingRules,
-        proxyMode
+        setRoutingRules
     });
 
     if (!isOpen) return <></>;
