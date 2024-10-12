@@ -7,7 +7,6 @@ export function createSbConfig(
     endpointPorts: number[],
     mtu: number,
     geoBlock: boolean,
-    geoRegion: string,
     geoIp: string,
     geoSite: string,
     ipSet: string[],
@@ -19,7 +18,6 @@ export function createSbConfig(
         socksPort === undefined ||
         mtu === undefined ||
         geoBlock === undefined ||
-        geoRegion === undefined ||
         geoIp === undefined ||
         geoSite === undefined
     ) {
@@ -110,18 +108,18 @@ export function createSbConfig(
                           }
                       ]
                     : []),
-                ...(geoIp !== ''
+                ...(geoIp !== 'none'
                     ? [
                           {
-                              rule_set: `geoip-${geoRegion}`,
+                              rule_set: `geoip-${geoIp}`,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(geoSite !== ''
+                ...(geoSite !== 'none'
                     ? [
                           {
-                              rule_set: `geosite-${geoRegion}`,
+                              rule_set: `geosite-${geoSite}`,
                               outbound: 'direct-out'
                           }
                       ]
@@ -143,25 +141,23 @@ export function createSbConfig(
                     : [])
             ],
             rule_set: [
-                ...(geoIp !== ''
+                ...(geoIp !== 'none'
                     ? [
                           {
-                              tag: `geoip-${geoRegion}`,
-                              type: 'remote',
-                              format: 'binary',
-                              url: geoIp,
-                              download_detour: 'direct-out'
+                              tag: `geoip-${geoIp}`,
+                              type: 'local',
+                              format: 'source',
+                              path: `geoip-${geoIp}.json`
                           }
                       ]
                     : []),
-                ...(geoSite !== ''
+                ...(geoSite !== 'none'
                     ? [
                           {
-                              tag: `geosite-${geoRegion}`,
-                              type: 'remote',
-                              format: 'binary',
-                              url: geoSite,
-                              download_detour: 'direct-out'
+                              tag: `geosite-${geoSite}`,
+                              type: 'local',
+                              format: 'source',
+                              path: `geosite-${geoSite}.json`
                           }
                       ]
                     : []),
@@ -169,57 +165,45 @@ export function createSbConfig(
                     ? [
                           {
                               tag: 'geosite-category-ads-all',
-                              type: 'remote',
-                              format: 'binary',
-                              url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-category-ads-all.srs',
-                              download_detour: 'direct-out'
+                              type: 'local',
+                              format: 'source',
+                              path: 'geosite-category-ads-all.json'
                           },
                           {
                               tag: 'geosite-malware',
-                              type: 'remote',
-                              format: 'binary',
-                              url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-malware.srs',
-                              download_detour: 'direct-out'
+                              type: 'local',
+                              format: 'source',
+                              path: 'geosite-malware.json'
                           },
                           {
                               tag: 'geosite-phishing',
-                              type: 'remote',
-                              format: 'binary',
-                              url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-phishing.srs',
-                              download_detour: 'direct-out'
+                              type: 'local',
+                              format: 'source',
+                              path: 'geosite-phishing.json'
                           },
                           {
                               tag: 'geosite-cryptominers',
-                              type: 'remote',
-                              format: 'binary',
-                              url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-cryptominers.srs',
-                              download_detour: 'direct-out'
+                              type: 'local',
+                              format: 'source',
+                              path: 'geosite-cryptominers.json'
                           },
                           {
                               tag: 'geoip-malware',
-                              type: 'remote',
-                              format: 'binary',
-                              url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-malware.srs',
-                              download_detour: 'direct-out'
+                              type: 'local',
+                              format: 'source',
+                              path: 'geoip-malware.json'
                           },
                           {
                               tag: 'geoip-phishing',
-                              type: 'remote',
-                              format: 'binary',
-                              url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-phishing.srs',
-                              download_detour: 'direct-out'
+                              type: 'local',
+                              format: 'source',
+                              path: 'geoip-phishing.json'
                           }
                       ]
                     : [])
             ],
             final: 'socks-out',
             auto_detect_interface: true
-        },
-        experimental: {
-            cache_file: {
-                enabled: true,
-                path: 'sbCache.db'
-            }
         }
     };
 
