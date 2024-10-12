@@ -49,6 +49,7 @@ import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
 import NetworkMonitor from './networkMonitor';
+import { geoDBs } from './config';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -101,6 +102,12 @@ if (!gotTheLock) {
             if (fs.existsSync(helperPath)) {
                 rimrafSync(helperPath);
             }
+            for (const fileName of geoDBs) {
+                const dbPath = path.join(wpDirPath, fileName);
+                if (fs.existsSync(dbPath)) {
+                    rimrafSync(dbPath);
+                }
+            }
         }
     }
 
@@ -140,6 +147,29 @@ if (!gotTheLock) {
             log.info(
                 'The process of copying the helper binary was halted due to the absence of the helper file.'
             );
+        }
+    }
+
+    const dbAssetDirectory = path.join(
+        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+        'assets',
+        'dbs'
+    );
+
+    for (const fileName of geoDBs) {
+        const dbAssetPath = path.join(dbAssetDirectory, fileName);
+        const dbWDPath = path.join(wpDirPath, fileName);
+        if (fs.existsSync(dbAssetPath) && !fs.existsSync(dbWDPath)) {
+            fs.copyFile(dbAssetPath, dbWDPath, (err) => {
+                if (err) throw err;
+                log.info(`${fileName} was copied to userData directory.`);
+            });
+        } else {
+            if (!fs.existsSync(dbAssetPath)) {
+                log.info(
+                    `The process of copying the ${fileName} was halted due to the absence of the db file.`
+                );
+            }
         }
     }
 
