@@ -141,8 +141,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
             </td>
             <td>
-                v10<br>
-                v11
+10+
             </td>
         </tr>
         <tr>
@@ -153,7 +152,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
             </td>
-            <td></td>
+            <td>10.15+</td>
         </tr>
         <tr>
             <td>Linux</td>
@@ -175,7 +174,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
                 <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
             </td>
-            <td>v6+</td>
+            <td>6+</td>
         </tr>
         <tr>
             <td>iOS</td>
