@@ -13,7 +13,7 @@
     },
     "version": "1.14.0",
     "license": "Restrictive",
-    "main": "./src/main/main.ts",
+    "main": "./.erb/dll/main.bundle.dev.js",
     "scripts": {
         "eval": "eval process.",
         "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -30,9 +30,10 @@
         "package:mac": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder  --mac --dir --publish never && npm run build:dll",
         "package:windows": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder --windows --dir  --publish never && npm run build:dll",
         "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
-        "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
-        "dev": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
-        "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
+        "prestart": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.dev.ts",
+        "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run prestart && npm run start:renderer",
+        "dev": "npm start",
+        "start:main": "concurrently -k \"cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --watch --config ./.erb/configs/webpack.config.main.dev.ts\" \"electronmon .\"",
         "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
         "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
         "test": "jest",
@@ -138,7 +139,7 @@
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.0",
         "detect-port": "^1.6.1",
-        "electron": "^27.3.11",
+        "electron": "^31.7.0",
         "electron-builder": "^25.1.8",
         "electron-devtools-installer": "^3.2.0",
         "electronmon": "^2.0.3",
@@ -299,7 +300,8 @@
     "electronmon": {
         "patterns": [
             "!**/**",
-            "src/main/**"
+            "src/main/**",
+            ".erb/dll/**"
         ],
         "logLevel": "quiet"
     }
