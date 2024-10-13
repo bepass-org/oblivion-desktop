@@ -3,6 +3,7 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
+import { defaultSettings } from '../../../../defaultSettings';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -16,8 +17,14 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     const { isOpen, onClose, routingRules, setRoutingRules } = props;
     const [routingRulesInput, setRoutingRulesInput] = useState<string>(routingRules);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
+    const [proxyMode, setProxyMode] = useState<string>('');
 
-    useEffect(() => setShowModal(isOpen), [isOpen]);
+    useEffect(() => {
+        setShowModal(isOpen), [isOpen];
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
+        });
+    });
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);
@@ -32,14 +39,17 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         }
         const lines = textareaContent.split('\n');
         const validEntriesSet = new Set<string>();
-        const entryRegex = /^(geoip|domain|ip|range):(.+)$/;
+        const entryRegex = /^(geoip|domain|ip|range|app):(.+)$/;
         const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
         const ipRangeRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/;
 
         lines.forEach((line) => {
             const trimmedLine = line.trim();
             if (trimmedLine) {
-                const lineWithoutQuotes = trimmedLine.replace(/['"]/g, '').replace(/ /g, '');
+                const lineWithoutQuotes = trimmedLine
+                    .replace(/['"]/g, '')
+                    .replace(/:\s+/g, ':')
+                    .replace(/\s+,/g, ',');
                 const entry = lineWithoutQuotes.endsWith(',')
                     ? lineWithoutQuotes.slice(0, -1)
                     : lineWithoutQuotes;
@@ -112,7 +122,9 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     );
 
     const handleSetRoutingRulesSimple = useCallback(() => {
-        setRoutingRulesInput(`domain:dolat.ir,\ndomain:apple.com,\nip:127.0.0.1,\ndomain:*.ir`);
+        setRoutingRulesInput(
+            `domain:dolat.ir,\ndomain:apple.com,\nip:127.0.0.1,\ndomain:*.ir,\napp:Telegram`
+        );
     }, [setRoutingRulesInput]);
 
     return {
@@ -125,7 +137,8 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         onSaveModal,
         onUpdateKeyDown,
         routingRulesInput,
-        showModal
+        showModal,
+        proxyMode
     };
 };
 export default useRoutingRulesModal;

@@ -23,7 +23,8 @@ const turkish: Language = {
         drawer_update_label: 'Yeni Güncelleme',
         drawer_speed_test: 'Hız Testi',
         drawer_about: 'Uygulama Hakkında',
-        drawer_lang: 'Dil Değişikliği'
+        drawer_lang: 'Dil Değişikliği',
+        drawer_singbox: 'Singbox Ayarları'
     },
     toast: {
         ip_check_please_wait: 'Lütfen kontrolü yeniden denemek için birkaç saniye bekleyin!',
@@ -98,14 +99,29 @@ const turkish: Language = {
         routing_rules_disabled: 'Devre Dışı',
         routing_rules_items: 'Öğeler',
         profile: 'Profil',
-        profile_desc: "Tarafınızdan kaydedilen endpoint'ler"
+        profile_desc: "Tarafınızdan kaydedilen endpoint'ler",
+        singbox: 'Singbox Ayarları',
+        close_singbox: 'İşlemi durdur',
+        close_singbox_desc: "Bağlantı kesildiğinde sing-box'ı otomatik olarak kapat",
+        close_helper: 'Yardımcıyı durdur',
+        close_helper_desc: 'Çıkışta yardımcıyı otomatik olarak kapat',
+        mtu: 'MTU Değeri',
+        mtu_desc: 'Maksimum İletim Birimini Ayarla',
+        geo_block: 'Engelleme',
+        geo_block_desc: 'Reklamlar, kötü amaçlı yazılımlar, kimlik avı ve kripto madencileri',
+        geo_rules_ip: 'IP Yönlendirme',
+        geo_rules_ip_desc: 'GeoIP kurallarını uygulama',
+        geo_rules_site: 'Web Yönlendirme',
+        geo_rules_site_desc: 'GeoSite kurallarını uygulama',
+        more_helper: 'Yardımcı Ayarları'
     },
     tabs: {
         home: 'Bağlan',
         warp: 'Warp',
         network: 'Ağ',
         scanner: 'Tarayıcı',
-        app: 'Uygulama'
+        app: 'Uygulama',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -118,6 +134,10 @@ const turkish: Language = {
         restore_desc:
             'Değişiklikleri geri yükleme işlemini onaylayarak, tüm program ayarları varsayılan duruma döner ve bağlantınız kesilir.',
         routing_rules_sample: 'Örnek',
+        routing_rules_alert_tun:
+            'Yalnızca etki alanı, ip ve uygulama için yönlendirme kuralları Tun yapılandırmasını etkileyecektir.',
+        routing_rules_alert_system:
+            'Uygulama yönlendirme kuralı dışında, diğer kurallar Sistem Proxy yapılandırmasını etkileyecektir.',
         endpoint_default: 'Varsayılan',
         endpoint_suggested: 'Önerilen',
         endpoint_latest: 'En Son',
@@ -127,6 +147,9 @@ const turkish: Language = {
         profile_name: 'Başlık',
         profile_endpoint: 'Endpoint',
         profile_limitation: (value) => `En fazla ${value} endpoint ekleyebilirsiniz.`,
+        mtu_title: 'MTU Değeri',
+        mtu_desc:
+            'Maksimum İletim Birimi (MTU), veri paketlerinin maksimum boyutunu ifade eder ve 1000 ile 9999 arasında ayarlanmalıdır.',
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
         cancel: 'İptal'
@@ -155,7 +178,9 @@ const turkish: Language = {
         error_wp_not_found: 'Warp-plus dosyası uygulama paketiyle birlikte yer almıyor!',
         error_wp_stopped: 'warp-plus dosyası çalışırken bir sorunla karşılaştı!',
         error_connection_failed: '1.1.1.1 ile bağlantı sağlanamadı.',
-        error_country_failed: 'Seçilen ülkeye bağlanılamıyor.'
+        error_country_failed: 'Seçilen ülkeye bağlanılamıyor.',
+        error_singbox_failed_stop: 'Sing-Box durdurulamadı!',
+        error_singbox_failed_start: 'Sing-Box başlatılamadı!'
     },
     about: {
         title: 'Uygulama Hakkında',

@@ -23,6 +23,7 @@ export interface Home {
     drawer_speed_test: string;
     drawer_about: string;
     drawer_lang: string;
+    drawer_singbox: string;
 }
 
 export interface Toast {
@@ -99,6 +100,20 @@ export interface Settings {
     routing_rules_items: string;
     profile: string;
     profile_desc: string;
+    singbox: string;
+    close_singbox: string;
+    close_singbox_desc: string;
+    close_helper: string;
+    close_helper_desc: string;
+    mtu: string;
+    mtu_desc: string;
+    geo_block: string;
+    geo_block_desc: string;
+    geo_rules_ip: string;
+    geo_rules_ip_desc: string;
+    geo_rules_site: string;
+    geo_rules_site_desc: string;
+    more_helper: string;
 }
 
 export interface Tabs {
@@ -107,6 +122,7 @@ export interface Tabs {
     network: string;
     scanner: string;
     app: string;
+    singbox: string;
 }
 
 export interface Modal {
@@ -118,6 +134,8 @@ export interface Modal {
     restore_title: string;
     restore_desc: string;
     routing_rules_sample: string;
+    routing_rules_alert_system: string;
+    routing_rules_alert_tun: string;
     endpoint_default: string;
     endpoint_suggested: string;
     endpoint_latest: string;
@@ -127,6 +145,8 @@ export interface Modal {
     profile_name: string;
     profile_endpoint: string;
     profile_limitation: (value: string) => string;
+    mtu_title: string;
+    mtu_desc: string;
     confirm: string;
     update: string;
     cancel: string;
@@ -154,6 +174,8 @@ export interface Log {
     error_wp_not_found: string;
     error_wp_stopped: string;
     error_connection_failed: string;
+    error_singbox_failed_stop: string;
+    error_singbox_failed_start: string;
 }
 
 export interface About {

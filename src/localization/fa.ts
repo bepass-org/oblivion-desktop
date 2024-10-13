@@ -23,7 +23,8 @@ const persian: Language = {
         drawer_update_label: 'نسخه جدید',
         drawer_speed_test: 'تست سرعت',
         drawer_about: 'درباره برنامه',
-        drawer_lang: 'تغییر زبان'
+        drawer_lang: 'تغییر زبان',
+        drawer_singbox: 'تنظیمات سینگ‌باکس'
     },
     toast: {
         ip_check_please_wait: 'برای بررسی مجدد چندثانیه دیگر تلاش کنید!',
@@ -99,14 +100,29 @@ const persian: Language = {
         routing_rules_disabled: 'غیرفعال',
         routing_rules_items: 'مورد',
         profile: 'پروفایل',
-        profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما'
+        profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما',
+        singbox: 'تنظیمات سینگ‌باکس',
+        close_singbox: 'توقف عملیات',
+        close_singbox_desc: 'بستن خودکار سینگ‌باکس هنگام لغو اتصال',
+        close_helper: 'توقف دستیار',
+        close_helper_desc: 'بستن خودکار دستیار سینگ‌باکس هنگام خروج',
+        mtu: 'مقدار MTU',
+        mtu_desc: 'تعیین حداکثر واحد انتقال',
+        geo_block: 'مسدودسازی',
+        geo_block_desc: 'تبلیغات، بدافزار، فیشینگ و ماینرهای رمزارز',
+        geo_rules_ip: 'مسیریابی IP',
+        geo_rules_ip_desc: 'به‌کارگیری قوانین GeoIP',
+        geo_rules_site: 'مسیریابی وب',
+        geo_rules_site_desc: 'به‌کارگیری قوانین GeoSite',
+        more_helper: 'تنظیمات دستیار'
     },
     tabs: {
         home: 'اتصال',
         warp: 'وارپ',
         network: 'شبکه',
         scanner: 'اسکنر',
-        app: 'برنامه'
+        app: 'برنامه',
+        singbox: 'سینگ‌باکس'
     },
     modal: {
         endpoint_title: 'اندپوینت',
@@ -119,6 +135,10 @@ const persian: Language = {
         restore_desc:
             'با تایید عملیات بازگردانی تغییرات، تمامی تنظیمات برنامه به\u200Cحالت پیشفرض بازگشته و اتصال شما قطع می\u200Cگردد.',
         routing_rules_sample: 'نمونه',
+        routing_rules_alert_tun:
+            'فقط قوانین مسیریابی domain, ip و app بر روی پیکربندی Tun اثرگذار خواهند بود.',
+        routing_rules_alert_system:
+            'به‌جز قانون مسیریابی app، سایر قوانین بر روی پیکربندی System Proxy اثرگذار هستند.',
         endpoint_default: 'پیشفرض',
         endpoint_suggested: 'پیشنهادی',
         endpoint_latest: 'اخیر',
@@ -129,6 +149,9 @@ const persian: Language = {
         profile_endpoint: 'اندپوینت',
         profile_limitation: (value) => `حداکثر می‌توانید ${value} اندپوینت اضافه نمایید.`,
         confirm: 'تایید می\u200Cکنم',
+        mtu_title: 'مقدار MTU',
+        mtu_desc:
+            'حداکثر واحد انتقال یا MTU، به حداکثر اندازه بسته‌های داده اشاره دارد، که باید بین ۱۰۰۰ تا ۹۹۹۹ تنظیم شوند.',
         update: 'بروزرسانی',
         cancel: 'انصراف'
     },
@@ -156,7 +179,9 @@ const persian: Language = {
         error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`,
         error_wp_stopped: `فایل warp-plus برای اجرا با مشکل مواجه است!`,
         error_connection_failed: 'اتصال به 1.1.1.1 امکان‌پذیر نبود.',
-        error_country_failed: 'امکان اتصال به کشور انتخابی وجود ندارد.'
+        error_country_failed: 'امکان اتصال به کشور انتخابی وجود ندارد.',
+        error_singbox_failed_stop: 'متوقف‌کردن سینگ‌باکس با خطا مواجه شد!',
+        error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!'
     },
     about: {
         title: 'درباره برنامه',

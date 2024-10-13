@@ -61,14 +61,14 @@ technology
             <td>
                 :white_check_mark: Proxy <small>(No Change)</small><br>
                 :white_check_mark: System Proxy <small>(with PAC)</small><br>
-                :white_large_square: TUN
+                :white_check_mark: TUN <small>(with SingBox)</small>
             </td>
         </tr>
         <tr>
             <td>Routing Rules</td>
             <td>
                 :white_check_mark: System Proxy<br>
-                :white_large_square: GeoIP
+                :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>
@@ -110,6 +110,7 @@ technology
                 :white_check_mark: Scanner<br>
                 :white_check_mark: Ping<br>
                 :white_check_mark: Accessibility<br>
+                :white_large_square: Kill Switch<br>
                 :white_large_square: Inline Update<br>
                 :white_large_square: SpeedTest
             </td>
@@ -227,6 +228,7 @@ provided by the following friends:
 - [regedit](https://www.npmjs.com/package/regedit)
 - [sing-box](https://github.com/SagerNet/sing-box)
 - [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
+- [hiddify-geo](https://github.com/hiddify/hiddify-geo)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [and others 🧡](package.json)
 

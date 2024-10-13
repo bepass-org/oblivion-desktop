@@ -104,3 +104,29 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
 
     ipcMain.emit('end-wp-and-exit-app');
 };
+
+export function extractPortsFromEndpoints(strData: string): number[] {
+    const endpointsRegex = /endpoints="\[(.*?)]"/;
+    const endpointsMatch = strData.match(endpointsRegex);
+
+    if (endpointsMatch) {
+        const endpointsStr = endpointsMatch[1];
+        const portRegex = /(?:\b(?:\d{1,3}\.){3}\d{1,3}|\[[a-fA-F0-9:]+]|[a-fA-F0-9:]+):(\d{1,5})/g;
+
+        const ports = new Set<number>();
+
+        let match = portRegex.exec(endpointsStr);
+        do {
+            if (match) {
+                ports.add(parseInt(match[1], 10));
+            }
+            match = portRegex.exec(endpointsStr);
+        } while (match);
+
+        if (ports.size > 0) {
+            return Array.from(ports);
+        }
+    }
+
+    return [];
+}

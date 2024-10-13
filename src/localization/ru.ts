@@ -23,7 +23,8 @@ const russian: Language = {
         drawer_update_label: 'Новое обновление',
         drawer_speed_test: 'Тест скорости',
         drawer_about: 'О приложении',
-        drawer_lang: 'Изменить язык'
+        drawer_lang: 'Изменить язык',
+        drawer_singbox: 'Настройки Singbox'
     },
     toast: {
         ip_check_please_wait: 'Пожалуйста, подождите несколько секунд, чтобы повторить проверку!',
@@ -99,14 +100,29 @@ const russian: Language = {
         routing_rules_disabled: 'Отключено',
         routing_rules_items: 'Предметы',
         profile: 'Профиль',
-        profile_desc: 'Сохраненные вами конечные точки'
+        profile_desc: 'Сохраненные вами конечные точки',
+        singbox: 'Настройки Singbox',
+        close_singbox: 'Остановка операции',
+        close_singbox_desc: 'Автоматически закрывать Singbox при отключении',
+        close_helper: 'Остановка помощника',
+        close_helper_desc: 'Автоматически закрывать помощник при выходе',
+        mtu: 'Значение MTU',
+        mtu_desc: 'Установить максимальную единицу передачи',
+        geo_block: 'Блокировка',
+        geo_block_desc: 'Реклама, вредоносное ПО, фишинг и майнеры криптовалют',
+        geo_rules_ip: 'Маршрутизация IP',
+        geo_rules_ip_desc: 'Применение правил GeoIP',
+        geo_rules_site: 'Веб-маршрутизация',
+        geo_rules_site_desc: 'Применение правил GeoSite',
+        more_helper: 'Настройки ассистента'
     },
     tabs: {
         home: 'Связь',
         warp: 'Warp',
         network: 'Сеть',
         scanner: 'Сканер',
-        app: 'заявка'
+        app: 'заявка',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Конечная точка',
@@ -119,6 +135,10 @@ const russian: Language = {
         restore_desc:
             'Подтверждая операцию восстановления изменений, все настройки программы вернутся к состоянию по умолчанию, и ваше подключение будет отключено.',
         routing_rules_sample: 'Пример',
+        routing_rules_alert_tun:
+            'Только правила маршрутизации для домена, ip и приложения повлияют на конфигурацию Tun.',
+        routing_rules_alert_system:
+            'За исключением правила маршрутизации приложения, другие правила повлияют на конфигурацию системного прокси.',
         endpoint_default: 'По умолчанию',
         endpoint_suggested: 'предложено',
         endpoint_latest: 'Последний',
@@ -128,6 +148,9 @@ const russian: Language = {
         profile_name: 'Название',
         profile_endpoint: 'Конечная точка',
         profile_limitation: (value) => `Вы можете добавить максимум ${value} конечных точек.`,
+        mtu_title: 'Значение MTU',
+        mtu_desc:
+            'Максимальная единица передачи (MTU) относится к максимальному размеру пакетов данных, который должен быть установлен в пределах от 1000 до 9999.',
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена'
@@ -156,7 +179,9 @@ const russian: Language = {
         error_wp_not_found: 'Файл warp-plus не находится рядом с пакетом приложения.',
         error_wp_stopped: 'Файл warp-plus столкнулся с проблемой при запуске!',
         error_connection_failed: 'Подключение к 1.1.1.1 невозможно.',
-        error_country_failed: 'Невозможно подключиться к выбранной стране.'
+        error_country_failed: 'Невозможно подключиться к выбранной стране.',
+        error_singbox_failed_stop: 'Не удалось остановить Sing-Box!',
+        error_singbox_failed_start: 'Не удалось запустить Sing-Box!'
     },
     about: {
         title: 'О приложении',

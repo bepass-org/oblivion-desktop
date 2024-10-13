@@ -4,12 +4,19 @@ import useTranslate from '../../localization/useTranslate';
 
 interface TabsProps {
     active: string;
+    proxyMode: string;
 }
 
-export default function Tabs({ active }: TabsProps) {
+export default function Tabs({ active, proxyMode }: TabsProps) {
     const appLang = useTranslate();
     return (
-        <div className={classNames('tabs', active !== 'landing' ? 'inSettings' : '')}>
+        <div
+            className={classNames(
+                'tabs',
+                active !== 'landing' ? 'inSettings' : '',
+                proxyMode === 'tun' ? 'withSingbox' : ''
+            )}
+        >
             <ul role='menubar' aria-orientation='horizontal'>
                 <li className={active === 'landing' ? 'active' : ''}>
                     <Link to={'/'} role='tab'>
@@ -29,6 +36,16 @@ export default function Tabs({ active }: TabsProps) {
                         <span>{appLang?.tabs?.network}</span>
                     </Link>
                 </li>
+                {proxyMode === 'tun' && (
+                    <>
+                        <li className={active === 'singbox' ? 'active' : ''}>
+                            <Link to={'/singbox'} role='tab'>
+                                <i className={'material-icons'}>&#xea25;</i>
+                                <span data-item='sb'>{appLang?.tabs?.singbox}</span>
+                            </Link>
+                        </li>
+                    </>
+                )}
                 <li className={active === 'scanner' ? 'active' : ''}>
                     <Link to={'/scanner'} role='tab'>
                         <i className={'material-icons'}>&#xe2db;</i>

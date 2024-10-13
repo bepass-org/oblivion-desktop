@@ -27,19 +27,29 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
+import { rimrafSync } from 'rimraf';
 //import { autoUpdater } from 'electron-updater';
 //import packageJsonData from '../../package.json';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
+import {
+    wpAssetPath,
+    wpBinPath,
+    sbAssetPath,
+    sbBinPath,
+    helperAssetPath,
+    helperPath,
+    wpDirPath
+} from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
 import NetworkMonitor from './networkMonitor';
+import { geoDBs } from './config';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -76,17 +86,94 @@ if (!gotTheLock) {
         }
     });
 
-    if (fs.existsSync(wpAssetPath)) {
-        // coping wp binary from assets dir to userData dir, so it can run without sudo/administrator privilege
+    const versionFilePath = path.join(wpDirPath, 'ver.txt');
+    const appVersion = app.getVersion();
+
+    if (fs.existsSync(versionFilePath)) {
+        const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
+
+        if (savedVersion !== appVersion) {
+            if (fs.existsSync(wpBinPath)) {
+                rimrafSync(wpBinPath);
+            }
+            if (fs.existsSync(sbBinPath)) {
+                rimrafSync(sbBinPath);
+            }
+            if (fs.existsSync(helperPath)) {
+                rimrafSync(helperPath);
+            }
+            for (const fileName of geoDBs) {
+                const dbPath = path.join(wpDirPath, fileName);
+                if (fs.existsSync(dbPath)) {
+                    rimrafSync(dbPath);
+                }
+            }
+        }
+    }
+
+    if (fs.existsSync(wpAssetPath) && !fs.existsSync(wpBinPath)) {
         fs.copyFile(wpAssetPath, wpBinPath, (err) => {
             if (err) throw err;
             log.info('wp binary was copied to userData directory.');
         });
     } else {
-        log.info(
-            'The process of copying the wp binary was halted due to the absence of the wp file.'
-        );
+        if (!fs.existsSync(wpAssetPath)) {
+            log.info(
+                'The process of copying the wp binary was halted due to the absence of the wp file.'
+            );
+        }
     }
+
+    if (fs.existsSync(sbAssetPath) && !fs.existsSync(sbBinPath)) {
+        fs.copyFile(sbAssetPath, sbBinPath, (err) => {
+            if (err) throw err;
+            log.info('sb binary was copied to userData directory.');
+        });
+    } else {
+        if (!fs.existsSync(sbAssetPath)) {
+            log.info(
+                'The process of copying the sb binary was halted due to the absence of the sb file.'
+            );
+        }
+    }
+
+    if (fs.existsSync(helperAssetPath) && !fs.existsSync(helperPath)) {
+        fs.copyFile(helperAssetPath, helperPath, (err) => {
+            if (err) throw err;
+            log.info('helper binary was copied to userData directory.');
+        });
+    } else {
+        if (!fs.existsSync(helperAssetPath)) {
+            log.info(
+                'The process of copying the helper binary was halted due to the absence of the helper file.'
+            );
+        }
+    }
+
+    const dbAssetDirectory = path.join(
+        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+        'assets',
+        'dbs'
+    );
+
+    for (const fileName of geoDBs) {
+        const dbAssetPath = path.join(dbAssetDirectory, fileName);
+        const dbWDPath = path.join(wpDirPath, fileName);
+        if (fs.existsSync(dbAssetPath) && !fs.existsSync(dbWDPath)) {
+            fs.copyFile(dbAssetPath, dbWDPath, (err) => {
+                if (err) throw err;
+                log.info(`${fileName} was copied to userData directory.`);
+            });
+        } else {
+            if (!fs.existsSync(dbAssetPath)) {
+                log.info(
+                    `The process of copying the ${fileName} was halted due to the absence of the db file.`
+                );
+            }
+        }
+    }
+
+    fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
 
     if (!isDev()) {
         const sourceMapSupport = require('source-map-support');

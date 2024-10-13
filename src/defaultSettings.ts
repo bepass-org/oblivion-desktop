@@ -26,7 +26,13 @@ export type settingsKeys =
     | 'forceClose'
     | 'shortcut'
     | 'dataUsage'
-    | 'asn';
+    | 'asn'
+    | 'closeSingBox'
+    | 'closeHelper'
+    | 'singBoxMTU'
+    | 'singBoxGeoIp'
+    | 'singBoxGeoSite'
+    | 'singBoxGeoBlock';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -59,7 +65,11 @@ export const defaultSettings = {
     forceClose: false,
     shortcut: false,
     dataUsage: false,
-    asn: 'UNK'
+    asn: 'UNK',
+    closeSingBox: true,
+    closeHelper: true,
+    singBoxMTU: 9000,
+    singBoxGeoBlock: false
 };
 
 export const countries: { value: string; label: string }[] = [
@@ -117,4 +127,52 @@ export const dnsServers: { value: string; label: string }[] = [
     { value: '8.8.8.8', label: 'Google' },
     { value: '94.140.14.14', label: 'Adguard' },
     { value: '94.140.14.15', label: 'Adguard Family' }
+];
+
+export const singBoxGeoIp: { label: string; geoIp: string }[] = [
+    { label: 'None', geoIp: 'none' },
+    {
+        label: '🇮🇷 Iran',
+        geoIp: 'ir'
+    },
+    {
+        label: '🇨🇳 China',
+        geoIp: 'cn'
+    },
+    {
+        label: '🇷🇺 Russia',
+        geoIp: 'ru'
+    },
+    {
+        label: '🇦🇫 Afghanistan',
+        geoIp: 'af'
+    },
+    {
+        label: '🇹🇷 Turkey',
+        geoIp: 'tr'
+    },
+    {
+        label: '🇮🇩 Indonesia',
+        geoIp: 'id'
+    },
+    {
+        label: '🇧🇷 Brazil',
+        geoIp: 'br'
+    }
+];
+
+export const singBoxGeoSite: { label: string; geoSite: string }[] = [
+    { label: 'None', geoSite: 'none' },
+    {
+        label: '🇮🇷 Iran',
+        geoSite: 'ir'
+    },
+    {
+        label: '🇨🇳 China',
+        geoSite: 'cn'
+    },
+    {
+        label: '🇷🇺 Russia',
+        geoSite: 'category-ru'
+    }
 ];

@@ -44,11 +44,10 @@ export const logMetadata = () => {
             log.info('------------------------MetaData------------------------');
             log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
             log.info(`at od: ${packageJsonData.version}`);
-            log.info(`at wp: ${wpVersion}`);
+            log.info(`at wp: v${wpVersion}`);
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
             log.info('method:', calculateMethod(data[0]));
-            // TODO rename to network configuration when tun comes
-            log.info('proxyMode:', shouldProxySystem(data[1]));
+            log.info('proxyMode:', data[1]);
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
             log.info('asn:', data[5] ? data[5] : 'UNK');

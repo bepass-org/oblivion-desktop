@@ -7,25 +7,34 @@ import path from 'path';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import { spawn } from 'child_process';
+import {
+    isDev,
+    removeFileIfExists,
+    shouldProxySystem,
+    extractPortsFromEndpoints
+} from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
 import { defaultSettings } from '../../defaultSettings';
-import { regeditVbsDirPath } from '../main';
 import { customEvent } from '../lib/customEvent';
+import { regeditVbsDirPath } from '../main';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
+import SingBoxManager from '../lib/sbManager';
 
 const simpleLog = log.create({ logId: 'simpleLog' });
 simpleLog.transports.console.format = '{text}';
 simpleLog.transports.file.format = '{text}';
 
-const { spawn } = require('child_process');
-
 let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbAssetFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbWDFileName = `oblivion-sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const helperFileName = `oblivion-helper${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbConfigName = 'sbConfig.json';
 
 export const wpAssetPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
@@ -33,10 +42,34 @@ export const wpAssetPath = path.join(
     'bin',
     wpFileName
 );
+export const sbAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    'sing-box',
+    sbAssetFileName
+);
+export const helperAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    helperFileName
+);
 
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 export const stuffPath = path.join(wpDirPath, 'stuff');
+export const sbBinPath = path.join(wpDirPath, sbWDFileName);
+export const sbConfigPath = path.join(wpDirPath, sbConfigName);
+export const helperPath = path.join(wpDirPath, helperFileName);
+
+const singBoxManager = new SingBoxManager(
+    helperPath,
+    helperFileName,
+    sbWDFileName,
+    sbConfigName,
+    wpDirPath
+);
 
 let exitOnWpEnd = false;
 
@@ -102,7 +135,7 @@ ipcMain.on('wp-start', async (event) => {
         setStuffPath(args);
     }*/
 
-    const handleSystemProxyDisconnect = () => {
+    const handleSystemProxyDisconnect = async () => {
         if (shouldProxySystem(proxyMode)) {
             disableSystemProxy(regeditVbsDirPath, event).then(() => {
                 disconnectedFlags[0] = true;
@@ -136,13 +169,29 @@ ipcMain.on('wp-start', async (event) => {
     try {
         child = spawn(command, args, { cwd: wpDirPath });
         const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
+        const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
+        let endpointPorts: number[] = [];
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
+
+            if (strData.includes(endpointMessage) && proxyMode === 'tun') {
+                endpointPorts = extractPortsFromEndpoints(strData);
+            }
+
             if (strData.includes(successMessage)) {
-                connectedFlags[1] = true;
-                sendConnectedSignalToRenderer();
+                if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(endpointPorts))) {
+                    event.reply('guide-toast', appLang.log.error_singbox_failed_start);
+                    event.reply('wp-end', true);
+                    if (typeof child?.pid !== 'undefined') {
+                        treeKill(child.pid, 'SIGKILL');
+                        exitOnWpEnd = true;
+                    }
+                } else {
+                    connectedFlags[1] = true;
+                    sendConnectedSignalToRenderer();
+                }
             }
 
             // Save the last endpoint that was successfully connected
@@ -165,12 +214,17 @@ ipcMain.on('wp-start', async (event) => {
         });
 
         child.on('exit', async () => {
+            if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
+                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
+                event.reply('wp-end', false);
+                event.reply('wp-start', true);
+            }
             disconnectedFlags[1] = true;
             sendDisconnectedSignalToRenderer();
             log.info('wp process exited.');
             // manually setting pid to undefined
             child.pid = undefined;
-            handleSystemProxyDisconnect();
+            await handleSystemProxyDisconnect();
         });
     } catch (error) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
@@ -198,6 +252,7 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
             // send signal to `exitTheApp` function
             ipcMain.emit('exit');
         }
+        await singBoxManager.stopHelper();
     } catch (error) {
         log.error(error);
         event.reply('wp-end', false);
