@@ -30,7 +30,8 @@ export type settingsKeys =
     | 'closeSingBox'
     | 'closeHelper'
     | 'singBoxMTU'
-    | 'singBoxGeo'
+    | 'singBoxGeoIp'
+    | 'singBoxGeoSite'
     | 'singBoxGeoBlock';
 
 const date = new Date();
@@ -68,8 +69,7 @@ export const defaultSettings = {
     closeSingBox: true,
     closeHelper: true,
     singBoxMTU: 9000,
-    singBoxGeo: '',
-    singBoxGeoBlock: true
+    singBoxGeoBlock: false
 };
 
 export const countries: { value: string; label: string }[] = [
@@ -129,54 +129,50 @@ export const dnsServers: { value: string; label: string }[] = [
     { value: '94.140.14.15', label: 'Adguard Family' }
 ];
 
-export const singBoxGeo: { label: string; region: string; geoIp: string; geoSite: string }[] = [
-    { label: 'None', region: 'none', geoIp: '', geoSite: '' },
+export const singBoxGeoIp: { label: string; geoIp: string }[] = [
+    { label: 'None', geoIp: 'none' },
     {
         label: '🇮🇷 Iran',
-        region: 'ir',
-        geoIp: 'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs',
-        geoSite:
-            'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs'
+        geoIp: 'ir'
     },
     {
         label: '🇨🇳 China',
-        region: 'cn',
-        geoIp: 'https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs',
-        geoSite: 'https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs'
+        geoIp: 'cn'
     },
     {
         label: '🇷🇺 Russia',
-        region: 'ru',
-        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-ru.srs',
-        geoSite:
-            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-ru.srs'
+        geoIp: 'ru'
     },
     {
         label: '🇦🇫 Afghanistan',
-        region: 'af',
-        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-af.srs',
-        geoSite:
-            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-af.srs'
+        geoIp: 'af'
     },
     {
         label: '🇹🇷 Turkey',
-        region: 'tr',
-        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-tr.srs',
-        geoSite:
-            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-tr.srs'
+        geoIp: 'tr'
     },
     {
         label: '🇮🇩 Indonesia',
-        region: 'id',
-        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-id.srs',
-        geoSite:
-            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-id.srs'
+        geoIp: 'id'
     },
     {
         label: '🇧🇷 Brazil',
-        region: 'br',
-        geoIp: 'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geoip-br.srs',
-        geoSite:
-            'https://github.com/hiddify/hiddify-geo/raw/refs/heads/rule-set/country/geosite-br.srs'
+        geoIp: 'br'
+    }
+];
+
+export const singBoxGeoSite: { label: string; geoSite: string }[] = [
+    { label: 'None', geoSite: 'none' },
+    {
+        label: '🇮🇷 Iran',
+        geoSite: 'ir'
+    },
+    {
+        label: '🇨🇳 China',
+        geoSite: 'cn'
+    },
+    {
+        label: '🇷🇺 Russia',
+        geoSite: 'category-ru'
     }
 ];

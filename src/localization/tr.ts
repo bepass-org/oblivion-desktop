@@ -109,8 +109,10 @@ const turkish: Language = {
         mtu_desc: 'Maksimum İletim Birimini Ayarla',
         geo_block: 'Engelleme',
         geo_block_desc: 'Reklamlar, kötü amaçlı yazılımlar, kimlik avı ve kripto madencileri',
-        geo_rules: 'Yönlendirme',
-        geo_rules_desc: 'GeoIP ve GeoSite kurallarının uygulanması',
+        geo_rules_ip: 'IP Yönlendirme',
+        geo_rules_ip_desc: 'GeoIP kurallarını uygulama',
+        geo_rules_site: 'Web Yönlendirme',
+        geo_rules_site_desc: 'GeoSite kurallarını uygulama',
         more_helper: 'Yardımcı Ayarları'
     },
     tabs: {

@@ -111,8 +111,10 @@ const deutsch: Language = {
         mtu_desc: 'Die maximale Übertragungseinheit festlegen',
         geo_block: 'Blockierung',
         geo_block_desc: 'Werbung, Malware, Phishing und Kryptowährungs-Miner',
-        geo_rules: 'Routing',
-        geo_rules_desc: 'Anwendung von GeoIP- und GeoSite-Regeln',
+        geo_rules_ip: 'IP-Routing',
+        geo_rules_ip_desc: 'Anwenden von GeoIP-Regeln',
+        geo_rules_site: 'Web-Routing',
+        geo_rules_site_desc: 'Anwenden von GeoSite-Regeln',
         more_helper: 'Assistenteneinstellungen'
     },
     tabs: {

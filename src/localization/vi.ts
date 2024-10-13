@@ -110,8 +110,10 @@ const vietnamese: Language = {
         mtu_desc: 'Đặt Đơn vị Truyền tối đa',
         geo_block: 'Chặn',
         geo_block_desc: 'Quảng cáo, Phần mềm độc hại, Lừa đảo & Đào tiền mã hóa',
-        geo_rules: 'Quy tắc định tuyến',
-        geo_rules_desc: 'Áp dụng quy tắc GeoIP và GeoSite',
+        geo_rules_ip: 'Định tuyến IP',
+        geo_rules_ip_desc: 'Áp dụng các quy tắc GeoIP',
+        geo_rules_site: 'Định tuyến Web',
+        geo_rules_site_desc: 'Áp dụng các quy tắc GeoSite',
         more_helper: 'Đối tượng Phật'
     },
     tabs: {

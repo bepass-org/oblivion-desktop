@@ -4,15 +4,17 @@ import Nav from '../../components/Nav';
 import useSingBox from './useSingBox';
 import MTUModal from '../../components/Modal/MTU';
 import Tabs from '../../components/Tabs';
-import { singBoxGeo } from '../../../defaultSettings';
+import { singBoxGeoIp, singBoxGeoSite } from '../../../defaultSettings';
 
 export default function SingBox() {
     const {
         appLang,
         closeSingBox,
         closeHelper,
-        geo,
-        onChangeGeo,
+        geoIp,
+        onChangeGeoIp,
+        geoSite,
+        onChangeGeoSite,
         mtu,
         setMtu,
         handleCloseSingBoxOnClick,
@@ -31,7 +33,8 @@ export default function SingBox() {
     if (
         typeof closeSingBox === 'undefined' ||
         typeof closeHelper === 'undefined' ||
-        typeof geo === 'undefined' ||
+        typeof geoIp === 'undefined' ||
+        typeof geoSite === 'undefined' ||
         typeof mtu === 'undefined' ||
         typeof geoBlock === 'undefined'
     )
@@ -45,18 +48,47 @@ export default function SingBox() {
                 <div className='settings' role='menu'>
                     <div className={classNames('item')}>
                         <label className='key' htmlFor='geo_rules'>
-                            {appLang.settings.geo_rules}
+                            {appLang.settings.geo_rules_ip}
                         </label>
                         <div className='value'>
-                            <select tabIndex={-1} id='geo_rules' onChange={onChangeGeo} value={geo}>
-                                {singBoxGeo.map((option) => (
-                                    <option value={option.region} tabIndex={0} key={option.region}>
+                            <select
+                                tabIndex={-1}
+                                id='geo_rules'
+                                onChange={onChangeGeoIp}
+                                value={geoIp}
+                            >
+                                {singBoxGeoIp.map((option) => (
+                                    <option value={option.geoIp} tabIndex={0} key={option.geoIp}>
                                         {option.label}
                                     </option>
                                 ))}
                             </select>
                         </div>
-                        <div className='info'>{appLang.settings.geo_rules_desc}</div>
+                        <div className='info'>{appLang.settings.geo_rules_ip_desc}</div>
+                    </div>
+                    <div className={classNames('item')}>
+                        <label className='key' htmlFor='geo_rules'>
+                            {appLang.settings.geo_rules_site}
+                        </label>
+                        <div className='value'>
+                            <select
+                                tabIndex={-1}
+                                id='geo_rules'
+                                onChange={onChangeGeoSite}
+                                value={geoSite}
+                            >
+                                {singBoxGeoSite.map((option) => (
+                                    <option
+                                        value={option.geoSite}
+                                        tabIndex={0}
+                                        key={option.geoSite}
+                                    >
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='info'>{appLang.settings.geo_rules_site_desc}</div>
                     </div>
                     <div
                         role='button'

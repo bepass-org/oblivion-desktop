@@ -109,8 +109,10 @@ export interface Settings {
     mtu_desc: string;
     geo_block: string;
     geo_block_desc: string;
-    geo_rules: string;
-    geo_rules_desc: string;
+    geo_rules_ip: string;
+    geo_rules_ip_desc: string;
+    geo_rules_site: string;
+    geo_rules_site_desc: string;
     more_helper: string;
 }
 

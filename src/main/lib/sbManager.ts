@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import settings from 'electron-settings';
 import { isDev } from './utils';
-import { defaultSettings, singBoxGeo } from '../../defaultSettings';
+import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../defaultSettings';
 import { createSbConfig } from './sbConfig';
 
 type PlatformCommands = {
@@ -108,23 +108,85 @@ class SingBoxManager {
     }
 
     private async initialize(endpointPorts: number[]): Promise<void> {
-        const [port, geo, block, mtu, routingRules, closeSingBox, closeHelper] = await Promise.all([
-            settings.get('port') || defaultSettings.port,
-            settings.get('singBoxGeo'),
-            settings.get('singBoxGeoBlock'),
-            settings.get('singBoxMTU') || defaultSettings.singBoxMTU,
-            settings.get('routingRules'),
-            settings.get('closeSingBox'),
-            settings.get('closeHelper')
-        ]);
+        const [port, ip, site, block, mtu, routingRules, closeSingBox, closeHelper] =
+            await Promise.all([
+                settings.get('port'),
+                settings.get('singBoxGeoIp'),
+                settings.get('singBoxGeoSite'),
+                settings.get('singBoxGeoBlock'),
+                settings.get('singBoxMTU'),
+                settings.get('routingRules'),
+                settings.get('closeSingBox'),
+                settings.get('closeHelper')
+            ]);
 
+        const socksPort = typeof port === 'number' ? port : defaultSettings.port;
+        const tunMtu = typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU;
+        const geoIp = typeof ip === 'string' ? ip : singBoxGeoIp[0].geoIp;
+        const geoSite = typeof site === 'string' ? site : singBoxGeoSite[0].geoSite;
         const geoBlock = typeof block === 'boolean' ? block : defaultSettings.singBoxGeoBlock;
-        log.info(`GeoBlock(Ads, Malware, Phishing, Crypto Miners): ${geoBlock}`);
 
-        const selectedGeo = singBoxGeo.find((item) => item.region === geo) || singBoxGeo[0];
-        if (selectedGeo.region !== 'none') {
+        if (geoIp !== 'none') {
+            const hasGeoIp = await this.exportGeoList(['geoip', 'export', geoIp, '-f', 'geoip.db']);
+            log.info(`GeoIp: ${geoIp} => ${hasGeoIp}`);
+        }
+
+        if (geoSite !== 'none') {
+            const hasGeoSite = await this.exportGeoList([
+                'geosite',
+                'export',
+                geoSite,
+                '-f',
+                'geosite.db'
+            ]);
+            log.info(`GeoSite: ${geoSite} => ${hasGeoSite}`);
+        }
+
+        if (geoBlock) {
+            const geoIpMalware = await this.exportGeoList([
+                'geoip',
+                'export',
+                'malware',
+                '-f',
+                'security-ip.db'
+            ]);
+            const geoIpPhishing = await this.exportGeoList([
+                'geoip',
+                'export',
+                'phishing',
+                '-f',
+                'security-ip.db'
+            ]);
+            const geoSiteMalware = await this.exportGeoList([
+                'geosite',
+                'export',
+                'malware',
+                '-f',
+                'security.db'
+            ]);
+            const geoSiteCryptoMiners = await this.exportGeoList([
+                'geosite',
+                'export',
+                'cryptominers',
+                '-f',
+                'security.db'
+            ]);
+            const geoSitePhishing = await this.exportGeoList([
+                'geosite',
+                'export',
+                'phishing',
+                '-f',
+                'security.db'
+            ]);
+            const geoSiteAds = await this.exportGeoList([
+                'geosite',
+                'export',
+                'category-ads-all',
+                '-f',
+                'security.db'
+            ]);
             log.info(
-                `GeoRegion: ${selectedGeo.region}, GeoIP: ${selectedGeo.geoIp}, GeoSite: ${selectedGeo.geoSite}`
+                `GeoIpMalware: ${geoIpMalware}, GeoIpPhishing: ${geoIpPhishing}, GeoSiteMalware: ${geoSiteMalware}, GeoSiteCryptoMiners: ${geoSiteCryptoMiners}, GeoSitePhishing: ${geoSitePhishing}, GeoSiteAds: ${geoSiteAds}`
             );
         }
 
@@ -132,13 +194,12 @@ class SingBoxManager {
             this.parseRoutingRules(routingRules);
 
         createSbConfig(
-            Number(port),
+            socksPort,
             endpointPorts,
-            Number(mtu),
+            tunMtu,
             geoBlock,
-            selectedGeo.region,
-            selectedGeo.geoIp,
-            selectedGeo.geoSite,
+            geoIp,
+            geoSite,
             ipSet,
             domainSet,
             domainSuffixSet,
@@ -395,6 +456,22 @@ class SingBoxManager {
         }
 
         return { ipSet, domainSet, domainSuffixSet, processSet };
+    }
+
+    private async exportGeoList(args: string[]): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            let noError = true;
+            const command = path.join(this.workingDirPath, this.sbWDFileName);
+            const extractProcess = spawn(command, args, { cwd: this.workingDirPath });
+
+            extractProcess.stdout?.on('error', () => {
+                noError = false;
+            });
+
+            extractProcess.on('close', () => {
+                resolve(noError);
+            });
+        });
     }
 }
 

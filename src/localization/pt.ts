@@ -109,8 +109,10 @@ const brazilianPortuguese: Language = {
         mtu_desc: 'Definir a Unidade Máxima de Transmissão',
         geo_block: 'Bloqueio',
         geo_block_desc: 'Anúncios, Malware, Phishing e Mineração de Criptomoedas',
-        geo_rules: 'Regras de roteamento',
-        geo_rules_desc: 'Aplicando regras GeoIP e GeoSite',
+        geo_rules_ip: 'Roteamento IP',
+        geo_rules_ip_desc: 'Aplicação das regras GeoIP',
+        geo_rules_site: 'Roteamento Web',
+        geo_rules_site_desc: 'Aplicação das regras GeoSite',
         more_helper: 'Configurações do Assistente'
     },
     tabs: {

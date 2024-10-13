@@ -3,6 +3,7 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
+import { defaultSettings } from '../../../../defaultSettings';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -16,8 +17,14 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     const { isOpen, onClose, routingRules, setRoutingRules } = props;
     const [routingRulesInput, setRoutingRulesInput] = useState<string>(routingRules);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
+    const [proxyMode, setProxyMode] = useState<string>('');
 
-    useEffect(() => setShowModal(isOpen), [isOpen]);
+    useEffect(() => {
+        setShowModal(isOpen), [isOpen];
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
+        });
+    });
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);
@@ -130,7 +137,8 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         onSaveModal,
         onUpdateKeyDown,
         routingRulesInput,
-        showModal
+        showModal,
+        proxyMode
     };
 };
 export default useRoutingRulesModal;

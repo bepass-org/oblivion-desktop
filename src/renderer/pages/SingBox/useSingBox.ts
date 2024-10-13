@@ -2,7 +2,7 @@ import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 're
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import useTranslate from '../../../localization/useTranslate';
-import { defaultSettings, singBoxGeo } from '../../../defaultSettings';
+import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../../defaultSettings';
 
 const useSingBox = () => {
     useGoBackOnEscape();
@@ -12,7 +12,8 @@ const useSingBox = () => {
     const [mtu, setMtu] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
-    const [geo, setGeo] = useState<undefined | string>();
+    const [geoIp, setGeoIp] = useState<undefined | string>();
+    const [geoSite, setGeoSite] = useState<undefined | string>();
     const [geoBlock, setGeoBlock] = useState<undefined | boolean>();
 
     useEffect(() => {
@@ -28,8 +29,11 @@ const useSingBox = () => {
         settings.get('proxyMode').then((value) => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
-        settings.get('singBoxGeo').then((value) => {
-            setGeo(typeof value === 'undefined' ? singBoxGeo[0].region : value);
+        settings.get('singBoxGeoIp').then((value) => {
+            setGeoIp(typeof value === 'undefined' ? singBoxGeoIp[0].geoIp : value);
+        });
+        settings.get('singBoxGeoSite').then((value) => {
+            setGeoSite(typeof value === 'undefined' ? singBoxGeoSite[0].geoSite : value);
         });
         settings.get('singBoxGeoBlock').then((value) => {
             setGeoBlock(typeof value === 'undefined' ? defaultSettings.singBoxGeoBlock : value);
@@ -76,9 +80,14 @@ const useSingBox = () => {
         [onClickMtu]
     );
 
-    const onChangeGeo = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-        const newGeo = event.target.value;
-        settings.set('singBoxGeo', newGeo).then(() => setGeo(newGeo));
+    const onChangeGeoIp = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+        const newGeoIp = event.target.value;
+        settings.set('singBoxGeoIp', newGeoIp).then(() => setGeoIp(newGeoIp));
+    }, []);
+
+    const onChangeGeoSite = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+        const newGeoSite = event.target.value;
+        settings.set('singBoxGeoSite', newGeoSite).then(() => setGeoSite(newGeoSite));
     }, []);
 
     const handleSingBoxGeoBlockOnClick = useCallback(() => {
@@ -99,8 +108,10 @@ const useSingBox = () => {
         appLang,
         closeSingBox,
         closeHelper,
-        geo,
-        onChangeGeo,
+        geoIp,
+        onChangeGeoIp,
+        geoSite,
+        onChangeGeoSite,
         mtu,
         setMtu,
         handleCloseSingBoxOnClick,

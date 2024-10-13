@@ -110,8 +110,10 @@ const russian: Language = {
         mtu_desc: 'Установить максимальную единицу передачи',
         geo_block: 'Блокировка',
         geo_block_desc: 'Реклама, вредоносное ПО, фишинг и майнеры криптовалют',
-        geo_rules: 'Маршрутизация',
-        geo_rules_desc: 'Применение правил GeoIP и GeoSite',
+        geo_rules_ip: 'Маршрутизация IP',
+        geo_rules_ip_desc: 'Применение правил GeoIP',
+        geo_rules_site: 'Веб-маршрутизация',
+        geo_rules_site_desc: 'Применение правил GeoSite',
         more_helper: 'Настройки ассистента'
     },
     tabs: {

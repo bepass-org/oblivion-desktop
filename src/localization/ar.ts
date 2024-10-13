@@ -109,8 +109,10 @@ const arabic: Language = {
         mtu_desc: 'تعيين وحدة الإرسال القصوى',
         geo_block: 'الحظر',
         geo_block_desc: 'إعلانات، برامج ضارة، تصيد وعمّال تعدين العملات الرقمية',
-        geo_rules: 'قواعد التوجيه',
-        geo_rules_desc: 'تطبيق قواعد GeoIP و GeoSite',
+        geo_rules_ip: 'توجيه IP',
+        geo_rules_ip_desc: 'تطبيق قواعد GeoIP',
+        geo_rules_site: 'توجيه الويب',
+        geo_rules_site_desc: 'تطبيق قواعد GeoSite',
         more_helper: 'إعدادات المساعد'
     },
     tabs: {
