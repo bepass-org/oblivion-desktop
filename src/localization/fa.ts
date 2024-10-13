@@ -110,8 +110,10 @@ const persian: Language = {
         mtu_desc: 'تعیین حداکثر واحد انتقال',
         geo_block: 'مسدودسازی',
         geo_block_desc: 'تبلیغات، بدافزار، فیشینگ و ماینرهای رمزارز',
-        geo_rules: 'مسیریابی',
-        geo_rules_desc: 'به‌کارگیری قوانین GeoIP و GeoSite',
+        geo_rules_ip: 'مسیریابی IP',
+        geo_rules_ip_desc: 'به‌کارگیری قوانین GeoIP',
+        geo_rules_site: 'مسیریابی وب',
+        geo_rules_site_desc: 'به‌کارگیری قوانین GeoSite',
         more_helper: 'تنظیمات دستیار'
     },
     tabs: {

@@ -109,8 +109,10 @@ const english: Language = {
         mtu_desc: 'Set the Maximum Transmission Unit',
         geo_block: 'Blocking',
         geo_block_desc: 'Ads, Malware, Phishing & Crypto Miners',
-        geo_rules: 'Routing rules',
-        geo_rules_desc: 'Applying GeoIP and GeoSite rules',
+        geo_rules_ip: 'IP Routing',
+        geo_rules_ip_desc: 'Applying GeoIP rules',
+        geo_rules_site: 'Web Routing',
+        geo_rules_site_desc: 'Applying GeoSite rules',
         more_helper: 'Assistant Settings'
     },
     tabs: {

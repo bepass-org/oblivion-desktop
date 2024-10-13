@@ -48,7 +48,7 @@ export default function SingBox() {
                 <div className='settings' role='menu'>
                     <div className={classNames('item')}>
                         <label className='key' htmlFor='geo_rules'>
-                            GeoIp
+                            {appLang.settings.geo_rules_ip}
                         </label>
                         <div className='value'>
                             <select
@@ -64,11 +64,11 @@ export default function SingBox() {
                                 ))}
                             </select>
                         </div>
-                        <div className='info'>Applying GeoIp rules</div>
+                        <div className='info'>{appLang.settings.geo_rules_ip_desc}</div>
                     </div>
                     <div className={classNames('item')}>
                         <label className='key' htmlFor='geo_rules'>
-                            GeoSite
+                            {appLang.settings.geo_rules_site}
                         </label>
                         <div className='value'>
                             <select
@@ -88,7 +88,7 @@ export default function SingBox() {
                                 ))}
                             </select>
                         </div>
-                        <div className='info'>Applying GeoSite rules</div>
+                        <div className='info'>{appLang.settings.geo_rules_site_desc}</div>
                     </div>
                     <div
                         role='button'

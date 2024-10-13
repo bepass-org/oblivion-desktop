@@ -109,8 +109,10 @@ const indonesia: Language = {
         mtu_desc: 'Atur Maximum Transmission Unit',
         geo_block: 'Pemblokiran',
         geo_block_desc: 'Iklan, Malware, Phishing, dan Penambang Kripto',
-        geo_rules: 'Perutean',
-        geo_rules_desc: 'Penerapan aturan GeoIP dan GeoSite',
+        geo_rules_ip: 'Routing IP',
+        geo_rules_ip_desc: 'Menerapkan aturan GeoIP',
+        geo_rules_site: 'Routing Web',
+        geo_rules_site_desc: 'Menerapkan aturan GeoSite',
         more_helper: 'Pengaturan Asisten'
     },
     tabs: {
