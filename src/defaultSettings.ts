@@ -67,7 +67,7 @@ export const defaultSettings = {
     dataUsage: false,
     asn: 'UNK',
     closeSingBox: true,
-    closeHelper: true,
+    closeHelper: false,
     singBoxMTU: 9000,
     singBoxGeoBlock: false
 };
