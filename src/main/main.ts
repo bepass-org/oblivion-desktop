@@ -345,7 +345,7 @@ if (!gotTheLock) {
                     mainWindow = null;
                 });
 
-                mainWindow.on('minimize', async (e: any) => {
+                (mainWindow as any).on('minimize', async (e: Electron.Event) => {
                     e.preventDefault();
                 });
 
@@ -369,19 +369,26 @@ if (!gotTheLock) {
                     //await exitTheApp(mainWindow);
                 });
 
-                powerMonitor.on('shutdown', async (event: any) => {
-                    event.preventDefault();
-                    const shutdownTimeout = setTimeout(() => {
-                        app?.quit();
-                    }, 2500);
-                    try {
-                        await exitTheApp(mainWindow);
-                        clearTimeout(shutdownTimeout);
-                        app?.quit();
-                    } catch (error) {
-                        app?.quit();
-                    }
-                });
+                if (process.platform !== 'win32') {
+                    (powerMonitor as any).on('shutdown', async (event: Electron.Event) => {
+                        event.preventDefault();
+                        try {
+                            await exitTheApp(mainWindow);
+                            app?.quit();
+                        } catch (error) {
+                            app?.quit();
+                        }
+                    });
+                } else {
+                    (app as any).on('session-end', async () => {
+                        try {
+                            await exitTheApp(mainWindow);
+                            app.quit();
+                        } catch (error) {
+                            app.quit();
+                        }
+                    });
+                }
             } else {
                 mainWindow.show();
             }

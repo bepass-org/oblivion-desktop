@@ -19,7 +19,7 @@ import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
 import SingBoxManager from '../lib/sbManager';
 
-const simpleLog = log.create('simpleLog');
+const simpleLog = log.create({ logId: 'simpleLog' });
 simpleLog.transports.console.format = '{text}';
 simpleLog.transports.file.format = '{text}';
 
