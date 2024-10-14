@@ -345,7 +345,7 @@ if (!gotTheLock) {
                     mainWindow = null;
                 });
 
-                mainWindow.on('minimize', async (e: any) => {
+                (mainWindow as any).on('minimize', async (e: Electron.Event) => {
                     e.preventDefault();
                 });
 
