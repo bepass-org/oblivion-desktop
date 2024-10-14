@@ -4,7 +4,6 @@ import { sbConfigPath } from '../ipcListeners/wp';
 
 export function createSbConfig(
     socksPort: number,
-    endpointPorts: number[],
     mtu: number,
     geoBlock: boolean,
     geoIp: string,
@@ -64,13 +63,8 @@ export function createSbConfig(
         route: {
             rules: [
                 {
-                    port: endpointPorts,
                     network: 'udp',
                     outbound: 'direct-out'
-                },
-                {
-                    network: 'udp',
-                    outbound: 'block-out'
                 },
                 {
                     ip_is_private: true,

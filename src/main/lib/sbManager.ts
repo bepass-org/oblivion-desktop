@@ -32,10 +32,10 @@ class SingBoxManager {
         this.configPath = path.join(this.workingDirPath, 'config.obv');
     }
 
-    public async startSingBox(endpointPorts: number[]): Promise<boolean> {
+    public async startSingBox(): Promise<boolean> {
         if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
-        await this.initialize(endpointPorts);
+        await this.initialize();
 
         try {
             if (!(await this.isProcessRunning(this.helperFileName))) {
@@ -57,18 +57,12 @@ class SingBoxManager {
                 return false;
             }
 
-            if (
-                !(await this.processCheck(
-                    this.sbWDFileName,
-                    'Sing-Box started successfully, waiting for connection...',
-                    'Failed to start Sing-Box.',
-                    true
-                ))
-            ) {
-                return false;
-            }
-
-            return this.checkConnectionStatus();
+            return this.processCheck(
+                this.sbWDFileName,
+                'Sing-Box started successfully, waiting for connection...',
+                'Failed to start Sing-Box.',
+                true
+            );
         } catch (error) {
             log.error('Failed to start Sing-Box:', error);
             return false;
@@ -107,7 +101,39 @@ class SingBoxManager {
         return true;
     }
 
-    private async initialize(endpointPorts: number[]): Promise<void> {
+    public async checkConnectionStatus(): Promise<boolean> {
+        const maxAttempts = 10;
+        const checkStatus = async (attempt: number): Promise<boolean> => {
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            try {
+                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                    signal
+                });
+                if (response.ok) {
+                    log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
+                    return true;
+                }
+            } catch {
+                log.info(`Connection not yet established. Retry attempt ${attempt}/10...`);
+            } finally {
+                clearTimeout(timeoutId);
+            }
+
+            if (attempt >= maxAttempts) {
+                log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
+                return false;
+            }
+
+            await this.delay(2000);
+            return checkStatus(attempt + 1);
+        };
+
+        return checkStatus(1);
+    }
+
+    private async initialize(): Promise<void> {
         const [port, ip, site, block, mtu, routingRules, closeSingBox, closeHelper] =
             await Promise.all([
                 settings.get('port'),
@@ -195,7 +221,6 @@ class SingBoxManager {
 
         createSbConfig(
             socksPort,
-            endpointPorts,
             tunMtu,
             geoBlock,
             geoIp,
@@ -326,38 +351,6 @@ class SingBoxManager {
         };
 
         return checkProcess(1);
-    }
-
-    private async checkConnectionStatus(): Promise<boolean> {
-        const maxAttempts = 10;
-        const checkStatus = async (attempt: number): Promise<boolean> => {
-            const controller = new AbortController();
-            const signal = controller.signal;
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            try {
-                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
-                    signal
-                });
-                if (response.ok) {
-                    log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
-                    return true;
-                }
-            } catch {
-                log.info(`Connection not yet established. Retry attempt ${attempt}/10...`);
-            } finally {
-                clearTimeout(timeoutId);
-            }
-
-            if (attempt >= maxAttempts) {
-                log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
-                return false;
-            }
-
-            await this.delay(2000);
-            return checkStatus(attempt + 1);
-        };
-
-        return checkStatus(1);
     }
 
     private delay(ms: number): Promise<void> {
