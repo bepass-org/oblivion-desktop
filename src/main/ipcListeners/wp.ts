@@ -232,6 +232,7 @@ ipcMain.on('wp-start', async (event) => {
             await handleSystemProxyDisconnect();
         });
     } catch (error) {
+        log.error(error)
         event.reply('guide-toast', appLang.log.error_wp_stopped);
         event.reply('wp-end', true);
     }
