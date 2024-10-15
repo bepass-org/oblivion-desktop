@@ -21,11 +21,14 @@ class SingBoxManager {
 
     private monitorOblivionDesktop: boolean | null = null;
 
+    private readonly isWindows = process.platform === 'win32';
+
     constructor(
         private readonly helperPath: string,
         private readonly helperFileName: string,
         private readonly sbWDFileName: string,
         private readonly sbConfigName: string,
+        private readonly wpFileName: string,
         private readonly workingDirPath: string
     ) {
         this.cmdPath = path.join(this.workingDirPath, 'cmd.obv');
@@ -116,7 +119,9 @@ class SingBoxManager {
                     return true;
                 }
             } catch {
-                log.info(`Connection not yet established. Retry attempt ${attempt}/10...`);
+                log.info(
+                    `Connection not yet established. Retry attempt ${attempt}/${maxAttempts}...`
+                );
             } finally {
                 clearTimeout(timeoutId);
             }
@@ -244,8 +249,10 @@ class SingBoxManager {
         const config = {
             sbConfig: this.sbConfigName,
             sbBin: this.sbWDFileName,
-            wpBin: 'warp-plus',
-            obBin: isDev() ? 'electron' : 'oblivion-desktop',
+            wpBin: this.wpFileName,
+            obBin: isDev()
+                ? `electron${this.isWindows ? '.exe' : ''}`
+                : `oblivion-desktop${this.isWindows ? '.exe' : ''}`,
             monitorWp: this.monitorWarpPlus,
             monitorOb: this.monitorOblivionDesktop
         };
@@ -305,11 +312,11 @@ class SingBoxManager {
         });
     }
 
-    private async isProcessRunning(processPath: string): Promise<boolean> {
+    private async isProcessRunning(process: string): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
             let isRunning = false;
             const { running } = this.getPlatformCommands();
-            const [command, args] = running(processPath);
+            const [command, args] = running(process);
             const checkProcess = spawn(command, args);
 
             checkProcess.stdout?.on('data', (data: Buffer) => {
@@ -326,14 +333,14 @@ class SingBoxManager {
     }
 
     private async processCheck(
-        processPath: string,
+        process: string,
         successMessage: string,
         errorMessage: string,
         processShouldBeRunning: boolean
     ): Promise<boolean> {
         const maxAttempts = 10;
         const checkProcess = async (attempt: number): Promise<boolean> => {
-            const isRunning = await this.isProcessRunning(processPath);
+            const isRunning = await this.isProcessRunning(process);
             const conditionMet = processShouldBeRunning ? isRunning : !isRunning;
 
             if (conditionMet) {
@@ -418,8 +425,6 @@ class SingBoxManager {
                 .map((line) => line.trim().replace(/,$/, ''))
                 .filter((line) => line !== '');
 
-            const isWindows = process.platform === 'win32';
-
             lines.forEach((line) => {
                 const [prefix, value] = line.split(':').map((part) => part.trim());
                 if (!value) return;
@@ -438,7 +443,8 @@ class SingBoxManager {
                         break;
                     }
                     case 'app': {
-                        const app = isWindows && !value.endsWith('.exe') ? `${value}.exe` : value;
+                        const app =
+                            this.isWindows && !value.endsWith('.exe') ? `${value}.exe` : value;
                         processSet.push(app);
                         break;
                     }
