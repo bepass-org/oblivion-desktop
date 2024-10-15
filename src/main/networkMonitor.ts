@@ -36,6 +36,10 @@ class NetworkMonitor {
     }
 
     public initializeIpcEvents(): void {
+        if (process.platform === 'win32' && !this.isWindowsPowerShellStarted) {
+            powerShellStart();
+            this.isWindowsPowerShellStarted = true;
+        }
         ipcMain.on('check-speed', (event, arg) => {
             if (arg) {
                 this.startMonitoring();
@@ -49,10 +53,6 @@ class NetworkMonitor {
         if (this.speedMonitorInterval || this.monitoringState !== MonitoringState.Idle) return;
 
         this.monitoringState = MonitoringState.Initializing;
-        if (process.platform === 'win32' && !this.isWindowsPowerShellStarted) {
-            powerShellStart();
-            this.isWindowsPowerShellStarted = true;
-        }
         this.initializeStats();
     }
 
