@@ -232,9 +232,16 @@ ipcMain.on('wp-start', async (event) => {
             await handleSystemProxyDisconnect();
         });
     } catch (error) {
-        log.error(error)
         event.reply('guide-toast', appLang.log.error_wp_stopped);
         event.reply('wp-end', true);
+        // If the warp-plus file is damaged for any reason, it will be deleted so that when the program is closed and reopened, a new file is created in the previous path. 
+        // This prevents the user from needing to reinstall the program if they encounter the mentioned error.
+        if (fs.existsSync(wpBinPath)) {
+            fs.rm(wpBinPath, (err) => {
+                if (err) throw err;
+                log.info('wp binary was deleted from userData directory.');
+            });
+        }
     }
 });
 
