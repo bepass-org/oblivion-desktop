@@ -2,7 +2,7 @@ import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { removeDirIfExists } from './utils';
-import { stuffPath } from '../ipcListeners/wp';
+import { stuffPath, restartApp } from '../ipcListeners/wp';
 import { getTranslate } from '../../localization';
 //import { customEvent } from './customEvent';
 //import { getTranslateElectron } from '../../localization/electron';
@@ -80,7 +80,10 @@ export const getUserSettings = async () => {
 
 const wpErrorTranslation: Record<string, (params: { [key: string]: string }) => string> = {
     'bind: address already in use': ({ port }) => appLang.log.error_port_already_in_use(port),
-    'Only one usage of each socket address': () => appLang.log.error_port_socket,
+    'Only one usage of each socket address': () => {
+        restartApp();
+        return appLang.log.error_port_socket;
+    },
     'Invalid license': () => appLang.log.error_invalid_license,
     'Too many connected devices': () => appLang.log.error_too_many_connected,
     'Access is denied': () => appLang.log.error_access_denied,

@@ -58,6 +58,15 @@ export const sbBinPath = path.join(wpDirPath, sbWDFileName);
 export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
 
+export const restartApp = () => {
+    setTimeout(() => {
+        log.info('The app was relunched due to encountering a warp-plus error.');
+        app.relaunch();
+        app.exit(0);
+    }, 3500);
+    return;
+};
+
 const singBoxManager = new SingBoxManager(
     helperPath,
     helperFileName,
@@ -86,15 +95,6 @@ ipcMain.on('wp-start', async (event) => {
         event.reply('wp-end', true);
         return;
     }*/
-
-    const restartApp = () => {
-        setTimeout(() => {
-            log.info('The app was relunched due to encountering a warp-plus error.');
-            app.relaunch();
-            app.exit(0);
-        }, 3500);
-        return;
-    }
 
     if (!fs.existsSync(wpBinPath)) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
@@ -246,7 +246,7 @@ ipcMain.on('wp-start', async (event) => {
     } catch (error) {
         event.reply('guide-toast', appLang.log.error_wp_stopped);
         event.reply('wp-end', true);
-        // If the warp-plus file is damaged for any reason, it will be deleted so that when the program is closed and reopened, a new file is created in the previous path. 
+        // If the warp-plus file is damaged for any reason, it will be deleted so that when the program is closed and reopened, a new file is created in the previous path.
         // This prevents the user from needing to reinstall the program if they encounter the mentioned error.
         if (fs.existsSync(wpBinPath)) {
             fs.rm(wpBinPath, (err) => {
