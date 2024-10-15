@@ -63,6 +63,7 @@ const singBoxManager = new SingBoxManager(
     helperFileName,
     sbWDFileName,
     sbConfigName,
+    wpFileName,
     wpDirPath
 );
 
