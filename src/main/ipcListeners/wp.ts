@@ -87,9 +87,21 @@ ipcMain.on('wp-start', async (event) => {
         return;
     }*/
 
+    const restartApp = () => {
+        setTimeout(() => {
+            log.info('The app was relunched due to encountering a warp-plus error.');
+            app.relaunch();
+            app.exit(0);
+        }, 3500);
+        return;
+    }
+
     if (!fs.existsSync(wpBinPath)) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
         event.reply('wp-end', true);
+        if (fs.existsSync(wpAssetPath)) {
+            restartApp();
+        }
         return;
     }
 
@@ -240,6 +252,7 @@ ipcMain.on('wp-start', async (event) => {
             fs.rm(wpBinPath, (err) => {
                 if (err) throw err;
                 log.info('wp binary was deleted from userData directory.');
+                restartApp();
             });
         }
     }
