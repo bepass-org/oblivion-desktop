@@ -248,7 +248,7 @@ const useLanding = () => {
             }
             const started = window.performance.now();
             const http = new XMLHttpRequest();
-            http.open('GET', 'http://cp.cloudflare.com', true);
+            http.open('GET', 'https://cp.cloudflare.com', true);
             http.onreadystatechange = function () {};
             http.onloadend = function () {
                 setPing(Math.round(window.performance.now() - started));
@@ -361,6 +361,10 @@ const useLanding = () => {
         if (isConnected && isLoading) {
             setStatusText(`${appLang?.status?.disconnecting}`);
         } else if (!isConnected && isLoading) {
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
             setStatusText(`${appLang?.status?.connecting}`);
         } else if (isConnected && ipInfo?.countryCode) {
             setStatusText(`${appLang?.status?.connected_confirm}`);
