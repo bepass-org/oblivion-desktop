@@ -243,7 +243,7 @@ const useLanding = () => {
     const getPing = async () => {
         try {
             if (!ipInfo?.countryCode) {
-                setPing(-1);
+                setPing(0);
                 return;
             }
             const started = window.performance.now();
