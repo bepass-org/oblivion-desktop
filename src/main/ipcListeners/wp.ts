@@ -212,8 +212,7 @@ ipcMain.on('wp-start', async (event) => {
             }
 
             // Save the last endpoint that was successfully connected
-            const endpointRegex =
-                /msg="scan results" endpoints="\[\{AddrPort:(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})/;
+            const endpointRegex = /msg="(?:scan results|using warp endpoints)" endpoints="\[.*?(?:AddrPort:)?(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})/;
             const match = strData.match(endpointRegex);
             if (match) {
                 await settings.set('scanResult', match[1]);
