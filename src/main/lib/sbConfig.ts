@@ -34,13 +34,14 @@ export function createSbConfig(
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: mtu,
-                inet4_address: '172.19.0.1/28',
-                inet6_address: 'fdfe:dcba:9876::1/126',
+                address: [
+                    "172.19.0.1/30",
+                    "fdfe:dcba:9876::1/126"
+                ],
                 auto_route: true,
                 strict_route: false,
-                stack: 'gvisor',
+                stack: 'mixed',
                 sniff: true,
-                endpoint_independent_nat: false,
                 sniff_override_destination: true
             }
         ],
