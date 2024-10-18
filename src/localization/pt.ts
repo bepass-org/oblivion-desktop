@@ -181,7 +181,8 @@ const brazilianPortuguese: Language = {
         error_connection_failed: 'Não foi possível conectar-se a 1.1.1.1.',
         error_country_failed: 'Não foi possível conectar-se ao país selecionado.',
         error_singbox_failed_stop: 'Falha ao parar a Caixa de Canto!',
-        error_singbox_failed_start: 'Falha ao iniciar a Caixa de Canto!'
+        error_singbox_failed_start: 'Falha ao iniciar a Caixa de Canto!',
+        error_wp_reset_peer: 'A conexão com Cloudflare foi interrompida inesperadamente!'
     },
     about: {
         title: 'Sobre o Aplicativo',

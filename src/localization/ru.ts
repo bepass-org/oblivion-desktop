@@ -181,7 +181,8 @@ const russian: Language = {
         error_connection_failed: 'Подключение к 1.1.1.1 невозможно.',
         error_country_failed: 'Невозможно подключиться к выбранной стране.',
         error_singbox_failed_stop: 'Не удалось остановить Sing-Box!',
-        error_singbox_failed_start: 'Не удалось запустить Sing-Box!'
+        error_singbox_failed_start: 'Не удалось запустить Sing-Box!',
+        error_wp_reset_peer: 'Соединение с Cloudflare было неожиданно прервано!'
     },
     about: {
         title: 'О приложении',

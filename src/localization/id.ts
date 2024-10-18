@@ -178,7 +178,8 @@ const indonesia: Language = {
         error_connection_failed: 'Koneksi ke 1.1.1.1 tidak berhasil.',
         error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.',
         error_singbox_failed_stop: 'Gagal menghentikan Sing-Box!',
-        error_singbox_failed_start: 'Gagal memulai Sing-Box!'
+        error_singbox_failed_start: 'Gagal memulai Sing-Box!',
+        error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!'
     },
     about: {
         title: 'Tentang Aplikasi',

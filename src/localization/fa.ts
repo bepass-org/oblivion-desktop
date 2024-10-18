@@ -181,7 +181,8 @@ const persian: Language = {
         error_connection_failed: 'اتصال به 1.1.1.1 امکان‌پذیر نبود.',
         error_country_failed: 'امکان اتصال به کشور انتخابی وجود ندارد.',
         error_singbox_failed_stop: 'متوقف‌کردن سینگ‌باکس با خطا مواجه شد!',
-        error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!'
+        error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!',
+        error_wp_reset_peer: 'اتصال به کلودفلر به‌طور غیرمنتظره قطع شد!'
     },
     about: {
         title: 'درباره برنامه',

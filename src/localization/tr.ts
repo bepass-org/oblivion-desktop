@@ -180,7 +180,8 @@ const turkish: Language = {
         error_connection_failed: '1.1.1.1 ile bağlantı sağlanamadı.',
         error_country_failed: 'Seçilen ülkeye bağlanılamıyor.',
         error_singbox_failed_stop: 'Sing-Box durdurulamadı!',
-        error_singbox_failed_start: 'Sing-Box başlatılamadı!'
+        error_singbox_failed_start: 'Sing-Box başlatılamadı!',
+        error_wp_reset_peer: 'Cloudflare bağlantısı beklenmedik bir şekilde kesildi!'
     },
     about: {
         title: 'Uygulama Hakkında',

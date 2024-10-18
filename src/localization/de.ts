@@ -182,7 +182,8 @@ const deutsch: Language = {
         error_connection_failed: 'Verbindung zu 1.1.1.1 war nicht möglich.',
         error_country_failed: 'Verbindung zum ausgewählten Land nicht möglich.',
         error_singbox_failed_stop: 'Sing-Box konnte nicht gestoppt werden!',
-        error_singbox_failed_start: 'Sing-Box konnte nicht gestartet werden!'
+        error_singbox_failed_start: 'Sing-Box konnte nicht gestartet werden!',
+        error_wp_reset_peer: 'Die Verbindung zu Cloudflare wurde unerwartet unterbrochen!'
     },
     about: {
         title: 'Über',
