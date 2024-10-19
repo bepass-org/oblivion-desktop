@@ -9,19 +9,18 @@ import {
     checkEndpoint,
     checkRoutingRules,
     doesFileExist,
-    hasLicense,
-    shouldProxySystem
+    hasLicense
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetsPath } from '../main';
-import { wpVersion } from '../config';
+import { wpVersion, sbVersion, helperVersion } from '../config';
 
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
+export const helperLogPath = path.join(app?.getPath('userData'), 'oblivion-helper.log');
 
-// TODO refactor
-export function readLogFile() {
+export function readLogFile(value: string) {
     return new Promise((resolve, reject) => {
-        fs.readFile(logPath, 'utf8', (err: any, data: any) => {
+        fs.readFile(value, 'utf8', (err: any, data: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -43,8 +42,10 @@ export const logMetadata = () => {
         .then((data) => {
             log.info('------------------------MetaData------------------------');
             log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
-            log.info(`at od: ${packageJsonData.version}`);
+            log.info(`at od: v${packageJsonData.version}`);
             log.info(`at wp: v${wpVersion}`);
+            log.info(`at sb: v${sbVersion}`);
+            log.info(`at hp: v${helperVersion}`);
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
             log.info('method:', calculateMethod(data[0]));
             log.info('proxyMode:', data[1]);
@@ -63,10 +64,40 @@ export const logMetadata = () => {
         });
 };
 
-ipcMain.on('get-logs', async (event) => {
-    const bool = await doesFileExist(logPath);
-    if (bool) {
-        const data = await readLogFile();
-        event.reply('get-logs', data);
+const parseLogDate = (logLine: string) => {
+    const dateRegex =
+        /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2})|(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/;
+    const match = logLine.match(dateRegex);
+    if (match) {
+        if (match[1]) {
+            return new Date(match[1]);
+        } else if (match[2]) {
+            return new Date(match[2]);
+        }
     }
+    return new Date(0);
+};
+
+ipcMain.on('get-logs', async (event) => {
+    const wpLogPathExist = await doesFileExist(logPath);
+    const helperLogPathExist = await doesFileExist(String(helperLogPath));
+    let wpLogs = '';
+    let helperLogs = '';
+    if (wpLogPathExist) {
+        wpLogs = String(await readLogFile(logPath));
+    }
+    if (helperLogPathExist) {
+        helperLogs = String(await readLogFile(String(helperLogPath)));
+    }
+    const wpLogLines = wpLogs.split('\n');
+    const helperLogLines = helperLogs.split('\n');
+    const allLogLines = [...wpLogLines, ...helperLogLines]
+        .filter((line) => line.trim() !== '')
+        .sort((a, b) => {
+            const dateA = parseLogDate(a);
+            const dateB = parseLogDate(b);
+            return dateA.getTime() - dateB.getTime();
+        });
+    const mergedLogs = allLogLines.join('\n');
+    event.reply('get-logs', mergedLogs);
 });
