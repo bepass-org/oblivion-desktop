@@ -435,6 +435,9 @@ if (!gotTheLock) {
         };
 
         const autoConnect = async () => {
+            if (isDev()) {
+                return false;
+            }
             const checkAutoConnect = await settings.get('autoConnect');
             if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
                 try {
