@@ -10,9 +10,10 @@ import idID from './id';
 import arSA from './ar';
 import viVN from './vi';
 import ptBR from './pt';
+import urPK from './ur';
 import { Language } from './type';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
 
 const useTranslate = () => {
     const getLanguage = () => {
@@ -31,7 +32,8 @@ const useTranslate = () => {
         id: idID,
         ar: arSA,
         vi: viVN,
-        pt: ptBR
+        pt: ptBR,
+        ur: urPK
     };
 
     useEffect(() => {
