@@ -90,8 +90,9 @@ technology
                 :white_check_mark:  Turkish <br>
                 :white_check_mark:  Indonesian <br>
                 :white_check_mark:  Arabic <br>
-                :white_check_mark:  Portuguese (Brazil) <br>
-                :white_check_mark:  Vietnamese
+                :white_check_mark:  Portuguese <br>
+                :white_check_mark:  Vietnamese <br>
+                :white_check_mark:  Urdu
             </td>
         </tr>
         <tr>
