@@ -1,7 +1,7 @@
 // warp-plus
 
 import toast from 'react-hot-toast';
-import { app, ipcMain } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import treeKill from 'tree-kill';
 import path from 'path';
 import settings from 'electron-settings';
@@ -59,12 +59,16 @@ export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
 
 export const restartApp = () => {
+    if (BrowserWindow.getAllWindows().length > 0) {
+        BrowserWindow.getAllWindows().forEach((win) => {
+            win.close();
+        });
+    }
     setTimeout(() => {
-        log.info('The app was relunched due to encountering a warp-plus error.');
+        log.info('The app was relaunched due to encountering a warp-plus error.');
         app.relaunch();
         app.exit(0);
     }, 3500);
-    return;
 };
 
 const singBoxManager = new SingBoxManager(
