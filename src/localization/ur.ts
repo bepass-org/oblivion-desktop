@@ -169,6 +169,7 @@ const urdu: Language = {
         error_port_already_in_use: (value) =>
             `پورٹ ${value} کسی اور پروگرام کے ذریعے استعمال ہو رہی ہے؛ اسے تبدیل کریں۔`,
         error_port_socket: 'کوئی اور پورٹ استعمال کریں۔',
+        error_port_restart: 'پورٹ استعمال میں ہے؛ دوبارہ شروع کیا جا رہا ہے ...',
         error_unknown_flag: 'بیک گراؤنڈ میں ایک غیر قانونی کمانڈ چلائی گئی۔',
         error_deadline_exceeded: 'کنیکشن کا وقت ختم ہو گیا؛ دوبارہ کوشش کریں۔',
         error_configuration_encountered: 'پراکسی کنفیگریشن کو ایک مسئلہ درپیش آیا!',

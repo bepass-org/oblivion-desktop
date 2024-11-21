@@ -166,6 +166,7 @@ const arabic: Language = {
         error_port_already_in_use: (value) =>
             `المنفذ ${value} يتم استخدامه بواسطة برنامج آخر؛ قم بتغييره.`,
         error_port_socket: 'استخدم منفذ آخر.',
+        error_port_restart: 'المنفذ قيد الاستخدام؛ جاري إعادة التشغيل ...',
         error_unknown_flag: 'تم تنفيذ أمر غير صالح في الخلفية.',
         error_deadline_exceeded: 'انتهت مدة الاتصال؛ حاول مرة أخرى.',
         error_configuration_encountered: 'واجهت إعدادات البروكسي خطأ!',

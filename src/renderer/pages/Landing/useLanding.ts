@@ -170,7 +170,11 @@ const useLanding = () => {
         }
 
         ipcRenderer.on('guide-toast', (message: any) => {
-            defaultToast(message, 'GUIDE', 7000);
+            if (message === 'error_port_restart') {
+                loadingToast(appLang.log.error_port_restart);
+            } else {
+                defaultToast(message, 'GUIDE', 7000);
+            }
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
