@@ -51,6 +51,13 @@ export const helperAssetPath = path.join(
     helperFileName
 );
 
+export const protoAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'proto',
+    'oblivion.proto'
+);
+
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 export const stuffPath = path.join(wpDirPath, 'stuff');
@@ -64,7 +71,6 @@ export const restartApp = () => {
         app.relaunch();
         app.exit(0);
     }, 3500);
-    return;
 };
 
 const singBoxManager = new SingBoxManager(
@@ -72,8 +78,8 @@ const singBoxManager = new SingBoxManager(
     helperFileName,
     sbWDFileName,
     sbConfigName,
-    wpFileName,
-    wpDirPath
+    wpDirPath,
+    protoAssetPath
 );
 
 let exitOnWpEnd = false;
@@ -181,7 +187,7 @@ ipcMain.on('wp-start', async (event) => {
         //let endpointPorts: number[] = [];
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
-        if (proxyMode === 'tun' && !(await singBoxManager.startSingBox())) {
+        if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(child?.pid))) {
             event.reply('guide-toast', appLang.log.error_singbox_failed_start);
             event.reply('wp-end', true);
             if (typeof child?.pid !== 'undefined') {
@@ -270,6 +276,9 @@ ipcMain.on('wp-end', async (event) => {
 });
 
 ipcMain.on('end-wp-and-exit-app', async (event) => {
+    const closeHelperSetting = await settings.get('closeHelper');
+    const closeHelper =
+        typeof closeHelperSetting === 'boolean' ? closeHelperSetting : defaultSettings.closeHelper;
     try {
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
@@ -278,7 +287,9 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
             // send signal to `exitTheApp` function
             ipcMain.emit('exit');
         }
-        await singBoxManager.stopHelper();
+        if (closeHelper) {
+            await singBoxManager.stopHelper();
+        }
     } catch (error) {
         log.error(error);
         event.reply('wp-end', false);

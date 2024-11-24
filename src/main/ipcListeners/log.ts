@@ -16,7 +16,6 @@ import { binAssetsPath } from '../main';
 import { wpVersion, sbVersion, helperVersion } from '../config';
 
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
-export const helperLogPath = path.join(app?.getPath('userData'), 'oblivion-helper.log');
 
 export function readLogFile(value: string) {
     return new Promise((resolve, reject) => {
@@ -80,18 +79,12 @@ const parseLogDate = (logLine: string) => {
 
 ipcMain.on('get-logs', async (event) => {
     const wpLogPathExist = await doesFileExist(logPath);
-    const helperLogPathExist = await doesFileExist(String(helperLogPath));
     let wpLogs = '';
-    let helperLogs = '';
     if (wpLogPathExist) {
         wpLogs = String(await readLogFile(logPath));
     }
-    if (helperLogPathExist) {
-        helperLogs = String(await readLogFile(String(helperLogPath)));
-    }
     const wpLogLines = wpLogs.split('\n');
-    const helperLogLines = helperLogs.split('\n');
-    const allLogLines = [...wpLogLines, ...helperLogLines]
+    const allLogLines = [...wpLogLines]
         .filter((line) => line.trim() !== '')
         .sort((a, b) => {
             const dateA = parseLogDate(a);
