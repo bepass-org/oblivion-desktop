@@ -14,7 +14,7 @@ interface IProcessCommand {
     args: string[];
 }
 
-interface IGeoConfig {
+interface IConfig {
     geoIp: string;
     geoSite: string;
     geoBlock: boolean;
@@ -76,7 +76,7 @@ class SingBoxManager {
         }
 
         this.wpPid = wpPid;
-        await this.initialize();
+        await this.setupConfigs();
 
         try {
             const helperStarted = await this.ensureHelperIsRunning();
@@ -85,8 +85,7 @@ class SingBoxManager {
             log.info('Starting Sing-Box...');
             this.helperClient.Start({}, () => {});
 
-            return this.processCheck(
-                this.sbWDFileName,
+            return this.statusCheck(
                 'Sing-Box started successfully, waiting for connection...',
                 'Failed to start Sing-Box.',
                 true
@@ -97,20 +96,6 @@ class SingBoxManager {
         }
     }
 
-    private async ensureHelperIsRunning(): Promise<boolean> {
-        if (await this.isProcessRunning(this.helperFileName)) {
-            return true;
-        }
-
-        await this.startHelper();
-        return this.processCheck(
-            this.helperFileName,
-            'Oblivion-Helper started successfully.',
-            'Failed to start Oblivion-Helper.',
-            true
-        );
-    }
-
     public async stopSingBox(): Promise<boolean> {
         if (!(await this.isProcessRunning(this.helperFileName))) {
             return true;
@@ -119,8 +104,7 @@ class SingBoxManager {
         log.info('Stopping Sing-Box...');
         this.helperClient.Stop({}, () => {});
 
-        return this.processCheck(
-            this.sbWDFileName,
+        return this.statusCheck(
             'Sing-Box stopped successfully.',
             'Failed to stop Sing-Box.',
             false
@@ -167,22 +151,68 @@ class SingBoxManager {
         });
     }
 
-    public async stopHelper(): Promise<boolean> {
+    public async stopHelper(): Promise<void> {
         log.info('Stopping Oblivion-Helper...');
         this.helperClient.Exit({}, () => {});
+    }
 
-        return this.processCheck(
-            this.helperFileName,
-            'Oblivion-Helper stopped successfully.',
-            'Failed to stop Oblivion-Helper.',
-            false
-        );
+    private async ensureHelperIsRunning(): Promise<boolean> {
+        if (await this.isProcessRunning(this.helperFileName)) {
+            return true;
+        }
+
+        return this.startHelper();
+        /*return this.statusCheck(
+            'Oblivion-Helper started successfully.',
+            'Failed to start Oblivion-Helper.',
+            true
+        );*/
+    }
+
+    public async fetchHelperStatus(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.helperClient.Status({}, (error: any, response: { status: string }) => {
+                if (error) {
+                    log.error('Failed to fetch status:', error);
+                    return reject(error);
+                }
+                resolve(response.status);
+            });
+        });
+    }
+
+    private async statusCheck(
+        successMessage: string,
+        errorMessage: string,
+        statusShouldBeStarted: boolean,
+        maxAttempts = 10
+    ): Promise<boolean> {
+        const checkStatus = async (attempt: number): Promise<boolean> => {
+            const currentStatus = await this.fetchHelperStatus();
+            const isStarted = currentStatus === 'running';
+            const conditionMet = statusShouldBeStarted ? isStarted : !isStarted;
+
+            if (conditionMet) {
+                log.info(successMessage);
+                return true;
+            }
+
+            if (attempt >= maxAttempts) {
+                log.error(errorMessage);
+                return false;
+            }
+
+            await this.delay(1000);
+            return checkStatus(attempt + 1);
+        };
+
+        return checkStatus(1);
     }
 
     public async checkConnectionStatus(): Promise<boolean> {
         const maxAttempts = 10;
         const checkInterval = 2000;
-        const timeout = 5000;
+        const timeout = 3000;
 
         const checkStatus = async (attempt: number): Promise<boolean> => {
             const controller = new AbortController();
@@ -215,98 +245,6 @@ class SingBoxManager {
         };
 
         return checkStatus(1);
-    }
-
-    private async initialize(): Promise<void> {
-        const config = await this.loadConfiguration();
-        await this.setupGeoLists(config);
-        await this.createConfigFiles(config);
-    }
-
-    private async loadConfiguration(): Promise<IGeoConfig> {
-        const [port, ip, site, block, mtu] = await Promise.all([
-            settings.get('port'),
-            settings.get('singBoxGeoIp'),
-            settings.get('singBoxGeoSite'),
-            settings.get('singBoxGeoBlock'),
-            settings.get('singBoxMTU')
-        ]);
-
-        return {
-            socksPort: typeof port === 'number' ? port : defaultSettings.port,
-            tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
-            geoIp: typeof ip === 'string' ? ip : singBoxGeoIp[0].geoIp,
-            geoSite: typeof site === 'string' ? site : singBoxGeoSite[0].geoSite,
-            geoBlock: typeof block === 'boolean' ? block : defaultSettings.singBoxGeoBlock
-        };
-    }
-
-    private async setupGeoLists(config: IGeoConfig): Promise<void> {
-        const { geoIp, geoSite, geoBlock } = config;
-
-        if (geoIp !== 'none') {
-            const hasGeoIp = await this.exportGeoList(['geoip', 'export', geoIp, '-f', 'geoip.db']);
-            log.info(`GeoIp: ${geoIp} => ${hasGeoIp}`);
-        }
-
-        if (geoSite !== 'none') {
-            const hasGeoSite = await this.exportGeoList([
-                'geosite',
-                'export',
-                geoSite,
-                '-f',
-                'geosite.db'
-            ]);
-            log.info(`GeoSite: ${geoSite} => ${hasGeoSite}`);
-        }
-
-        if (geoBlock) {
-            await this.setupSecurityLists();
-        }
-    }
-
-    private async setupSecurityLists(): Promise<void> {
-        const securityTasks = [
-            ['geoip', 'malware', 'security-ip.db'],
-            ['geoip', 'phishing', 'security-ip.db'],
-            ['geosite', 'malware', 'security.db'],
-            ['geosite', 'cryptominers', 'security.db'],
-            ['geosite', 'phishing', 'security.db'],
-            ['geosite', 'category-ads-all', 'security.db']
-        ];
-
-        const results = await Promise.all(
-            securityTasks.map(([type, category, file]) =>
-                this.exportGeoList([type, 'export', category, '-f', file])
-            )
-        );
-
-        log.info('Security lists setup results:', results);
-    }
-
-    private async createConfigFiles(config: IGeoConfig): Promise<void> {
-        const routingRules = await settings.get('routingRules');
-        const rules = this.parseRoutingRules(routingRules);
-
-        createSbConfig(
-            config.socksPort,
-            config.tunMtu,
-            config.geoBlock,
-            config.geoIp,
-            config.geoSite,
-            rules.ipSet,
-            rules.domainSet,
-            rules.domainSuffixSet,
-            rules.processSet
-        );
-
-        const helperConfig = {
-            sbConfig: this.sbConfigName,
-            sbBin: this.sbWDFileName
-        };
-
-        fs.writeFileSync(this.configPath, JSON.stringify(helperConfig, null, 2), 'utf-8');
-        log.info(`Helper config file has been created at ${this.configPath}`);
     }
 
     private async monitorHelperStatus(): Promise<void> {
@@ -354,34 +292,6 @@ class SingBoxManager {
 
             checkProcess.on('close', () => resolve(isRunning));
         });
-    }
-
-    private async processCheck(
-        process: string,
-        successMessage: string,
-        errorMessage: string,
-        processShouldBeRunning: boolean,
-        maxAttempts = 10
-    ): Promise<boolean> {
-        const checkProcess = async (attempt: number): Promise<boolean> => {
-            const isRunning = await this.isProcessRunning(process);
-            const conditionMet = processShouldBeRunning ? isRunning : !isRunning;
-
-            if (conditionMet) {
-                log.info(successMessage);
-                return true;
-            }
-
-            if (attempt >= maxAttempts) {
-                log.error(errorMessage);
-                return false;
-            }
-
-            await this.delay(1000);
-            return checkProcess(attempt + 1);
-        };
-
-        return checkProcess(1);
     }
 
     private killWarpPlus(): void {
@@ -439,6 +349,98 @@ class SingBoxManager {
                 running: () => ({ command: '', args: [] })
             }
         );
+    }
+
+    private async setupConfigs(): Promise<void> {
+        const config = await this.loadConfiguration();
+        await this.setupGeoLists(config);
+        await this.createConfigFiles(config);
+    }
+
+    private async loadConfiguration(): Promise<IConfig> {
+        const [port, ip, site, block, mtu] = await Promise.all([
+            settings.get('port'),
+            settings.get('singBoxGeoIp'),
+            settings.get('singBoxGeoSite'),
+            settings.get('singBoxGeoBlock'),
+            settings.get('singBoxMTU')
+        ]);
+
+        return {
+            socksPort: typeof port === 'number' ? port : defaultSettings.port,
+            tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
+            geoIp: typeof ip === 'string' ? ip : singBoxGeoIp[0].geoIp,
+            geoSite: typeof site === 'string' ? site : singBoxGeoSite[0].geoSite,
+            geoBlock: typeof block === 'boolean' ? block : defaultSettings.singBoxGeoBlock
+        };
+    }
+
+    private async setupGeoLists(config: IConfig): Promise<void> {
+        const { geoIp, geoSite, geoBlock } = config;
+
+        if (geoIp !== 'none') {
+            const hasGeoIp = await this.exportGeoList(['geoip', 'export', geoIp, '-f', 'geoip.db']);
+            log.info(`GeoIp: ${geoIp} => ${hasGeoIp}`);
+        }
+
+        if (geoSite !== 'none') {
+            const hasGeoSite = await this.exportGeoList([
+                'geosite',
+                'export',
+                geoSite,
+                '-f',
+                'geosite.db'
+            ]);
+            log.info(`GeoSite: ${geoSite} => ${hasGeoSite}`);
+        }
+
+        if (geoBlock) {
+            await this.setupSecurityLists();
+        }
+    }
+
+    private async setupSecurityLists(): Promise<void> {
+        const securityTasks = [
+            ['geoip', 'malware', 'security-ip.db'],
+            ['geoip', 'phishing', 'security-ip.db'],
+            ['geosite', 'malware', 'security.db'],
+            ['geosite', 'cryptominers', 'security.db'],
+            ['geosite', 'phishing', 'security.db'],
+            ['geosite', 'category-ads-all', 'security.db']
+        ];
+
+        const results = await Promise.all(
+            securityTasks.map(([type, category, file]) =>
+                this.exportGeoList([type, 'export', category, '-f', file])
+            )
+        );
+
+        log.info('Security lists setup results:', results);
+    }
+
+    private async createConfigFiles(config: IConfig): Promise<void> {
+        const routingRules = await settings.get('routingRules');
+        const rules = this.parseRoutingRules(routingRules);
+
+        createSbConfig(
+            config.socksPort,
+            config.tunMtu,
+            config.geoBlock,
+            config.geoIp,
+            config.geoSite,
+            rules.ipSet,
+            rules.domainSet,
+            rules.domainSuffixSet,
+            rules.processSet
+        );
+
+        const helperConfig = {
+            sbConfig: this.sbConfigName,
+            sbBin: this.sbWDFileName
+        };
+
+        fs.writeFileSync(this.configPath, JSON.stringify(helperConfig, null, 2), 'utf-8');
+        log.info(`Helper config file has been created at ${this.configPath}`);
     }
 
     private parseRoutingRules(routingRules: any): IRoutingRules {
