@@ -82,7 +82,8 @@ const wpErrorTranslation: Record<string, (params: { [key: string]: string }) => 
     'bind: address already in use': ({ port }) => appLang.log.error_port_already_in_use(port),
     'Only one usage of each socket address': () => {
         restartApp();
-        return appLang.log.error_port_socket;
+        //return appLang.log.error_port_socket;
+        return 'error_port_restart';
     },
     'Invalid license': () => appLang.log.error_invalid_license,
     'Too many connected devices': () => appLang.log.error_too_many_connected,

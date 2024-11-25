@@ -8,9 +8,21 @@ import idID from './id';
 import arSA from './ar';
 import viVN from './vi';
 import ptBR from './pt';
+import urPK from './ur';
 import { defaultSettings } from '../defaultSettings';
 
-export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt';
+export type LanguageType =
+    | 'fa'
+    | 'en'
+    | 'ru'
+    | 'cn'
+    | 'de'
+    | 'tr'
+    | 'id'
+    | 'ar'
+    | 'vi'
+    | 'pt'
+    | 'ur';
 type directionType = 'rtl' | 'ltr';
 
 const lang = defaultSettings.lang as LanguageType;
@@ -26,7 +38,8 @@ const direction = {
     id: 'ltr',
     ar: 'rtl',
     vi: 'ltr',
-    pt: 'ltr'
+    pt: 'ltr',
+    ur: 'ltr'
 };
 
 const getDirection = () => {
@@ -54,7 +67,8 @@ const translate = {
     id: idID,
     ar: arSA,
     vi: viVN,
-    pt: ptBR
+    pt: ptBR,
+    ur: urPK
 };
 
 const getTranslate = (forceLang?: string) => {

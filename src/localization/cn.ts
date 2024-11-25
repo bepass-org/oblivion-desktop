@@ -162,6 +162,7 @@ const chinese: Language = {
         error_object_null: '程序遇到错误；再试一次。',
         error_port_already_in_use: (value) => `端口 ${value} 正在被另一个程序使用；更改。`,
         error_port_socket: '使用另一个端口。',
+        error_port_restart: '端口正在使用中；正在重新启动...',
         error_unknown_flag: '后台执行了无效命令。',
         error_deadline_exceeded: '连接超时；再试一次。',
         error_configuration_encountered: '代理配置遇到错误！',

@@ -164,6 +164,7 @@ export interface Log {
     error_object_null: string;
     error_port_already_in_use: (value: string) => string;
     error_port_socket: string;
+    error_port_restart: string;
     error_unknown_flag: string;
     error_country_failed: string;
     error_deadline_exceeded: string;

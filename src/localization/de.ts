@@ -170,6 +170,7 @@ const deutsch: Language = {
         error_port_already_in_use: (value) =>
             `Port ${value} wird von einem anderen Programm verwendet; Ändern Sie es.`,
         error_port_socket: 'Anderen Port verwenden.',
+        error_port_restart: 'Der Port wird verwendet; Neustart ...',
         error_unknown_flag: 'Im Hintergrund wurde ein ungültiger Befehl ausgeführt.',
         error_deadline_exceeded: 'Zeitüberschreitung bei der Verbindung; Versuchen Sie es erneut.',
         error_configuration_encountered: 'Proxy-Konfiguration hat einen Fehler festgestellt!',

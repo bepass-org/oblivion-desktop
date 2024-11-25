@@ -168,6 +168,7 @@ const brazilianPortuguese: Language = {
         error_port_already_in_use: (value) =>
             `A porta ${value} está sendo usada por outro programa; Altere-a.`,
         error_port_socket: 'Use outra porta.',
+        error_port_restart: 'A porta está em uso; reiniciando ...',
         error_unknown_flag: 'Um comando inválido foi executado em segundo plano.',
         error_deadline_exceeded: 'Tempo limite de conexão esgotado; Tente novamente.',
         error_configuration_encountered: 'Erro na configuração do proxy!',

@@ -168,6 +168,7 @@ const turkish: Language = {
         error_port_already_in_use: (value) =>
             `Port ${value} başka bir program tarafından kullanılıyor; Değiştirin.`,
         error_port_socket: 'Başka bir port kullanın.',
+        error_port_restart: 'Port kullanılıyor; yeniden başlatılıyor ...',
         error_unknown_flag: 'Arka planda geçersiz bir komut yürütüldü.',
         error_deadline_exceeded: 'Bağlantı zaman aşımına uğradı; Tekrar deneyin.',
         error_configuration_encountered: 'Proxy yapılandırması hatası ile karşılaşıldı!',

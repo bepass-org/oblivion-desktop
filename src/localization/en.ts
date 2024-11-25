@@ -167,6 +167,7 @@ const english: Language = {
         error_port_already_in_use: (value) =>
             `Port ${value} is being used by another program; Change it.`,
         error_port_socket: 'Use another port.',
+        error_port_restart: 'The port is in use; restarting ...',
         error_unknown_flag: 'An invalid command was executed in the background.',
         error_deadline_exceeded: 'Connection timed out; Try again.',
         error_configuration_encountered: 'Proxy configuration encountered an error!',

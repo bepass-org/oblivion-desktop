@@ -103,8 +103,9 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark:  ترکی<br>
                 :white_check_mark:  اندونزیایی <br>
                 :white_check_mark:  عربی <br>
-                :white_check_mark:  پرتغالی (برزیل)  <br>
-                :white_check_mark:  ویتنامی
+                :white_check_mark:  پرتغالی  <br>
+                :white_check_mark:  ویتنامی <br>
+                :white_check_mark:  اردو
             </td>
         </tr>
         <tr>

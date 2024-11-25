@@ -168,6 +168,7 @@ const vietnamese: Language = {
         error_port_already_in_use: (value) =>
             `Cổng ${value} đang được sử dụng bởi chương trình khác; Thay đổi cổng.`,
         error_port_socket: 'Sử dụng cổng khác.',
+        error_port_restart: 'Cổng đang được sử dụng; khởi động lại ...',
         error_unknown_flag: 'Một lệnh không hợp lệ đã được thực thi trong nền.',
         error_deadline_exceeded: 'Hết thời gian kết nối; Thử lại.',
         error_configuration_encountered: 'Cấu hình proxy gặp lỗi!',
