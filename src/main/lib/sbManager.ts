@@ -184,13 +184,13 @@ class SingBoxManager {
     private async statusCheck(
         successMessage: string,
         errorMessage: string,
-        statusShouldBeStarted: boolean,
+        statusShouldBeRunning: boolean,
         maxAttempts = 10
     ): Promise<boolean> {
         const checkStatus = async (attempt: number): Promise<boolean> => {
             const currentStatus = await this.fetchHelperStatus();
             const isRunning = currentStatus === 'running';
-            const conditionMet = statusShouldBeStarted ? isRunning : !isRunning;
+            const conditionMet = statusShouldBeRunning ? isRunning : !isRunning;
 
             if (conditionMet) {
                 log.info(successMessage);
