@@ -27,7 +27,6 @@ export type settingsKeys =
     | 'shortcut'
     | 'dataUsage'
     | 'asn'
-    | 'closeSingBox'
     | 'closeHelper'
     | 'singBoxMTU'
     | 'singBoxGeoIp'
@@ -66,7 +65,6 @@ export const defaultSettings = {
     shortcut: false,
     dataUsage: false,
     asn: 'UNK',
-    closeSingBox: true,
     closeHelper: false,
     singBoxMTU: 9000,
     singBoxGeoBlock: false

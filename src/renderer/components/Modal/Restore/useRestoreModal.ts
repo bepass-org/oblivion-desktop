@@ -106,7 +106,6 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('dns', dnsServers[0].value);
         await settings.set('dataUsage', defaultSettings.dataUsage);
         await settings.set('asn', defaultSettings.asn);
-        await settings.set('closeSingBox', defaultSettings.closeSingBox);
         await settings.set('closeHelper', defaultSettings.closeHelper);
         await settings.set('singBoxMTU', defaultSettings.singBoxMTU);
         await settings.set('singBoxGeoIp', singBoxGeoIp[0].geoIp);
