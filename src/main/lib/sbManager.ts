@@ -162,11 +162,6 @@ class SingBoxManager {
         }
 
         return this.startHelper();
-        /*return this.statusCheck(
-            'Oblivion-Helper started successfully.',
-            'Failed to start Oblivion-Helper.',
-            true
-        );*/
     }
 
     public async fetchHelperStatus(): Promise<string> {
