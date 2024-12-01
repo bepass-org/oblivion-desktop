@@ -62,7 +62,7 @@ class SingBoxManager {
         });
         this.oblivionHelperProto = grpc.loadPackageDefinition(packageDefinition).oblivionHelper;
         this.helperClient = new this.oblivionHelperProto.OblivionService(
-            'localhost:50051',
+            '127.0.0.1:50051',
             grpc.credentials.createInsecure()
         );
         this.monitorHelperStatus().catch((err) =>
