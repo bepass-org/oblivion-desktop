@@ -66,16 +66,33 @@ export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
 
 export const restartApp = () => {
-    setTimeout(() => {
-        if (BrowserWindow.getAllWindows().length > 0) {
-            BrowserWindow.getAllWindows().forEach((win) => {
-                win.close();
-            });
+    const maxRetries = 2;
+    let retryCount = 0;
+    const attemptRestart = () => {
+        try {
+            const allWindows = BrowserWindow.getAllWindows();
+            if (allWindows.length > 0) {
+                allWindows.forEach((win) => {
+                    if (!win.isDestroyed()) {
+                        win.close();
+                    }
+                });
+            }
+            log.info('The app is being relaunched due to encountering a warp-plus error.');
+            app.relaunch();
+            app.quit();
+        } catch (error) {
+            retryCount += 1;
+            log.error(`Error during app restart (attempt ${retryCount}):`, error);
+            if (retryCount < maxRetries) {
+                log.info('Retrying app quit...');
+                setTimeout(attemptRestart, 1000); 
+            } else {
+                log.error('Max retry limit reached. Could not restart app.');
+            }
         }
-        log.info('The app was relaunched due to encountering a warp-plus error.');
-        app.relaunch();
-        app.exit(0);
-    }, 3500);
+    };
+    setTimeout(attemptRestart, 3500);
 };
 
 const singBoxManager = new SingBoxManager(
