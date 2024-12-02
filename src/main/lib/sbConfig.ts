@@ -25,9 +25,10 @@ export function createSbConfig(
 
     const config = {
         log: {
-            disabled: true,
+            disabled: false,
             level: 'warn',
-            timestamp: true
+            timestamp: true,
+            output: 'sing-box.log'
         },
         inbounds: [
             {

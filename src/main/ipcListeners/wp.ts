@@ -51,6 +51,13 @@ export const helperAssetPath = path.join(
     helperFileName
 );
 
+export const protoAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'proto',
+    'oblivion.proto'
+);
+
 export const wpDirPath = path.join(app.getPath('userData'));
 export const wpBinPath = path.join(wpDirPath, wpFileName);
 export const stuffPath = path.join(wpDirPath, 'stuff');
@@ -76,8 +83,8 @@ const singBoxManager = new SingBoxManager(
     helperFileName,
     sbWDFileName,
     sbConfigName,
-    wpFileName,
-    wpDirPath
+    wpDirPath,
+    protoAssetPath
 );
 
 let exitOnWpEnd = false;
@@ -185,12 +192,18 @@ ipcMain.on('wp-start', async (event) => {
         //let endpointPorts: number[] = [];
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
-        if (proxyMode === 'tun' && !(await singBoxManager.startSingBox())) {
-            event.reply('guide-toast', appLang.log.error_singbox_failed_start);
-            event.reply('wp-end', true);
-            if (typeof child?.pid !== 'undefined') {
-                treeKill(child.pid, 'SIGKILL');
-                exitOnWpEnd = true;
+        let isSingBoxRunning: boolean = false;
+
+        if (proxyMode === 'tun') {
+            isSingBoxRunning = await singBoxManager.startSingBox(child?.pid);
+            if (!isSingBoxRunning) {
+                event.reply('guide-toast', appLang.log.error_singbox_failed_start);
+                event.reply('wp-end', true);
+                if (typeof child?.pid !== 'undefined') {
+                    console.log(child?.pid);
+                    treeKill(child.pid, 'SIGKILL');
+                    exitOnWpEnd = true;
+                }
             }
         }
 
@@ -202,7 +215,10 @@ ipcMain.on('wp-start', async (event) => {
             } */
 
             if (strData.includes(successMessage)) {
-                if (proxyMode === 'tun' && !(await singBoxManager.checkConnectionStatus())) {
+                if (
+                    proxyMode === 'tun' &&
+                    (!isSingBoxRunning || !(await singBoxManager.checkConnectionStatus()))
+                ) {
                     event.reply('guide-toast', appLang.log.error_singbox_failed_start);
                     event.reply('wp-end', true);
                     if (typeof child?.pid !== 'undefined') {
@@ -235,10 +251,13 @@ ipcMain.on('wp-start', async (event) => {
         });
 
         child.on('exit', async () => {
-            if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
-                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
-                event.reply('wp-end', false);
-                event.reply('wp-start', true);
+            if (proxyMode === 'tun') {
+                isSingBoxRunning = !(await singBoxManager.stopSingBox());
+                if (isSingBoxRunning) {
+                    event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
+                    event.reply('wp-end', false);
+                    event.reply('wp-start', true);
+                }
             }
             disconnectedFlags[1] = true;
             sendDisconnectedSignalToRenderer();
@@ -274,6 +293,9 @@ ipcMain.on('wp-end', async (event) => {
 });
 
 ipcMain.on('end-wp-and-exit-app', async (event) => {
+    const closeHelperSetting = await settings.get('closeHelper');
+    const closeHelper =
+        typeof closeHelperSetting === 'boolean' ? closeHelperSetting : defaultSettings.closeHelper;
     try {
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
@@ -282,7 +304,9 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
             // send signal to `exitTheApp` function
             ipcMain.emit('exit');
         }
-        await singBoxManager.stopHelper();
+        if (closeHelper) {
+            await singBoxManager.stopHelper();
+        }
     } catch (error) {
         log.error(error);
         event.reply('wp-end', false);

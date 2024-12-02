@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package oblivionHelper;
+
+service OblivionService {
+  rpc Start (StartRequest) returns (StartResponse);
+  rpc Stop (StopRequest) returns (StopResponse);
+  rpc Status (StatusRequest) returns (StatusResponse);
+  rpc StreamStatus (StatusRequest) returns (stream StatusResponse);
+  rpc Exit (ExitRequest) returns (ExitResponse);
+}
+
+message StartRequest {}
+message StartResponse {}
+message StopRequest {}
+message StopResponse {}
+message StatusRequest {}
+message StatusResponse {
+  string status = 1;
+}
+message ExitRequest {}
+message ExitResponse {}

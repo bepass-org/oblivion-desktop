@@ -7,7 +7,6 @@ import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../../defaultS
 const useSingBox = () => {
     useGoBackOnEscape();
     const appLang = useTranslate();
-    const [closeSingBox, setCloseSingBox] = useState<boolean>();
     const [closeHelper, setCloseSHelper] = useState<boolean>();
     const [mtu, setMtu] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
@@ -17,9 +16,6 @@ const useSingBox = () => {
     const [geoBlock, setGeoBlock] = useState<undefined | boolean>();
 
     useEffect(() => {
-        settings.get('closeSingBox').then((value) => {
-            setCloseSingBox(typeof value === 'undefined' ? defaultSettings.closeSingBox : value);
-        });
         settings.get('closeHelper').then((value) => {
             setCloseSHelper(typeof value === 'undefined' ? defaultSettings.closeHelper : value);
         });
@@ -39,20 +35,6 @@ const useSingBox = () => {
             setGeoBlock(typeof value === 'undefined' ? defaultSettings.singBoxGeoBlock : value);
         });
     }, []);
-
-    const handleCloseSingBoxOnClick = useCallback(() => {
-        settings.set('closeSingBox', !closeSingBox).then(() => setCloseSingBox(!closeSingBox));
-    }, [closeSingBox]);
-
-    const handleCloseSingBoxOnKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCloseSingBoxOnClick();
-            }
-        },
-        [handleCloseSingBoxOnClick]
-    );
 
     const handleCloseHelperOnClick = useCallback(() => {
         settings.set('closeHelper', !closeHelper).then(() => setCloseSHelper(!closeHelper));
@@ -106,7 +88,6 @@ const useSingBox = () => {
 
     return {
         appLang,
-        closeSingBox,
         closeHelper,
         geoIp,
         onChangeGeoIp,
@@ -114,8 +95,6 @@ const useSingBox = () => {
         onChangeGeoSite,
         mtu,
         setMtu,
-        handleCloseSingBoxOnClick,
-        handleCloseSingBoxOnKeyDown,
         handleCloseHelperOnClick,
         handleCloseHelperOnKeyDown,
         onClickMtu,

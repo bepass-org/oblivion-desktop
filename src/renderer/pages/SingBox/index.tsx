@@ -9,7 +9,6 @@ import { singBoxGeoIp, singBoxGeoSite } from '../../../defaultSettings';
 export default function SingBox() {
     const {
         appLang,
-        closeSingBox,
         closeHelper,
         geoIp,
         onChangeGeoIp,
@@ -17,8 +16,6 @@ export default function SingBox() {
         onChangeGeoSite,
         mtu,
         setMtu,
-        handleCloseSingBoxOnClick,
-        handleCloseSingBoxOnKeyDown,
         handleCloseHelperOnClick,
         handleCloseHelperOnKeyDown,
         onClickMtu,
@@ -31,7 +28,6 @@ export default function SingBox() {
     } = useSingBox();
 
     if (
-        typeof closeSingBox === 'undefined' ||
         typeof closeHelper === 'undefined' ||
         typeof geoIp === 'undefined' ||
         typeof geoSite === 'undefined' ||
@@ -116,26 +112,6 @@ export default function SingBox() {
                     {appLang?.settings?.more_helper}
                 </div>
                 <div className='settings' role='menu' tabIndex={0}>
-                    <div
-                        role='button'
-                        className={classNames('item')}
-                        onClick={handleCloseSingBoxOnClick}
-                        onKeyDown={handleCloseSingBoxOnKeyDown}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='close_singbox'>
-                            {appLang.settings.close_singbox}
-                        </label>
-                        <div className='value'>
-                            <div
-                                className={classNames('checkbox', closeSingBox ? 'checked' : '')}
-                                tabIndex={-1}
-                            >
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang.settings.close_singbox_desc}</div>
-                    </div>
                     <div
                         role='button'
                         className={classNames('item')}
