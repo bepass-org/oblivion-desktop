@@ -66,12 +66,12 @@ export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
 
 export const restartApp = () => {
-    if (BrowserWindow.getAllWindows().length > 0) {
-        BrowserWindow.getAllWindows().forEach((win) => {
-            win.close();
-        });
-    }
     setTimeout(() => {
+        if (BrowserWindow.getAllWindows().length > 0) {
+            BrowserWindow.getAllWindows().forEach((win) => {
+                win.close();
+            });
+        }
         log.info('The app was relaunched due to encountering a warp-plus error.');
         app.relaunch();
         app.exit(0);
