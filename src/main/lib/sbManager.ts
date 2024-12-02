@@ -86,7 +86,7 @@ class SingBoxManager {
             this.helperClient.Start({}, () => {});
 
             return this.statusCheck(
-                'Sing-Box started successfully, waiting for connection...',
+                'Sing-Box started successfully.',
                 'Failed to start Sing-Box.',
                 true
             );
@@ -208,6 +208,8 @@ class SingBoxManager {
         const maxAttempts = 10;
         const checkInterval = 2000;
         const timeout = 3000;
+
+        log.info('Waiting for connection...');
 
         const checkStatus = async (attempt: number): Promise<boolean> => {
             const controller = new AbortController();
