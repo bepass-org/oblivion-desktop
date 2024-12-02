@@ -86,7 +86,7 @@ export const restartApp = () => {
             log.error(`Error during app restart (attempt ${retryCount}):`, error);
             if (retryCount < maxRetries) {
                 log.info('Retrying app quit...');
-                setTimeout(attemptRestart, 1000); 
+                setTimeout(attemptRestart, 1000);
             } else {
                 log.error('Max retry limit reached. Could not restart app.');
             }
