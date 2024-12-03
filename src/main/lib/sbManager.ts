@@ -40,6 +40,8 @@ class SingBoxManager {
 
     private helperClient: any;
 
+    private isListeningToHelper: boolean = false;
+
     constructor(
         private readonly helperPath: string,
         private readonly helperFileName: string,
@@ -81,6 +83,11 @@ class SingBoxManager {
         try {
             const helperStarted = await this.ensureHelperIsRunning();
             if (!helperStarted) return false;
+
+            if (!this.isListeningToHelper) {
+                await this.delay(2000);
+                await this.monitorHelperStatus();
+            }
 
             log.info('Starting Sing-Box...');
             this.helperClient.Start({}, () => {});
@@ -124,8 +131,6 @@ class SingBoxManager {
                     process.platform === 'linux' &&
                     data.toString().includes('Server started on port')
                 ) {
-                    await this.delay(2000);
-                    await this.monitorHelperStatus();
                     resolve(true);
                 }
             });
@@ -143,8 +148,6 @@ class SingBoxManager {
 
             helperProcess.on('close', async (code) => {
                 if (process.platform !== 'linux' && code === 0) {
-                    await this.delay(2000);
-                    await this.monitorHelperStatus();
                     resolve(true);
                 }
             });
@@ -251,6 +254,8 @@ class SingBoxManager {
 
         const call = this.helperClient.StreamStatus({});
 
+        this.isListeningToHelper = true;
+
         call.on('data', (response: { status: string }) => {
             log.info('Oblivion-Helper Status:', response.status);
             if (response.status !== 'started') {
@@ -260,6 +265,7 @@ class SingBoxManager {
 
         call.on('end', () => {
             log.info('Oblivion-Helper service ended.');
+            this.isListeningToHelper = false;
             this.killWarpPlus();
         });
 
