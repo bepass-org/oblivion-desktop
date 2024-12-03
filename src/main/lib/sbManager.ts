@@ -265,6 +265,7 @@ class SingBoxManager {
 
         call.on('end', () => {
             log.info('Oblivion-Helper service ended.');
+            this.isListeningToHelper = false;
             this.killWarpPlus();
         });
 
