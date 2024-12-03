@@ -142,9 +142,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=windows"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
             </td>
-            <td>
-10+
-            </td>
+            <td>10+</td>
         </tr>
         <tr>
             <td>macOS</td>
