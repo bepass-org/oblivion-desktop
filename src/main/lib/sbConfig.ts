@@ -25,7 +25,7 @@ export function createSbConfig(
 
     const config = {
         log: {
-            disabled: false,
+            disabled: true,
             level: 'warn',
             timestamp: true,
             output: 'sing-box.log'
@@ -38,7 +38,7 @@ export function createSbConfig(
                 address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
                 strict_route: false,
-                stack: 'mixed',
+                stack: 'gvisor',
                 sniff: true,
                 sniff_override_destination: true
             }
