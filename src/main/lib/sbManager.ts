@@ -42,6 +42,8 @@ class SingBoxManager {
 
     private isListeningToHelper: boolean = false;
 
+    private doesSingBoxNeedsToStop: boolean = false;
+
     constructor(
         private readonly helperPath: string,
         private readonly helperFileName: string,
@@ -67,9 +69,6 @@ class SingBoxManager {
             '127.0.0.1:50051',
             grpc.credentials.createInsecure()
         );
-        this.monitorHelperStatus().catch((err) =>
-            log.error('Failed to monitor helper status:', err)
-        );
     }
 
     public async startSingBox(wpPid: number): Promise<boolean> {
@@ -90,13 +89,19 @@ class SingBoxManager {
             }
 
             log.info('Starting Sing-Box...');
-            this.helperClient.Start({}, () => {});
 
-            return this.statusCheck(
-                'Sing-Box started successfully.',
-                'Failed to start Sing-Box.',
-                true
-            );
+            return new Promise<boolean>((resolve) => {
+                this.helperClient.Start({}, (err: Error, response: { message: string }) => {
+                    if (err) {
+                        log.error('Oblivion-Helper:', err.message);
+                        resolve(false);
+                        return;
+                    }
+                    log.info('Oblivion-Helper:', response.message);
+                    this.doesSingBoxNeedsToStop = true;
+                    resolve(true);
+                });
+            });
         } catch (error) {
             log.error('Failed to start Sing-Box:', error);
             return false;
@@ -104,18 +109,24 @@ class SingBoxManager {
     }
 
     public async stopSingBox(): Promise<boolean> {
-        if (!(await this.isProcessRunning(this.helperFileName))) {
+        if (!(await this.isProcessRunning(this.helperFileName)) || !this.doesSingBoxNeedsToStop) {
             return true;
         }
 
         log.info('Stopping Sing-Box...');
-        this.helperClient.Stop({}, () => {});
 
-        return this.statusCheck(
-            'Sing-Box stopped successfully.',
-            'Failed to stop Sing-Box.',
-            false
-        );
+        return new Promise<boolean>((resolve) => {
+            this.helperClient.Stop({}, (err: Error, response: { message: string }) => {
+                if (err) {
+                    log.error('Oblivion-Helper:', err.message);
+                    resolve(false);
+                    return;
+                }
+                log.info('Oblivion-Helper:', response.message);
+                this.doesSingBoxNeedsToStop = false;
+                resolve(true);
+            });
+        });
     }
 
     private async startHelper(): Promise<boolean> {
@@ -127,10 +138,7 @@ class SingBoxManager {
             });
 
             helperProcess.stdout?.on('data', async (data: Buffer) => {
-                if (
-                    process.platform === 'linux' &&
-                    data.toString().includes('Server started on port')
-                ) {
+                if (process.platform === 'linux' && data.toString().includes('Server started on')) {
                     resolve(true);
                 }
             });
@@ -155,62 +163,19 @@ class SingBoxManager {
     }
 
     public async stopHelper(): Promise<void> {
+        this.doesSingBoxNeedsToStop = false;
         log.info('Stopping Oblivion-Helper...');
         this.helperClient.Exit({}, () => {});
     }
 
     private async ensureHelperIsRunning(): Promise<boolean> {
-        if (await this.isProcessRunning(this.helperFileName)) {
-            return true;
-        }
-
-        return this.startHelper();
-    }
-
-    public async fetchHelperStatus(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            this.helperClient.Status({}, (error: any, response: { status: string }) => {
-                if (error) {
-                    log.error('Failed to fetch status:', error);
-                    return reject(error);
-                }
-                resolve(response.status);
-            });
-        });
-    }
-
-    private async statusCheck(
-        successMessage: string,
-        errorMessage: string,
-        statusShouldBeRunning: boolean,
-        maxAttempts = 10
-    ): Promise<boolean> {
-        const checkStatus = async (attempt: number): Promise<boolean> => {
-            const currentStatus = await this.fetchHelperStatus();
-            const isRunning = currentStatus === 'running';
-            const conditionMet = statusShouldBeRunning ? isRunning : !isRunning;
-
-            if (conditionMet) {
-                log.info(successMessage);
-                return true;
-            }
-
-            if (attempt >= maxAttempts) {
-                log.error(errorMessage);
-                return false;
-            }
-
-            await this.delay(1000);
-            return checkStatus(attempt + 1);
-        };
-
-        return checkStatus(1);
+        return (await this.isProcessRunning(this.helperFileName)) || this.startHelper();
     }
 
     public async checkConnectionStatus(): Promise<boolean> {
         const maxAttempts = 10;
-        const checkInterval = 2000;
-        const timeout = 3000;
+        const checkInterval = 3000;
+        const timeout = 5000;
 
         log.info('Waiting for connection...');
 
@@ -248,29 +213,25 @@ class SingBoxManager {
     }
 
     private async monitorHelperStatus(): Promise<void> {
-        if (!(await this.isProcessRunning(this.helperFileName))) {
-            return;
-        }
-
         const call = this.helperClient.StreamStatus({});
 
         this.isListeningToHelper = true;
 
         call.on('data', (response: { status: string }) => {
             log.info('Oblivion-Helper Status:', response.status);
-            if (response.status !== 'started') {
+            if (response.status === 'terminated') {
                 this.killWarpPlus();
             }
         });
 
         call.on('end', () => {
-            log.info('Oblivion-Helper service ended.');
+            log.info('Oblivion-Helper service has ended.');
             this.isListeningToHelper = false;
             this.killWarpPlus();
         });
 
-        call.on('error', () => {
-            log.warn('Oblivion-Helper error');
+        call.on('error', (err: Error) => {
+            log.warn('Oblivion-Helper Error:', err.message);
             this.killWarpPlus();
         });
     }
@@ -299,6 +260,7 @@ class SingBoxManager {
 
     private killWarpPlus(): void {
         if (this.wpPid) {
+            this.doesSingBoxNeedsToStop = false;
             treeKill(this.wpPid, 'SIGKILL');
         }
     }
@@ -458,17 +420,16 @@ class SingBoxManager {
             return result;
         }
 
-        const lines = routingRules
+        routingRules
             .split('\n')
-            .map((line) => line.trim().replace(/,$/, ''))
-            .filter(Boolean);
+            .map((line: string) => line.trim().replace(/,$/, ''))
+            .filter(Boolean)
+            .forEach((line: string) => {
+                const [prefix, value] = line.split(':').map((part) => part.trim());
+                if (!value) return;
 
-        lines.forEach((line) => {
-            const [prefix, value] = line.split(':').map((part) => part.trim());
-            if (!value) return;
-
-            this.processRoutingRule(prefix, value, result);
-        });
+                this.processRoutingRule(prefix, value, result);
+            });
 
         return result;
     }
