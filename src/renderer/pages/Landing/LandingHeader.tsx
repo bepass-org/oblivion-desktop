@@ -27,10 +27,10 @@ const LandingHeader: FC<LandingHeaderProps> = ({
                     <i className={classNames('material-icons', 'pull-right')}>&#xe5d2;</i>
                     <div className={classNames('indicator', hasNewUpdate ? '' : 'hidden')} />
                 </div>
-                <Link to='/about' tabIndex={0}>
+                <Link to='/about' tabIndex={0} style={{ outline: 'none' }}>
                     <i className={classNames('material-icons', 'navLeft')}>&#xe88e;</i>
                 </Link>
-                <Link to={'/debug'} tabIndex={0}>
+                <Link to={'/debug'} tabIndex={0} style={{ outline: 'none' }}>
                     <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                 </Link>
             </div>
