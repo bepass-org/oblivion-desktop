@@ -125,6 +125,9 @@ const useOptions = () => {
                     setDataUsage(false);
                     settings.set('dataUsage', false);
                 }
+                else if (event.target.value === 'tun') {
+                    setShareVPN(false);
+                }
             }, 1000);
         },
         [isConnected, isLoading, appLang]
@@ -150,6 +153,7 @@ const useOptions = () => {
         },
         [onClickPort]
     );
+
     const onClickRoutingRoles = useCallback(() => {
         if (proxyMode !== 'none') {
             setShowRoutingRulesModal(true);
@@ -167,13 +171,15 @@ const useOptions = () => {
     );
 
     const handleShareVPNOnClick = useCallback(() => {
-        setShareVPN(!shareVPN);
-        settings.set('shareVPN', !shareVPN);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-        setTimeout(function () {
-            settings.set('hostIP', !shareVPN ? localIp : '127.0.0.1');
-        }, 1000);
-    }, [isConnected, isLoading, shareVPN, appLang, localIp]);
+        if ( proxyMode !== 'tun' ) {
+            setShareVPN(!shareVPN);
+            settings.set('shareVPN', !shareVPN);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+            setTimeout(function () {
+                settings.set('hostIP', !shareVPN ? localIp : '127.0.0.1');
+            }, 1000);
+        }
+    }, [isConnected, isLoading, shareVPN, appLang, localIp, proxyMode]);
 
     const handleShareVPNOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
