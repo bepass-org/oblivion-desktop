@@ -124,8 +124,7 @@ const useOptions = () => {
                     settings.set('ipData', false);
                     setDataUsage(false);
                     settings.set('dataUsage', false);
-                }
-                else if (event.target.value === 'tun') {
+                } else if (event.target.value === 'tun') {
                     setShareVPN(false);
                 }
             }, 1000);
@@ -171,7 +170,7 @@ const useOptions = () => {
     );
 
     const handleShareVPNOnClick = useCallback(() => {
-        if ( proxyMode !== 'tun' ) {
+        if (proxyMode !== 'tun') {
             setShareVPN(!shareVPN);
             settings.set('shareVPN', !shareVPN);
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });

@@ -158,10 +158,7 @@ export default function Options() {
                     </div>
                     <div
                         role='button'
-                        className={classNames(
-                            'item',
-                            proxyMode === 'tun' ? 'disabled' : ''
-                        )}
+                        className={classNames('item', proxyMode === 'tun' ? 'disabled' : '')}
                         onClick={handleShareVPNOnClick}
                         onKeyDown={
                             // TODO: The code needs refactoring
