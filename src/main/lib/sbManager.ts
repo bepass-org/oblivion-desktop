@@ -168,7 +168,7 @@ class SingBoxManager {
         return (await this.isProcessRunning(this.helperFileName)) || this.startHelper();
     }
 
-    public async checkConnectionStatus(): Promise<boolean> {
+    private async checkConnectionStatus(): Promise<boolean> {
         const maxAttempts = 10;
         const checkInterval = 3000;
         const timeout = 5000;
@@ -187,6 +187,7 @@ class SingBoxManager {
                 });
 
                 if (response.ok) {
+                    await this.delay(1500);
                     log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
                     return true;
                 }
