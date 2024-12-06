@@ -27,7 +27,7 @@ let child: any;
 
 export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbAssetFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
-export const sbWDFileName = `oblivion-sing-box${process.platform === 'win32' ? '.exe' : ''}`;
+export const sbWDFileName = `oblivion-sb${process.platform === 'win32' ? '.exe' : ''}`;
 export const helperFileName = `oblivion-helper${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbConfigName = 'sbConfig.json';
 
