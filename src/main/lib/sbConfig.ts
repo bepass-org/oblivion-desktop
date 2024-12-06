@@ -25,21 +25,71 @@ export function createSbConfig(
 
     const config = {
         log: {
-            disabled: false,
+            disabled: true,
             level: 'warn',
             timestamp: true,
             output: 'sing-box.log'
         },
+        dns: {
+            final: 'dns-remote',
+            independent_cache: true,
+            rules: [
+                {
+                    outbound: ['any'],
+                    server: 'dns-direct'
+                },
+                ...(geoBlock
+                    ? [
+                          {
+                              rule_set: [
+                                  'geosite-category-ads-all',
+                                  'geosite-malware',
+                                  'geosite-phishing',
+                                  'geosite-cryptominers',
+                                  'geoip-malware',
+                                  'geoip-phishing'
+                              ],
+                              disable_cache: true,
+                              server: 'dns-block'
+                          }
+                      ]
+                    : [])
+            ],
+            servers: [
+                {
+                    address: 'https://1.1.1.2/dns-query',
+                    address_resolver: 'dns-direct',
+                    detour: 'socks-out',
+                    tag: 'dns-remote'
+                },
+                {
+                    address: '8.8.8.8',
+                    detour: 'direct-out',
+                    tag: 'dns-direct'
+                },
+                {
+                    address: 'rcode://success',
+                    tag: 'dns-block'
+                }
+            ]
+        },
         inbounds: [
+            {
+                listen: '0.0.0.0',
+                listen_port: 6450,
+                override_address: '8.8.8.8',
+                override_port: 53,
+                tag: 'dns-in',
+                type: 'direct'
+            },
             {
                 type: 'tun',
                 tag: 'tun-in',
-                interface_name: 'Oblivion (TUN)',
                 mtu: mtu,
                 address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
                 strict_route: false,
-                stack: 'gvisor',
+                stack: 'mixed',
                 sniff: true,
                 sniff_override_destination: true
             }
@@ -49,7 +99,9 @@ export function createSbConfig(
                 type: 'socks',
                 tag: 'socks-out',
                 server: '127.0.0.1',
-                server_port: socksPort
+                server_port: socksPort,
+                version: '5',
+                udp_fragment: true
             },
             {
                 type: 'direct',
@@ -58,10 +110,22 @@ export function createSbConfig(
             {
                 type: 'block',
                 tag: 'block-out'
+            },
+            {
+                type: 'dns',
+                tag: 'dns-out'
             }
         ],
         route: {
             rules: [
+                {
+                    outbound: 'dns-out',
+                    port: [53]
+                },
+                {
+                    inbound: ['dns-in'],
+                    outbound: 'dns-out'
+                },
                 {
                     network: 'udp',
                     outbound: 'direct-out'
@@ -96,6 +160,10 @@ export function createSbConfig(
                     : []),
                 ...(processSet.length > 0
                     ? [
+                          {
+                              process_name: processSet,
+                              outbound: 'dns-out'
+                          },
                           {
                               process_name: processSet,
                               outbound: 'direct-out'
@@ -198,6 +266,13 @@ export function createSbConfig(
             ],
             final: 'socks-out',
             auto_detect_interface: true
+        },
+        experimental: {
+            cache_file: {
+                enabled: true,
+                path: 'sbCache.db',
+                store_fakeip: true
+            }
         }
     };
 

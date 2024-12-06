@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn, exec } from 'child_process';
 import log from 'electron-log';
 import fs from 'fs';
 import path from 'path';
@@ -9,9 +9,9 @@ import * as protoLoader from '@grpc/proto-loader';
 import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../defaultSettings';
 import { createSbConfig } from './sbConfig';
 
-interface IProcessCommand {
+interface ICommand {
     command: string;
-    args: string[];
+    args?: string[];
 }
 
 interface IConfig {
@@ -42,7 +42,7 @@ class SingBoxManager {
 
     private isListeningToHelper: boolean = false;
 
-    private doesSingBoxNeedsToStop: boolean = false;
+    private shouldBreakConnectionTest: boolean = false;
 
     constructor(
         private readonly helperPath: string,
@@ -72,9 +72,7 @@ class SingBoxManager {
     }
 
     public async startSingBox(wpPid: number): Promise<boolean> {
-        if (await this.isProcessRunning(this.sbWDFileName)) {
-            return true;
-        }
+        if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
         this.wpPid = wpPid;
         await this.setupConfigs();
@@ -98,8 +96,8 @@ class SingBoxManager {
                         return;
                     }
                     log.info('Oblivion-Helper:', response.message);
-                    this.doesSingBoxNeedsToStop = true;
-                    resolve(true);
+                    this.shouldBreakConnectionTest = false;
+                    resolve(this.checkConnectionStatus());
                 });
             });
         } catch (error) {
@@ -109,9 +107,7 @@ class SingBoxManager {
     }
 
     public async stopSingBox(): Promise<boolean> {
-        if (!(await this.isProcessRunning(this.helperFileName)) || !this.doesSingBoxNeedsToStop) {
-            return true;
-        }
+        if (!(await this.isProcessRunning(this.sbWDFileName))) return true;
 
         log.info('Stopping Sing-Box...');
 
@@ -123,7 +119,7 @@ class SingBoxManager {
                     return;
                 }
                 log.info('Oblivion-Helper:', response.message);
-                this.doesSingBoxNeedsToStop = false;
+                this.shouldBreakConnectionTest = true;
                 resolve(true);
             });
         });
@@ -132,12 +128,13 @@ class SingBoxManager {
     private async startHelper(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             log.info('Starting Oblivion-Helper...');
+
             const command = this.getPlatformCommands().start(this.helperPath);
             const helperProcess = spawn(command.command, command.args, {
                 cwd: this.workingDirPath
             });
 
-            helperProcess.stdout?.on('data', async (data: Buffer) => {
+            helperProcess.stdout?.on('data', (data: Buffer) => {
                 if (process.platform === 'linux' && data.toString().includes('Server started on')) {
                     resolve(true);
                 }
@@ -163,7 +160,6 @@ class SingBoxManager {
     }
 
     public async stopHelper(): Promise<void> {
-        this.doesSingBoxNeedsToStop = false;
         log.info('Stopping Oblivion-Helper...');
         this.helperClient.Exit({}, () => {});
     }
@@ -180,6 +176,8 @@ class SingBoxManager {
         log.info('Waiting for connection...');
 
         const checkStatus = async (attempt: number): Promise<boolean> => {
+            if (this.shouldBreakConnectionTest) return false;
+
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -243,30 +241,25 @@ class SingBoxManager {
     }
 
     private async isProcessRunning(processName: string): Promise<boolean> {
-        return new Promise<boolean>((resolve) => {
-            const command = this.getPlatformCommands().running(processName);
-            const checkProcess = spawn(command.command, command.args);
-            let isRunning = false;
+        const command = this.getPlatformCommands().running(processName).command;
 
-            checkProcess.stdout?.on('data', (data: Buffer) => {
-                if (data.toString().trim().length > 0) {
-                    isRunning = true;
-                }
+        return new Promise((resolve, reject) => {
+            exec(command, (err: Error | null, stdout: string) => {
+                if (err) reject(err.message);
+
+                resolve(stdout.toLowerCase().indexOf(processName.toLowerCase()) > -1);
             });
-
-            checkProcess.on('close', () => resolve(isRunning));
         });
     }
 
     private killWarpPlus(): void {
         if (this.wpPid) {
-            this.doesSingBoxNeedsToStop = false;
             treeKill(this.wpPid, 'SIGKILL');
         }
     }
 
-    private getPlatformCommands(): Record<string, (process: string) => IProcessCommand> {
-        const commands: Record<string, Record<string, (helperPath: string) => IProcessCommand>> = {
+    private getPlatformCommands(): Record<string, (param: string) => ICommand> {
+        const commands: Record<string, Record<string, (param: string) => ICommand>> = {
             darwin: {
                 start: (helperPath) => ({
                     command: 'osascript',
@@ -276,8 +269,7 @@ class SingBoxManager {
                     ]
                 }),
                 running: (processName) => ({
-                    command: 'pgrep',
-                    args: ['-f', processName]
+                    command: `pgrep -l ${processName} | awk '{ print $2 }'`
                 })
             },
             win32: {
@@ -288,12 +280,8 @@ class SingBoxManager {
                         `Start-Process -FilePath '${helperPath.replace(/'/g, "''")}' -Verb RunAs -WindowStyle Hidden;`
                     ]
                 }),
-                running: (processName) => ({
-                    command: 'powershell.exe',
-                    args: [
-                        '-Command',
-                        `Get-CimInstance Win32_Process | Where-Object { $_.Name -like '${processName}'}`
-                    ]
+                running: () => ({
+                    command: `tasklist`
                 })
             },
             linux: {
@@ -302,8 +290,7 @@ class SingBoxManager {
                     args: [helperPath]
                 }),
                 running: (processName) => ({
-                    command: 'pgrep',
-                    args: ['-f', processName]
+                    command: `pgrep -l ${processName} | awk '{ print $2 }'`
                 })
             }
         };
@@ -311,12 +298,13 @@ class SingBoxManager {
         return (
             commands[process.platform] || {
                 start: () => ({ command: '', args: [] }),
-                running: () => ({ command: '', args: [] })
+                running: () => ({ command: '' })
             }
         );
     }
 
     private async setupConfigs(): Promise<void> {
+        log.info('Setting up configs...');
         const config = await this.loadConfiguration();
         await this.setupGeoLists(config);
         await this.createConfigFiles(config);
@@ -344,19 +332,13 @@ class SingBoxManager {
         const { geoIp, geoSite, geoBlock } = config;
 
         if (geoIp !== 'none') {
-            const hasGeoIp = await this.exportGeoList(['geoip', 'export', geoIp, '-f', 'geoip.db']);
-            log.info(`GeoIp: ${geoIp} => ${hasGeoIp}`);
+            const hasExported = await this.exportGeoList(`geoip export ${geoIp} -f geoip.db`);
+            log.info(`GeoIp: ${geoIp} => ${hasExported}`);
         }
 
         if (geoSite !== 'none') {
-            const hasGeoSite = await this.exportGeoList([
-                'geosite',
-                'export',
-                geoSite,
-                '-f',
-                'geosite.db'
-            ]);
-            log.info(`GeoSite: ${geoSite} => ${hasGeoSite}`);
+            const hasExported = await this.exportGeoList(`geosite export ${geoSite} -f geosite.db`);
+            log.info(`GeoSite: ${geoSite} => ${hasExported}`);
         }
 
         if (geoBlock) {
@@ -374,13 +356,14 @@ class SingBoxManager {
             ['geosite', 'category-ads-all', 'security.db']
         ];
 
-        const results = await Promise.all(
-            securityTasks.map(([type, category, file]) =>
-                this.exportGeoList([type, 'export', category, '-f', file])
-            )
+        await Promise.all(
+            securityTasks.map(async ([type, category, file]) => {
+                const hasExported = await this.exportGeoList(
+                    `${type} export ${category} -f ${file}`
+                );
+                log.info(`GeoBlock: ${type}/${category} => ${hasExported}`);
+            })
         );
-
-        log.info('Security lists setup results:', results);
     }
 
     private async createConfigFiles(config: IConfig): Promise<void> {
@@ -464,18 +447,16 @@ class SingBoxManager {
         result.processSet.push(app);
     }
 
-    private async exportGeoList(args: string[]): Promise<boolean> {
+    private async exportGeoList(args: string): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
-            let noError = true;
-            const command = path.join(this.workingDirPath, this.sbWDFileName);
-            const extractProcess = spawn(command, args, { cwd: this.workingDirPath });
-
-            extractProcess.stdout?.on('error', () => {
-                noError = false;
-            });
-
-            extractProcess.on('close', () => {
-                resolve(noError);
+            const command = path
+                .join(this.workingDirPath, this.sbWDFileName)
+                .replace(/(\s+)/g, '\\$1');
+            exec(`${command} ${args}`, { cwd: this.workingDirPath }, (err: any) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
             });
         });
     }
