@@ -209,21 +209,6 @@ ipcMain.on('wp-start', async (event) => {
         //let endpointPorts: number[] = [];
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
-        let isSingBoxRunning: boolean = false;
-
-        if (proxyMode === 'tun') {
-            isSingBoxRunning = await singBoxManager.startSingBox(child?.pid);
-            if (!isSingBoxRunning) {
-                event.reply('guide-toast', appLang.log.error_singbox_failed_start);
-                event.reply('wp-end', true);
-                if (typeof child?.pid !== 'undefined') {
-                    console.log(child?.pid);
-                    treeKill(child.pid, 'SIGKILL');
-                    exitOnWpEnd = true;
-                }
-            }
-        }
-
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
 
@@ -232,13 +217,11 @@ ipcMain.on('wp-start', async (event) => {
             } */
 
             if (strData.includes(successMessage)) {
-                if (
-                    proxyMode === 'tun' &&
-                    (!isSingBoxRunning || !(await singBoxManager.checkConnectionStatus()))
-                ) {
+                if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(child?.pid))) {
                     event.reply('guide-toast', appLang.log.error_singbox_failed_start);
                     event.reply('wp-end', true);
                     if (typeof child?.pid !== 'undefined') {
+                        console.log(child?.pid);
                         treeKill(child.pid, 'SIGKILL');
                         exitOnWpEnd = true;
                     }
@@ -268,13 +251,10 @@ ipcMain.on('wp-start', async (event) => {
         });
 
         child.on('exit', async () => {
-            if (proxyMode === 'tun') {
-                isSingBoxRunning = !(await singBoxManager.stopSingBox());
-                if (isSingBoxRunning) {
-                    event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
-                    event.reply('wp-end', false);
-                    event.reply('wp-start', true);
-                }
+            if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
+                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
+                event.reply('wp-end', false);
+                event.reply('wp-start', true);
             }
             disconnectedFlags[1] = true;
             sendDisconnectedSignalToRenderer();
