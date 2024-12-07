@@ -41,7 +41,8 @@ import {
     sbBinPath,
     helperAssetPath,
     helperPath,
-    wpDirPath
+    wpDirPath,
+    singBoxManager
 } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
@@ -595,6 +596,8 @@ if (!gotTheLock) {
 
         const networkMonitor = new NetworkMonitor(mainWindow);
         networkMonitor.initializeIpcEvents();
+
+        singBoxManager.initializeMainWindow(mainWindow);
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {
