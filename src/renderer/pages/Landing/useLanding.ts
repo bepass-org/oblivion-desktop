@@ -177,6 +177,23 @@ const useLanding = () => {
             }
         });
 
+        ipcRenderer.on('sb-terminate', (message: any) => {
+            if (message === 'terminated') {
+                setIsLoading(true);
+                setIsConnected(false);
+                defaultToast(
+                    'Sing-Box terminated unexpectedly. Restarting...',
+                    'SB_TERMINATED',
+                    5000
+                );
+            } else if (message === 'restarted') {
+                toast.remove('SB_TERMINATED');
+                setIsLoading(false);
+                setIsConnected(true);
+                defaultToast('Sing-Box restarted successfully.', 'SB_RESTARTED', 5000);
+            }
+        });
+
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'connect' && !isLoading) {
                 setIpInfo({
