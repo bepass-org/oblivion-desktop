@@ -247,6 +247,8 @@ class SingBoxManager {
 
             this.isListeningToHelper = true;
 
+            let terminationsCount: number = 0;
+
             call.on('data', (response: { status: string }) => {
                 log.info('Oblivion-Helper Status:', response.status);
                 if (response.status === 'terminated') {
@@ -254,10 +256,21 @@ class SingBoxManager {
                     customEvent.emit('tray-icon', 'disconnected');
                     this.sendMessageToRenderer('sb-terminate', 'terminated');
 
-                    this.startService().then(() => {
-                        customEvent.emit('tray-icon', 'connected-tun');
-                        this.sendMessageToRenderer('sb-terminate', 'restarted');
-                    });
+                    if (terminationsCount < 3) {
+                        this.startService().then((connected) => {
+                            console.log(connected);
+                            if (connected) {
+                                customEvent.emit('tray-icon', 'connected-tun');
+                                this.sendMessageToRenderer('sb-terminate', 'restarted');
+                                terminationsCount = 0;
+                            }
+                        });
+                        terminationsCount++;
+                    } else {
+                        this.shouldBreakConnectionTest = true;
+                        this.killWarpPlus();
+                        terminationsCount = 0;
+                    }
                 }
             });
 
