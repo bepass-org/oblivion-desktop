@@ -217,14 +217,11 @@ ipcMain.on('wp-start', async (event) => {
             } */
 
             if (strData.includes(successMessage)) {
-                if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(child?.pid))) {
-                    event.reply('guide-toast', appLang.log.error_singbox_failed_start);
+                if (
+                    proxyMode === 'tun' &&
+                    !(await singBoxManager.startSingBox(child?.pid, appLang))
+                ) {
                     event.reply('wp-end', true);
-                    if (typeof child?.pid !== 'undefined') {
-                        console.log(child?.pid);
-                        treeKill(child.pid, 'SIGKILL');
-                        exitOnWpEnd = true;
-                    }
                 } else {
                     connectedFlags[1] = true;
                     sendConnectedSignalToRenderer();
@@ -252,16 +249,14 @@ ipcMain.on('wp-start', async (event) => {
 
         child.on('exit', async () => {
             if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
-                event.reply('guide-toast', appLang.log.error_singbox_failed_stop);
                 event.reply('wp-end', false);
-                event.reply('wp-start', true);
+            } else {
+                disconnectedFlags[1] = true;
+                sendDisconnectedSignalToRenderer();
+                log.info('wp process exited.');
+                child.pid = undefined;
+                await handleSystemProxyDisconnect();
             }
-            disconnectedFlags[1] = true;
-            sendDisconnectedSignalToRenderer();
-            log.info('wp process exited.');
-            // manually setting pid to undefined
-            child.pid = undefined;
-            await handleSystemProxyDisconnect();
         });
     } catch (error) {
         event.reply('guide-toast', appLang.log.error_wp_stopped);
@@ -302,7 +297,7 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
             ipcMain.emit('exit');
         }
         if (closeHelper) {
-            await singBoxManager.stopHelper();
+            singBoxManager.stopHelper();
         }
     } catch (error) {
         log.error(error);
