@@ -258,7 +258,6 @@ class SingBoxManager {
 
                     if (terminationsCount < 3) {
                         this.startService().then((connected) => {
-                            console.log(connected);
                             if (connected) {
                                 customEvent.emit('tray-icon', 'connected-tun');
                                 this.sendMessageToRenderer('sb-terminate', 'restarted');
