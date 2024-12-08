@@ -234,6 +234,7 @@ Cloudflare Warp فراهم می‌کند.
 -   [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 -   [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
 -   [Oblivion](https://github.com/bepass-org/oblivion)
+-   [Oblivion Helper](https://github.com/ShadowZagrosDev/oblivion-helper)
 -   [Electron](https://www.electronjs.org/)
 -   [React](https://github.com/facebook/react)
 -   [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
@@ -241,7 +242,6 @@ Cloudflare Warp فراهم می‌کند.
 -   [regedit](https://www.npmjs.com/package/regedit)
 -   [sing-box](https://github.com/SagerNet/sing-box)
 -   [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
--   [hiddify-geo](https://github.com/hiddify/hiddify-geo)
 -   [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 -   [و دیگران 🧡](package.json)
 
