@@ -14,7 +14,7 @@ export const loadTheme = () => {
 
 export const loadLang = () => {
     settings.get('lang').then((data) => {
-        if ( typeof data === 'undefined' ) { 
+        if (typeof data === 'undefined') {
             data = defaultSettings.lang;
         }
         if (!localStorage.getItem('lang')) {
