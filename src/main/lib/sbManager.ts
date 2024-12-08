@@ -272,6 +272,11 @@ class SingBoxManager {
                         this.shouldBreakConnectionTest = true;
                         this.killWarpPlus();
                         terminationsCount = 0;
+                        log.warn('Exceeded maximum restart attempts.');
+                        this.sendMessageToRenderer(
+                            'guide-toast',
+                            `${this.appLang?.log.error_deadline_exceeded}`
+                        );
                     }
                 }
             });
