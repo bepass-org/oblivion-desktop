@@ -180,7 +180,8 @@ const indonesia: Language = {
         error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.',
         error_singbox_failed_stop: 'Gagal menghentikan Sing-Box!',
         error_singbox_failed_start: 'Gagal memulai Sing-Box!',
-        error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!'
+        error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!',
+        error_faild_connection: 'Gagal menjalin koneksi!'
     },
     about: {
         title: 'Tentang Aplikasi',

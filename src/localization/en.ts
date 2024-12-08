@@ -181,7 +181,8 @@ const english: Language = {
         error_country_failed: 'Cannot connect to the selected country.',
         error_singbox_failed_stop: 'Failed to stop Sing-Box!',
         error_singbox_failed_start: 'Failed to start Sing-Box!',
-        error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!'
+        error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!',
+        error_faild_connection: 'Failed to establish connection!'
     },
     about: {
         title: 'About App',

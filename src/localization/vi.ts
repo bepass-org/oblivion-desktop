@@ -182,7 +182,8 @@ const vietnamese: Language = {
         error_country_failed: 'Không thể kết nối với quốc gia đã chọn.',
         error_singbox_failed_stop: 'Không thể dừng Hộp hát!',
         error_singbox_failed_start: 'Không thể khởi động Hộp hát!',
-        error_wp_reset_peer: 'Kết nối đến Cloudflare bị gián đoạn đột ngột!'
+        error_wp_reset_peer: 'Kết nối đến Cloudflare bị gián đoạn đột ngột!',
+        error_faild_connection: 'Không thể thiết lập kết nối!'
     },
     about: {
         title: 'Giới thiệu về ứng dụng',

@@ -183,7 +183,8 @@ const urdu: Language = {
         error_country_failed: 'منتخب شدہ ملک سے کنیکٹ نہیں ہو سکتا۔',
         error_singbox_failed_stop: 'سنگ باکس کو روکنے میں ناکامی!',
         error_singbox_failed_start: 'سنگ باکس کو شروع کرنے میں ناکامی!',
-        error_wp_reset_peer: 'کلاؤڈفلئیر سے کنیکشن غیر متوقع طور پر منقطع ہو گیا!'
+        error_wp_reset_peer: 'کلاؤڈفلئیر سے کنیکشن غیر متوقع طور پر منقطع ہو گیا!',
+        error_faild_connection: 'کنکشن قائم کرنے میں ناکامی!'
     },
     about: {
         title: 'ایپ کے بارے میں',

@@ -178,6 +178,7 @@ export interface Log {
     error_singbox_failed_stop: string;
     error_singbox_failed_start: string;
     error_wp_reset_peer: string;
+    error_faild_connection: string;
 }
 
 export interface About {
