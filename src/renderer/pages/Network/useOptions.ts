@@ -126,15 +126,14 @@ const useOptions = () => {
                     settings.set('dataUsage', false);
                 } else if (event.target.value === 'tun') {
                     setShareVPN(false);
-                    if (method === 'psiphon') {
-                        setIpData(false);
+                    /*if (method === 'psiphon') {
                         settings.set('method', 'gool');
                         setMethod('gool');
-                    }
+                    }*/
                 }
             }, 1000);
         },
-        [isConnected, isLoading, appLang, method]
+        [isConnected, isLoading, appLang]
     );
 
     const onChangeDNS = useCallback(

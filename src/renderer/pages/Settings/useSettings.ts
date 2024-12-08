@@ -119,12 +119,12 @@ const useSettings = () => {
     );
 
     const onEnablePsiphon = useCallback(() => {
-        if (proxyMode !== 'tun') {
-            setMethod('psiphon');
-            settings.set('method', 'psiphon');
-            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-        }
-    }, [isConnected, isLoading, appLang, proxyMode]);
+        //if (proxyMode !== 'tun') {
+        setMethod('psiphon');
+        settings.set('method', 'psiphon');
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+        //}
+    }, [isConnected, isLoading, appLang]);
 
     const onKeyDownPsiphon = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
