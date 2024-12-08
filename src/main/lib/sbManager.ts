@@ -226,7 +226,10 @@ class SingBoxManager {
 
             if (attempt >= maxAttempts) {
                 log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
-                this.sendMessageToRenderer('guide-toast', `${this.appLang?.log.error_faild_connection}`);
+                this.sendMessageToRenderer(
+                    'guide-toast',
+                    `${this.appLang?.log.error_faild_connection}`
+                );
                 return false;
             }
 
