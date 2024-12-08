@@ -179,18 +179,15 @@ const useLanding = () => {
 
         ipcRenderer.on('sb-terminate', (message: any) => {
             if (message === 'terminated') {
-                setIsLoading(true);
-                setIsConnected(false);
-                defaultToast(
-                    'Sing-Box terminated unexpectedly. Restarting...',
-                    'SB_TERMINATED',
-                    5000
-                );
+                setIsLoading(false);
+                loadingToast(appLang.status.keep_trying);
+                setTimeout(function () {
+                    setIsLoading(true);
+                    stopLoadingToast();
+                }, 3500);
             } else if (message === 'restarted') {
-                toast.remove('SB_TERMINATED');
                 setIsLoading(false);
                 setIsConnected(true);
-                defaultToast('Sing-Box restarted successfully.', 'SB_RESTARTED', 5000);
             }
         });
 
