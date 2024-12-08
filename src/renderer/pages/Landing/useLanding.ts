@@ -289,7 +289,7 @@ const useLanding = () => {
                     const timeoutId = setTimeout(() => {
                         controller.abort();
                     }, 5000);
-                    const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                    const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
                         signal
                     });
                     const data = await response.text();
@@ -302,7 +302,7 @@ const useLanding = () => {
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     const checkWarp = warpLine ? warpLine.split('=')[1] : '';
                     const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
-                    if (getLoc && cfHost === 'cloudflare.com') {
+                    if (getLoc && cfHost === '1.1.1.1') {
                         if (
                             (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
                             checkWarp !== 'off'
