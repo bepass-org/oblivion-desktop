@@ -1,13 +1,16 @@
-import { spawn, exec } from 'child_process';
+import { BrowserWindow } from 'electron';
+import settings from 'electron-settings';
 import log from 'electron-log';
+import { spawn, exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import settings from 'electron-settings';
 import treeKill from 'tree-kill';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
 import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../defaultSettings';
 import { createSbConfig } from './sbConfig';
+import { customEvent } from './customEvent';
+import { Language } from '../../localization/type';
 
 interface ICommand {
     command: string;
@@ -34,7 +37,9 @@ class SingBoxManager {
 
     private readonly isWindows = process.platform === 'win32';
 
-    private wpPid: number | undefined;
+    private wpPid?: number;
+
+    private appLang?: Language;
 
     private oblivionHelperProto: any;
 
@@ -43,6 +48,8 @@ class SingBoxManager {
     private isListeningToHelper: boolean = false;
 
     private shouldBreakConnectionTest: boolean = false;
+
+    private mainWindow: BrowserWindow | null | undefined;
 
     constructor(
         private readonly helperPath: string,
@@ -56,6 +63,57 @@ class SingBoxManager {
         this.initializeGrpcClient();
     }
 
+    //Public-Methods
+    public initializeMainWindow(mainWindow: BrowserWindow | null) {
+        this.mainWindow = mainWindow;
+    }
+
+    public async startSingBox(wpPid?: number, appLang?: Language): Promise<boolean> {
+        if (await this.isProcessRunning(this.sbWDFileName)) return true;
+
+        this.wpPid = wpPid;
+        this.appLang = appLang;
+        await this.setupConfigs();
+
+        try {
+            const helperStarted = await this.ensureHelperIsRunning();
+            if (!helperStarted) return false;
+
+            await this.monitorHelperStatus();
+
+            return this.startService();
+        } catch (error) {
+            this.sendMessageToRenderer(
+                'guide-toast',
+                `${this.appLang?.log.error_singbox_failed_start}\n${error}`
+            );
+            log.error('Failed to start Sing-Box:', error);
+            this.killWarpPlus();
+            return false;
+        }
+    }
+
+    public async stopSingBox(): Promise<boolean> {
+        if (!(await this.isProcessRunning(this.sbWDFileName))) return true;
+
+        try {
+            return this.stopService();
+        } catch (error) {
+            this.sendMessageToRenderer(
+                'guide-toast',
+                `${this.appLang?.log.error_singbox_failed_stop}\n${error}`
+            );
+            log.error('Failed to stop Sing-Box:', error);
+            return false;
+        }
+    }
+
+    public stopHelper(): void {
+        log.info('Stopping Oblivion-Helper...');
+        this.helperClient.Exit({}, () => {});
+    }
+
+    //Private-Methods
     private initializeGrpcClient(): void {
         const packageDefinition = protoLoader.loadSync(this.protoAssetPath, {
             keepCase: true,
@@ -71,58 +129,8 @@ class SingBoxManager {
         );
     }
 
-    public async startSingBox(wpPid: number): Promise<boolean> {
-        if (await this.isProcessRunning(this.sbWDFileName)) return true;
-
-        this.wpPid = wpPid;
-        await this.setupConfigs();
-
-        try {
-            const helperStarted = await this.ensureHelperIsRunning();
-            if (!helperStarted) return false;
-
-            if (!this.isListeningToHelper) {
-                await this.delay(2000);
-                await this.monitorHelperStatus();
-            }
-
-            log.info('Starting Sing-Box...');
-
-            return new Promise<boolean>((resolve) => {
-                this.helperClient.Start({}, (err: Error, response: { message: string }) => {
-                    if (err) {
-                        log.error('Oblivion-Helper:', err.message);
-                        resolve(false);
-                        return;
-                    }
-                    log.info('Oblivion-Helper:', response.message);
-                    this.shouldBreakConnectionTest = false;
-                    resolve(this.checkConnectionStatus());
-                });
-            });
-        } catch (error) {
-            log.error('Failed to start Sing-Box:', error);
-            return false;
-        }
-    }
-
-    public async stopSingBox(): Promise<boolean> {
-        if (!(await this.isProcessRunning(this.sbWDFileName))) return true;
-
-        log.info('Stopping Sing-Box...');
-
-        return new Promise<boolean>((resolve) => {
-            this.helperClient.Stop({}, (err: Error, response: { message: string }) => {
-                if (err) {
-                    log.error('Oblivion-Helper:', err.message);
-                    resolve(false);
-                    return;
-                }
-                log.info('Oblivion-Helper:', response.message);
-                this.shouldBreakConnectionTest = true;
-                resolve(true);
-            });
-        });
+    private async ensureHelperIsRunning(): Promise<boolean> {
+        return (await this.isProcessRunning(this.helperFileName)) || this.startHelper();
     }
 
     private async startHelper(): Promise<boolean> {
@@ -143,11 +151,7 @@ class SingBoxManager {
             helperProcess.stderr?.on('data', (err: Buffer) => {
                 const errorMessage = err.toString();
                 if (errorMessage.includes('dismissed') || errorMessage.includes('canceled')) {
-                    reject(
-                        process.platform === 'darwin'
-                            ? 'The operation was canceled by the user.'
-                            : new Error(errorMessage)
-                    );
+                    reject('The operation was canceled by the user');
                 }
             });
 
@@ -159,19 +163,40 @@ class SingBoxManager {
         });
     }
 
-    public async stopHelper(): Promise<void> {
-        log.info('Stopping Oblivion-Helper...');
-        this.helperClient.Exit({}, () => {});
+    private startService(): Promise<boolean> {
+        log.info('Starting Sing-Box...');
+        this.shouldBreakConnectionTest = false;
+
+        return new Promise<boolean>((resolve, reject) => {
+            this.helperClient.Start({}, (err: Error, response: { message: string }) => {
+                if (err) {
+                    reject(`Oblivion-Helper: ${err.message}`);
+                }
+                log.info('Oblivion-Helper:', response.message);
+                resolve(this.checkConnectionStatus());
+            });
+        });
     }
 
-    private async ensureHelperIsRunning(): Promise<boolean> {
-        return (await this.isProcessRunning(this.helperFileName)) || this.startHelper();
+    private stopService(): Promise<boolean> {
+        log.info('Stopping Sing-Box...');
+        this.shouldBreakConnectionTest = true;
+
+        return new Promise<boolean>((resolve, reject) => {
+            this.helperClient.Stop({}, (err: Error, response: { message: string }) => {
+                if (err) {
+                    reject(`Oblivion-Helper: ${err.message}`);
+                }
+                log.info('Oblivion-Helper:', response.message);
+                resolve(true);
+            });
+        });
     }
 
-    private async checkConnectionStatus(): Promise<boolean> {
+    private checkConnectionStatus(): Promise<boolean> {
         const maxAttempts = 10;
         const checkInterval = 3000;
-        const timeout = 5000;
+        const timeout = 3000;
 
         log.info('Waiting for connection...');
 
@@ -182,11 +207,11 @@ class SingBoxManager {
             const timeoutId = setTimeout(() => controller.abort(), timeout);
 
             try {
-                const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
                     signal: controller.signal
                 });
 
-                if (response.ok) {
+                if (response.ok && !this.shouldBreakConnectionTest) {
                     await this.delay(1500);
                     log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
                     return true;
@@ -201,6 +226,7 @@ class SingBoxManager {
 
             if (attempt >= maxAttempts) {
                 log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
+                this.sendMessageToRenderer('guide-toast', 'Failed to establish connection');
                 return false;
             }
 
@@ -212,36 +238,55 @@ class SingBoxManager {
     }
 
     private async monitorHelperStatus(): Promise<void> {
-        const call = this.helperClient.StreamStatus({});
+        if (!this.isListeningToHelper) {
+            await this.delay(2000);
 
-        this.isListeningToHelper = true;
+            log.info('Monitoring helper status...');
 
-        call.on('data', (response: { status: string }) => {
-            log.info('Oblivion-Helper Status:', response.status);
-            if (response.status === 'terminated') {
+            const call = this.helperClient.StreamStatus({});
+
+            this.isListeningToHelper = true;
+
+            let terminationsCount: number = 0;
+
+            call.on('data', (response: { status: string }) => {
+                log.info('Oblivion-Helper Status:', response.status);
+                if (response.status === 'terminated') {
+                    log.info('Sing-Box terminated unexpectedly. Restarting...');
+                    customEvent.emit('tray-icon', 'disconnected');
+                    this.sendMessageToRenderer('sb-terminate', 'terminated');
+
+                    if (terminationsCount < 3) {
+                        this.startService().then((connected) => {
+                            if (connected) {
+                                customEvent.emit('tray-icon', 'connected-tun');
+                                this.sendMessageToRenderer('sb-terminate', 'restarted');
+                                terminationsCount = 0;
+                            }
+                        });
+                        terminationsCount++;
+                    } else {
+                        this.shouldBreakConnectionTest = true;
+                        this.killWarpPlus();
+                        terminationsCount = 0;
+                    }
+                }
+            });
+
+            call.on('end', async () => {
+                log.info('Oblivion-Helper service has ended.');
+                this.isListeningToHelper = false;
                 this.killWarpPlus();
-            }
-        });
+            });
 
-        call.on('end', () => {
-            log.info('Oblivion-Helper service has ended.');
-            this.isListeningToHelper = false;
-            this.killWarpPlus();
-        });
-
-        call.on('error', (err: Error) => {
-            log.warn('Oblivion-Helper Error:', err.message);
-            this.killWarpPlus();
-        });
+            call.on('error', async (err: Error) => {
+                log.warn('Oblivion-Helper Error:', err.message);
+                this.killWarpPlus();
+            });
+        }
     }
 
-    private delay(ms: number): Promise<void> {
-        return new Promise((resolve) => {
-            setTimeout(resolve, ms);
-        });
-    }
-
-    private async isProcessRunning(processName: string): Promise<boolean> {
+    private isProcessRunning(processName: string): Promise<boolean> {
         const command = this.getPlatformCommands().running(processName).command;
 
         return new Promise((resolve, reject) => {
@@ -257,6 +302,12 @@ class SingBoxManager {
         if (this.wpPid) {
             treeKill(this.wpPid, 'SIGKILL');
         }
+    }
+
+    private delay(ms: number): Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
     }
 
     private getPlatformCommands(): Record<string, (param: string) => ICommand> {
@@ -448,7 +499,7 @@ class SingBoxManager {
         result.processSet.push(app);
     }
 
-    private async exportGeoList(args: string): Promise<boolean> {
+    private exportGeoList(args: string): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
             const command = path
                 .join(this.workingDirPath, this.sbWDFileName)
@@ -460,6 +511,12 @@ class SingBoxManager {
                 resolve(true);
             });
         });
+    }
+
+    private sendMessageToRenderer(channel: string, message: string): void {
+        if (this.mainWindow) {
+            this.mainWindow.webContents.send(channel, message);
+        }
     }
 }
 
