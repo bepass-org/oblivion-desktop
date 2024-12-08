@@ -132,7 +132,7 @@ export default function Settings() {
                         </div>
                         <div
                             role='button'
-                            className={classNames('item')}
+                            className={classNames('item', proxyMode !== 'tun' ? '' : 'disabled')}
                             onClick={onEnablePsiphon}
                             onKeyDown={onKeyDownPsiphon}
                             tabIndex={0}
