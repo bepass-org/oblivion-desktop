@@ -110,12 +110,12 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                             <span>{appLang?.home?.drawer_lang}</span>
                         </a>
                     </li>*/}
-                    {/* <li role='presentation'>
+                    <li role='presentation'>
                         <Link to='/speed' role='menuitem'>
                             <i className={'material-icons'}>speed</i>
                             <span>{appLang?.speedTest?.title}</span>
                         </Link>
-                    </li> */}
+                    </li>
                     <li role='presentation'>
                         <Link to='/about' role='menuitem'>
                             <i className={'material-icons'}>&#xe88e;</i>

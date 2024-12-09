@@ -51,6 +51,7 @@ import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
 import NetworkMonitor from './networkMonitor';
 import { geoDBs } from './config';
+import SpeedTestManager from './speedTest';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -103,6 +104,7 @@ if (!gotTheLock) {
             if (fs.existsSync(helperPath)) {
                 rimrafSync(helperPath);
             }
+            // eslint-disable-next-line no-restricted-syntax
             for (const fileName of geoDBs) {
                 const dbPath = path.join(wpDirPath, fileName);
                 if (fs.existsSync(dbPath)) {
@@ -157,6 +159,7 @@ if (!gotTheLock) {
         'dbs'
     );
 
+    // eslint-disable-next-line no-restricted-syntax
     for (const fileName of geoDBs) {
         const dbAssetPath = path.join(dbAssetDirectory, fileName);
         const dbWDPath = path.join(wpDirPath, fileName);
@@ -346,6 +349,7 @@ if (!gotTheLock) {
                     mainWindow = null;
                 });
 
+                // eslint-disable-next-line no-undef
                 (mainWindow as any).on('minimize', async (e: Electron.Event) => {
                     e.preventDefault();
                 });
@@ -371,6 +375,7 @@ if (!gotTheLock) {
                 });
 
                 if (process.platform !== 'win32') {
+                    // eslint-disable-next-line no-undef
                     (powerMonitor as any).on('shutdown', async (event: Electron.Event) => {
                         event.preventDefault();
                         try {
@@ -536,13 +541,13 @@ if (!gotTheLock) {
                     ]
                 },
                 { label: '', type: 'separator' },
-                /*{
+                {
                     label: appLang.systemTray.speed_test,
                     type: 'normal',
                     click: () => {
                         redirectTo('/speed');
                     }
-                },*/
+                },
                 {
                     label: appLang.systemTray.about,
                     type: 'normal',
@@ -597,13 +602,16 @@ if (!gotTheLock) {
         const networkMonitor = new NetworkMonitor(mainWindow);
         networkMonitor.initializeIpcEvents();
 
+        const speedTest = new SpeedTestManager(mainWindow);
+        speedTest.initializeIpcEvents();
+
         singBoxManager.initializeMainWindow(mainWindow);
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {
                 getUserLang = defaultSettings.lang;
             }
-            ipcMain.on('localization', async (event, newLang) => {
+            ipcMain.on('localization', async (_, newLang) => {
                 getUserLang = newLang;
                 appIcon.setContextMenu(
                     Menu.buildFromTemplate(
@@ -621,7 +629,7 @@ if (!gotTheLock) {
             });
 
             checkStartUp();
-            ipcMain.on('startup', async (event, newStatus) => {
+            ipcMain.on('startup', async (_, newStatus) => {
                 if (process.env.NODE_ENV !== 'development') {
                     app.setLoginItemSettings({
                         openAtLogin: newStatus
@@ -737,8 +745,8 @@ if (!gotTheLock) {
     });
 
     app.whenReady()
-        .then(() => {
-            createWindow();
+        .then(async () => {
+            await createWindow();
             app.on('activate', () => {
                 // On macOS, it's common to re-create a window in the app when the
                 // dock icon is clicked and there are no other windows open.

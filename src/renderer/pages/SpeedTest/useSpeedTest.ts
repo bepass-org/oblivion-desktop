@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import SpeedTest, { MeasurementConfig } from '@cloudflare/speedtest';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { defaultToast } from '../../lib/toasts';
 
@@ -18,45 +18,35 @@ export const useSpeedTest = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
     const [testButtonText, setTestButtonText] = useState('play_arrow');
-    const speedTestRef = useRef<SpeedTest | null>(null);
-    const rafIdRef = useRef<number | null>(null);
-
-    const testMeasurements: MeasurementConfig[] = [
-        { type: 'latency', numPackets: 1 },
-        { type: 'download', bytes: 1e5, count: 1, bypassMinDuration: true },
-        { type: 'latency', numPackets: 20 },
-        { type: 'download', bytes: 1e5, count: 9 },
-        { type: 'download', bytes: 1e6, count: 8 },
-        { type: 'upload', bytes: 1e5, count: 8 },
-        { type: 'upload', bytes: 1e6, count: 6 },
-        { type: 'download', bytes: 1e7, count: 6 }
-    ] as const;
 
     useEffect(() => {
-        speedTestRef.current = new SpeedTest({ autoStart: false, measurements: testMeasurements });
-        const speedTest = speedTestRef.current;
+        if (!navigator.onLine) {
+            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 3000);
+        }
 
-        speedTest.onFinish = (results) => {
-            if (rafIdRef.current) {
-                cancelAnimationFrame(rafIdRef.current);
+        ipcRenderer.on('speed-test-results', (event: any, data: any) => {
+            switch (event) {
+                case 'started':
+                    setIsRunning(true);
+                    setIsFinished(false);
+                    setTestButtonText('pause');
+                    break;
+                case 'paused':
+                    setIsRunning(false);
+                    setIsFinished(false);
+                    setTestButtonText('play_arrow');
+                    break;
+                case 'finished':
+                    setIsRunning(false);
+                    setIsFinished(true);
+                    setTestButtonText('replay');
+                    break;
+                default:
+                    break;
             }
-            setIsRunning(false);
-            setIsFinished(true);
-            setTestResults(results?.getSummary());
-            setTestButtonText('replay');
-        };
-
-        speedTest.onError = (err) => {
-            defaultToast(err, 'SPEED_TEST', 5000);
-        };
-
-        return () => {
-            if (rafIdRef.current) {
-                cancelAnimationFrame(rafIdRef.current);
-            }
-            speedTest?.pause();
-        };
-    }, []);
+            setTestResults(data);
+        });
+    }, [appLang?.toast?.offline]);
 
     const checkServerAvailability = useCallback(async () => {
         try {
@@ -78,77 +68,46 @@ export const useSpeedTest = () => {
     }, [appLang?.speedTest?.server_unavailable]);
 
     const toggleTest = useCallback(async () => {
-        const speedTest = speedTestRef.current;
-        if (!speedTest) return;
-
         if (!navigator.onLine) {
-            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 3000);
             return;
         }
 
         if (isRunning) {
-            speedTest.pause();
-            setIsRunning(false);
-            setTestButtonText('play_arrow');
-            if (rafIdRef.current) {
-                cancelAnimationFrame(rafIdRef.current);
-            }
+            ipcRenderer.sendMessage('speed-test-command', 'pause');
             return;
         }
 
-        try {
-            setTestButtonText('pause');
-            setIsRunning(true);
-            const serverAvailable = await checkServerAvailability();
-            if (!serverAvailable) {
-                setTestButtonText('play_arrow');
-                setIsRunning(false);
-                return;
-            }
-            setTestResults(undefined);
-
-            if (isFinished) {
-                setIsFinished(false);
-                speedTest.restart();
-            } else {
-                speedTest.play();
-            }
-
-            const updateResults = () => {
-                setTestResults(speedTest.results?.getSummary());
-                if (speedTest.isRunning) {
-                    rafIdRef.current = requestAnimationFrame(updateResults);
-                }
-            };
-            rafIdRef.current = requestAnimationFrame(updateResults);
-        } catch (err) {
-            defaultToast(appLang?.speedTest?.error_msg, 'SPEED_TEST', 5000);
-            setIsRunning(false);
-            setTestButtonText('play_arrow');
+        const serverAvailable = await checkServerAvailability();
+        if (!serverAvailable) {
+            return;
         }
-    }, [
-        appLang?.speedTest?.error_msg,
-        appLang?.toast?.offline,
-        checkServerAvailability,
-        isFinished,
-        isRunning
-    ]);
 
-    const formatSpeed = useCallback(
-        (speed?: number) => (speed ? (speed / MB_CONVERSION).toFixed(2) : 'N/A'),
-        []
-    );
+        if (isFinished) {
+            ipcRenderer.sendMessage('speed-test-command', 'restart');
+        } else {
+            ipcRenderer.sendMessage('speed-test-command', 'play');
+        }
+    }, [checkServerAvailability, isFinished, isRunning]);
 
-    const formatValue = useCallback((value?: number) => value?.toFixed(2) ?? 'N/A', []);
+    const formattedResults = useMemo(() => {
+        if (!testResults) return null;
+
+        return {
+            download: testResults.download
+                ? (testResults.download / MB_CONVERSION).toFixed(2)
+                : 'N/A',
+            upload: testResults.upload ? (testResults.upload / MB_CONVERSION).toFixed(2) : 'N/A',
+            latency: testResults.latency?.toFixed(2) ?? 'N/A',
+            jitter: testResults.jitter?.toFixed(2) ?? 'N/A'
+        };
+    }, [testResults]);
 
     return {
         appLang,
-        testResults,
+        testResults: formattedResults,
         isRunning,
         isFinished,
         testButtonText,
-        toggleTest,
-        formatSpeed,
-        formatValue
+        toggleTest
     };
 };

@@ -36,7 +36,7 @@ class NetworkMonitor {
     }
 
     public initializeIpcEvents(): void {
-        ipcMain.on('check-speed', (event, arg) => {
+        ipcMain.on('check-speed', (_, arg) => {
             if (arg) {
                 this.startMonitoring();
             } else {

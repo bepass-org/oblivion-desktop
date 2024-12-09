@@ -14,7 +14,9 @@ export type Channels =
     | 'startup'
     | 'check-speed'
     | 'speed-stats'
-    | 'sb-terminate';
+    | 'sb-terminate'
+    | 'speed-test-command'
+    | 'speed-test-results';
 
 const electronHandler = {
     ipcRenderer: {
