@@ -112,7 +112,7 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                     </li>*/}
                     <li role='presentation'>
                         <Link to='/speed' role='menuitem'>
-                            <i className={'material-icons'}>speed</i>
+                            <i className={'material-icons'}>&#xe9e4;</i>
                             <span>{appLang?.speedTest?.title}</span>
                         </Link>
                     </li>
