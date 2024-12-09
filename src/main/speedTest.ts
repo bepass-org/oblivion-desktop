@@ -8,7 +8,9 @@ const testMeasurements: MeasurementConfig[] = [
     { type: 'latency', numPackets: 20 },
     { type: 'download', bytes: 1e5, count: 9 },
     { type: 'download', bytes: 1e6, count: 8 },
-    { type: 'upload', bytes: 1e5, count: 8 }
+    { type: 'upload', bytes: 1e5, count: 8 },
+    { type: 'upload', bytes: 1e6, count: 6 },
+    { type: 'download', bytes: 1e7, count: 6 }
 ];
 
 class SpeedTestManager {
@@ -24,7 +26,6 @@ class SpeedTestManager {
         ipcMain.on('speed-test-command', (_, arg: any) => {
             switch (arg) {
                 case 'play':
-                    this.broadcastResults('started', true);
                     if (this.speedTest?.isFinished) {
                         this.speedTest.restart();
                     } else {
@@ -46,23 +47,25 @@ class SpeedTestManager {
     }
 
     private setupSpeedTest() {
-        this.speedTest = new SpeedTest({ autoStart: false, measurements: testMeasurements });
+        if (this.speedTest == null) {
+            this.speedTest = new SpeedTest({ autoStart: false, measurements: testMeasurements });
 
-        this.speedTest.onResultsChange = () => this.broadcastResults('started');
+            this.speedTest.onResultsChange = () => this.broadcastResults('started');
 
-        this.speedTest.onFinish = () => this.broadcastResults('finished');
+            this.speedTest.onFinish = () => this.broadcastResults('finished');
 
-        this.speedTest.onError = (error) => {
-            log.error('Speed Test Error:', error);
-        };
+            this.speedTest.onError = (error) => {
+                log.error('Speed Test Error:', error);
+            };
+        }
     }
 
-    private broadcastResults(event: string, init: boolean = false) {
+    private broadcastResults(event: string) {
         if (this.mainWindow) {
             this.mainWindow.webContents.send(
                 'speed-test-results',
                 event,
-                init ? undefined : this.speedTest?.results.getSummary()
+                this.speedTest?.results.getSummary()
             );
         }
     }
