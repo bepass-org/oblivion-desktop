@@ -111,9 +111,9 @@ technology
                 :white_check_mark: Scanner<br>
                 :white_check_mark: Ping<br>
                 :white_check_mark: Accessibility<br>
-                :white_large_square: Kill Switch<br>
+                :white_check_mark: SpeedTest<br>
                 :white_large_square: Inline Update<br>
-                :white_large_square: SpeedTest
+                :white_large_square: Kill Switch
             </td>
         </tr>
     </tbody>
