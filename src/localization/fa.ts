@@ -24,7 +24,7 @@ const persian: Language = {
         drawer_speed_test: 'تست سرعت',
         drawer_about: 'درباره برنامه',
         drawer_lang: 'تغییر زبان',
-        drawer_singbox: 'تنظیمات سینگ‌باکس'
+        drawer_singbox: 'تنظیمات تانل'
     },
     toast: {
         ip_check_please_wait: 'برای بررسی مجدد چندثانیه دیگر تلاش کنید!',

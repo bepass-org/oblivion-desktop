@@ -24,7 +24,7 @@ const turkish: Language = {
         drawer_speed_test: 'Hız Testi',
         drawer_about: 'Uygulama Hakkında',
         drawer_lang: 'Dil Değişikliği',
-        drawer_singbox: 'Singbox Ayarları'
+        drawer_singbox: 'Tünel Ayarlar'
     },
     toast: {
         ip_check_please_wait: 'Lütfen kontrolü yeniden denemek için birkaç saniye bekleyin!',

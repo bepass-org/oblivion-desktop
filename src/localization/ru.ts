@@ -24,7 +24,7 @@ const russian: Language = {
         drawer_speed_test: 'Тест скорости',
         drawer_about: 'О приложении',
         drawer_lang: 'Изменить язык',
-        drawer_singbox: 'Настройки Singbox'
+        drawer_singbox: 'Настройки туннеля'
     },
     toast: {
         ip_check_please_wait: 'Пожалуйста, подождите несколько секунд, чтобы повторить проверку!',

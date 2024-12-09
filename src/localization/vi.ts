@@ -24,7 +24,7 @@ const vietnamese: Language = {
         drawer_speed_test: 'Kiểm tra tốc độ',
         drawer_about: 'Giới thiệu về ứng dụng',
         drawer_lang: 'Thay đổi ngôn ngữ',
-        drawer_singbox: 'Cài đặt Hộp hát'
+        drawer_singbox: 'Cài đặt Đường hầm'
     },
     toast: {
         ip_check_please_wait: 'Vui lòng đợi vài giây để kiểm tra lại!',

@@ -24,7 +24,7 @@ const chinese: Language = {
         drawer_speed_test: '速度测试',
         drawer_about: '关于应用',
         drawer_lang: '更改语言',
-        drawer_singbox: 'Singbox 设置'
+        drawer_singbox: '隧道设置'
     },
     toast: {
         ip_check_please_wait: '请等待几秒钟后重试检查！',

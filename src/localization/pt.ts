@@ -24,7 +24,7 @@ const brazilianPortuguese: Language = {
         drawer_speed_test: 'Teste de Velocidade',
         drawer_about: 'Sobre o Aplicativo',
         drawer_lang: 'Alterar Idioma',
-        drawer_singbox: 'Configurações do Caixa de Canto'
+        drawer_singbox: 'Configurações de Túnel'
     },
     toast: {
         ip_check_please_wait: 'Por favor, aguarde alguns segundos para tentar novamente!',

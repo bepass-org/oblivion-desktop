@@ -24,7 +24,7 @@ const urdu: Language = {
         drawer_speed_test: 'اسپیڈ ٹیسٹ',
         drawer_about: 'ایپ کے بارے میں',
         drawer_lang: 'زبان تبدیل کریں',
-        drawer_singbox: 'سنگ باکس سیٹنگز'
+        drawer_singbox: 'ٹنل کی ترتیبات'
     },
     toast: {
         ip_check_please_wait: 'براہ کرم چند سیکنڈ انتظار کریں اور دوبارہ چیک کریں!',

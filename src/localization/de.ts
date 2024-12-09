@@ -24,7 +24,7 @@ const deutsch: Language = {
         drawer_speed_test: 'Geschwindigkeitstest',
         drawer_about: 'Über',
         drawer_lang: 'Sprache ändern',
-        drawer_singbox: 'Singbox-Einstellungen'
+        drawer_singbox: 'Tunnel-Einstellungen'
     },
     toast: {
         ip_check_please_wait:

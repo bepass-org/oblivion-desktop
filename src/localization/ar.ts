@@ -24,7 +24,7 @@ const arabic: Language = {
         drawer_speed_test: 'اختبار السرعة',
         drawer_about: 'حول التطبيق',
         drawer_lang: 'تغيير اللغة',
-        drawer_singbox: 'إعدادات صندوق الغناء'
+        drawer_singbox: 'إعدادات النفق'
     },
     toast: {
         ip_check_please_wait: 'يرجى الانتظار بضع ثوانٍ لإعادة المحاولة!',
