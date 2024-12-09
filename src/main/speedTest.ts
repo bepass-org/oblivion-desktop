@@ -8,9 +8,7 @@ const testMeasurements: MeasurementConfig[] = [
     { type: 'latency', numPackets: 20 },
     { type: 'download', bytes: 1e5, count: 9 },
     { type: 'download', bytes: 1e6, count: 8 },
-    { type: 'upload', bytes: 1e5, count: 8 },
-    { type: 'upload', bytes: 1e6, count: 6 },
-    { type: 'download', bytes: 1e7, count: 6 }
+    { type: 'upload', bytes: 1e5, count: 8 }
 ];
 
 class SpeedTestManager {
