@@ -6,16 +6,8 @@ import { useSpeedTest } from './useSpeedTest';
 import ResultCard from '../../components/Card';
 
 const Speed: FC = () => {
-    const {
-        appLang,
-        testResults,
-        isRunning,
-        isFinished,
-        testButtonText,
-        toggleTest,
-        formatSpeed,
-        formatValue
-    } = useSpeedTest();
+    const { appLang, testResults, isRunning, isFinished, testButtonText, toggleTest } =
+        useSpeedTest();
 
     const renderResults = useMemo(() => {
         if (!testResults) return null;
@@ -25,30 +17,30 @@ const Speed: FC = () => {
                 <div className='resultRow'>
                     <ResultCard
                         label={appLang?.speedTest?.download_speed}
-                        value={formatSpeed(testResults.download)}
+                        value={testResults.download}
                         unit='Mbps'
                     />
                     <ResultCard
                         label={appLang?.speedTest?.upload_speed}
-                        value={formatSpeed(testResults.upload)}
+                        value={testResults.upload}
                         unit='Mbps'
                     />
                 </div>
                 <div className='resultRow'>
                     <ResultCard
                         label={appLang?.speedTest?.latency}
-                        value={formatValue(testResults.latency)}
+                        value={testResults.latency}
                         unit='Ms'
                     />
                     <ResultCard
                         label={appLang?.speedTest?.jitter}
-                        value={formatValue(testResults.jitter)}
+                        value={testResults.jitter}
                         unit='Ms'
                     />
                 </div>
             </div>
         );
-    }, [appLang?.speedTest, formatSpeed, formatValue, testResults]);
+    }, [appLang?.speedTest, testResults]);
 
     return (
         <>
