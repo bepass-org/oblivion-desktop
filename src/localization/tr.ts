@@ -183,7 +183,8 @@ const turkish: Language = {
         error_singbox_failed_stop: 'Sing-Box durdurulamadı!',
         error_singbox_failed_start: 'Sing-Box başlatılamadı!',
         error_wp_reset_peer: 'Cloudflare bağlantısı beklenmedik bir şekilde kesildi!',
-        error_faild_connection: 'Bağlantı kurulamadı!'
+        error_faild_connection: 'Bağlantı kurulamadı!',
+        error_canceled_by_user: 'İşlem kullanıcı tarafından iptal edildi.'
     },
     about: {
         title: 'Uygulama Hakkında',

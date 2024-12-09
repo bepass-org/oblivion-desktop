@@ -151,7 +151,7 @@ class SingBoxManager {
             helperProcess.stderr?.on('data', (err: Buffer) => {
                 const errorMessage = err.toString();
                 if (errorMessage.includes('dismissed') || errorMessage.includes('canceled')) {
-                    reject('The operation was canceled by the user');
+                    reject(`${this.appLang?.log.error_canceled_by_user}`);
                 }
             });
 

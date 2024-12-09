@@ -177,7 +177,8 @@ const chinese: Language = {
         error_singbox_failed_stop: '停止 Sing-Box 失败!',
         error_singbox_failed_start: '启动 Sing-Box 失败!',
         error_wp_reset_peer: '与 Cloudflare 的连接意外中断！',
-        error_faild_connection: '无法建立连接！'
+        error_faild_connection: '无法建立连接！',
+        error_canceled_by_user: '操作已被用户取消。'
     },
     about: {
         title: '关于应用',
