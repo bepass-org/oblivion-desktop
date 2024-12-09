@@ -9,19 +9,17 @@ import {
     checkEndpoint,
     checkRoutingRules,
     doesFileExist,
-    hasLicense,
-    shouldProxySystem
+    hasLicense
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetsPath } from '../main';
-import { wpVersion } from '../config';
+import { wpVersion, sbVersion, helperVersion } from '../config';
 
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
 
-// TODO refactor
-export function readLogFile() {
+export function readLogFile(value: string) {
     return new Promise((resolve, reject) => {
-        fs.readFile(logPath, 'utf8', (err: any, data: any) => {
+        fs.readFile(value, 'utf8', (err: any, data: any) => {
             if (err) {
                 reject(err);
             } else {
@@ -43,12 +41,13 @@ export const logMetadata = () => {
         .then((data) => {
             log.info('------------------------MetaData------------------------');
             log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
-            log.info(`at od: ${packageJsonData.version}`);
-            log.info(`at wp: ${wpVersion}`);
+            log.info(`at od: v${packageJsonData.version}`);
+            log.info(`at wp: v${wpVersion}`);
+            log.info(`at sb: v${sbVersion}`);
+            log.info(`at hp: v${helperVersion}`);
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
             log.info('method:', calculateMethod(data[0]));
-            // TODO rename to network configuration when tun comes
-            log.info('proxyMode:', shouldProxySystem(data[1]));
+            log.info('proxyMode:', data[1]);
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
             log.info('asn:', data[5] ? data[5] : 'UNK');
@@ -64,10 +63,34 @@ export const logMetadata = () => {
         });
 };
 
-ipcMain.on('get-logs', async (event) => {
-    const bool = await doesFileExist(logPath);
-    if (bool) {
-        const data = await readLogFile();
-        event.reply('get-logs', data);
+const parseLogDate = (logLine: string) => {
+    const dateRegex =
+        /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2})|(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/;
+    const match = logLine.match(dateRegex);
+    if (match) {
+        if (match[1]) {
+            return new Date(match[1]);
+        } else if (match[2]) {
+            return new Date(match[2]);
+        }
     }
+    return new Date(0);
+};
+
+ipcMain.on('get-logs', async (event) => {
+    const wpLogPathExist = await doesFileExist(logPath);
+    let wpLogs = '';
+    if (wpLogPathExist) {
+        wpLogs = String(await readLogFile(logPath));
+    }
+    const wpLogLines = wpLogs.split('\n');
+    const allLogLines = [...wpLogLines]
+        .filter((line) => line.trim() !== '')
+        .sort((a, b) => {
+            const dateA = parseLogDate(a);
+            const dateB = parseLogDate(b);
+            return dateA.getTime() - dateB.getTime();
+        });
+    const mergedLogs = allLogLines.join('\n');
+    event.reply('get-logs', mergedLogs);
 });

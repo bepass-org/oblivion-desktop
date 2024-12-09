@@ -23,7 +23,8 @@ const english: Language = {
         drawer_update_label: 'New Update',
         drawer_speed_test: 'Speed Test',
         drawer_about: 'About App',
-        drawer_lang: 'Language Change'
+        drawer_lang: 'Language Change',
+        drawer_singbox: 'Singbox Settings'
     },
     toast: {
         ip_check_please_wait: 'Please wait a few seconds to retry the check!',
@@ -98,14 +99,29 @@ const english: Language = {
         routing_rules_disabled: 'Disabled',
         routing_rules_items: 'Items',
         profile: 'Profile',
-        profile_desc: 'Endpoints saved by you'
+        profile_desc: 'Endpoints saved by you',
+        singbox: 'Singbox Settings',
+        close_singbox: 'Stop operation',
+        close_singbox_desc: 'Automatically close sing-box on disconnect',
+        close_helper: 'Stop helper',
+        close_helper_desc: 'Automatically close helper on exit',
+        mtu: 'MTU Value',
+        mtu_desc: 'Set the Maximum Transmission Unit',
+        geo_block: 'Blocking',
+        geo_block_desc: 'Ads, Malware, Phishing & Crypto Miners',
+        geo_rules_ip: 'IP Routing',
+        geo_rules_ip_desc: 'Applying GeoIP rules',
+        geo_rules_site: 'Web Routing',
+        geo_rules_site_desc: 'Applying GeoSite rules',
+        more_helper: 'Assistant Settings'
     },
     tabs: {
         home: 'Connect',
         warp: 'Warp',
         network: 'Network',
         scanner: 'Scanner',
-        app: 'App'
+        app: 'App',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -118,6 +134,10 @@ const english: Language = {
         restore_desc:
             'By confirming the operation of restoring the changes, all program settings will return to the default state and your connection will be disconnected.',
         routing_rules_sample: 'Sample',
+        routing_rules_alert_tun:
+            'Only the routing rules for domain, ip & app will affect the Tun configuration.',
+        routing_rules_alert_system:
+            'Except for the app routing rule, other rules will affect the System Proxy configuration.',
         endpoint_default: 'Default',
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',
@@ -127,6 +147,9 @@ const english: Language = {
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',
         profile_limitation: (value) => `You can add a maximum of ${value} endpoints.`,
+        mtu_title: 'MTU Value',
+        mtu_desc:
+            'Maximum Transmission Unit (MTU) refers to the maximum size of data packets, which should be set between 1000 and 9999.',
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'
@@ -144,6 +167,7 @@ const english: Language = {
         error_port_already_in_use: (value) =>
             `Port ${value} is being used by another program; Change it.`,
         error_port_socket: 'Use another port.',
+        error_port_restart: 'The port is in use; restarting ...',
         error_unknown_flag: 'An invalid command was executed in the background.',
         error_deadline_exceeded: 'Connection timed out; Try again.',
         error_configuration_encountered: 'Proxy configuration encountered an error!',
@@ -154,7 +178,11 @@ const english: Language = {
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
         error_wp_stopped: 'The warp-plus file has encountered an issue running!',
         error_connection_failed: 'Connection to 1.1.1.1 was not possible.',
-        error_country_failed: 'Cannot connect to the selected country.'
+        error_country_failed: 'Cannot connect to the selected country.',
+        error_singbox_failed_stop: 'Failed to stop Sing-Box!',
+        error_singbox_failed_start: 'Failed to start Sing-Box!',
+        error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!',
+        error_faild_connection: 'Failed to establish connection!'
     },
     about: {
         title: 'About App',

@@ -74,14 +74,14 @@ Cloudflare Warp فراهم می‌کند.
             <td>
                 :white_check_mark: پروکسی <small>(بدون تغییر)</small><br>
                 :white_check_mark: پروکسی سیستم <small>(با PAC)</small><br>
-                :white_large_square: TUN
+                :white_check_mark: TUN <small>(با سینگ‌باکس)</small>
             </td>
         </tr>
         <tr>
             <td>قوانین مسیریابی</td>
             <td>
                 :white_check_mark: پروکسی سیستم<br>
-                :white_large_square: GeoIP
+                :white_check_mark: دیتابیس Geo
             </td>
         </tr>
         <tr>
@@ -103,8 +103,9 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark:  ترکی<br>
                 :white_check_mark:  اندونزیایی <br>
                 :white_check_mark:  عربی <br>
-                :white_check_mark:  پرتغالی (برزیل)  <br>
-                :white_check_mark:  ویتنامی
+                :white_check_mark:  پرتغالی  <br>
+                :white_check_mark:  ویتنامی <br>
+                :white_check_mark:  اردو
             </td>
         </tr>
         <tr>
@@ -123,6 +124,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: اسکنر<br>
                 :white_check_mark: پینگ<br>
                 :white_check_mark: دسترس‌پذیری<br>
+                :white_large_square: قطع اضطراری<br>
                 :white_large_square: بروزرسانی داخلی<br>
                 :white_large_square: تست سرعت
             </td>
@@ -154,8 +156,7 @@ Cloudflare Warp فراهم می‌کند.
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
             </td>
             <td>
-                v10<br>
-                v11
+                10+
             </td>
         </tr>
         <tr>
@@ -166,7 +167,7 @@ Cloudflare Warp فراهم می‌کند.
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
             </td>
-            <td></td>
+            <td>10.15+</td>
         </tr>
         <tr>
             <td>لینوکس</td>
@@ -188,7 +189,7 @@ Cloudflare Warp فراهم می‌کند.
                 <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
                 <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
             </td>
-            <td>v6+</td>
+            <td>6+</td>
         </tr>
         <tr>
             <td>iOS</td>
@@ -233,6 +234,7 @@ Cloudflare Warp فراهم می‌کند.
 -   [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 -   [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
 -   [Oblivion](https://github.com/bepass-org/oblivion)
+-   [Oblivion Helper](https://github.com/ShadowZagrosDev/oblivion-helper)
 -   [Electron](https://www.electronjs.org/)
 -   [React](https://github.com/facebook/react)
 -   [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)

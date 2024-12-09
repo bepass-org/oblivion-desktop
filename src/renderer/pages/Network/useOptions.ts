@@ -124,6 +124,12 @@ const useOptions = () => {
                     settings.set('ipData', false);
                     setDataUsage(false);
                     settings.set('dataUsage', false);
+                } else if (event.target.value === 'tun') {
+                    setShareVPN(false);
+                    /*if (method === 'psiphon') {
+                        settings.set('method', 'gool');
+                        setMethod('gool');
+                    }*/
                 }
             }, 1000);
         },
@@ -150,6 +156,7 @@ const useOptions = () => {
         },
         [onClickPort]
     );
+
     const onClickRoutingRoles = useCallback(() => {
         if (proxyMode !== 'none') {
             setShowRoutingRulesModal(true);
@@ -167,13 +174,15 @@ const useOptions = () => {
     );
 
     const handleShareVPNOnClick = useCallback(() => {
-        setShareVPN(!shareVPN);
-        settings.set('shareVPN', !shareVPN);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-        setTimeout(function () {
-            settings.set('hostIP', !shareVPN ? localIp : '127.0.0.1');
-        }, 1000);
-    }, [isConnected, isLoading, shareVPN, appLang, localIp]);
+        if (proxyMode !== 'tun') {
+            setShareVPN(!shareVPN);
+            settings.set('shareVPN', !shareVPN);
+            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+            setTimeout(function () {
+                settings.set('hostIP', !shareVPN ? localIp : '127.0.0.1');
+            }, 1000);
+        }
+    }, [isConnected, isLoading, shareVPN, appLang, localIp, proxyMode]);
 
     const handleShareVPNOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

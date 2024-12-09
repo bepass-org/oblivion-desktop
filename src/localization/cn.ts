@@ -23,7 +23,8 @@ const chinese: Language = {
         drawer_update_label: '新版本',
         drawer_speed_test: '速度测试',
         drawer_about: '关于应用',
-        drawer_lang: '更改语言'
+        drawer_lang: '更改语言',
+        drawer_singbox: 'Singbox 设置'
     },
     toast: {
         ip_check_please_wait: '请等待几秒钟后重试检查！',
@@ -98,14 +99,29 @@ const chinese: Language = {
         routing_rules_disabled: '已禁用',
         routing_rules_items: '项目',
         profile: '个人资料',
-        profile_desc: '您保存的端点'
+        profile_desc: '您保存的端点',
+        singbox: 'Singbox 设置',
+        close_singbox: '停止操作',
+        close_singbox_desc: '断开连接时自动关闭 sing-box',
+        close_helper: '停止助手',
+        close_helper_desc: '退出时自动关闭助手',
+        mtu: 'MTU 值',
+        mtu_desc: '设置最大传输单元',
+        geo_block: '阻止',
+        geo_block_desc: '广告、恶意软件、网络钓鱼和加密货币矿工',
+        geo_rules_ip: 'IP 路由',
+        geo_rules_ip_desc: '应用 GeoIP 规则',
+        geo_rules_site: '网页路由',
+        geo_rules_site_desc: '应用 GeoSite 规则',
+        more_helper: '助理设置'
     },
     tabs: {
         home: '连接',
         warp: 'Warp',
         network: '网络',
         scanner: '扫描仪',
-        app: '应用'
+        app: '应用',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: '端点',
@@ -117,6 +133,8 @@ const chinese: Language = {
         restore_title: '恢复更改',
         restore_desc: '确认恢复默认设置后，所有应用设置将恢复为默认值，并且您的连接将断开。',
         routing_rules_sample: '示例',
+        routing_rules_alert_tun: '只有域名、ip和应用的路由规则会影响Tun配置。',
+        routing_rules_alert_system: '除了应用路由规则，其他规则将影响系统代理配置。',
         endpoint_default: '默认',
         endpoint_suggested: '建议',
         endpoint_latest: '最新的',
@@ -126,6 +144,8 @@ const chinese: Language = {
         profile_name: '标题',
         profile_endpoint: '端点',
         profile_limitation: (value) => `您最多可以添加 ${value} 个端点。`,
+        mtu_title: 'MTU 值',
+        mtu_desc: '最大传输单元 (MTU) 是指数据包的最大大小，应设置在 1000 到 9999 之间。',
         confirm: '确认',
         update: '更新',
         cancel: '取消'
@@ -142,6 +162,7 @@ const chinese: Language = {
         error_object_null: '程序遇到错误；再试一次。',
         error_port_already_in_use: (value) => `端口 ${value} 正在被另一个程序使用；更改。`,
         error_port_socket: '使用另一个端口。',
+        error_port_restart: '端口正在使用中；正在重新启动...',
         error_unknown_flag: '后台执行了无效命令。',
         error_deadline_exceeded: '连接超时；再试一次。',
         error_configuration_encountered: '代理配置遇到错误！',
@@ -152,7 +173,11 @@ const chinese: Language = {
         error_wp_not_found: 'warp-plus 文件不在应用程序包旁边。',
         error_wp_stopped: 'warp-plus 文件在运行时遇到了问题！',
         error_connection_failed: '无法连接到1.1.1.1。',
-        error_country_failed: '无法连接到所选国家.'
+        error_country_failed: '无法连接到所选国家.',
+        error_singbox_failed_stop: '停止 Sing-Box 失败!',
+        error_singbox_failed_start: '启动 Sing-Box 失败!',
+        error_wp_reset_peer: '与 Cloudflare 的连接意外中断！',
+        error_faild_connection: '无法建立连接！'
     },
     about: {
         title: '关于应用',

@@ -128,7 +128,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 <span className={pingIsZero ? 'shimmer' : ''}>
                                     {ping > 0
                                         ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
-                                        : 'timeout'}
+                                        : 'Timeout'}
                                 </span>
                             </div>
                             <div

@@ -10,9 +10,10 @@ import idID from './id';
 import arSA from './ar';
 import viVN from './vi';
 import ptBR from './pt';
+import urPK from './pt';
 import { defaultSettings } from '../defaultSettings';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
 
 const translate = {
     fa: faIR,
@@ -24,7 +25,8 @@ const translate = {
     id: idID,
     ar: arSA,
     vi: viVN,
-    pt: ptBR
+    pt: ptBR,
+    ur: urPK
 };
 
 export const getTranslateElectron = () => {

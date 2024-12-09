@@ -17,6 +17,10 @@ const proxyModes = [
     {
         value: 'system',
         label: 'System Proxy'
+    },
+    {
+        value: 'tun',
+        label: 'Tun 🧪'
     }
 ];
 
@@ -67,7 +71,7 @@ export default function Options() {
         <>
             <Nav title={appLang?.settings?.network} />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
-                <Tabs active='network' />
+                <Tabs active='network' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     {/*<div
                         className={classNames('item', autoSetProxy ? 'checked' : '')}
@@ -154,7 +158,7 @@ export default function Options() {
                     </div>
                     <div
                         role='button'
-                        className={classNames('item', shareVPN ? 'checked' : '')}
+                        className={classNames('item', proxyMode === 'tun' ? 'disabled' : '')}
                         onClick={handleShareVPNOnClick}
                         onKeyDown={
                             // TODO: The code needs refactoring
@@ -233,6 +237,7 @@ export default function Options() {
             <RoutingRulesModal
                 routingRules={routingRules}
                 setRoutingRules={setRoutingRules}
+                proxyMode={proxyMode}
                 title={appLang?.settings?.routing_rules}
                 isOpen={showRoutingRulesModal}
                 onClose={onCloseRoutingRulesModal}

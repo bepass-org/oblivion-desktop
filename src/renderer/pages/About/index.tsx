@@ -49,7 +49,7 @@ export default function About() {
                                 <div className='name'>Oblivion-Desktop</div>
                             </div>
                         </a>
-                        <a href='https://ircf.space/contacts.php' target='_blank' rel='noreferrer'>
+                        <a href='https://ircf.space/contacts' target='_blank' rel='noreferrer'>
                             <div className='item'>
                                 <div className='icon'>
                                     <img src={ircf} alt='ircf' />

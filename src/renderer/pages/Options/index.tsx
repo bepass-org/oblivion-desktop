@@ -37,7 +37,8 @@ export default function Options() {
         setAutoConnect,
         setForceClose,
         setShortcut,
-        theme
+        theme,
+        proxyMode
     } = useOptions();
 
     if (
@@ -65,7 +66,7 @@ export default function Options() {
                 onClose={onCloseRestoreModal}
             />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
-                <Tabs active='options' />
+                <Tabs active='options' proxyMode={proxyMode} />
                 <div className='settings' role='menu'>
                     <div
                         role='button'

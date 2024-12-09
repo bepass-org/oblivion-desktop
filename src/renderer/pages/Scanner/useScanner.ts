@@ -26,6 +26,7 @@ const useScanner = () => {
     const [rtt, setRtt] = useState<undefined | string>();
     const [reserved, setReserved] = useState<undefined | boolean>();
     const [lang, setLang] = useState<string>('');
+    const [proxyMode, setProxyMode] = useState<string>('');
 
     const navigate = useNavigate();
 
@@ -53,6 +54,9 @@ const useScanner = () => {
         });
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
+        });
+        settings.get('proxyMode').then((value) => {
+            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -221,7 +225,8 @@ const useScanner = () => {
         onOpenProfileModal,
         onCloseProfileModal,
         onKeyDownProfile,
-        countProfiles
+        countProfiles,
+        proxyMode
     };
 };
 export default useScanner;

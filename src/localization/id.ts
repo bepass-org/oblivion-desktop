@@ -23,7 +23,8 @@ const indonesia: Language = {
         drawer_update_label: 'Pembaruan Baru',
         drawer_speed_test: 'Uji kecepatan',
         drawer_about: 'Tentang Aplikasi',
-        drawer_lang: 'Ganti Bahasa'
+        drawer_lang: 'Ganti Bahasa',
+        drawer_singbox: 'Pengaturan Singbox'
     },
     toast: {
         ip_check_please_wait: 'Mohon tunggu beberapa detik untuk mencoba kembali pemeriksaan!',
@@ -98,14 +99,29 @@ const indonesia: Language = {
         routing_rules_disabled: 'Dimatikan',
         routing_rules_items: 'Item',
         profile: 'Profil',
-        profile_desc: 'Titik akhir yang disimpan oleh Anda'
+        profile_desc: 'Titik akhir yang disimpan oleh Anda',
+        singbox: 'Pengaturan Singbox',
+        close_singbox: 'Hentikan operasi',
+        close_singbox_desc: 'Otomatis tutup sing-box saat terputus',
+        close_helper: 'Hentikan pembantu',
+        close_helper_desc: 'Tutup otomatis pembantu saat keluar',
+        mtu: 'Nilai MTU',
+        mtu_desc: 'Atur Maximum Transmission Unit',
+        geo_block: 'Pemblokiran',
+        geo_block_desc: 'Iklan, Malware, Phishing, dan Penambang Kripto',
+        geo_rules_ip: 'Routing IP',
+        geo_rules_ip_desc: 'Menerapkan aturan GeoIP',
+        geo_rules_site: 'Routing Web',
+        geo_rules_site_desc: 'Menerapkan aturan GeoSite',
+        more_helper: 'Pengaturan Asisten'
     },
     tabs: {
         home: 'Hubungkan',
         warp: 'Warp',
         network: 'Network',
         scanner: 'Scanner',
-        app: 'App'
+        app: 'App',
+        singbox: 'Singbox'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -118,6 +134,10 @@ const indonesia: Language = {
         restore_desc:
             'Dengan mengonfirmasi operasi pemulihan perubahan, semua pengaturan program akan kembali ke kondisi bawaan dan koneksi Anda akan terputus.',
         routing_rules_sample: 'Sampel',
+        routing_rules_alert_tun:
+            'Hanya aturan perutean untuk domain, ip, dan aplikasi yang akan mempengaruhi konfigurasi Tun.',
+        routing_rules_alert_system:
+            'Kecuali aturan perutean aplikasi, aturan lainnya akan mempengaruhi konfigurasi Proxy Sistem.',
         endpoint_default: 'Bawaan',
         endpoint_suggested: 'Disarankan',
         endpoint_latest: 'Terkini',
@@ -127,6 +147,9 @@ const indonesia: Language = {
         profile_name: 'Judul',
         profile_endpoint: 'Titik Akhir',
         profile_limitation: (value) => `Anda dapat menambahkan maksimal ${value} titik akhir.`,
+        mtu_title: 'Nilai MTU',
+        mtu_desc:
+            'Maximum Transmission Unit (MTU) mengacu pada ukuran maksimum paket data, yang harus diatur antara 1000 hingga 9999.',
         confirm: 'Saya mengerti',
         update: 'Perbarui',
         cancel: 'Batalkan'
@@ -143,6 +166,7 @@ const indonesia: Language = {
         error_object_null: 'Program mengalami kesalahan; Coba lagi.',
         error_port_already_in_use: (value) => `Port ${value} sedang digunakan program lain.`,
         error_port_socket: 'Gunakan port lain.',
+        error_port_restart: 'Port sedang digunakan; memulai ulang ...',
         error_unknown_flag: 'Perintah yang tidak valid dieksekusi di latar belakang.',
         error_deadline_exceeded: 'Waktu koneksi habis; Coba Lagi.',
         error_configuration_encountered: 'Konfigurasi proxy mengalami kesalahan!',
@@ -153,7 +177,11 @@ const indonesia: Language = {
         error_wp_not_found: 'File warp-plus tidak terletak di samping paket aplikasi!',
         error_wp_stopped: 'File warp-plus mengalami masalah saat dijalankan!',
         error_connection_failed: 'Koneksi ke 1.1.1.1 tidak berhasil.',
-        error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.'
+        error_country_failed: 'Tidak dapat terhubung ke negara yang dipilih.',
+        error_singbox_failed_stop: 'Gagal menghentikan Sing-Box!',
+        error_singbox_failed_start: 'Gagal memulai Sing-Box!',
+        error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!',
+        error_faild_connection: 'Gagal menjalin koneksi!'
     },
     about: {
         title: 'Tentang Aplikasi',

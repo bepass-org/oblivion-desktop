@@ -61,14 +61,14 @@ technology
             <td>
                 :white_check_mark: Proxy <small>(No Change)</small><br>
                 :white_check_mark: System Proxy <small>(with PAC)</small><br>
-                :white_large_square: TUN
+                :white_check_mark: TUN <small>(with SingBox)</small>
             </td>
         </tr>
         <tr>
             <td>Routing Rules</td>
             <td>
                 :white_check_mark: System Proxy<br>
-                :white_large_square: GeoIP
+                :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>
@@ -90,8 +90,9 @@ technology
                 :white_check_mark:  Turkish <br>
                 :white_check_mark:  Indonesian <br>
                 :white_check_mark:  Arabic <br>
-                :white_check_mark:  Portuguese (Brazil) <br>
-                :white_check_mark:  Vietnamese
+                :white_check_mark:  Portuguese <br>
+                :white_check_mark:  Vietnamese <br>
+                :white_check_mark:  Urdu
             </td>
         </tr>
         <tr>
@@ -110,6 +111,7 @@ technology
                 :white_check_mark: Scanner<br>
                 :white_check_mark: Ping<br>
                 :white_check_mark: Accessibility<br>
+                :white_large_square: Kill Switch<br>
                 :white_large_square: Inline Update<br>
                 :white_large_square: SpeedTest
             </td>
@@ -140,10 +142,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=windows"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
             </td>
-            <td>
-                v10<br>
-                v11
-            </td>
+            <td>10+</td>
         </tr>
         <tr>
             <td>macOS</td>
@@ -153,7 +152,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
             </td>
-            <td></td>
+            <td>10.15+</td>
         </tr>
         <tr>
             <td>Linux</td>
@@ -175,7 +174,7 @@ technology
                 <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
                 <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
             </td>
-            <td>v6+</td>
+            <td>6+</td>
         </tr>
         <tr>
             <td>iOS</td>
@@ -221,6 +220,7 @@ provided by the following friends:
 - [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
 - [Oblivion](https://github.com/bepass-org/oblivion)
+- [Oblivion Helper](https://github.com/ShadowZagrosDev/oblivion-helper)
 - [Electron](https://www.electronjs.org/)
 - [React](https://github.com/facebook/react)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)

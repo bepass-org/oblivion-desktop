@@ -12,6 +12,7 @@ interface LandingDrawerProps {
     hasNewUpdate: boolean;
     toggleDrawer: () => void;
     appVersion: string;
+    proxyMode: string;
 }
 
 const LandingDrawer: FC<LandingDrawerProps> = ({
@@ -20,7 +21,8 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
     hasNewUpdate,
     lang,
     toggleDrawer,
-    appVersion
+    appVersion,
+    proxyMode
 }) => {
     return (
         <Drawer
@@ -61,6 +63,16 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                             <span>{appLang?.home?.drawer_settings_network}</span>
                         </Link>
                     </li>
+                    {proxyMode === 'tun' && (
+                        <>
+                            <li role='presentation'>
+                                <Link to={'/singBox'} role='menuitem'>
+                                    <i className={'material-icons'}>&#xea25;</i>
+                                    <span>{appLang?.home?.drawer_singbox}</span>
+                                </Link>
+                            </li>
+                        </>
+                    )}
                     <li role='presentation'>
                         <Link to={'/scanner'} role='menuitem'>
                             <i className={'material-icons'}>&#xe2db;</i>

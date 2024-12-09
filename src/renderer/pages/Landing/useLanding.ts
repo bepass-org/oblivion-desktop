@@ -170,7 +170,25 @@ const useLanding = () => {
         }
 
         ipcRenderer.on('guide-toast', (message: any) => {
-            defaultToast(message, 'GUIDE', 7000);
+            if (message === 'error_port_restart') {
+                loadingToast(appLang.log.error_port_restart);
+            } else {
+                defaultToast(message, 'GUIDE', 7000);
+            }
+        });
+
+        ipcRenderer.on('sb-terminate', (message: any) => {
+            if (message === 'terminated') {
+                setIsLoading(false);
+                loadingToast(appLang.status.keep_trying);
+                setTimeout(function () {
+                    setIsLoading(true);
+                    stopLoadingToast();
+                }, 3500);
+            } else if (message === 'restarted') {
+                setIsLoading(false);
+                setIsConnected(true);
+            }
         });
 
         ipcRenderer.on('tray-menu', (args: any) => {
@@ -243,12 +261,12 @@ const useLanding = () => {
     const getPing = async () => {
         try {
             if (!ipInfo?.countryCode) {
-                setPing(-1);
+                setPing(0);
                 return;
             }
             const started = window.performance.now();
             const http = new XMLHttpRequest();
-            http.open('GET', 'http://cp.cloudflare.com', true);
+            http.open('GET', 'https://cp.cloudflare.com', true);
             http.onreadystatechange = function () {};
             http.onloadend = function () {
                 setPing(Math.round(window.performance.now() - started));
@@ -271,7 +289,7 @@ const useLanding = () => {
                     const timeoutId = setTimeout(() => {
                         controller.abort();
                     }, 5000);
-                    const response = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+                    const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
                         signal
                     });
                     const data = await response.text();
@@ -284,7 +302,7 @@ const useLanding = () => {
                     const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
                     const checkWarp = warpLine ? warpLine.split('=')[1] : '';
                     const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
-                    if (getLoc && cfHost === 'cloudflare.com') {
+                    if (getLoc && cfHost === '1.1.1.1') {
                         if (
                             (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
                             checkWarp !== 'off'
@@ -361,6 +379,10 @@ const useLanding = () => {
         if (isConnected && isLoading) {
             setStatusText(`${appLang?.status?.disconnecting}`);
         } else if (!isConnected && isLoading) {
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
             setStatusText(`${appLang?.status?.connecting}`);
         } else if (isConnected && ipInfo?.countryCode) {
             setStatusText(`${appLang?.status?.connected_confirm}`);
