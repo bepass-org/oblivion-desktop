@@ -45,7 +45,7 @@ const useProfileModal = (props: ProfileModalProps) => {
                 setProfilesInput(updatedProfiles);
                 setEditingIndex(null);
             } else {
-                const isDuplicate = profilesInput.some(
+                const isDuplicate = Array.isArray(profilesInput) && profilesInput.some(
                     (item: Profile) =>
                         item?.name === profileName && item?.endpoint === profileEndpoint
                 );
