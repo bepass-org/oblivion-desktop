@@ -93,7 +93,9 @@ const useProfileModal = (props: ProfileModalProps) => {
     useEffect(() => {
         settings.get('profiles').then((value) => {
             setProfilesInput(
-                typeof value === 'undefined' ? JSON.parse(defaultSettings.profiles) : JSON.parse(value)
+                typeof value === 'undefined'
+                    ? JSON.parse(defaultSettings.profiles)
+                    : JSON.parse(value)
             );
         });
     }, []);
