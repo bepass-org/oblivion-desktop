@@ -157,20 +157,22 @@ const ProfileModal: FC<ProfileModalProps> = ({
                     >
                         {appLang?.modal?.update}
                     </div>
-                    <i
-                        role='presentation'
+                    <div
+                        role='button'
                         className={classNames(
-                            'material-icons',
-                            'updater',
+                            'btn',
+                            'btn-update',
                             defaultSettings.endpoint === endpoint ? 'hidden' : ''
                         )}
-                        title={appLang?.modal?.endpoint_paste}
                         onClick={() => {
                             setProfileEndpoint(endpoint);
                         }}
+                        tabIndex={0}
                     >
-                        &#xea8e;
-                    </i>
+                        <i className={'material-icons'} title={appLang?.modal?.endpoint_paste}>
+                            &#xea8e;
+                        </i>
+                    </div>
                 </div>
             </div>
         </div>
