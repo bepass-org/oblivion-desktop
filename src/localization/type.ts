@@ -35,6 +35,7 @@ export interface Toast {
     please_wait: string;
     offline: string;
     settings_changed: string;
+    hardware_usage: string;
 }
 
 export interface Settings {

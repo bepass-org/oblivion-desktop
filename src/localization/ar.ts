@@ -35,7 +35,8 @@ const arabic: Language = {
         cleared: 'تم مسح السجل!',
         please_wait: 'يرجى الانتظار ...',
         offline: 'أنت غير متصل!',
-        settings_changed: 'يتطلب تطبيق الإعدادات إعادة الاتصال.'
+        settings_changed: 'يتطلب تطبيق الإعدادات إعادة الاتصال.',
+        hardware_usage: 'تمكين هذا الخيار سيزيد من استهلاك موارد الأجهزة.'
     },
     settings: {
         title: 'إعدادات Warp',

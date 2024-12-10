@@ -35,7 +35,8 @@ const vietnamese: Language = {
         cleared: 'Nhật ký đã được xóa!',
         please_wait: 'Vui lòng đợi ...',
         offline: 'Bạn đang ngoại tuyến!',
-        settings_changed: 'Việc áp dụng cài đặt yêu cầu kết nối lại.'
+        settings_changed: 'Việc áp dụng cài đặt yêu cầu kết nối lại.',
+        hardware_usage: 'Bật tùy chọn này sẽ tăng mức sử dụng tài nguyên phần cứng.'
     },
     settings: {
         title: 'Cài đặt Warp',

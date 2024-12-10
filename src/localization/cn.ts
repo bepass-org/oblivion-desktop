@@ -35,7 +35,8 @@ const chinese: Language = {
         cleared: '日志已被清除！',
         please_wait: '请等待...',
         offline: '您处于离线状态！',
-        settings_changed: '应用设置已更改，需要重新连接。'
+        settings_changed: '应用设置已更改，需要重新连接。',
+        hardware_usage: '启用此选项会增加硬件资源的使用。'
     },
     settings: {
         title: 'Warp 设置',

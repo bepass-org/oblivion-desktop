@@ -35,7 +35,8 @@ const brazilianPortuguese: Language = {
         cleared: 'O log foi limpo!',
         please_wait: 'Por favor, aguarde ...',
         offline: 'Você está offline!',
-        settings_changed: 'Aplicar configurações requer reconexão.'
+        settings_changed: 'Aplicar configurações requer reconexão.',
+        hardware_usage: 'Ativar esta opção aumentará o uso dos recursos de hardware.'
     },
     settings: {
         title: 'Configurações do Warp',

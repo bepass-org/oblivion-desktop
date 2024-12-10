@@ -35,7 +35,9 @@ const indonesia: Language = {
         cleared: 'Log telah dibersihkan!',
         please_wait: 'Mohon Tunggu ...',
         offline: 'Anda sedang offline!',
-        settings_changed: 'Menerapkan pengaturan memerlukan penyambungan ulang.'
+        settings_changed: 'Menerapkan pengaturan memerlukan penyambungan ulang.',
+        hardware_usage:
+            'Mengaktifkan opsi ini akan meningkatkan penggunaan sumber daya perangkat keras.'
     },
     settings: {
         title: 'Pengaturan Warp',

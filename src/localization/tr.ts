@@ -35,7 +35,8 @@ const turkish: Language = {
         cleared: 'Günlük temizlendi!',
         please_wait: 'Lütfen Bekleyin ...',
         offline: 'Çevrimdışısınız!',
-        settings_changed: 'Ayarları uygulamak için yeniden bağlanma gerekiyor.'
+        settings_changed: 'Ayarları uygulamak için yeniden bağlanma gerekiyor.',
+        hardware_usage: 'Bu seçeneği etkinleştirmek donanım kaynaklarının kullanımını artıracaktır.'
     },
     settings: {
         title: 'Warp Ayarları',

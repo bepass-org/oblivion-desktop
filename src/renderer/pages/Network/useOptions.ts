@@ -4,7 +4,8 @@ import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
-import { settingsHaveChangedToast } from '../../lib/toasts';
+import toast from 'react-hot-toast';
+import { defaultToast, settingsHaveChangedToast } from '../../lib/toasts';
 import { defaultSettings, dnsServers } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
@@ -89,6 +90,14 @@ const useOptions = () => {
 
         getLocalIP();
     }, []);
+
+    useEffect(() => {
+        if (dataUsage) {
+            defaultToast(`${appLang?.toast?.hardware_usage}`, 'DATA_USAGE');
+        } else {
+            toast.remove('DATA_USAGE');
+        }
+    }, [dataUsage]);
 
     const countRoutingRules = useCallback(
         (value: string) => {

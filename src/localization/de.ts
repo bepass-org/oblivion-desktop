@@ -37,7 +37,8 @@ const deutsch: Language = {
         please_wait: 'Bitte warten ...',
         offline: 'Sie sind offline!',
         settings_changed:
-            'Das Anwenden der Einstellungen erfordert ein erneutes herstellen der Verbindung.'
+            'Das Anwenden der Einstellungen erfordert ein erneutes herstellen der Verbindung.',
+        hardware_usage: 'Das Aktivieren dieser Option erhöht die Nutzung der Hardware-Ressourcen.'
     },
     settings: {
         title: 'Warp-Einstellungen',

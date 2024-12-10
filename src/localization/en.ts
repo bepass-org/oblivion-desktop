@@ -35,7 +35,8 @@ const english: Language = {
         cleared: 'The log has been cleared!',
         please_wait: 'Please Wait ...',
         offline: 'You Are Offline!',
-        settings_changed: 'Applying settings requires reconnecting.'
+        settings_changed: 'Applying settings requires reconnecting.',
+        hardware_usage: 'Enabling this option will increase hardware resource usage.'
     },
     settings: {
         title: 'Warp Settings',
