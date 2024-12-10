@@ -230,6 +230,7 @@ class SingBoxManager {
                     'guide-toast',
                     `${this.appLang?.log.error_faild_connection}`
                 );
+                this.killWarpPlus();
                 return false;
             }
 
