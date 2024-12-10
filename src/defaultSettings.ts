@@ -65,7 +65,7 @@ export const defaultSettings = {
     shortcut: false,
     dataUsage: false,
     asn: 'UNK',
-    closeHelper: false,
+    closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false
 };
