@@ -1733,18 +1733,45 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     color: #dadada;
 }
 
-.dialog .dialogBox .updater {
+.dialog .dialogBox .btn.btn-update {
+    border-color: #acacac;
+    margin-left: 10px;
+    font-weight: 300;
     float: right;
-    margin: 21px 1px 0 1px;
+}
+
+[dir='ltr'] .dialog .dialogBox .btn.btn-update {
+    margin-left: 0;
+    margin-right: 10px;
+    float: left;
+}
+
+[data-bs-theme='dark'] .dialog .dialogBox .btn.btn-update {
+    border-color: #303666;
+}
+
+.dialog .dialogBox .btn.btn-update:hover {
+    border-color: #979797;
+}
+
+[data-bs-theme='dark'] .dialog .dialogBox .btn.btn-update:hover {
+    border-color: #464d8b;
+    color: #dadada;
+}
+
+.dialog .dialogBox .btn.btn-update i {
+    float: right;
+    margin: 0 1px 0 1px;
     transition: all 0.2s ease-in-out;
     opacity: 0.5;
     user-select: none;
     cursor: pointer;
+    line-height: 20px;
 }
-[dir='ltr'] .dialog .dialogBox .updater {
+[dir='ltr'] .dialog .dialogBox .btn.btn-update i {
     float: left;
 }
-.dialog .dialogBox .updater:hover {
+.dialog .dialogBox .btn.btn-update i:hover {
     opacity: 0.8;
 }
 

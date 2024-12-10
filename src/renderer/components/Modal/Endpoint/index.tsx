@@ -223,15 +223,20 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     >
                         {appLang?.modal?.update}
                     </div>
-                    <i
-                        role='presentation'
-                        ref={updaterRef}
-                        className='material-icons updater'
-                        title={appLang?.modal?.endpoint_update}
+                    <div
+                        className={classNames('btn', 'btn-update')}
                         onClick={fetchEndpoints}
+                        role='button'
+                        ref={updaterRef}
+                        tabIndex={0}
                     >
-                        &#xeb5a;
-                    </i>
+                        <i
+                            className='material-icons updater'
+                            title={appLang?.modal?.endpoint_update}
+                        >
+                            &#xeb5a;
+                        </i>
+                    </div>
                 </div>
             </div>
         </div>
