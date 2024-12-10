@@ -75,7 +75,46 @@ export function checkEndpoint(endpoint: any) {
         : 'custom';
 }
 
-// TODO refactor/remove
+export function checkDataUsage(value: any) {
+    return typeof value === 'boolean'
+        ? value
+            ? 'true'
+            : 'false'
+        : defaultSettings.dataUsage
+          ? 'true'
+          : 'false';
+}
+
+export function checkProxyMode(value: any) {
+    return typeof value === 'string' ? value : defaultSettings.proxyMode;
+}
+
+export function checkReserved(value: any) {
+    return typeof value === 'boolean'
+        ? value
+            ? 'true'
+            : 'false'
+        : defaultSettings.reserved
+          ? 'true'
+          : 'false';
+}
+
+export function checkGeoStatus(ip: any, site: any, block: any) {
+    let status = '';
+    status = 'Ip: ' + (typeof ip === 'string' ? String(ip) : 'none') + ', ';
+    status += 'Site: ' + (typeof site === 'string' ? String(site) : 'none') + ', ';
+    status +=
+        'Block: ' +
+        (typeof block === 'boolean'
+            ? block
+                ? 'true'
+                : 'false'
+            : defaultSettings.singBoxGeoBlock
+              ? 'true'
+              : 'false');
+    return status;
+}
+
 export function calculateMethod(method: any) {
     switch (method) {
         case 'gool':

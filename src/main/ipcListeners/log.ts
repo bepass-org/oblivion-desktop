@@ -6,10 +6,14 @@ import log from 'electron-log';
 import settings from 'electron-settings';
 import {
     calculateMethod,
+    checkDataUsage,
     checkEndpoint,
+    checkProxyMode,
     checkRoutingRules,
     doesFileExist,
-    hasLicense
+    hasLicense,
+    checkReserved,
+    checkGeoStatus
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetsPath } from '../main';
@@ -36,8 +40,25 @@ export const logMetadata = () => {
     const endpoint = settings.get('endpoint');
     const routingRules = settings.get('routingRules');
     const asn = settings.get('asn');
+    const dataUsage = settings.get('dataUsage');
+    const reserved = settings.get('reserved');
+    const singBoxGeoIp = settings.get('singBoxGeoIp');
+    const singBoxGeoSite = settings.get('singBoxGeoSite');
+    const singBoxGeoBlock = settings.get('singBoxGeoBlock');
 
-    Promise.all([method, proxyMode, license, endpoint, routingRules, asn])
+    Promise.all([
+        method,
+        proxyMode,
+        license,
+        endpoint,
+        routingRules,
+        asn,
+        dataUsage,
+        reserved,
+        singBoxGeoIp,
+        singBoxGeoSite,
+        singBoxGeoBlock
+    ])
         .then((data) => {
             log.info('------------------------MetaData------------------------');
             log.info(`running on: ${process.platform} ${os.release()} ${process.arch}`);
@@ -47,11 +68,14 @@ export const logMetadata = () => {
             log.info(`at hp: v${helperVersion}`);
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
             log.info('method:', calculateMethod(data[0]));
-            log.info('proxyMode:', data[1]);
+            log.info('proxyMode:', checkProxyMode(data[1]));
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
+            log.info('dataUsage:', checkDataUsage(data[6]));
             log.info('asn:', data[5] ? data[5] : 'UNK');
             log.info('license:', hasLicense(data[2]));
+            log.info('reserved:', checkReserved(data[7]));
+            log.info('geo', checkGeoStatus(data[8], data[9], data[10]));
             log.info(`exe: ${app.getPath('exe')}`);
             log.info(`userData: ${app.getPath('userData')}`);
             log.info(`logs: ${app.getPath('logs')}`);
