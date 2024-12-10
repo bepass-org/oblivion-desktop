@@ -106,29 +106,35 @@ const ProfileModal: FC<ProfileModalProps> = ({
                     {typeof profilesInput !== 'string' && profilesInput.length > 0 && (
                         <>
                             <div className='tagList'>
-                                {profilesInput.map((item: Profile, index: number) => (
-                                    <div className='tagItem' key={Number(index)}>
-                                        <i
-                                            role='presentation'
-                                            className='material-icons closeIco'
-                                            onClick={() => {
-                                                handleRemoveProfile(index);
-                                            }}
-                                        >
-                                            &#xe5cd;
-                                        </i>
-                                        <i
-                                            role='presentation'
-                                            className='material-icons'
-                                            onClick={() => {
-                                                handleEditProfile(index);
-                                            }}
-                                        >
-                                            &#xe3c9;
-                                        </i>
-                                        <span title={item.endpoint}>{item.name}</span>
-                                    </div>
-                                ))}
+                                {profilesInput.map(
+                                    (item: Profile, index: number) =>
+                                        typeof item.endpoint === 'string' &&
+                                        item.endpoint.length > 7 && (
+                                            <>
+                                                <div className='tagItem' key={Number(index)}>
+                                                    <i
+                                                        role='presentation'
+                                                        className='material-icons closeIco'
+                                                        onClick={() => {
+                                                            handleRemoveProfile(index);
+                                                        }}
+                                                    >
+                                                        &#xe5cd;
+                                                    </i>
+                                                    <i
+                                                        role='presentation'
+                                                        className='material-icons'
+                                                        onClick={() => {
+                                                            handleEditProfile(index);
+                                                        }}
+                                                    >
+                                                        &#xe3c9;
+                                                    </i>
+                                                    <span title={item.endpoint}>{item.name}</span>
+                                                </div>
+                                            </>
+                                        )
+                                )}
                             </div>
                         </>
                     )}

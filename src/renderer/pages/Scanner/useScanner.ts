@@ -132,9 +132,14 @@ const useScanner = () => {
     );
 
     const countProfiles = useCallback(
-        (value: number) => {
-            return value > 0
-                ? (lang === 'fa' ? toPersianNumber(value) : value) +
+        (value: { name: string; endpoint: string }[] | undefined) => {
+            if (!Array.isArray(value) || value.length === 0) {
+                return appLang?.settings?.routing_rules_disabled;
+            }
+            const filteredValue = value.filter((item) => item.endpoint?.length > 7);
+            const count = filteredValue.length;
+            return count > 0
+                ? (lang === 'fa' ? toPersianNumber(count) : count) +
                       ' ' +
                       (appLang?.settings?.routing_rules_items || '')
                 : appLang?.settings?.routing_rules_disabled;

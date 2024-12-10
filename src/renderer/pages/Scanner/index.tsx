@@ -161,7 +161,7 @@ export default function Scanner() {
                         </label>
                         <div className='value'>
                             <span className='dirLeft' id='profile' dir='auto' tabIndex={-1}>
-                                {countProfiles(profiles?.length || 0)}
+                                {countProfiles(profiles)}
                             </span>
                         </div>
                         <div className='info'>{appLang?.settings?.profile_desc}</div>

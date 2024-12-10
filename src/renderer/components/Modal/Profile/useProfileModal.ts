@@ -30,13 +30,17 @@ const useProfileModal = (props: ProfileModalProps) => {
             regex =
                 /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))/;
         }
-        return regex.test(endpoint) ? endpoint : '';
+        return regex.test(endpoint) && endpoint.length > 7 ? endpoint : '';
     }, []);
 
     const handleAddProfile = useCallback(() => {
         if (editingIndex === null && profilesInput?.length > 6) {
             defaultToast(appLang.modal.profile_limitation('7'), 'PROFILE_LIMITATION', 5000);
-        } else if (profileName !== '' && checkValidEndpoint(profileEndpoint) !== '') {
+        } else if (
+            profileName !== '' &&
+            checkValidEndpoint(profileEndpoint) !== '' &&
+            profileEndpoint.length > 7
+        ) {
             const newProfile = { name: profileName, endpoint: profileEndpoint };
             if (editingIndex !== null) {
                 const updatedProfiles = profilesInput.map((profile: Profile, index: number) =>
@@ -102,7 +106,11 @@ const useProfileModal = (props: ProfileModalProps) => {
     }, [onClose]);
 
     const onSaveModal = useCallback(() => {
-        if (profileName !== '' && checkValidEndpoint(profileEndpoint)) {
+        if (
+            profileName !== '' &&
+            checkValidEndpoint(profileEndpoint) &&
+            profileEndpoint.length > 7
+        ) {
             handleAddProfile();
         } else {
             settings.set('profiles', JSON.stringify(profilesInput));

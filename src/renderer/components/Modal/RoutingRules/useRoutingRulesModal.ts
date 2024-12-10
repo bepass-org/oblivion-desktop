@@ -126,7 +126,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
 
     const handleSetRoutingRulesSimple = useCallback(() => {
         setRoutingRulesInput(
-            `domain:dolat.ir,\ndomain:apple.com,\nip:127.0.0.1,\ndomain:*.ir,\napp:Telegram`
+            `domain:dolat.ir,\ndomain:apple.com,\nip:127.0.0.1,\ndomain:*.ir,\napp:Figma`
         );
     }, [setRoutingRulesInput]);
 
