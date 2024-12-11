@@ -86,13 +86,13 @@ export const restartApp = () => {
             log.error(`Error during app restart (attempt ${retryCount}):`, error);
             if (retryCount < maxRetries) {
                 log.info('Retrying app quit...');
-                setTimeout(attemptRestart, 1000);
+                setTimeout(attemptRestart, 1500);
             } else {
                 log.error('Max retry limit reached. Could not restart app.');
             }
         }
     };
-    setTimeout(attemptRestart, 3500);
+    setTimeout(attemptRestart, 5000);
 };
 
 export const singBoxManager = new SingBoxManager(
