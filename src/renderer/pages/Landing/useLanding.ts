@@ -284,6 +284,7 @@ const useLanding = () => {
                 setIpInfo(cachedIpInfo);
             } else {
                 if (isConnected && !isLoading) {
+                    const traceStarted = window.performance.now();
                     const controller = new AbortController();
                     const signal = controller.signal;
                     const timeoutId = setTimeout(() => {
@@ -314,6 +315,7 @@ const useLanding = () => {
                             cachedIpInfo = ipInfo2;
                             lastFetchTime = currentTime;
                             setIpInfo(ipInfo2);
+                            setPing(Math.round(window.performance.now() - traceStarted));
                         } else {
                             setTimeout(getIpLocation, 7500);
                         }
