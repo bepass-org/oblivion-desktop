@@ -156,9 +156,9 @@ const useSettings = () => {
         [appLang?.settings?.method_psiphon_location_auto]
     );
 
-    const methodIsWarp = useMemo(() => method === '', [method]);
-    const methodIsGool = useMemo(() => method === 'gool', [method]);
-    const methodIsPsiphon = useMemo(() => method === 'psiphon', [method]);
+    const methodIsWarp = useMemo(() => typeof method !== 'undefined' && method === '', [method]);
+    const methodIsGool = useMemo(() => typeof method !== 'undefined' && method === 'gool' || typeof method === 'undefined', [method]);
+    const methodIsPsiphon = useMemo(() => typeof method !== 'undefined' && method === 'psiphon', [method]);
 
     const loading =
         typeof location === 'undefined' ||
