@@ -116,12 +116,14 @@ export function checkGeoStatus(ip: any, site: any, block: any) {
 }
 
 export function calculateMethod(method: any) {
+    if (typeof method === 'undefined') {
+        return defaultSettings.method;
+    }
     switch (method) {
         case 'gool':
             return 'gool';
         case 'psiphon':
             return 'psiphon';
-
         default:
             return 'warp';
     }
