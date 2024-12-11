@@ -157,8 +157,14 @@ const useSettings = () => {
     );
 
     const methodIsWarp = useMemo(() => typeof method !== 'undefined' && method === '', [method]);
-    const methodIsGool = useMemo(() => typeof method !== 'undefined' && method === 'gool' || typeof method === 'undefined', [method]);
-    const methodIsPsiphon = useMemo(() => typeof method !== 'undefined' && method === 'psiphon', [method]);
+    const methodIsGool = useMemo(
+        () => (typeof method !== 'undefined' && method === 'gool') || typeof method === 'undefined',
+        [method]
+    );
+    const methodIsPsiphon = useMemo(
+        () => typeof method !== 'undefined' && method === 'psiphon',
+        [method]
+    );
 
     const loading =
         typeof location === 'undefined' ||
