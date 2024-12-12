@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { BrowserWindow, app, ipcMain } from 'electron';
 import log from 'electron-log';
-import { powerShellRelease } from 'systeminformation';
 import { defaultSettings } from '../../defaultSettings';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
@@ -137,9 +136,6 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
 
     // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
     ipcMain.on('exit', () => {
-        if (process.platform === 'win32') {
-            powerShellRelease();
-        }
         app.exit(0);
     });
 

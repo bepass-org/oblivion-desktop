@@ -64,7 +64,6 @@ class SingBoxManager {
     }
 
     //Public-Methods
-
     public async startSingBox(
         wpPid?: number,
         appLang?: Language,
