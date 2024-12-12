@@ -42,7 +42,9 @@ import {
     helperAssetPath,
     helperPath,
     wpDirPath,
-    singBoxManager
+    singBoxManager,
+    netStatsPath,
+    netStatsAssetPath
 } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
@@ -104,6 +106,9 @@ if (!gotTheLock) {
             if (fs.existsSync(helperPath)) {
                 rimrafSync(helperPath);
             }
+            if (fs.existsSync(netStatsPath)) {
+                rimrafSync(netStatsPath);
+            }
             // eslint-disable-next-line no-restricted-syntax
             for (const fileName of geoDBs) {
                 const dbPath = path.join(wpDirPath, fileName);
@@ -149,6 +154,19 @@ if (!gotTheLock) {
         if (!fs.existsSync(helperAssetPath)) {
             log.info(
                 'The process of copying the helper binary was halted due to the absence of the helper file.'
+            );
+        }
+    }
+
+    if (fs.existsSync(netStatsAssetPath) && !fs.existsSync(netStatsPath)) {
+        fs.copyFile(netStatsAssetPath, netStatsPath, (err) => {
+            if (err) throw err;
+            log.info('netStats binary was copied to userData directory.');
+        });
+    } else {
+        if (!fs.existsSync(netStatsAssetPath)) {
+            log.info(
+                'The process of copying the netStats binary was halted due to the absence of the netStats file.'
             );
         }
     }
