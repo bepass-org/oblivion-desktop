@@ -12,8 +12,8 @@ export type Channels =
     | 'tray-menu'
     | 'localization'
     | 'startup'
-    | 'check-speed'
-    | 'speed-stats'
+    | 'netStats-command'
+    | 'netStats-stats'
     | 'sb-terminate'
     | 'speed-test-command'
     | 'speed-test-results';
