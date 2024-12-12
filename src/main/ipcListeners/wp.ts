@@ -18,6 +18,7 @@ import { regeditVbsDirPath } from '../main';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
 import SingBoxManager from '../lib/sbManager';
+import NetworkMonitor from '../lib/netStatsManager';
 
 const simpleLog = log.create({ logId: 'simpleLog' });
 simpleLog.transports.console.format = '{text}';
@@ -111,6 +112,8 @@ export const singBoxManager = new SingBoxManager(
     protoAssetPath
 );
 
+const networkMonitor = new NetworkMonitor(netStatsPath, wpDirPath);
+
 let exitOnWpEnd = false;
 
 let appLang = getTranslate('en');
@@ -123,6 +126,8 @@ ipcMain.on('wp-start', async (event) => {
     //const autoSetProxy = await settings.get('autoSetProxy');
     const proxyMode = await settings.get('proxyMode');
     const lang = await settings.get('lang');
+    const ipData = (await settings.get('ipData')) || defaultSettings.ipData;
+    const dataUsage = (await settings.get('dataUsage')) || defaultSettings.dataUsage;
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     /*if (! net.isOnline()) {
@@ -153,12 +158,16 @@ ipcMain.on('wp-start', async (event) => {
                 `connected-${typeof proxyMode !== 'undefined' ? proxyMode : defaultSettings.proxyMode}`
             );
             toast.remove('GUIDE');
+            if (ipData && dataUsage && proxyMode !== 'none') {
+                networkMonitor.startMonitoring(event);
+            }
         }
     };
 
     const sendDisconnectedSignalToRenderer = () => {
         customEvent.emit('tray-icon', 'disconnecting');
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
+            networkMonitor.stopMonitoring();
             event.reply('wp-end', true);
 
             // send signal to `exitTheApp` function
