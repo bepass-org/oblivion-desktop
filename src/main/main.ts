@@ -51,7 +51,6 @@ import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
-import NetworkMonitor from './networkMonitor';
 import { geoDBs } from './config';
 import SpeedTestManager from './speedTest';
 
@@ -616,9 +615,6 @@ if (!gotTheLock) {
                 Menu.buildFromTemplate(trayMenuContext(connectionLabel(status), status, true))
             );
         };
-
-        const networkMonitor = new NetworkMonitor(mainWindow);
-        networkMonitor.initializeIpcEvents();
 
         const speedTest = new SpeedTestManager(mainWindow);
         speedTest.initializeIpcEvents();
