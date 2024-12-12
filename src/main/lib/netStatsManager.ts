@@ -78,7 +78,7 @@ class NetStatsManager {
 
                 if (code !== 0 && this.retryCount < NetStatsManager.MAX_RETRIES) {
                     this.retryCount++;
-                    this.startMonitoring(event);
+                    //this.startMonitoring(event);
                 }
             });
         }
@@ -88,7 +88,6 @@ class NetStatsManager {
         if (this.statsProcess) {
             log.info('Stopping netStats monitoring...');
             this.statsProcess.kill();
-            this.statsProcess = null;
         }
     }
 }
