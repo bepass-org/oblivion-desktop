@@ -212,7 +212,7 @@ const useOptions = () => {
             if (ipData) {
                 setDataUsage(false);
                 settings.set('dataUsage', false);
-                ipcRenderer.sendMessage('check-speed', false);
+                ipcRenderer.sendMessage('netStats-command', false);
             }
         }, 1000);
     }, [ipData, proxyMode]);
@@ -232,7 +232,7 @@ const useOptions = () => {
             setDataUsage(!dataUsage);
             settings.set('dataUsage', !dataUsage);
         }
-        ipcRenderer.sendMessage('check-speed', isConnected && !dataUsage && ipData);
+        ipcRenderer.sendMessage('netStats-command', isConnected && !dataUsage && ipData);
     }, [dataUsage, ipData, isConnected]);
 
     const handleDataUsageOnKeyDown = useCallback(

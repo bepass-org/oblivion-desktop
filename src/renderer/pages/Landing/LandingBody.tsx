@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FC, FormEvent } from 'react';
 import { Swipe } from 'react-swipe-component';
 import { cfFlag } from '../../lib/cfFlag';
-import { IpConfig, SpeedStats } from './useLanding';
+import { IpConfig, INetStats } from './useLanding';
 import { Language } from '../../../localization/type';
 
 interface LandingBodyProps {
@@ -21,7 +21,7 @@ interface LandingBodyProps {
     handleOnClickPing: () => void;
     proxyStatus: string;
     appVersion: string;
-    speeds: SpeedStats;
+    netStats: INetStats;
     dataUsage: boolean;
 }
 
@@ -41,7 +41,7 @@ const LandingBody: FC<LandingBodyProps> = ({
     statusText,
     proxyStatus,
     appVersion,
-    speeds,
+    netStats,
     dataUsage
 }) => {
     const pingIsZero = ping === 0;
@@ -63,6 +63,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 onSwipedLeft={handleOnSwipedLeft}
                                 onSwipedRight={handleOnSwipedRight}
                             >
+                                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                                 <button
                                     type='submit'
                                     role='switch'
@@ -141,35 +142,35 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 <i className='material-icons'>&#xe1af;</i>
                                 <span
                                     className={
-                                        pingIsZero || speeds.totalUsage.unit === 'N/A'
+                                        pingIsZero || netStats.totalUsage.unit === 'N/A'
                                             ? 'shimmer'
                                             : ''
                                     }
                                 >
-                                    {speeds.totalUsage.value}{' '}
-                                    <small>{speeds.totalUsage.unit}</small>
+                                    {netStats.totalUsage.value}{' '}
+                                    <small>{netStats.totalUsage.unit}</small>
                                 </span>
                                 <div
                                     className={classNames(
                                         'isTooltip',
-                                        speeds.totalUpload.value === 'N/A' ||
-                                            speeds.totalDownload.value === 'N/A' ||
+                                        netStats.totalSent.value === -1 ||
+                                            netStats.totalRecv.value === -1 ||
                                             pingIsZero ||
-                                            speeds.totalUsage.unit === 'N/A'
+                                            netStats.totalUsage.value === -1
                                             ? 'hidden'
                                             : ''
                                     )}
                                 >
                                     <i className='material-icons'>&#xe5d8;</i>
                                     <span>
-                                        {speeds.totalUpload.value}{' '}
-                                        <small>{speeds.totalUpload.unit}</small>
+                                        {netStats.totalSent.value}{' '}
+                                        <small>{netStats.totalSent.unit}</small>
                                     </span>
                                     <div className='clearfix' />
                                     <i className='material-icons latest'>&#xe5db;</i>
                                     <span>
-                                        {speeds.totalDownload.value}{' '}
-                                        <small>{speeds.totalDownload.unit}</small>
+                                        {netStats.totalRecv.value}{' '}
+                                        <small>{netStats.totalRecv.unit}</small>
                                     </span>
                                 </div>
                             </div>
@@ -182,26 +183,26 @@ const LandingBody: FC<LandingBodyProps> = ({
                                 <i className='material-icons'>&#xe2c0;</i>
                                 <span
                                     className={
-                                        pingIsZero || speeds.currentDownload.unit === 'N/A'
+                                        pingIsZero || netStats.recvSpeed.value === -1
                                             ? 'shimmer'
                                             : ''
                                     }
                                 >
-                                    {speeds.currentDownload.value}{' '}
-                                    <small>{speeds.currentDownload.unit}</small>
+                                    {netStats.recvSpeed.value}{' '}
+                                    <small>{netStats.recvSpeed.unit}</small>
                                 </span>
                             </div>
                             <div className='upload'>
                                 <i className='material-icons'>&#xe2c3;</i>
                                 <span
                                     className={
-                                        pingIsZero || speeds.currentUpload.unit === 'N/A'
+                                        pingIsZero || netStats.sentSpeed.value === -1
                                             ? 'shimmer'
                                             : ''
                                     }
                                 >
-                                    {speeds.currentUpload.value}{' '}
-                                    <small>{speeds.currentUpload.unit}</small>
+                                    {netStats.sentSpeed.value}{' '}
+                                    <small>{netStats.sentSpeed.unit}</small>
                                 </span>
                             </div>
                         </div>

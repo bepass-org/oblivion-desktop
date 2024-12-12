@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { isDev, ipcRenderer, onEscapeKeyPressed, formatNetworkStat } from '../../lib/utils';
+import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
 import {
     defaultToast,
     defaultToastWithSubmitButton,
@@ -28,20 +28,20 @@ let connectedToIrIPOnceDisplayed = false;
 let canCheckNewVer = true;
 let hasNewUpdate = false;
 
-export interface SpeedStats {
-    currentDownload: { value: string; unit: string };
-    currentUpload: { value: string; unit: string };
-    totalDownload: { value: string; unit: string };
-    totalUpload: { value: string; unit: string };
-    totalUsage: { value: string; unit: string };
+export interface INetStats {
+    sentSpeed: { value: number; unit: string };
+    recvSpeed: { value: number; unit: string };
+    totalSent: { value: number; unit: string };
+    totalRecv: { value: number; unit: string };
+    totalUsage: { value: number; unit: string };
 }
 
-const defaultSpeedStats: SpeedStats = {
-    currentDownload: { value: 'N/A', unit: 'N/A' },
-    currentUpload: { value: 'N/A', unit: 'N/A' },
-    totalDownload: { value: 'N/A', unit: 'N/A' },
-    totalUpload: { value: 'N/A', unit: 'N/A' },
-    totalUsage: { value: 'N/A', unit: 'N/A' }
+const defaultNetStats: INetStats = {
+    sentSpeed: { value: -1, unit: 'N/A' },
+    recvSpeed: { value: -1, unit: 'N/A' },
+    totalSent: { value: -1, unit: 'N/A' },
+    totalRecv: { value: -1, unit: 'N/A' },
+    totalUsage: { value: -1, unit: 'N/A' }
 };
 
 const useLanding = () => {
@@ -76,7 +76,7 @@ const useLanding = () => {
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [shortcut, setShortcut] = useState<boolean>(false);
-    const [speeds, setSpeeds] = useState<SpeedStats>(defaultSpeedStats);
+    const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
 
     const navigate = useNavigate();
@@ -230,14 +230,14 @@ const useLanding = () => {
 
     useEffect(() => {
         if (isConnected && dataUsage) {
-            ipcRenderer.on('speed-stats', (event: any) => {
-                setSpeeds((prevSpeeds) => ({
-                    ...prevSpeeds,
-                    currentDownload: formatNetworkStat(event?.currentDownload),
-                    currentUpload: formatNetworkStat(event?.currentUpload),
-                    totalDownload: formatNetworkStat(event?.totalDownload),
-                    totalUpload: formatNetworkStat(event?.totalUpload),
-                    totalUsage: formatNetworkStat(event?.totalUsage)
+            ipcRenderer.on('netStats-stats', (event: any) => {
+                setNetStats((prevNetStats) => ({
+                    ...prevNetStats,
+                    sentSpeed: event?.sentSpeed,
+                    recvSpeed: event?.recvSpeed,
+                    totalSent: event?.totalSent,
+                    totalRecv: event?.totalRecv,
+                    totalUsage: event?.totalUsage
                 }));
             });
         }
@@ -404,10 +404,6 @@ const useLanding = () => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
-                ipcRenderer.sendMessage(
-                    'check-speed',
-                    proxyStatus !== 'none' && dataUsage && ipData
-                );
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
                 }*/
@@ -422,7 +418,6 @@ const useLanding = () => {
                     countryCode: false,
                     ip: ''
                 });
-                ipcRenderer.sendMessage('check-speed', false);
                 /*if (proxyStatus !== '') {
                     ipcRenderer.sendMessage('tray-icon', 'disconnected');
                 }*/
@@ -502,7 +497,7 @@ const useLanding = () => {
         proxyStatus,
         appVersion: packageJsonData?.version,
         shortcut,
-        speeds,
+        netStats,
         dataUsage
     };
 };
