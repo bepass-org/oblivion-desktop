@@ -29,6 +29,7 @@ export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''
 export const sbAssetFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbWDFileName = `oblivion-sb${process.platform === 'win32' ? '.exe' : ''}`;
 export const helperFileName = `oblivion-helper${process.platform === 'win32' ? '.exe' : ''}`;
+export const netStatsFileName = `zag-netStats${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbConfigName = 'sbConfig.json';
 
 export const wpAssetPath = path.join(
@@ -50,7 +51,12 @@ export const helperAssetPath = path.join(
     'bin',
     helperFileName
 );
-
+export const netStatsAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    netStatsFileName
+);
 export const protoAssetPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
     'assets',
@@ -64,6 +70,7 @@ export const stuffPath = path.join(wpDirPath, 'stuff');
 export const sbBinPath = path.join(wpDirPath, sbWDFileName);
 export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
+export const netStatsPath = path.join(wpDirPath, netStatsFileName);
 
 export const restartApp = () => {
     const maxRetries = 2;
