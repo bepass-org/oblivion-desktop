@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import { spawn, exec } from 'child_process';
@@ -49,7 +49,7 @@ class SingBoxManager {
 
     private shouldBreakConnectionTest: boolean = false;
 
-    private mainWindow: BrowserWindow | null | undefined;
+    private event?: IpcMainEvent;
 
     constructor(
         private readonly helperPath: string,
@@ -64,11 +64,15 @@ class SingBoxManager {
     }
 
     //Public-Methods
-    public initializeMainWindow(mainWindow: BrowserWindow | null) {
-        this.mainWindow = mainWindow;
-    }
 
-    public async startSingBox(wpPid?: number, appLang?: Language): Promise<boolean> {
+    public async startSingBox(
+        wpPid?: number,
+        appLang?: Language,
+        event?: IpcMainEvent
+    ): Promise<boolean> {
+        if (!this.event) {
+            this.event = event;
+        }
         if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
         this.wpPid = wpPid;
@@ -523,8 +527,8 @@ class SingBoxManager {
     }
 
     private sendMessageToRenderer(channel: string, message: string): void {
-        if (this.mainWindow) {
-            this.mainWindow.webContents.send(channel, message);
+        if (this.event) {
+            this.event.reply(channel, message);
         }
     }
 }

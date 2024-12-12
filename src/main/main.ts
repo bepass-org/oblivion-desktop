@@ -42,7 +42,6 @@ import {
     helperAssetPath,
     helperPath,
     wpDirPath,
-    singBoxManager,
     netStatsPath,
     netStatsAssetPath
 } from './ipcListeners/wp';
@@ -52,7 +51,7 @@ import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
 import { geoDBs } from './config';
-import SpeedTestManager from './speedTest';
+import SpeedTestManager from './lib/speedTestManager';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -616,10 +615,8 @@ if (!gotTheLock) {
             );
         };
 
-        const speedTest = new SpeedTestManager(mainWindow);
-        speedTest.initializeIpcEvents();
-
-        singBoxManager.initializeMainWindow(mainWindow);
+        // eslint-disable-next-line no-new
+        new SpeedTestManager();
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {

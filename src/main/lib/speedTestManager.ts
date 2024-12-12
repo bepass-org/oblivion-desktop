@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { IpcMainEvent, ipcMain } from 'electron';
 import log from 'electron-log';
 import SpeedTest, { MeasurementConfig } from '@cloudflare/speedtest';
 
@@ -16,15 +16,18 @@ const testMeasurements: MeasurementConfig[] = [
 class SpeedTestManager {
     private speedTest: SpeedTest | null = null;
 
-    private readonly mainWindow: BrowserWindow | null;
+    private event: IpcMainEvent | null = null;
 
-    constructor(mainWindow: BrowserWindow | null) {
-        this.mainWindow = mainWindow;
+    constructor() {
+        this.initializeIpcEvents();
     }
 
     public initializeIpcEvents(): void {
-        ipcMain.on('speed-test-command', (_, arg: any) => {
-            switch (arg) {
+        ipcMain.on('speed-test-command', (event, command: string) => {
+            if (!this.event) {
+                this.event = event;
+            }
+            switch (command) {
                 case 'play':
                     if (this.speedTest?.isFinished) {
                         this.speedTest.restart();
@@ -47,7 +50,7 @@ class SpeedTestManager {
     }
 
     private setupSpeedTest() {
-        if (this.speedTest == null) {
+        if (!this.speedTest) {
             this.speedTest = new SpeedTest({ autoStart: false, measurements: testMeasurements });
 
             this.speedTest.onResultsChange = () => this.broadcastResults('started');
@@ -60,14 +63,8 @@ class SpeedTestManager {
         }
     }
 
-    private broadcastResults(event: string) {
-        if (this.mainWindow) {
-            this.mainWindow.webContents.send(
-                'speed-test-results',
-                event,
-                this.speedTest?.results.getSummary()
-            );
-        }
+    private broadcastResults(status: string) {
+        this.event?.reply('speed-test-results', status, this.speedTest?.results.getSummary());
     }
 }
 

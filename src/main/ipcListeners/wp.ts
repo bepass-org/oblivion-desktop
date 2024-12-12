@@ -103,7 +103,7 @@ export const restartApp = () => {
     setTimeout(attemptRestart, 5000);
 };
 
-export const singBoxManager = new SingBoxManager(
+const singBoxManager = new SingBoxManager(
     helperPath,
     helperFileName,
     sbWDFileName,
@@ -235,7 +235,7 @@ ipcMain.on('wp-start', async (event) => {
             if (strData.includes(successMessage)) {
                 if (
                     proxyMode === 'tun' &&
-                    !(await singBoxManager.startSingBox(child?.pid, appLang))
+                    !(await singBoxManager.startSingBox(child?.pid, appLang, event))
                 ) {
                     event.reply('wp-end', true);
                 } else {
