@@ -129,6 +129,20 @@ export function calculateMethod(method: any) {
     }
 }
 
+export function checkIpType(value: any) {
+    if (typeof value === 'undefined') {
+        return 'v4/v6';
+    }
+    switch (value) {
+        case '-6':
+            return 'v6';
+        case '-4':
+            return 'v4';
+        default:
+            return 'v4/v6';
+    }
+}
+
 export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
     log.info('exiting the app...');
     if (mainWindow) {
