@@ -53,6 +53,22 @@ export function createSbConfig(
                               server: 'dns-block'
                           }
                       ]
+                    : []),
+                ...(geoIp !== 'none'
+                    ? [
+                          {
+                              rule_set: `geoip-${geoIp}`,
+                              server: 'dns-direct'
+                          }
+                      ]
+                    : []),
+                ...(geoSite !== 'none'
+                    ? [
+                          {
+                              rule_set: `geosite-${geoSite}`,
+                              server: 'dns-direct'
+                          }
+                      ]
                     : [])
             ],
             servers: [
