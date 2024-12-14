@@ -91,13 +91,13 @@ const useOptions = () => {
         getLocalIP();
     }, []);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (dataUsage) {
             defaultToast(`${appLang?.toast?.hardware_usage}`, 'DATA_USAGE');
         } else {
             toast.remove('DATA_USAGE');
         }
-    }, [dataUsage]);
+    }, [dataUsage]);*/
 
     const countRoutingRules = useCallback(
         (value: string) => {
