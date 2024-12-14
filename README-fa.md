@@ -243,6 +243,7 @@ Cloudflare Warp فراهم می‌کند.
 -   [sing-box](https://github.com/SagerNet/sing-box)
 -   [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 -   [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
+-   [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
 -   [و دیگران 🧡](package.json)
 
 ## مشارکت‌کنندگان
