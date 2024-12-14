@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import { spawn, exec } from 'child_process';
@@ -49,7 +49,9 @@ class SingBoxManager {
 
     private shouldBreakConnectionTest: boolean = false;
 
-    private mainWindow: BrowserWindow | null | undefined;
+    private event?: IpcMainEvent;
+
+    private retryCount: number = 0;
 
     constructor(
         private readonly helperPath: string,
@@ -64,15 +66,19 @@ class SingBoxManager {
     }
 
     //Public-Methods
-    public initializeMainWindow(mainWindow: BrowserWindow | null) {
-        this.mainWindow = mainWindow;
-    }
-
-    public async startSingBox(wpPid?: number, appLang?: Language): Promise<boolean> {
+    public async startSingBox(
+        wpPid?: number,
+        appLang?: Language,
+        event?: IpcMainEvent
+    ): Promise<boolean> {
+        if (!this.event) {
+            this.event = event;
+        }
         if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
         this.wpPid = wpPid;
         this.appLang = appLang;
+        this.retryCount = 0;
         await this.setupConfigs();
 
         try {
@@ -251,8 +257,6 @@ class SingBoxManager {
 
             this.isListeningToHelper = true;
 
-            let terminationsCount: number = 0;
-
             call.on('data', (response: { status: string }) => {
                 log.info('Oblivion-Helper Status:', response.status);
                 if (response.status === 'terminated') {
@@ -260,24 +264,19 @@ class SingBoxManager {
                     customEvent.emit('tray-icon', 'disconnected');
                     this.sendMessageToRenderer('sb-terminate', 'terminated');
 
-                    if (terminationsCount < 3) {
+                    if (this.retryCount < 3) {
                         this.startService().then((connected) => {
                             if (connected) {
                                 customEvent.emit('tray-icon', 'connected-tun');
                                 this.sendMessageToRenderer('sb-terminate', 'restarted');
-                                terminationsCount = 0;
                             }
                         });
-                        terminationsCount++;
+                        this.retryCount++;
                     } else {
                         this.shouldBreakConnectionTest = true;
+                        this.sendMessageToRenderer('sb-terminate', 'exceeded');
                         this.killWarpPlus();
-                        terminationsCount = 0;
                         log.warn('Exceeded maximum restart attempts.');
-                        this.sendMessageToRenderer(
-                            'guide-toast',
-                            `${this.appLang?.log.error_deadline_exceeded}`
-                        );
                     }
                 }
             });
@@ -523,8 +522,8 @@ class SingBoxManager {
     }
 
     private sendMessageToRenderer(channel: string, message: string): void {
-        if (this.mainWindow) {
-            this.mainWindow.webContents.send(channel, message);
+        if (this.event) {
+            this.event.reply(channel, message);
         }
     }
 }

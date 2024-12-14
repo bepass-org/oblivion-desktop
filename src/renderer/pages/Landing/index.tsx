@@ -29,7 +29,7 @@ export default function Landing() {
         proxyStatus,
         appVersion,
         shortcut,
-        speeds,
+        netStats,
         dataUsage
     } = useLanding();
 
@@ -65,7 +65,7 @@ export default function Landing() {
                 statusText={statusText}
                 proxyStatus={proxyStatus}
                 appVersion={appVersion}
-                speeds={speeds}
+                netStats={netStats}
                 dataUsage={dataUsage}
             />
             {(!isConnected || (isConnected && !ipData)) && shortcut && (

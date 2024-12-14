@@ -18,6 +18,7 @@ import { regeditVbsDirPath } from '../main';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
 import SingBoxManager from '../lib/sbManager';
+import NetworkMonitor from '../lib/netStatsManager';
 
 const simpleLog = log.create({ logId: 'simpleLog' });
 simpleLog.transports.console.format = '{text}';
@@ -29,6 +30,7 @@ export const wpFileName = `warp-plus${process.platform === 'win32' ? '.exe' : ''
 export const sbAssetFileName = `sing-box${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbWDFileName = `oblivion-sb${process.platform === 'win32' ? '.exe' : ''}`;
 export const helperFileName = `oblivion-helper${process.platform === 'win32' ? '.exe' : ''}`;
+export const netStatsFileName = `zag-netStats${process.platform === 'win32' ? '.exe' : ''}`;
 export const sbConfigName = 'sbConfig.json';
 
 export const wpAssetPath = path.join(
@@ -50,7 +52,12 @@ export const helperAssetPath = path.join(
     'bin',
     helperFileName
 );
-
+export const netStatsAssetPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin',
+    netStatsFileName
+);
 export const protoAssetPath = path.join(
     app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
     'assets',
@@ -64,6 +71,7 @@ export const stuffPath = path.join(wpDirPath, 'stuff');
 export const sbBinPath = path.join(wpDirPath, sbWDFileName);
 export const sbConfigPath = path.join(wpDirPath, sbConfigName);
 export const helperPath = path.join(wpDirPath, helperFileName);
+export const netStatsPath = path.join(wpDirPath, netStatsFileName);
 
 export const restartApp = () => {
     const maxRetries = 2;
@@ -95,7 +103,7 @@ export const restartApp = () => {
     setTimeout(attemptRestart, 5000);
 };
 
-export const singBoxManager = new SingBoxManager(
+const singBoxManager = new SingBoxManager(
     helperPath,
     helperFileName,
     sbWDFileName,
@@ -103,6 +111,8 @@ export const singBoxManager = new SingBoxManager(
     wpDirPath,
     protoAssetPath
 );
+
+const networkMonitor = new NetworkMonitor(netStatsPath, wpDirPath);
 
 let exitOnWpEnd = false;
 
@@ -116,6 +126,8 @@ ipcMain.on('wp-start', async (event) => {
     //const autoSetProxy = await settings.get('autoSetProxy');
     const proxyMode = await settings.get('proxyMode');
     const lang = await settings.get('lang');
+    const ipData = (await settings.get('ipData')) || defaultSettings.ipData;
+    const dataUsage = (await settings.get('dataUsage')) || defaultSettings.dataUsage;
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     /*if (! net.isOnline()) {
@@ -146,12 +158,16 @@ ipcMain.on('wp-start', async (event) => {
                 `connected-${typeof proxyMode !== 'undefined' ? proxyMode : defaultSettings.proxyMode}`
             );
             toast.remove('GUIDE');
+            if (ipData && dataUsage && proxyMode !== 'none') {
+                networkMonitor.startMonitoring(event);
+            }
         }
     };
 
     const sendDisconnectedSignalToRenderer = () => {
         customEvent.emit('tray-icon', 'disconnecting');
         if (disconnectedFlags[0] && disconnectedFlags[1]) {
+            networkMonitor.stopMonitoring();
             event.reply('wp-end', true);
 
             // send signal to `exitTheApp` function
@@ -219,7 +235,7 @@ ipcMain.on('wp-start', async (event) => {
             if (strData.includes(successMessage)) {
                 if (
                     proxyMode === 'tun' &&
-                    !(await singBoxManager.startSingBox(child?.pid, appLang))
+                    !(await singBoxManager.startSingBox(child?.pid, appLang, event))
                 ) {
                     event.reply('wp-end', true);
                 } else {

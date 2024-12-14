@@ -42,16 +42,16 @@ import {
     helperAssetPath,
     helperPath,
     wpDirPath,
-    singBoxManager
+    netStatsPath,
+    netStatsAssetPath
 } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
-import NetworkMonitor from './networkMonitor';
 import { geoDBs } from './config';
-import SpeedTestManager from './speedTest';
+import SpeedTestManager from './lib/speedTestManager';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -104,6 +104,9 @@ if (!gotTheLock) {
             if (fs.existsSync(helperPath)) {
                 rimrafSync(helperPath);
             }
+            if (fs.existsSync(netStatsPath)) {
+                rimrafSync(netStatsPath);
+            }
             // eslint-disable-next-line no-restricted-syntax
             for (const fileName of geoDBs) {
                 const dbPath = path.join(wpDirPath, fileName);
@@ -149,6 +152,19 @@ if (!gotTheLock) {
         if (!fs.existsSync(helperAssetPath)) {
             log.info(
                 'The process of copying the helper binary was halted due to the absence of the helper file.'
+            );
+        }
+    }
+
+    if (fs.existsSync(netStatsAssetPath) && !fs.existsSync(netStatsPath)) {
+        fs.copyFile(netStatsAssetPath, netStatsPath, (err) => {
+            if (err) throw err;
+            log.info('netStats binary was copied to userData directory.');
+        });
+    } else {
+        if (!fs.existsSync(netStatsAssetPath)) {
+            log.info(
+                'The process of copying the netStats binary was halted due to the absence of the netStats file.'
             );
         }
     }
@@ -599,13 +615,8 @@ if (!gotTheLock) {
             );
         };
 
-        const networkMonitor = new NetworkMonitor(mainWindow);
-        networkMonitor.initializeIpcEvents();
-
-        const speedTest = new SpeedTestManager(mainWindow);
-        speedTest.initializeIpcEvents();
-
-        singBoxManager.initializeMainWindow(mainWindow);
+        // eslint-disable-next-line no-new
+        new SpeedTestManager();
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {
