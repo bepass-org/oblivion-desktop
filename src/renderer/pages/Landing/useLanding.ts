@@ -180,15 +180,19 @@ const useLanding = () => {
 
         ipcRenderer.on('sb-terminate', (message: any) => {
             if (message === 'terminated') {
-                setIsLoading(false);
+                setIsLoading(true);
+                setIsConnected(false);
                 loadingToast(appLang.status.keep_trying);
-                setTimeout(function () {
-                    setIsLoading(true);
-                    stopLoadingToast();
-                }, 3500);
             } else if (message === 'restarted') {
                 setIsLoading(false);
                 setIsConnected(true);
+            } else if (message === 'exceeded') {
+                stopLoadingToast();
+                setIsLoading(false);
+                setIsConnected(false);
+                setTimeout(function () {
+                    defaultToast(appLang.log.error_deadline_exceeded, 'EXCEEDED', 5000);
+                }, 3000);
             }
         });
 
@@ -337,8 +341,7 @@ const useLanding = () => {
             });*/
             setTimeout(getIpLocation, 10000);
             //onChange();
-        }
-        finally {
+        } finally {
             isFetching = false;
         }
     };
@@ -470,8 +473,7 @@ const useLanding = () => {
         const getTime = new Date().getTime();
         if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
             return;
-        }
-        else {
+        } else {
             getIpLocation();
         }
     };

@@ -51,6 +51,8 @@ class SingBoxManager {
 
     private event?: IpcMainEvent;
 
+    private retryCount: number = 0;
+
     constructor(
         private readonly helperPath: string,
         private readonly helperFileName: string,
@@ -76,6 +78,7 @@ class SingBoxManager {
 
         this.wpPid = wpPid;
         this.appLang = appLang;
+        this.retryCount = 0;
         await this.setupConfigs();
 
         try {
@@ -254,8 +257,6 @@ class SingBoxManager {
 
             this.isListeningToHelper = true;
 
-            let terminationsCount: number = 0;
-
             call.on('data', (response: { status: string }) => {
                 log.info('Oblivion-Helper Status:', response.status);
                 if (response.status === 'terminated') {
@@ -263,24 +264,19 @@ class SingBoxManager {
                     customEvent.emit('tray-icon', 'disconnected');
                     this.sendMessageToRenderer('sb-terminate', 'terminated');
 
-                    if (terminationsCount < 3) {
+                    if (this.retryCount < 3) {
                         this.startService().then((connected) => {
                             if (connected) {
                                 customEvent.emit('tray-icon', 'connected-tun');
                                 this.sendMessageToRenderer('sb-terminate', 'restarted');
-                                terminationsCount = 0;
                             }
                         });
-                        terminationsCount++;
+                        this.retryCount++;
                     } else {
                         this.shouldBreakConnectionTest = true;
+                        this.sendMessageToRenderer('sb-terminate', 'exceeded');
                         this.killWarpPlus();
-                        terminationsCount = 0;
                         log.warn('Exceeded maximum restart attempts.');
-                        this.sendMessageToRenderer(
-                            'guide-toast',
-                            `${this.appLang?.log.error_deadline_exceeded}`
-                        );
                     }
                 }
             });
