@@ -74,7 +74,7 @@ export const logMetadata = () => {
             log.info('proxyMode:', checkProxyMode(data[1]));
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
-            log.info('ipType:', checkIpType(data[11]));
+            log.info('ipType:', checkIpType(data[11], data[3]));
             log.info('dataUsage:', checkDataUsage(data[6]));
             log.info('asn:', data[5] ? data[5] : 'UNK');
             log.info('license:', hasLicense(data[2]));

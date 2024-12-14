@@ -128,17 +128,22 @@ export function calculateMethod(method: any) {
     }
 }
 
-export function checkIpType(value: any) {
-    if (typeof value === 'undefined') {
-        return 'v4/v6';
-    }
-    switch (value) {
-        case '-6':
+export function checkIpType(value: any, endpoint: any) {
+    if (checkEndpoint(endpoint) !== 'custom') {
+        switch (value) {
+            case '-6':
+                return 'v6';
+            case '-4':
+                return 'v4';
+            default:
+                return 'v4/v6';
+        }
+    } else {
+        if (endpoint.startsWith('[')) {
             return 'v6';
-        case '-4':
+        } else {
             return 'v4';
-        default:
-            return 'v4/v6';
+        }
     }
 }
 
