@@ -1,6 +1,7 @@
 import fs from 'fs';
 import log from 'electron-log';
 import { sbConfigPath } from '../ipcListeners/wp';
+import { disableSbLogs } from '../dxConfig';
 
 export function createSbConfig(
     socksPort: number,
@@ -25,7 +26,7 @@ export function createSbConfig(
 
     const config = {
         log: {
-            disabled: true,
+            disabled: disableSbLogs,
             level: 'warn',
             timestamp: true,
             output: 'sing-box.log'
