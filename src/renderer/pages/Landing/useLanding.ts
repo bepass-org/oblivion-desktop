@@ -21,6 +21,7 @@ export type IpConfig = {
     ip: string;
 };
 
+let isFetching = false;
 let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
@@ -222,6 +223,7 @@ const useLanding = () => {
     useEffect(() => {
         if (online) {
             toast.remove('ONLINE_STATUS');
+            handleOnClickIp();
         } else {
             //checkInternetToast(appLang?.toast?.offline);
             defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
@@ -279,6 +281,8 @@ const useLanding = () => {
 
     const getIpLocation = async () => {
         try {
+            if (isFetching) return;
+            isFetching = true;
             const currentTime = new Date().getTime();
             if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
                 setIpInfo(cachedIpInfo);
@@ -334,6 +338,9 @@ const useLanding = () => {
             setTimeout(getIpLocation, 10000);
             //onChange();
         }
+        finally {
+            isFetching = false;
+        }
     };
 
     useEffect(() => {
@@ -364,14 +371,14 @@ const useLanding = () => {
     }, []);
 
     useEffect(() => {
-        if (ipData) {
+        /*if (ipData) {
             getIpLocation();
         }
         if (ping === 0) {
             if ((isConnected && !ipData) || (isConnected && ipInfo?.countryCode)) {
                 getPing();
             }
-        }
+        }*/
 
         if (isLoading || !isConnected) {
             toast.remove('ipChangedToIR');
@@ -391,6 +398,7 @@ const useLanding = () => {
         } else if (isConnected && !ipInfo?.countryCode && ipData) {
             if (proxyStatus !== 'none') {
                 setStatusText(`${appLang?.status?.ip_check}`);
+                getIpLocation();
             } else {
                 setStatusText(`${appLang?.status?.connected}`);
             }
@@ -398,6 +406,7 @@ const useLanding = () => {
             setStatusText(`${appLang?.status?.connected}`);
         } else {
             setStatusText(`${appLang?.status?.disconnected}`);
+            toast.remove('IRAN_IP');
         }
 
         ipcRenderer.on('wp-start', (ok) => {
@@ -462,8 +471,9 @@ const useLanding = () => {
         if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
             return;
         }
-
-        getIpLocation();
+        else {
+            getIpLocation();
+        }
     };
 
     const handleOnClickPing = () => {
