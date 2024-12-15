@@ -123,7 +123,7 @@ class SingBoxManager {
     public async stopHelperOnStart(): Promise<void> {
         if (await this.isProcessRunning(this.helperFileName)) {
             this.helperClient.Exit({}, () => {});
-            await this.delay(3000);
+            await this.delay(4000);
             this.isListeningToHelper = false;
         }
     }
