@@ -1827,7 +1827,7 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     background-color: rgba(0, 0, 0, 0.25) !important;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1050px) {
     .navMenu,
     .drawerOverlay {
         display: none !important;
@@ -2060,6 +2060,13 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 }
 [data-bs-theme='dark'] .tabs.inSettings {
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+@media (min-width: 400px) {
+    .tabs.inSettings,
+    [data-bs-theme='dark'] .tabs.inSettings {
+        box-shadow: none;
+    }
 }
 
 .tabs ul {
