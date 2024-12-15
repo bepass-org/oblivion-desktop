@@ -1,15 +1,13 @@
 Function .onInit
     ; Detect OS type by checking environment variables
-    GetEnv $R0 "OS"   ; Get the OS environment variable
+    ReadEnvStr $R0 "OS"
 
     ; Handle processes based on OS
     ${If} $R0 == "Windows_NT"
-        ; Include the Windows-specific script only for Windows
-        !include "build/installer.nsh"
         ExecWait 'taskkill /IM oblivion-helper.exe /F'
     ${ElseIf} $R0 == "Linux"
         ExecWait 'sh -c "pkill -f oblivion-helper"'
-    ${ElseIf} $R0 == "Darwin"  ; Darwin is the OS identifier for macOS
+    ${ElseIf} $R0 == "Darwin"
         ExecWait 'sh -c "pkill -f oblivion-helper"'
     ${EndIf}
 
