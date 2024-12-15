@@ -246,8 +246,7 @@
             "createStartMenuShortcut": true,
             "runAfterFinish": true,
             "shortcutName": "Oblivion Desktop",
-            "include": "build/installer.nsh",
-            "requireAdministrator": false
+            "include": "build/installer.nsh"
         },
         "linux": {
             "target": [
