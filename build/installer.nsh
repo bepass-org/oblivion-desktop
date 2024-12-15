@@ -4,6 +4,8 @@ Function .onInit
 
     ; Handle processes based on OS
     ${If} $R0 == "Windows_NT"
+        ; Include the Windows-specific script only for Windows
+        !include "build/installer.nsh"
         ExecWait 'taskkill /IM oblivion-helper.exe /F'
     ${ElseIf} $R0 == "Linux"
         ExecWait 'sh -c "pkill -f oblivion-helper"'
