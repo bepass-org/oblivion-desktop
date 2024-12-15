@@ -114,9 +114,18 @@ class SingBoxManager {
         }
     }
 
-    public stopHelper(): void {
+    public async stopHelper(): Promise<void> {
         log.info('Stopping Oblivion-Helper...');
         this.helperClient.Exit({}, () => {});
+        await this.delay(2000);
+    }
+
+    public async stopHelperOnStart(): Promise<void> {
+        if (await this.isProcessRunning(this.helperFileName)) {
+            this.helperClient.Exit({}, () => {});
+            await this.delay(3000);
+            this.isListeningToHelper = false;
+        }
     }
 
     //Private-Methods

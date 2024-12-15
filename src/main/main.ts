@@ -43,7 +43,8 @@ import {
     helperPath,
     wpDirPath,
     netStatsPath,
-    netStatsAssetPath
+    netStatsAssetPath,
+    singBoxManager
 } from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
@@ -102,7 +103,19 @@ if (!gotTheLock) {
                 rimrafSync(sbBinPath);
             }
             if (fs.existsSync(helperPath)) {
-                rimrafSync(helperPath);
+                singBoxManager.stopHelperOnStart().then(() => {
+                    rimrafSync(helperPath);
+                    if (fs.existsSync(helperAssetPath)) {
+                        fs.copyFile(helperAssetPath, helperPath, (err) => {
+                            if (err) throw err;
+                            log.info('helper binary was copied to userData directory.');
+                        });
+                    } else {
+                        log.info(
+                            'The process of copying the helper binary was halted due to the absence of the helper file.'
+                        );
+                    }
+                });
             }
             if (fs.existsSync(netStatsPath)) {
                 rimrafSync(netStatsPath);
