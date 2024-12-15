@@ -1092,7 +1092,7 @@ html[data-bs-theme='dark'] .shimmer {
 .appToast {
     float: right;
     width: 100%;
-    padding: 0 20px;
+    padding: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
