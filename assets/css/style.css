@@ -1827,6 +1827,29 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     background-color: rgba(0, 0, 0, 0.25) !important;
 }
 
+@media (min-width: 800px) {
+    .navMenu,
+    .drawerOverlay {
+        display: none !important;
+    }
+    .EZDrawer .EZDrawer__container {
+        background: transparent !important;
+        box-shadow: none !important;
+        border-left: 1px solid #f3f3f3;
+    }
+    [data-bs-theme='dark'] .EZDrawer .EZDrawer__container {
+        border-left: 1px solid #2b2e3b;
+    }
+    [dir='ltr'] .EZDrawer .EZDrawer__container {
+        border-left: none;
+        border-right: 1px solid #f3f3f3;
+    }
+    [dir='ltr'][data-bs-theme='dark'] .EZDrawer .EZDrawer__container {
+        border-left: none;
+        border-right: 1px solid #2b2e3b;
+    }
+}
+
 [data-bs-theme='dark'] .drawerOverlay {
     backdrop-filter: blur(3px);
     --webkit-backdrop-filter: blur(3px);

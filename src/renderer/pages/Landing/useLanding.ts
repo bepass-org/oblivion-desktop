@@ -67,6 +67,29 @@ const useLanding = () => {
     const toggleDrawer = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
+    
+    useEffect(() => {
+        if (window.innerWidth > 799) {
+            setTimeout(function () {
+                setDrawerIsOpen(true);
+            }, 300);
+        }
+        const handleResize = () => {
+            if (window.innerWidth > 799) {
+                setTimeout(function () {
+                    setDrawerIsOpen(true);
+                }, 300);
+            } else {
+                setTimeout(function () {
+                    setDrawerIsOpen(false);
+                }, 300);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     //const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState<string>();
