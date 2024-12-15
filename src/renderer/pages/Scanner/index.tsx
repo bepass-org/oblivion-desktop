@@ -59,81 +59,82 @@ export default function Scanner() {
                 onClose={onCloseProfileModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
-                <Tabs active='scanner' proxyMode={proxyMode} />
-                <div className='settings' role='menu'>
-                    <div
-                        role='button'
-                        className={classNames('item')}
-                        onClick={onOpenEndpointModal}
-                        onKeyDown={onKeyDownEndpoint}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='endpoint'>
-                            {appLang?.settings?.endpoint}
-                        </label>
-                        <div className='value'>
-                            <span className='dirLeft' id='endpoint' tabIndex={-1}>
-                                {endpoint}
-                            </span>
-                        </div>
-                        <div className='info'>{appLang?.settings?.endpoint_desc}</div>
-                    </div>
-                    <div
-                        role='button'
-                        className={classNames('item', isDefaultEndpoint ? '' : 'disabled')}
-                        tabIndex={0}
-                    >
-                        <Dropdown
-                            id='id-type-select'
-                            onChange={onChangeType}
-                            value={ipType || ''}
-                            label={appLang?.settings?.scanner_ip_type}
+                <div className='container'>
+                    <Tabs active='scanner' proxyMode={proxyMode} />
+                    <div className='settings' role='menu'>
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={onOpenEndpointModal}
+                            onKeyDown={onKeyDownEndpoint}
                             tabIndex={0}
-                            disabled={!isDefaultEndpoint}
-                            items={ipSelectorItems}
-                        />
-                        <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
-                    </div>
-                    <div
-                        role='button'
-                        className={classNames('item', isDefaultEndpoint ? '' : 'disabled')}
-                    >
-                        <Dropdown
-                            label={appLang?.settings?.scanner_rtt}
-                            id='rtt-select'
-                            onChange={onChangeRTT}
-                            value={rtt || ''}
-                            disabled={!isDefaultEndpoint}
-                            tabIndex={0}
-                            items={rttSelectorItems}
-                        />
-                        <div className='info' role='note'>
-                            {appLang?.settings?.scanner_rtt_desc}
+                        >
+                            <label className='key' htmlFor='endpoint'>
+                                {appLang?.settings?.endpoint}
+                            </label>
+                            <div className='value'>
+                                <span className='dirLeft' id='endpoint' tabIndex={-1}>
+                                    {endpoint}
+                                </span>
+                            </div>
+                            <div className='info'>{appLang?.settings?.endpoint_desc}</div>
                         </div>
-                    </div>
-                    <div
-                        role='button'
-                        className={'item'}
-                        onClick={onClickReservedButton}
-                        onKeyDown={onKeyDownReservedButton}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='reserved'>
-                            {appLang?.settings?.scanner_reserved}
-                        </label>
-                        <div className='value'>
-                            <div
-                                tabIndex={-1}
-                                id='reserved'
-                                className={classNames('checkbox', reserved ? 'checked' : '')}
-                            >
-                                <i className='material-icons'>&#xe876;</i>
+                        <div
+                            role='button'
+                            className={classNames('item', isDefaultEndpoint ? '' : 'disabled')}
+                            tabIndex={0}
+                        >
+                            <Dropdown
+                                id='id-type-select'
+                                onChange={onChangeType}
+                                value={ipType || ''}
+                                label={appLang?.settings?.scanner_ip_type}
+                                tabIndex={0}
+                                disabled={!isDefaultEndpoint}
+                                items={ipSelectorItems}
+                            />
+                            <div className='info'>{appLang?.settings?.scanner_ip_type_desc}</div>
+                        </div>
+                        <div
+                            role='button'
+                            className={classNames('item', isDefaultEndpoint ? '' : 'disabled')}
+                        >
+                            <Dropdown
+                                label={appLang?.settings?.scanner_rtt}
+                                id='rtt-select'
+                                onChange={onChangeRTT}
+                                value={rtt || ''}
+                                disabled={!isDefaultEndpoint}
+                                tabIndex={0}
+                                items={rttSelectorItems}
+                            />
+                            <div className='info' role='note'>
+                                {appLang?.settings?.scanner_rtt_desc}
                             </div>
                         </div>
-                        <div className='info'>{appLang?.settings?.scanner_reserved_desc}</div>
+                        <div
+                            role='button'
+                            className={'item'}
+                            onClick={onClickReservedButton}
+                            onKeyDown={onKeyDownReservedButton}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='reserved'>
+                                {appLang?.settings?.scanner_reserved}
+                            </label>
+                            <div className='value'>
+                                <div
+                                    tabIndex={-1}
+                                    id='reserved'
+                                    className={classNames('checkbox', reserved ? 'checked' : '')}
+                                >
+                                    <i className='material-icons'>&#xe876;</i>
+                                </div>
+                            </div>
+                            <div className='info'>{appLang?.settings?.scanner_reserved_desc}</div>
+                        </div>
                     </div>
-                </div>
-                {/*<div
+                    {/*<div
                     className={classNames(
                         'appToast',
                         endpoint === defaultSettings.endpoint ? 'hidden' : ''
@@ -144,27 +145,28 @@ export default function Scanner() {
                         {appLang?.settings?.scanner_alert}
                     </div>
                 </div>*/}
-                <div className='moreSettings'>
-                    <i className='material-icons'>&#xe313;</i>
-                    {appLang?.settings?.more}
-                </div>
-                <div className='settings'>
-                    <div
-                        role='button'
-                        className={classNames('item')}
-                        onClick={onOpenProfileModal}
-                        onKeyDown={onKeyDownProfile}
-                        tabIndex={0}
-                    >
-                        <label className='key' htmlFor='endpoint'>
-                            {appLang?.settings?.profile}
-                        </label>
-                        <div className='value'>
-                            <span className='dirLeft' id='profile' dir='auto' tabIndex={-1}>
-                                {countProfiles(profiles)}
-                            </span>
+                    <div className='moreSettings'>
+                        <i className='material-icons'>&#xe313;</i>
+                        {appLang?.settings?.more}
+                    </div>
+                    <div className='settings'>
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={onOpenProfileModal}
+                            onKeyDown={onKeyDownProfile}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='endpoint'>
+                                {appLang?.settings?.profile}
+                            </label>
+                            <div className='value'>
+                                <span className='dirLeft' id='profile' dir='auto' tabIndex={-1}>
+                                    {countProfiles(profiles)}
+                                </span>
+                            </div>
+                            <div className='info'>{appLang?.settings?.profile_desc}</div>
                         </div>
-                        <div className='info'>{appLang?.settings?.profile_desc}</div>
                     </div>
                 </div>
             </div>

@@ -46,31 +46,37 @@ const Speed: FC = () => {
         <>
             <Nav title={appLang?.speedTest?.title} />
             <div className={classNames('myApp', 'normalPage')}>
-                <div
-                    className={classNames('speedTest', {
-                        testRunning: isRunning,
-                        testDone: testResults || isFinished
-                    })}
-                >
-                    <button
-                        className={classNames('startButton', 'material-icons')}
-                        data-type={
-                            !navigator.onLine ? 'disabled' : !isFinished ? 'enabled' : 'finished'
-                        }
-                        onClick={toggleTest}
-                        disabled={!navigator.onLine}
+                <div className='container'>
+                    <div
+                        className={classNames('speedTest', {
+                            testRunning: isRunning,
+                            testDone: testResults || isFinished
+                        })}
                     >
-                        {testButtonText}
-                    </button>
-                    {!testResults ? (
-                        <span className='statusMessage'>
-                            {isRunning
-                                ? appLang?.speedTest?.initializing
-                                : appLang?.speedTest?.click_start}
-                        </span>
-                    ) : (
-                        renderResults
-                    )}
+                        <button
+                            className={classNames('startButton', 'material-icons')}
+                            data-type={
+                                !navigator.onLine
+                                    ? 'disabled'
+                                    : !isFinished
+                                      ? 'enabled'
+                                      : 'finished'
+                            }
+                            onClick={toggleTest}
+                            disabled={!navigator.onLine}
+                        >
+                            {testButtonText}
+                        </button>
+                        {!testResults ? (
+                            <span className='statusMessage'>
+                                {isRunning
+                                    ? appLang?.speedTest?.initializing
+                                    : appLang?.speedTest?.click_start}
+                            </span>
+                        ) : (
+                            renderResults
+                        )}
+                    </div>
                 </div>
             </div>
             <Toaster position='bottom-center' reverseOrder={false} />
