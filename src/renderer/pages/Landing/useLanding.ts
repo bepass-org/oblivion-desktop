@@ -180,22 +180,19 @@ const useLanding = () => {
 
         ipcRenderer.on('sb-terminate', (message: any) => {
             if (message === 'terminated') {
-                setIsLoading(false);
+                setIsLoading(true);
                 setIsConnected(false);
                 loadingToast(appLang.status.keep_trying);
-                setTimeout(function () {
-                    setIsLoading(true);
-                    stopLoadingToast();
-                }, 3500);
             } else if (message === 'restarted') {
                 setIsLoading(false);
                 setIsConnected(true);
             } else if (message === 'exceeded') {
                 setIsLoading(false);
                 setIsConnected(false);
+                stopLoadingToast();
                 setTimeout(function () {
                     defaultToast(appLang.log.error_deadline_exceeded, 'EXCEEDED', 5000);
-                }, 3000);
+                }, 2000);
             }
         });
 
