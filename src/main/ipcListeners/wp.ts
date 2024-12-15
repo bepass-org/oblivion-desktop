@@ -103,7 +103,7 @@ export const restartApp = () => {
     setTimeout(attemptRestart, 5000);
 };
 
-const singBoxManager = new SingBoxManager(
+export const singBoxManager = new SingBoxManager(
     helperPath,
     helperFileName,
     sbWDFileName,
