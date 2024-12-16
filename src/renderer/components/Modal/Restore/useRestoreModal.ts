@@ -111,7 +111,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxGeoIp', singBoxGeoIp[0].geoIp);
         await settings.set('singBoxGeoSite', singBoxGeoSite[0].geoSite);
         await settings.set('singBoxGeoBlock', defaultSettings.singBoxGeoBlock);
-        await settings.set('restartCounter', defaultSettings.restartCounter); 
+        await settings.set('restartCounter', defaultSettings.restartCounter);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);

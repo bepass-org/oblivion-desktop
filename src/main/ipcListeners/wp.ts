@@ -128,8 +128,8 @@ ipcMain.on('wp-start', async (event) => {
     const lang = await settings.get('lang');
     const ipData = (await settings.get('ipData')) || defaultSettings.ipData;
     const dataUsage = (await settings.get('dataUsage')) || defaultSettings.dataUsage;
-    const restartCounter = 
-    (await settings.get('restartCounter') as number) || defaultSettings.restartCounter;
+    const restartCounter =
+        ((await settings.get('restartCounter')) as number) || defaultSettings.restartCounter;
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     /*if (! net.isOnline()) {
