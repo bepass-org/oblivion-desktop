@@ -128,6 +128,8 @@ ipcMain.on('wp-start', async (event) => {
     const lang = await settings.get('lang');
     const ipData = (await settings.get('ipData')) || defaultSettings.ipData;
     const dataUsage = (await settings.get('dataUsage')) || defaultSettings.dataUsage;
+    const restartCounter = 
+    (await settings.get('restartCounter') as number) || defaultSettings.restartCounter;
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     /*if (! net.isOnline()) {
@@ -139,7 +141,8 @@ ipcMain.on('wp-start', async (event) => {
     if (!fs.existsSync(wpBinPath)) {
         event.reply('guide-toast', appLang.log.error_wp_not_found);
         event.reply('wp-end', true);
-        if (fs.existsSync(wpAssetPath)) {
+        if (fs.existsSync(wpAssetPath) && restartCounter < 2) {
+            await settings.set('restartCounter', restartCounter + 1);
             restartApp();
         }
         return;
@@ -241,6 +244,7 @@ ipcMain.on('wp-start', async (event) => {
                 } else {
                     connectedFlags[1] = true;
                     sendConnectedSignalToRenderer();
+                    await settings.set('restartCounter', 0);
                 }
             }
 

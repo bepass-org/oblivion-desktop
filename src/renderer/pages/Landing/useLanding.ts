@@ -67,7 +67,7 @@ const useLanding = () => {
     const toggleDrawer = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
-    
+
     useEffect(() => {
         if (window.innerWidth > 1049) {
             setTimeout(function () {
