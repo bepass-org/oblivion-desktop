@@ -13,7 +13,7 @@ export default function Tabs({ active, proxyMode }: TabsProps) {
         <div
             className={classNames(
                 'tabs',
-                active !== 'landing' ? 'inSettings' : '',
+                active !== 'landing' ? 'inSettings' : 'inHome',
                 proxyMode === 'tun' ? 'withSingbox' : ''
             )}
         >

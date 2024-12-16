@@ -69,13 +69,13 @@ const useLanding = () => {
     };
     
     useEffect(() => {
-        if (window.innerWidth > 799) {
+        if (window.innerWidth > 1049) {
             setTimeout(function () {
                 setDrawerIsOpen(true);
             }, 300);
         }
         const handleResize = () => {
-            if (window.innerWidth > 799) {
+            if (window.innerWidth > 1049) {
                 setTimeout(function () {
                     setDrawerIsOpen(true);
                 }, 300);
