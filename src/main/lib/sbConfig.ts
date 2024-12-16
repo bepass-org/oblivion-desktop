@@ -25,13 +25,17 @@ export function createSbConfig(
         throw new Error('some required parameters are undefined');
     }
 
+    const logConfig = disableSbLogs
+        ? { disabled: true }
+        : {
+              disabled: false,
+              level: 'warn',
+              timestamp: true,
+              output: 'sing-box.log'
+          };
+
     const config = {
-        log: {
-            disabled: disableSbLogs,
-            level: 'warn',
-            timestamp: true,
-            output: 'sing-box.log'
-        },
+        log: logConfig,
         dns: {
             final: 'dns-remote',
             independent_cache: true,
