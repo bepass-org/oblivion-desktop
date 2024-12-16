@@ -386,7 +386,7 @@ if (!gotTheLock) {
                 let windowPosition: number[] = mainWindow?.getPosition();
 
                 mainWindow.on('leave-full-screen', async () => {
-                    mainWindow?.setSize(400,650);
+                    mainWindow?.setSize(windowWidth, windowHeight);
                     mainWindow?.setPosition(windowPosition[0], windowPosition[1]);
                 });
 
