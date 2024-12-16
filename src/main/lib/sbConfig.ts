@@ -136,11 +136,14 @@ export function createSbConfig(
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                {
-                    network: 'udp',
-                    port: endpointPorts,
-                    outbound: 'direct-out'
-                },
+                ...(process.platform === 'darwin'
+                    ? [
+                          {
+                              port: endpointPorts,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
                 {
                     ip_is_private: true,
                     outbound: 'direct-out'
