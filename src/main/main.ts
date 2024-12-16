@@ -281,7 +281,7 @@ if (!gotTheLock) {
             center: true,
             frame: true,
             resizable: true,
-            fullscreenable: false,
+            fullscreenable: true,
             //minimizable: process.platform !== 'linux',
             icon: getAssetPath('oblivion.png'),
             webPreferences: {
@@ -336,7 +336,11 @@ if (!gotTheLock) {
         function createMainWindow() {
             if (!mainWindow) {
                 mainWindow = new BrowserWindow(config);
+
                 mainWindow.setMinimumSize(windowWidth, windowHeight);
+                mainWindow.on('will-resize', (event) => {
+                    event.preventDefault();
+                });
 
                 mainWindow.loadURL(resolveHtmlPath('index.html'));
 
