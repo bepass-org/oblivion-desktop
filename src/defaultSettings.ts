@@ -31,7 +31,8 @@ export type settingsKeys =
     | 'singBoxMTU'
     | 'singBoxGeoIp'
     | 'singBoxGeoSite'
-    | 'singBoxGeoBlock';
+    | 'singBoxGeoBlock'
+    | 'restartCounter';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -67,7 +68,8 @@ export const defaultSettings = {
     asn: 'UNK',
     closeHelper: true,
     singBoxMTU: 9000,
-    singBoxGeoBlock: false
+    singBoxGeoBlock: false,
+    restartCounter: 0
 };
 
 export const countries: { value: string; label: string }[] = [
