@@ -12,7 +12,8 @@ export function createSbConfig(
     ipSet: string[],
     domainSet: string[],
     domainSuffixSet: string[],
-    processSet: string[]
+    processSet: string[],
+    endpointPorts?: number[]
 ) {
     if (
         socksPort === undefined ||
@@ -34,6 +35,7 @@ export function createSbConfig(
         dns: {
             final: 'dns-remote',
             independent_cache: true,
+            strategy: 'prefer_ipv4',
             rules: [
                 {
                     outbound: ['any'],
@@ -52,14 +54,6 @@ export function createSbConfig(
                               ],
                               disable_cache: true,
                               server: 'dns-block'
-                          }
-                      ]
-                    : []),
-                ...(geoIp !== 'none'
-                    ? [
-                          {
-                              rule_set: `geoip-${geoIp}`,
-                              server: 'dns-direct'
                           }
                       ]
                     : []),
@@ -117,8 +111,7 @@ export function createSbConfig(
                 tag: 'socks-out',
                 server: '127.0.0.1',
                 server_port: socksPort,
-                version: '5',
-                udp_fragment: true
+                version: '5'
             },
             {
                 type: 'direct',
@@ -143,10 +136,14 @@ export function createSbConfig(
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                {
-                    network: 'udp',
-                    outbound: 'direct-out'
-                },
+                ...(process.platform === 'darwin'
+                    ? [
+                          {
+                              port: endpointPorts,
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
                 {
                     ip_is_private: true,
                     outbound: 'direct-out'
@@ -177,10 +174,6 @@ export function createSbConfig(
                     : []),
                 ...(processSet.length > 0
                     ? [
-                          {
-                              process_name: processSet,
-                              outbound: 'dns-out'
-                          },
                           {
                               process_name: processSet,
                               outbound: 'direct-out'

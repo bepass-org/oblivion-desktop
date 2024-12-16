@@ -8,7 +8,12 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
 import { spawn } from 'child_process';
-import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
+import {
+    isDev,
+    removeFileIfExists,
+    shouldProxySystem,
+    extractPortsFromEndpoints
+} from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -108,6 +113,7 @@ export const singBoxManager = new SingBoxManager(
     helperFileName,
     sbWDFileName,
     sbConfigName,
+    wpFileName,
     wpDirPath,
     protoAssetPath
 );
@@ -224,21 +230,21 @@ ipcMain.on('wp-start', async (event) => {
     try {
         child = spawn(command, args, { cwd: wpDirPath });
         const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-        //const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
-        //let endpointPorts: number[] = [];
+        const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
+        let endpointPorts: number[] = [];
         // const successTunMessage = `level=INFO msg="serving tun"`;
 
         child.stdout.on('data', async (data: any) => {
             const strData = data.toString();
 
-            /* if (strData.includes(endpointMessage) && proxyMode === 'tun') {
+            if (strData.includes(endpointMessage) && proxyMode === 'tun') {
                 endpointPorts = extractPortsFromEndpoints(strData);
-            } */
+            }
 
             if (strData.includes(successMessage)) {
                 if (
                     proxyMode === 'tun' &&
-                    !(await singBoxManager.startSingBox(child?.pid, appLang, event))
+                    !(await singBoxManager.startSingBox(child?.pid, appLang, event, endpointPorts))
                 ) {
                     event.reply('wp-end', true);
                 } else {
