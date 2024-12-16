@@ -383,6 +383,13 @@ if (!gotTheLock) {
                     mainWindow = null;
                 });
 
+                let windowPosition: number[] = mainWindow?.getPosition();
+
+                mainWindow.on('leave-full-screen', async () => {
+                    mainWindow?.setSize(400,650);
+                    mainWindow?.setPosition(windowPosition[0], windowPosition[1]);
+                });
+
                 // eslint-disable-next-line no-undef
                 (mainWindow as any).on('minimize', async (e: Electron.Event) => {
                     e.preventDefault();
