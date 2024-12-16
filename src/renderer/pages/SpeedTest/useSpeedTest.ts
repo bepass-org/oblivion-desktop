@@ -24,7 +24,7 @@ export const useSpeedTest = () => {
             defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 3000);
         }
 
-        ipcRenderer.on('speed-test-results', (event: any, data: any) => {
+        ipcRenderer.on('speed-test', (event: any, data: any) => {
             switch (event) {
                 case 'started':
                     setIsRunning(true);
@@ -73,7 +73,7 @@ export const useSpeedTest = () => {
         }
 
         if (isRunning) {
-            ipcRenderer.sendMessage('speed-test-command', 'pause');
+            ipcRenderer.sendMessage('speed-test', 'pause');
             return;
         }
 
@@ -83,9 +83,9 @@ export const useSpeedTest = () => {
         }
 
         if (isFinished) {
-            ipcRenderer.sendMessage('speed-test-command', 'restart');
+            ipcRenderer.sendMessage('speed-test', 'restart');
         } else {
-            ipcRenderer.sendMessage('speed-test-command', 'play');
+            ipcRenderer.sendMessage('speed-test', 'play');
         }
     }, [checkServerAvailability, isFinished, isRunning]);
 

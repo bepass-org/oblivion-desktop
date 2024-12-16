@@ -12,11 +12,9 @@ export type Channels =
     | 'tray-menu'
     | 'localization'
     | 'startup'
-    | 'netStats-command'
-    | 'netStats-stats'
+    | 'net-stats'
     | 'sb-terminate'
-    | 'speed-test-command'
-    | 'speed-test-results';
+    | 'speed-test';
 
 const electronHandler = {
     ipcRenderer: {

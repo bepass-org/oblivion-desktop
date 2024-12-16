@@ -67,7 +67,7 @@ const useLanding = () => {
     const toggleDrawer = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
-    
+
     useEffect(() => {
         if (window.innerWidth > 799) {
             setTimeout(function () {
@@ -261,7 +261,7 @@ const useLanding = () => {
 
     useEffect(() => {
         if (isConnected && dataUsage) {
-            ipcRenderer.on('netStats-stats', (event: any) => {
+            ipcRenderer.on('net-stats', (event: any) => {
                 setNetStats((prevNetStats) => ({
                     ...prevNetStats,
                     sentSpeed: event?.sentSpeed,

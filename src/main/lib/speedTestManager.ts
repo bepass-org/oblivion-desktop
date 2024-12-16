@@ -23,7 +23,7 @@ class SpeedTestManager {
     }
 
     public initializeIpcEvents(): void {
-        ipcMain.on('speed-test-command', (event, command: string) => {
+        ipcMain.on('speed-test', (event, command: string) => {
             if (!this.event) {
                 this.event = event;
             }
@@ -64,7 +64,7 @@ class SpeedTestManager {
     }
 
     private broadcastResults(status: string) {
-        this.event?.reply('speed-test-results', status, this.speedTest?.results.getSummary());
+        this.event?.reply('speed-test', status, this.speedTest?.results.getSummary());
     }
 }
 

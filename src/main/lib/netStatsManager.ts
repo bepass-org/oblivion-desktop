@@ -26,7 +26,7 @@ class NetStatsManager {
     }
 
     public initializeIpcEvents(): void {
-        ipcMain.on('netStats-command', (event, shouldStart) => {
+        ipcMain.on('net-stats', (event, shouldStart) => {
             if (shouldStart && !this.isMonitoring) {
                 this.isMonitoring = true;
                 this.startMonitoring(event);
@@ -56,9 +56,10 @@ class NetStatsManager {
                 const output = data.toString();
                 try {
                     if (output.startsWith('{"interface":')) {
+                        this.isMonitoring = true;
                         this.retryCount = 0;
                         const stats = JSON.parse(output);
-                        event.reply('netStats-stats', stats);
+                        event.reply('net-stats', stats);
                     } else {
                         log.info('netStats output:', output);
                     }
