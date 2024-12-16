@@ -57,14 +57,6 @@ export function createSbConfig(
                           }
                       ]
                     : []),
-                ...(geoIp !== 'none'
-                    ? [
-                          {
-                              rule_set: `geoip-${geoIp}`,
-                              server: 'dns-direct'
-                          }
-                      ]
-                    : []),
                 ...(geoSite !== 'none'
                     ? [
                           {
