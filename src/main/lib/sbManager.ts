@@ -53,11 +53,14 @@ class SingBoxManager {
 
     private retryCount: number = 0;
 
+    private endpointPorts?: number[];
+
     constructor(
         private readonly helperPath: string,
         private readonly helperFileName: string,
         private readonly sbWDFileName: string,
         private readonly sbConfigName: string,
+        private readonly wpFileName: string,
         private readonly workingDirPath: string,
         private readonly protoAssetPath: string
     ) {
@@ -69,7 +72,8 @@ class SingBoxManager {
     public async startSingBox(
         wpPid?: number,
         appLang?: Language,
-        event?: IpcMainEvent
+        event?: IpcMainEvent,
+        endpointPorts?: number[]
     ): Promise<boolean> {
         if (!this.event) {
             this.event = event;
@@ -78,6 +82,7 @@ class SingBoxManager {
 
         this.wpPid = wpPid;
         this.appLang = appLang;
+        this.endpointPorts = endpointPorts;
         this.retryCount = 0;
         await this.setupConfigs();
 
@@ -448,7 +453,8 @@ class SingBoxManager {
             rules.ipSet,
             rules.domainSet,
             rules.domainSuffixSet,
-            rules.processSet
+            rules.processSet,
+            this.endpointPorts
         );
 
         const helperConfig = {
@@ -465,7 +471,7 @@ class SingBoxManager {
             ipSet: [],
             domainSet: [],
             domainSuffixSet: [],
-            processSet: []
+            processSet: [this.wpFileName]
         };
 
         if (typeof routingRules !== 'string' || routingRules.trim() === '') {

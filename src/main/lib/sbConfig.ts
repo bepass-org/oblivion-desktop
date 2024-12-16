@@ -12,7 +12,8 @@ export function createSbConfig(
     ipSet: string[],
     domainSet: string[],
     domainSuffixSet: string[],
-    processSet: string[]
+    processSet: string[],
+    endpointPorts?: number[]
 ) {
     if (
         socksPort === undefined ||
@@ -34,6 +35,7 @@ export function createSbConfig(
         dns: {
             final: 'dns-remote',
             independent_cache: true,
+            strategy: 'prefer_ipv4',
             rules: [
                 {
                     outbound: ['any'],
@@ -117,8 +119,7 @@ export function createSbConfig(
                 tag: 'socks-out',
                 server: '127.0.0.1',
                 server_port: socksPort,
-                version: '5',
-                udp_fragment: true
+                version: '5'
             },
             {
                 type: 'direct',
@@ -145,6 +146,7 @@ export function createSbConfig(
                 },
                 {
                     network: 'udp',
+                    port: endpointPorts,
                     outbound: 'direct-out'
                 },
                 {
@@ -177,10 +179,6 @@ export function createSbConfig(
                     : []),
                 ...(processSet.length > 0
                     ? [
-                          {
-                              process_name: processSet,
-                              outbound: 'dns-out'
-                          },
                           {
                               process_name: processSet,
                               outbound: 'direct-out'
