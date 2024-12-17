@@ -364,18 +364,16 @@ if (!gotTheLock) {
 
                 mainWindow.on('close', async (e: any) => {
                     e.preventDefault();
-                    if (isDev()) {
-                        console.log(
-                            'The od has been closed due to the modification of main.ts ...'
-                        );
-                        await exitTheApp(mainWindow);
-                    } else {
-                        const forceClose = await settings.get('forceClose');
-                        if (typeof forceClose === 'boolean' && forceClose) {
+                    const forceClose = await settings.get('forceClose');
+                    if (typeof forceClose === 'boolean' && forceClose) {
+                        try {
                             await exitTheApp(mainWindow);
-                        } else {
-                            mainWindow?.hide();
+                            app.exit(0);
+                        } catch (err) {
+                            console.error('Error while exiting the app:', err);
                         }
+                    } else {
+                        mainWindow?.hide();
                     }
                 });
 
@@ -407,12 +405,22 @@ if (!gotTheLock) {
                     return { action: 'deny' };
                 });
 
-                // Fixing the Issue of Applications Closing on a macOS
-                app.on('before-quit', () => {
+                app.on('before-quit', async (event: any) => {
                     //startAtLogin();
                     connectionStatus = 'disconnected';
-                    mainWindow?.removeAllListeners('close');
-                    //await exitTheApp(mainWindow);
+                    if (process.platform === 'win32') {
+                        event.preventDefault();
+                        try {
+                            await exitTheApp(mainWindow);
+                            app.exit(0);
+                        } catch (error) {
+                            console.error('Error while exiting the app:', error);
+                            app.exit(1);
+                        }
+                    } else {
+                        // Fixing the Issue of Applications Closing on a macOS
+                        mainWindow?.removeAllListeners('close');
+                    }
                 });
 
                 if (process.platform !== 'win32') {
