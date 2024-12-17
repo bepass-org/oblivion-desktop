@@ -152,6 +152,7 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
     if (mainWindow) {
         mainWindow.hide();
     }
+    ipcMain.emit('wp-end', true);
 
     // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
     ipcMain.on('exit', () => {
