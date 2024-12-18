@@ -1,10 +1,9 @@
-import { IpcMainEvent } from 'electron';
+import { ipcMain, IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import { spawn, exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import treeKill from 'tree-kill';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
 import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../defaultSettings';
@@ -37,8 +36,6 @@ class SingBoxManager {
 
     private readonly isWindows = process.platform === 'win32';
 
-    private wpPid?: number;
-
     private appLang?: Language;
 
     private oblivionHelperProto: any;
@@ -52,8 +49,6 @@ class SingBoxManager {
     private event?: IpcMainEvent;
 
     private retryCount: number = 0;
-
-    private endpointPorts?: number[];
 
     constructor(
         private readonly helperPath: string,
@@ -69,20 +64,11 @@ class SingBoxManager {
     }
 
     //Public-Methods
-    public async startSingBox(
-        wpPid?: number,
-        appLang?: Language,
-        event?: IpcMainEvent,
-        endpointPorts?: number[]
-    ): Promise<boolean> {
-        if (!this.event) {
-            this.event = event;
-        }
+    public async startSingBox(appLang?: Language, event?: IpcMainEvent): Promise<boolean> {
+        if (!this.event) this.event = event;
         if (await this.isProcessRunning(this.sbWDFileName)) return true;
 
-        this.wpPid = wpPid;
         this.appLang = appLang;
-        this.endpointPorts = endpointPorts;
         this.retryCount = 0;
         await this.setupConfigs();
 
@@ -99,7 +85,6 @@ class SingBoxManager {
                 `${this.appLang?.log.error_singbox_failed_start}\n${error}`
             );
             log.error('Failed to start Sing-Box:', error);
-            this.killWarpPlus();
             return false;
         }
     }
@@ -191,9 +176,10 @@ class SingBoxManager {
             this.helperClient.Start({}, (err: Error, response: { message: string }) => {
                 if (err) {
                     reject(`Oblivion-Helper: ${err.message}`);
+                    return;
                 }
                 log.info('Oblivion-Helper:', response.message);
-                resolve(this.checkConnectionStatus());
+                resolve(true);
             });
         });
     }
@@ -206,6 +192,7 @@ class SingBoxManager {
             this.helperClient.Stop({}, (err: Error, response: { message: string }) => {
                 if (err) {
                     reject(`Oblivion-Helper: ${err.message}`);
+                    return;
                 }
                 log.info('Oblivion-Helper:', response.message);
                 resolve(true);
@@ -213,7 +200,7 @@ class SingBoxManager {
         });
     }
 
-    private checkConnectionStatus(): Promise<boolean> {
+    public checkConnectionStatus(): Promise<boolean> {
         const maxAttempts = 10;
         const checkInterval = 3000;
         const timeout = 3000;
@@ -250,7 +237,7 @@ class SingBoxManager {
                     'guide-toast',
                     `${this.appLang?.log.error_faild_connection}`
                 );
-                this.killWarpPlus();
+                ipcMain.emit('wp-end');
                 return false;
             }
 
@@ -271,25 +258,28 @@ class SingBoxManager {
 
             this.isListeningToHelper = true;
 
-            call.on('data', (response: { status: string }) => {
+            call.on('data', async (response: { status: string }) => {
                 log.info('Oblivion-Helper Status:', response.status);
                 if (response.status === 'terminated') {
                     log.info('Sing-Box terminated unexpectedly. Restarting...');
                     customEvent.emit('tray-icon', 'disconnected');
                     this.sendMessageToRenderer('guide-toast', 'sb_terminated');
+                    this.retryCount++;
 
-                    if (this.retryCount < 3) {
-                        this.startService().then((connected) => {
-                            if (connected) {
-                                customEvent.emit('tray-icon', 'connected-tun');
-                                this.sendMessageToRenderer('guide-toast', 'sb_restarted');
-                            }
-                        });
-                        this.retryCount++;
+                    if (this.retryCount <= 3) {
+                        const isStarted = await this.startService();
+                        await this.delay(3000);
+                        if (
+                            isStarted &&
+                            this.retryCount <= 3 &&
+                            (await this.checkConnectionStatus())
+                        ) {
+                            customEvent.emit('tray-icon', 'connected-tun');
+                            this.sendMessageToRenderer('guide-toast', 'sb_restarted');
+                        }
                     } else {
-                        this.shouldBreakConnectionTest = true;
                         this.sendMessageToRenderer('guide-toast', 'sb_exceeded');
-                        this.killWarpPlus();
+                        ipcMain.emit('wp-end');
                         log.warn('Exceeded maximum restart attempts.');
                     }
                 }
@@ -298,12 +288,12 @@ class SingBoxManager {
             call.on('end', async () => {
                 log.info('Oblivion-Helper service has ended.');
                 this.isListeningToHelper = false;
-                this.killWarpPlus();
+                ipcMain.emit('wp-end');
             });
 
             call.on('error', async (err: Error) => {
                 log.warn('Oblivion-Helper Error:', err.message);
-                this.killWarpPlus();
+                ipcMain.emit('wp-end');
             });
         }
     }
@@ -318,12 +308,6 @@ class SingBoxManager {
                 resolve(stdout.toLowerCase().indexOf(processName.toLowerCase()) > -1);
             });
         });
-    }
-
-    private killWarpPlus(): void {
-        if (this.wpPid) {
-            treeKill(this.wpPid, 'SIGKILL');
-        }
     }
 
     private delay(ms: number): Promise<void> {
@@ -453,8 +437,7 @@ class SingBoxManager {
             rules.ipSet,
             rules.domainSet,
             rules.domainSuffixSet,
-            rules.processSet,
-            this.endpointPorts
+            rules.processSet
         );
 
         const helperConfig = {
