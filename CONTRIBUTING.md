@@ -8,7 +8,7 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
 
     if you have programming skills that can be helpful:
     Pick up issues/tasks from [issues page](https://github.com/bepass-org/oblivion-desktop/issues) or the [project board](https://github.com/orgs/bepass-org/projects/4) or suggest your own features, fixes, etc.  
-    Before starting a new task, please coordinate with the collaborators to ensure no one else is working on it.
+     Before starting a new task, please coordinate with the collaborators to ensure no one else is working on it.
 
     - #### Setup your development environment
 
