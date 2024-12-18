@@ -23,9 +23,11 @@ const electronHandler = {
         on(channel: Channels, func: (...args: unknown[]) => void) {
             const subscription = (_event: IpcRendererEvent, ...args: unknown[]) => func(...args);
             ipcRenderer.on(channel, subscription);
+            //console.log(`Adding listener for ${channel}`);
 
             return () => {
                 ipcRenderer.removeListener(channel, subscription);
+                //console.log(`Removed listener for ${channel}`);
             };
         },
         once(channel: Channels, func: (...args: unknown[]) => void) {
@@ -36,6 +38,14 @@ const electronHandler = {
         },
         removeAllListeners(channel: Channels) {
             ipcRenderer.removeAllListeners(channel);
+        },
+        clean() {
+            ipcRenderer.removeAllListeners('settings');
+            ipcRenderer.removeAllListeners('guide-toast');
+            ipcRenderer.removeAllListeners('tray-menu');
+            ipcRenderer.removeAllListeners('wp-start');
+            ipcRenderer.removeAllListeners('wp-end');
+            ipcRenderer.removeAllListeners('net-stats');
         }
     },
     NODE_ENV: process.env.NODE_ENV,

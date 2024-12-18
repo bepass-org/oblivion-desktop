@@ -159,6 +159,8 @@ const useLanding = () => {
     };
 
     useEffect(() => {
+        //ipcRenderer.clean();
+
         settings
             .getMultiple(['lang', 'ipData', 'method', 'proxyMode', 'shortcut', 'dataUsage'])
             .then((values) => {

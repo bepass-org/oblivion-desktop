@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+import { ipcRenderer } from '../../lib/utils';
 
 const useNav = () => {
     const isSticky = useCallback(() => {
@@ -19,5 +20,10 @@ const useNav = () => {
             window.removeEventListener('scroll', isSticky);
         };
     }, [isSticky]);
+
+    useEffect(() => {
+        //ipcRenderer.clean();
+    }, []);
+
 };
 export default useNav;
