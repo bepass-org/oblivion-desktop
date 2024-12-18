@@ -3,6 +3,7 @@ import { Language } from '../../localization/type';
 
 const defaultToastStyle = {
     fontSize: '13px',
+    lineHeight: '22px',
     borderRadius: '10px',
     background: '#333',
     color: '#fff'

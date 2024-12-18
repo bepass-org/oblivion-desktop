@@ -44,13 +44,13 @@ const validateLicense = (license: string): string => {
 
 const determineIpType = (endpoint: string, ipType: string): '' | '4' | '6' => {
     if (endpoint === defaultSettings.endpoint) {
-        return ipType === '4' || ipType === '6' ? (ipType as '4' | '6') : '';
+        return ipType === '4' || ipType === '6' ? ipType : '';
     } else if (isIPv4(endpoint)) {
         return '4';
     } else if (isIPv6(endpoint)) {
         return '6';
     }
-    return '';
+    return ipType === '4' || ipType === '6' ? ipType : '';
 };
 
 const validateReserved = (reserved: string): '0' | '1' => {
@@ -78,18 +78,19 @@ const parseProfileConfig = (pastedText: string): ConfigType | null => {
 };
 
 const parseConnectionConfig = (pastedText: string): ConfigType | null => {
-    const match = /^oblivion:\/\/(warp|cfon|gool)@([^?]*)\?(.+)$/i.exec(pastedText);
+    const match = /^oblivion:\/\/(warp|cfon|gool)@([^?]*)\??(.*)$/i.exec(pastedText);
     if (!match) return null;
 
     const method: 'warp' | 'cfon' | 'gool' = (match[1] as any) || defaultSettings.method;
     const endpoint = match[2] || defaultSettings.endpoint;
-    const params = new URLSearchParams(match[3]);
-    const location = validateCountry(params.get('c') || '', method);
-    const license = validateLicense(params.get('l') || '');
-    const reserved = validateReserved(params.get('r') || '');
+    const params = match[3] ? new URLSearchParams(match[3]) : new URLSearchParams();
+
+    const location = validateCountry(params?.get('c') || '', method);
+    const license = validateLicense(params?.get('l') || '');
+    const reserved = validateReserved(params?.get('r') || '');
     const ipType = determineIpType(
         endpoint,
-        params.get('t')?.toLowerCase() === 'i' ? 'i' : params.get('t') || ''
+        params?.get('i') || ''
     );
 
     return {
@@ -142,7 +143,8 @@ const ConfigHandler = ({ appLang }: any) => {
                     //defaultToast(appLang?.toast?.profile_added, 'CONFIG_HANDLER', 7000);
                 } else {
                     //ipcRenderer.sendMessage('wp-end');
-                    defaultToast(appLang?.toast?.config_added, 'CONFIG_HANDLER', 7000);
+                    alert(config.ipType);
+                    defaultToast(appLang?.toast?.config_added, 'CONFIG_HANDLER', 5000);
                     setTimeout(async () => {
                         await settings.set(
                             'method',
@@ -166,8 +168,11 @@ const ConfigHandler = ({ appLang }: any) => {
                 }
                 setTimeout(() => {
                     // wp-start
-                    toast.remove('ONLINE_STATUS');
+                    toast.remove('CONFIG_HANDLER');
                 }, 7000);
+            }
+            else {
+                //console.log(config)
             }
             event.preventDefault();
         };
