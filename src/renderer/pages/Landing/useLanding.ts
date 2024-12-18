@@ -196,28 +196,24 @@ const useLanding = () => {
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
                 loadingToast(appLang.log.error_port_restart);
-            } else {
-                defaultToast(message, 'GUIDE', 7000);
-            }
-        });
-
-        ipcRenderer.on('sb-terminate', (message: any) => {
-            if (message === 'terminated') {
+            } else if (message === 'sb_terminated') {
                 setIsLoading(true);
                 setIsConnected(false);
                 loadingToast(appLang.status.keep_trying);
                 setTimeout(function () {
                     stopLoadingToast();
                 }, 3500);
-            } else if (message === 'restarted') {
+            } else if (message === 'sb_restarted') {
                 setIsLoading(false);
                 setIsConnected(true);
-            } else if (message === 'exceeded') {
+            } else if (message === 'sb_exceeded') {
                 setIsLoading(false);
                 setIsConnected(false);
                 setTimeout(function () {
                     defaultToast(appLang.log.error_deadline_exceeded, 'EXCEEDED', 5000);
                 }, 2000);
+            } else {
+                defaultToast(message, 'GUIDE', 7000);
             }
         });
 

@@ -13,7 +13,6 @@ export type Channels =
     | 'localization'
     | 'startup'
     | 'net-stats'
-    | 'sb-terminate'
     | 'speed-test';
 
 const electronHandler = {

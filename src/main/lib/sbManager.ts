@@ -276,19 +276,19 @@ class SingBoxManager {
                 if (response.status === 'terminated') {
                     log.info('Sing-Box terminated unexpectedly. Restarting...');
                     customEvent.emit('tray-icon', 'disconnected');
-                    this.sendMessageToRenderer('sb-terminate', 'terminated');
+                    this.sendMessageToRenderer('guide-toast', 'sb_terminated');
 
                     if (this.retryCount < 3) {
                         this.startService().then((connected) => {
                             if (connected) {
                                 customEvent.emit('tray-icon', 'connected-tun');
-                                this.sendMessageToRenderer('sb-terminate', 'restarted');
+                                this.sendMessageToRenderer('guide-toast', 'sb_restarted');
                             }
                         });
                         this.retryCount++;
                     } else {
                         this.shouldBreakConnectionTest = true;
-                        this.sendMessageToRenderer('sb-terminate', 'exceeded');
+                        this.sendMessageToRenderer('guide-toast', 'sb_exceeded');
                         this.killWarpPlus();
                         log.warn('Exceeded maximum restart attempts.');
                     }
