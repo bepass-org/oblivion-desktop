@@ -43,6 +43,8 @@ const electronHandler = {
     username: process.env.USER || process.env.USERNAME || null
 };
 
+//ipcRenderer.setMaxListeners(20);
+
 contextBridge.exposeInMainWorld('electron', electronHandler);
 
 export type ElectronHandler = typeof electronHandler;

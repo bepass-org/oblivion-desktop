@@ -237,6 +237,24 @@ const useLanding = () => {
             }
         });
 
+        ipcRenderer.on('wp-start', (ok:any) => {
+            if (ok) {
+                setIsLoading(false);
+                setIsConnected(true);
+            }
+        });
+
+        ipcRenderer.on('wp-end', (ok:any) => {
+            if (ok) {
+                setIsConnected(false);
+                setIsLoading(false);
+                setIpInfo({
+                    countryCode: false,
+                    ip: ''
+                });
+            }
+        });
+
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
         return () => {
@@ -432,30 +450,6 @@ const useLanding = () => {
             setStatusText(`${appLang?.status?.disconnected}`);
             toast.remove('IRAN_IP');
         }
-
-        ipcRenderer.once('wp-start', (ok) => {
-            if (ok) {
-                setIsLoading(false);
-                setIsConnected(true);
-                /*if (proxyStatus !== '') {
-                    ipcRenderer.sendMessage('tray-icon', `connected-${proxyStatus}`);
-                }*/
-            }
-        });
-
-        ipcRenderer.once('wp-end', (ok) => {
-            if (ok) {
-                setIsConnected(false);
-                setIsLoading(false);
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                /*if (proxyStatus !== '') {
-                    ipcRenderer.sendMessage('tray-icon', 'disconnected');
-                }*/
-            }
-        });
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
     const handleMenuOnKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
