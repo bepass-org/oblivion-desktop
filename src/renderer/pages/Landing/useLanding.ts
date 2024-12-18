@@ -437,7 +437,7 @@ const useLanding = () => {
             toast.remove('IRAN_IP');
         }
 
-        ipcRenderer.on('wp-start', (ok) => {
+        ipcRenderer.once('wp-start', (ok) => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
@@ -447,7 +447,7 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('wp-end', (ok) => {
+        ipcRenderer.once('wp-end', (ok) => {
             if (ok) {
                 setIsConnected(false);
                 setIsLoading(false);
