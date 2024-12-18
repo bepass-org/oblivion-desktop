@@ -8,12 +8,7 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
 import { spawn } from 'child_process';
-import {
-    isDev,
-    removeFileIfExists,
-    shouldProxySystem,
-    extractPortsFromEndpoints
-} from '../lib/utils';
+import { isDev, removeFileIfExists, shouldProxySystem } from '../lib/utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from '../lib/proxy';
 import { logMetadata, logPath } from './log';
 import { getUserSettings, handleWpErrors } from '../lib/wp';
@@ -222,80 +217,85 @@ ipcMain.on('wp-start', async (event) => {
         sendConnectedSignalToRenderer();
     }
 
-    const command = path.join(wpDirPath, wpFileName);
+    const startWP = async () => {
+        const command = path.join(wpDirPath, wpFileName);
 
-    log.info('starting wp process...');
-    log.info(`${command + ' ' + args.join(' ')}`);
+        log.info('starting wp process...');
+        log.info(`${command + ' ' + args.join(' ')}`);
 
-    try {
-        child = spawn(command, args, { cwd: wpDirPath });
-        const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
-        const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
-        let endpointPorts: number[] = [];
-        // const successTunMessage = `level=INFO msg="serving tun"`;
+        try {
+            child = spawn(command, args, { cwd: wpDirPath });
+            const successMessage = `level=INFO msg="serving proxy" address=${hostIP}`;
+            //const endpointMessage = `level=INFO msg="using warp endpoints" endpoints=`;
+            //let endpointPorts: number[] = [];
+            // const successTunMessage = `level=INFO msg="serving tun"`;
 
-        child.stdout.on('data', async (data: any) => {
-            const strData = data.toString();
+            child.stdout.on('data', async (data: any) => {
+                const strData = data.toString();
 
-            if (strData.includes(endpointMessage) && proxyMode === 'tun') {
-                endpointPorts = extractPortsFromEndpoints(strData);
-            }
+                /* if (strData.includes(endpointMessage) && proxyMode === 'tun') {
+                    endpointPorts = extractPortsFromEndpoints(strData);
+                } */
 
-            if (strData.includes(successMessage)) {
-                if (
-                    proxyMode === 'tun' &&
-                    !(await singBoxManager.startSingBox(child?.pid, appLang, event, endpointPorts))
-                ) {
-                    event.reply('wp-end', true);
-                } else {
-                    connectedFlags[1] = true;
-                    sendConnectedSignalToRenderer();
-                    await settings.set('restartCounter', 0);
+                if (strData.includes(successMessage)) {
+                    if (proxyMode === 'tun' && !(await singBoxManager.checkConnectionStatus())) {
+                        event.reply('wp-end', true);
+                    } else {
+                        connectedFlags[1] = true;
+                        sendConnectedSignalToRenderer();
+                        await settings.set('restartCounter', 0);
+                    }
                 }
-            }
 
-            // Save the last endpoint that was successfully connected
-            const endpointRegex =
-                /msg="(?:scan results|using warp endpoints)" endpoints="\[.*?(?:AddrPort:)?(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})/;
-            const match = strData.match(endpointRegex);
-            if (match) {
-                await settings.set('scanResult', match[1]);
-            }
+                // Save the last endpoint that was successfully connected
+                const endpointRegex =
+                    /msg="(?:scan results|using warp endpoints)" endpoints="\[.*?(?:AddrPort:)?(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})/;
+                const match = strData.match(endpointRegex);
+                if (match) {
+                    await settings.set('scanResult', match[1]);
+                }
 
-            handleWpErrors(strData, event, String(port));
+                handleWpErrors(strData, event, String(port));
 
-            if (!showWpLogs && isDev()) return;
-            simpleLog.info(strData);
-        });
-
-        child.stderr.on('data', (err: any) => {
-            if (!showWpLogs && isDev()) return;
-            simpleLog.error(`err: ${err.toString()}`);
-        });
-
-        child.on('exit', async () => {
-            if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
-                event.reply('wp-end', false);
-            } else {
-                disconnectedFlags[1] = true;
-                sendDisconnectedSignalToRenderer();
-                log.info('wp process exited.');
-                child.pid = undefined;
-                await handleSystemProxyDisconnect();
-            }
-        });
-    } catch (error) {
-        event.reply('guide-toast', appLang.log.error_wp_stopped);
-        event.reply('wp-end', true);
-        // If the warp-plus file is damaged for any reason, it will be deleted so that when the program is closed and reopened, a new file is created in the previous path.
-        // This prevents the user from needing to reinstall the program if they encounter the mentioned error.
-        if (fs.existsSync(wpBinPath)) {
-            fs.rm(wpBinPath, (err) => {
-                if (err) throw err;
-                log.info('wp binary was deleted from userData directory.');
-                restartApp();
+                if (!showWpLogs && isDev()) return;
+                simpleLog.info(strData);
             });
+
+            child.stderr.on('data', (err: any) => {
+                if (!showWpLogs && isDev()) return;
+                simpleLog.error(`err: ${err.toString()}`);
+            });
+
+            child.on('exit', async () => {
+                if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
+                    event.reply('wp-end', false);
+                } else {
+                    disconnectedFlags[1] = true;
+                    sendDisconnectedSignalToRenderer();
+                    log.info('wp process exited.');
+                    child.pid = undefined;
+                    await handleSystemProxyDisconnect();
+                }
+            });
+        } catch (error) {
+            event.reply('guide-toast', appLang.log.error_wp_stopped);
+            event.reply('wp-end', true);
+            // If the warp-plus file is damaged for any reason, it will be deleted so that when the program is closed and reopened, a new file is created in the previous path.
+            // This prevents the user from needing to reinstall the program if they encounter the mentioned error.
+            if (fs.existsSync(wpBinPath)) {
+                fs.rm(wpBinPath, (err) => {
+                    if (err) throw err;
+                    log.info('wp binary was deleted from userData directory.');
+                    restartApp();
+                });
+            }
         }
+    };
+
+    if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(appLang, event))) {
+        event.reply('wp-end', true);
+    } else {
+        startWP();
     }
 });
 

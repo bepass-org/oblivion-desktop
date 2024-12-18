@@ -24,6 +24,5 @@ const useNav = () => {
     useEffect(() => {
         //ipcRenderer.clean();
     }, []);
-
 };
 export default useNav;

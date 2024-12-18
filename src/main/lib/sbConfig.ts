@@ -12,8 +12,7 @@ export function createSbConfig(
     ipSet: string[],
     domainSet: string[],
     domainSuffixSet: string[],
-    processSet: string[],
-    endpointPorts?: number[]
+    processSet: string[]
 ) {
     if (
         socksPort === undefined ||
@@ -103,10 +102,10 @@ export function createSbConfig(
                 mtu: mtu,
                 address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
-                strict_route: false,
+                strict_route: true,
                 stack: 'mixed',
-                sniff: true,
-                sniff_override_destination: true
+                sniff: process.platform === 'darwin' ? true : false,
+                sniff_override_destination: process.platform === 'darwin' ? true : false
             }
         ],
         outbounds: [
@@ -143,7 +142,7 @@ export function createSbConfig(
                 ...(process.platform === 'darwin'
                     ? [
                           {
-                              port: endpointPorts,
+                              network: 'udp',
                               outbound: 'direct-out'
                           }
                       ]
