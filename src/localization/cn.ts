@@ -36,7 +36,9 @@ const chinese: Language = {
         please_wait: '请等待...',
         offline: '您处于离线状态！',
         settings_changed: '应用设置已更改，需要重新连接。',
-        hardware_usage: '启用此选项会增加硬件资源的使用。'
+        hardware_usage: '启用此选项会增加硬件资源的使用。',
+        config_added: '配置已成功添加，要使用它，您必须点击连接。',
+        profile_added: '端点已成功添加到个人资料中。'
     },
     settings: {
         title: 'Warp 设置',

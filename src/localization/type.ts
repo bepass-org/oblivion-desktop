@@ -36,6 +36,8 @@ export interface Toast {
     offline: string;
     settings_changed: string;
     hardware_usage: string;
+    config_added: string;
+    profile_added: string;
 }
 
 export interface Settings {

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import 'react-modern-drawer/dist/index.css';
 import useLanding from './useLanding';
@@ -5,6 +6,7 @@ import LandingDrawer from './LandingDrawer';
 import LandingHeader from './LandingHeader';
 import LandingBody from './LandingBody';
 import Tabs from '../../components/Tabs';
+import ConfigHandler from '../../components/ConfigHandler';
 
 export default function Landing() {
     const {
@@ -35,6 +37,7 @@ export default function Landing() {
 
     return (
         <>
+            <ConfigHandler appLang={appLang} />
             <LandingHeader
                 handleMenuOnKeyDown={handleMenuOnKeyDown}
                 hasNewUpdate={hasNewUpdate}

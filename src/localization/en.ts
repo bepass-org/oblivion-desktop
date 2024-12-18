@@ -36,7 +36,10 @@ const english: Language = {
         please_wait: 'Please Wait ...',
         offline: 'You Are Offline!',
         settings_changed: 'Applying settings requires reconnecting.',
-        hardware_usage: 'Enabling this option will increase hardware resource usage.'
+        hardware_usage: 'Enabling this option will increase hardware resource usage.',
+        config_added:
+            'The configuration has been successfully added, and to use it, you must click on the connection.',
+        profile_added: 'The endpoint has been successfully added to the profile.'
     },
     settings: {
         title: 'Warp Settings',

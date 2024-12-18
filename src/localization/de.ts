@@ -38,7 +38,10 @@ const deutsch: Language = {
         offline: 'Sie sind offline!',
         settings_changed:
             'Das Anwenden der Einstellungen erfordert ein erneutes herstellen der Verbindung.',
-        hardware_usage: 'Das Aktivieren dieser Option erhöht die Nutzung der Hardware-Ressourcen.'
+        hardware_usage: 'Das Aktivieren dieser Option erhöht die Nutzung der Hardware-Ressourcen.',
+        config_added:
+            'Konfigurasi telah berhasil ditambahkan, dan untuk menggunakannya, Anda harus mengklik koneksi.',
+        profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.'
     },
     settings: {
         title: 'Warp-Einstellungen',

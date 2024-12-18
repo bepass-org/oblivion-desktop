@@ -36,7 +36,11 @@ const turkish: Language = {
         please_wait: 'Lütfen Bekleyin ...',
         offline: 'Çevrimdışısınız!',
         settings_changed: 'Ayarları uygulamak için yeniden bağlanma gerekiyor.',
-        hardware_usage: 'Bu seçeneği etkinleştirmek donanım kaynaklarının kullanımını artıracaktır.'
+        hardware_usage:
+            'Bu seçeneği etkinleştirmek donanım kaynaklarının kullanımını artıracaktır.',
+        config_added:
+            'Yapılandırma başarıyla eklendi ve kullanmak için bağlantıya tıklamanız gerekiyor.',
+        profile_added: 'Uç nokta başarıyla profile eklendi.'
     },
     settings: {
         title: 'Warp Ayarları',

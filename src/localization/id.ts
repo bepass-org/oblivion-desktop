@@ -37,7 +37,10 @@ const indonesia: Language = {
         offline: 'Anda sedang offline!',
         settings_changed: 'Menerapkan pengaturan memerlukan penyambungan ulang.',
         hardware_usage:
-            'Mengaktifkan opsi ini akan meningkatkan penggunaan sumber daya perangkat keras.'
+            'Mengaktifkan opsi ini akan meningkatkan penggunaan sumber daya perangkat keras.',
+        config_added:
+            'Konfigurasi telah berhasil ditambahkan, dan untuk menggunakannya, Anda harus mengklik koneksi.',
+        profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.'
     },
     settings: {
         title: 'Pengaturan Warp',

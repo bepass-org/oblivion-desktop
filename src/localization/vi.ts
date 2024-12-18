@@ -36,7 +36,10 @@ const vietnamese: Language = {
         please_wait: 'Vui lòng đợi ...',
         offline: 'Bạn đang ngoại tuyến!',
         settings_changed: 'Việc áp dụng cài đặt yêu cầu kết nối lại.',
-        hardware_usage: 'Bật tùy chọn này sẽ tăng mức sử dụng tài nguyên phần cứng.'
+        hardware_usage: 'Bật tùy chọn này sẽ tăng mức sử dụng tài nguyên phần cứng.',
+        config_added:
+            'Cấu hình đã được thêm thành công, và để sử dụng nó, bạn phải nhấp vào kết nối.',
+        profile_added: 'Điểm cuối đã được thêm thành công vào hồ sơ.'
     },
     settings: {
         title: 'Cài đặt Warp',
