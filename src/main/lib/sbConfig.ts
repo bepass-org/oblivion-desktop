@@ -103,7 +103,9 @@ export function createSbConfig(
                 address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
                 strict_route: true,
-                stack: 'mixed'
+                stack: 'mixed',
+                sniff: process.platform === 'darwin' ? true : false,
+                sniff_override_destination: process.platform === 'darwin' ? true : false
             }
         ],
         outbounds: [
