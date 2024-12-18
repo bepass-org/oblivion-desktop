@@ -47,29 +47,54 @@ const useOptions = () => {
     }, [targetId]);
 
     useEffect(() => {
-        settings.get('theme').then((value) => {
-            setTheme(
-                typeof value === 'undefined' ? (detectingSystemTheme ? 'dark' : 'light') : value
-            );
-        });
-        settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? getLanguageName() : value);
-        });
-        settings.get('openAtLogin').then((value) => {
-            setOpenAtLogin(typeof value === 'undefined' ? defaultSettings.openAtLogin : value);
-        });
-        settings.get('autoConnect').then((value) => {
-            setAutoConnect(typeof value === 'undefined' ? defaultSettings.autoConnect : value);
-        });
-        settings.get('forceClose').then((value) => {
-            setForceClose(typeof value === 'undefined' ? defaultSettings.forceClose : value);
-        });
-        settings.get('shortcut').then((value) => {
-            setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
-        });
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
+        settings
+            .getMultiple([
+                'theme',
+                'lang',
+                'openAtLogin',
+                'autoConnect',
+                'forceClose',
+                'shortcut',
+                'proxyMode'
+            ])
+            .then((values) => {
+                setTheme(
+                    typeof values.theme === 'undefined'
+                        ? detectingSystemTheme
+                            ? 'dark'
+                            : 'light'
+                        : values.theme
+                );
+                setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
+                setOpenAtLogin(
+                    typeof values.openAtLogin === 'undefined'
+                        ? defaultSettings.openAtLogin
+                        : values.openAtLogin
+                );
+                setAutoConnect(
+                    typeof values.autoConnect === 'undefined'
+                        ? defaultSettings.autoConnect
+                        : values.autoConnect
+                );
+                setForceClose(
+                    typeof values.forceClose === 'undefined'
+                        ? defaultSettings.forceClose
+                        : values.forceClose
+                );
+                setShortcut(
+                    typeof values.shortcut === 'undefined'
+                        ? defaultSettings.shortcut
+                        : values.shortcut
+                );
+                setProxyMode(
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode
+                );
+            })
+            .catch((error) => {
+                console.error('Error fetching settings:', error);
+            });
 
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'changePage') {

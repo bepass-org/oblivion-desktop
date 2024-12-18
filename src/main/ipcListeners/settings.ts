@@ -8,6 +8,9 @@ ipcMain.on('settings', async (event, arg) => {
             key: arg.key,
             value: res
         });
+    } else if (arg.mode === 'getAll') {
+        const res = await settings.get();
+        event.reply('settings', res);
     } else if (arg.mode === 'set') {
         await settings.set(arg.key, arg.value);
         event.reply('settings', {

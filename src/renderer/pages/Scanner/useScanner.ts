@@ -33,31 +33,38 @@ const useScanner = () => {
     useGoBackOnEscape();
 
     useEffect(() => {
-        settings.get('endpoint').then((value) => {
-            setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
-        });
-        settings.get('ipType').then((value) => {
-            setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
-        });
-        settings.get('rtt').then((value) => {
-            setRtt(typeof value === 'undefined' ? defaultSettings.rtt : value);
-        });
-        settings.get('reserved').then((value) => {
-            setReserved(typeof value === 'undefined' ? defaultSettings.reserved : value);
-        });
-        settings.get('profiles').then((value) => {
-            setProfiles(
-                typeof value === 'undefined'
-                    ? JSON.parse(defaultSettings.profiles)
-                    : JSON.parse(value)
-            );
-        });
-        settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
-        });
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
+        settings
+            .getMultiple(['endpoint', 'ipType', 'rtt', 'reserved', 'profiles', 'lang', 'proxyMode'])
+            .then((values) => {
+                setEndpoint(
+                    typeof values.endpoint === 'undefined'
+                        ? defaultSettings.endpoint
+                        : values.endpoint
+                );
+                setIpType(
+                    typeof values.ipType === 'undefined' ? defaultSettings.ipType : values.ipType
+                );
+                setRtt(typeof values.rtt === 'undefined' ? defaultSettings.rtt : values.rtt);
+                setReserved(
+                    typeof values.reserved === 'undefined'
+                        ? defaultSettings.reserved
+                        : values.reserved
+                );
+                setProfiles(
+                    typeof values.profiles === 'undefined'
+                        ? JSON.parse(defaultSettings.profiles)
+                        : JSON.parse(values.profiles)
+                );
+                setLang(typeof values.lang === 'undefined' ? defaultSettings.lang : values.lang);
+                setProxyMode(
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode
+                );
+            })
+            .catch((error) => {
+                console.error('Error fetching settings:', error);
+            });
 
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'changePage') {

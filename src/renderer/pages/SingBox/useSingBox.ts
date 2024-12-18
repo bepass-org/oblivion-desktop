@@ -7,7 +7,7 @@ import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../../defaultS
 const useSingBox = () => {
     useGoBackOnEscape();
     const appLang = useTranslate();
-    const [closeHelper, setCloseSHelper] = useState<boolean>();
+    const [closeHelper, setCloseHelper] = useState<boolean>();
     const [mtu, setMtu] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
@@ -16,28 +16,54 @@ const useSingBox = () => {
     const [geoBlock, setGeoBlock] = useState<undefined | boolean>();
 
     useEffect(() => {
-        settings.get('closeHelper').then((value) => {
-            setCloseSHelper(typeof value === 'undefined' ? defaultSettings.closeHelper : value);
-        });
-        settings.get('singBoxMTU').then((value) => {
-            setMtu(typeof value === 'undefined' ? defaultSettings.singBoxMTU : value);
-        });
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
-        settings.get('singBoxGeoIp').then((value) => {
-            setGeoIp(typeof value === 'undefined' ? singBoxGeoIp[0].geoIp : value);
-        });
-        settings.get('singBoxGeoSite').then((value) => {
-            setGeoSite(typeof value === 'undefined' ? singBoxGeoSite[0].geoSite : value);
-        });
-        settings.get('singBoxGeoBlock').then((value) => {
-            setGeoBlock(typeof value === 'undefined' ? defaultSettings.singBoxGeoBlock : value);
-        });
+        settings
+            .getMultiple([
+                'closeHelper',
+                'singBoxMTU',
+                'proxyMode',
+                'singBoxGeoIp',
+                'singBoxGeoSite',
+                'singBoxGeoBlock'
+            ])
+            .then((values) => {
+                setCloseHelper(
+                    typeof values.closeHelper === 'undefined'
+                        ? defaultSettings.closeHelper
+                        : values.closeHelper
+                );
+                setMtu(
+                    typeof values.singBoxMTU === 'undefined'
+                        ? defaultSettings.singBoxMTU
+                        : values.singBoxMTU
+                );
+                setProxyMode(
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode
+                );
+                setGeoIp(
+                    typeof values.singBoxGeoIp === 'undefined'
+                        ? singBoxGeoIp[0].geoIp
+                        : values.singBoxGeoIp
+                );
+                setGeoSite(
+                    typeof values.singBoxGeoSite === 'undefined'
+                        ? singBoxGeoSite[0].geoSite
+                        : values.singBoxGeoSite
+                );
+                setGeoBlock(
+                    typeof values.singBoxGeoBlock === 'undefined'
+                        ? defaultSettings.singBoxGeoBlock
+                        : values.singBoxGeoBlock
+                );
+            })
+            .catch((error) => {
+                console.error('Error fetching settings:', error);
+            });
     }, []);
 
     const handleCloseHelperOnClick = useCallback(() => {
-        settings.set('closeHelper', !closeHelper).then(() => setCloseSHelper(!closeHelper));
+        settings.set('closeHelper', !closeHelper).then(() => setCloseHelper(!closeHelper));
     }, [closeHelper]);
 
     const handleCloseHelperOnKeyDown = useCallback(

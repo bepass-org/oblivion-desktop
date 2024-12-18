@@ -159,33 +159,35 @@ const useLanding = () => {
     };
 
     useEffect(() => {
-        /*settings.get('theme').then((value) => {
-            setTheme(typeof value === 'undefined' ? defaultSettings.theme : value);
-        });*/
-        settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? getLanguageName() : value);
-        });
-        settings.get('ipData').then((value) => {
-            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
-        });
-        /*settings.get('psiphon').then((value) => {
-            setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
-        });
-        settings.get('gool').then((value) => {
-            setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
-        });*/
-        settings.get('method').then((value) => {
-            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
-        });
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
-        settings.get('shortcut').then((value) => {
-            setShortcut(typeof value === 'undefined' ? defaultSettings.shortcut : value);
-        });
-        settings.get('dataUsage').then((value) => {
-            setDataUsage(typeof value === 'undefined' ? defaultSettings.dataUsage : value);
-        });
+        settings
+            .getMultiple(['lang', 'ipData', 'method', 'proxyMode', 'shortcut', 'dataUsage'])
+            .then((values) => {
+                setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
+                setIpData(
+                    typeof values.ipData === 'undefined' ? defaultSettings.ipData : values.ipData
+                );
+                setMethod(
+                    typeof values.method === 'undefined' ? defaultSettings.method : values.method
+                );
+                setProxyMode(
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode
+                );
+                setShortcut(
+                    typeof values.shortcut === 'undefined'
+                        ? defaultSettings.shortcut
+                        : values.shortcut
+                );
+                setDataUsage(
+                    typeof values.dataUsage === 'undefined'
+                        ? defaultSettings.dataUsage
+                        : values.dataUsage
+                );
+            })
+            .catch((error) => {
+                console.error('Error fetching settings:', error);
+            });
 
         cachedIpInfo = null;
         if (canCheckNewVer) {

@@ -51,36 +51,52 @@ const useOptions = () => {
     };
 
     useEffect(() => {
-        settings.get('ipData').then((value) => {
-            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
-        });
-        settings.get('port').then((value) => {
-            setPort(typeof value === 'undefined' ? defaultSettings.port : value);
-        });
-        /*settings.get('autoSetProxy').then((value) => {
-            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
-        });*/
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
-        settings.get('shareVPN').then((value) => {
-            setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
-        });
-        settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? dnsServers[0].value : value);
-        });
-        settings.get('routingRules').then((value) => {
-            setRoutingRules(typeof value === 'undefined' ? defaultSettings.routingRules : value);
-        });
-        settings.get('lang').then((value) => {
-            setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
-        });
-        settings.get('method').then((value) => {
-            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
-        });
-        settings.get('dataUsage').then((value) => {
-            setDataUsage(typeof value === 'undefined' ? defaultSettings.dataUsage : value);
-        });
+        settings
+            .getMultiple([
+                'ipData',
+                'port',
+                'proxyMode',
+                'shareVPN',
+                'dns',
+                'routingRules',
+                'lang',
+                'method',
+                'dataUsage'
+            ])
+            .then((values) => {
+                setIpData(
+                    typeof values.ipData === 'undefined' ? defaultSettings.ipData : values.ipData
+                );
+                setPort(typeof values.port === 'undefined' ? defaultSettings.port : values.port);
+                setProxyMode(
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode
+                );
+                setShareVPN(
+                    typeof values.shareVPN === 'undefined'
+                        ? defaultSettings.shareVPN
+                        : values.shareVPN
+                );
+                setDns(typeof values.dns === 'undefined' ? dnsServers[0].value : values.dns);
+                setRoutingRules(
+                    typeof values.routingRules === 'undefined'
+                        ? defaultSettings.routingRules
+                        : values.routingRules
+                );
+                setLang(typeof values.lang === 'undefined' ? defaultSettings.lang : values.lang);
+                setMethod(
+                    typeof values.method === 'undefined' ? defaultSettings.method : values.method
+                );
+                setDataUsage(
+                    typeof values.dataUsage === 'undefined'
+                        ? defaultSettings.dataUsage
+                        : values.dataUsage
+                );
+            })
+            .catch((error) => {
+                console.error('Error fetching settings:', error);
+            });
 
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'changePage') {

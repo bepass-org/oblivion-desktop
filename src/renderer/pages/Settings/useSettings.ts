@@ -35,33 +35,29 @@ const useSettings = () => {
     useGoBackOnEscape();
 
     useEffect(() => {
-        /*settings.get('scan').then((value) => {
-            setScan(typeof value === 'undefined' ? defaultSettings.scan : value);
-        });*/
-        /*settings.get('endpoint').then((value) => {
-            setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
-        });*/
-        /*settings.get('ipType').then((value) => {
-            setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
-        });*/
-        /*settings.get('psiphon').then((value) => {
-            setPsiphon(typeof value === 'undefined' ? defaultSettings.psiphon : value);
-        });*/
-        settings.get('location').then((value) => {
-            setLocation(typeof value === 'undefined' ? defaultSettings.location : value);
-        });
-        settings.get('license').then((value) => {
-            setLicense(typeof value === 'undefined' ? defaultSettings.license : value);
-        });
-        /*settings.get('gool').then((value) => {
-            setGool(typeof value === 'undefined' ? defaultSettings.gool : value);
-        });*/
-        settings.get('method').then((value) => {
-            setMethod(typeof value === 'undefined' ? defaultSettings.method : value);
-        });
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
+        settings
+            .getMultiple(['location', 'license', 'method', 'proxyMode'])
+            .then((values) => {
+                setLocation(
+                    typeof values.location === 'undefined'
+                        ? defaultSettings.location
+                        : values.location
+                );
+                setLicense(
+                    typeof values.license === 'undefined' ? defaultSettings.license : values.license
+                );
+                setMethod(
+                    typeof values.method === 'undefined' ? defaultSettings.method : values.method
+                );
+                setProxyMode(
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode
+                );
+            })
+            .catch((error) => {
+                console.error('Error fetching settings:', error);
+            });
 
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'changePage') {
