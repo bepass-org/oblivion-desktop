@@ -237,14 +237,14 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('wp-start', (ok:any) => {
+        ipcRenderer.on('wp-start', (ok: any) => {
             if (ok) {
                 setIsLoading(false);
                 setIsConnected(true);
             }
         });
 
-        ipcRenderer.on('wp-end', (ok:any) => {
+        ipcRenderer.on('wp-end', (ok: any) => {
             if (ok) {
                 setIsConnected(false);
                 setIsLoading(false);
