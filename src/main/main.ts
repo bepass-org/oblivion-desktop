@@ -345,6 +345,17 @@ if (!gotTheLock) {
 
                 mainWindow.loadURL(resolveHtmlPath('index.html'));
 
+                app.setAsDefaultProtocolClient('oblivion');
+                app.on('open-url', (event: any, url: string) => {
+                    event.preventDefault();
+                    if (mainWindow) {
+                        mainWindow.show();
+                        //redirectTo('/');
+                        //console.log('Received URL:', url);
+                        //mainWindow.webContents.send('process-url', url);
+                    }
+                });
+
                 mainWindow.on('ready-to-show', async () => {
                     if (!mainWindow) {
                         throw new Error('"mainWindow" is not defined');

@@ -197,6 +197,14 @@
             "assets/bin/**"
         ],
         "afterSign": ".erb/scripts/notarize.js",
+        "protocols": [
+            {
+                "name": "Oblivion Protocol",
+                "schemes": [
+                    "oblivion"
+                ]
+            }
+        ],
         "mac": {
             "target": [
                 {
