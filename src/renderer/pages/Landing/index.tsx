@@ -37,7 +37,7 @@ export default function Landing() {
 
     return (
         <>
-            <ConfigHandler appLang={appLang} />
+            <ConfigHandler isConnected={isConnected} isLoading={isLoading} appLang={appLang} />
             <LandingHeader
                 handleMenuOnKeyDown={handleMenuOnKeyDown}
                 hasNewUpdate={hasNewUpdate}
