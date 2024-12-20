@@ -3,6 +3,7 @@ import { settings } from '../../../lib/settings';
 import { useStore } from '../../../store';
 import useTranslate from '../../../../localization/useTranslate';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
+import { validateLicense } from '../../../lib/inputSanitizer';
 
 interface LicenseModalProps {
     isOpen: boolean;
@@ -27,8 +28,7 @@ const useLicenseModal = (props: LicenseModalProps) => {
     }, [onClose]);
 
     const onSaveModalClick = useCallback(() => {
-        const regex = /^[a-zA-Z0-9-]*$/;
-        const tmp = regex.test(licenseInput) ? licenseInput : '';
+        const tmp = validateLicense(licenseInput) ? licenseInput : '';
         setLicenseInput(tmp);
         setLicense(tmp);
         settings.set('license', tmp);
