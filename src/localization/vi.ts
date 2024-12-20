@@ -51,7 +51,7 @@ const vietnamese: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Bật Psiphon',
         method_psiphon_location: 'Quốc gia',
-        method_psiphon_location_auto: 'Tự động',
+        method_psiphon_location_auto: 'ngẫu nhiên',
         method_psiphon_location_desc: 'Chọn IP quốc gia mong muốn',
         endpoint: 'Điểm kết thúc',
         endpoint_desc: 'Kết hợp giữa địa chỉ IP hoặc tên miền, cùng với cổng',

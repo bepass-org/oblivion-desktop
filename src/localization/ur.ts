@@ -51,7 +51,7 @@ const urdu: Language = {
         method_psiphon: 'سائفون',
         method_psiphon_desc: 'سائفون فعال کریں',
         method_psiphon_location: 'ملک',
-        method_psiphon_location_auto: 'خودکار',
+        method_psiphon_location_auto: 'بے ترتیب',
         method_psiphon_location_desc: 'پسندیدہ ملک کا آئی پی منتخب کریں',
         endpoint: 'اینڈپوائنٹ',
         endpoint_desc: 'آئی پی یا ڈومین نام کا مجموعہ، پورٹ کے ساتھ',

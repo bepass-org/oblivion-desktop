@@ -50,7 +50,7 @@ const arabic: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'تمكين Psiphon',
         method_psiphon_location: 'البلد',
-        method_psiphon_location_auto: 'تلقائي',
+        method_psiphon_location_auto: 'عشوائي',
         method_psiphon_location_desc: 'اختر عنوان IP للدولة المطلوبة',
         endpoint: 'نقطة النهاية',
         endpoint_desc: 'مزيج من عنوان IP أو اسم النطاق، مع المنفذ',

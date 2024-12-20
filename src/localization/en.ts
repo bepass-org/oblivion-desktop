@@ -51,7 +51,7 @@ const english: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Enable Psiphon',
         method_psiphon_location: 'Country',
-        method_psiphon_location_auto: 'Automatic',
+        method_psiphon_location_auto: 'Random',
         method_psiphon_location_desc: 'Select the desired country IP',
         endpoint: 'Endpoint',
         endpoint_desc: 'Combination of IP or domain name, along with port',

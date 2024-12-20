@@ -52,7 +52,7 @@ const turkish: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: "Psiphon'u etkinleştir",
         method_psiphon_location: 'Ülke',
-        method_psiphon_location_auto: 'Otomatik',
+        method_psiphon_location_auto: 'rastgele',
         method_psiphon_location_desc: "İstenen ülke IP'sini seçin",
         endpoint: 'Endpoint',
         endpoint_desc: 'IP veya alan adı kombinasyonu, port ile birlikte',

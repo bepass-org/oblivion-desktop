@@ -52,7 +52,7 @@ const indonesia: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Aktifkan Psiphon',
         method_psiphon_location: 'Negara',
-        method_psiphon_location_auto: 'Otomatis',
+        method_psiphon_location_auto: 'acak',
         method_psiphon_location_desc: 'Pilih IP negara yang diinginkan',
         endpoint: 'Titik Akhir',
         endpoint_desc: 'Kombinasi IP atau nama domain, bersama dengan port',

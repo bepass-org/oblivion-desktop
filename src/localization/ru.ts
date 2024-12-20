@@ -51,7 +51,7 @@ const russian: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Включить Psiphon',
         method_psiphon_location: 'Страна',
-        method_psiphon_location_auto: 'Автоматически',
+        method_psiphon_location_auto: 'случайный',
         method_psiphon_location_desc: 'Выберите желаемый IP-адрес страны',
         endpoint: 'Конечная точка',
         endpoint_desc: 'Комбинация IP-адреса или доменного имени вместе с портом',

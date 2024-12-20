@@ -50,7 +50,7 @@ const chinese: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: '启用 Psiphon',
         method_psiphon_location: '选择国家',
-        method_psiphon_location_auto: '自动',
+        method_psiphon_location_auto: '随机',
         method_psiphon_location_desc: '选择所需的国家 IP 地址',
         endpoint: '端点',
         endpoint_desc: 'IP 或域名与端口的组合',

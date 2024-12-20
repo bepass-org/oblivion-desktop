@@ -51,7 +51,7 @@ const brazilianPortuguese: Language = {
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Ativar Psiphon',
         method_psiphon_location: 'País',
-        method_psiphon_location_auto: 'Automático',
+        method_psiphon_location_auto: 'aleatório',
         method_psiphon_location_desc: 'Selecione o IP do país desejado',
         endpoint: 'Endpoint',
         endpoint_desc: 'Combinação de IP ou nome de domínio, junto com porta',

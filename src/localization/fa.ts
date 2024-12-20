@@ -50,7 +50,7 @@ const persian: Language = {
         method_psiphon: 'سایفون',
         method_psiphon_desc: 'فعالسازی Psiphon',
         method_psiphon_location: 'انتخاب کشور',
-        method_psiphon_location_auto: 'Automatic',
+        method_psiphon_location_auto: 'Random',
         method_psiphon_location_desc: 'انتخاب آی\u200Cپی کشور موردنظر',
         endpoint: 'اندپوینت',
         endpoint_desc: 'ترکیبی از IP یا نام دامنه، به\u200Cهمراه پورت',
