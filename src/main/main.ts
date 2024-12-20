@@ -275,7 +275,6 @@ if (!gotTheLock) {
             show: false,
             width: windowWidth,
             height: windowHeight,
-            enableRemoteModule: true,
             autoHideMenuBar: true,
             transparent: false,
             center: true,
@@ -288,6 +287,8 @@ if (!gotTheLock) {
                 nativeWindowOpen: false,
                 devTools: false,
                 devToolsKeyCombination: false,
+                contextIsolation: true,
+                enableRemoteModule: false,
                 preload: app.isPackaged
                     ? path.join(__dirname, 'preload.js')
                     : path.join(__dirname, '../../.erb/dll/preload.js')
