@@ -1169,10 +1169,15 @@ html[data-bs-theme='dark'] .shimmer {
     z-index: 4;
     position: absolute;
 }
+@media (min-width: 400px) {
+    .splashScreen .splashScreenImg {
+        background-size: 400px;
+    }
+}
+
 html:not([lang='fa']) .splashScreen .splashScreenImg {
     background-image: url('../img/splashScreen/light-en.png');
 }
-
 [data-bs-theme='dark'] .splashScreen .splashScreenImg {
     background-image: url('../img/splashScreen/dark.png');
 }
