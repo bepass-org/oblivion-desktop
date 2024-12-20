@@ -34,13 +34,14 @@ const ProfileModal: FC<ProfileModalProps> = ({
         handleAddProfile,
         handleRemoveProfile,
         handleEditProfile,
-        checkValidEndpoint,
+        validEndpoint,
         handleOnClose,
         onSaveModal,
         onUpdateKeyDown,
         showModal,
         isEditing,
-        cancelEdit
+        cancelEdit,
+        sanitizeName
     } = useProfileModal({
         isOpen,
         onClose,
@@ -68,7 +69,7 @@ const ProfileModal: FC<ProfileModalProps> = ({
                             maxLength={10}
                             value={profileName}
                             onChange={(e) => {
-                                setProfileName(e.target.value);
+                                setProfileName(sanitizeName(e.target.value));
                             }}
                         />
                         <Input
@@ -84,8 +85,7 @@ const ProfileModal: FC<ProfileModalProps> = ({
                             <button
                                 className='btn'
                                 disabled={
-                                    checkValidEndpoint(profileEndpoint) === '' ||
-                                    profileName.length < 1
+                                    validEndpoint(profileEndpoint) === '' || profileName.length < 1
                                 }
                                 onClick={() => {
                                     handleAddProfile();
@@ -111,7 +111,7 @@ const ProfileModal: FC<ProfileModalProps> = ({
                                         typeof item.endpoint === 'string' &&
                                         item.endpoint.length > 7 && (
                                             <>
-                                                <div className='tagItem' key={Number(index)}>
+                                                <div className='tagItem' key={index}>
                                                     <i
                                                         role='presentation'
                                                         className='material-icons closeIco'

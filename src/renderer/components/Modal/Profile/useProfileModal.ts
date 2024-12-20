@@ -5,6 +5,7 @@ import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
 import { defaultToast } from '../../../lib/toasts';
 import { Profile } from '../../../pages/Scanner/useScanner';
+import { sanitizeProfileName, validEndpoint } from '../../../lib/inputSanitizer';
 
 type ProfileModalProps = {
     isOpen: boolean;
@@ -23,22 +24,12 @@ const useProfileModal = (props: ProfileModalProps) => {
 
     const appLang = useTranslate();
 
-    const checkValidEndpoint = useCallback((value: string) => {
-        const endpoint = value.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        let regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
-        if (endpoint.startsWith('[')) {
-            regex =
-                /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))/;
-        }
-        return regex.test(endpoint) && endpoint.length > 7 ? endpoint : '';
-    }, []);
-
     const handleAddProfile = useCallback(() => {
         if (editingIndex === null && profilesInput?.length > 6) {
             defaultToast(appLang.modal.profile_limitation('7'), 'PROFILE_LIMITATION', 5000);
         } else if (
             profileName !== '' &&
-            checkValidEndpoint(profileEndpoint) !== '' &&
+            validEndpoint(profileEndpoint) !== '' &&
             profileEndpoint.length > 7
         ) {
             const newProfile = { name: profileName, endpoint: profileEndpoint };
@@ -63,14 +54,7 @@ const useProfileModal = (props: ProfileModalProps) => {
         }
         setProfileName('');
         setProfileEndpoint('');
-    }, [
-        appLang.modal,
-        checkValidEndpoint,
-        editingIndex,
-        profileEndpoint,
-        profileName,
-        profilesInput
-    ]);
+    }, [appLang.modal, editingIndex, profileEndpoint, profileName, profilesInput]);
 
     const handleRemoveProfile = (key: number) => {
         const updatedProfiles = profilesInput.filter((_, index: number) => index !== key);
@@ -108,11 +92,7 @@ const useProfileModal = (props: ProfileModalProps) => {
     }, [onClose]);
 
     const onSaveModal = useCallback(() => {
-        if (
-            profileName !== '' &&
-            checkValidEndpoint(profileEndpoint) &&
-            profileEndpoint.length > 7
-        ) {
+        if (profileName !== '' && validEndpoint(profileEndpoint) && profileEndpoint.length > 7) {
             handleAddProfile();
         } else {
             settings.set('profiles', JSON.stringify(profilesInput));
@@ -130,7 +110,6 @@ const useProfileModal = (props: ProfileModalProps) => {
         //setProfileName,
         //setProfileEndpoint,
         handleAddProfile,
-        checkValidEndpoint,
         profileName,
         profileEndpoint
     ]);
@@ -177,9 +156,10 @@ const useProfileModal = (props: ProfileModalProps) => {
         handleRemoveProfile,
         handleEditProfile,
         cancelEdit,
-        checkValidEndpoint,
+        validEndpoint,
         handleOnClose,
-        isEditing: editingIndex !== null
+        isEditing: editingIndex !== null,
+        sanitizeName: sanitizeProfileName
     };
 };
 
