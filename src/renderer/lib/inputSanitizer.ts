@@ -1,0 +1,204 @@
+import toast from 'react-hot-toast';
+import { settings } from './settings';
+import { countries, defaultSettings } from '../../defaultSettings';
+import { defaultToast, settingsHaveChangedToast } from './toasts';
+
+type ConfigType =
+    | {
+          method: 'profile';
+          endpoint: string;
+          name: string;
+      }
+    | {
+          method: 'warp' | 'psiphon' | 'gool';
+          endpoint: string;
+          location: string;
+          license: string;
+          ipType: '' | 'v4' | 'v6';
+          reserved: '0' | '1';
+      };
+
+const UNTITLED = 'untitled';
+const isIPv4 = (address: string) => /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(address);
+const isIPv6 = (address: string) => /^[0-9a-fA-F:]+$/.test(address);
+const VALID_COUNTRIES = countries.map((c) => c.value);
+
+export const sanitizeProfileName = (name: string): string => {
+    name = name.trim();
+    name = name.replace(/[^a-zA-Z0-9-_ ]/g, '');
+    name = name.replace(/@/g, '');
+    name = name.replace(/[?&]/g, '');
+    if (name.length > 10) {
+        name = name.slice(0, 10);
+    }
+    return name;
+};
+
+export const validEndpoint = (value: string) => {
+    const endpoint = value.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    let regex = /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})$/;
+    if (endpoint.startsWith('[')) {
+        regex =
+            /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))/;
+    }
+    return regex.test(endpoint) && endpoint.length > 7 ? endpoint : '';
+};
+
+export const newProfile = (savedProfiles: any, newName: string, newEndpoint: string) => {
+    if (!Array.isArray(savedProfiles)) {
+        savedProfiles =
+            typeof savedProfiles === 'undefined'
+                ? JSON.parse(defaultSettings.profiles)
+                : JSON.parse(savedProfiles);
+    }
+    if (savedProfiles.length > 7) {
+        return false;
+    }
+    const isDuplicate =
+        Array.isArray(savedProfiles) &&
+        savedProfiles.some((item: any) => item?.name === newName && item?.endpoint === newEndpoint);
+    if (!isDuplicate) {
+        return [...savedProfiles, { name: newName, endpoint: newEndpoint }];
+    } else {
+        return false;
+    }
+};
+
+export const validateCountry = (location: string, method: string): string => {
+    const upperCountry = location.toUpperCase();
+    return String(
+        method === 'psiphon' && VALID_COUNTRIES.includes(upperCountry) ? upperCountry : ''
+    );
+};
+
+export const validateLicense = (license: string): string => {
+    return /^[a-zA-Z0-9-]*$/.test(license) ? license : '';
+};
+
+export const determineIpType = (endpoint: string, ipType: string): '' | 'v4' | 'v6' => {
+    if (endpoint === defaultSettings.endpoint) {
+        return ipType === 'v4' || ipType === 'v6' ? ipType : '';
+    } else if (isIPv4(endpoint)) {
+        return 'v4';
+    } else if (isIPv6(endpoint)) {
+        return 'v6';
+    }
+    return ipType === 'v4' || ipType === 'v6' ? ipType : '';
+};
+
+export const validateReserved = (reserved: string): '0' | '1' => {
+    return reserved === '0' || reserved === '1'
+        ? (reserved as '0' | '1')
+        : defaultSettings.reserved
+          ? '1'
+          : '0';
+};
+
+export const sanitizeConfig = (input: string): string => {
+    let atCount = 0;
+    input = input.toLowerCase();
+    input = input.replace('cfon', 'psiphon');
+    input = input.replace(/@/g, (match) => {
+        atCount += 1;
+        return atCount > 1 ? '' : match;
+    });
+    let hashCount = 0;
+    input = input.replace(/#/g, (match) => {
+        hashCount += 1;
+        return hashCount > 1 ? '' : match;
+    });
+    let questionMarkCount = 0;
+    input = input.replace(/\?/g, (match) => {
+        questionMarkCount += 1;
+        return questionMarkCount > 1 ? '' : match;
+    });
+    return input;
+};
+
+export const parseProfileConfig = (pastedText: string): ConfigType | null => {
+    const match = /^oblivion:\/\/profile@([^#]*)#([a-zA-Z0-9-_ &?]*)$/i.exec(pastedText);
+    if (!match) return null;
+    const endpoint = match[1] || defaultSettings.endpoint;
+    const name = sanitizeProfileName(match[2]);
+    return {
+        method: 'profile',
+        endpoint,
+        name: name.length < 3 ? UNTITLED : name
+    };
+};
+
+export const validateConfig = (pastedText: string): ConfigType | null => {
+    if (pastedText.startsWith('oblivion://profile')) {
+        return parseProfileConfig(pastedText);
+    } else if (pastedText.startsWith('oblivion://')) {
+        return parseConnectionConfig(pastedText);
+    }
+    return null;
+};
+
+export const parseConnectionConfig = (pastedText: string): ConfigType | null => {
+    const match = /^oblivion:\/\/(warp|psiphon|gool)@([^?]*)\??(.*)$/i.exec(pastedText);
+    if (!match) return null;
+    const method: 'warp' | 'psiphon' | 'gool' = (match[1] as any) || defaultSettings.method;
+    const endpoint = match[2] || defaultSettings.endpoint;
+    const params = match[3] ? new URLSearchParams(match[3]) : new URLSearchParams();
+    const location = validateCountry(params?.get('location') || '', method);
+    const license = validateLicense(params?.get('license') || '');
+    const reserved = validateReserved(params?.get('reserved') || '');
+    const ipType = determineIpType(endpoint, params?.get('ip') || '');
+    return {
+        method,
+        endpoint,
+        location,
+        license,
+        ipType,
+        reserved
+    };
+};
+
+export const saveConfig = (
+    pastedText: string,
+    isConnected: boolean,
+    isLoading: boolean,
+    appLang: any
+) => {
+    pastedText = sanitizeConfig(pastedText);
+    const config = validateConfig(pastedText);
+    if (config) {
+        toast.remove('SETTINGS_CHANGED');
+        if (config.method === 'profile') {
+            setTimeout(async () => {
+                const profiles = await settings.get('profiles');
+                const canSaveProfile = newProfile(profiles, config.name, config.endpoint);
+                if (canSaveProfile) {
+                    settings.set('profiles', JSON.stringify(canSaveProfile));
+                    defaultToast(appLang?.toast?.profile_added, 'SETTINGS_CHANGED', 5000);
+                }
+            }, 200);
+        } else {
+            if (isConnected) {
+                settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+            } else {
+                defaultToast(appLang?.toast?.config_added, 'SETTINGS_CHANGED', 5000);
+            }
+            setTimeout(async () => {
+                await settings.set('method', config.method === 'warp' ? '' : config.method);
+                await settings.set('endpoint', config.endpoint);
+                await settings.set('location', config.location);
+                if (config.license !== '') {
+                    await settings.set('license', config.license);
+                }
+                await settings.set(
+                    'ipType',
+                    config.ipType === '' ? '' : '-' + config.ipType.replace('v', '')
+                );
+                await settings.set('reserved', config.reserved === '1' ? true : false);
+            }, 200);
+        }
+        setTimeout(() => {
+            toast.remove('SETTINGS_CHANGED');
+        }, 5000);
+    } else {
+        //console.log(config)
+    }
+};
