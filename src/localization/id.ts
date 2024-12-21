@@ -186,7 +186,7 @@ const indonesia: Language = {
         error_singbox_failed_stop: 'Gagal menghentikan Sing-Box!',
         error_singbox_failed_start: 'Gagal memulai Sing-Box!',
         error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!',
-        error_faild_connection: 'Gagal menjalin koneksi!',
+        error_failed_connection: 'Gagal menjalin koneksi!',
         error_canceled_by_user: 'Operasi dibatalkan oleh pengguna.'
     },
     about: {

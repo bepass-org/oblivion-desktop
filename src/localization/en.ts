@@ -186,7 +186,7 @@ const english: Language = {
         error_singbox_failed_stop: 'Failed to stop Sing-Box!',
         error_singbox_failed_start: 'Failed to start Sing-Box!',
         error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!',
-        error_faild_connection: 'Failed to establish connection!',
+        error_failed_connection: 'Failed to establish connection!',
         error_canceled_by_user: 'The operation was canceled by the user.'
     },
     about: {

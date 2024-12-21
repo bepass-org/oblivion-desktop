@@ -184,7 +184,7 @@ const arabic: Language = {
         error_singbox_failed_stop: 'فشل في إيقاف صندوق الغناء!',
         error_singbox_failed_start: 'فشل في بدء تشغيل صندوق الغناء!',
         error_wp_reset_peer: 'تم قطع الاتصال بـ Cloudflare بشكل غير متوقع!',
-        error_faild_connection: 'فشل في إنشاء الاتصال!',
+        error_failed_connection: 'فشل في إنشاء الاتصال!',
         error_canceled_by_user: 'تم إلغاء العملية من قبل المستخدم.'
     },
     about: {

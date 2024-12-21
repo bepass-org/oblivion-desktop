@@ -187,7 +187,7 @@ const vietnamese: Language = {
         error_singbox_failed_stop: 'Không thể dừng Hộp hát!',
         error_singbox_failed_start: 'Không thể khởi động Hộp hát!',
         error_wp_reset_peer: 'Kết nối đến Cloudflare bị gián đoạn đột ngột!',
-        error_faild_connection: 'Không thể thiết lập kết nối!',
+        error_failed_connection: 'Không thể thiết lập kết nối!',
         error_canceled_by_user: 'Hoạt động đã bị hủy bởi người dùng.'
     },
     about: {

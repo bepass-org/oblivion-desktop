@@ -1,25 +1,25 @@
 # Dev Docs
 
-this is a [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
+this is an [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
 ](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
-in a nutshell its a GUI that interacts with [warp-plus](https://github.com/bepass-org/warp-plus/) binary and changes system proxy setting.
+in a nutshell it's a GUI that interacts with [warp-plus](https://github.com/bepass-org/warp-plus/) binary and changes system proxy setting.
 
 <!-- and [sing-box](https://sing-box.sagernet.org/alig) binaries. -->
 
 ## Getting Started
 
-0. make sure you have [node](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
+1. make sure you have [node](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 
-1. clone this repo
+2. clone this repo
 
-2. install packages
+3. install packages
 
 ```shell
 npm install
 ```
 
-3. run the development server
+4. run the development server
 
 ```shell
 npm run dev # or npm start

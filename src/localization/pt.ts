@@ -188,7 +188,7 @@ const brazilianPortuguese: Language = {
         error_singbox_failed_stop: 'Falha ao parar a Caixa de Canto!',
         error_singbox_failed_start: 'Falha ao iniciar a Caixa de Canto!',
         error_wp_reset_peer: 'A conexão com Cloudflare foi interrompida inesperadamente!',
-        error_faild_connection: 'Falha ao estabelecer conexão!',
+        error_failed_connection: 'Falha ao estabelecer conexão!',
         error_canceled_by_user: 'A operação foi cancelada pelo usuário.'
     },
     about: {

@@ -188,7 +188,7 @@ const urdu: Language = {
         error_singbox_failed_stop: 'سنگ باکس کو روکنے میں ناکامی!',
         error_singbox_failed_start: 'سنگ باکس کو شروع کرنے میں ناکامی!',
         error_wp_reset_peer: 'کلاؤڈفلئیر سے کنیکشن غیر متوقع طور پر منقطع ہو گیا!',
-        error_faild_connection: 'کنکشن قائم کرنے میں ناکامی!',
+        error_failed_connection: 'کنکشن قائم کرنے میں ناکامی!',
         error_canceled_by_user: 'عملیہ صارف کے ذریعہ منسوخ کر دیا گیا۔'
     },
     about: {

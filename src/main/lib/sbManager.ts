@@ -235,7 +235,7 @@ class SingBoxManager {
                 log.error(`Failed to establish Sing-Box connection after ${maxAttempts} attempts.`);
                 this.sendMessageToRenderer(
                     'guide-toast',
-                    `${this.appLang?.log.error_faild_connection}`
+                    `${this.appLang?.log.error_failed_connection}`
                 );
                 ipcMain.emit('wp-end');
                 return false;

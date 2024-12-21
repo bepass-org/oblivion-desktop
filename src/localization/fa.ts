@@ -187,7 +187,7 @@ const persian: Language = {
         error_singbox_failed_stop: 'متوقف‌کردن سینگ‌باکس با خطا مواجه شد!',
         error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!',
         error_wp_reset_peer: 'اتصال به کلودفلر به‌طور غیرمنتظره قطع شد!',
-        error_faild_connection: 'اتصال موفقیت‌آمیز نبود!',
+        error_failed_connection: 'اتصال موفقیت‌آمیز نبود!',
         error_canceled_by_user: 'عملیات توسط کاربر لغو شد.'
     },
     about: {

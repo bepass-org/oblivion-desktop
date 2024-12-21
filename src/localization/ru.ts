@@ -188,7 +188,7 @@ const russian: Language = {
         error_singbox_failed_stop: 'Не удалось остановить Sing-Box!',
         error_singbox_failed_start: 'Не удалось запустить Sing-Box!',
         error_wp_reset_peer: 'Соединение с Cloudflare было неожиданно прервано!',
-        error_faild_connection: 'Не удалось установить соединение!',
+        error_failed_connection: 'Не удалось установить соединение!',
         error_canceled_by_user: 'Операция была отменена пользователем.'
     },
     about: {
