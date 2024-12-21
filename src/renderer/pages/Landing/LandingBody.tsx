@@ -2,8 +2,9 @@ import classNames from 'classnames';
 import { FC, FormEvent } from 'react';
 import { Swipe } from 'react-swipe-component';
 import { cfFlag } from '../../lib/cfFlag';
-import { IpConfig, INetStats } from './useLanding';
+import { IpConfig } from './useLanding';
 import { Language } from '../../../localization/type';
+import { INetStats } from '../../../constants';
 
 interface LandingBodyProps {
     appLang: Language;

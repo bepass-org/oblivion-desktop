@@ -2,8 +2,9 @@ import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { removeDirIfExists } from './utils';
-import { stuffPath, restartApp } from '../ipcListeners/wp';
+import { restartApp } from '../ipcListeners/wp';
 import { getTranslate } from '../../localization';
+import { stuffPath } from '../../constants';
 //import { customEvent } from './customEvent';
 //import { getTranslateElectron } from '../../localization/electron';
 //import fs from 'fs';
@@ -106,7 +107,9 @@ export const handleWpErrors = (strData: string, ipcEvent: IpcMainEvent, port: st
     Object.entries(wpErrorTranslation).forEach(([errorMsg, translator]) => {
         if (strData.includes(errorMsg)) {
             ipcEvent.reply('guide-toast', translator({ port }));
-            removeDirIfExists(stuffPath);
+            removeDirIfExists(stuffPath).catch((err) =>
+                console.log('removeDirIfExists Error:', err.message)
+            );
         }
     });
 };

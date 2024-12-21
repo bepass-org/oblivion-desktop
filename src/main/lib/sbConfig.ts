@@ -1,29 +1,16 @@
 import fs from 'fs';
 import log from 'electron-log';
-import { sbConfigPath } from '../ipcListeners/wp';
 import { disableSbLogs } from '../dxConfig';
+import {
+    sbConfigPath,
+    sbCacheName,
+    IConfig,
+    IGeoConfig,
+    IRoutingRules,
+    isDarwin
+} from '../../constants';
 
-export function createSbConfig(
-    socksPort: number,
-    mtu: number,
-    geoBlock: boolean,
-    geoIp: string,
-    geoSite: string,
-    ipSet: string[],
-    domainSet: string[],
-    domainSuffixSet: string[],
-    processSet: string[]
-) {
-    if (
-        socksPort === undefined ||
-        mtu === undefined ||
-        geoBlock === undefined ||
-        geoIp === undefined ||
-        geoSite === undefined
-    ) {
-        throw new Error('some required parameters are undefined');
-    }
-
+export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
     const logConfig = disableSbLogs
         ? { disabled: true }
         : {
@@ -33,7 +20,7 @@ export function createSbConfig(
               output: 'sing-box.log'
           };
 
-    const config = {
+    const configuration = {
         log: logConfig,
         dns: {
             final: 'dns-remote',
@@ -44,7 +31,7 @@ export function createSbConfig(
                     outbound: ['any'],
                     server: 'dns-direct'
                 },
-                ...(geoBlock
+                ...(geoConfig.geoBlock
                     ? [
                           {
                               rule_set: [
@@ -60,10 +47,10 @@ export function createSbConfig(
                           }
                       ]
                     : []),
-                ...(geoSite !== 'none'
+                ...(geoConfig.geoSite !== 'none'
                     ? [
                           {
-                              rule_set: `geosite-${geoSite}`,
+                              rule_set: `geosite-${geoConfig.geoSite}`,
                               server: 'dns-direct'
                           }
                       ]
@@ -99,13 +86,13 @@ export function createSbConfig(
             {
                 type: 'tun',
                 tag: 'tun-in',
-                mtu: mtu,
+                mtu: config.tunMtu,
                 address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
                 strict_route: true,
                 stack: 'mixed',
-                sniff: process.platform === 'darwin' ? true : false,
-                sniff_override_destination: process.platform === 'darwin' ? true : false
+                sniff: isDarwin,
+                sniff_override_destination: isDarwin
             }
         ],
         outbounds: [
@@ -113,7 +100,7 @@ export function createSbConfig(
                 type: 'socks',
                 tag: 'socks-out',
                 server: '127.0.0.1',
-                server_port: socksPort,
+                server_port: config.socksPort,
                 version: '5'
             },
             {
@@ -139,7 +126,7 @@ export function createSbConfig(
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                ...(process.platform === 'darwin'
+                ...(isDarwin
                     ? [
                           {
                               network: 'udp',
@@ -151,55 +138,55 @@ export function createSbConfig(
                     ip_is_private: true,
                     outbound: 'direct-out'
                 },
-                ...(ipSet.length > 0
+                ...(rulesConfig.ipSet.length > 0
                     ? [
                           {
-                              ip_cidr: ipSet,
+                              ip_cidr: rulesConfig.ipSet,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(domainSet.length > 0
+                ...(rulesConfig.domainSet.length > 0
                     ? [
                           {
-                              domain: domainSet,
+                              domain: rulesConfig.domainSet,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(domainSuffixSet.length > 0
+                ...(rulesConfig.domainSuffixSet.length > 0
                     ? [
                           {
-                              domain_suffix: domainSuffixSet,
+                              domain_suffix: rulesConfig.domainSuffixSet,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(processSet.length > 0
+                ...(rulesConfig.processSet.length > 0
                     ? [
                           {
-                              process_name: processSet,
+                              process_name: rulesConfig.processSet,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(geoIp !== 'none'
+                ...(geoConfig.geoIp !== 'none'
                     ? [
                           {
-                              rule_set: `geoip-${geoIp}`,
+                              rule_set: `geoip-${geoConfig.geoIp}`,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(geoSite !== 'none'
+                ...(geoConfig.geoSite !== 'none'
                     ? [
                           {
-                              rule_set: `geosite-${geoSite}`,
+                              rule_set: `geosite-${geoConfig.geoSite}`,
                               outbound: 'direct-out'
                           }
                       ]
                     : []),
-                ...(geoBlock
+                ...(geoConfig.geoBlock
                     ? [
                           {
                               rule_set: [
@@ -216,63 +203,63 @@ export function createSbConfig(
                     : [])
             ],
             rule_set: [
-                ...(geoIp !== 'none'
+                ...(geoConfig.geoIp !== 'none'
                     ? [
                           {
-                              tag: `geoip-${geoIp}`,
+                              tag: `geoip-${geoConfig.geoIp}`,
                               type: 'local',
                               format: 'source',
-                              path: `geoip-${geoIp}.json`
+                              path: `./ruleset/geoip-${geoConfig.geoIp}.json`
                           }
                       ]
                     : []),
-                ...(geoSite !== 'none'
+                ...(geoConfig.geoSite !== 'none'
                     ? [
                           {
-                              tag: `geosite-${geoSite}`,
+                              tag: `geosite-${geoConfig.geoSite}`,
                               type: 'local',
                               format: 'source',
-                              path: `geosite-${geoSite}.json`
+                              path: `./ruleset/geosite-${geoConfig.geoSite}.json`
                           }
                       ]
                     : []),
-                ...(geoBlock
+                ...(geoConfig.geoBlock
                     ? [
                           {
                               tag: 'geosite-category-ads-all',
                               type: 'local',
                               format: 'source',
-                              path: 'geosite-category-ads-all.json'
+                              path: './ruleset/geosite-category-ads-all.json'
                           },
                           {
                               tag: 'geosite-malware',
                               type: 'local',
                               format: 'source',
-                              path: 'geosite-malware.json'
+                              path: './ruleset/geosite-malware.json'
                           },
                           {
                               tag: 'geosite-phishing',
                               type: 'local',
                               format: 'source',
-                              path: 'geosite-phishing.json'
+                              path: './ruleset/geosite-phishing.json'
                           },
                           {
                               tag: 'geosite-cryptominers',
                               type: 'local',
                               format: 'source',
-                              path: 'geosite-cryptominers.json'
+                              path: './ruleset/geosite-cryptominers.json'
                           },
                           {
                               tag: 'geoip-malware',
                               type: 'local',
                               format: 'source',
-                              path: 'geoip-malware.json'
+                              path: './ruleset/geoip-malware.json'
                           },
                           {
                               tag: 'geoip-phishing',
                               type: 'local',
                               format: 'source',
-                              path: 'geoip-phishing.json'
+                              path: './ruleset/geoip-phishing.json'
                           }
                       ]
                     : [])
@@ -283,12 +270,12 @@ export function createSbConfig(
         experimental: {
             cache_file: {
                 enabled: true,
-                path: 'sbCache.db',
+                path: sbCacheName,
                 store_fakeip: true
             }
         }
     };
 
-    fs.writeFileSync(sbConfigPath, JSON.stringify(config, null, 2), 'utf-8');
+    fs.writeFileSync(sbConfigPath, JSON.stringify(configuration, null, 2), 'utf-8');
     log.info(`Sing-Box config file has been created at ${sbConfigPath}`);
 }
