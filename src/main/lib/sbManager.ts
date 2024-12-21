@@ -406,12 +406,12 @@ class SingBoxManager {
 
     private async setupSecurityLists(): Promise<void> {
         const securityTasks = [
-            ['geoip', 'malware', 'security-ip.db'],
-            ['geoip', 'phishing', 'security-ip.db'],
-            ['geosite', 'malware', 'security.db'],
-            ['geosite', 'cryptominers', 'security.db'],
-            ['geosite', 'phishing', 'security.db'],
-            ['geosite', 'category-ads-all', 'security.db']
+            ['geoip', 'malware', 'geoip.db'],
+            ['geoip', 'phishing', 'geoip.db'],
+            ['geosite', 'malware', 'geosite.db'],
+            ['geosite', 'cryptominers', 'geosite.db'],
+            ['geosite', 'phishing', 'geosite.db'],
+            ['geosite', 'category-ads-all', 'geosite.db']
         ];
 
         await Promise.all(
