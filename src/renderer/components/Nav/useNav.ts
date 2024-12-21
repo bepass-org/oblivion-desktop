@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { ipcRenderer } from '../../lib/utils';
+//import { ipcRenderer } from '../../lib/utils';
 
 const useNav = () => {
     const isSticky = useCallback(() => {

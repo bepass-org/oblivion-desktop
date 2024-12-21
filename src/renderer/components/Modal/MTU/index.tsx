@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { defaultSettings } from '../../../../defaultSettings';
 import useMTUModal from './useMTUModal';
-import { lang } from '../../../../localization';
+//import { lang } from '../../../../localization';
 
 interface MTUModalProps {
     title: string;
