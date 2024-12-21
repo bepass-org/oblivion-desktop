@@ -10,7 +10,7 @@ import idID from './id';
 import arSA from './ar';
 import viVN from './vi';
 import ptBR from './pt';
-import urPK from './pt';
+import urPK from './ur';
 import { defaultSettings } from '../defaultSettings';
 
 type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
