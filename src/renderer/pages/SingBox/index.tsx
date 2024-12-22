@@ -4,35 +4,49 @@ import Nav from '../../components/Nav';
 import useSingBox from './useSingBox';
 import MTUModal from '../../components/Modal/MTU';
 import Tabs from '../../components/Tabs';
-import { singBoxGeoIp, singBoxGeoSite } from '../../../defaultSettings';
+import { singBoxGeoIp, singBoxGeoSite, singBoxLog, singBoxStack } from '../../../defaultSettings';
 
 export default function SingBox() {
     const {
         appLang,
-        closeHelper,
-        geoIp,
-        onChangeGeoIp,
-        geoSite,
-        onChangeGeoSite,
-        mtu,
-        setMtu,
-        handleCloseHelperOnClick,
-        handleCloseHelperOnKeyDown,
+        settingsState,
+        handleToggleSetting,
+        handleSelectChange,
+        handleKeyDown,
+        showPortModal,
         onClickMtu,
         onKeyDownClickMtu,
-        showPortModal,
-        proxyMode,
-        geoBlock,
-        handleSingBoxGeoBlockOnClick,
-        handleSingBoxGeoBlockOnKeyDown
+        setMtu
     } = useSingBox();
+
+    const {
+        closeHelper,
+        singBoxGeoIp: geoIp,
+        singBoxGeoSite: geoSite,
+        singBoxMTU: mtu,
+        singBoxGeoBlock: geoBlock,
+        singBoxLog: log,
+        singBoxStack: stack,
+        singBoxStrictRoute: strictRoute,
+        singBoxSniff: sniff,
+        singBoxSniffOverrideDest: sniffOverride,
+        singBoxUDP: udp,
+        proxyMode
+    } = settingsState;
 
     if (
         typeof closeHelper === 'undefined' ||
         typeof geoIp === 'undefined' ||
         typeof geoSite === 'undefined' ||
         typeof mtu === 'undefined' ||
-        typeof geoBlock === 'undefined'
+        typeof geoBlock === 'undefined' ||
+        typeof log === 'undefined' ||
+        typeof stack === 'undefined' ||
+        typeof strictRoute === 'undefined' ||
+        typeof sniff === 'undefined' ||
+        typeof sniffOverride === 'undefined' ||
+        typeof udp === 'undefined' ||
+        typeof proxyMode === 'undefined'
     )
         return <div className='settings' />;
 
@@ -41,7 +55,7 @@ export default function SingBox() {
             <Nav title={appLang.settings.singbox} />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <div className='container'>
-                    <Tabs active='singbox' proxyMode={proxyMode} />
+                    <Tabs active='singbox' proxyMode={proxyMode as string} />
                     <div className='settings' role='menu'>
                         <div className={classNames('item')}>
                             <label className='key' htmlFor='geo_rules'>
@@ -51,8 +65,8 @@ export default function SingBox() {
                                 <select
                                     tabIndex={-1}
                                     id='geo_rules'
-                                    onChange={onChangeGeoIp}
-                                    value={geoIp}
+                                    onChange={handleSelectChange('singBoxGeoIp')}
+                                    value={geoIp as string}
                                 >
                                     {singBoxGeoIp.map((option) => (
                                         <option
@@ -75,8 +89,8 @@ export default function SingBox() {
                                 <select
                                     tabIndex={-1}
                                     id='geo_rules'
-                                    onChange={onChangeGeoSite}
-                                    value={geoSite}
+                                    onChange={handleSelectChange('singBoxGeoSite')}
+                                    value={geoSite as string}
                                 >
                                     {singBoxGeoSite.map((option) => (
                                         <option
@@ -94,8 +108,8 @@ export default function SingBox() {
                         <div
                             role='button'
                             className={classNames('item')}
-                            onClick={handleSingBoxGeoBlockOnClick}
-                            onKeyDown={handleSingBoxGeoBlockOnKeyDown}
+                            onClick={() => handleToggleSetting('singBoxGeoBlock')}
+                            onKeyDown={handleKeyDown('singBoxGeoBlock')}
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='geo_block'>
@@ -106,22 +120,22 @@ export default function SingBox() {
                                     className={classNames('checkbox', geoBlock ? 'checked' : '')}
                                     tabIndex={-1}
                                 >
-                                    <i className='material-icons'>&#xe876;</i>
+                                    <i className='material-icons'></i>
                                 </div>
                             </div>
                             <div className='info'>{appLang.settings.geo_block_desc}</div>
                         </div>
                     </div>
                     <div className='moreSettings'>
-                        <i className='material-icons'>&#xe313;</i>
+                        <i className='material-icons'></i>
                         {appLang?.settings?.more_helper}
                     </div>
                     <div className='settings' role='menu' tabIndex={0}>
                         <div
                             role='button'
                             className={classNames('item')}
-                            onClick={handleCloseHelperOnClick}
-                            onKeyDown={handleCloseHelperOnKeyDown}
+                            onClick={() => handleToggleSetting('closeHelper')}
+                            onKeyDown={handleKeyDown('closeHelper')}
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='close_helper'>
@@ -132,17 +146,67 @@ export default function SingBox() {
                                     className={classNames('checkbox', closeHelper ? 'checked' : '')}
                                     tabIndex={-1}
                                 >
-                                    <i className='material-icons'>&#xe876;</i>
+                                    <i className='material-icons'></i>
                                 </div>
                             </div>
                             <div className='info'>{appLang.settings.close_helper_desc}</div>
                         </div>
                     </div>
                     <div className='moreSettings'>
-                        <i className='material-icons'>&#xe313;</i>
+                        <i className='material-icons'></i>
                         {appLang?.settings?.more}
                     </div>
                     <div className='settings' role='menu' tabIndex={0}>
+                        <div className={classNames('item')}>
+                            <label className='key' htmlFor='log'>
+                                Log
+                            </label>
+                            <div className='value'>
+                                <select
+                                    tabIndex={-1}
+                                    id='log'
+                                    onChange={handleSelectChange('singBoxLog')}
+                                    value={log as string}
+                                >
+                                    {singBoxLog.map((option) => (
+                                        <option
+                                            value={option.value}
+                                            tabIndex={0}
+                                            key={option.value}
+                                        >
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='info'>Set SingBox Log Level</div>
+                        </div>
+
+                        <div className={classNames('item')}>
+                            <label className='key' htmlFor='stack'>
+                                Stack
+                            </label>
+                            <div className='value'>
+                                <select
+                                    tabIndex={-1}
+                                    id='stack'
+                                    onChange={handleSelectChange('singBoxStack')}
+                                    value={stack as string}
+                                >
+                                    {singBoxStack.map((option) => (
+                                        <option
+                                            value={option.value}
+                                            tabIndex={0}
+                                            key={option.value}
+                                        >
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='info'>Set SinBox Stack</div>
+                        </div>
+
                         <div
                             role='button'
                             className='item'
@@ -160,11 +224,98 @@ export default function SingBox() {
                             </div>
                             <div className='info'>{appLang.settings.mtu_desc}</div>
                         </div>
+
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={() => handleToggleSetting('singBoxStrictRoute')}
+                            onKeyDown={handleKeyDown('singBoxStrictRoute')}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='strict_route'>
+                                Strict Route
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames('checkbox', strictRoute ? 'checked' : '')}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>Set strict route</div>
+                        </div>
+
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={() => handleToggleSetting('singBoxSniff')}
+                            onKeyDown={handleKeyDown('singBoxSniff')}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='sniff'>
+                                Sniff
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames('checkbox', sniff ? 'checked' : '')}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>Set Sniff</div>
+                        </div>
+
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={() => handleToggleSetting('singBoxSniffOverrideDest')}
+                            onKeyDown={handleKeyDown('singBoxSniffOverrideDest')}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='sniff_override_destination'>
+                                Sniff Override Destination
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames(
+                                        'checkbox',
+                                        sniffOverride ? 'checked' : ''
+                                    )}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>Set sniff override destination</div>
+                        </div>
+
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={() => handleToggleSetting('singBoxUDP')}
+                            onKeyDown={handleKeyDown('singBoxUDP')}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='udp_direct'>
+                                UDP Direct
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames('checkbox', udp ? 'checked' : '')}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>Set udp direct</div>
+                        </div>
                     </div>
                 </div>
             </div>
             <MTUModal
-                mtu={mtu}
+                mtu={mtu as number}
                 setMtu={setMtu}
                 title={appLang.modal.mtu_title}
                 isOpen={showPortModal}

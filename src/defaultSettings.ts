@@ -32,6 +32,12 @@ export type settingsKeys =
     | 'singBoxGeoIp'
     | 'singBoxGeoSite'
     | 'singBoxGeoBlock'
+    | 'singBoxLog'
+    | 'singBoxStrictRoute'
+    | 'singBoxStack'
+    | 'singBoxSniff'
+    | 'singBoxSniffOverrideDest'
+    | 'singBoxUDP'
     | 'restartCounter';
 
 const date = new Date();
@@ -69,6 +75,10 @@ export const defaultSettings = {
     closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
+    singBoxStrictRoute: true,
+    singBoxSniff: false,
+    singBoxSniffOverrideDest: false,
+    singBoxUDP: false,
     restartCounter: 0
 };
 
@@ -176,4 +186,21 @@ export const singBoxGeoSite: { label: string; geoSite: string }[] = [
         label: '🇷🇺 Russia',
         geoSite: 'category-ru'
     }
+];
+
+export const singBoxLog: { value: string; label: string }[] = [
+    { value: 'disabled', label: 'Disabled' },
+    { value: 'trace', label: 'Trace' },
+    { value: 'debug', label: 'Debug' },
+    { value: 'info', label: 'Info' },
+    { value: 'warn', label: 'Warn' },
+    { value: 'error', label: 'Error' },
+    { value: 'fatal', label: 'Fatal' },
+    { value: 'panic', label: 'Panic' }
+];
+
+export const singBoxStack: { value: string; label: string }[] = [
+    { value: 'mixed', label: 'Mixed' },
+    { value: 'system', label: 'System' },
+    { value: 'gvisor', label: 'gVisor' }
 ];

@@ -3,4 +3,3 @@
 export const useCustomWindowXY = false; // to open window on right side of the screen
 export const openDevToolsByDefault = false;
 export const showWpLogs = true;
-export const disableSbLogs = true;

@@ -1,24 +1,16 @@
 import fs from 'fs';
 import log from 'electron-log';
-import { disableSbLogs } from '../dxConfig';
-import {
-    sbConfigPath,
-    sbCacheName,
-    IConfig,
-    IGeoConfig,
-    IRoutingRules,
-    isDarwin
-} from '../../constants';
+import { sbConfigPath, sbCacheName, IConfig, IGeoConfig, IRoutingRules } from '../../constants';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
-    const logConfig = disableSbLogs
-        ? { disabled: true }
-        : {
-              disabled: false,
-              level: 'warn',
-              timestamp: true,
-              output: 'sing-box.log'
-          };
+    const logConfig =
+        config.logLevel === 'disabled'
+            ? { disabled: true }
+            : {
+                  level: config.logLevel,
+                  timestamp: true,
+                  output: 'sing-box.log'
+              };
 
     const configuration = {
         log: logConfig,
@@ -89,10 +81,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 mtu: config.tunMtu,
                 address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
-                strict_route: true,
-                stack: 'mixed',
-                sniff: isDarwin,
-                sniff_override_destination: isDarwin
+                strict_route: config.tunStrictRoute,
+                stack: config.tunStack,
+                sniff: config.tunSniff,
+                sniff_override_destination: config.tunSniffOverrideDest
             }
         ],
         outbounds: [
@@ -126,7 +118,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                ...(isDarwin
+                ...(config.udpDirect
                     ? [
                           {
                               network: 'udp',

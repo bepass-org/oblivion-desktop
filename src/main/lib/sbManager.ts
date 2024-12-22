@@ -7,7 +7,13 @@ import path from 'path';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
 import { rimraf } from 'rimraf';
-import { defaultSettings, singBoxGeoIp, singBoxGeoSite } from '../../defaultSettings';
+import {
+    defaultSettings,
+    singBoxGeoIp,
+    singBoxGeoSite,
+    singBoxLog,
+    singBoxStack
+} from '../../defaultSettings';
 import { createSbConfig } from './sbConfig';
 import { customEvent } from './customEvent';
 import { Language } from '../../localization/type';
@@ -357,11 +363,32 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [port, mtu] = await Promise.all([settings.get('port'), settings.get('singBoxMTU')]);
+        const [port, mtu, loglevel, stack, strict, sniff, sniffOverride, udp] = await Promise.all([
+            settings.get('port'),
+            settings.get('singBoxMTU'),
+            settings.get('singBoxLog'),
+            settings.get('singBoxStack'),
+            settings.get('singBoxStrictRoute'),
+            settings.get('singBoxSniff'),
+            settings.get('singBoxSniffOverrideDest'),
+            settings.get('singBoxUDP')
+        ]);
 
         return {
             socksPort: typeof port === 'number' ? port : defaultSettings.port,
-            tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU
+            tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
+
+            logLevel: typeof loglevel === 'string' ? loglevel : singBoxLog[0].value,
+            tunStack: typeof stack === 'string' ? stack : singBoxStack[0].value,
+
+            tunStrictRoute:
+                typeof strict === 'boolean' ? strict : defaultSettings.singBoxStrictRoute,
+            tunSniff: typeof sniff === 'boolean' ? sniff : defaultSettings.singBoxSniff,
+            tunSniffOverrideDest:
+                typeof sniffOverride === 'boolean'
+                    ? sniffOverride
+                    : defaultSettings.singBoxSniffOverrideDest,
+            udpDirect: typeof udp === 'boolean' ? udp : defaultSettings.singBoxUDP
         };
     }
 
