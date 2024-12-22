@@ -2,7 +2,6 @@ import enUS from './en';
 import faIR from './fa';
 import ruRU from './ru';
 import cnCN from './cn';
-import deDE from './de';
 import trTR from './tr';
 import idID from './id';
 import arSA from './ar';
@@ -11,18 +10,7 @@ import ptBR from './pt';
 import urPK from './ur';
 import { defaultSettings } from '../defaultSettings';
 
-export type LanguageType =
-    | 'fa'
-    | 'en'
-    | 'ru'
-    | 'cn'
-    | 'de'
-    | 'tr'
-    | 'id'
-    | 'ar'
-    | 'vi'
-    | 'pt'
-    | 'ur';
+export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
 type directionType = 'rtl' | 'ltr';
 
 const lang = defaultSettings.lang as LanguageType;
@@ -33,7 +21,6 @@ const direction = {
     en: 'ltr',
     ru: 'ltr',
     cn: 'ltr',
-    de: 'ltr',
     tr: 'ltr',
     id: 'ltr',
     ar: 'rtl',
@@ -62,7 +49,6 @@ const translate = {
     en: enUS,
     ru: ruRU,
     cn: cnCN,
-    de: deDE,
     tr: trTR,
     id: idID,
     ar: arSA,

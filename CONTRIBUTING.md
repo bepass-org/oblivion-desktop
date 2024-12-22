@@ -21,10 +21,11 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
 
 - ### 🌐 Translation
 
-    The current translation is being done from Persian to other languages using AI. Contributions and feedback from native speakers are welcome.
+    The current translation is done from English to other languages. Persian and English are translated manually, while other languages are translated with the help of AI. Your contributions to improving the translation and providing feedback are welcome.
 
-    - If you want to edit the text in the app, edit the files in the [src/localization](src/localization) folder directly. Some text may still be hardcoded and will be added to translation keys soon.
-    - If you're interested in translating markdown(.md) files. just create/edit file next to original file. (we will take care of folder structure if it gets messy)
+    - Translations into new languages will only be accepted for countries and languages where internet filtering and violations of internet freedoms similar to Iran, China, and Russia exist. The goal of this program has never been to include all languages. For countries where government surveillance and filtering are used to combat cybercrime and restrict access to illegal content such as child pornography, terrorism, and racist content, English is sufficient as the standard language.
+    - If you want to edit the translated text in the app, you can directly edit the files in the [src/localization](src/localization) folder.
+    - If you're interested in translating markdown (.md) files for new languages, simply create the language file next to the original file. (We will take care of the folder structure if needed.)
 
 - ### 💬 Discussions
 
