@@ -43,7 +43,21 @@ export const getUserSettings = async () => {
     ]);
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
-    const dnsList = typeof dns === 'string' ? JSON.parse(dns) : dnsServers[0].value;
+    let dnsValue = <any>'';
+    if (typeof dns === 'string') {
+        if (dns.startsWith('[{')) {
+            const dnsList = JSON.parse(dns);
+            if (typeof dnsList[0]?.plain === 'string') {
+                dnsValue = dnsList[0].plain;
+            }
+        } else {
+            dnsValue = dns;
+        }
+    }
+    const shouldUseDns = typeof proxyMode === 'string' && proxyMode === 'system';
+    const isDnsValid = dnsValue !== '' && dnsValue !== '1.1.1.2';
+    const isMethodAllowed =
+        typeof method !== 'string' || (typeof method === 'string' && method !== 'psiphon');
 
     return [
         '--bind',
@@ -75,12 +89,7 @@ export const getUserSettings = async () => {
                       : defaultSettings.endpoint
               ]),
         ...(typeof reserved === 'boolean' && !reserved ? ['--reserved', '0,0,0'] : []),
-        ...(((typeof proxyMode === 'string' && proxyMode === 'system') ||
-            typeof method !== 'string') &&
-        dnsList[0].plain !== '1.1.1.2' &&
-        ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string')
-            ? ['--dns', dnsList[0].plain]
-            : [])
+        ...(shouldUseDns && isDnsValid && isMethodAllowed ? ['--dns', dnsValue] : [])
     ];
 };
 
