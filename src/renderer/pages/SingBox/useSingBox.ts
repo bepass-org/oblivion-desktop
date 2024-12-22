@@ -10,6 +10,7 @@ import {
     singBoxStack,
     settingsKeys
 } from '../../../defaultSettings';
+import { platform } from '../../lib/utils';
 
 type SettingValue<T> = T extends boolean ? boolean : T extends number ? number : string;
 
@@ -32,6 +33,10 @@ const useSingBox = () => {
                 return singBoxLog[0].value;
             case 'singBoxStack':
                 return singBoxStack[0].value;
+            case 'singBoxSniff':
+            case 'singBoxSniffOverrideDest':
+            case 'singBoxUDP':
+                return platform === 'darwin' ? true : defaultSettings[key];
             default:
                 return defaultSettings[key];
         }
