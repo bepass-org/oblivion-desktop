@@ -35,10 +35,10 @@ const useMTUModal = (props: MtuModalProps) => {
         const tmp = isValidMtu(mtuInput) ? mtuInput : defValue;
         setMtuInput(tmp);
         setMtu(tmp);
-        settings.set('singBoxMTU', tmp);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+        //settings.set('singBoxMTU', tmp);
+        //settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [isValidMtu, mtuInput, defValue, setMtu, isConnected, isLoading, appLang, handleOnClose]);
+    }, [isValidMtu, mtuInput, defValue, setMtu, handleOnClose]);
 
     const onSaveModalKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
