@@ -388,12 +388,12 @@ const useLanding = () => {
             if (method === '' && ipInfo?.countryCode === 'ir') {
                 ipToast();
             } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
-                ipcRenderer.sendMessage('wp-end');
+                ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
                 setIsLoading(true);
                 loadingToast(appLang.status.keep_trying);
                 setTimeout(function () {
                     stopLoadingToast();
-                    ipcRenderer.sendMessage('wp-start');
+                    ipcRenderer.sendMessage('wp-start', 'start-from-gool');
                     setIsLoading(true);
                     setPing(0);
                 }, 3500);

@@ -34,6 +34,8 @@ let exitOnWpEnd = false;
 let appLang = getTranslate('en');
 let connectedFlags: boolean[];
 let disconnectedFlags: boolean[];
+let shouldStartSingBox: boolean = true;
+let shouldStopSingBox: boolean = true;
 
 export const restartApp = () => {
     const maxRetries = 2;
@@ -65,7 +67,12 @@ export const restartApp = () => {
     setTimeout(attemptRestart, 5000);
 };
 
-ipcMain.on('wp-start', async (event) => {
+ipcMain.on('wp-start', async (event, arg) => {
+    if (arg && arg === 'start-from-gool') {
+        shouldStartSingBox = false;
+    } else {
+        shouldStartSingBox = true;
+    }
     const port = (await settings.get('port')) || defaultSettings.port;
     const hostIP = (await settings.get('hostIP')) || defaultSettings.hostIP;
     //const autoSetProxy = await settings.get('autoSetProxy');
@@ -212,7 +219,11 @@ ipcMain.on('wp-start', async (event) => {
             });
 
             child.on('exit', async () => {
-                if (proxyMode === 'tun' && !(await singBoxManager.stopSingBox())) {
+                if (
+                    proxyMode === 'tun' &&
+                    shouldStopSingBox &&
+                    !(await singBoxManager.stopSingBox())
+                ) {
                     event.reply('wp-end', false);
                 } else {
                     disconnectedFlags[1] = true;
@@ -237,7 +248,11 @@ ipcMain.on('wp-start', async (event) => {
         }
     };
 
-    if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(appLang, event))) {
+    if (
+        proxyMode === 'tun' &&
+        shouldStartSingBox &&
+        !(await singBoxManager.startSingBox(appLang, event))
+    ) {
         event.reply('wp-end', true);
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
@@ -247,7 +262,12 @@ ipcMain.on('wp-start', async (event) => {
     }
 });
 
-ipcMain.on('wp-end', async (event) => {
+ipcMain.on('wp-end', async (event, arg) => {
+    if (arg && arg === 'stop-from-gool') {
+        shouldStopSingBox = false;
+    } else {
+        shouldStopSingBox = true;
+    }
     try {
         if (typeof child?.pid !== 'undefined') {
             treeKill(child.pid, 'SIGKILL');
