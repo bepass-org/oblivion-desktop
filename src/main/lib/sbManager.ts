@@ -9,6 +9,7 @@ import * as protoLoader from '@grpc/proto-loader';
 import { rimraf } from 'rimraf';
 import {
     defaultSettings,
+    dnsServers,
     singBoxGeoIp,
     singBoxGeoSite,
     singBoxLog,
@@ -363,24 +364,25 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [port, mtu, loglevel, stack, strict, sniff, sniffOverride, udp] = await Promise.all([
-            settings.get('port'),
-            settings.get('singBoxMTU'),
-            settings.get('singBoxLog'),
-            settings.get('singBoxStack'),
-            settings.get('singBoxStrictRoute'),
-            settings.get('singBoxSniff'),
-            settings.get('singBoxSniffOverrideDest'),
-            settings.get('singBoxUDP')
-        ]);
+        const [port, dns, mtu, loglevel, stack, strict, sniff, sniffOverride, udp] =
+            await Promise.all([
+                settings.get('port'),
+                settings.get('dns'),
+                settings.get('singBoxMTU'),
+                settings.get('singBoxLog'),
+                settings.get('singBoxStack'),
+                settings.get('singBoxStrictRoute'),
+                settings.get('singBoxSniff'),
+                settings.get('singBoxSniffOverrideDest'),
+                settings.get('singBoxUDP')
+            ]);
 
         return {
             socksPort: typeof port === 'number' ? port : defaultSettings.port,
+            dnsList: typeof dns === 'string' ? dns : dnsServers[0].value,
             tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
-
             logLevel: typeof loglevel === 'string' ? loglevel : singBoxLog[0].value,
             tunStack: typeof stack === 'string' ? stack : singBoxStack[0].value,
-
             tunStrictRoute:
                 typeof strict === 'boolean' ? strict : defaultSettings.singBoxStrictRoute,
             tunSniff: typeof sniff === 'boolean' ? sniff : defaultSettings.singBoxSniff,
