@@ -182,6 +182,9 @@ ipcMain.on('wp-start', async (event) => {
                 if (strData.includes(successMessage)) {
                     if (proxyMode === 'tun' && !(await singBoxManager.checkConnectionStatus())) {
                         event.reply('wp-end', true);
+                        if (typeof child?.pid !== 'undefined') {
+                            treeKill(child.pid, 'SIGKILL');
+                        }
                     } else {
                         connectedFlags[1] = true;
                         sendConnectedSignalToRenderer();
@@ -236,6 +239,9 @@ ipcMain.on('wp-start', async (event) => {
 
     if (proxyMode === 'tun' && !(await singBoxManager.startSingBox(appLang, event))) {
         event.reply('wp-end', true);
+        if (typeof child?.pid !== 'undefined') {
+            treeKill(child.pid, 'SIGKILL');
+        }
     } else {
         startWP();
     }
