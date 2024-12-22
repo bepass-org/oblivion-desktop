@@ -118,7 +118,19 @@ const russian: Language = {
         geo_rules_ip_desc: 'Применение правил GeoIP',
         geo_rules_site: 'Веб-маршрутизация',
         geo_rules_site_desc: 'Применение правил GeoSite',
-        more_helper: 'Настройки ассистента'
+        more_helper: 'Настройки ассистента',
+        singbox_log: 'Журналирование',
+        singbox_log_desc: 'Установить уровень журнала',
+        singbox_stack: 'Стек',
+        singbox_stack_desc: 'Установить тип стека',
+        singbox_strict_route: 'Строгий маршрут',
+        singbox_strict_route_desc: 'Установить статус строгого маршрута',
+        singbox_sniff: 'Перехват',
+        singbox_sniff_desc: 'Включить перехват',
+        singbox_sniff_override: 'Переопределить назначение',
+        singbox_sniff_override_desc: 'Установить переопределение назначения перехвата',
+        singbox_udp_direct: 'Прямое UDP',
+        singbox_udp_direct_desc: 'Включить прямое UDP'
     },
     tabs: {
         home: 'Связь',

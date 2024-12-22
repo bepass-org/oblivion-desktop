@@ -159,7 +159,7 @@ export default function SingBox() {
                     <div className='settings' role='menu' tabIndex={0}>
                         <div className={classNames('item')}>
                             <label className='key' htmlFor='log'>
-                                Log
+                                {appLang.settings.singbox_log}
                             </label>
                             <div className='value'>
                                 <select
@@ -179,12 +179,12 @@ export default function SingBox() {
                                     ))}
                                 </select>
                             </div>
-                            <div className='info'>Set SingBox Log Level</div>
+                            <div className='info'>{appLang.settings.singbox_log_desc}</div>
                         </div>
 
                         <div className={classNames('item')}>
                             <label className='key' htmlFor='stack'>
-                                Stack
+                                {appLang.settings.singbox_stack}
                             </label>
                             <div className='value'>
                                 <select
@@ -204,7 +204,7 @@ export default function SingBox() {
                                     ))}
                                 </select>
                             </div>
-                            <div className='info'>Set SinBox Stack</div>
+                            <div className='info'>{appLang.settings.singbox_stack_desc}</div>
                         </div>
 
                         <div
@@ -233,7 +233,7 @@ export default function SingBox() {
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='strict_route'>
-                                Strict Route
+                                {appLang.settings.singbox_strict_route}
                             </label>
                             <div className='value'>
                                 <div
@@ -243,7 +243,7 @@ export default function SingBox() {
                                     <i className='material-icons'></i>
                                 </div>
                             </div>
-                            <div className='info'>Set strict route</div>
+                            <div className='info'>{appLang.settings.singbox_strict_route_desc}</div>
                         </div>
 
                         <div
@@ -254,7 +254,7 @@ export default function SingBox() {
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='sniff'>
-                                Sniff
+                                {appLang.settings.singbox_sniff}
                             </label>
                             <div className='value'>
                                 <div
@@ -264,7 +264,7 @@ export default function SingBox() {
                                     <i className='material-icons'></i>
                                 </div>
                             </div>
-                            <div className='info'>Set Sniff</div>
+                            <div className='info'>{appLang.settings.singbox_sniff_desc}</div>
                         </div>
 
                         <div
@@ -275,7 +275,7 @@ export default function SingBox() {
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='sniff_override_destination'>
-                                Sniff Override Destination
+                                {appLang.settings.singbox_sniff_override}
                             </label>
                             <div className='value'>
                                 <div
@@ -288,7 +288,9 @@ export default function SingBox() {
                                     <i className='material-icons'></i>
                                 </div>
                             </div>
-                            <div className='info'>Set sniff override destination</div>
+                            <div className='info'>
+                                {appLang.settings.singbox_sniff_override_desc}
+                            </div>
                         </div>
 
                         <div
@@ -299,7 +301,7 @@ export default function SingBox() {
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='udp_direct'>
-                                UDP Direct
+                                {appLang.settings.singbox_udp_direct}
                             </label>
                             <div className='value'>
                                 <div
@@ -309,7 +311,7 @@ export default function SingBox() {
                                     <i className='material-icons'></i>
                                 </div>
                             </div>
-                            <div className='info'>Set udp direct</div>
+                            <div className='info'>{appLang.settings.singbox_udp_direct_desc}</div>
                         </div>
                     </div>
                 </div>

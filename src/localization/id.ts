@@ -118,7 +118,19 @@ const indonesia: Language = {
         geo_rules_ip_desc: 'Menerapkan aturan GeoIP',
         geo_rules_site: 'Routing Web',
         geo_rules_site_desc: 'Menerapkan aturan GeoSite',
-        more_helper: 'Pengaturan Asisten'
+        more_helper: 'Pengaturan Asisten',
+        singbox_log: 'Pencatatan',
+        singbox_log_desc: 'Atur Tingkat Pencatatan',
+        singbox_stack: 'Tumpukan',
+        singbox_stack_desc: 'Atur Jenis Tumpukan',
+        singbox_strict_route: 'Rute Ketat',
+        singbox_strict_route_desc: 'Atur Status Rute Ketat',
+        singbox_sniff: 'Penyadapan',
+        singbox_sniff_desc: 'Aktifkan Penyadapan',
+        singbox_sniff_override: 'Ganti Tujuan',
+        singbox_sniff_override_desc: 'Atur Tujuan Penyadapan yang Diganti',
+        singbox_udp_direct: 'UDP Langsung',
+        singbox_udp_direct_desc: 'Aktifkan UDP Langsung'
     },
     tabs: {
         home: 'Hubungkan',

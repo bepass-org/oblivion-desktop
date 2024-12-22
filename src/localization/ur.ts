@@ -118,7 +118,19 @@ const urdu: Language = {
         geo_rules_ip_desc: 'GeoIP قواعد لاگو کریں',
         geo_rules_site: 'ویب روٹنگ',
         geo_rules_site_desc: 'GeoSite قواعد لاگو کریں',
-        more_helper: 'مددگار کی ترتیبات'
+        more_helper: 'مددگار کی ترتیبات',
+        singbox_log: 'لاگنگ',
+        singbox_log_desc: 'لاگ سطح سیٹ کریں',
+        singbox_stack: 'اسٹیک',
+        singbox_stack_desc: 'اسٹیک کی قسم سیٹ کریں',
+        singbox_strict_route: 'سخت راستہ',
+        singbox_strict_route_desc: 'سخت راستہ کی حالت سیٹ کریں',
+        singbox_sniff: 'سنیفنگ',
+        singbox_sniff_desc: 'سنیفنگ کو فعال کریں',
+        singbox_sniff_override: 'مقصد کو اوور رائڈ کریں',
+        singbox_sniff_override_desc: 'سنیفنگ مقصد کو اوور رائڈ کریں',
+        singbox_udp_direct: 'UDP براہ راست',
+        singbox_udp_direct_desc: 'UDP براہ راست کو فعال کریں'
     },
     tabs: {
         home: 'کنیکٹ',

@@ -117,7 +117,19 @@ const english: Language = {
         geo_rules_ip_desc: 'Applying GeoIP rules',
         geo_rules_site: 'Web Routing',
         geo_rules_site_desc: 'Applying GeoSite rules',
-        more_helper: 'Assistant Settings'
+        more_helper: 'Assistant Settings',
+        singbox_log: 'Logging',
+        singbox_log_desc: 'Set Log Level',
+        singbox_stack: 'Stack',
+        singbox_stack_desc: 'Set Stack Type',
+        singbox_strict_route: 'Strict Route',
+        singbox_strict_route_desc: 'Set Strict Route Status',
+        singbox_sniff: 'Sniff',
+        singbox_sniff_desc: 'Enable Sniffing',
+        singbox_sniff_override: 'Override Dest',
+        singbox_sniff_override_desc: 'Set sniff override destination',
+        singbox_udp_direct: 'UDP Direct',
+        singbox_udp_direct_desc: 'Enable UDP Direct'
     },
     tabs: {
         home: 'Connect',

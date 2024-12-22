@@ -117,6 +117,18 @@ export interface Settings {
     geo_rules_site: string;
     geo_rules_site_desc: string;
     more_helper: string;
+    singbox_log: string;
+    singbox_log_desc: string;
+    singbox_stack: string;
+    singbox_stack_desc: string;
+    singbox_strict_route: string;
+    singbox_strict_route_desc: string;
+    singbox_sniff: string;
+    singbox_sniff_desc: string;
+    singbox_sniff_override: string;
+    singbox_sniff_override_desc: string;
+    singbox_udp_direct: string;
+    singbox_udp_direct_desc: string;
 }
 
 export interface Tabs {

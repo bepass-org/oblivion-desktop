@@ -117,7 +117,19 @@ const brazilianPortuguese: Language = {
         geo_rules_ip_desc: 'Aplicação das regras GeoIP',
         geo_rules_site: 'Roteamento Web',
         geo_rules_site_desc: 'Aplicação das regras GeoSite',
-        more_helper: 'Configurações do Assistente'
+        more_helper: 'Configurações do Assistente',
+        singbox_log: 'Registro',
+        singbox_log_desc: 'Definir Nível de Registro',
+        singbox_stack: 'Pilha',
+        singbox_stack_desc: 'Definir Tipo de Pilha',
+        singbox_strict_route: 'Rota Rigorosa',
+        singbox_strict_route_desc: 'Definir Status da Rota Rigorosa',
+        singbox_sniff: 'Sniffing',
+        singbox_sniff_desc: 'Ativar Sniffing',
+        singbox_sniff_override: 'Sobrescrever Destino',
+        singbox_sniff_override_desc: 'Definir destino sobrescrito para Sniffing',
+        singbox_udp_direct: 'UDP Direto',
+        singbox_udp_direct_desc: 'Ativar UDP Direto'
     },
     tabs: {
         home: 'Conectar',

@@ -116,7 +116,19 @@ const chinese: Language = {
         geo_rules_ip_desc: '应用 GeoIP 规则',
         geo_rules_site: '网页路由',
         geo_rules_site_desc: '应用 GeoSite 规则',
-        more_helper: '助理设置'
+        more_helper: '助理设置',
+        singbox_log: '日志记录',
+        singbox_log_desc: '设置日志级别',
+        singbox_stack: '堆栈',
+        singbox_stack_desc: '设置堆栈类型',
+        singbox_strict_route: '严格路由',
+        singbox_strict_route_desc: '设置严格路由状态',
+        singbox_sniff: '嗅探',
+        singbox_sniff_desc: '启用嗅探',
+        singbox_sniff_override: '覆盖目标',
+        singbox_sniff_override_desc: '设置嗅探覆盖目标',
+        singbox_udp_direct: '直接UDP连接',
+        singbox_udp_direct_desc: '启用UDP直接连接'
     },
     tabs: {
         home: '连接',

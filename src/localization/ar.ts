@@ -116,7 +116,19 @@ const arabic: Language = {
         geo_rules_ip_desc: 'تطبيق قواعد GeoIP',
         geo_rules_site: 'توجيه الويب',
         geo_rules_site_desc: 'تطبيق قواعد GeoSite',
-        more_helper: 'إعدادات المساعد'
+        more_helper: 'إعدادات المساعد',
+        singbox_log: 'التسجيل',
+        singbox_log_desc: 'تعيين مستوى التسجيل',
+        singbox_stack: 'الهيكل',
+        singbox_stack_desc: 'تعيين نوع الهيكل',
+        singbox_strict_route: 'المسار الصارم',
+        singbox_strict_route_desc: 'تعيين حالة المسار الصارم',
+        singbox_sniff: 'الاستنشاق',
+        singbox_sniff_desc: 'تفعيل الاستنشاق',
+        singbox_sniff_override: 'تجاوز الوجهة',
+        singbox_sniff_override_desc: 'تعيين الوجهة المتجاوزة للاستنشاق',
+        singbox_udp_direct: 'اتصال UDP مباشر',
+        singbox_udp_direct_desc: 'تفعيل الاتصال المباشر عبر UDP'
     },
     tabs: {
         home: 'اتصال',

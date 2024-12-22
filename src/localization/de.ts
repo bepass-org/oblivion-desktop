@@ -119,7 +119,19 @@ const deutsch: Language = {
         geo_rules_ip_desc: 'Anwenden von GeoIP-Regeln',
         geo_rules_site: 'Web-Routing',
         geo_rules_site_desc: 'Anwenden von GeoSite-Regeln',
-        more_helper: 'Assistenteneinstellungen'
+        more_helper: 'Assistenteneinstellungen',
+        singbox_log: 'Protokollierung',
+        singbox_log_desc: 'Protokollstufe festlegen',
+        singbox_stack: 'Stack',
+        singbox_stack_desc: 'Stack-Typ festlegen',
+        singbox_strict_route: 'Strenger Route',
+        singbox_strict_route_desc: 'Status der strengen Route festlegen',
+        singbox_sniff: 'Schnüffeln',
+        singbox_sniff_desc: 'Schnüffeln aktivieren',
+        singbox_sniff_override: 'Ziel überschreiben',
+        singbox_sniff_override_desc: 'Ziel für Schnüffeln überschreiben festlegen',
+        singbox_udp_direct: 'Direktes UDP',
+        singbox_udp_direct_desc: 'Direktes UDP aktivieren'
     },
     tabs: {
         home: 'Verbinden',

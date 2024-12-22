@@ -118,7 +118,19 @@ const vietnamese: Language = {
         geo_rules_ip_desc: 'Áp dụng các quy tắc GeoIP',
         geo_rules_site: 'Định tuyến Web',
         geo_rules_site_desc: 'Áp dụng các quy tắc GeoSite',
-        more_helper: 'Đối tượng Phật'
+        more_helper: 'Đối tượng Phật',
+        singbox_log: 'Ghi Log',
+        singbox_log_desc: 'Cài đặt Mức Log',
+        singbox_stack: 'Ngăn Xếp',
+        singbox_stack_desc: 'Cài đặt Loại Ngăn Xếp',
+        singbox_strict_route: 'Lộ Trình Nghiêm Ngặt',
+        singbox_strict_route_desc: 'Cài đặt Trạng Thái Lộ Trình Nghiêm Ngặt',
+        singbox_sniff: 'Nghe Gói',
+        singbox_sniff_desc: 'Kích Hoạt Nghe Gói',
+        singbox_sniff_override: 'Ghi Đè Đích',
+        singbox_sniff_override_desc: 'Cài đặt đích ghi đè cho Nghe Gói',
+        singbox_udp_direct: 'UDP Trực Tiếp',
+        singbox_udp_direct_desc: 'Kích Hoạt UDP Trực Tiếp'
     },
     tabs: {
         home: 'Kết nối',
