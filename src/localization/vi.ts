@@ -124,11 +124,11 @@ const vietnamese: Language = {
         singbox_stack: 'Ngăn Xếp',
         singbox_stack_desc: 'Cài đặt Loại Ngăn Xếp',
         singbox_strict_route: 'Lộ Trình Nghiêm Ngặt',
-        singbox_strict_route_desc: 'Cài đặt Trạng Thái Lộ Trình Nghiêm Ngặt',
+        singbox_strict_route_desc: 'Kích hoạt Lộ trình Nghiêm ngặt',
         singbox_sniff: 'Nghe Gói',
         singbox_sniff_desc: 'Kích Hoạt Nghe Gói',
         singbox_sniff_override: 'Ghi Đè Đích',
-        singbox_sniff_override_desc: 'Cài đặt đích ghi đè cho Nghe Gói',
+        singbox_sniff_override_desc: 'Kích hoạt ghi đè đích sniff',
         singbox_udp_direct: 'UDP Trực Tiếp',
         singbox_udp_direct_desc: 'Kích Hoạt UDP Trực Tiếp'
     },

@@ -123,11 +123,11 @@ const english: Language = {
         singbox_stack: 'Stack',
         singbox_stack_desc: 'Set Stack Type',
         singbox_strict_route: 'Strict Route',
-        singbox_strict_route_desc: 'Set Strict Route Status',
+        singbox_strict_route_desc: 'Enable Strict Route',
         singbox_sniff: 'Sniff',
         singbox_sniff_desc: 'Enable Sniffing',
         singbox_sniff_override: 'Override Dest',
-        singbox_sniff_override_desc: 'Set sniff override destination',
+        singbox_sniff_override_desc: 'Enable sniff override destination',
         singbox_udp_direct: 'UDP Direct',
         singbox_udp_direct_desc: 'Enable UDP Direct'
     },

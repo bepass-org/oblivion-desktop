@@ -124,11 +124,11 @@ const turkish: Language = {
         singbox_stack: 'Yığın',
         singbox_stack_desc: 'Yığın Tipini Ayarla',
         singbox_strict_route: 'Sıkı Yönlendirme',
-        singbox_strict_route_desc: 'Sıkı Yönlendirme Durumunu Ayarla',
+        singbox_strict_route_desc: 'Sıkı Yolu Etkinleştir',
         singbox_sniff: 'Dinleme',
         singbox_sniff_desc: 'Dinlemeyi Etkinleştir',
         singbox_sniff_override: 'Hedefi Geçersiz Kıl',
-        singbox_sniff_override_desc: 'Dinleme hedefini geçersiz kıl',
+        singbox_sniff_override_desc: 'Sniff hedefi geçersiz kılmayı etkinleştir',
         singbox_udp_direct: 'Doğrudan UDP',
         singbox_udp_direct_desc: "Doğrudan UDP'yi Etkinleştir"
     },

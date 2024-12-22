@@ -122,11 +122,11 @@ const arabic: Language = {
         singbox_stack: 'الهيكل',
         singbox_stack_desc: 'تعيين نوع الهيكل',
         singbox_strict_route: 'المسار الصارم',
-        singbox_strict_route_desc: 'تعيين حالة المسار الصارم',
+        singbox_strict_route_desc: 'تفعيل المسار الصارم',
         singbox_sniff: 'الاستنشاق',
         singbox_sniff_desc: 'تفعيل الاستنشاق',
         singbox_sniff_override: 'تجاوز الوجهة',
-        singbox_sniff_override_desc: 'تعيين الوجهة المتجاوزة للاستنشاق',
+        singbox_sniff_override_desc: 'تفعيل تجاوز وجهة السنف',
         singbox_udp_direct: 'اتصال UDP مباشر',
         singbox_udp_direct_desc: 'تفعيل الاتصال المباشر عبر UDP'
     },
