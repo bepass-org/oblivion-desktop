@@ -29,6 +29,7 @@ import {
     workingDirPath,
     isWindows,
     isLinux,
+    isDarwin,
     IConfig,
     IGeoConfig,
     IRoutingRules,
@@ -385,12 +386,12 @@ class SingBoxManager {
             tunStack: typeof stack === 'string' ? stack : singBoxStack[0].value,
             tunStrictRoute:
                 typeof strict === 'boolean' ? strict : defaultSettings.singBoxStrictRoute,
-            tunSniff: typeof sniff === 'boolean' ? sniff : defaultSettings.singBoxSniff,
+            tunSniff: typeof sniff === 'boolean' ? sniff : isDarwin ? true : defaultSettings.singBoxSniff,
             tunSniffOverrideDest:
                 typeof sniffOverride === 'boolean'
                     ? sniffOverride
-                    : defaultSettings.singBoxSniffOverrideDest,
-            udpDirect: typeof udp === 'boolean' ? udp : defaultSettings.singBoxUDP
+                    : isDarwin ? true : defaultSettings.singBoxSniffOverrideDest,
+            udpDirect: typeof udp === 'boolean' ? udp : isDarwin ? true : defaultSettings.singBoxUDP
         };
     }
 
