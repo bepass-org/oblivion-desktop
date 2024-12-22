@@ -132,11 +132,6 @@ export const languages: { value: string; label: string }[] = [
     { value: 'ur', label: 'اردو' }
 ];
 
-//
-//
-//
-//
-
 export const dnsServers: { value: string; label: string }[] = [
     { value: '[{ "plain": "1.1.1.2", "DoH": "https://1.1.1.2/dns-query" }]', label: 'Cloudflare' },
     { value: '[{ "plain": "8.8.8.8", "DoH": "https://dns.google/dns-query" }]', label: 'Google' },
