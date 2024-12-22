@@ -1,6 +1,6 @@
 import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
-import { countries, defaultSettings } from '../../defaultSettings';
+import { countries, defaultSettings, dnsServers } from '../../defaultSettings';
 import { removeDirIfExists } from './utils';
 import { restartApp } from '../ipcListeners/wp';
 import { getTranslate } from '../../localization';
@@ -14,21 +14,36 @@ let appLang = getTranslate('en');
 const randomCountry = () => countries[Math.floor(Math.random() * countries.length)]?.value || 'DE';
 
 export const getUserSettings = async () => {
-    const [endpoint, ipType, port, location, license, method, hostIP, rtt, reserved, lang, dns] =
-        await Promise.all([
-            settings.get('endpoint'),
-            settings.get('ipType'),
-            settings.get('port'),
-            settings.get('location'),
-            settings.get('license'),
-            settings.get('method'),
-            settings.get('hostIP'),
-            settings.get('rtt'),
-            settings.get('reserved'),
-            settings.get('lang'),
-            settings.get('dns')
-        ]);
+    const [
+        endpoint,
+        ipType,
+        port,
+        location,
+        license,
+        method,
+        hostIP,
+        rtt,
+        reserved,
+        lang,
+        dns,
+        proxyMode
+    ] = await Promise.all([
+        settings.get('endpoint'),
+        settings.get('ipType'),
+        settings.get('port'),
+        settings.get('location'),
+        settings.get('license'),
+        settings.get('method'),
+        settings.get('hostIP'),
+        settings.get('rtt'),
+        settings.get('reserved'),
+        settings.get('lang'),
+        settings.get('dns'),
+        settings.get('proxyMode')
+    ]);
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+
+    const dnsList = typeof dns === 'string' ? JSON.parse(dns) : dnsServers[0].value;
 
     return [
         '--bind',
@@ -60,11 +75,11 @@ export const getUserSettings = async () => {
                       : defaultSettings.endpoint
               ]),
         ...(typeof reserved === 'boolean' && !reserved ? ['--reserved', '0,0,0'] : []),
-        ...(typeof dns === 'string' &&
-        dns !== '' &&
-        dns !== '1.1.1.1' &&
+        ...(((typeof proxyMode === 'string' && proxyMode === 'system') ||
+            typeof method !== 'string') &&
+        dnsList[0].plain !== '1.1.1.2' &&
         ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string')
-            ? ['--dns', dns]
+            ? ['--dns', dnsList[0].plain]
             : [])
     ];
 };

@@ -141,14 +141,27 @@ export default function Options() {
                             </div>
                             <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                         </div>
-                        <div className={classNames('item', !methodIsPsiphon ? '' : 'disabled')}>
+                        <div
+                            className={classNames(
+                                'item',
+                                proxyMode === 'tun' ||
+                                    ((proxyMode === undefined || proxyMode === 'system') &&
+                                        !methodIsPsiphon)
+                                    ? ''
+                                    : 'disabled'
+                            )}
+                        >
                             <Dropdown
                                 id='flex-switch-check-checked-dns'
                                 onChange={onChangeDNS}
-                                value={dns || '1.1.1.1'}
+                                value={dns}
                                 label={appLang?.settings?.dns}
                                 tabIndex={-1}
-                                disabled={methodIsPsiphon}
+                                disabled={
+                                    proxyMode === 'none' ||
+                                    ((proxyMode === undefined || proxyMode === 'system') &&
+                                        methodIsPsiphon)
+                                }
                                 items={dnsServers}
                             />
                             <div className='info'>

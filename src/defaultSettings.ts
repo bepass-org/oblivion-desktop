@@ -133,11 +133,22 @@ export const languages: { value: string; label: string }[] = [
     { value: 'ur', label: 'اردو' }
 ];
 
+//
+//
+//
+//
+
 export const dnsServers: { value: string; label: string }[] = [
-    { value: '1.1.1.1', label: 'Cloudflare' },
-    { value: '8.8.8.8', label: 'Google' },
-    { value: '94.140.14.14', label: 'Adguard' },
-    { value: '94.140.14.15', label: 'Adguard Family' }
+    { value: '[{ "plain": "1.1.1.2", "DoH": "https://1.1.1.2/dns-query" }]', label: 'Cloudflare' },
+    { value: '[{ "plain": "8.8.8.8", "DoH": "https://dns.google/dns-query" }]', label: 'Google' },
+    {
+        value: '[{ "plain": "94.140.14.14", "DoH": "https://dns.adguard-dns.com/dns-query" }]',
+        label: 'Adguard'
+    },
+    {
+        value: '[{ "plain": "94.140.14.15", "DoH": "https://family.adguard-dns.com/dns-query" }]',
+        label: 'Adguard Family'
+    }
 ];
 
 export const singBoxGeoIp: { label: string; geoIp: string }[] = [

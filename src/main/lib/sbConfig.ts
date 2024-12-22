@@ -3,6 +3,8 @@ import log from 'electron-log';
 import { sbConfigPath, sbCacheName, IConfig, IGeoConfig, IRoutingRules } from '../../constants';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
+    const dnsList = JSON.parse(config.dnsList);
+
     const logConfig =
         config.logLevel === 'disabled'
             ? { disabled: true }
@@ -50,13 +52,13 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             ],
             servers: [
                 {
-                    address: 'https://1.1.1.2/dns-query',
+                    address: dnsList[0].DoH,
                     address_resolver: 'dns-direct',
                     detour: 'socks-out',
                     tag: 'dns-remote'
                 },
                 {
-                    address: '8.8.8.8',
+                    address: dnsList[0].plain,
                     detour: 'direct-out',
                     tag: 'dns-direct'
                 },
@@ -70,7 +72,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             {
                 listen: '0.0.0.0',
                 listen_port: 6450,
-                override_address: '8.8.8.8',
+                override_address: dnsList[0].plain,
                 override_port: 53,
                 tag: 'dns-in',
                 type: 'direct'

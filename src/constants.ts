@@ -60,6 +60,7 @@ export interface INetStats {
 
 export interface IConfig {
     socksPort: number;
+    dnsList: string;
     tunMtu: number;
     logLevel: string;
     tunStack: string;
