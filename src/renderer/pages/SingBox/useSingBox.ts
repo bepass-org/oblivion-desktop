@@ -79,13 +79,39 @@ const useSingBox = () => {
     }, []);
 
     const handleToggleSetting = useCallback(
-        (key: settingsKeys) => {
+        async (key: settingsKeys) => {
             const currentValue = settingsState[key];
             if (typeof currentValue === 'boolean') {
                 const newValue = !currentValue;
-                settings.set(key, newValue).then(() => {
-                    setSettingsState((prevState) => ({ ...prevState, [key]: newValue }));
-                });
+
+                const updateSetting = async (k: settingsKeys, v: boolean) => {
+                    await settings.set(k, v);
+                    setSettingsState((prevState) => ({ ...prevState, [k]: v }));
+                };
+
+                await updateSetting(key, newValue);
+
+                const dependentSettings: {
+                    [key in settingsKeys]?: { [value in 'true' | 'false']?: settingsKeys[] };
+                } = {
+                    singBoxUDP: {
+                        true: ['singBoxSniff', 'singBoxSniffOverrideDest']
+                    },
+                    singBoxSniff: {
+                        false: ['singBoxUDP']
+                    },
+                    singBoxSniffOverrideDest: {
+                        false: ['singBoxUDP']
+                    }
+                };
+
+                const dependents = dependentSettings[key]?.[`${newValue}` as 'true' | 'false'];
+                if (dependents) {
+                    for (const depKey of dependents) {
+                        await new Promise((resolve) => setTimeout(resolve, 300));
+                        await updateSetting(depKey, newValue);
+                    }
+                }
             }
         },
         [settingsState]
