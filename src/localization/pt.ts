@@ -39,7 +39,8 @@ const brazilianPortuguese: Language = {
         hardware_usage: 'Ativar esta opção aumentará o uso dos recursos de hardware.',
         config_added:
             'A configuração foi adicionada com sucesso, e para usá-la, você deve clicar na conexão.',
-        profile_added: 'O ponto final foi adicionado com sucesso ao perfil.'
+        profile_added: 'O ponto final foi adicionado com sucesso ao perfil.',
+        endpoint_added: 'O endpoint foi substituído com sucesso.'
     },
     settings: {
         title: 'Configurações do Warp',

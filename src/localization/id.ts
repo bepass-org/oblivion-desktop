@@ -40,7 +40,8 @@ const indonesia: Language = {
             'Mengaktifkan opsi ini akan meningkatkan penggunaan sumber daya perangkat keras.',
         config_added:
             'Konfigurasi telah berhasil ditambahkan, dan untuk menggunakannya, Anda harus mengklik koneksi.',
-        profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.'
+        profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.',
+        endpoint_added: 'Endpoint berhasil diganti.'
     },
     settings: {
         title: 'Pengaturan Warp',

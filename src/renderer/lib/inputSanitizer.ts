@@ -10,6 +10,10 @@ type ConfigType =
           name: string;
       }
     | {
+          method: 'endpoint';
+          endpoint: string;
+      }
+    | {
           method: 'warp' | 'psiphon' | 'gool';
           endpoint: string;
           location: string;
@@ -45,6 +49,9 @@ export const validEndpoint = (value: string) => {
 };
 
 export const newProfile = (savedProfiles: any, newName: string, newEndpoint: string) => {
+    if (!validEndpoint(newEndpoint) && newEndpoint !== defaultSettings.endpoint) {
+        return false;
+    }
     if (!Array.isArray(savedProfiles)) {
         savedProfiles =
             typeof savedProfiles === 'undefined'
@@ -127,9 +134,24 @@ export const parseProfileConfig = (pastedText: string): ConfigType | null => {
     };
 };
 
+export const parseEndpointConfig = (pastedText: string): ConfigType | null => {
+    const match = /^oblivion:\/\/endpoint@([^#]*)$/i.exec(pastedText);
+    if (!match) return null;
+    if (!validEndpoint(match[1])) {
+        return null;
+    }
+    const endpoint = match[1] || defaultSettings.endpoint;
+    return {
+        method: 'endpoint',
+        endpoint
+    };
+};
+
 export const validateConfig = (pastedText: string): ConfigType | null => {
     if (pastedText.startsWith('oblivion://profile')) {
         return parseProfileConfig(pastedText);
+    } else if (pastedText.startsWith('oblivion://endpoint')) {
+        return parseEndpointConfig(pastedText);
     } else if (pastedText.startsWith('oblivion://')) {
         return parseConnectionConfig(pastedText);
     }
@@ -175,6 +197,15 @@ export const saveConfig = (
                     defaultToast(appLang?.toast?.profile_added, 'SETTINGS_CHANGED', 5000);
                 }
             }, 200);
+        } else if (config.method === 'endpoint') {
+            if (isConnected) {
+                settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+            } else {
+                defaultToast(appLang?.toast?.endpoint_added, 'SETTINGS_CHANGED', 5000);
+            }
+            setTimeout(async () => {
+                settings.set('endpoint', config.endpoint);
+            }, 200);
         } else {
             if (isConnected) {
                 settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
@@ -199,6 +230,6 @@ export const saveConfig = (
             toast.remove('SETTINGS_CHANGED');
         }, 5000);
     } else {
-        //console.log(config)
+        console.log(config);
     }
 };

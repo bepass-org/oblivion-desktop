@@ -38,6 +38,7 @@ export interface Toast {
     hardware_usage: string;
     config_added: string;
     profile_added: string;
+    endpoint_added: string;
 }
 
 export interface Settings {

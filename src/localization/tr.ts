@@ -40,7 +40,8 @@ const turkish: Language = {
             'Bu seçeneği etkinleştirmek donanım kaynaklarının kullanımını artıracaktır.',
         config_added:
             'Yapılandırma başarıyla eklendi ve kullanmak için bağlantıya tıklamanız gerekiyor.',
-        profile_added: 'Uç nokta başarıyla profile eklendi.'
+        profile_added: 'Uç nokta başarıyla profile eklendi.',
+        endpoint_added: 'Uç nokta başarıyla değiştirildi.'
     },
     settings: {
         title: 'Warp Ayarları',

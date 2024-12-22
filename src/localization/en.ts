@@ -39,7 +39,8 @@ const english: Language = {
         hardware_usage: 'Enabling this option will increase hardware resource usage.',
         config_added:
             'The configuration has been successfully added, and to use it, you must click on the connection.',
-        profile_added: 'The endpoint has been successfully added to the profile.'
+        profile_added: 'The endpoint has been successfully added to the profile.',
+        endpoint_added: 'The endpoint was successfully replaced.'
     },
     settings: {
         title: 'Warp Settings',
