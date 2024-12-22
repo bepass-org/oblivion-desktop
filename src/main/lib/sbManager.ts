@@ -10,6 +10,7 @@ import { rimraf } from 'rimraf';
 import {
     defaultSettings,
     dnsServers,
+    dohDnsServers,
     singBoxGeoIp,
     singBoxGeoSite,
     singBoxLog,
@@ -380,7 +381,6 @@ class SingBoxManager {
 
         return {
             socksPort: typeof port === 'number' ? port : defaultSettings.port,
-            dnsList: typeof dns === 'string' ? dns : dnsServers[0].value,
             tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
             logLevel: typeof loglevel === 'string' ? loglevel : singBoxLog[0].value,
             tunStack: typeof stack === 'string' ? stack : singBoxStack[0].value,
@@ -394,7 +394,14 @@ class SingBoxManager {
                     : isDarwin
                       ? true
                       : defaultSettings.singBoxSniffOverrideDest,
-            udpDirect: typeof udp === 'boolean' ? udp : isDarwin ? true : defaultSettings.singBoxUDP
+            udpDirect:
+                typeof udp === 'boolean' ? udp : isDarwin ? true : defaultSettings.singBoxUDP,
+            plainDns: typeof dns === 'string' ? dns : dnsServers[0].value,
+            DoHDns:
+                typeof dns === 'string'
+                    ? (dohDnsServers.find((doh) => doh.key === dns)?.value ??
+                      dohDnsServers[0].value)
+                    : dohDnsServers[0].value
         };
     }
 

@@ -60,7 +60,6 @@ export interface INetStats {
 
 export interface IConfig {
     socksPort: number;
-    dnsList: string;
     tunMtu: number;
     logLevel: string;
     tunStack: string;
@@ -68,6 +67,8 @@ export interface IConfig {
     tunSniff: boolean;
     tunSniffOverrideDest: boolean;
     udpDirect: boolean;
+    plainDns: string;
+    DoHDns: string;
 }
 
 export interface IGeoConfig {
