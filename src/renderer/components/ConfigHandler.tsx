@@ -13,6 +13,13 @@ const ConfigHandler = ({ isConnected, isLoading, appLang }: any) => {
             event.preventDefault();
             let pastedText = event.clipboardData?.getData('Text') || '';
             saveConfig(pastedText, isConnected, isLoading, appLang);
+            setTimeout(async () => {
+                try {
+                    await navigator.clipboard?.writeText('');
+                } catch (err) {
+                    //
+                }
+            }, 200);
         };
 
         window.addEventListener('paste', handlePaste);

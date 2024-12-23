@@ -3,6 +3,7 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
+import { removeLeadingZeros } from '../../../lib/inputSanitizer';
 
 interface PortModalProps {
     isOpen: boolean;
@@ -19,6 +20,12 @@ const usePortModal = (props: PortModalProps) => {
     const [showModal, setShowModal] = useState<boolean>(isOpen);
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
+
+    useEffect(() => {
+        if (portInput.toString().startsWith('0')) {
+            setPortInput(removeLeadingZeros(portInput));
+        }
+    }, [portInput]);
 
     const appLang = useTranslate();
 

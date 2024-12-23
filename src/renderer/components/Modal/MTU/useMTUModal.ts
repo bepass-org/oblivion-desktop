@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 //import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
+import { removeLeadingZeros } from '../../../lib/inputSanitizer';
 //import { useStore } from '../../../store';
 //import { settingsHaveChangedToast } from '../../../lib/toasts';
 
@@ -19,6 +20,12 @@ const useMTUModal = (props: MtuModalProps) => {
     const [showModal, setShowModal] = useState<boolean>(isOpen);
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
+
+    useEffect(() => {
+        if (mtuInput.toString().startsWith('0')) {
+            setMtuInput(removeLeadingZeros(mtuInput));
+        }
+    }, [mtuInput]);
 
     const appLang = useTranslate();
 
