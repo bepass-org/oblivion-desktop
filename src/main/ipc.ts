@@ -1,7 +1,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/ipc
 
 import { ipcMain } from 'electron';
-import './ipcListeners/wp';
+import './lib/wpManager';
 import './ipcListeners/log';
 import './ipcListeners/settings';
 
