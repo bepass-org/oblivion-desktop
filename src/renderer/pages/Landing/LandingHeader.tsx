@@ -26,7 +26,7 @@ const LandingHeader: FC<LandingHeaderProps> = ({
     const checkClipboard = async () => {
         try {
             const text = await navigator.clipboard.readText();
-            if (text.startsWith('oblivion://')) {
+            if (text.toLowerCase().startsWith('oblivion://')) {
                 setShowPasteOption(true);
                 setClipboardContent(text);
             } else {
