@@ -111,7 +111,6 @@ export const sanitizeConfig = (input: string): string => {
         return '';
     }
     let atCount = 0;
-    input = input.toLowerCase();
     input = input.replace('cfon', 'psiphon');
     input = input.replace(/@/g, (match) => {
         atCount += 1;
@@ -131,6 +130,7 @@ export const sanitizeConfig = (input: string): string => {
 };
 
 export const parseProfileConfig = (pastedText: string): ConfigType | null => {
+    pastedText = pastedText.toLowerCase();
     const match = /^oblivion:\/\/profile@([^#]*)#([a-zA-Z0-9-_ &?]*)$/i.exec(pastedText);
     if (!match) return null;
     const endpoint = match[1] || defaultSettings.endpoint;
@@ -143,6 +143,7 @@ export const parseProfileConfig = (pastedText: string): ConfigType | null => {
 };
 
 export const parseEndpointConfig = (pastedText: string): ConfigType | null => {
+    pastedText = pastedText.toLowerCase();
     const match = /^oblivion:\/\/endpoint@([^#]*)$/i.exec(pastedText);
     if (!match) return null;
     if (!validEndpoint(match[1])) {
@@ -167,13 +168,17 @@ export const validateConfig = (pastedText: string): ConfigType | null => {
 };
 
 export const parseConnectionConfig = (pastedText: string): ConfigType | null => {
+    pastedText = pastedText.replace('?&', '?');
+    const licenseMatch = pastedText.match(/(^|&)license=([^&]*)/i);
+    const licenseValue = licenseMatch ? licenseMatch[2] : '';
+    pastedText = pastedText.toLowerCase();
     const match = /^oblivion:\/\/(warp|psiphon|gool)@([^?]*)\??(.*)$/i.exec(pastedText);
     if (!match) return null;
     const method: 'warp' | 'psiphon' | 'gool' = (match[1] as any) || defaultSettings.method;
     const endpoint = match[2] || defaultSettings.endpoint;
     const params = match[3] ? new URLSearchParams(match[3]) : new URLSearchParams();
     const location = validateCountry(params?.get('location') || '', method);
-    const license = validateLicense(params?.get('license') || '');
+    const license = validateLicense(licenseValue || '');
     const reserved = validateReserved(params?.get('reserved') || '');
     const ipType = determineIpType(endpoint, params?.get('ip') || '');
     return {
@@ -195,6 +200,7 @@ export const saveConfig = (
     if (typeof pastedText !== 'string') {
         return false;
     }
+    pastedText = pastedText.trim();
     pastedText = sanitizeConfig(pastedText);
     const config = validateConfig(pastedText);
     if (config) {
