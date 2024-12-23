@@ -212,8 +212,8 @@ export const saveConfig = (
                 }
             }, 200);
         } else {
-            if (isConnected) {
-                settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+            if (isConnected || isLoading) {
+                defaultToast(appLang?.toast?.settings_changed, 'SETTINGS_CHANGED', 5000);
             } else {
                 defaultToast(appLang?.toast?.config_added, 'SETTINGS_CHANGED', 5000);
             }

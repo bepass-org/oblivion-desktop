@@ -49,7 +49,7 @@ const LandingHeader: FC<LandingHeaderProps> = ({
 
     const handleIconClick = () => {
         if (clipboardContent) {
-            alert(clipboardContent);
+            //alert(clipboardContent);
             saveConfig(clipboardContent, isConnected, isLoading, appLang);
             setShowPasteOption(false);
         }
