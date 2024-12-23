@@ -49,7 +49,7 @@ export const validEndpoint = (value: string) => {
 };
 
 export const newProfile = (savedProfiles: any, newName: string, newEndpoint: string) => {
-    if (!validEndpoint(newEndpoint) && newEndpoint !== defaultSettings.endpoint) {
+    if (validEndpoint(newEndpoint) !== '' && newEndpoint === defaultSettings.endpoint) {
         return false;
     }
     if (!Array.isArray(savedProfiles)) {
@@ -146,7 +146,7 @@ export const parseEndpointConfig = (pastedText: string): ConfigType | null => {
     pastedText = pastedText.toLowerCase();
     const match = /^oblivion:\/\/endpoint@([^#]*)$/i.exec(pastedText);
     if (!match) return null;
-    if (!validEndpoint(match[1])) {
+    if (validEndpoint(match[1]) === '') {
         return null;
     }
     const endpoint = match[1] || defaultSettings.endpoint;

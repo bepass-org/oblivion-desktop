@@ -92,7 +92,11 @@ const useProfileModal = (props: ProfileModalProps) => {
     }, [onClose]);
 
     const onSaveModal = useCallback(() => {
-        if (profileName !== '' && validEndpoint(profileEndpoint) && profileEndpoint.length > 7) {
+        if (
+            profileName !== '' &&
+            validEndpoint(profileEndpoint) !== '' &&
+            profileEndpoint.length > 7
+        ) {
             handleAddProfile();
         } else {
             settings.set('profiles', JSON.stringify(profilesInput));
