@@ -1,18 +1,60 @@
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { FC, KeyboardEvent } from 'react';
+import { saveConfig } from '../../lib/inputSanitizer';
 
 interface LandingHeaderProps {
     toggleDrawer: () => void;
     hasNewUpdate: boolean;
     handleMenuOnKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
+    isConnected: boolean;
+    isLoading: boolean;
+    appLang: any;
 }
 
 const LandingHeader: FC<LandingHeaderProps> = ({
     handleMenuOnKeyDown,
     hasNewUpdate,
-    toggleDrawer
+    toggleDrawer,
+    isConnected,
+    isLoading,
+    appLang
 }) => {
+    const [showPasteOption, setShowPasteOption] = useState(false);
+    const [clipboardContent, setClipboardContent] = useState<string | null>(null);
+
+    const checkClipboard = async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text.startsWith('oblivion://')) {
+                setShowPasteOption(true);
+                setClipboardContent(text);
+            } else {
+                setShowPasteOption(false);
+            }
+        } catch (err) {
+            //console.error('Error reading clipboard:', err);
+        }
+    };
+
+    useEffect(() => {
+        const handleFocus = () => {
+            checkClipboard();
+        };
+        window.addEventListener('focus', handleFocus);
+        return () => {
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, []);
+
+    const handleIconClick = () => {
+        if (clipboardContent) {
+            alert(clipboardContent);
+            saveConfig(clipboardContent, isConnected, isLoading, appLang);
+            setShowPasteOption(false);
+        }
+    };
+
     return (
         <nav className='header'>
             <div className='container'>
@@ -33,6 +75,11 @@ const LandingHeader: FC<LandingHeaderProps> = ({
                 <Link to={'/debug'} tabIndex={0}>
                     <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                 </Link>
+                {showPasteOption && (
+                    <div onClick={handleIconClick} tabIndex={0}>
+                        <i className={classNames('material-icons', 'navPaste')}>&#xea8e;</i>
+                    </div>
+                )}
             </div>
         </nav>
     );

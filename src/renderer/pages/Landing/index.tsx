@@ -42,6 +42,9 @@ export default function Landing() {
                 handleMenuOnKeyDown={handleMenuOnKeyDown}
                 hasNewUpdate={hasNewUpdate}
                 toggleDrawer={toggleDrawer}
+                isConnected={isConnected}
+                isLoading={isLoading}
+                appLang={appLang}
             />
             <LandingDrawer
                 appLang={appLang}

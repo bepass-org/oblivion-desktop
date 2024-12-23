@@ -92,6 +92,17 @@ nav.header i:hover {
     color: #eaeaea;
 }
 
+nav.header i.navPaste {
+    float: left;
+    margin: 2px 0 0 15px;
+    font-size: 26px !important;
+}
+
+[dir='ltr'] nav.header i.navPaste {
+    float: right;
+    margin: 2px 15px 0 0;
+}
+
 nav.header i.log {
     color: #a1a1a1;
     margin: 0 0 0 15px;

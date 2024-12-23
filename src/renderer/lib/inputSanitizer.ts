@@ -102,6 +102,9 @@ export const validateReserved = (reserved: string): '0' | '1' => {
 };
 
 export const sanitizeConfig = (input: string): string => {
+    if (input === '') {
+        return '';
+    }
     let atCount = 0;
     input = input.toLowerCase();
     input = input.replace('cfon', 'psiphon');
@@ -184,6 +187,9 @@ export const saveConfig = (
     isLoading: boolean,
     appLang: any
 ) => {
+    if (typeof pastedText !== 'string') {
+        return false;
+    }
     pastedText = sanitizeConfig(pastedText);
     const config = validateConfig(pastedText);
     if (config) {
@@ -193,18 +199,17 @@ export const saveConfig = (
                 const profiles = await settings.get('profiles');
                 const canSaveProfile = newProfile(profiles, config.name, config.endpoint);
                 if (canSaveProfile) {
-                    settings.set('profiles', JSON.stringify(canSaveProfile));
+                    await settings.set('profiles', JSON.stringify(canSaveProfile));
                     defaultToast(appLang?.toast?.profile_added, 'SETTINGS_CHANGED', 5000);
                 }
             }, 200);
         } else if (config.method === 'endpoint') {
-            if (isConnected) {
-                settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-            } else {
-                defaultToast(appLang?.toast?.endpoint_added, 'SETTINGS_CHANGED', 5000);
-            }
             setTimeout(async () => {
-                settings.set('endpoint', config.endpoint);
+                const endpoint = await settings.get('endpoint');
+                if (endpoint !== config.endpoint) {
+                    await settings.set('endpoint', config.endpoint);
+                    defaultToast(appLang?.toast?.endpoint_added, 'SETTINGS_CHANGED', 5000);
+                }
             }, 200);
         } else {
             if (isConnected) {
