@@ -11,6 +11,9 @@ import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
 import useTranslate from '../../../../localization/useTranslate';
+import { platform } from '../../../lib/utils';
+
+const isDarwin = platform === 'darwin';
 
 interface RestoreModalProps {
     isOpen: boolean;
@@ -116,9 +119,12 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxLog', singBoxLog[0].value);
         await settings.set('singBoxStack', singBoxStack[0].value);
         await settings.set('singBoxStrictRoute', defaultSettings.singBoxStrictRoute);
-        await settings.set('singBoxSniff', defaultSettings.singBoxSniff);
-        await settings.set('singBoxSniffOverrideDest', defaultSettings.singBoxSniffOverrideDest);
-        await settings.set('singBoxUDP', defaultSettings.singBoxUDP);
+        await settings.set('singBoxSniff', isDarwin ? true : defaultSettings.singBoxSniff);
+        await settings.set(
+            'singBoxSniffOverrideDest',
+            isDarwin ? true : defaultSettings.singBoxSniffOverrideDest
+        );
+        await settings.set('singBoxUDP', isDarwin ? true : defaultSettings.singBoxUDP);
         await settings.set('restartCounter', defaultSettings.restartCounter);
         //
         ipcRenderer.sendMessage('wp-end');
