@@ -79,6 +79,11 @@ export const validateCountry = (location: string, method: string): string => {
 };
 
 export const validateLicense = (license: string): string => {
+    license = license.trim();
+    license = license.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
+    if ( license.length < 3 ) {
+        return '';
+    }
     return /^[a-zA-Z0-9-]*$/.test(license) ? license : '';
 };
 
