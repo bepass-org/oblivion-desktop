@@ -73,6 +73,7 @@ simpleLog.transports.console.format = '{text}';
 simpleLog.transports.file.format = '{text}';
 
 class WarpPlusManager {
+    //Public-Methods
     static restartApp() {
         let retryCount = 0;
 
@@ -122,7 +123,38 @@ class WarpPlusManager {
         }
     }
 
-    static sendConnectionSignal() {
+    static async startWarpPlus() {
+        if (!fs.existsSync(wpBinPath)) {
+            state.event?.reply('guide-toast', state.appLang.log.error_wp_not_found);
+            state.event?.reply('wp-end', true);
+
+            if (fs.existsSync(wpAssetPath) && state.settings.restartCounter < 2) {
+                await settings.set('restartCounter', state.settings.restartCounter + 1);
+                this.restartApp();
+            }
+            return;
+        }
+
+        try {
+            const args = await getUserSettings();
+            log.info('Starting WarpPlus process...');
+            log.info(`${wpBinPath} ${args.join(' ')}`);
+            state.child = spawn(wpBinPath, args, { cwd: workingDirPath });
+            this.setupChildProcessHandlers();
+        } catch (error) {
+            log.error('Error starting WarpPlus:', error);
+            this.handleStartupError();
+        }
+    }
+
+    static killChild() {
+        if (state.child?.pid) {
+            treeKill(state.child.pid, 'SIGKILL');
+        }
+    }
+
+    //Private-Methods
+    private static sendConnectionSignal() {
         // eslint-disable-next-line default-case
         switch (state.connectionState) {
             case ConnectionState.CONNECTING:
@@ -154,30 +186,6 @@ class WarpPlusManager {
                 if (state.exitOnWpEnd) ipcMain.emit('exit');
                 customEvent.emit('tray-icon', 'disconnected');
                 break;
-        }
-    }
-
-    static async startWarpPlus() {
-        if (!fs.existsSync(wpBinPath)) {
-            state.event?.reply('guide-toast', state.appLang.log.error_wp_not_found);
-            state.event?.reply('wp-end', true);
-
-            if (fs.existsSync(wpAssetPath) && state.settings.restartCounter < 2) {
-                await settings.set('restartCounter', state.settings.restartCounter + 1);
-                this.restartApp();
-            }
-            return;
-        }
-
-        try {
-            const args = await getUserSettings();
-            log.info('Starting WarpPlus process...');
-            log.info(`${wpBinPath} ${args.join(' ')}`);
-            state.child = spawn(wpBinPath, args, { cwd: workingDirPath });
-            this.setupChildProcessHandlers();
-        } catch (error) {
-            log.error('Error starting WarpPlus:', error);
-            this.handleStartupError();
         }
     }
 
@@ -252,12 +260,6 @@ class WarpPlusManager {
                 log.info('Deleted corrupt WarpPlus binary. Restarting app...');
                 this.restartApp();
             });
-        }
-    }
-
-    static killChild() {
-        if (state.child?.pid) {
-            treeKill(state.child.pid, 'SIGKILL');
         }
     }
 }
