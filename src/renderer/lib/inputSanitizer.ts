@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { settings } from './settings';
 import { countries, defaultSettings } from '../../defaultSettings';
-import { defaultToast, settingsHaveChangedToast } from './toasts';
+import { defaultToast } from './toasts';
 
 type ConfigType =
     | {
@@ -81,7 +81,7 @@ export const validateCountry = (location: string, method: string): string => {
 export const validateLicense = (license: string): string => {
     license = license.trim();
     license = license.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
-    if ( license.length < 3 ) {
+    if (license.length < 3) {
         return '';
     }
     return /^[a-zA-Z0-9-]*$/.test(license) ? license : '';
@@ -206,6 +206,8 @@ export const saveConfig = (
                 if (canSaveProfile) {
                     await settings.set('profiles', JSON.stringify(canSaveProfile));
                     defaultToast(appLang?.toast?.profile_added, 'SETTINGS_CHANGED', 5000);
+                } else {
+                    //console.log(config);
                 }
             }, 200);
         } else if (config.method === 'endpoint') {
@@ -214,6 +216,8 @@ export const saveConfig = (
                 if (endpoint !== config.endpoint) {
                     await settings.set('endpoint', config.endpoint);
                     defaultToast(appLang?.toast?.endpoint_added, 'SETTINGS_CHANGED', 5000);
+                } else {
+                    //console.log(config);
                 }
             }, 200);
         } else {
@@ -240,6 +244,6 @@ export const saveConfig = (
             toast.remove('SETTINGS_CHANGED');
         }, 5000);
     } else {
-        console.log(config);
+        //console.log(config);
     }
 };
