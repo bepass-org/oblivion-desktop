@@ -191,6 +191,14 @@ export const parseConnectionConfig = (pastedText: string): ConfigType | null => 
     };
 };
 
+export const removeLeadingZeros = (input: any) => {
+    let numberString = input.toString();
+    if (numberString.startsWith('0')) {
+        return numberString.replace(/^0+/, '');
+    }
+    return numberString;
+};
+
 export const saveConfig = (
     pastedText: string,
     isConnected: boolean,
