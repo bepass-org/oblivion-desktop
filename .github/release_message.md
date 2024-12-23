@@ -12,7 +12,7 @@ https://github.com/bepass-org/oblivion-desktop/issues
 
 </div>
 
-## Version RELEASE_TAG has been released for Windows, Linux & macOs.
+## Version RELEASE_TAG has been released for Windows, Linux & macOS.
 
 ### Some software changes:
 

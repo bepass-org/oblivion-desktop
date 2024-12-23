@@ -38,7 +38,8 @@ const chinese: Language = {
         settings_changed: '应用设置已更改，需要重新连接。',
         hardware_usage: '启用此选项会增加硬件资源的使用。',
         config_added: '配置已成功添加，要使用它，您必须点击连接。',
-        profile_added: '端点已成功添加到个人资料中。'
+        profile_added: '端点已成功添加到个人资料中。',
+        endpoint_added: '终端已成功替换。'
     },
     settings: {
         title: 'Warp 设置',
@@ -116,7 +117,19 @@ const chinese: Language = {
         geo_rules_ip_desc: '应用 GeoIP 规则',
         geo_rules_site: '网页路由',
         geo_rules_site_desc: '应用 GeoSite 规则',
-        more_helper: '助理设置'
+        more_helper: '助理设置',
+        singbox_log: '日志记录',
+        singbox_log_desc: '设置日志级别',
+        singbox_stack: '堆栈',
+        singbox_stack_desc: '设置堆栈类型',
+        singbox_strict_route: '严格路由',
+        singbox_strict_route_desc: '启用严格路由',
+        singbox_sniff: '嗅探',
+        singbox_sniff_desc: '启用嗅探',
+        singbox_sniff_override: '覆盖目标',
+        singbox_sniff_override_desc: '启用嗅探覆盖目的地',
+        singbox_udp_direct: '直接UDP连接',
+        singbox_udp_direct_desc: '启用UDP直接连接'
     },
     tabs: {
         home: '连接',
@@ -180,7 +193,7 @@ const chinese: Language = {
         error_singbox_failed_stop: '停止 Sing-Box 失败!',
         error_singbox_failed_start: '启动 Sing-Box 失败!',
         error_wp_reset_peer: '与 Cloudflare 的连接意外中断！',
-        error_faild_connection: '无法建立连接！',
+        error_failed_connection: '无法建立连接！',
         error_canceled_by_user: '操作已被用户取消。'
     },
     about: {

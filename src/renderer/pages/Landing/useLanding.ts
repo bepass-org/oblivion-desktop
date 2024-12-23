@@ -15,6 +15,7 @@ import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
+import { INetStats } from '../../../constants';
 
 export type IpConfig = {
     countryCode: string | boolean;
@@ -28,14 +29,6 @@ const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
 let canCheckNewVer = true;
 let hasNewUpdate = false;
-
-export interface INetStats {
-    sentSpeed: { value: number; unit: string };
-    recvSpeed: { value: number; unit: string };
-    totalSent: { value: number; unit: string };
-    totalRecv: { value: number; unit: string };
-    totalUsage: { value: number; unit: string };
-}
 
 const defaultNetStats: INetStats = {
     sentSpeed: { value: -1, unit: 'N/A' },
@@ -206,13 +199,14 @@ const useLanding = () => {
                 loadingToast(appLang.status.keep_trying);
                 setTimeout(function () {
                     stopLoadingToast();
-                }, 3500);
+                }, 5000);
             } else if (message === 'sb_restarted') {
                 setIsLoading(false);
                 setIsConnected(true);
             } else if (message === 'sb_exceeded') {
                 setIsLoading(false);
                 setIsConnected(false);
+                stopLoadingToast();
                 setTimeout(function () {
                     defaultToast(appLang.log.error_deadline_exceeded, 'EXCEEDED', 5000);
                 }, 2000);
@@ -394,12 +388,12 @@ const useLanding = () => {
             if (method === '' && ipInfo?.countryCode === 'ir') {
                 ipToast();
             } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
-                ipcRenderer.sendMessage('wp-end');
+                ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
                 setIsLoading(true);
                 loadingToast(appLang.status.keep_trying);
                 setTimeout(function () {
                     stopLoadingToast();
-                    ipcRenderer.sendMessage('wp-start');
+                    ipcRenderer.sendMessage('wp-start', 'start-from-gool');
                     setIsLoading(true);
                     setPing(0);
                 }, 3500);

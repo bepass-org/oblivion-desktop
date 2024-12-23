@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
-import { settings } from '../lib/settings';
-import { ipcRenderer } from '../lib/utils';
-import toast from 'react-hot-toast';
-import { defaultToast, settingsHaveChangedToast } from '../lib/toasts';
-import { newProfile, sanitizeConfig, saveConfig, validateConfig } from '../lib/inputSanitizer';
+import { saveConfig } from '../lib/inputSanitizer';
 
 const ConfigHandler = ({ isConnected, isLoading, appLang }: any) => {
     useEffect(() => {

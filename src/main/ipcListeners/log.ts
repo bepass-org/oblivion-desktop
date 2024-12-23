@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import os from 'os';
 import { app, ipcMain } from 'electron';
 import log from 'electron-log';
@@ -17,10 +16,8 @@ import {
     checkIpType
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
-import { binAssetsPath } from '../main';
+import { binAssetPath, logPath } from '../../constants';
 import { wpVersion, sbVersion, helperVersion } from '../config';
-
-export const logPath = path.join(app?.getPath('logs'), 'main.log');
 
 export function readLogFile(value: string) {
     return new Promise((resolve, reject) => {
@@ -69,7 +66,7 @@ export const logMetadata = () => {
             log.info(`at wp: v${wpVersion}`);
             log.info(`at sb: v${sbVersion}`);
             log.info(`at hp: v${helperVersion}`);
-            log.info(`ls assets/bin: ${fs.readdirSync(binAssetsPath)}`);
+            log.info(`ls assets/bin: ${fs.readdirSync(binAssetPath, { recursive: true })}`);
             log.info('method:', calculateMethod(data[0]));
             log.info('proxyMode:', checkProxyMode(data[1]));
             log.info('routingRules:', checkRoutingRules(data[4]));

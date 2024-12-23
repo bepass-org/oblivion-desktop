@@ -32,6 +32,12 @@ export type settingsKeys =
     | 'singBoxGeoIp'
     | 'singBoxGeoSite'
     | 'singBoxGeoBlock'
+    | 'singBoxLog'
+    | 'singBoxStrictRoute'
+    | 'singBoxStack'
+    | 'singBoxSniff'
+    | 'singBoxSniffOverrideDest'
+    | 'singBoxUDP'
     | 'restartCounter';
 
 const date = new Date();
@@ -69,6 +75,10 @@ export const defaultSettings = {
     closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
+    singBoxStrictRoute: true,
+    singBoxSniff: false,
+    singBoxSniffOverrideDest: false,
+    singBoxUDP: false,
     restartCounter: 0
 };
 
@@ -114,7 +124,6 @@ export const languages: { value: string; label: string }[] = [
     { value: 'en', label: 'English' },
     { value: 'cn', label: '中文' },
     { value: 'ru', label: 'Русский' },
-    { value: 'de', label: 'Deutsch' },
     { value: 'tr', label: 'Türkçe' },
     { value: 'id', label: 'Indonesia' },
     { value: 'ar', label: 'العربية' },
@@ -128,6 +137,13 @@ export const dnsServers: { value: string; label: string }[] = [
     { value: '8.8.8.8', label: 'Google' },
     { value: '94.140.14.14', label: 'Adguard' },
     { value: '94.140.14.15', label: 'Adguard Family' }
+];
+
+export const dohDnsServers: { key: string; value: string }[] = [
+    { key: '1.1.1.1', value: 'https://1.1.1.2/dns-query' },
+    { key: '8.8.8.8', value: 'https://dns.google/dns-query' },
+    { key: '94.140.14.14', value: 'https://dns.adguard-dns.com/dns-query' },
+    { key: '94.140.14.15', value: 'https://family.adguard-dns.com/dns-query' }
 ];
 
 export const singBoxGeoIp: { label: string; geoIp: string }[] = [
@@ -176,4 +192,21 @@ export const singBoxGeoSite: { label: string; geoSite: string }[] = [
         label: '🇷🇺 Russia',
         geoSite: 'category-ru'
     }
+];
+
+export const singBoxLog: { value: string; label: string }[] = [
+    { value: 'disabled', label: 'Disabled' },
+    { value: 'trace', label: 'Trace' },
+    { value: 'debug', label: 'Debug' },
+    { value: 'info', label: 'Info' },
+    { value: 'warn', label: 'Warn' },
+    { value: 'error', label: 'Error' },
+    { value: 'fatal', label: 'Fatal' },
+    { value: 'panic', label: 'Panic' }
+];
+
+export const singBoxStack: { value: string; label: string }[] = [
+    { value: 'mixed', label: 'Mixed' },
+    { value: 'system', label: 'System' },
+    { value: 'gvisor', label: 'gVisor' }
 ];

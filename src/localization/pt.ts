@@ -39,7 +39,8 @@ const brazilianPortuguese: Language = {
         hardware_usage: 'Ativar esta opção aumentará o uso dos recursos de hardware.',
         config_added:
             'A configuração foi adicionada com sucesso, e para usá-la, você deve clicar na conexão.',
-        profile_added: 'O ponto final foi adicionado com sucesso ao perfil.'
+        profile_added: 'O ponto final foi adicionado com sucesso ao perfil.',
+        endpoint_added: 'O endpoint foi substituído com sucesso.'
     },
     settings: {
         title: 'Configurações do Warp',
@@ -117,7 +118,19 @@ const brazilianPortuguese: Language = {
         geo_rules_ip_desc: 'Aplicação das regras GeoIP',
         geo_rules_site: 'Roteamento Web',
         geo_rules_site_desc: 'Aplicação das regras GeoSite',
-        more_helper: 'Configurações do Assistente'
+        more_helper: 'Configurações do Assistente',
+        singbox_log: 'Registro',
+        singbox_log_desc: 'Definir Nível de Registro',
+        singbox_stack: 'Pilha',
+        singbox_stack_desc: 'Definir Tipo de Pilha',
+        singbox_strict_route: 'Rota Rigorosa',
+        singbox_strict_route_desc: 'Ativar Rota Rigorosa',
+        singbox_sniff: 'Sniffing',
+        singbox_sniff_desc: 'Ativar Sniffing',
+        singbox_sniff_override: 'Sobrescrever Destino',
+        singbox_sniff_override_desc: 'Ativar substituição de destino de sniff',
+        singbox_udp_direct: 'UDP Direto',
+        singbox_udp_direct_desc: 'Ativar UDP Direto'
     },
     tabs: {
         home: 'Conectar',
@@ -188,7 +201,7 @@ const brazilianPortuguese: Language = {
         error_singbox_failed_stop: 'Falha ao parar a Caixa de Canto!',
         error_singbox_failed_start: 'Falha ao iniciar a Caixa de Canto!',
         error_wp_reset_peer: 'A conexão com Cloudflare foi interrompida inesperadamente!',
-        error_faild_connection: 'Falha ao estabelecer conexão!',
+        error_failed_connection: 'Falha ao estabelecer conexão!',
         error_canceled_by_user: 'A operação foi cancelada pelo usuário.'
     },
     about: {

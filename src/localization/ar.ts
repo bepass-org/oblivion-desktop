@@ -38,7 +38,8 @@ const arabic: Language = {
         settings_changed: 'يتطلب تطبيق الإعدادات إعادة الاتصال.',
         hardware_usage: 'تمكين هذا الخيار سيزيد من استهلاك موارد الأجهزة.',
         config_added: 'تم إضافة الإعداد بنجاح، وللاستفادة منه يجب عليك النقر على الاتصال.',
-        profile_added: 'تمت إضافة نقطة النهاية بنجاح إلى الملف الشخصي.'
+        profile_added: 'تمت إضافة نقطة النهاية بنجاح إلى الملف الشخصي.',
+        endpoint_added: 'تم استبدال نقطة النهاية بنجاح.'
     },
     settings: {
         title: 'إعدادات Warp',
@@ -116,7 +117,19 @@ const arabic: Language = {
         geo_rules_ip_desc: 'تطبيق قواعد GeoIP',
         geo_rules_site: 'توجيه الويب',
         geo_rules_site_desc: 'تطبيق قواعد GeoSite',
-        more_helper: 'إعدادات المساعد'
+        more_helper: 'إعدادات المساعد',
+        singbox_log: 'التسجيل',
+        singbox_log_desc: 'تعيين مستوى التسجيل',
+        singbox_stack: 'الهيكل',
+        singbox_stack_desc: 'تعيين نوع الهيكل',
+        singbox_strict_route: 'المسار الصارم',
+        singbox_strict_route_desc: 'تفعيل المسار الصارم',
+        singbox_sniff: 'الاستنشاق',
+        singbox_sniff_desc: 'تفعيل الاستنشاق',
+        singbox_sniff_override: 'تجاوز الوجهة',
+        singbox_sniff_override_desc: 'تفعيل تجاوز وجهة السنف',
+        singbox_udp_direct: 'اتصال UDP مباشر',
+        singbox_udp_direct_desc: 'تفعيل الاتصال المباشر عبر UDP'
     },
     tabs: {
         home: 'اتصال',
@@ -184,7 +197,7 @@ const arabic: Language = {
         error_singbox_failed_stop: 'فشل في إيقاف صندوق الغناء!',
         error_singbox_failed_start: 'فشل في بدء تشغيل صندوق الغناء!',
         error_wp_reset_peer: 'تم قطع الاتصال بـ Cloudflare بشكل غير متوقع!',
-        error_faild_connection: 'فشل في إنشاء الاتصال!',
+        error_failed_connection: 'فشل في إنشاء الاتصال!',
         error_canceled_by_user: 'تم إلغاء العملية من قبل المستخدم.'
     },
     about: {

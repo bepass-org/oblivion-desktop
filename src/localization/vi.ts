@@ -39,7 +39,8 @@ const vietnamese: Language = {
         hardware_usage: 'Bật tùy chọn này sẽ tăng mức sử dụng tài nguyên phần cứng.',
         config_added:
             'Cấu hình đã được thêm thành công, và để sử dụng nó, bạn phải nhấp vào kết nối.',
-        profile_added: 'Điểm cuối đã được thêm thành công vào hồ sơ.'
+        profile_added: 'Điểm cuối đã được thêm thành công vào hồ sơ.',
+        endpoint_added: 'Điểm cuối đã được thay thế thành công.'
     },
     settings: {
         title: 'Cài đặt Warp',
@@ -118,7 +119,19 @@ const vietnamese: Language = {
         geo_rules_ip_desc: 'Áp dụng các quy tắc GeoIP',
         geo_rules_site: 'Định tuyến Web',
         geo_rules_site_desc: 'Áp dụng các quy tắc GeoSite',
-        more_helper: 'Đối tượng Phật'
+        more_helper: 'Đối tượng Phật',
+        singbox_log: 'Ghi Log',
+        singbox_log_desc: 'Cài đặt Mức Log',
+        singbox_stack: 'Ngăn Xếp',
+        singbox_stack_desc: 'Cài đặt Loại Ngăn Xếp',
+        singbox_strict_route: 'Lộ Trình Nghiêm Ngặt',
+        singbox_strict_route_desc: 'Kích hoạt Lộ trình Nghiêm ngặt',
+        singbox_sniff: 'Nghe Gói',
+        singbox_sniff_desc: 'Kích Hoạt Nghe Gói',
+        singbox_sniff_override: 'Ghi Đè Đích',
+        singbox_sniff_override_desc: 'Kích hoạt ghi đè đích sniff',
+        singbox_udp_direct: 'UDP Trực Tiếp',
+        singbox_udp_direct_desc: 'Kích Hoạt UDP Trực Tiếp'
     },
     tabs: {
         home: 'Kết nối',
@@ -187,7 +200,7 @@ const vietnamese: Language = {
         error_singbox_failed_stop: 'Không thể dừng Hộp hát!',
         error_singbox_failed_start: 'Không thể khởi động Hộp hát!',
         error_wp_reset_peer: 'Kết nối đến Cloudflare bị gián đoạn đột ngột!',
-        error_faild_connection: 'Không thể thiết lập kết nối!',
+        error_failed_connection: 'Không thể thiết lập kết nối!',
         error_canceled_by_user: 'Hoạt động đã bị hủy bởi người dùng.'
     },
     about: {

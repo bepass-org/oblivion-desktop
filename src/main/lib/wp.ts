@@ -1,9 +1,10 @@
 import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
-import { countries, defaultSettings } from '../../defaultSettings';
+import { countries, defaultSettings, dnsServers } from '../../defaultSettings';
 import { removeDirIfExists } from './utils';
-import { stuffPath, restartApp } from '../ipcListeners/wp';
+import { restartApp } from '../ipcListeners/wp';
 import { getTranslate } from '../../localization';
+import { stuffPath } from '../../constants';
 //import { customEvent } from './customEvent';
 //import { getTranslateElectron } from '../../localization/electron';
 //import fs from 'fs';
@@ -13,20 +14,33 @@ let appLang = getTranslate('en');
 const randomCountry = () => countries[Math.floor(Math.random() * countries.length)]?.value || 'DE';
 
 export const getUserSettings = async () => {
-    const [endpoint, ipType, port, location, license, method, hostIP, rtt, reserved, lang, dns] =
-        await Promise.all([
-            settings.get('endpoint'),
-            settings.get('ipType'),
-            settings.get('port'),
-            settings.get('location'),
-            settings.get('license'),
-            settings.get('method'),
-            settings.get('hostIP'),
-            settings.get('rtt'),
-            settings.get('reserved'),
-            settings.get('lang'),
-            settings.get('dns')
-        ]);
+    const [
+        endpoint,
+        ipType,
+        port,
+        location,
+        license,
+        method,
+        hostIP,
+        rtt,
+        reserved,
+        lang,
+        dns,
+        proxyMode
+    ] = await Promise.all([
+        settings.get('endpoint'),
+        settings.get('ipType'),
+        settings.get('port'),
+        settings.get('location'),
+        settings.get('license'),
+        settings.get('method'),
+        settings.get('hostIP'),
+        settings.get('rtt'),
+        settings.get('reserved'),
+        settings.get('lang'),
+        settings.get('dns'),
+        settings.get('proxyMode')
+    ]);
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     return [
@@ -62,7 +76,8 @@ export const getUserSettings = async () => {
         ...(typeof dns === 'string' &&
         dns !== '' &&
         dns !== '1.1.1.1' &&
-        ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string')
+        ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string') &&
+        ((typeof proxyMode === 'string' && proxyMode === 'system') || typeof method !== 'string')
             ? ['--dns', dns]
             : [])
     ];
@@ -106,7 +121,9 @@ export const handleWpErrors = (strData: string, ipcEvent: IpcMainEvent, port: st
     Object.entries(wpErrorTranslation).forEach(([errorMsg, translator]) => {
         if (strData.includes(errorMsg)) {
             ipcEvent.reply('guide-toast', translator({ port }));
-            removeDirIfExists(stuffPath);
+            removeDirIfExists(stuffPath).catch((err) =>
+                console.log('removeDirIfExists Error:', err.message)
+            );
         }
     });
 };

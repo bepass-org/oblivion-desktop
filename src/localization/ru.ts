@@ -39,7 +39,8 @@ const russian: Language = {
         hardware_usage: 'Включение этой опции увеличит использование ресурсов оборудования.',
         config_added:
             'Конфигурация успешно добавлена, и для ее использования вам нужно нажать на подключение.',
-        profile_added: 'Точка доступа успешно добавлена в профиль.'
+        profile_added: 'Точка доступа успешно добавлена в профиль.',
+        endpoint_added: 'Конечная точка успешно заменена.'
     },
     settings: {
         title: 'Настройки Warp',
@@ -118,7 +119,19 @@ const russian: Language = {
         geo_rules_ip_desc: 'Применение правил GeoIP',
         geo_rules_site: 'Веб-маршрутизация',
         geo_rules_site_desc: 'Применение правил GeoSite',
-        more_helper: 'Настройки ассистента'
+        more_helper: 'Настройки ассистента',
+        singbox_log: 'Журналирование',
+        singbox_log_desc: 'Установить уровень журнала',
+        singbox_stack: 'Стек',
+        singbox_stack_desc: 'Установить тип стека',
+        singbox_strict_route: 'Строгий маршрут',
+        singbox_strict_route_desc: 'Включить строгий маршрут',
+        singbox_sniff: 'Перехват',
+        singbox_sniff_desc: 'Включить перехват',
+        singbox_sniff_override: 'Переопределить назначение',
+        singbox_sniff_override_desc: 'Включить переопределение назначения для sniff',
+        singbox_udp_direct: 'Прямое UDP',
+        singbox_udp_direct_desc: 'Включить прямое UDP'
     },
     tabs: {
         home: 'Связь',
@@ -188,7 +201,7 @@ const russian: Language = {
         error_singbox_failed_stop: 'Не удалось остановить Sing-Box!',
         error_singbox_failed_start: 'Не удалось запустить Sing-Box!',
         error_wp_reset_peer: 'Соединение с Cloudflare было неожиданно прервано!',
-        error_faild_connection: 'Не удалось установить соединение!',
+        error_failed_connection: 'Не удалось установить соединение!',
         error_canceled_by_user: 'Операция была отменена пользователем.'
     },
     about: {

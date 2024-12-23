@@ -14,4 +14,4 @@ customEvent.on('greet', () => {
 // trigger an event
 customEvent.emit('greet');
 
-// ! also consider using ipcMain.emit('<channel>') if it suites your need.
+// ! also consider using ipcMain.emit('<channel>') if it suits your need.

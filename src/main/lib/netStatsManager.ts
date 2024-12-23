@@ -2,6 +2,7 @@ import { ipcMain } from 'electron';
 import log from 'electron-log';
 import { ChildProcess, spawn } from 'child_process';
 import { networkInterfaceDefault } from 'systeminformation';
+import { netStatsPath, workingDirPath } from '../../constants';
 
 class NetStatsManager {
     private statsProcess?: ChildProcess | null;
@@ -14,11 +15,9 @@ class NetStatsManager {
 
     private static readonly MAX_RETRIES = 3;
 
-    constructor(
-        private readonly netStatsPath: string,
-        private readonly wpDirPath: string,
-        private readonly spawnArgs: string[] = ['-t', '1', '-p', '2', '-f', 'json']
-    ) {
+    private shouldRestart: boolean = false;
+
+    constructor(private readonly spawnArgs: string[] = ['-t', '1', '-p', '2', '-f', 'json']) {
         this.initializeIpcEvents();
         this.initializeNetworkInterface().catch((err) =>
             log.error('Failed to initialize network interface:', err)
@@ -43,12 +42,13 @@ class NetStatsManager {
 
     public startMonitoring(event: any): void {
         if (!this.statsProcess) {
+            this.shouldRestart = true;
             log.info('Starting netStats...');
             this.statsProcess = spawn(
-                this.netStatsPath,
+                netStatsPath,
                 ['-i', this.networkInterface, ...this.spawnArgs],
                 {
-                    cwd: this.wpDirPath
+                    cwd: workingDirPath
                 }
             );
 
@@ -77,9 +77,10 @@ class NetStatsManager {
                 this.statsProcess = null;
                 this.isMonitoring = false;
 
-                if (code !== 0 && this.retryCount < NetStatsManager.MAX_RETRIES) {
+                if (this.shouldRestart && this.retryCount < NetStatsManager.MAX_RETRIES) {
+                    log.info('netStats exited unexpectedly. Restarting...');
                     this.retryCount++;
-                    //this.startMonitoring(event);
+                    this.startMonitoring(event);
                 }
             });
         }
@@ -87,7 +88,8 @@ class NetStatsManager {
 
     public stopMonitoring(): void {
         if (this.statsProcess) {
-            log.info('Stopping netStats monitoring...');
+            this.shouldRestart = false;
+            log.info('Stopping netStats...');
             this.statsProcess.kill();
         }
     }

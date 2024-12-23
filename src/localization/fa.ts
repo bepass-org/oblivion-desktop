@@ -38,7 +38,8 @@ const persian: Language = {
         settings_changed: 'اعمال تنظیمات نیازمند اتصال مجدد می\u200Cباشد.',
         hardware_usage: 'فعال نگه‌داشتن این‌گزینه موجب افزایش مصرف منابع سخت‌افزار می‌گردد.',
         config_added: 'کانفیگ به درستی اضافه شده و برای استفاده از آن باید بر روی اتصال بزنید.',
-        profile_added: 'اندپوینت به درستی به پروفایل اضافه شد.'
+        profile_added: 'اندپوینت به درستی به پروفایل اضافه شد.',
+        endpoint_added: 'اندپوینت به درستی جایگزین شد.'
     },
     settings: {
         title: 'تنظیمات وارپ',
@@ -108,7 +109,7 @@ const persian: Language = {
         close_singbox: 'توقف عملیات',
         close_singbox_desc: 'بستن خودکار سینگ‌باکس هنگام لغو اتصال',
         close_helper: 'توقف دستیار',
-        close_helper_desc: 'بستن خودکار دستیار سینگ‌باکس هنگام خروج',
+        close_helper_desc: 'بستن خودکار دستیار هنگام خروج',
         mtu: 'مقدار MTU',
         mtu_desc: 'تعیین حداکثر واحد انتقال',
         geo_block: 'مسدودسازی',
@@ -117,7 +118,19 @@ const persian: Language = {
         geo_rules_ip_desc: 'به‌کارگیری قوانین GeoIP',
         geo_rules_site: 'مسیریابی وب',
         geo_rules_site_desc: 'به‌کارگیری قوانین GeoSite',
-        more_helper: 'تنظیمات دستیار'
+        more_helper: 'تنظیمات دستیار',
+        singbox_log: 'گزارش‌دهی',
+        singbox_log_desc: 'تنظیم سطح Log',
+        singbox_stack: 'چینش',
+        singbox_stack_desc: 'تنظیم نوع Stack',
+        singbox_strict_route: 'مسیر دقیق',
+        singbox_strict_route_desc: 'تعیین وضعیت Strict Route',
+        singbox_sniff: 'تحلیل بسته‌ها',
+        singbox_sniff_desc: 'فعالسازی Sniff',
+        singbox_sniff_override: 'بازنویسی مقصد',
+        singbox_sniff_override_desc: 'تغییر مقصد Sniff',
+        singbox_udp_direct: 'اتصال مستقیم',
+        singbox_udp_direct_desc: 'فعالسازی UDP Direct'
     },
     tabs: {
         home: 'اتصال',
@@ -187,7 +200,7 @@ const persian: Language = {
         error_singbox_failed_stop: 'متوقف‌کردن سینگ‌باکس با خطا مواجه شد!',
         error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!',
         error_wp_reset_peer: 'اتصال به کلودفلر به‌طور غیرمنتظره قطع شد!',
-        error_faild_connection: 'اتصال موفقیت‌آمیز نبود!',
+        error_failed_connection: 'اتصال موفقیت‌آمیز نبود!',
         error_canceled_by_user: 'عملیات توسط کاربر لغو شد.'
     },
     about: {

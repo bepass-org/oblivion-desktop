@@ -34,41 +34,35 @@ import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
 import './ipc';
-import {
-    wpAssetPath,
-    wpBinPath,
-    sbAssetPath,
-    sbBinPath,
-    helperAssetPath,
-    helperPath,
-    wpDirPath,
-    netStatsPath,
-    netStatsAssetPath,
-    singBoxManager
-} from './ipcListeners/wp';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
 import { geoDBs } from './config';
-import SpeedTestManager from './lib/speedTestManager';
+import {
+    appVersion,
+    wpAssetPath,
+    wpBinPath,
+    sbAssetPath,
+    sbBinPath,
+    helperAssetPath,
+    helperPath,
+    versionFilePath,
+    netStatsPath,
+    netStatsAssetPath,
+    singBoxManager,
+    workingDirPath,
+    dbAssetDirPath
+} from '../constants';
 
 let mainWindow: BrowserWindow | null = null;
-
 let getUserLang: any = 'en';
 let appLang = getTranslate(getUserLang);
 let connectionStatus = 'disconnected';
 
 const gotTheLock = app.requestSingleInstanceLock();
 const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
-
-export const binAssetsPath = path.join(
-    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-    'assets',
-    'bin'
-);
-export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
 
 // autoUpdater.autoDownload = false;
 // autoUpdater.autoRunAppAfterInstall = true;
@@ -88,9 +82,6 @@ if (!gotTheLock) {
             mainWindow.focus();
         }
     });
-
-    const versionFilePath = path.join(wpDirPath, 'ver.txt');
-    const appVersion = app.getVersion();
 
     if (fs.existsSync(versionFilePath)) {
         const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
@@ -122,7 +113,7 @@ if (!gotTheLock) {
             }
             // eslint-disable-next-line no-restricted-syntax
             for (const fileName of geoDBs) {
-                const dbPath = path.join(wpDirPath, fileName);
+                const dbPath = path.join(workingDirPath, fileName);
                 if (fs.existsSync(dbPath)) {
                     rimrafSync(dbPath);
                 }
@@ -182,16 +173,10 @@ if (!gotTheLock) {
         }
     }
 
-    const dbAssetDirectory = path.join(
-        app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
-        'assets',
-        'dbs'
-    );
-
     // eslint-disable-next-line no-restricted-syntax
     for (const fileName of geoDBs) {
-        const dbAssetPath = path.join(dbAssetDirectory, fileName);
-        const dbWDPath = path.join(wpDirPath, fileName);
+        const dbAssetPath = path.join(dbAssetDirPath, fileName);
+        const dbWDPath = path.join(workingDirPath, fileName);
         if (fs.existsSync(dbAssetPath) && !fs.existsSync(dbWDPath)) {
             fs.copyFile(dbAssetPath, dbWDPath, (err) => {
                 if (err) throw err;
@@ -393,7 +378,7 @@ if (!gotTheLock) {
                     mainWindow = null;
                 });
 
-                let windowPosition: number[] = mainWindow?.getPosition();
+                const windowPosition: number[] = mainWindow?.getPosition();
 
                 mainWindow.on('leave-full-screen', async () => {
                     mainWindow?.setSize(windowWidth, windowHeight);
@@ -659,9 +644,6 @@ if (!gotTheLock) {
                 Menu.buildFromTemplate(trayMenuContext(connectionLabel(status), status, true))
             );
         };
-
-        // eslint-disable-next-line no-new
-        new SpeedTestManager();
 
         app?.whenReady().then(() => {
             if (typeof getUserLang === 'undefined') {

@@ -86,7 +86,6 @@ technology
                 :white_check_mark:  English <br>
                 :white_check_mark:  Chinese <br>
                 :white_check_mark:  Russian <br>
-                :white_check_mark:  Deutsch <br>
                 :white_check_mark:  Turkish <br>
                 :white_check_mark:  Indonesian <br>
                 :white_check_mark:  Arabic <br>
@@ -191,7 +190,7 @@ technology
 
 checkout [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
 in [issues](https://github.com/bepass-org/oblivion-desktop/issues) (open
-and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did'nt
+and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you didn't
 get your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
 
 ## Get Involved

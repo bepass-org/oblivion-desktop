@@ -40,7 +40,8 @@ const turkish: Language = {
             'Bu seçeneği etkinleştirmek donanım kaynaklarının kullanımını artıracaktır.',
         config_added:
             'Yapılandırma başarıyla eklendi ve kullanmak için bağlantıya tıklamanız gerekiyor.',
-        profile_added: 'Uç nokta başarıyla profile eklendi.'
+        profile_added: 'Uç nokta başarıyla profile eklendi.',
+        endpoint_added: 'Uç nokta başarıyla değiştirildi.'
     },
     settings: {
         title: 'Warp Ayarları',
@@ -118,7 +119,19 @@ const turkish: Language = {
         geo_rules_ip_desc: 'GeoIP kurallarını uygulama',
         geo_rules_site: 'Web Yönlendirme',
         geo_rules_site_desc: 'GeoSite kurallarını uygulama',
-        more_helper: 'Yardımcı Ayarları'
+        more_helper: 'Yardımcı Ayarları',
+        singbox_log: 'Kayıt',
+        singbox_log_desc: 'Kayıt Seviyesi Ayarla',
+        singbox_stack: 'Yığın',
+        singbox_stack_desc: 'Yığın Tipini Ayarla',
+        singbox_strict_route: 'Sıkı Yönlendirme',
+        singbox_strict_route_desc: 'Sıkı Yolu Etkinleştir',
+        singbox_sniff: 'Dinleme',
+        singbox_sniff_desc: 'Dinlemeyi Etkinleştir',
+        singbox_sniff_override: 'Hedefi Geçersiz Kıl',
+        singbox_sniff_override_desc: 'Sniff hedefi geçersiz kılmayı etkinleştir',
+        singbox_udp_direct: 'Doğrudan UDP',
+        singbox_udp_direct_desc: "Doğrudan UDP'yi Etkinleştir"
     },
     tabs: {
         home: 'Bağlan',
@@ -188,7 +201,7 @@ const turkish: Language = {
         error_singbox_failed_stop: 'Sing-Box durdurulamadı!',
         error_singbox_failed_start: 'Sing-Box başlatılamadı!',
         error_wp_reset_peer: 'Cloudflare bağlantısı beklenmedik bir şekilde kesildi!',
-        error_faild_connection: 'Bağlantı kurulamadı!',
+        error_failed_connection: 'Bağlantı kurulamadı!',
         error_canceled_by_user: 'İşlem kullanıcı tarafından iptal edildi.'
     },
     about: {

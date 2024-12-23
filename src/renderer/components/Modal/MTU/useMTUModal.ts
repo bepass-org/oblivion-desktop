@@ -1,8 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { settings } from '../../../lib/settings';
+//import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
-import { useStore } from '../../../store';
-import { settingsHaveChangedToast } from '../../../lib/toasts';
+//import { useStore } from '../../../store';
+//import { settingsHaveChangedToast } from '../../../lib/toasts';
 
 interface MtuModalProps {
     isOpen: boolean;
@@ -13,7 +13,7 @@ interface MtuModalProps {
 }
 
 const useMTUModal = (props: MtuModalProps) => {
-    const { isConnected, isLoading } = useStore();
+    //const { isConnected, isLoading } = useStore();
     const { isOpen, onClose, mtu, setMtu, defValue } = props;
     const [mtuInput, setMtuInput] = useState<number>(mtu);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
@@ -35,10 +35,10 @@ const useMTUModal = (props: MtuModalProps) => {
         const tmp = isValidMtu(mtuInput) ? mtuInput : defValue;
         setMtuInput(tmp);
         setMtu(tmp);
-        settings.set('singBoxMTU', tmp);
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+        //settings.set('singBoxMTU', tmp);
+        //settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [isValidMtu, mtuInput, defValue, setMtu, isConnected, isLoading, appLang, handleOnClose]);
+    }, [isValidMtu, mtuInput, defValue, setMtu, handleOnClose]);
 
     const onSaveModalKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {

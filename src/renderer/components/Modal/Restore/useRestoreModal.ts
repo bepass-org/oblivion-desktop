@@ -3,7 +3,9 @@ import {
     defaultSettings,
     dnsServers,
     singBoxGeoIp,
-    singBoxGeoSite
+    singBoxGeoSite,
+    singBoxLog,
+    singBoxStack
 } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
@@ -111,6 +113,12 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxGeoIp', singBoxGeoIp[0].geoIp);
         await settings.set('singBoxGeoSite', singBoxGeoSite[0].geoSite);
         await settings.set('singBoxGeoBlock', defaultSettings.singBoxGeoBlock);
+        await settings.set('singBoxLog', singBoxLog[0].value);
+        await settings.set('singBoxStack', singBoxStack[0].value);
+        await settings.set('singBoxStrictRoute', defaultSettings.singBoxStrictRoute);
+        await settings.set('singBoxSniff', defaultSettings.singBoxSniff);
+        await settings.set('singBoxSniffOverrideDest', defaultSettings.singBoxSniffOverrideDest);
+        await settings.set('singBoxUDP', defaultSettings.singBoxUDP);
         await settings.set('restartCounter', defaultSettings.restartCounter);
         //
         ipcRenderer.sendMessage('wp-end');

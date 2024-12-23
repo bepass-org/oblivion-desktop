@@ -38,6 +38,7 @@ export interface Toast {
     hardware_usage: string;
     config_added: string;
     profile_added: string;
+    endpoint_added: string;
 }
 
 export interface Settings {
@@ -117,6 +118,18 @@ export interface Settings {
     geo_rules_site: string;
     geo_rules_site_desc: string;
     more_helper: string;
+    singbox_log: string;
+    singbox_log_desc: string;
+    singbox_stack: string;
+    singbox_stack_desc: string;
+    singbox_strict_route: string;
+    singbox_strict_route_desc: string;
+    singbox_sniff: string;
+    singbox_sniff_desc: string;
+    singbox_sniff_override: string;
+    singbox_sniff_override_desc: string;
+    singbox_udp_direct: string;
+    singbox_udp_direct_desc: string;
 }
 
 export interface Tabs {
@@ -181,7 +194,7 @@ export interface Log {
     error_singbox_failed_stop: string;
     error_singbox_failed_start: string;
     error_wp_reset_peer: string;
-    error_faild_connection: string;
+    error_failed_connection: string;
     error_canceled_by_user: string;
 }
 

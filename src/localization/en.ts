@@ -39,7 +39,8 @@ const english: Language = {
         hardware_usage: 'Enabling this option will increase hardware resource usage.',
         config_added:
             'The configuration has been successfully added, and to use it, you must click on the connection.',
-        profile_added: 'The endpoint has been successfully added to the profile.'
+        profile_added: 'The endpoint has been successfully added to the profile.',
+        endpoint_added: 'The endpoint was successfully replaced.'
     },
     settings: {
         title: 'Warp Settings',
@@ -117,7 +118,19 @@ const english: Language = {
         geo_rules_ip_desc: 'Applying GeoIP rules',
         geo_rules_site: 'Web Routing',
         geo_rules_site_desc: 'Applying GeoSite rules',
-        more_helper: 'Assistant Settings'
+        more_helper: 'Assistant Settings',
+        singbox_log: 'Logging',
+        singbox_log_desc: 'Set Log Level',
+        singbox_stack: 'Stack',
+        singbox_stack_desc: 'Set Stack Type',
+        singbox_strict_route: 'Strict Route',
+        singbox_strict_route_desc: 'Enable Strict Route',
+        singbox_sniff: 'Sniff',
+        singbox_sniff_desc: 'Enable Sniffing',
+        singbox_sniff_override: 'Override Dest',
+        singbox_sniff_override_desc: 'Enable sniff override destination',
+        singbox_udp_direct: 'UDP Direct',
+        singbox_udp_direct_desc: 'Enable UDP Direct'
     },
     tabs: {
         home: 'Connect',
@@ -186,7 +199,7 @@ const english: Language = {
         error_singbox_failed_stop: 'Failed to stop Sing-Box!',
         error_singbox_failed_start: 'Failed to start Sing-Box!',
         error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!',
-        error_faild_connection: 'Failed to establish connection!',
+        error_failed_connection: 'Failed to establish connection!',
         error_canceled_by_user: 'The operation was canceled by the user.'
     },
     about: {

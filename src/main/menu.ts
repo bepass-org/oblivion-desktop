@@ -1,6 +1,6 @@
 import { Menu, shell, BrowserWindow } from 'electron';
 import { exitTheApp } from './lib/utils';
-import { regeditVbsDirPath } from './main';
+//import { regeditVbsDirPath } from '../constants';
 
 export default class MenuBuilder {
     mainWindow: BrowserWindow;

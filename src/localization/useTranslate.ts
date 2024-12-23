@@ -4,7 +4,6 @@ import enUS from './en';
 import faIR from './fa';
 import ruRU from './ru';
 import cnCN from './cn';
-import deDE from './de';
 import trTR from './tr';
 import idID from './id';
 import arSA from './ar';
@@ -13,7 +12,7 @@ import ptBR from './pt';
 import urPK from './ur';
 import { Language } from './type';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'de' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
+type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
 
 const useTranslate = () => {
     const getLanguage = () => {
@@ -27,7 +26,6 @@ const useTranslate = () => {
         en: enUS,
         ru: ruRU,
         cn: cnCN,
-        de: deDE,
         tr: trTR,
         id: idID,
         ar: arSA,

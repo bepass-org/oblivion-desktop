@@ -39,7 +39,8 @@ const urdu: Language = {
         hardware_usage: 'اس آپشن کو فعال کرنے سے ہارڈویئر وسائل کے استعمال میں اضافہ ہوگا۔',
         config_added:
             'کنفیگریشن کامیابی سے شامل کر دی گئی ہے، اور اسے استعمال کرنے کے لیے آپ کو کنکشن پر کلک کرنا ہوگا۔',
-        profile_added: 'اینڈپوائنٹ کامیابی سے پروفائل میں شامل کیا گیا۔'
+        profile_added: 'اینڈپوائنٹ کامیابی سے پروفائل میں شامل کیا گیا۔',
+        endpoint_added: 'اینڈ پوائنٹ کو کامیابی کے ساتھ تبدیل کر دیا گیا۔'
     },
     settings: {
         title: 'وارپ کی ترتیبات',
@@ -118,7 +119,19 @@ const urdu: Language = {
         geo_rules_ip_desc: 'GeoIP قواعد لاگو کریں',
         geo_rules_site: 'ویب روٹنگ',
         geo_rules_site_desc: 'GeoSite قواعد لاگو کریں',
-        more_helper: 'مددگار کی ترتیبات'
+        more_helper: 'مددگار کی ترتیبات',
+        singbox_log: 'لاگنگ',
+        singbox_log_desc: 'لاگ سطح سیٹ کریں',
+        singbox_stack: 'اسٹیک',
+        singbox_stack_desc: 'اسٹیک کی قسم سیٹ کریں',
+        singbox_strict_route: 'سخت راستہ',
+        singbox_strict_route_desc: 'اسٹرکٹ روٹ کو فعال کریں',
+        singbox_sniff: 'سنیفنگ',
+        singbox_sniff_desc: 'سنیفنگ کو فعال کریں',
+        singbox_sniff_override: 'مقصد کو اوور رائڈ کریں',
+        singbox_sniff_override_desc: 'سنیف اووررائیڈ منزل کو فعال کریں',
+        singbox_udp_direct: 'UDP براہ راست',
+        singbox_udp_direct_desc: 'UDP براہ راست کو فعال کریں'
     },
     tabs: {
         home: 'کنیکٹ',
@@ -188,7 +201,7 @@ const urdu: Language = {
         error_singbox_failed_stop: 'سنگ باکس کو روکنے میں ناکامی!',
         error_singbox_failed_start: 'سنگ باکس کو شروع کرنے میں ناکامی!',
         error_wp_reset_peer: 'کلاؤڈفلئیر سے کنیکشن غیر متوقع طور پر منقطع ہو گیا!',
-        error_faild_connection: 'کنکشن قائم کرنے میں ناکامی!',
+        error_failed_connection: 'کنکشن قائم کرنے میں ناکامی!',
         error_canceled_by_user: 'عملیہ صارف کے ذریعہ منسوخ کر دیا گیا۔'
     },
     about: {
