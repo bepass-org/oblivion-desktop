@@ -268,20 +268,17 @@ class WarpPlusManager {
 ipcMain.on('wp-start', async (event, arg) => {
     state.shouldStartSingBox = arg !== 'start-from-gool';
     state.exitOnWpEnd = false;
-
-    const lang = (await settings.get('lang')) || defaultSettings.lang;
-    state.appLang = getTranslate(String(lang || defaultSettings.lang));
     state.event = event;
 
+    const settingsValues = settings.getSync();
+    state.appLang = getTranslate(String(settingsValues?.lang || defaultSettings.lang));
     state.settings = {
-        proxyMode: String((await settings.get('proxyMode')) || defaultSettings.proxyMode),
-        port: Number((await settings.get('port')) || defaultSettings.port),
-        hostIP: String((await settings.get('hostIP')) || defaultSettings.hostIP),
-        ipData: Boolean((await settings.get('ipData')) || defaultSettings.ipData),
-        dataUsage: Boolean((await settings.get('dataUsage')) || defaultSettings.dataUsage),
-        restartCounter: Number(
-            (await settings.get('restartCounter')) || defaultSettings.restartCounter
-        )
+        proxyMode: String(settingsValues.proxyMode || defaultSettings.proxyMode),
+        port: Number(settingsValues.port || defaultSettings.port),
+        hostIP: String(settingsValues.hostIP || defaultSettings.hostIP),
+        ipData: Boolean(settingsValues.ipData || defaultSettings.ipData),
+        dataUsage: Boolean(settingsValues.dataUsage || defaultSettings.dataUsage),
+        restartCounter: Number(settingsValues.restartCounter || defaultSettings.restartCounter)
     };
 
     await removeFileIfExists(logPath);
