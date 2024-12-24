@@ -63,10 +63,7 @@ export interface IConfig {
     tunMtu: number;
     logLevel: string;
     tunStack: string;
-    tunStrictRoute: boolean;
     tunSniff: boolean;
-    tunSniffOverrideDest: boolean;
-    udpDirect: boolean;
     plainDns: string;
     DoHDns: string;
 }

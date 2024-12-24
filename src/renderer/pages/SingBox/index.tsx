@@ -27,10 +27,7 @@ export default function SingBox() {
         singBoxGeoBlock: geoBlock,
         singBoxLog: log,
         singBoxStack: stack,
-        singBoxStrictRoute: strictRoute,
         singBoxSniff: sniff,
-        singBoxSniffOverrideDest: sniffOverride,
-        singBoxUDP: udp,
         proxyMode
     } = settingsState;
 
@@ -42,10 +39,7 @@ export default function SingBox() {
         typeof geoBlock === 'undefined' ||
         typeof log === 'undefined' ||
         typeof stack === 'undefined' ||
-        typeof strictRoute === 'undefined' ||
         typeof sniff === 'undefined' ||
-        typeof sniffOverride === 'undefined' ||
-        typeof udp === 'undefined' ||
         typeof proxyMode === 'undefined'
     )
         return <div className='settings' />;
@@ -228,27 +222,6 @@ export default function SingBox() {
                         <div
                             role='button'
                             className={classNames('item')}
-                            onClick={() => handleToggleSetting('singBoxStrictRoute')}
-                            onKeyDown={handleKeyDown('singBoxStrictRoute')}
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='strict_route'>
-                                {appLang.settings.singbox_strict_route}
-                            </label>
-                            <div className='value'>
-                                <div
-                                    className={classNames('checkbox', strictRoute ? 'checked' : '')}
-                                    tabIndex={-1}
-                                >
-                                    <i className='material-icons'></i>
-                                </div>
-                            </div>
-                            <div className='info'>{appLang.settings.singbox_strict_route_desc}</div>
-                        </div>
-
-                        <div
-                            role='button'
-                            className={classNames('item')}
                             onClick={() => handleToggleSetting('singBoxSniff')}
                             onKeyDown={handleKeyDown('singBoxSniff')}
                             tabIndex={0}
@@ -265,53 +238,6 @@ export default function SingBox() {
                                 </div>
                             </div>
                             <div className='info'>{appLang.settings.singbox_sniff_desc}</div>
-                        </div>
-
-                        <div
-                            role='button'
-                            className={classNames('item')}
-                            onClick={() => handleToggleSetting('singBoxSniffOverrideDest')}
-                            onKeyDown={handleKeyDown('singBoxSniffOverrideDest')}
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='sniff_override_destination'>
-                                {appLang.settings.singbox_sniff_override}
-                            </label>
-                            <div className='value'>
-                                <div
-                                    className={classNames(
-                                        'checkbox',
-                                        sniffOverride ? 'checked' : ''
-                                    )}
-                                    tabIndex={-1}
-                                >
-                                    <i className='material-icons'></i>
-                                </div>
-                            </div>
-                            <div className='info'>
-                                {appLang.settings.singbox_sniff_override_desc}
-                            </div>
-                        </div>
-
-                        <div
-                            role='button'
-                            className={classNames('item')}
-                            onClick={() => handleToggleSetting('singBoxUDP')}
-                            onKeyDown={handleKeyDown('singBoxUDP')}
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='udp_direct'>
-                                {appLang.settings.singbox_udp_direct}
-                            </label>
-                            <div className='value'>
-                                <div
-                                    className={classNames('checkbox', udp ? 'checked' : '')}
-                                    tabIndex={-1}
-                                >
-                                    <i className='material-icons'></i>
-                                </div>
-                            </div>
-                            <div className='info'>{appLang.settings.singbox_udp_direct_desc}</div>
                         </div>
                     </div>
                 </div>

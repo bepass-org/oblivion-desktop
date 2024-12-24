@@ -366,17 +366,14 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [port, dns, mtu, loglevel, stack, strict, sniff, sniffOverride, udp] =
+        const [port, dns, mtu, loglevel, stack, sniff] =
             await Promise.all([
                 settings.get('port'),
                 settings.get('dns'),
                 settings.get('singBoxMTU'),
                 settings.get('singBoxLog'),
                 settings.get('singBoxStack'),
-                settings.get('singBoxStrictRoute'),
                 settings.get('singBoxSniff'),
-                settings.get('singBoxSniffOverrideDest'),
-                settings.get('singBoxUDP')
             ]);
 
         return {
@@ -384,18 +381,8 @@ class SingBoxManager {
             tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
             logLevel: typeof loglevel === 'string' ? loglevel : singBoxLog[0].value,
             tunStack: typeof stack === 'string' ? stack : singBoxStack[0].value,
-            tunStrictRoute:
-                typeof strict === 'boolean' ? strict : defaultSettings.singBoxStrictRoute,
             tunSniff:
                 typeof sniff === 'boolean' ? sniff : isDarwin ? true : defaultSettings.singBoxSniff,
-            tunSniffOverrideDest:
-                typeof sniffOverride === 'boolean'
-                    ? sniffOverride
-                    : isDarwin
-                      ? true
-                      : defaultSettings.singBoxSniffOverrideDest,
-            udpDirect:
-                typeof udp === 'boolean' ? udp : isDarwin ? true : defaultSettings.singBoxUDP,
             plainDns: typeof dns === 'string' ? dns : dnsServers[0].value,
             DoHDns:
                 typeof dns === 'string'

@@ -123,14 +123,8 @@ const persian: Language = {
         singbox_log_desc: 'تنظیم سطح Log',
         singbox_stack: 'چینش',
         singbox_stack_desc: 'تنظیم نوع Stack',
-        singbox_strict_route: 'مسیر دقیق',
-        singbox_strict_route_desc: 'تعیین وضعیت Strict Route',
         singbox_sniff: 'تحلیل بسته‌ها',
-        singbox_sniff_desc: 'فعالسازی Sniff',
-        singbox_sniff_override: 'بازنویسی مقصد',
-        singbox_sniff_override_desc: 'تغییر مقصد Sniff',
-        singbox_udp_direct: 'اتصال مستقیم',
-        singbox_udp_direct_desc: 'فعالسازی UDP Direct'
+        singbox_sniff_desc: 'فعالسازی Sniff و بازنویسی مقصد'
     },
     tabs: {
         home: 'اتصال',

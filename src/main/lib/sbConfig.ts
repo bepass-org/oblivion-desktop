@@ -79,12 +79,12 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: config.tunMtu,
-                address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
+                address: ['172.19.0.1/30'],
                 auto_route: true,
-                strict_route: config.tunStrictRoute,
+                strict_route: false,
                 stack: config.tunStack,
                 sniff: config.tunSniff,
-                sniff_override_destination: config.tunSniffOverrideDest
+                sniff_override_destination: config.tunSniff
             }
         ],
         outbounds: [
@@ -93,7 +93,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 tag: 'socks-out',
                 server: '127.0.0.1',
                 server_port: config.socksPort,
-                version: '5'
+                version: '5',
             },
             {
                 type: 'direct',
@@ -118,14 +118,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                ...(config.udpDirect
-                    ? [
-                          {
-                              network: 'udp',
-                              outbound: 'direct-out'
-                          }
-                      ]
-                    : []),
                 {
                     ip_is_private: true,
                     outbound: 'direct-out'
