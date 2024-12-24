@@ -52,7 +52,7 @@ const useSingBox = () => {
                     'singBoxGeoBlock',
                     'singBoxLog',
                     'singBoxStack',
-                    'singBoxSniff',
+                    'singBoxSniff'
                 ];
                 const values = await settings.getMultiple(keysToFetch);
 

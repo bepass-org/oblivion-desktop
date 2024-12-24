@@ -93,7 +93,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 tag: 'socks-out',
                 server: '127.0.0.1',
                 server_port: config.socksPort,
-                version: '5',
+                version: '5'
             },
             {
                 type: 'direct',
