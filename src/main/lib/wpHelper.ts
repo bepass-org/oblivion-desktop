@@ -14,33 +14,20 @@ let appLang = getTranslate('en');
 const randomCountry = () => countries[Math.floor(Math.random() * countries.length)]?.value || 'DE';
 
 export const getUserSettings = async () => {
-    const [
-        endpoint,
-        ipType,
-        port,
-        location,
-        license,
-        method,
-        hostIP,
-        rtt,
-        reserved,
-        lang,
-        dns,
-        proxyMode
-    ] = await Promise.all([
-        settings.get('endpoint'),
-        settings.get('ipType'),
-        settings.get('port'),
-        settings.get('location'),
-        settings.get('license'),
-        settings.get('method'),
-        settings.get('hostIP'),
-        settings.get('rtt'),
-        settings.get('reserved'),
-        settings.get('lang'),
-        settings.get('dns'),
-        settings.get('proxyMode')
-    ]);
+    const [endpoint, ipType, port, location, license, method, hostIP, rtt, reserved, lang, dns] =
+        await Promise.all([
+            settings.get('endpoint'),
+            settings.get('ipType'),
+            settings.get('port'),
+            settings.get('location'),
+            settings.get('license'),
+            settings.get('method'),
+            settings.get('hostIP'),
+            settings.get('rtt'),
+            settings.get('reserved'),
+            settings.get('lang'),
+            settings.get('dns')
+        ]);
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     return [
@@ -76,8 +63,7 @@ export const getUserSettings = async () => {
         ...(typeof dns === 'string' &&
         dns !== '' &&
         dns !== '1.1.1.1' &&
-        ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string') &&
-        ((typeof proxyMode === 'string' && proxyMode === 'system') || typeof method !== 'string')
+        ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string')
             ? ['--dns', dns]
             : [])
     ];
