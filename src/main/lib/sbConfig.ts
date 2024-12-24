@@ -79,7 +79,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: config.tunMtu,
-                address: ['172.19.0.1/30'],
+                address: [
+                    '172.19.0.1/30',
+                    ...(config.darwinEndpoint ? ['fdfe:dcba:9876::1/126'] : [])
+                ],
                 auto_route: true,
                 strict_route: false,
                 stack: config.tunStack,
@@ -118,10 +121,14 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                {
-                    ip_is_private: true,
-                    outbound: 'direct-out'
-                },
+                ...(config.darwinEndpoint
+                    ? [
+                          {
+                              network: 'udp',
+                              outbound: 'direct-out'
+                          }
+                      ]
+                    : []),
                 ...(rulesConfig.ipSet.length > 0
                     ? [
                           {

@@ -66,6 +66,7 @@ export interface IConfig {
     tunSniff: boolean;
     plainDns: string;
     DoHDns: string;
+    darwinEndpoint: boolean;
 }
 
 export interface IGeoConfig {
