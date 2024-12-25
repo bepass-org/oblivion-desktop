@@ -1,13 +1,4 @@
-/* eslint global-require: off, no-console: off, promise/always-return: off */
-
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `npm run build` or `npm run build:main`, this file is compiled to
- * `./src/main.js` using webpack. This gives us some performance wins.
- */
+/* eslint global-require: off */
 
 import {
     app,
@@ -20,16 +11,17 @@ import {
     nativeImage,
     IpcMainEvent,
     globalShortcut,
-    powerMonitor
-    //dialog
+    powerMonitor,
+    BrowserWindowConstructorOptions,
+    Event,
+    NativeImage,
+    MenuItemConstructorOptions
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import { rimrafSync } from 'rimraf';
-//import { autoUpdater } from 'electron-updater';
-//import packageJsonData from '../../package.json';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
@@ -56,222 +48,132 @@ import {
     dbAssetDirPath
 } from '../constants';
 
-let mainWindow: BrowserWindow | null = null;
-let getUserLang: any = 'en';
-let appLang = getTranslate(getUserLang);
-let connectionStatus = 'disconnected';
+const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
+const WINDOW_DIMENSIONS = {
+    width: 400,
+    height: 650
+};
 
-const gotTheLock = app.requestSingleInstanceLock();
-const appTitle = 'Oblivion Desktop' + (isDev() ? ' ᴅᴇᴠ' : '');
+interface WindowState {
+    mainWindow: BrowserWindow | null;
+    appIcon: Tray | null;
+    connectionStatus: string;
+    trayMenuEvent?: IpcMainEvent;
+    userLang: string;
+    appLang: ReturnType<typeof getTranslate>;
+}
 
-// autoUpdater.autoDownload = false;
-// autoUpdater.autoRunAppAfterInstall = true;
+class OblivionDesktop {
+    private state: WindowState = {
+        mainWindow: null,
+        appIcon: null,
+        connectionStatus: 'disconnected',
+        userLang: 'en',
+        appLang: getTranslate('en')
+    };
 
-if (!gotTheLock) {
-    log.info('did not create new instance since there was already one running.');
-    app.exit(0);
-} else {
-    devPlayground();
-    log.info('creating new od instance...');
-    logMetadata();
+    constructor() {
+        this.initialize().catch((err) => log.error('Initialization failed:', err));
+    }
 
-    app.on('second-instance', () => {
-        // Someone tried to run a second instance, we should focus our window.
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            mainWindow.focus();
+    private async initialize(): Promise<void> {
+        if (!app.requestSingleInstanceLock()) {
+            log.info('Instance already running.');
+            app.exit(0);
+            return;
         }
-    });
 
-    if (fs.existsSync(versionFilePath)) {
-        const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
+        await this.setupInitialConfiguration();
+        this.setupIpcEvents();
+        this.setupAppEvents();
+    }
 
-        if (savedVersion !== appVersion) {
-            if (fs.existsSync(wpBinPath)) {
-                rimrafSync(wpBinPath);
+    private async setupInitialConfiguration(): Promise<void> {
+        devPlayground();
+        log.info('Creating new od instance...');
+        logMetadata();
+
+        await this.handleVersionCheck();
+        this.copyRequiredFiles();
+    }
+
+    private async handleVersionCheck(): Promise<void> {
+        if (fs.existsSync(versionFilePath)) {
+            const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
+            if (savedVersion !== appVersion) {
+                await singBoxManager.stopHelperOnStart();
+                await this.cleanupOldFiles();
             }
-            if (fs.existsSync(sbBinPath)) {
-                rimrafSync(sbBinPath);
+        }
+        fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
+    }
+
+    private async cleanupOldFiles(): Promise<void> {
+        const filesToClean = [wpBinPath, sbBinPath, helperPath, netStatsPath];
+        filesToClean.forEach((file) => {
+            if (fs.existsSync(file)) {
+                rimrafSync(file);
             }
-            if (fs.existsSync(helperPath)) {
-                singBoxManager.stopHelperOnStart().then(() => {
-                    rimrafSync(helperPath);
-                    if (fs.existsSync(helperAssetPath)) {
-                        fs.copyFile(helperAssetPath, helperPath, (err) => {
-                            if (err) throw err;
-                            log.info('helper binary was copied to userData directory.');
-                        });
-                    } else {
-                        log.info(
-                            'The process of copying the helper binary was halted due to the absence of the helper file.'
-                        );
-                    }
+        });
+
+        geoDBs.forEach((fileName) => {
+            const dbPath = path.join(workingDirPath, fileName);
+            if (fs.existsSync(dbPath)) {
+                rimrafSync(dbPath);
+            }
+        });
+    }
+
+    private copyRequiredFiles(): void {
+        const filePairs = [
+            { src: wpAssetPath, dest: wpBinPath, name: 'wp' },
+            { src: sbAssetPath, dest: sbBinPath, name: 'sb' },
+            { src: helperAssetPath, dest: helperPath, name: 'helper' },
+            { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' }
+        ];
+
+        filePairs.forEach(({ src, dest, name }) => {
+            if (fs.existsSync(src) && !fs.existsSync(dest)) {
+                fs.copyFile(src, dest, (err) => {
+                    if (err) throw err;
+                    log.info(`${name} binary was copied to userData directory.`);
                 });
+            } else if (!fs.existsSync(src)) {
+                log.info(`Copy halted: ${name} file does not exist.`);
             }
-            if (fs.existsSync(netStatsPath)) {
-                rimrafSync(netStatsPath);
+        });
+
+        geoDBs.forEach((fileName) => {
+            const dbAssetPath = path.join(dbAssetDirPath, fileName);
+            const dbWDPath = path.join(workingDirPath, fileName);
+            if (fs.existsSync(dbAssetPath) && !fs.existsSync(dbWDPath)) {
+                fs.copyFile(dbAssetPath, dbWDPath, (err) => {
+                    if (err) throw err;
+                    log.info(`${fileName} was copied to userData directory.`);
+                });
+            } else if (!fs.existsSync(dbAssetPath)) {
+                log.info(`Copy halted: ${fileName} file does not exist.`);
             }
-            // eslint-disable-next-line no-restricted-syntax
-            for (const fileName of geoDBs) {
-                const dbPath = path.join(workingDirPath, fileName);
-                if (fs.existsSync(dbPath)) {
-                    rimrafSync(dbPath);
-                }
-            }
-        }
-    }
-
-    if (fs.existsSync(wpAssetPath) && !fs.existsSync(wpBinPath)) {
-        fs.copyFile(wpAssetPath, wpBinPath, (err) => {
-            if (err) throw err;
-            log.info('wp binary was copied to userData directory.');
         });
-    } else {
-        if (!fs.existsSync(wpAssetPath)) {
-            log.info(
-                'The process of copying the wp binary was halted due to the absence of the wp file.'
-            );
-        }
     }
 
-    if (fs.existsSync(sbAssetPath) && !fs.existsSync(sbBinPath)) {
-        fs.copyFile(sbAssetPath, sbBinPath, (err) => {
-            if (err) throw err;
-            log.info('sb binary was copied to userData directory.');
-        });
-    } else {
-        if (!fs.existsSync(sbAssetPath)) {
-            log.info(
-                'The process of copying the sb binary was halted due to the absence of the sb file.'
-            );
-        }
-    }
-
-    if (fs.existsSync(helperAssetPath) && !fs.existsSync(helperPath)) {
-        fs.copyFile(helperAssetPath, helperPath, (err) => {
-            if (err) throw err;
-            log.info('helper binary was copied to userData directory.');
-        });
-    } else {
-        if (!fs.existsSync(helperAssetPath)) {
-            log.info(
-                'The process of copying the helper binary was halted due to the absence of the helper file.'
-            );
-        }
-    }
-
-    if (fs.existsSync(netStatsAssetPath) && !fs.existsSync(netStatsPath)) {
-        fs.copyFile(netStatsAssetPath, netStatsPath, (err) => {
-            if (err) throw err;
-            log.info('netStats binary was copied to userData directory.');
-        });
-    } else {
-        if (!fs.existsSync(netStatsAssetPath)) {
-            log.info(
-                'The process of copying the netStats binary was halted due to the absence of the netStats file.'
-            );
-        }
-    }
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const fileName of geoDBs) {
-        const dbAssetPath = path.join(dbAssetDirPath, fileName);
-        const dbWDPath = path.join(workingDirPath, fileName);
-        if (fs.existsSync(dbAssetPath) && !fs.existsSync(dbWDPath)) {
-            fs.copyFile(dbAssetPath, dbWDPath, (err) => {
-                if (err) throw err;
-                log.info(`${fileName} was copied to userData directory.`);
-            });
-        } else {
-            if (!fs.existsSync(dbAssetPath)) {
-                log.info(
-                    `The process of copying the ${fileName} was halted due to the absence of the db file.`
-                );
-            }
-        }
-    }
-
-    fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
-
-    if (!isDev()) {
-        const sourceMapSupport = require('source-map-support');
-        sourceMapSupport.install();
-    }
-
-    const resolveHtmlPath = (htmlFileName: string) => {
-        if (isDev()) {
-            const port = process.env.PORT || 1212;
-            const url = new URL(`http://localhost:${port}`);
-            url.pathname = htmlFileName;
-            return url.href;
-        }
-        return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
-    };
-
-    const isDebug = isDev() || process.env.DEBUG_PROD === 'true';
-
-    if (isDebug && openDevToolsByDefault) {
-        require('electron-debug')();
-    }
-
-    const installExtensions = async () => {
-        const installer = require('electron-devtools-installer');
-        const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-        const extensions = ['REACT_DEVELOPER_TOOLS'];
-
-        return installer
-            .default(
-                extensions.map((name) => installer[name]),
-                forceDownload
-            )
-            .catch(console.log);
-    };
-
-    const registerQuitShortcut = () => {
-        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
-        globalShortcut.register(shortcut, async () => {
-            await exitTheApp(mainWindow);
-        });
-    };
-
-    const unregisterQuitShortcut = () => {
-        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
-        globalShortcut.unregister(shortcut);
-    };
-
-    const createWindow = async () => {
-        if (isDebug) {
-            await installExtensions();
-        }
-
-        const RESOURCES_PATH = app.isPackaged
-            ? path.join(process.resourcesPath, 'assets')
-            : path.join(__dirname, '../../assets');
-
-        const getAssetPath = (...paths: string[]): string => {
-            return path.join(RESOURCES_PATH, ...paths);
-        };
-
-        const windowWidth = 400;
-        const windowHeight = 650;
-
+    private createWindowConfig(): BrowserWindowConstructorOptions {
         const config: any = {
-            title: appTitle,
+            title: APP_TITLE,
             show: false,
-            width: windowWidth,
-            height: windowHeight,
+            width: WINDOW_DIMENSIONS.width,
+            height: WINDOW_DIMENSIONS.height,
             autoHideMenuBar: true,
             transparent: false,
             center: true,
             frame: true,
             resizable: true,
             fullscreenable: true,
-            //minimizable: process.platform !== 'linux',
-            icon: getAssetPath('oblivion.png'),
+            icon: this.getAssetPath('oblivion.png'),
             webPreferences: {
                 nativeWindowOpen: false,
-                devTools: false,
-                devToolsKeyCombination: false,
+                devTools: isDev(),
+                devToolsKeyCombination: isDev(),
                 contextIsolation: true,
                 enableRemoteModule: false,
                 preload: app.isPackaged
@@ -280,516 +182,424 @@ if (!gotTheLock) {
             }
         };
 
-        getUserLang = await settings.get('lang');
-
-        if (isDev()) {
+        if (isDev() && useCustomWindowXY) {
             const primaryDisplay = screen.getPrimaryDisplay();
-            const displayWidth = primaryDisplay.workAreaSize.width;
-            const displayHeight = primaryDisplay.workAreaSize.height;
-            if (useCustomWindowXY) {
-                config.x = displayWidth - windowWidth - 60;
-                config.y = displayHeight - windowHeight - 160;
-            }
-            config.webPreferences.devTools = true;
-            config.webPreferences.devToolsKeyCombination = true;
+            const { width: displayWidth, height: displayHeight } = primaryDisplay.workAreaSize;
+            config.x = displayWidth - WINDOW_DIMENSIONS.width - 60;
+            config.y = displayHeight - WINDOW_DIMENSIONS.height - 160;
         }
 
-        /*const startAtLogin = async () => {
-            if (process.env.NODE_ENV !== 'development') {
-                const checkOpenAtLogin = await settings.get('openAtLogin');
-                app.setLoginItemSettings({
-                    openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
-                });
-            }
-        };*/
+        return config;
+    }
 
-        const checkStartUp = async () => {
-            if (process.env.NODE_ENV !== 'development') {
-                const checkOpenAtLogin = await settings.get('openAtLogin');
-                const loginItemSettings = app.getLoginItemSettings();
-                if (
-                    typeof checkOpenAtLogin === 'boolean' &&
-                    checkOpenAtLogin &&
-                    !loginItemSettings.openAtLogin
-                ) {
-                    app.setLoginItemSettings({
-                        openAtLogin: true
-                    });
-                }
-            }
-        };
+    private getAssetPath(...paths: string[]): string {
+        const RESOURCES_PATH = app.isPackaged
+            ? path.join(process.resourcesPath, 'assets')
+            : path.join(__dirname, '../../assets');
+        return path.join(RESOURCES_PATH, ...paths);
+    }
 
-        function createMainWindow() {
-            if (!mainWindow) {
-                mainWindow = new BrowserWindow(config);
+    private resolveHtmlPath(htmlFileName: string): string {
+        if (isDev()) {
+            const port = process.env.PORT || 1212;
+            const url = new URL(`http://localhost:${port}`);
+            url.pathname = htmlFileName;
+            return url.href;
+        }
+        return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
+    }
 
-                mainWindow.setMinimumSize(windowWidth, windowHeight);
-                mainWindow.on('will-resize', (event) => {
-                    event.preventDefault();
-                });
+    private async createWindow(): Promise<void> {
+        const isDebug = isDev() || process.env.DEBUG_PROD === 'true';
 
-                mainWindow.loadURL(resolveHtmlPath('index.html'));
-
-                app.setAsDefaultProtocolClient('oblivion');
-                app.on('open-url', (event: any, url: string) => {
-                    event.preventDefault();
-                    if (mainWindow) {
-                        mainWindow.show();
-                        //redirectTo('/');
-                        //console.log('Received URL:', url);
-                        //mainWindow.webContents.send('process-url', url);
-                    }
-                });
-
-                mainWindow.on('ready-to-show', async () => {
-                    if (!mainWindow) {
-                        throw new Error('"mainWindow" is not defined');
-                    }
-                    /*if (process.env.START_MINIMIZED) {
-                        mainWindow.minimize();
-                    } else {
-                        mainWindow.show();
-                    }*/
-                    mainWindow.show();
-                });
-
-                ipcMain.on('open-devtools', async () => {
-                    // TODO add toggle
-                    mainWindow?.webContents.openDevTools();
-                    // mainWindow.webContents.closeDevTools();
-                });
-
-                mainWindow.on('close', async (e: any) => {
-                    e.preventDefault();
-                    const forceClose = await settings.get('forceClose');
-                    if (typeof forceClose === 'boolean' && forceClose) {
-                        try {
-                            await exitTheApp(mainWindow);
-                            app.exit(0);
-                        } catch (err) {
-                            console.error('Error while exiting the app:', err);
-                        }
-                    } else {
-                        mainWindow?.hide();
-                    }
-                });
-
-                mainWindow.on('closed', async () => {
-                    mainWindow = null;
-                });
-
-                const windowPosition: number[] = mainWindow?.getPosition();
-
-                mainWindow.on('leave-full-screen', async () => {
-                    mainWindow?.setSize(windowWidth, windowHeight);
-                    mainWindow?.setPosition(windowPosition[0], windowPosition[1]);
-                });
-
-                // eslint-disable-next-line no-undef
-                (mainWindow as any).on('minimize', async (e: Electron.Event) => {
-                    e.preventDefault();
-                });
-
-                mainWindow.on('focus', registerQuitShortcut);
-                mainWindow.on('blur', unregisterQuitShortcut);
-
-                const menuBuilder = new MenuBuilder(mainWindow);
-                menuBuilder.buildMenu();
-
-                // Open urls in the user's browser
-                mainWindow.webContents.setWindowOpenHandler((e) => {
-                    shell.openExternal(e.url);
-                    return { action: 'deny' };
-                });
-
-                app.on('before-quit', async (event: any) => {
-                    //startAtLogin();
-                    connectionStatus = 'disconnected';
-                    if (process.platform === 'win32') {
-                        event.preventDefault();
-                        try {
-                            await exitTheApp(mainWindow);
-                            app.exit(0);
-                        } catch (error) {
-                            console.error('Error while exiting the app:', error);
-                            app.exit(1);
-                        }
-                    } else {
-                        // Fixing the Issue of Applications Closing on a macOS
-                        mainWindow?.removeAllListeners('close');
-                    }
-                });
-
-                if (process.platform !== 'win32') {
-                    // eslint-disable-next-line no-undef
-                    (powerMonitor as any).on('shutdown', async (event: Electron.Event) => {
-                        event.preventDefault();
-                        try {
-                            await exitTheApp(mainWindow);
-                            app?.quit();
-                        } catch (error) {
-                            app?.quit();
-                        }
-                    });
-                } else {
-                    (app as any).on('session-end', async () => {
-                        try {
-                            await exitTheApp(mainWindow);
-                            app.quit();
-                        } catch (error) {
-                            app.quit();
-                        }
-                    });
-                }
-            } else {
-                mainWindow.show();
-            }
+        if (!isDev()) {
+            const sourceMapSupport = require('source-map-support');
+            sourceMapSupport.install();
         }
 
-        createMainWindow();
+        if (isDebug && openDevToolsByDefault) {
+            require('electron-debug')();
+        }
+        if (isDebug) {
+            await this.installDevTools();
+        }
 
-        let appIcon: any = null;
-        //let contextMenu: any = null;
+        const config = this.createWindowConfig();
+        this.state.mainWindow = new BrowserWindow(config);
+        await this.setupWindowEvents();
+        await this.state.mainWindow.loadURL(this.resolveHtmlPath('index.html'));
 
-        const trayIconChanger = (status: string): any => {
-            connectionStatus = String(status);
-            const iconPath = getAssetPath(`img/status/${status}.png`);
-            const nativeImageIcon = nativeImage.createFromPath(iconPath);
-            if (!nativeImageIcon.isEmpty()) {
-                if (process.platform !== 'win32') {
-                    return nativeImageIcon.resize({ width: 16, height: 16 });
-                } else {
-                    return nativeImageIcon;
-                }
-            } else {
-                console.error(`Failed to load trayIcon: ${iconPath}`);
-                return null;
+        const menuBuilder = new MenuBuilder(this.state.mainWindow);
+        menuBuilder.buildMenu();
+    }
+
+    private async installDevTools(): Promise<void> {
+        const installer = require('electron-devtools-installer');
+        const extensions = ['REACT_DEVELOPER_TOOLS'];
+        await installer
+            .default(
+                extensions.map((name) => installer[name]),
+                !!process.env.UPGRADE_EXTENSIONS
+            )
+            .catch((err: Error) => log.error('InstallDevTools Error:', err.message));
+    }
+
+    private async setupWindowEvents(): Promise<void> {
+        if (!this.state.mainWindow) return;
+
+        this.state.mainWindow.setMinimumSize(WINDOW_DIMENSIONS.width, WINDOW_DIMENSIONS.height);
+
+        this.state.mainWindow.on('will-resize', (event) => {
+            event.preventDefault();
+        });
+
+        this.state.mainWindow.on('ready-to-show', async () => {
+            this.state.mainWindow?.show();
+        });
+
+        this.state.mainWindow.on('close', this.handleWindowClose.bind(this));
+
+        this.state.mainWindow.on('closed', async () => {
+            this.state.mainWindow = null;
+        });
+
+        this.state.mainWindow.on('leave-full-screen', async () => {
+            this.state.mainWindow?.setSize(WINDOW_DIMENSIONS.width, WINDOW_DIMENSIONS.height);
+            this.state.mainWindow?.center();
+        });
+
+        (this.state.mainWindow as any).on('minimize', async (e: Event) => {
+            e.preventDefault();
+        });
+
+        this.state.mainWindow.on('focus', () => this.registerQuitShortcut());
+
+        this.state.mainWindow.on('blur', () => this.unregisterQuitShortcut());
+
+        this.state.mainWindow.webContents.setWindowOpenHandler((e) => {
+            shell.openExternal(e.url);
+            return { action: 'deny' };
+        });
+    }
+
+    private async handleWindowClose(e: Event): Promise<void> {
+        e.preventDefault();
+        const forceClose = await settings.get('forceClose');
+        if (typeof forceClose === 'boolean' && forceClose) {
+            try {
+                await exitTheApp(this.state.mainWindow);
+                app.exit(0);
+            } catch (err) {
+                log.error('Error while exiting the app:', err);
             }
-        };
+        } else {
+            this.state.mainWindow?.hide();
+        }
+    }
 
-        let trayMenuEvent: IpcMainEvent;
+    private registerQuitShortcut(): void {
+        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+        globalShortcut.register(shortcut, async () => {
+            await exitTheApp(this.state.mainWindow);
+        });
+    }
+
+    private unregisterQuitShortcut(): void {
+        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+        globalShortcut.unregister(shortcut);
+    }
+
+    private setupIpcEvents(): void {
         ipcMain.on('tray-menu', (event) => {
-            trayMenuEvent = event;
+            this.state.trayMenuEvent = event;
         });
 
-        const redirectTo = (value: string) => {
-            if (!mainWindow) {
-                createMainWindow();
-            } else {
-                mainWindow.show();
-                if (value !== '') {
-                    trayMenuEvent?.reply('tray-menu', {
-                        key: 'changePage',
-                        msg: value
-                    });
-                }
-            }
-        };
+        ipcMain.on('localization', async (_, newLang) => {
+            this.state.userLang = newLang;
+            this.state.appLang = getTranslate(this.state.userLang);
+            this.updateTrayMenu();
+            this.state.appIcon?.focus();
+        });
 
-        const autoConnect = async () => {
-            if (isDev()) {
-                return false;
+        ipcMain.on('startup', async (_, newStatus) => {
+            if (process.env.NODE_ENV !== 'development') {
+                app.setLoginItemSettings({
+                    openAtLogin: newStatus
+                });
             }
-            const checkAutoConnect = await settings.get('autoConnect');
-            if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
+        });
+
+        ipcMain.on('open-devtools', async () => {
+            this.state.mainWindow?.webContents.openDevTools();
+        });
+
+        customEvent.on('tray-icon', (newStatus: string) => {
+            if (!this.state.appIcon) return;
+
+            if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
+                const newIcon = this.createTrayIcon(newStatus);
+                this.state.appIcon.setImage(newIcon);
+            }
+
+            this.state.connectionStatus = newStatus;
+            this.updateTrayMenu();
+        });
+    }
+
+    private setupAppEvents(): void {
+        app.on('second-instance', () => {
+            if (this.state.mainWindow) {
+                if (this.state.mainWindow.isMinimized()) {
+                    this.state.mainWindow.restore();
+                }
+                this.state.mainWindow.focus();
+            }
+        });
+
+        app.on('activate', () => {
+            // On macOS, it's common to re-create a window in the app when the
+            // dock icon is clicked and there are no other windows open.
+            if (this.state.mainWindow === null)
+                this.createWindow().catch((err) => log.error('Create Window Error:', err));
+        });
+
+        app.on('window-all-closed', async () => {
+            await exitTheApp(this.state.mainWindow);
+        });
+
+        app.on('before-quit', async (event) => {
+            this.state.connectionStatus = 'disconnected';
+            if (process.platform === 'win32') {
+                event.preventDefault();
                 try {
-                    /*trayMenuEvent.reply('tray-menu', {
-                        key: 'connectToggle',
-                        msg: 'Connect Tray Click!'
-                    });*/
-                    ipcMain.on('tray-menu', (event: any) => {
-                        event.reply('tray-menu', {
-                            key: 'connect',
-                            msg: 'Connect Tray Click!'
-                        });
-                    });
-                } catch (err) {
-                    console.log(err);
+                    await exitTheApp(this.state.mainWindow);
+                    app.exit(0);
+                } catch (error) {
+                    log.error('Error while exiting the app:', error);
+                    app.exit(1);
                 }
             }
-        };
-
-        const trayMenuContext: any = (
-            connectLabel: string,
-            connectStatus: string,
-            connectEnable: boolean
-        ) => {
-            appLang = getTranslate(getUserLang);
-            return [
-                {
-                    label: appTitle,
-                    type: 'normal',
-                    click: () => {
-                        redirectTo('/');
-                    }
-                },
-                { label: '', type: 'separator' },
-                {
-                    id: 'connectToggle',
-                    label: connectLabel,
-                    type: 'normal',
-                    enabled: connectEnable,
-                    click: () => {
-                        if (
-                            connectStatus.startsWith('connected') ||
-                            connectStatus === 'disconnected'
-                        ) {
-                            trayMenuEvent?.reply('tray-menu', {
-                                key: connectStatus === 'disconnected' ? 'connect' : 'disconnect',
-                                msg: 'Connect Tray Click!'
-                            });
-                        }
-                        /*appIcon.setContextMenu(
-                            Menu.buildFromTemplate(
-                                trayMenuContext(
-                                    connectStatus === 'connect'
-                                        ? appLang.systemTray.connecting
-                                        : appLang.systemTray.disconnecting,
-                                    connectStatus,
-                                    false
-                                )
-                            )
-                        );*/
-                        redirectTo('/');
-                    }
-                },
-                {
-                    label: appLang.systemTray.settings,
-                    submenu: [
-                        {
-                            label: appLang.systemTray.settings_warp,
-                            type: 'normal',
-                            click: () => {
-                                redirectTo('/settings');
-                            }
-                        },
-                        {
-                            label: appLang.systemTray.settings_network,
-                            type: 'normal',
-                            click: () => {
-                                redirectTo('/network');
-                            }
-                        },
-                        {
-                            label: appLang.systemTray.settings_scanner,
-                            type: 'normal',
-                            click: () => {
-                                redirectTo('/scanner');
-                            }
-                        },
-                        {
-                            label: appLang.systemTray.settings_app,
-                            type: 'normal',
-                            click: () => {
-                                redirectTo('/options');
-                            }
-                        }
-                    ]
-                },
-                { label: '', type: 'separator' },
-                {
-                    label: appLang.systemTray.speed_test,
-                    type: 'normal',
-                    click: () => {
-                        redirectTo('/speed');
-                    }
-                },
-                {
-                    label: appLang.systemTray.about,
-                    type: 'normal',
-                    click: () => {
-                        redirectTo('/about');
-                    }
-                },
-                {
-                    label: appLang.systemTray.log,
-                    type: 'normal',
-                    click: () => {
-                        redirectTo('/debug');
-                    }
-                },
-                { label: '', type: 'separator' },
-                {
-                    label: appLang.systemTray.exit,
-                    type: 'normal',
-                    click: async () => {
-                        await exitTheApp(mainWindow);
-                    }
-                }
-            ];
-        };
-
-        const connectionLabel = (status: string) => {
-            let text = '';
-            appLang = getTranslate(getUserLang);
-            if (status.startsWith('connected')) {
-                text = `✓ ${appLang.systemTray.connected}`;
-            } else if (status === 'disconnected') {
-                text = appLang.systemTray.connect;
-            } else if (status === 'connecting') {
-                text = appLang.systemTray.connecting;
-            } else if (status === 'disconnecting') {
-                text = appLang.systemTray.disconnecting;
-            }
-            return text;
-        };
-
-        const systemTrayMenu = (status: string) => {
-            appIcon = new Tray(trayIconChanger(status));
-            appIcon.on('click', async () => {
-                redirectTo('');
-            });
-            appIcon.setToolTip(appTitle);
-            appIcon.setContextMenu(
-                Menu.buildFromTemplate(trayMenuContext(connectionLabel(status), status, true))
-            );
-        };
-
-        app?.whenReady().then(() => {
-            if (typeof getUserLang === 'undefined') {
-                getUserLang = defaultSettings.lang;
-            }
-            ipcMain.on('localization', async (_, newLang) => {
-                getUserLang = newLang;
-                appIcon.setContextMenu(
-                    Menu.buildFromTemplate(
-                        trayMenuContext(
-                            connectionLabel(connectionStatus),
-                            connectionStatus,
-                            !(
-                                connectionStatus === 'disconnecting' ||
-                                connectionStatus === 'connecting'
-                            )
-                        )
-                    )
-                );
-                appIcon.focus();
-            });
-
-            checkStartUp();
-            ipcMain.on('startup', async (_, newStatus) => {
-                if (process.env.NODE_ENV !== 'development') {
-                    app.setLoginItemSettings({
-                        openAtLogin: newStatus
-                    });
-                }
-            });
-
-            connectionStatus = 'disconnected';
-            systemTrayMenu('disconnected');
-            autoConnect();
-            /*ipcMain.on('tray-icon', async (event, newStatus) => {
-                appIcon.setImage(trayIconChanger(newStatus));
-            });*/
-            customEvent.on('tray-icon', (newStatus: any) => {
-                if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
-                    const newIcon = trayIconChanger(newStatus);
-                    if (newIcon) {
-                        appIcon.setImage(newIcon);
-                    }
-                }
-                appIcon.setContextMenu(
-                    Menu.buildFromTemplate(
-                        trayMenuContext(
-                            connectionLabel(newStatus),
-                            newStatus,
-                            !(newStatus === 'disconnecting' || newStatus === 'connecting')
-                        )
-                    )
-                );
-            });
-
-            /*const autoUpdateFeed = `https://update.electronjs.org/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/${process.platform}-${process.arch}/${app.getVersion()}`;
-            autoUpdater.setFeedURL(autoUpdateFeed);
-            autoUpdater.setFeedURL({
-                provider: 'github',
-                owner: `${packageJsonData.build.publish.owner}`,
-                repo: `${packageJsonData.build.publish.repo}`
-            });
-            autoUpdater.checkForUpdatesAndNotify();*/
         });
 
-        /*autoUpdater.on('update-available', () => {
-            dialog
-                .showMessageBox({
-                    type: 'info',
-                    title: appLang.update.available,
-                    message: appLang.update.available_message(appTitle),
-                    buttons: ['Yes', 'No']
-                })
-                // eslint-disable-next-line promise/no-nesting
-                .then(async (result) => {
-                    if (result.response === 0) {
-                        try {
-                            await autoUpdater.downloadUpdate();
-                            if (mainWindow) {
-                                mainWindow.setProgressBar(100);
-                            }
-                        } catch (error) {
-                            console.error('Error downloading update:', error);
+        if (process.platform !== 'win32') {
+            powerMonitor.on('shutdown', async (event: Event) => {
+                event.preventDefault();
+                try {
+                    await exitTheApp(this.state.mainWindow);
+                    app.quit();
+                } catch {
+                    app.quit();
+                }
+            });
+        } else {
+            app.on('session-end', async () => {
+                try {
+                    await exitTheApp(this.state.mainWindow);
+                    app.quit();
+                } catch {
+                    app.quit();
+                }
+            });
+        }
+
+        app.setAsDefaultProtocolClient('oblivion');
+        app.on('open-url', (event: Event) => {
+            event.preventDefault();
+            if (this.state.mainWindow) {
+                this.state.mainWindow.show();
+            }
+        });
+    }
+
+    private async setupTray(): Promise<void> {
+        this.state.userLang = String((await settings.get('lang')) || defaultSettings.lang);
+        this.state.appLang = getTranslate(this.state.userLang);
+
+        const trayIcon = this.createTrayIcon('disconnected');
+        this.state.appIcon = new Tray(trayIcon);
+        this.state.appIcon.setToolTip(APP_TITLE);
+        this.state.appIcon.on('click', () => this.redirectTo(''));
+        this.updateTrayMenu();
+    }
+
+    private createTrayIcon(status: string): NativeImage {
+        const iconPath = this.getAssetPath(`img/status/${status}.png`);
+        const icon = nativeImage.createFromPath(iconPath);
+        if (icon.isEmpty()) log.error(`Failed to load trayIcon: ${iconPath}`);
+        return process.platform !== 'win32' ? icon.resize({ width: 16, height: 16 }) : icon;
+    }
+
+    private updateTrayMenu(): void {
+        if (!this.state.appIcon) return;
+
+        const template = this.createTrayMenuTemplate();
+        this.state.appIcon.setContextMenu(Menu.buildFromTemplate(template));
+    }
+
+    private createTrayMenuTemplate(): MenuItemConstructorOptions[] {
+        const connectLabel = this.getConnectionLabel();
+        const canToggleConnection = !(
+            this.state.connectionStatus === 'disconnecting' ||
+            this.state.connectionStatus === 'connecting'
+        );
+
+        return [
+            {
+                label: APP_TITLE,
+                type: 'normal',
+                click: () => this.redirectTo('/')
+            },
+            { type: 'separator' },
+            {
+                id: 'connectToggle',
+                label: connectLabel,
+                type: 'normal',
+                enabled: canToggleConnection,
+                click: () => this.handleConnectionToggle()
+            },
+            {
+                label: this.state.appLang.systemTray.settings,
+                submenu: [
+                    {
+                        label: this.state.appLang.systemTray.settings_warp,
+                        type: 'normal',
+                        click: () => {
+                            this.redirectTo('/settings');
+                        }
+                    },
+                    {
+                        label: this.state.appLang.systemTray.settings_network,
+                        type: 'normal',
+                        click: () => {
+                            this.redirectTo('/network');
+                        }
+                    },
+                    {
+                        label: this.state.appLang.systemTray.settings_scanner,
+                        type: 'normal',
+                        click: () => {
+                            this.redirectTo('/scanner');
+                        }
+                    },
+                    {
+                        label: this.state.appLang.systemTray.settings_app,
+                        type: 'normal',
+                        click: () => {
+                            this.redirectTo('/options');
                         }
                     }
+                ]
+            },
+            { label: '', type: 'separator' },
+            {
+                label: this.state.appLang.systemTray.speed_test,
+                type: 'normal',
+                click: () => {
+                    this.redirectTo('/speed');
+                }
+            },
+            {
+                label: this.state.appLang.systemTray.about,
+                type: 'normal',
+                click: () => {
+                    this.redirectTo('/about');
+                }
+            },
+            {
+                label: this.state.appLang.systemTray.log,
+                type: 'normal',
+                click: () => {
+                    this.redirectTo('/debug');
+                }
+            },
+            { label: '', type: 'separator' },
+            {
+                label: this.state.appLang.systemTray.exit,
+                click: async () => {
+                    await exitTheApp(this.state.mainWindow);
+                }
+            }
+        ];
+    }
+
+    private getConnectionLabel(): string {
+        const connectionStatus = this.state.connectionStatus.split('-')[0];
+
+        const labels = {
+            connected: `✓ ${this.state.appLang.systemTray.connected}`,
+            disconnected: this.state.appLang.systemTray.connect,
+            connecting: this.state.appLang.systemTray.connecting,
+            disconnecting: this.state.appLang.systemTray.disconnecting
+        };
+        return labels[connectionStatus as keyof typeof labels] || labels.disconnected;
+    }
+
+    private handleConnectionToggle(): void {
+        const isConnected = this.state.connectionStatus.startsWith('connected');
+        const event = isConnected ? 'disconnect' : 'connect';
+        this.state.trayMenuEvent?.reply('tray-menu', {
+            key: event,
+            msg: 'Connect Tray Click!'
+        });
+        this.redirectTo('/');
+    }
+
+    private redirectTo(route: string): void {
+        if (!this.state.mainWindow) {
+            this.createWindow().catch((err) => log.error('Create Window Error:', err));
+        } else {
+            this.state.mainWindow.show();
+            if (route) {
+                this.state.trayMenuEvent?.reply('tray-menu', {
+                    key: 'changePage',
+                    msg: route
                 });
-        });
-
-        autoUpdater.on('download-progress', (progressObj: any) => {
-            if (mainWindow) {
-                mainWindow.setProgressBar(Math.round(progressObj.percent) / 100);
             }
-        });
+        }
+    }
 
-        autoUpdater.on('update-downloaded', () => {
-            if (mainWindow) {
-                mainWindow.setProgressBar(1);
-            }
-            dialog
-                .showMessageBox({
-                    type: 'info',
-                    title: appLang.update.ready,
-                    message: appLang.update.ready_message(appTitle),
-                    buttons: ['Yes', 'Later']
-                })
-                // eslint-disable-next-line promise/no-nesting
-                .then((result) => {
-                    if (result.response === 0) {
-                        autoUpdater.quitAndInstall();
-                    }
+    private async checkStartUp(): Promise<void> {
+        if (process.env.NODE_ENV !== 'development') {
+            const checkOpenAtLogin = await settings.get('openAtLogin');
+            const loginItemSettings = app.getLoginItemSettings();
+
+            if (
+                typeof checkOpenAtLogin === 'boolean' &&
+                checkOpenAtLogin &&
+                !loginItemSettings.openAtLogin
+            ) {
+                app.setLoginItemSettings({
+                    openAtLogin: true
                 });
-        });
-
-        autoUpdater.on('error', (error: any) => {
-            console.error('Update error:', error);
-            if (mainWindow) {
-                mainWindow.setProgressBar(0);
             }
-        });*/
+        }
+    }
 
-        /*process.on('uncaughtException', (error: any) => {
-            console.error('Unhandled Exception:', error);
-            const errorMessage = `A JavaScript error occurred in the main process.
-        Error message: ${error.message}
-        Stack trace: ${error.stack}`;
-            dialog.showErrorBox('Error', errorMessage);
-            app.quit();
-        });*/
+    private async autoConnect(): Promise<void> {
+        if (isDev()) return;
 
-        log.info('od is ready!');
-    };
-
-    app.on('window-all-closed', async () => {
-        //await startAtLogin();
-        await exitTheApp(mainWindow);
-        console.log('window-all-closed');
-    });
-
-    app.whenReady()
-        .then(async () => {
-            await createWindow();
-            app.on('activate', () => {
-                // On macOS, it's common to re-create a window in the app when the
-                // dock icon is clicked and there are no other windows open.
-                if (mainWindow === null) createWindow();
+        const checkAutoConnect = await settings.get('autoConnect');
+        if (typeof checkAutoConnect === 'boolean' && checkAutoConnect) {
+            this.state.trayMenuEvent?.reply('tray-menu', {
+                key: 'connect',
+                msg: 'Connect Tray Click!'
             });
-        })
-        .catch(console.log);
+        }
+    }
+
+    public async handleAppReady(): Promise<void> {
+        app.whenReady().then(async () => {
+            await this.createWindow();
+            await this.setupTray();
+            await this.checkStartUp();
+            await this.autoConnect();
+            log.info('od is ready!');
+        });
+    }
 }
+
+const oblivionDesktop = new OblivionDesktop();
+oblivionDesktop.handleAppReady().catch((error) => {
+    log.error('Failed to start application:', error);
+    process.exit(1);
+});
