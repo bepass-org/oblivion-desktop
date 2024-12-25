@@ -109,11 +109,12 @@ class SingBoxManager {
     }
 
     public async stopHelperOnStart(): Promise<void> {
-        if (await this.isProcessRunning(helperFileName)) {
-            this.helperClient.Exit({}, () => {});
-            await this.delay(4000);
-            this.isListeningToHelper = false;
-        }
+        if (!(await this.isProcessRunning(helperFileName))) return;
+
+        log.info('Stopping Oblivion-Helper on startup...');
+        this.helperClient.Exit({}, () => {});
+        await this.delay(4000);
+        this.isListeningToHelper = false;
     }
 
     public checkConnectionStatus(): Promise<boolean> {
