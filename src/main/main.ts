@@ -1,5 +1,3 @@
-/* eslint global-require: off */
-
 import {
     app,
     BrowserWindow,
@@ -21,10 +19,12 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+//import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
 import MenuBuilder from './menu';
-import { exitTheApp, isDev } from './lib/utils';
-import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
+import { exitTheApp, isDev, isDebug } from './lib/utils';
+import { openDevToolsByDefault, openDevToolsInFullScreen, useCustomWindowXY } from './dxConfig';
 import './ipc';
 import { devPlayground } from './playground';
 import { logMetadata } from './ipcListeners/log';
@@ -182,7 +182,7 @@ class OblivionDesktop {
             }
         };
 
-        if (isDev() && useCustomWindowXY) {
+        if (isDev() && useCustomWindowXY && !openDevToolsInFullScreen) {
             const primaryDisplay = screen.getPrimaryDisplay();
             const { width: displayWidth, height: displayHeight } = primaryDisplay.workAreaSize;
             config.x = displayWidth - WINDOW_DIMENSIONS.width - 60;
@@ -210,17 +210,18 @@ class OblivionDesktop {
     }
 
     private async createWindow(): Promise<void> {
-        const isDebug = isDev() || process.env.DEBUG_PROD === 'true';
+        // we don't have this package installed. anything missing?
+        // if (!isDev()) {
+        //     const sourceMapSupport = require('source-map-support');
+        //     sourceMapSupport.install();
+        // }
 
-        if (!isDev()) {
-            const sourceMapSupport = require('source-map-support');
-            sourceMapSupport.install();
-        }
+        // seems we don't need this. check openDevTools method.
+        // if (isDebug() && openDevToolsByDefault) {
+        //     debug();
+        // }
 
-        if (isDebug && openDevToolsByDefault) {
-            require('electron-debug')();
-        }
-        if (isDebug) {
+        if (isDebug()) {
             await this.installDevTools();
         }
 
@@ -234,14 +235,29 @@ class OblivionDesktop {
     }
 
     private async installDevTools(): Promise<void> {
-        const installer = require('electron-devtools-installer');
-        const extensions = ['REACT_DEVELOPER_TOOLS'];
-        await installer
-            .default(
-                extensions.map((name) => installer[name]),
-                !!process.env.UPGRADE_EXTENSIONS
-            )
+        // we used import instead of require. everything ok?
+        // const installer = require('electron-devtools-installer');
+        // const extensions = ['REACT_DEVELOPER_TOOLS'];
+
+        // await installer
+        //    .default(
+        //        extensions.map((name) => installer[name]),
+        //        !!process.env.UPGRADE_EXTENSIONS
+        //    )
+        //    .catch((err: Error) => log.error('InstallDevTools Error:', err.message));
+
+        installExtension(REACT_DEVELOPER_TOOLS)
+            .then((name) => log.info(`Added Extension:  ${name}`))
             .catch((err: Error) => log.error('InstallDevTools Error:', err.message));
+    }
+
+    private openDevTools(): void {
+        if (isDebug() && openDevToolsByDefault) {
+            this.state.mainWindow?.webContents.openDevTools();
+            if (openDevToolsInFullScreen) {
+                this.state.mainWindow?.setFullScreen(true);
+            }
+        }
     }
 
     private async setupWindowEvents(): Promise<void> {
@@ -255,6 +271,7 @@ class OblivionDesktop {
 
         this.state.mainWindow.on('ready-to-show', async () => {
             this.state.mainWindow?.show();
+            this.openDevTools();
         });
 
         this.state.mainWindow.on('close', this.handleWindowClose.bind(this));
