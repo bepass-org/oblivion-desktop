@@ -79,10 +79,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: config.tunMtu,
-                address: [
-                    '172.19.0.1/30',
-                    ...(config.darwinEndpoint ? ['fdfe:dcba:9876::1/126'] : [])
-                ],
+                address: ['172.19.0.1/30'],
                 auto_route: true,
                 strict_route: false,
                 stack: config.tunStack,
@@ -121,11 +118,18 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                ...(config.darwinEndpoint
+                ...(geoConfig.geoBlock
                     ? [
                           {
-                              network: 'udp',
-                              outbound: 'direct-out'
+                              rule_set: [
+                                  'geosite-category-ads-all',
+                                  'geosite-malware',
+                                  'geosite-phishing',
+                                  'geosite-cryptominers',
+                                  'geoip-malware',
+                                  'geoip-phishing'
+                              ],
+                              outbound: 'block-out'
                           }
                       ]
                     : []),
@@ -177,84 +181,87 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
-                ...(geoConfig.geoBlock
-                    ? [
-                          {
-                              rule_set: [
-                                  'geosite-category-ads-all',
-                                  'geosite-malware',
-                                  'geosite-phishing',
-                                  'geosite-cryptominers',
-                                  'geoip-malware',
-                                  'geoip-phishing'
-                              ],
-                              outbound: 'block-out'
-                          }
-                      ]
-                    : [])
+                
+                    {
+                        network: 'tcp',
+                        outbound: 'socks-out'
+                    },
+                    {
+                        ip_is_private: true,
+                        outbound: 'direct-out'
+                    },
+                    {
+                        source_ip_is_private: true,
+                        outbound: 'direct-out'
+                    },
+                    
             ],
-            rule_set: [
-                ...(geoConfig.geoIp !== 'none'
-                    ? [
-                          {
-                              tag: `geoip-${geoConfig.geoIp}`,
-                              type: 'local',
-                              format: 'source',
-                              path: `./ruleset/geoip-${geoConfig.geoIp}.json`
-                          }
+            ...(geoConfig.geoIp !== 'none' || geoConfig.geoSite !== 'none' || geoConfig.geoBlock
+                ? {
+                      rule_set: [
+                          ...(geoConfig.geoIp !== 'none'
+                              ? [
+                                    {
+                                        tag: `geoip-${geoConfig.geoIp}`,
+                                        type: 'local',
+                                        format: 'source',
+                                        path: `./ruleset/geoip-${geoConfig.geoIp}.json`
+                                    }
+                                ]
+                              : []),
+                          ...(geoConfig.geoSite !== 'none'
+                              ? [
+                                    {
+                                        tag: `geosite-${geoConfig.geoSite}`,
+                                        type: 'local',
+                                        format: 'source',
+                                        path: `./ruleset/geosite-${geoConfig.geoSite}.json`
+                                    }
+                                ]
+                              : []),
+                          ...(geoConfig.geoBlock
+                              ? [
+                                    {
+                                        tag: 'geosite-category-ads-all',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: './ruleset/geosite-category-ads-all.json'
+                                    },
+                                    {
+                                        tag: 'geosite-malware',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: './ruleset/geosite-malware.json'
+                                    },
+                                    {
+                                        tag: 'geosite-phishing',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: './ruleset/geosite-phishing.json'
+                                    },
+                                    {
+                                        tag: 'geosite-cryptominers',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: './ruleset/geosite-cryptominers.json'
+                                    },
+                                    {
+                                        tag: 'geoip-malware',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: './ruleset/geoip-malware.json'
+                                    },
+                                    {
+                                        tag: 'geoip-phishing',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: './ruleset/geoip-phishing.json'
+                                    }
+                                ]
+                              : [])
                       ]
-                    : []),
-                ...(geoConfig.geoSite !== 'none'
-                    ? [
-                          {
-                              tag: `geosite-${geoConfig.geoSite}`,
-                              type: 'local',
-                              format: 'source',
-                              path: `./ruleset/geosite-${geoConfig.geoSite}.json`
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoBlock
-                    ? [
-                          {
-                              tag: 'geosite-category-ads-all',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-category-ads-all.json'
-                          },
-                          {
-                              tag: 'geosite-malware',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-malware.json'
-                          },
-                          {
-                              tag: 'geosite-phishing',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-phishing.json'
-                          },
-                          {
-                              tag: 'geosite-cryptominers',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-cryptominers.json'
-                          },
-                          {
-                              tag: 'geoip-malware',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geoip-malware.json'
-                          },
-                          {
-                              tag: 'geoip-phishing',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geoip-phishing.json'
-                          }
-                      ]
-                    : [])
-            ],
+                  }
+                : undefined),
             final: 'socks-out',
             auto_detect_interface: true
         },
