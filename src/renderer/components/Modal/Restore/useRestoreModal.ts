@@ -118,7 +118,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxGeoBlock', defaultSettings.singBoxGeoBlock);
         await settings.set('singBoxLog', singBoxLog[0].value);
         await settings.set('singBoxStack', singBoxStack[0].value);
-        await settings.set('singBoxSniff', isDarwin ? true : defaultSettings.singBoxSniff);
+        await settings.set('singBoxSniff', defaultSettings.singBoxSniff);
         await settings.set('restartCounter', defaultSettings.restartCounter);
         //
         ipcRenderer.sendMessage('wp-end');

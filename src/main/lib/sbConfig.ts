@@ -181,20 +181,18 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
-                
-                    {
-                        network: 'tcp',
-                        outbound: 'socks-out'
-                    },
-                    {
-                        ip_is_private: true,
-                        outbound: 'direct-out'
-                    },
-                    {
-                        source_ip_is_private: true,
-                        outbound: 'direct-out'
-                    },
-                    
+                {
+                    network: 'tcp',
+                    outbound: 'socks-out'
+                },
+                {
+                    ip_is_private: true,
+                    outbound: 'direct-out'
+                },
+                {
+                    source_ip_is_private: true,
+                    outbound: 'direct-out'
+                }
             ],
             ...(geoConfig.geoIp !== 'none' || geoConfig.geoSite !== 'none' || geoConfig.geoBlock
                 ? {

@@ -72,7 +72,7 @@ export const defaultSettings = {
     closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
-    singBoxSniff: false,
+    singBoxSniff: true,
     restartCounter: 0
 };
 

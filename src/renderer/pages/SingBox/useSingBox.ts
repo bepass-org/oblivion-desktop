@@ -33,8 +33,6 @@ const useSingBox = () => {
                 return singBoxLog[0].value;
             case 'singBoxStack':
                 return singBoxStack[0].value;
-            case 'singBoxSniff':
-                return platform === 'darwin' ? true : defaultSettings[key];
             default:
                 return defaultSettings[key];
         }

@@ -381,8 +381,7 @@ class SingBoxManager {
             tunMtu: typeof mtu === 'number' ? mtu : defaultSettings.singBoxMTU,
             logLevel: typeof loglevel === 'string' ? loglevel : singBoxLog[0].value,
             tunStack: typeof stack === 'string' ? stack : singBoxStack[0].value,
-            tunSniff:
-                typeof sniff === 'boolean' ? sniff : isDarwin ? true : defaultSettings.singBoxSniff,
+            tunSniff: typeof sniff === 'boolean' ? sniff : defaultSettings.singBoxSniff,
             plainDns: typeof dns === 'string' ? dns : dnsServers[0].value,
             DoHDns:
                 typeof dns === 'string'
