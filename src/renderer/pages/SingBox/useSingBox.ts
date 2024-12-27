@@ -10,7 +10,6 @@ import {
     singBoxStack,
     settingsKeys
 } from '../../../defaultSettings';
-import { platform } from '../../lib/utils';
 
 type SettingValue<T> = T extends boolean ? boolean : T extends number ? number : string;
 

@@ -30,7 +30,6 @@ import {
     workingDirPath,
     isWindows,
     isLinux,
-    isDarwin,
     IConfig,
     IGeoConfig,
     IRoutingRules,

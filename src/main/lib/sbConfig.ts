@@ -1,6 +1,14 @@
 import fs from 'fs';
 import log from 'electron-log';
-import { sbConfigPath, sbCacheName, IConfig, IGeoConfig, IRoutingRules } from '../../constants';
+import path from 'path';
+import {
+    sbConfigPath,
+    sbCacheName,
+    IConfig,
+    IGeoConfig,
+    IRoutingRules,
+    workingDirPath
+} from '../../constants';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
     const logConfig =
@@ -9,7 +17,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             : {
                   level: config.logLevel,
                   timestamp: true,
-                  output: 'sing-box.log'
+                  output: path.join(workingDirPath, 'sing-box.log')
               };
 
     const configuration = {
@@ -203,7 +211,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                         tag: `geoip-${geoConfig.geoIp}`,
                                         type: 'local',
                                         format: 'source',
-                                        path: `./ruleset/geoip-${geoConfig.geoIp}.json`
+                                        path: path.join(
+                                            workingDirPath,
+                                            `ruleset/geoip-${geoConfig.geoIp}.json`
+                                        )
                                     }
                                 ]
                               : []),
@@ -213,7 +224,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                         tag: `geosite-${geoConfig.geoSite}`,
                                         type: 'local',
                                         format: 'source',
-                                        path: `./ruleset/geosite-${geoConfig.geoSite}.json`
+                                        path: path.join(
+                                            workingDirPath,
+                                            `ruleset/geosite-${geoConfig.geoSite}.json`
+                                        )
                                     }
                                 ]
                               : []),
@@ -223,37 +237,55 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                         tag: 'geosite-category-ads-all',
                                         type: 'local',
                                         format: 'source',
-                                        path: './ruleset/geosite-category-ads-all.json'
+                                        path: path.join(
+                                            workingDirPath,
+                                            'ruleset/geosite-category-ads-all.json'
+                                        )
                                     },
                                     {
                                         tag: 'geosite-malware',
                                         type: 'local',
                                         format: 'source',
-                                        path: './ruleset/geosite-malware.json'
+                                        path: path.join(
+                                            workingDirPath,
+                                            '/ruleset/geosite-malware.json'
+                                        )
                                     },
                                     {
                                         tag: 'geosite-phishing',
                                         type: 'local',
                                         format: 'source',
-                                        path: './ruleset/geosite-phishing.json'
+                                        path: path.join(
+                                            workingDirPath,
+                                            '/ruleset/geosite-phishing.json'
+                                        )
                                     },
                                     {
                                         tag: 'geosite-cryptominers',
                                         type: 'local',
                                         format: 'source',
-                                        path: './ruleset/geosite-cryptominers.json'
+                                        path: path.join(
+                                            workingDirPath,
+                                            '/ruleset/geosite-cryptominers.json'
+                                        )
                                     },
                                     {
                                         tag: 'geoip-malware',
                                         type: 'local',
                                         format: 'source',
-                                        path: './ruleset/geoip-malware.json'
+                                        path: path.join(
+                                            workingDirPath,
+                                            '/ruleset/geoip-malware.json'
+                                        )
                                     },
                                     {
                                         tag: 'geoip-phishing',
                                         type: 'local',
                                         format: 'source',
-                                        path: './ruleset/geoip-phishing.json'
+                                        path: path.join(
+                                            workingDirPath,
+                                            '/ruleset/geoip-phishing.json'
+                                        )
                                     }
                                 ]
                               : [])
@@ -266,7 +298,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         experimental: {
             cache_file: {
                 enabled: true,
-                path: sbCacheName,
+                path: path.join(workingDirPath, sbCacheName),
                 store_fakeip: true
             }
         }

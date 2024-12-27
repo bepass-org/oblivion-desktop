@@ -11,9 +11,6 @@ import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
 import useTranslate from '../../../../localization/useTranslate';
-import { platform } from '../../../lib/utils';
-
-const isDarwin = platform === 'darwin';
 
 interface RestoreModalProps {
     isOpen: boolean;
