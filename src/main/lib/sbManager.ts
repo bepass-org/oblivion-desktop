@@ -20,7 +20,6 @@ import { createSbConfig } from './sbConfig';
 import { customEvent } from './customEvent';
 import { Language } from '../../localization/type';
 import {
-    wpFileName,
     sbConfigName,
     sbWDFileName,
     helperFileName,
@@ -468,7 +467,7 @@ class SingBoxManager {
             ipSet: [],
             domainSet: [],
             domainSuffixSet: [],
-            processSet: [wpFileName]
+            processSet: []
         };
 
         if (typeof routingRules !== 'string' || routingRules.trim() === '') {

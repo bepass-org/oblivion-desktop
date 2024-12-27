@@ -7,7 +7,7 @@ import SpeedTestManager from './main/lib/speedTestManager';
 //Platforms
 export const isWindows = process.platform === 'win32';
 export const isLinux = process.platform === 'linux';
-export const isDarwin = process.platform === 'darwin';
+//export const isDarwin = process.platform === 'darwin';
 
 // Constants
 export const appVersion = app.getVersion();

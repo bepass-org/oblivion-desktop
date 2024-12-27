@@ -5,6 +5,8 @@ import {
     sbConfigPath,
     sbLogPath,
     sbCachePath,
+    wpBinPath,
+    helperPath,
     ruleSetDirPath,
     IConfig,
     IGeoConfig,
@@ -55,7 +57,11 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               server: 'dns-direct'
                           }
                       ]
-                    : [])
+                    : []),
+                {
+                    process_path: [wpBinPath, helperPath],
+                    server: 'dns-direct'
+                }
             ],
             servers: [
                 {
@@ -126,6 +132,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 {
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
+                },
+                {
+                    process_path: [wpBinPath, helperPath],
+                    outbound: 'direct-out'
                 },
                 ...(geoConfig.geoBlock
                     ? [
