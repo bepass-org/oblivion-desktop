@@ -18,6 +18,7 @@ export const helperFileName = `oblivion-helper${isWindows ? '.exe' : ''}`;
 export const netStatsFileName = `zag-netStats${isWindows ? '.exe' : ''}`;
 export const sbConfigName = 'sbConfig.json';
 export const sbCacheName = 'sbCache.db';
+export const sbLogName = 'sing-box.log';
 
 // Paths
 const appPath = app.getAppPath().replace('/app.asar', '').replace('\\app.asar', '');
@@ -41,7 +42,8 @@ export const helperConfigPath = path.join(workingDirPath, 'config.obv');
 //export const sbCachePath = path.join(workingDirPath, sbCacheName);
 export const versionFilePath = path.join(workingDirPath, 'ver.txt');
 export const ruleSetDirPath = path.join(workingDirPath, 'ruleset');
-
+export const sbLogPath = path.join(workingDirPath, sbLogName);
+export const sbCachePath = path.join(workingDirPath, sbCacheName);
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
 
 // Managers
