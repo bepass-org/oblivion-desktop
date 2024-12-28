@@ -125,7 +125,7 @@ const indonesia: Language = {
         singbox_stack: 'Tumpukan',
         singbox_stack_desc: 'Atur Jenis Tumpukan',
         singbox_sniff: 'Penyadapan',
-        singbox_sniff_desc: 'Aktifkan Penyadapan'
+        singbox_sniff_desc: 'Aktifkan Sniffing & Override Tujuan'
     },
     tabs: {
         home: 'Hubungkan',

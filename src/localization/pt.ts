@@ -124,7 +124,7 @@ const brazilianPortuguese: Language = {
         singbox_stack: 'Pilha',
         singbox_stack_desc: 'Definir Tipo de Pilha',
         singbox_sniff: 'Sniffing',
-        singbox_sniff_desc: 'Ativar Sniffing'
+        singbox_sniff_desc: 'Ativar farejamento e substituir destino'
     },
     tabs: {
         home: 'Conectar',

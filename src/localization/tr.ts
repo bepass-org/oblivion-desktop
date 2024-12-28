@@ -125,7 +125,7 @@ const turkish: Language = {
         singbox_stack: 'Yığın',
         singbox_stack_desc: 'Yığın Tipini Ayarla',
         singbox_sniff: 'Dinleme',
-        singbox_sniff_desc: 'Dinlemeyi Etkinleştir'
+        singbox_sniff_desc: 'Sniffing’i Etkinleştir ve Hedefi Geçersiz Kıl'
     },
     tabs: {
         home: 'Bağlan',

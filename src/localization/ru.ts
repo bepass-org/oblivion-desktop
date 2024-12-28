@@ -125,7 +125,7 @@ const russian: Language = {
         singbox_stack: 'Стек',
         singbox_stack_desc: 'Установить тип стека',
         singbox_sniff: 'Перехват',
-        singbox_sniff_desc: 'Включить перехват'
+        singbox_sniff_desc: 'Включить сканирование и переопределить назначение'
     },
     tabs: {
         home: 'Связь',

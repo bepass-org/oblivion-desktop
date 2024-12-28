@@ -125,7 +125,7 @@ const vietnamese: Language = {
         singbox_stack: 'Ngăn Xếp',
         singbox_stack_desc: 'Cài đặt Loại Ngăn Xếp',
         singbox_sniff: 'Nghe Gói',
-        singbox_sniff_desc: 'Kích Hoạt Nghe Gói'
+        singbox_sniff_desc: 'Bật tính năng sniffing và ghi đè điểm đến'
     },
     tabs: {
         home: 'Kết nối',
