@@ -42,7 +42,7 @@ const direction = {
     ar: 'rtl',
     vi: 'ltr',
     pt: 'ltr',
-    ur: 'ltr',
+    ur: 'rtl',
     es: 'ltr',
     am: 'ltr',
     my: 'ltr'
