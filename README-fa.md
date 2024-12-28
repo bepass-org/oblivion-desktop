@@ -136,14 +136,14 @@ Cloudflare Warp فراهم می‌کند.
 
 <div align="right">
     <table>
-        <thead align="left">
+        <thead align="right">
             <tr>
                 <th>سیستم‌عامل</th>
                 <th>دانلود</th>
                 <th>سازگاری</th>
             </tr>
         </thead>
-        <tbody align="left">
+        <tbody align="right">
             <tr>
                 <td>ویندوز</td>
                 <td>
