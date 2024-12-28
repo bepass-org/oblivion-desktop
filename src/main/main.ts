@@ -19,7 +19,7 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+//import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
 import MenuBuilder from './menu';
@@ -221,9 +221,9 @@ class OblivionDesktop {
         //     debug();
         // }
 
-        if (isDebug()) {
+        /* if (isDebug()) {
             await this.installDevTools();
-        }
+        } */
 
         const config = this.createWindowConfig();
         this.state.mainWindow = new BrowserWindow(config);
@@ -234,7 +234,7 @@ class OblivionDesktop {
         menuBuilder.buildMenu();
     }
 
-    private async installDevTools(): Promise<void> {
+    /* private async installDevTools(): Promise<void> {
         // we used import instead of require. everything ok?
         // const installer = require('electron-devtools-installer');
         // const extensions = ['REACT_DEVELOPER_TOOLS'];
@@ -249,7 +249,7 @@ class OblivionDesktop {
         installExtension(REACT_DEVELOPER_TOOLS)
             .then((name) => log.info(`Added Extension:  ${name}`))
             .catch((err: Error) => log.error('InstallDevTools Error:', err.message));
-    }
+    } */
 
     private openDevTools(): void {
         if (isDebug() && openDevToolsByDefault) {
