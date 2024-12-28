@@ -91,7 +91,10 @@ technology
                 :white_check_mark:  Arabic <br>
                 :white_check_mark:  Portuguese <br>
                 :white_check_mark:  Vietnamese <br>
-                :white_check_mark:  Urdu
+                :white_check_mark:  Urdu <br>
+                :white_check_mark:  Spanish <br>
+                :white_check_mark:  Burmese <br>
+                :white_check_mark:  Amharic
             </td>
         </tr>
         <tr>
