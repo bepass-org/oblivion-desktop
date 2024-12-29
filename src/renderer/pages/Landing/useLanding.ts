@@ -61,29 +61,6 @@ const useLanding = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
 
-    useEffect(() => {
-        if (window.innerWidth > 1049) {
-            setTimeout(function () {
-                setDrawerIsOpen(true);
-            }, 300);
-        }
-        const handleResize = () => {
-            if (window.innerWidth > 1049) {
-                setTimeout(function () {
-                    setDrawerIsOpen(true);
-                }, 300);
-            } else {
-                setTimeout(function () {
-                    setDrawerIsOpen(false);
-                }, 300);
-            }
-        };
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
     //const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState<string>();
     const [ipData, setIpData] = useState<boolean>();
@@ -190,6 +167,27 @@ const useLanding = () => {
             canCheckNewVer = false;
         }
 
+        const handleResize = () => {
+            if (window.innerWidth > 1049) {
+                setTimeout(() => setDrawerIsOpen(true), 300);
+            } else {
+                setTimeout(() => setDrawerIsOpen(false), 300);
+            }
+        };
+
+        const handleOnlineStatusChange = () => {
+            setOnline(navigator.onLine);
+            if (navigator.onLine) {
+                toast.remove('ONLINE_STATUS');
+                handleOnClickIp();
+            } else {
+                defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
+            }
+        };
+
+        handleResize();
+        handleOnlineStatusChange();
+
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
                 loadingToast(appLang.log.error_port_restart);
@@ -253,9 +251,11 @@ const useLanding = () => {
             }
         });
 
+        window.addEventListener('resize', handleResize);
         window.addEventListener('online', () => setOnline(true));
         window.addEventListener('offline', () => setOnline(false));
         return () => {
+            window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', () => setOnline(true));
             window.removeEventListener('offline', () => setOnline(false));
         };
