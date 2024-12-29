@@ -267,32 +267,28 @@ const useLanding = () => {
     }, []);
 
     useEffect(() => {
-        if (isConnected && dataUsage) {
-            ipcRenderer.on('net-stats', (event: any) => {
-                setNetStats((prevNetStats) => ({
-                    ...prevNetStats,
-                    sentSpeed: event?.sentSpeed,
-                    recvSpeed: event?.recvSpeed,
-                    totalSent: event?.totalSent,
-                    totalRecv: event?.totalRecv,
-                    totalUsage: event?.totalUsage
-                }));
-            });
-        }
+        if (!isConnected) return;
+        if (!dataUsage) return;
+        ipcRenderer.on('net-stats', (event: any) => {
+            setNetStats((prevNetStats) => ({
+                ...prevNetStats,
+                sentSpeed: event?.sentSpeed,
+                recvSpeed: event?.recvSpeed,
+                totalSent: event?.totalSent,
+                totalRecv: event?.totalRecv,
+                totalUsage: event?.totalUsage
+            }));
+        });
     }, [dataUsage, isConnected]);
 
-    const ipToast = async () => {
-        if (connectedToIrIPOnceDisplayed) {
-            return false;
-        }
-
+    const ipToast = () => {
+        if (connectedToIrIPOnceDisplayed) return;
         defaultToastWithSubmitButton(
             `${appLang?.toast?.ir_location}`,
             `${appLang?.toast?.btn_submit}`,
             'IRAN_IP',
             Infinity
         );
-
         connectedToIrIPOnceDisplayed = true;
     };
 
@@ -377,24 +373,24 @@ const useLanding = () => {
     };
 
     useEffect(() => {
-        if (ipInfo?.countryCode) {
-            if (method === '' && ipInfo?.countryCode === 'ir') {
-                ipToast();
-            } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
-                ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
+        if (!ipInfo) return;
+        if (typeof ipInfo?.countryCode != 'string') return;
+        if (method === '' && ipInfo?.countryCode === 'ir') {
+            ipToast();
+        } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
+            ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
+            setIsLoading(true);
+            loadingToast(appLang.status.keep_trying);
+            setTimeout(function () {
+                stopLoadingToast();
+                ipcRenderer.sendMessage('wp-start', 'start-from-gool');
                 setIsLoading(true);
-                loadingToast(appLang.status.keep_trying);
-                setTimeout(function () {
-                    stopLoadingToast();
-                    ipcRenderer.sendMessage('wp-start', 'start-from-gool');
-                    setIsLoading(true);
-                    setPing(0);
-                }, 3500);
-            } else {
-                toast.remove('ipChangedToIR');
-            }
+                setPing(0);
+            }, 3500);
+        } else {
+            toast.remove('ipChangedToIR');
         }
-    }, [ipInfo]);
+    }, [method, ipInfo, appLang.status.keep_trying]);
 
     useEffect(() => {
         /*if (ipData) {
