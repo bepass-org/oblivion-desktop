@@ -55,7 +55,7 @@ const useLanding = () => {
         countryCode: false,
         ip: ''
     });
-    const [online, setOnline] = useState<boolean>(navigator?.onLine);
+    //const [online, setOnline] = useState<boolean>(navigator?.onLine);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
@@ -247,7 +247,6 @@ const useLanding = () => {
         });
 
         const handleOnlineStatusChange = debounce(() => {
-            setOnline(navigator.onLine);
             if (navigator.onLine) {
                 toast.remove('ONLINE_STATUS');
                 handleOnClickIp();
