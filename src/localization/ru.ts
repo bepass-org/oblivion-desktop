@@ -124,14 +124,8 @@ const russian: Language = {
         singbox_log_desc: 'Установить уровень журнала',
         singbox_stack: 'Стек',
         singbox_stack_desc: 'Установить тип стека',
-        singbox_strict_route: 'Строгий маршрут',
-        singbox_strict_route_desc: 'Включить строгий маршрут',
         singbox_sniff: 'Перехват',
-        singbox_sniff_desc: 'Включить перехват',
-        singbox_sniff_override: 'Переопределить назначение',
-        singbox_sniff_override_desc: 'Включить переопределение назначения для sniff',
-        singbox_udp_direct: 'Прямое UDP',
-        singbox_udp_direct_desc: 'Включить прямое UDP'
+        singbox_sniff_desc: 'Включить сканирование и переопределить назначение'
     },
     tabs: {
         home: 'Связь',

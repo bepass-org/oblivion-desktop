@@ -10,7 +10,6 @@ import {
     singBoxStack,
     settingsKeys
 } from '../../../defaultSettings';
-import { platform } from '../../lib/utils';
 
 type SettingValue<T> = T extends boolean ? boolean : T extends number ? number : string;
 
@@ -33,10 +32,6 @@ const useSingBox = () => {
                 return singBoxLog[0].value;
             case 'singBoxStack':
                 return singBoxStack[0].value;
-            case 'singBoxSniff':
-            case 'singBoxSniffOverrideDest':
-            case 'singBoxUDP':
-                return platform === 'darwin' ? true : defaultSettings[key];
             default:
                 return defaultSettings[key];
         }
@@ -53,11 +48,8 @@ const useSingBox = () => {
                     'singBoxGeoSite',
                     'singBoxGeoBlock',
                     'singBoxLog',
-                    'singBoxStrictRoute',
                     'singBoxStack',
-                    'singBoxSniff',
-                    'singBoxSniffOverrideDest',
-                    'singBoxUDP'
+                    'singBoxSniff'
                 ];
                 const values = await settings.getMultiple(keysToFetch);
 
@@ -79,39 +71,13 @@ const useSingBox = () => {
     }, []);
 
     const handleToggleSetting = useCallback(
-        async (key: settingsKeys) => {
+        (key: settingsKeys) => {
             const currentValue = settingsState[key];
             if (typeof currentValue === 'boolean') {
                 const newValue = !currentValue;
-
-                const updateSetting = async (k: settingsKeys, v: boolean) => {
-                    await settings.set(k, v);
-                    setSettingsState((prevState) => ({ ...prevState, [k]: v }));
-                };
-
-                await updateSetting(key, newValue);
-
-                const dependentSettings: {
-                    [key in settingsKeys]?: { [value in 'true' | 'false']?: settingsKeys[] };
-                } = {
-                    singBoxUDP: {
-                        true: ['singBoxSniff', 'singBoxSniffOverrideDest']
-                    },
-                    singBoxSniff: {
-                        false: ['singBoxUDP']
-                    },
-                    singBoxSniffOverrideDest: {
-                        false: ['singBoxUDP']
-                    }
-                };
-
-                const dependents = dependentSettings[key]?.[`${newValue}` as 'true' | 'false'];
-                if (dependents) {
-                    for (const depKey of dependents) {
-                        await new Promise((resolve) => setTimeout(resolve, 300));
-                        await updateSetting(depKey, newValue);
-                    }
-                }
+                settings.set(key, newValue).then(() => {
+                    setSettingsState((prevState) => ({ ...prevState, [key]: newValue }));
+                });
             }
         },
         [settingsState]

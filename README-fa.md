@@ -104,7 +104,10 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark:  عربی <br>
                 :white_check_mark:  پرتغالی  <br>
                 :white_check_mark:  ویتنامی <br>
-                :white_check_mark:  اردو
+                :white_check_mark:  اردو <br>
+                :white_check_mark:  اسپانیایی <br>
+                :white_check_mark:  برمه‌ای <br>
+                :white_check_mark:  امهری
             </td>
         </tr>
         <tr>
@@ -135,70 +138,70 @@ Cloudflare Warp فراهم می‌کند.
 ## دانلود
 
 <div align="right">
-<table>
-    <thead align="right">
-        <tr>
-            <th>سیستم‌عامل</th>
-            <th>دانلود</th>
-            <th>سازگاری</th>
-        </tr>
-    </thead>
-    <tbody align=right>
-        <tr>
-            <td>ویندوز</td>
-            <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-x64-0C88D8.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-arm64-0C88D8.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Setup-x86-0C88D8.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x64-005AA8.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
-            </td>
-            <td>
-                10+
-            </td>
-        </tr>
-        <tr>
-            <td>مک‌اواس</td>
-            <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-arm64-F0F0F1.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DMG-x64-5D5D5D.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
-            </td>
-            <td>10.15+</td>
-        </tr>
-        <tr>
-            <td>لینوکس</td>
-            <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DEB-x64-DC470E.svg?logo=debian"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/DEB-arm64-DC470E.svg?logo=debian"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-x64-01ABD2.svg?logo=redhat"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a><br>    
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/tar.xz-x64-EDC204.svg?logo=linux"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest"><img src="https://img.shields.io/badge/tar.xz-arm64-EDC204.svg?logo=linux"></a><br>             
-            </td>
-            <td>
-                گنوم<br>
-                کی‌دی‌ای
-            </td>
-        </tr>
-        <td>اندروید</td>
-            <td>
-                <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
-                <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
-            </td>
-            <td>6+</td>
-        </tr>
-        <tr>
-            <td>iOS</td>
-            <td>
-                <small>Coming Soon ...</small>
-            </td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+    <table>
+        <thead align="right">
+            <tr>
+                <th>سیستم‌عامل</th>
+                <th>دانلود</th>
+                <th>سازگاری</th>
+            </tr>
+        </thead>
+        <tbody align="right">
+            <tr>
+                <td>ویندوز</td>
+                <td>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-0C88D8.svg?logo=windows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-arm64.exe"><img src="https://img.shields.io/badge/Setup-arm64-0C88D8.svg?logo=windows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-ia32.exe"><img src="https://img.shields.io/badge/Setup-x86-0C88D8.svg?logo=windows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-005AA8.svg?logo=windows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-arm64.zip"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=windows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-ia32.zip"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
+                </td>
+                <td>
+                    10+<br>
+                </td>
+            </tr>
+            <tr>
+                <td>مک‌اواس</td>
+                <td>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/DMG-arm64-F0F0F1.svg?logo=apple"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/DMG-x64-5D5D5D.svg?logo=apple"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.zip"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.zip"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
+                </td>
+                <td>10.15+</td>
+            </tr>
+            <tr>
+                <td>لینوکس</td>
+                <td>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/DEB-x64-DC470E.svg?logo=debian"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/DEB-arm64-DC470E.svg?logo=debian"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/RPM-x64-01ABD2.svg?logo=redhat"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a><br>    
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/tar.xz-x64-EDC204.svg?logo=linux"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/tar.xz-arm64-EDC204.svg?logo=linux"></a><br>             
+                </td>
+                <td>
+                    گنوم<br>
+                    کی‌دی‌ای
+                </td>
+            </tr>
+            <td>اندروید</td>
+                <td>
+                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
+                    <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
+                </td>
+                <td>6+</td>
+            </tr>
+            <tr>
+                <td>آی‌او‌اس</td>
+                <td>
+                    <small>بزودی ...</small>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 ## به مشکل برخوردید 🐞؟

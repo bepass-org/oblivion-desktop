@@ -33,11 +33,8 @@ export type settingsKeys =
     | 'singBoxGeoSite'
     | 'singBoxGeoBlock'
     | 'singBoxLog'
-    | 'singBoxStrictRoute'
     | 'singBoxStack'
     | 'singBoxSniff'
-    | 'singBoxSniffOverrideDest'
-    | 'singBoxUDP'
     | 'restartCounter';
 
 const date = new Date();
@@ -75,10 +72,7 @@ export const defaultSettings = {
     closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
-    singBoxStrictRoute: true,
-    singBoxSniff: false,
-    singBoxSniffOverrideDest: false,
-    singBoxUDP: false,
+    singBoxSniff: true,
     restartCounter: 0
 };
 

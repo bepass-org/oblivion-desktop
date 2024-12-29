@@ -516,11 +516,18 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             try {
                 await windowsProxySettings(
                     {
+                        ProxyServer: {
+                            type: 'REG_SZ',
+                            value: ''
+                        },
+                        ProxyOverride: {
+                            type: 'REG_SZ',
+                            value: ''
+                        },
                         AutoConfigURL: {
                             type: 'REG_SZ',
                             value: ''
                         },
-                        // disable use script setup?
                         ProxyEnable: {
                             type: 'REG_DWORD',
                             value: 0

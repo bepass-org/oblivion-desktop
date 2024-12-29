@@ -123,14 +123,8 @@ const brazilianPortuguese: Language = {
         singbox_log_desc: 'Definir Nível de Registro',
         singbox_stack: 'Pilha',
         singbox_stack_desc: 'Definir Tipo de Pilha',
-        singbox_strict_route: 'Rota Rigorosa',
-        singbox_strict_route_desc: 'Ativar Rota Rigorosa',
         singbox_sniff: 'Sniffing',
-        singbox_sniff_desc: 'Ativar Sniffing',
-        singbox_sniff_override: 'Sobrescrever Destino',
-        singbox_sniff_override_desc: 'Ativar substituição de destino de sniff',
-        singbox_udp_direct: 'UDP Direto',
-        singbox_udp_direct_desc: 'Ativar UDP Direto'
+        singbox_sniff_desc: 'Ativar farejamento e substituir destino'
     },
     tabs: {
         home: 'Conectar',

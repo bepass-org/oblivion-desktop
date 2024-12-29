@@ -10,9 +10,25 @@ import arSA from './ar';
 import viVN from './vi';
 import ptBR from './pt';
 import urPK from './ur';
+import esCU from './es';
+import amET from './am';
+import myMM from './my';
 import { defaultSettings } from '../defaultSettings';
 
-type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
+type LanguageType =
+    | 'fa'
+    | 'en'
+    | 'ru'
+    | 'cn'
+    | 'tr'
+    | 'id'
+    | 'ar'
+    | 'vi'
+    | 'pt'
+    | 'ur'
+    | 'es'
+    | 'am'
+    | 'my';
 
 const translate = {
     fa: faIR,
@@ -24,7 +40,10 @@ const translate = {
     ar: arSA,
     vi: viVN,
     pt: ptBR,
-    ur: urPK
+    ur: urPK,
+    es: esCU,
+    am: amET,
+    my: myMM
 };
 
 export const getTranslateElectron = () => {

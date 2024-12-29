@@ -1,5 +1,6 @@
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
@@ -54,35 +55,12 @@ const useLanding = () => {
         countryCode: false,
         ip: ''
     });
-    const [online, setOnline] = useState<boolean>(navigator?.onLine);
+    //const [online, setOnline] = useState<boolean>(navigator?.onLine);
 
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const toggleDrawer = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
-
-    useEffect(() => {
-        if (window.innerWidth > 1049) {
-            setTimeout(function () {
-                setDrawerIsOpen(true);
-            }, 300);
-        }
-        const handleResize = () => {
-            if (window.innerWidth > 1049) {
-                setTimeout(function () {
-                    setDrawerIsOpen(true);
-                }, 300);
-            } else {
-                setTimeout(function () {
-                    setDrawerIsOpen(false);
-                }, 300);
-            }
-        };
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     //const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState<string>();
@@ -108,46 +86,47 @@ const useLanding = () => {
             } else {
                 defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
             }
-        } else {
-            if (isLoading) {
-                ipcRenderer.sendMessage('wp-end');
-            } else if (isConnected) {
-                ipcRenderer.sendMessage('wp-end');
-                setIsLoading(true);
-            } else {
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                setProxyStatus(proxyMode);
-                ipcRenderer.sendMessage('wp-start');
-                setIsLoading(true);
-                setPing(0);
-            }
+            return;
         }
-    }, [appLang?.toast?.offline, isLoading, isConnected, setIsLoading, setProxyStatus, proxyMode]);
-
-    const fetchReleaseVersion = async () => {
-        if (!isDev()) {
-            try {
-                const response = await fetch(
-                    'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
-                );
-                if (response.ok) {
-                    const data = await response.json();
-                    const latestVersion = String(data?.tag_name);
-                    const appVersion = String(packageJsonData?.version);
-                    if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
-                        hasNewUpdate = true;
-                    }
-                } else {
-                    console.error('Failed to fetch release version:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Failed to fetch release version:', error);
-            }
+        if (isLoading) {
+            ipcRenderer.sendMessage('wp-end');
+        } else if (isConnected) {
+            ipcRenderer.sendMessage('wp-end');
+            setIsLoading(true);
         } else {
-            hasNewUpdate = false;
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
+            setProxyStatus(proxyMode);
+            ipcRenderer.sendMessage('wp-start');
+            setIsLoading(true);
+            setPing(0);
+        }
+    }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
+
+    let isCheckingVersion = false;
+    const fetchReleaseVersion = async () => {
+        if (isCheckingVersion || isDev()) return;
+        isCheckingVersion = true;
+        try {
+            const response = await fetch(
+                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
+            );
+            if (response.ok) {
+                const data = await response.json();
+                const latestVersion = String(data?.tag_name);
+                const appVersion = String(packageJsonData?.version);
+                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
+                    hasNewUpdate = true;
+                }
+            } else {
+                console.log('Failed to fetch release version:', response.statusText);
+            }
+        } catch (error) {
+            console.log('Failed to fetch release version:', error);
+        } finally {
+            isCheckingVersion = false;
         }
     };
 
@@ -181,7 +160,7 @@ const useLanding = () => {
                 );
             })
             .catch((error) => {
-                console.error('Error fetching settings:', error);
+                console.log('Error fetching settings:', error);
             });
 
         cachedIpInfo = null;
@@ -189,6 +168,20 @@ const useLanding = () => {
             fetchReleaseVersion();
             canCheckNewVer = false;
         }
+
+        onEscapeKeyPressed(() => {
+            setDrawerIsOpen(false);
+        });
+        toast.remove('COPIED');
+
+        const handleResize = () => {
+            if (window.innerWidth > 1049) {
+                setTimeout(() => setDrawerIsOpen(true), 300);
+            } else {
+                setTimeout(() => setDrawerIsOpen(false), 300);
+            }
+        };
+        const resizeListener = debounce(handleResize, 500);
 
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
@@ -253,51 +246,48 @@ const useLanding = () => {
             }
         });
 
-        window.addEventListener('online', () => setOnline(true));
-        window.addEventListener('offline', () => setOnline(false));
+        const handleOnlineStatusChange = debounce(() => {
+            if (navigator.onLine) {
+                toast.remove('ONLINE_STATUS');
+                handleOnClickIp();
+            } else {
+                defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
+            }
+        }, 5000);
+
+        window.addEventListener('resize', resizeListener);
+        window.addEventListener('online', handleOnlineStatusChange);
+        window.addEventListener('offline', handleOnlineStatusChange);
         return () => {
-            window.removeEventListener('online', () => setOnline(true));
-            window.removeEventListener('offline', () => setOnline(false));
+            window.removeEventListener('resize', resizeListener);
+            window.removeEventListener('online', handleOnlineStatusChange);
+            window.removeEventListener('offline', handleOnlineStatusChange);
         };
     }, []);
 
     useEffect(() => {
-        if (online) {
-            toast.remove('ONLINE_STATUS');
-            handleOnClickIp();
-        } else {
-            //checkInternetToast(appLang?.toast?.offline);
-            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
-        }
-    }, [appLang?.toast?.offline, online]);
-
-    useEffect(() => {
-        if (isConnected && dataUsage) {
-            ipcRenderer.on('net-stats', (event: any) => {
-                setNetStats((prevNetStats) => ({
-                    ...prevNetStats,
-                    sentSpeed: event?.sentSpeed,
-                    recvSpeed: event?.recvSpeed,
-                    totalSent: event?.totalSent,
-                    totalRecv: event?.totalRecv,
-                    totalUsage: event?.totalUsage
-                }));
-            });
-        }
+        if (!isConnected) return;
+        if (!dataUsage) return;
+        ipcRenderer.on('net-stats', (event: any) => {
+            setNetStats((prevNetStats) => ({
+                ...prevNetStats,
+                sentSpeed: event?.sentSpeed,
+                recvSpeed: event?.recvSpeed,
+                totalSent: event?.totalSent,
+                totalRecv: event?.totalRecv,
+                totalUsage: event?.totalUsage
+            }));
+        });
     }, [dataUsage, isConnected]);
 
-    const ipToast = async () => {
-        if (connectedToIrIPOnceDisplayed) {
-            return false;
-        }
-
+    const ipToast = () => {
+        if (connectedToIrIPOnceDisplayed) return;
         defaultToastWithSubmitButton(
             `${appLang?.toast?.ir_location}`,
             `${appLang?.toast?.btn_submit}`,
             'IRAN_IP',
             Infinity
         );
-
         connectedToIrIPOnceDisplayed = true;
     };
 
@@ -321,56 +311,54 @@ const useLanding = () => {
     };
 
     const getIpLocation = async () => {
+        if (isFetching || isLoading || !isConnected) return;
+        isFetching = true;
         try {
-            if (isFetching) return;
-            isFetching = true;
-            const currentTime = new Date().getTime();
+            const currentTime = Date.now();
             if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
                 setIpInfo(cachedIpInfo);
-            } else {
-                if (isConnected && !isLoading) {
-                    const traceStarted = window.performance.now();
-                    const controller = new AbortController();
-                    const signal = controller.signal;
-                    const timeoutId = setTimeout(() => {
-                        controller.abort();
-                    }, 5000);
-                    const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
-                        signal
-                    });
-                    const data = await response.text();
-                    const lines = data.split('\n');
-                    const ipLine = lines.find((line) => line.startsWith('ip='));
-                    const locationLine = lines.find((line) => line.startsWith('loc='));
-                    const warpLine = lines.find((warp) => warp.startsWith('warp='));
-                    const cfLine = lines.find((warp) => warp.startsWith('h='));
-                    const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
-                    const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
-                    const checkWarp = warpLine ? warpLine.split('=')[1] : '';
-                    const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
-                    if (getLoc && cfHost === '1.1.1.1') {
-                        if (
-                            (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
-                            checkWarp !== 'off'
-                        ) {
-                            const ipInfo2 = {
-                                countryCode: getLoc,
-                                ip: getIp
-                            };
-                            cachedIpInfo = ipInfo2;
-                            lastFetchTime = currentTime;
-                            setIpInfo(ipInfo2);
-                            setPing(Math.round(window.performance.now() - traceStarted));
-                        } else {
-                            setTimeout(getIpLocation, 7500);
-                        }
-                    } else {
-                        setTimeout(getIpLocation, 7500);
-                    }
-                    clearTimeout(timeoutId);
-                    toast.remove('ipLocationStatus');
-                }
+                return;
             }
+            const traceStarted = window.performance.now();
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+            }, 5000);
+            const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
+                signal
+            });
+            const data = await response.text();
+            const parseLine = (key: string) =>
+                data
+                    .split('\n')
+                    .find((line) => line.startsWith(`${key}=`))
+                    ?.split('=')[1];
+            const getIp = parseLine('ip') || '127.0.0.1';
+            const getLoc = parseLine('loc')?.toLowerCase() || false;
+            const checkWarp = parseLine('warp') || '';
+            const cfHost = parseLine('h') || 'off';
+            if (getLoc && cfHost === '1.1.1.1') {
+                if (
+                    (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
+                    checkWarp !== 'off'
+                ) {
+                    const ipInfo2 = {
+                        countryCode: getLoc,
+                        ip: getIp
+                    };
+                    cachedIpInfo = ipInfo2;
+                    lastFetchTime = currentTime;
+                    setIpInfo(ipInfo2);
+                    setPing(Math.round(window.performance.now() - traceStarted));
+                } else {
+                    setTimeout(getIpLocation, 7500);
+                }
+            } else {
+                setTimeout(getIpLocation, 7500);
+            }
+            clearTimeout(timeoutId);
+            toast.remove('ipLocationStatus');
         } catch (error) {
             /*setIpInfo({
                 countryCode: false,
@@ -384,31 +372,24 @@ const useLanding = () => {
     };
 
     useEffect(() => {
-        if (ipInfo?.countryCode) {
-            if (method === '' && ipInfo?.countryCode === 'ir') {
-                ipToast();
-            } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
-                ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
+        if (!ipInfo) return;
+        if (typeof ipInfo?.countryCode != 'string') return;
+        if (method === '' && ipInfo?.countryCode === 'ir') {
+            ipToast();
+        } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
+            ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
+            setIsLoading(true);
+            loadingToast(appLang.status.keep_trying);
+            setTimeout(function () {
+                stopLoadingToast();
+                ipcRenderer.sendMessage('wp-start', 'start-from-gool');
                 setIsLoading(true);
-                loadingToast(appLang.status.keep_trying);
-                setTimeout(function () {
-                    stopLoadingToast();
-                    ipcRenderer.sendMessage('wp-start', 'start-from-gool');
-                    setIsLoading(true);
-                    setPing(0);
-                }, 3500);
-            } else {
-                toast.remove('ipChangedToIR');
-            }
+                setPing(0);
+            }, 3500);
+        } else {
+            toast.remove('ipChangedToIR');
         }
-    }, [ipInfo]);
-
-    useEffect(() => {
-        onEscapeKeyPressed(() => {
-            setDrawerIsOpen(false);
-        });
-        toast.remove('COPIED');
-    }, []);
+    }, [method, ipInfo, appLang.status.keep_trying]);
 
     useEffect(() => {
         /*if (ipData) {
@@ -428,10 +409,10 @@ const useLanding = () => {
         if (isConnected && isLoading) {
             setStatusText(`${appLang?.status?.disconnecting}`);
         } else if (!isConnected && isLoading) {
-            setIpInfo({
+            /*setIpInfo({
                 countryCode: false,
                 ip: ''
-            });
+            });*/
             setStatusText(`${appLang?.status?.connecting}`);
         } else if (isConnected && ipInfo?.countryCode) {
             setStatusText(`${appLang?.status?.connected_confirm}`);
@@ -478,17 +459,15 @@ const useLanding = () => {
     }, [isConnected, isLoading, onChange]);
 
     const handleOnClickIp = () => {
-        setIpInfo({
-            countryCode: false,
-            ip: ''
-        });
-
         const getTime = new Date().getTime();
         if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
             return;
-        } else {
-            getIpLocation();
         }
+        getIpLocation();
     };
 
     const handleOnClickPing = () => {

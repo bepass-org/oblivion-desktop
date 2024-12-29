@@ -8,9 +8,25 @@ import arSA from './ar';
 import viVN from './vi';
 import ptBR from './pt';
 import urPK from './ur';
+import esCU from './es';
+import amET from './am';
+import myMM from './my';
 import { defaultSettings } from '../defaultSettings';
 
-export type LanguageType = 'fa' | 'en' | 'ru' | 'cn' | 'tr' | 'id' | 'ar' | 'vi' | 'pt' | 'ur';
+export type LanguageType =
+    | 'fa'
+    | 'en'
+    | 'ru'
+    | 'cn'
+    | 'tr'
+    | 'id'
+    | 'ar'
+    | 'vi'
+    | 'pt'
+    | 'ur'
+    | 'es'
+    | 'am'
+    | 'my';
 type directionType = 'rtl' | 'ltr';
 
 const lang = defaultSettings.lang as LanguageType;
@@ -26,7 +42,10 @@ const direction = {
     ar: 'rtl',
     vi: 'ltr',
     pt: 'ltr',
-    ur: 'ltr'
+    ur: 'rtl',
+    es: 'ltr',
+    am: 'ltr',
+    my: 'ltr'
 };
 
 const getDirection = () => {
@@ -54,7 +73,10 @@ const translate = {
     ar: arSA,
     vi: viVN,
     pt: ptBR,
-    ur: urPK
+    ur: urPK,
+    es: esCU,
+    am: amET,
+    my: myMM
 };
 
 const getTranslate = (forceLang?: string) => {

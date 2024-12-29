@@ -124,14 +124,8 @@ const urdu: Language = {
         singbox_log_desc: 'لاگ سطح سیٹ کریں',
         singbox_stack: 'اسٹیک',
         singbox_stack_desc: 'اسٹیک کی قسم سیٹ کریں',
-        singbox_strict_route: 'سخت راستہ',
-        singbox_strict_route_desc: 'اسٹرکٹ روٹ کو فعال کریں',
         singbox_sniff: 'سنیفنگ',
-        singbox_sniff_desc: 'سنیفنگ کو فعال کریں',
-        singbox_sniff_override: 'مقصد کو اوور رائڈ کریں',
-        singbox_sniff_override_desc: 'سنیف اووررائیڈ منزل کو فعال کریں',
-        singbox_udp_direct: 'UDP براہ راست',
-        singbox_udp_direct_desc: 'UDP براہ راست کو فعال کریں'
+        singbox_sniff_desc: 'سنیفنگ فعال کریں اور منزل کو اووررائیڈ کریں'
     },
     tabs: {
         home: 'کنیکٹ',

@@ -1,6 +1,17 @@
 import fs from 'fs';
 import log from 'electron-log';
-import { sbConfigPath, sbCacheName, IConfig, IGeoConfig, IRoutingRules } from '../../constants';
+import path from 'path';
+import {
+    sbConfigPath,
+    sbLogPath,
+    sbCachePath,
+    wpBinPath,
+    helperPath,
+    ruleSetDirPath,
+    IConfig,
+    IGeoConfig,
+    IRoutingRules
+} from '../../constants';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
     const logConfig =
@@ -9,7 +20,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             : {
                   level: config.logLevel,
                   timestamp: true,
-                  output: 'sing-box.log'
+                  output: sbLogPath
               };
 
     const configuration = {
@@ -46,7 +57,11 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               server: 'dns-direct'
                           }
                       ]
-                    : [])
+                    : []),
+                {
+                    process_path: [wpBinPath, helperPath],
+                    server: 'dns-direct'
+                }
             ],
             servers: [
                 {
@@ -79,12 +94,12 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: config.tunMtu,
-                address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
+                address: ['172.19.0.1/30'],
                 auto_route: true,
-                strict_route: config.tunStrictRoute,
+                strict_route: false,
                 stack: config.tunStack,
                 sniff: config.tunSniff,
-                sniff_override_destination: config.tunSniffOverrideDest
+                sniff_override_destination: config.tunSniff
             }
         ],
         outbounds: [
@@ -118,18 +133,25 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     inbound: ['dns-in'],
                     outbound: 'dns-out'
                 },
-                ...(config.udpDirect
+                {
+                    process_path: [wpBinPath, helperPath],
+                    outbound: 'direct-out'
+                },
+                ...(geoConfig.geoBlock
                     ? [
                           {
-                              network: 'udp',
-                              outbound: 'direct-out'
+                              rule_set: [
+                                  'geosite-category-ads-all',
+                                  'geosite-malware',
+                                  'geosite-phishing',
+                                  'geosite-cryptominers',
+                                  'geoip-malware',
+                                  'geoip-phishing'
+                              ],
+                              outbound: 'block-out'
                           }
                       ]
                     : []),
-                {
-                    ip_is_private: true,
-                    outbound: 'direct-out'
-                },
                 ...(rulesConfig.ipSet.length > 0
                     ? [
                           {
@@ -178,91 +200,101 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
-                ...(geoConfig.geoBlock
-                    ? [
-                          {
-                              rule_set: [
-                                  'geosite-category-ads-all',
-                                  'geosite-malware',
-                                  'geosite-phishing',
-                                  'geosite-cryptominers',
-                                  'geoip-malware',
-                                  'geoip-phishing'
-                              ],
-                              outbound: 'block-out'
-                          }
-                      ]
-                    : [])
+                {
+                    network: 'tcp',
+                    outbound: 'socks-out'
+                },
+                {
+                    ip_is_private: true,
+                    outbound: 'direct-out'
+                },
+                {
+                    source_ip_is_private: true,
+                    outbound: 'direct-out'
+                }
             ],
-            rule_set: [
-                ...(geoConfig.geoIp !== 'none'
-                    ? [
-                          {
-                              tag: `geoip-${geoConfig.geoIp}`,
-                              type: 'local',
-                              format: 'source',
-                              path: `./ruleset/geoip-${geoConfig.geoIp}.json`
-                          }
+            ...(geoConfig.geoIp !== 'none' || geoConfig.geoSite !== 'none' || geoConfig.geoBlock
+                ? {
+                      rule_set: [
+                          ...(geoConfig.geoIp !== 'none'
+                              ? [
+                                    {
+                                        tag: `geoip-${geoConfig.geoIp}`,
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(
+                                            ruleSetDirPath,
+                                            `geoip-${geoConfig.geoIp}.json`
+                                        )
+                                    }
+                                ]
+                              : []),
+                          ...(geoConfig.geoSite !== 'none'
+                              ? [
+                                    {
+                                        tag: `geosite-${geoConfig.geoSite}`,
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(
+                                            ruleSetDirPath,
+                                            `geosite-${geoConfig.geoSite}.json`
+                                        )
+                                    }
+                                ]
+                              : []),
+                          ...(geoConfig.geoBlock
+                              ? [
+                                    {
+                                        tag: 'geosite-category-ads-all',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(
+                                            ruleSetDirPath,
+                                            'geosite-category-ads-all.json'
+                                        )
+                                    },
+                                    {
+                                        tag: 'geosite-malware',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(ruleSetDirPath, 'geosite-malware.json')
+                                    },
+                                    {
+                                        tag: 'geosite-phishing',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(ruleSetDirPath, 'geosite-phishing.json')
+                                    },
+                                    {
+                                        tag: 'geosite-cryptominers',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(ruleSetDirPath, 'geosite-cryptominers.json')
+                                    },
+                                    {
+                                        tag: 'geoip-malware',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(ruleSetDirPath, 'geoip-malware.json')
+                                    },
+                                    {
+                                        tag: 'geoip-phishing',
+                                        type: 'local',
+                                        format: 'source',
+                                        path: path.join(ruleSetDirPath, 'geoip-phishing.json')
+                                    }
+                                ]
+                              : [])
                       ]
-                    : []),
-                ...(geoConfig.geoSite !== 'none'
-                    ? [
-                          {
-                              tag: `geosite-${geoConfig.geoSite}`,
-                              type: 'local',
-                              format: 'source',
-                              path: `./ruleset/geosite-${geoConfig.geoSite}.json`
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoBlock
-                    ? [
-                          {
-                              tag: 'geosite-category-ads-all',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-category-ads-all.json'
-                          },
-                          {
-                              tag: 'geosite-malware',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-malware.json'
-                          },
-                          {
-                              tag: 'geosite-phishing',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-phishing.json'
-                          },
-                          {
-                              tag: 'geosite-cryptominers',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geosite-cryptominers.json'
-                          },
-                          {
-                              tag: 'geoip-malware',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geoip-malware.json'
-                          },
-                          {
-                              tag: 'geoip-phishing',
-                              type: 'local',
-                              format: 'source',
-                              path: './ruleset/geoip-phishing.json'
-                          }
-                      ]
-                    : [])
-            ],
+                  }
+                : undefined),
             final: 'socks-out',
             auto_detect_interface: true
         },
         experimental: {
             cache_file: {
                 enabled: true,
-                path: sbCacheName,
+                path: sbCachePath,
                 store_fakeip: true
             }
         }

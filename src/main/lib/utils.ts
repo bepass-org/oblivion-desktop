@@ -5,6 +5,9 @@ import { defaultSettings } from '../../defaultSettings';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
+export const isDebug = () =>
+    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+
 export function doesFileExist(filePath: string) {
     return new Promise((resolve, reject) => {
         fs.access(filePath, fs.constants.F_OK, (err: any) => {
