@@ -1,5 +1,6 @@
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
@@ -174,19 +175,7 @@ const useLanding = () => {
                 setTimeout(() => setDrawerIsOpen(false), 300);
             }
         };
-
-        const handleOnlineStatusChange = () => {
-            setOnline(navigator.onLine);
-            if (navigator.onLine) {
-                toast.remove('ONLINE_STATUS');
-                handleOnClickIp();
-            } else {
-                defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
-            }
-        };
-
-        handleResize();
-        handleOnlineStatusChange();
+        const resizeListener = debounce(handleResize, 200);
 
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
@@ -251,13 +240,23 @@ const useLanding = () => {
             }
         });
 
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('online', () => setOnline(true));
-        window.addEventListener('offline', () => setOnline(false));
+        const handleOnlineStatusChange = debounce(() => {
+            setOnline(navigator.onLine);
+            if (navigator.onLine) {
+                toast.remove('ONLINE_STATUS');
+                handleOnClickIp();
+            } else {
+                defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
+            }
+        }, 5000);
+
+        window.addEventListener('resize', resizeListener);
+        window.addEventListener('online', handleOnlineStatusChange);
+        window.addEventListener('offline', handleOnlineStatusChange);
         return () => {
-            window.removeEventListener('resize', handleResize);
-            window.removeEventListener('online', () => setOnline(true));
-            window.removeEventListener('offline', () => setOnline(false));
+            window.removeEventListener('resize', resizeListener);
+            window.removeEventListener('online', handleOnlineStatusChange);
+            window.removeEventListener('offline', handleOnlineStatusChange);
         };
     }, []);
 
@@ -327,6 +326,7 @@ const useLanding = () => {
             const currentTime = new Date().getTime();
             if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
                 setIpInfo(cachedIpInfo);
+                return;
             } else {
                 if (isConnected && !isLoading) {
                     const traceStarted = window.performance.now();
