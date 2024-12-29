@@ -169,6 +169,11 @@ const useLanding = () => {
             canCheckNewVer = false;
         }
 
+        onEscapeKeyPressed(() => {
+            setDrawerIsOpen(false);
+        });
+        toast.remove('COPIED');
+
         const handleResize = () => {
             if (window.innerWidth > 1049) {
                 setTimeout(() => setDrawerIsOpen(true), 300);
@@ -390,13 +395,6 @@ const useLanding = () => {
             }
         }
     }, [ipInfo]);
-
-    useEffect(() => {
-        onEscapeKeyPressed(() => {
-            setDrawerIsOpen(false);
-        });
-        toast.remove('COPIED');
-    }, []);
 
     useEffect(() => {
         /*if (ipData) {
