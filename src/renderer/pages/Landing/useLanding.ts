@@ -409,10 +409,10 @@ const useLanding = () => {
         if (isConnected && isLoading) {
             setStatusText(`${appLang?.status?.disconnecting}`);
         } else if (!isConnected && isLoading) {
-            setIpInfo({
+            /*setIpInfo({
                 countryCode: false,
                 ip: ''
-            });
+            });*/
             setStatusText(`${appLang?.status?.connecting}`);
         } else if (isConnected && ipInfo?.countryCode) {
             setStatusText(`${appLang?.status?.connected_confirm}`);
