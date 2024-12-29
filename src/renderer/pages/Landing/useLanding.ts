@@ -86,46 +86,47 @@ const useLanding = () => {
             } else {
                 defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
             }
-        } else {
-            if (isLoading) {
-                ipcRenderer.sendMessage('wp-end');
-            } else if (isConnected) {
-                ipcRenderer.sendMessage('wp-end');
-                setIsLoading(true);
-            } else {
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                setProxyStatus(proxyMode);
-                ipcRenderer.sendMessage('wp-start');
-                setIsLoading(true);
-                setPing(0);
-            }
+            return;
         }
-    }, [appLang?.toast?.offline, isLoading, isConnected, setIsLoading, setProxyStatus, proxyMode]);
-
-    const fetchReleaseVersion = async () => {
-        if (!isDev()) {
-            try {
-                const response = await fetch(
-                    'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
-                );
-                if (response.ok) {
-                    const data = await response.json();
-                    const latestVersion = String(data?.tag_name);
-                    const appVersion = String(packageJsonData?.version);
-                    if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
-                        hasNewUpdate = true;
-                    }
-                } else {
-                    console.error('Failed to fetch release version:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Failed to fetch release version:', error);
-            }
+        if (isLoading) {
+            ipcRenderer.sendMessage('wp-end');
+        } else if (isConnected) {
+            ipcRenderer.sendMessage('wp-end');
+            setIsLoading(true);
         } else {
-            hasNewUpdate = false;
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
+            setProxyStatus(proxyMode);
+            ipcRenderer.sendMessage('wp-start');
+            setIsLoading(true);
+            setPing(0);
+        }
+    }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
+
+    let isCheckingVersion = false;
+    const fetchReleaseVersion = async () => {
+        if (isCheckingVersion || isDev()) return;
+        isCheckingVersion = true;
+        try {
+            const response = await fetch(
+                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
+            );
+            if (response.ok) {
+                const data = await response.json();
+                const latestVersion = String(data?.tag_name);
+                const appVersion = String(packageJsonData?.version);
+                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
+                    hasNewUpdate = true;
+                }
+            } else {
+                console.log('Failed to fetch release version:', response.statusText);
+            }
+        } catch (error) {
+            console.log('Failed to fetch release version:', error);
+        } finally {
+            isCheckingVersion = false;
         }
     };
 
@@ -159,7 +160,7 @@ const useLanding = () => {
                 );
             })
             .catch((error) => {
-                console.error('Error fetching settings:', error);
+                console.log('Error fetching settings:', error);
             });
 
         cachedIpInfo = null;
@@ -175,7 +176,7 @@ const useLanding = () => {
                 setTimeout(() => setDrawerIsOpen(false), 300);
             }
         };
-        const resizeListener = debounce(handleResize, 200);
+        const resizeListener = debounce(handleResize, 500);
 
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
@@ -261,16 +262,6 @@ const useLanding = () => {
     }, []);
 
     useEffect(() => {
-        if (online) {
-            toast.remove('ONLINE_STATUS');
-            handleOnClickIp();
-        } else {
-            //checkInternetToast(appLang?.toast?.offline);
-            defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
-        }
-    }, [appLang?.toast?.offline, online]);
-
-    useEffect(() => {
         if (isConnected && dataUsage) {
             ipcRenderer.on('net-stats', (event: any) => {
                 setNetStats((prevNetStats) => ({
@@ -320,57 +311,54 @@ const useLanding = () => {
     };
 
     const getIpLocation = async () => {
+        if (isFetching || isLoading || !isConnected) return;
+        isFetching = true;
         try {
-            if (isFetching) return;
-            isFetching = true;
-            const currentTime = new Date().getTime();
+            const currentTime = Date.now();
             if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
                 setIpInfo(cachedIpInfo);
                 return;
-            } else {
-                if (isConnected && !isLoading) {
-                    const traceStarted = window.performance.now();
-                    const controller = new AbortController();
-                    const signal = controller.signal;
-                    const timeoutId = setTimeout(() => {
-                        controller.abort();
-                    }, 5000);
-                    const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
-                        signal
-                    });
-                    const data = await response.text();
-                    const lines = data.split('\n');
-                    const ipLine = lines.find((line) => line.startsWith('ip='));
-                    const locationLine = lines.find((line) => line.startsWith('loc='));
-                    const warpLine = lines.find((warp) => warp.startsWith('warp='));
-                    const cfLine = lines.find((warp) => warp.startsWith('h='));
-                    const getIp = ipLine ? ipLine.split('=')[1] : '127.0.0.1';
-                    const getLoc = locationLine ? locationLine.split('=')[1].toLowerCase() : false;
-                    const checkWarp = warpLine ? warpLine.split('=')[1] : '';
-                    const cfHost = cfLine ? cfLine.split('=')[1] : 'off';
-                    if (getLoc && cfHost === '1.1.1.1') {
-                        if (
-                            (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
-                            checkWarp !== 'off'
-                        ) {
-                            const ipInfo2 = {
-                                countryCode: getLoc,
-                                ip: getIp
-                            };
-                            cachedIpInfo = ipInfo2;
-                            lastFetchTime = currentTime;
-                            setIpInfo(ipInfo2);
-                            setPing(Math.round(window.performance.now() - traceStarted));
-                        } else {
-                            setTimeout(getIpLocation, 7500);
-                        }
-                    } else {
-                        setTimeout(getIpLocation, 7500);
-                    }
-                    clearTimeout(timeoutId);
-                    toast.remove('ipLocationStatus');
-                }
             }
+            const traceStarted = window.performance.now();
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+            }, 5000);
+            const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
+                signal
+            });
+            const data = await response.text();
+            const parseLine = (key: string) =>
+                data
+                    .split('\n')
+                    .find((line) => line.startsWith(`${key}=`))
+                    ?.split('=')[1];
+            const getIp = parseLine('ip') || '127.0.0.1';
+            const getLoc = parseLine('loc')?.toLowerCase() || false;
+            const checkWarp = parseLine('warp') || '';
+            const cfHost = parseLine('h') || 'off';
+            if (getLoc && cfHost === '1.1.1.1') {
+                if (
+                    (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
+                    checkWarp !== 'off'
+                ) {
+                    const ipInfo2 = {
+                        countryCode: getLoc,
+                        ip: getIp
+                    };
+                    cachedIpInfo = ipInfo2;
+                    lastFetchTime = currentTime;
+                    setIpInfo(ipInfo2);
+                    setPing(Math.round(window.performance.now() - traceStarted));
+                } else {
+                    setTimeout(getIpLocation, 7500);
+                }
+            } else {
+                setTimeout(getIpLocation, 7500);
+            }
+            clearTimeout(timeoutId);
+            toast.remove('ipLocationStatus');
         } catch (error) {
             /*setIpInfo({
                 countryCode: false,
@@ -478,17 +466,15 @@ const useLanding = () => {
     }, [isConnected, isLoading, onChange]);
 
     const handleOnClickIp = () => {
-        setIpInfo({
-            countryCode: false,
-            ip: ''
-        });
-
         const getTime = new Date().getTime();
         if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
             return;
-        } else {
-            getIpLocation();
         }
+        getIpLocation();
     };
 
     const handleOnClickPing = () => {
