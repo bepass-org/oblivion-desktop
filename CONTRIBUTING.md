@@ -33,4 +33,4 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
 
 ### ⚠️ Warning
 
-we recommend to not use your real name/account when contributing to this project. as it may cause you problem in some countries(that have problems with free circulation of information).
+we recommend to not use your real name/account when contributing to this project. as it may cause you problem in some countries (that have problems with free circulation of information).
