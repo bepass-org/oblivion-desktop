@@ -134,7 +134,7 @@ async function handleDownload() {
 
     await dlUnzipMove(
         helperUrls[platform][arch],
-        './assets/bin',
+        './assets/bin/oblivion-helper',
         `oblivion-helper-v${helperVersion}.zip`
     );
 

@@ -25,7 +25,7 @@ export class DarwinHelper implements IPlatformHelper {
             command: 'osascript',
             args: [
                 '-e',
-                `do shell script "\\"${binPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges`
+                `do shell script "\\"${binPath}\\" > /dev/null 2>&1 & echo $! &" with prompt "Oblivion Desktop requires administrator privileges to run Oblivion-Helper, which is needed to manage network connections.\nPlease grant permissions." with administrator privileges`
             ]
         };
     }
