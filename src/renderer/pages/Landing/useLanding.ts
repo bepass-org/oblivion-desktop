@@ -186,23 +186,25 @@ const useLanding = () => {
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
                 loadingToast(appLang.log.error_port_restart);
-            } else if (message === 'sb_terminated') {
-                setIsLoading(true);
-                setIsConnected(false);
-                loadingToast(appLang.status.keep_trying);
+            } else if (message === 'sb_preparing') {
+                loadingToast('Preparing ruleset...');
                 setTimeout(function () {
                     stopLoadingToast();
-                }, 5000);
-            } else if (message === 'sb_restarted') {
-                setIsLoading(false);
-                setIsConnected(true);
-            } else if (message === 'sb_exceeded') {
+                }, 3000);
+            } else if (message === 'sb_download_failed') {
                 setIsLoading(false);
                 setIsConnected(false);
                 stopLoadingToast();
                 setTimeout(function () {
-                    defaultToast(appLang.log.error_deadline_exceeded, 'EXCEEDED', 5000);
+                    defaultToast('Downloading ruleset failed.', 'DOWNLOAD_FAILED', 3000);
                 }, 2000);
+            } else if (message === 'sb_start_failed') {
+                stopLoadingToast();
+                setIsLoading(false);
+                setIsConnected(false);
+            } else if (message === 'sb_stop_failed') {
+                setIsLoading(false);
+                setIsConnected(true);
             } else {
                 defaultToast(message, 'GUIDE', 7000);
             }

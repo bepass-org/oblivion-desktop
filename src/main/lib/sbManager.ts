@@ -3,10 +3,8 @@ import settings from 'electron-settings';
 import log from 'electron-log';
 import { spawn, exec } from 'child_process';
 import fs from 'fs';
-import path from 'path';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
-import { rimraf } from 'rimraf';
 import {
     defaultSettings,
     dnsServers,
@@ -17,28 +15,59 @@ import {
     singBoxStack
 } from '../../defaultSettings';
 import { createSbConfig } from './sbConfig';
-import { customEvent } from './customEvent';
 import { Language } from '../../localization/type';
 import {
-    sbConfigName,
-    sbWDFileName,
     helperFileName,
-    helperConfigPath,
-    protoAssetPath,
     helperPath,
+    sbExportListPath,
+    protoAssetPath,
     workingDirPath,
-    isWindows,
     isLinux,
     IConfig,
     IGeoConfig,
-    IRoutingRules,
-    ruleSetDirPath
+    ruleSetBaseUrl,
+    IPlatformHelper
 } from '../../constants';
+import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './sbHelper';
 
-interface ICommand {
-    command: string;
-    args?: string[];
+interface GrpcResponse<T> {
+    message: T;
 }
+
+interface GrpcError {
+    message: string;
+    code?: number;
+}
+// Constants for delays and timeouts
+const STATUS_MONITOR_DELAY = 2000;
+const SUCCESS_DELAY = 1500;
+const CONNECTION_CHECK_INTERVAL = 3000;
+const CONNECTION_TIMEOUT = 3000;
+const MAX_CHECK_CONNECTION_RETRY_ATTEMPTS = 10;
+
+// Constant for status messages
+const STATUS_PREPARING = 'preparing';
+const STATUS_DOWNLOAD_FAILED = 'download-failed';
+
+// Constant for logging
+const LOG_MONITORING_HELPER_STATUS = 'Monitoring helper status...';
+const LOG_HELPER_SERVICE_ENDED = 'Oblivion-Helper service has ended.';
+const LOG_FAILED_CONNECTION = 'Failed to establish Sing-Box connection after';
+const LOG_WAITING_CONNECTION = 'Waiting for connection...';
+const LOG_CONNECTION_ESTABLISHED = 'Sing-Box connected successfully after';
+const LOG_CONNECTION_NOT_ESTABLISHED = 'Connection not yet established. Retry attempt';
+const LOG_OBLIVION_HELPER = 'Oblivion-Helper:';
+const LOG_OBLIVION_HELPER_ERROR = 'Oblivion-Helper Error:';
+const LOG_STARTING_HELPER = 'Starting Oblivion-Helper...';
+const LOG_STOPPING_HELPER = 'Stopping Oblivion-Helper...';
+const LOG_STOPPING_HELPER_ON_START = 'Stopping Oblivion-Helper on startup...';
+const LOG_SETTING_UP_CONFIGS = 'Setting up configs...';
+const LOG_STARTING_SING_BOX = 'Starting Sing-Box...';
+const LOG_STOPPING_SING_BOX = 'Stopping Sing-Box...';
+const LOG_EXPORT_LIST_CREATED = 'ExportList config file has been created at';
+const LOG_OBLIVION_HELPER_STATUS = 'Oblivion-Helper Status:';
+const LOG_FAILED_START_SINGBOX = 'Failed to start Sing-Box:';
+const LOG_FAILED_STOP_SINGBOX = 'Failed to stop Sing-Box:';
 
 class SingBoxManager {
     private helperClient: any;
@@ -47,31 +76,31 @@ class SingBoxManager {
 
     private appLang?: Language;
 
+    private isSBRunning: boolean = false;
+
     private isListeningToHelper: boolean = false;
 
     private shouldBreakConnectionTest: boolean = false;
 
-    private retryCount: number = 0;
-
     private responseStatus: string = '';
 
-    private static readonly MAX_ATTEMPTS = 10;
+    private platformHelper: IPlatformHelper;
 
-    private static readonly CHECK_INTERVAL = 3000;
-
-    private static readonly TIMEOUT = 3000;
+    private routingRuleParser: RoutingRuleParser;
 
     constructor() {
         this.initializeGrpcClient();
+        this.platformHelper = this.getPlatformHelper();
+        this.routingRuleParser = new RoutingRuleParser();
     }
 
     //Public-Methods
     public async startSingBox(appLang?: Language, event?: IpcMainEvent): Promise<boolean> {
         if (!this.event) this.event = event;
-        if (await this.isProcessRunning(sbWDFileName)) return true;
+        if (this.isSBRunning) return true;
 
+        this.isSBRunning = true;
         this.appLang = appLang;
-        this.retryCount = 0;
         await this.setupConfigs();
 
         try {
@@ -82,47 +111,51 @@ class SingBoxManager {
 
             return this.startService();
         } catch (error) {
+            this.isSBRunning = false;
             this.replyEvent(`${this.appLang?.log.error_singbox_failed_start}\n${error}`);
-            log.error('Failed to start Sing-Box:', error);
+            log.error(LOG_FAILED_START_SINGBOX, error);
             return false;
         }
     }
 
     public async stopSingBox(): Promise<boolean> {
-        if (!(await this.isProcessRunning(sbWDFileName))) return true;
+        if (!this.isSBRunning) return true;
+
+        this.isSBRunning = false;
 
         try {
             return this.stopService();
         } catch (error) {
-            this.replyEvent(`${this.appLang?.log.error_singbox_failed_stop}\n${error}`);
-            log.error('Failed to stop Sing-Box:', error);
+            this.isSBRunning = true;
+            this.replyEvent(`${this.appLang?.log.error_singbox_failed_stop}\n$${error}`);
+            log.error(LOG_FAILED_STOP_SINGBOX, error);
             return false;
         }
     }
 
     public async stopHelper(): Promise<void> {
-        log.info('Stopping Oblivion-Helper...');
+        log.info(LOG_STOPPING_HELPER);
         this.helperClient.Exit({}, () => {});
-        await this.delay(2000);
+        await this.delay(STATUS_MONITOR_DELAY);
     }
 
     public async stopHelperOnStart(): Promise<void> {
         if (!(await this.isProcessRunning(helperFileName))) return;
 
-        log.info('Stopping Oblivion-Helper on startup...');
+        log.info(LOG_STOPPING_HELPER_ON_START);
         this.helperClient.Exit({}, () => {});
-        await this.delay(4000);
+        await this.delay(STATUS_MONITOR_DELAY * 2);
         this.isListeningToHelper = false;
     }
 
     public checkConnectionStatus(): Promise<boolean> {
-        log.info('Waiting for connection...');
+        log.info(LOG_WAITING_CONNECTION);
 
         const checkStatus = async (attempt: number): Promise<boolean> => {
             if (this.shouldBreakConnectionTest) return false;
 
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), SingBoxManager.TIMEOUT);
+            const timeoutId = setTimeout(() => controller.abort(), CONNECTION_TIMEOUT);
 
             try {
                 const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
@@ -130,28 +163,28 @@ class SingBoxManager {
                 });
 
                 if (response.ok && !this.shouldBreakConnectionTest) {
-                    await this.delay(1500);
-                    log.info(`Sing-Box connected successfully after ${attempt} attempts.`);
+                    await this.delay(SUCCESS_DELAY);
+                    log.info(`${LOG_CONNECTION_ESTABLISHED} ${attempt} attempts.`);
                     return true;
                 }
             } catch {
                 log.info(
-                    `Connection not yet established. Retry attempt ${attempt}/${SingBoxManager.MAX_ATTEMPTS}...`
+                    `${LOG_CONNECTION_NOT_ESTABLISHED} ${attempt}/${MAX_CHECK_CONNECTION_RETRY_ATTEMPTS}...`
                 );
             } finally {
                 clearTimeout(timeoutId);
             }
 
-            if (attempt >= SingBoxManager.MAX_ATTEMPTS) {
+            if (attempt >= MAX_CHECK_CONNECTION_RETRY_ATTEMPTS) {
                 log.error(
-                    `Failed to establish Sing-Box connection after ${SingBoxManager.MAX_ATTEMPTS} attempts.`
+                    `${LOG_FAILED_CONNECTION} ${MAX_CHECK_CONNECTION_RETRY_ATTEMPTS} attempts.`
                 );
                 this.replyEvent(`${this.appLang?.log.error_failed_connection}`);
                 ipcMain.emit('wp-end');
                 return false;
             }
 
-            await this.delay(SingBoxManager.CHECK_INTERVAL);
+            await this.delay(CONNECTION_CHECK_INTERVAL);
             return checkStatus(attempt + 1);
         };
 
@@ -181,9 +214,9 @@ class SingBoxManager {
 
     private async startHelper(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            log.info('Starting Oblivion-Helper...');
+            log.info(LOG_STARTING_HELPER);
 
-            const command = this.getPlatformCommands().start(helperPath);
+            const command = this.platformHelper.start(helperPath);
             const helperProcess = spawn(command.command, command.args, {
                 cwd: workingDirPath
             });
@@ -210,96 +243,96 @@ class SingBoxManager {
     }
 
     private startService(): Promise<boolean> {
-        log.info('Starting Sing-Box...');
+        log.info(LOG_STARTING_SING_BOX);
         this.shouldBreakConnectionTest = false;
 
-        return new Promise<boolean>((resolve, reject) => {
-            this.helperClient.Start({}, (err: Error, response: { message: string }) => {
-                if (err) {
-                    reject(`Oblivion-Helper: ${err.message}`);
-                    return;
-                }
-                log.info('Oblivion-Helper:', response.message);
-                resolve(true);
-            });
-        });
+        return this.executeGrpcCall<string>('Start', {});
     }
 
     private stopService(): Promise<boolean> {
-        log.info('Stopping Sing-Box...');
+        log.info(LOG_STOPPING_SING_BOX);
         this.shouldBreakConnectionTest = true;
 
+        return this.executeGrpcCall<string>('Stop', {});
+    }
+
+    private async executeGrpcCall<T>(method: 'Start' | 'Stop', request: any): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            this.helperClient.Stop({}, (err: Error, response: { message: string }) => {
+            this.helperClient[method](request, (err: GrpcError, response: GrpcResponse<T>) => {
                 if (err) {
-                    reject(`Oblivion-Helper: ${err.message}`);
+                    if (method === 'Start') {
+                        this.replyEvent('sb_start_failed');
+                        this.isSBRunning = false;
+                    } else {
+                        this.replyEvent('sb_stop_failed');
+                        this.isSBRunning = true;
+                    }
+                    const errorMessage = `${LOG_OBLIVION_HELPER_ERROR} ${err.code} ${err.message}`;
+                    log.error(errorMessage);
+                    this.replyEvent(errorMessage);
+                    reject(`${LOG_OBLIVION_HELPER} ${err.message}`);
                     return;
                 }
-                log.info('Oblivion-Helper:', response.message);
+                log.info(`${LOG_OBLIVION_HELPER} ${response.message}`);
                 resolve(true);
             });
         });
     }
 
     private async monitorHelperStatus(): Promise<void> {
-        if (!this.isListeningToHelper) {
-            await this.delay(2000);
+        if (this.isListeningToHelper) return;
 
-            log.info('Monitoring helper status...');
+        await this.delay(STATUS_MONITOR_DELAY);
+        log.info(LOG_MONITORING_HELPER_STATUS);
 
-            const call = this.helperClient.StreamStatus({});
+        const call = this.helperClient.StreamStatus({});
+        this.isListeningToHelper = true;
 
-            this.isListeningToHelper = true;
-
-            call.on('data', async (response: { status: string }) => {
-                this.responseStatus = response.status;
-                log.info('Oblivion-Helper Status:', this.responseStatus);
-                if (this.responseStatus === 'terminated') {
-                    log.info('Sing-Box terminated unexpectedly. Restarting...');
-                    customEvent.emit('tray-icon', 'disconnected');
-                    this.replyEvent('sb_terminated');
-                    this.retryCount++;
-
-                    if (this.retryCount <= 3) {
-                        const isStarted = await this.startService();
-                        await this.delay(5000);
-                        if (
-                            isStarted &&
-                            this.responseStatus !== 'terminated' &&
-                            (await this.checkConnectionStatus())
-                        ) {
-                            customEvent.emit('tray-icon', 'connected-tun');
-                            this.replyEvent('sb_restarted');
-                        }
-                    } else {
-                        this.shouldBreakConnectionTest = true;
-                        this.replyEvent('sb_exceeded');
-                        ipcMain.emit('wp-end');
-                        log.warn('Exceeded maximum restart attempts.');
-                    }
-                }
-            });
-
-            call.on('end', async () => {
-                log.info('Oblivion-Helper service has ended.');
-                this.isListeningToHelper = false;
-                ipcMain.emit('wp-end');
-            });
-
-            call.on('error', async (err: Error) => {
-                log.warn('Oblivion-Helper Error:', err.message);
-                ipcMain.emit('wp-end');
-            });
-        }
+        call.on('data', (response: { status: string }) => this.handleStatusUpdate(response.status));
+        call.on('end', () => this.handleStreamEnd());
+        call.on('error', (err: Error) => this.handleStreamError(err));
     }
 
+    private handleStatusUpdate = async (status: string): Promise<void> => {
+        this.responseStatus = status;
+        log.info(LOG_OBLIVION_HELPER_STATUS, this.responseStatus);
+
+        switch (this.responseStatus) {
+            case STATUS_PREPARING:
+                this.replyEvent('sb_preparing');
+                break;
+            case STATUS_DOWNLOAD_FAILED:
+                this.replyEvent('sb_download_failed');
+                this.isSBRunning = false;
+                ipcMain.emit('wp-end');
+                break;
+            default:
+                break;
+        }
+    };
+
+    private handleStreamEnd = (): void => {
+        log.info(LOG_HELPER_SERVICE_ENDED);
+        this.isListeningToHelper = false;
+        this.isSBRunning = false;
+        ipcMain.emit('wp-end');
+    };
+
+    private handleStreamError = (err: Error): void => {
+        log.warn(LOG_OBLIVION_HELPER_ERROR, err.message);
+        this.isSBRunning = false;
+        ipcMain.emit('wp-end');
+    };
+
     private isProcessRunning(processName: string): Promise<boolean> {
-        const command = this.getPlatformCommands().running(processName).command;
+        const command = this.platformHelper.running(processName).command;
 
         return new Promise((resolve, reject) => {
             exec(command, (err: Error | null, stdout: string) => {
-                if (err) reject(err.message);
-
+                if (err) {
+                    reject(err.message);
+                    return;
+                }
                 resolve(stdout.toLowerCase().indexOf(processName.toLowerCase()) > -1);
             });
         });
@@ -311,57 +344,27 @@ class SingBoxManager {
         });
     }
 
-    private getPlatformCommands(): Record<string, (param: string) => ICommand> {
-        const commands: Record<string, Record<string, (param: string) => ICommand>> = {
-            darwin: {
-                start: (binPath) => ({
-                    command: 'osascript',
-                    args: [
-                        '-e',
-                        `do shell script "\\"${binPath}\\" > /dev/null 2>&1 & echo $! &" with administrator privileges`
-                    ]
-                }),
-                running: (processName) => ({
-                    command: `pgrep -l ${processName} | awk '{ print $2 }'`
-                })
-            },
-            win32: {
-                start: (binPath) => ({
-                    command: 'powershell.exe',
-                    args: [
-                        '-Command',
-                        `Start-Process -FilePath '${binPath.replace(/'/g, "''")}' -Verb RunAs -WindowStyle Hidden;`
-                    ]
-                }),
-                running: () => ({
-                    command: `tasklist`
-                })
-            },
-            linux: {
-                start: (binPath) => ({
-                    command: 'pkexec',
-                    args: [binPath]
-                }),
-                running: (processName) => ({
-                    command: `pgrep -l ${processName} | awk '{ print $2 }'`
-                })
-            }
-        };
-
-        return (
-            commands[process.platform] || {
-                start: () => ({ command: '', args: [] }),
-                running: () => ({ command: '' })
-            }
-        );
+    private getPlatformHelper(): IPlatformHelper {
+        switch (process.platform) {
+            case 'darwin':
+                return new DarwinHelper();
+            case 'win32':
+                return new WindowsHelper();
+            case 'linux':
+                return new LinuxHelper();
+            default:
+                throw new Error(`Unsupported platform: ${process.platform}`);
+        }
     }
 
     private async setupConfigs(): Promise<void> {
-        log.info('Setting up configs...');
+        log.info(LOG_SETTING_UP_CONFIGS);
         const config = await this.loadConfiguration();
         const geoConfig = await this.loadGeoConfiguration();
         await this.setupGeoLists(geoConfig);
-        await this.createConfigFiles(config, geoConfig);
+        const routingRules = await settings.get('routingRules');
+        const rulesConfig = this.routingRuleParser.parse(routingRules);
+        createSbConfig(config, geoConfig, rulesConfig);
     }
 
     private async loadConfiguration(): Promise<IConfig> {
@@ -406,129 +409,36 @@ class SingBoxManager {
     private async setupGeoLists(geoConfig: IGeoConfig): Promise<void> {
         const { geoIp, geoSite, geoBlock } = geoConfig;
 
-        if (fs.existsSync(ruleSetDirPath)) {
-            await rimraf(ruleSetDirPath);
-        }
-        fs.mkdirSync(ruleSetDirPath);
+        const urls: Record<string, string> = {};
+
+        const addRuleSet = (filename: string) => {
+            urls[filename] = `${ruleSetBaseUrl}${filename}`;
+        };
 
         if (geoIp !== 'none') {
-            const hasExported = await this.exportGeoList(
-                `geoip export ${geoIp} -o ./ruleset/geoip-${geoIp}.json`
-            );
-            log.info(`GeoIp: ${geoIp} => ${hasExported}`);
+            addRuleSet(`geoip-${geoIp}.srs`);
         }
 
         if (geoSite !== 'none') {
-            const hasExported = await this.exportGeoList(
-                `geosite export ${geoSite} -o ./ruleset/geosite-${geoSite}.json`
-            );
-            log.info(`GeoSite: ${geoSite} => ${hasExported}`);
+            addRuleSet(`geosite-${geoSite}.srs`);
         }
 
         if (geoBlock) {
-            await this.setupSecurityLists();
+            addRuleSet(`geosite-category-ads-all.srs`);
+            addRuleSet(`geosite-malware.srs`);
+            addRuleSet(`geosite-phishing.srs`);
+            addRuleSet(`geosite-cryptominers.srs`);
+            addRuleSet(`geoip-malware.srs`);
+            addRuleSet(`geoip-phishing.srs`);
         }
-    }
 
-    private async setupSecurityLists(): Promise<void> {
-        const securityTasks = [
-            ['geoip', 'malware'],
-            ['geoip', 'phishing'],
-            ['geosite', 'malware'],
-            ['geosite', 'cryptominers'],
-            ['geosite', 'phishing'],
-            ['geosite', 'category-ads-all']
-        ];
-
-        await Promise.all(
-            securityTasks.map(async ([type, category]) => {
-                const hasExported = await this.exportGeoList(
-                    `${type} export ${category} -o ./ruleset/${type}-${category}.json`
-                );
-                log.info(`GeoBlock: ${type}/${category} => ${hasExported}`);
-            })
-        );
-    }
-
-    private async createConfigFiles(config: IConfig, geoConfig: IGeoConfig): Promise<void> {
-        const routingRules = await settings.get('routingRules');
-        const rulesConfig = this.parseRoutingRules(routingRules);
-
-        createSbConfig(config, geoConfig, rulesConfig);
-
-        const helperConfig = { sbConfig: sbConfigName, sbBin: sbWDFileName };
-
-        fs.writeFileSync(helperConfigPath, JSON.stringify(helperConfig, null, 2), 'utf-8');
-        log.info(`Helper config file has been created at ${helperConfigPath}`);
-    }
-
-    private parseRoutingRules(routingRules: any): IRoutingRules {
-        const result: IRoutingRules = {
-            ipSet: [],
-            domainSet: [],
-            domainSuffixSet: [],
-            processSet: []
+        const exportConfig = {
+            interval: 7,
+            urls: urls
         };
 
-        if (typeof routingRules !== 'string' || routingRules.trim() === '') {
-            return result;
-        }
-
-        routingRules
-            .split('\n')
-            .map((line: string) => line.trim().replace(/,$/, ''))
-            .filter(Boolean)
-            .forEach((line: string) => {
-                const [prefix, value] = line.split(':').map((part) => part.trim());
-                if (!value) return;
-
-                this.processRoutingRule(prefix, value, result);
-            });
-
-        return result;
-    }
-
-    private processRoutingRule(prefix: string, value: string, result: IRoutingRules): void {
-        switch (prefix) {
-            case 'ip':
-                result.ipSet.push(value);
-                break;
-            case 'domain':
-                this.processDomainRule(value, result);
-                break;
-            case 'app':
-                this.processAppRule(value, result);
-                break;
-            default:
-                log.warn(`Unknown routing rule prefix: ${prefix}`);
-                break;
-        }
-    }
-
-    private processDomainRule(value: string, result: IRoutingRules): void {
-        if (value.startsWith('*')) {
-            result.domainSuffixSet.push(value.substring(1));
-        } else {
-            result.domainSet.push(value.replace('www.', ''));
-        }
-    }
-
-    private processAppRule(value: string, result: IRoutingRules): void {
-        const app = isWindows && !value.endsWith('.exe') ? `${value}.exe` : value;
-        result.processSet.push(app);
-    }
-
-    private exportGeoList(args: string): Promise<boolean> {
-        return new Promise<boolean>((resolve) => {
-            const command = path.join(workingDirPath, sbWDFileName).replace(/(\s+)/g, '\\$1');
-            exec(`${command} ${args}`, { cwd: workingDirPath }, (err: any) => {
-                if (err) {
-                    console.log(err);
-                    resolve(false);
-                }
-                resolve(true);
-            });
-        });
+        fs.writeFileSync(sbExportListPath, JSON.stringify(exportConfig, null, 2), 'utf-8');
+        log.info(`${LOG_EXPORT_LIST_CREATED} ${sbExportListPath}`);
     }
 
     private replyEvent(message: string): void {

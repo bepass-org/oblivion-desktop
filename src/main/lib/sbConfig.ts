@@ -221,10 +221,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                     {
                                         tag: `geoip-${geoConfig.geoIp}`,
                                         type: 'local',
-                                        format: 'source',
+                                        format: 'binary',
                                         path: path.join(
                                             ruleSetDirPath,
-                                            `geoip-${geoConfig.geoIp}.json`
+                                            `geoip-${geoConfig.geoIp}.srs`
                                         )
                                     }
                                 ]
@@ -234,10 +234,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                     {
                                         tag: `geosite-${geoConfig.geoSite}`,
                                         type: 'local',
-                                        format: 'source',
+                                        format: 'binary',
                                         path: path.join(
                                             ruleSetDirPath,
-                                            `geosite-${geoConfig.geoSite}.json`
+                                            `geosite-${geoConfig.geoSite}.srs`
                                         )
                                     }
                                 ]
@@ -247,41 +247,41 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                     {
                                         tag: 'geosite-category-ads-all',
                                         type: 'local',
-                                        format: 'source',
+                                        format: 'binary',
                                         path: path.join(
                                             ruleSetDirPath,
-                                            'geosite-category-ads-all.json'
+                                            'geosite-category-ads-all.srs'
                                         )
                                     },
                                     {
                                         tag: 'geosite-malware',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geosite-malware.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-malware.srs')
                                     },
                                     {
                                         tag: 'geosite-phishing',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geosite-phishing.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-phishing.srs')
                                     },
                                     {
                                         tag: 'geosite-cryptominers',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geosite-cryptominers.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-cryptominers.srs')
                                     },
                                     {
                                         tag: 'geoip-malware',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geoip-malware.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geoip-malware.srs')
                                     },
                                     {
                                         tag: 'geoip-phishing',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geoip-phishing.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geoip-phishing.srs')
                                     }
                                 ]
                               : [])
