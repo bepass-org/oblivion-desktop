@@ -7,7 +7,7 @@ import log from 'electron-log';
 import fs from 'fs';
 import { isDev, removeFileIfExists, shouldProxySystem } from './utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from './proxy';
-import { logMetadata } from '../ipcListeners/log';
+import { getOsInfo, logMetadata } from '../ipcListeners/log';
 import { getUserSettings, handleWpErrors } from './wpHelper';
 import { defaultSettings } from '../../defaultSettings';
 import { customEvent } from './customEvent';
@@ -283,7 +283,8 @@ ipcMain.on('wp-start', async (event, arg) => {
 
     await removeFileIfExists(logPath);
     log.info('Deleted past logs for new connection.');
-    logMetadata();
+    const osInfo = await getOsInfo();
+    logMetadata(osInfo);
 
     await WarpPlusManager.handleSystemProxy(true);
 

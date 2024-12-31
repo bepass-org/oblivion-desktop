@@ -27,7 +27,7 @@ import { exitTheApp, isDev, isDebug } from './lib/utils';
 import { openDevToolsByDefault, openDevToolsInFullScreen, useCustomWindowXY } from './dxConfig';
 import './ipc';
 import { devPlayground } from './playground';
-import { logMetadata } from './ipcListeners/log';
+import { getOsInfo, logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
@@ -86,7 +86,8 @@ class OblivionDesktop {
     private async setupInitialConfiguration(): Promise<void> {
         devPlayground();
         log.info('Creating new od instance...');
-        logMetadata();
+        const osInfo = await getOsInfo();
+        logMetadata(osInfo);
 
         await this.handleVersionCheck();
         this.copyRequiredFiles();

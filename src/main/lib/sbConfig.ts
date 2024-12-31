@@ -96,7 +96,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 mtu: config.tunMtu,
                 address: ['172.19.0.1/30'],
                 auto_route: true,
-                strict_route: false,
+                strict_route: true,
                 stack: config.tunStack,
                 sniff: config.tunSniff,
                 sniff_override_destination: config.tunSniff
