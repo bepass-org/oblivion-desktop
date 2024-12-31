@@ -40,7 +40,6 @@ const setRoutingRules = (value: any) => {
 // tweaking windows proxy settings using regedit
 const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) => {
     regeditModule.setExternalVBSLocation(regeditVbsDirPath);
-
     return regedit.putValue({
         'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings': {
             ...args
@@ -369,7 +368,6 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     pacServeUrl = await servePacScript(Number(port) + 1);
                     log.info('pacServeUrl:', pacServeUrl);
                 }
-
                 await windowsProxySettings(
                     {
                         ProxyServer: {
@@ -392,7 +390,6 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     regeditVbsDirPath
                 );
                 log.info('system proxy has been set.');
-
                 resolve();
             } catch (error) {
                 log.error(`error while trying to set system proxy: , ${error}`);
@@ -512,7 +509,6 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
             if (method === 'psiphon') {
                 killPacScriptServer();
             }
-
             try {
                 await windowsProxySettings(
                     {
@@ -522,7 +518,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                         },
                         ProxyOverride: {
                             type: 'REG_SZ',
-                            value: ''
+                            value: 'localhost,<local>'
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
