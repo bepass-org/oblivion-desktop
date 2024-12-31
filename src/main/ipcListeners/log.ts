@@ -1,6 +1,6 @@
 import fs from 'fs';
 import os from 'os';
-import si from 'systeminformation';
+import { osInfo } from 'systeminformation';
 import { app, ipcMain } from 'electron';
 import log from 'electron-log';
 import settings from 'electron-settings';
@@ -34,7 +34,7 @@ export function readLogFile(value: string) {
 
 export const getOsInfo = async () => {
     let getOsInfo = '';
-    await si.osInfo()
+    await osInfo()
     .then((data) => {
         getOsInfo += data.distro ? data.distro + ' ' : '';
         getOsInfo += (data.release ? '('+data.release+')' : os.release()) + ' ';
