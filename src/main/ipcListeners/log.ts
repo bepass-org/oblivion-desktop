@@ -35,19 +35,20 @@ export function readLogFile(value: string) {
 export const getOsInfo = async () => {
     let getOsInfo = '';
     await osInfo()
-    .then((data) => {
-        getOsInfo += data.distro ? data.distro + ' ' : '';
-        getOsInfo += (data.release ? '('+data.release+')' : os.release()) + ' ';
-        getOsInfo += data.arch ? data.arch : process.arch;
-    })
-    .catch((err) => {
-        log.error(err);
-        getOsInfo = process.platform + ' ' + os.release() + ' ' + process.arch;
-    });
+        .then((data) => {
+            getOsInfo += data.distro ? data.distro + ' ' : '';
+            getOsInfo += (data.release ? '(' + data.release + ')' : os.release()) + ' ';
+            getOsInfo += (data.arch ? data.arch : process.arch) + ' ';
+            getOsInfo += data.build ? data.build : '';
+        })
+        .catch((err) => {
+            log.error(err);
+            getOsInfo = process.platform + ' ' + os.release() + ' ' + process.arch;
+        });
     return getOsInfo;
-}
+};
 
-export const logMetadata = (osInfo:string) => {
+export const logMetadata = (osInfo: string) => {
     const method = settings.get('method');
     const proxyMode = settings.get('proxyMode');
     const license = settings.get('license');
