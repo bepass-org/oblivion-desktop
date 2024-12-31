@@ -72,7 +72,7 @@ class NetStatsManager {
                 log.error('netStats error:', data.toString());
             });
 
-            this.statsProcess.on('close', (code) => {
+            this.statsProcess.on('close', async (code) => {
                 log.info(`netStats exited with code ${code}`);
                 this.statsProcess = null;
                 this.isMonitoring = false;
@@ -80,6 +80,7 @@ class NetStatsManager {
                 if (this.shouldRestart && this.retryCount < NetStatsManager.MAX_RETRIES) {
                     log.info('netStats exited unexpectedly. Restarting...');
                     this.retryCount++;
+                    await this.initializeNetworkInterface();
                     this.startMonitoring(event);
                 }
             });
