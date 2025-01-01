@@ -470,7 +470,14 @@ class OblivionDesktop {
                 label: connectLabel,
                 type: 'normal',
                 enabled: canToggleConnection,
-                click: () => this.handleConnectionToggle()
+                click: () => {
+                    this.handleConnectionToggle();
+                    this.state.connectionStatus =
+                        this.state.connectionStatus === 'disconnected'
+                            ? 'connecting'
+                            : 'disconnecting';
+                    this.updateTrayMenu();
+                }
             },
             {
                 label: this.state.appLang.systemTray.settings,

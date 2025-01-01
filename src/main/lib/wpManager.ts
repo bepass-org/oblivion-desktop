@@ -162,7 +162,7 @@ class WarpPlusManager {
                 break;
 
             case ConnectionState.DISCONNECTING:
-                customEvent.emit('tray-icon', 'connecting');
+                customEvent.emit('tray-icon', 'disconnecting');
                 break;
 
             case ConnectionState.CONNECTED:
