@@ -11,6 +11,8 @@ import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
 import useTranslate from '../../../../localization/useTranslate';
+import { useNavigate } from 'react-router-dom';
+import { loadingToast, stopLoadingToast } from '../../../lib/toasts';
 
 interface RestoreModalProps {
     isOpen: boolean;
@@ -40,6 +42,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
     );
 
     const [showModal, setShowModal] = useState<boolean>(isOpen);
+    const navigate = useNavigate();
 
     useEffect(() => setShowModal(isOpen), [isOpen]);
 
@@ -61,6 +64,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
     );
 
     const onSaveModal = useCallback(async () => {
+        loadingToast(appLang?.toast?.please_wait);
         // in this page
         setForceClose(defaultSettings.forceClose);
         setShortcut(defaultSettings.shortcut);
@@ -121,6 +125,11 @@ const useRestoreModal = (props: RestoreModalProps) => {
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
         ipcRenderer.sendMessage('startup', defaultSettings.openAtLogin);
+        //
+        setTimeout(function () {
+            stopLoadingToast();
+            navigate('/');
+        }, 1500);
     }, [
         setForceClose,
         setShortcut,

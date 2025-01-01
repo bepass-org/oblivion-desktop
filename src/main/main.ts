@@ -86,9 +86,6 @@ class OblivionDesktop {
     private async setupInitialConfiguration(): Promise<void> {
         devPlayground();
         log.info('Creating new od instance...');
-        const osInfo = await getOsInfo();
-        logMetadata(osInfo);
-
         await this.handleVersionCheck();
         this.copyRequiredFiles();
     }
@@ -314,7 +311,7 @@ class OblivionDesktop {
         });
 
         ipcMain.on('startup', async (_, newStatus) => {
-            if (process.env.NODE_ENV !== 'development') {
+            if (!isDev()) {
                 app.setLoginItemSettings({
                     openAtLogin: newStatus
                 });
@@ -447,7 +444,14 @@ class OblivionDesktop {
                 label: connectLabel,
                 type: 'normal',
                 enabled: canToggleConnection,
-                click: () => this.handleConnectionToggle()
+                click: () => {
+                    this.handleConnectionToggle();
+                    this.state.connectionStatus =
+                        this.state.connectionStatus === 'disconnected'
+                            ? 'connecting'
+                            : 'disconnecting';
+                    this.updateTrayMenu();
+                }
             },
             {
                 label: this.state.appLang.systemTray.settings,
@@ -551,19 +555,18 @@ class OblivionDesktop {
     }
 
     private async checkStartUp(): Promise<void> {
-        if (process.env.NODE_ENV !== 'development') {
-            const checkOpenAtLogin = await settings.get('openAtLogin');
-            const loginItemSettings = app.getLoginItemSettings();
+        if (isDev()) return;
+        const checkOpenAtLogin = await settings.get('openAtLogin');
+        const loginItemSettings = app.getLoginItemSettings();
 
-            if (
-                typeof checkOpenAtLogin === 'boolean' &&
-                checkOpenAtLogin &&
-                !loginItemSettings.openAtLogin
-            ) {
-                app.setLoginItemSettings({
-                    openAtLogin: true
-                });
-            }
+        if (
+            typeof checkOpenAtLogin === 'boolean' &&
+            checkOpenAtLogin &&
+            !loginItemSettings.openAtLogin
+        ) {
+            app.setLoginItemSettings({
+                openAtLogin: true
+            });
         }
     }
 
@@ -579,12 +582,18 @@ class OblivionDesktop {
         }
     }
 
+    private async setupMetaData(): Promise<void> {
+        const osInfo = await getOsInfo();
+        logMetadata(osInfo);
+    }
+
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
             await this.createWindow();
             await this.setupTray();
             await this.checkStartUp();
             await this.autoConnect();
+            await this.setupMetaData();
             log.info('od is ready!');
         });
     }
