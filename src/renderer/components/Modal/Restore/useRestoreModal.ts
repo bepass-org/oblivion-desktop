@@ -126,7 +126,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
         ipcRenderer.sendMessage('startup', defaultSettings.openAtLogin);
         //
-        setTimeout(function() {
+        setTimeout(function () {
             stopLoadingToast();
             navigate('/');
         }, 1500);
