@@ -25,7 +25,7 @@ export const createPacScript = async (hostIp: string, port: string | number) => 
             .replace(/\n|<br>/g, '')
             .replace(/app:[^,]+(,|$)/g, '')
             .split(',')
-            .filter(rule => rule.trim() !== '')
+            .filter((rule) => rule.trim() !== '')
             .map((rule) => {
                 const parts = rule.split(':');
                 return {
