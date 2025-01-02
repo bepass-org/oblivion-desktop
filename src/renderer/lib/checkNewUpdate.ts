@@ -29,9 +29,10 @@ const comparison = (localVersion: any, apiVersion: any) => {
 
 let isCheckingVersion = false;
 export const checkNewUpdate = async (appVersion: string) => {
-    if (isDev()) return false;
+    //if (isDev()) return false;
     if (isCheckingVersion) return false;
     try {
+        isCheckingVersion = true;
         const betaRelease = await settings.get('betaRelease');
         const isBetaVersionChecking =
             typeof betaRelease === 'undefined' ? defaultSettings.betaRelease : betaRelease;

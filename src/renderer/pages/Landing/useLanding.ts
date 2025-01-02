@@ -28,7 +28,6 @@ let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
-let hasNewUpdate = false;
 
 const defaultNetStats: INetStats = {
     sentSpeed: { value: -1, unit: 'N/A' },
@@ -73,6 +72,7 @@ const useLanding = () => {
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
+    const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -154,20 +154,6 @@ const useLanding = () => {
             });
 
         cachedIpInfo = null;
-
-        const checkForUpdates = async () => {
-            const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
-            if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
-            if (typeof betaRelease === 'undefined') return;
-            try {
-                const comparison = await checkNewUpdate(packageJsonData?.version);
-                hasNewUpdate = typeof comparison === 'boolean' ? comparison : false;
-                localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        checkForUpdates();
 
         onEscapeKeyPressed(() => {
             setDrawerIsOpen(false);
@@ -260,6 +246,10 @@ const useLanding = () => {
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
 
+        const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
+        setHasNewUpdate(typeof hasUpdate !== 'undefined' && hasUpdate === 'true' ? true : false);
+        checkForUpdates();
+
         return () => {
             window.removeEventListener('resize', resizeListener);
             window.removeEventListener('online', handleOnlineStatusChange);
@@ -291,6 +281,23 @@ const useLanding = () => {
             Infinity
         );
         connectedToIrIPOnceDisplayed = true;
+    };
+
+    const checkForUpdates = async () => {
+        const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
+        if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
+        if (typeof betaRelease === 'undefined') return;
+        try {
+            const comparison = await checkNewUpdate(packageJsonData?.version);
+            setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
+            localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
+            localStorage.setItem(
+                'OBLIVION_NEWUPDATE',
+                typeof comparison === 'boolean' ? (comparison ? 'true' : 'false') : 'false'
+            );
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const getPing = async () => {
