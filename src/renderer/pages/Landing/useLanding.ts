@@ -68,7 +68,7 @@ const useLanding = () => {
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
-    const [shortcut, setShortcut] = useState<boolean>(false);
+    const [shortcut, setShortcut] = useState<boolean>();
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
@@ -286,7 +286,6 @@ const useLanding = () => {
     const checkForUpdates = async () => {
         const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
         if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
-        if (typeof betaRelease === 'undefined') return;
         try {
             const comparison = await checkNewUpdate(packageJsonData?.version);
             setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
