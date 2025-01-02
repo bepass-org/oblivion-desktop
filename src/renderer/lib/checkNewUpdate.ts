@@ -1,4 +1,6 @@
-export const checkNewUpdate = (localVersion: any, apiVersion: any) => {
+import { isDev } from './utils';
+
+const comparison = (localVersion: any, apiVersion: any) => {
     const parts1 = localVersion
         .toLowerCase()
         .replace('v', '')
@@ -21,4 +23,36 @@ export const checkNewUpdate = (localVersion: any, apiVersion: any) => {
         }
     }
     return false;
+};
+
+let isCheckingVersion = false;
+export const checkNewUpdate = async (
+    appVersion: string,
+    isBetaVersionChecking: boolean = false
+) => {
+    if (isCheckingVersion || isDev()) return;
+    isCheckingVersion = true;
+    try {
+        const response = await fetch(
+            `https://api.github.com/repos/bepass-org/oblivion-desktop/releases${isBetaVersionChecking ? '' : '/latest'}`
+        );
+        if (response.ok) {
+            const data = await response.json();
+            let latestVersion = String(data?.tag_name);
+            if ( isBetaVersionChecking ) {
+                latestVersion = String(data?.[0]?.tag_name);
+            }
+            if (latestVersion && comparison(String(appVersion), latestVersion)) {
+                return true;
+            }
+        } else {
+            console.log('Failed to fetch release version:', response.statusText);
+            return false;
+        }
+    } catch (error) {
+        console.log('Failed to fetch release version:', error);
+        return false;
+    } finally {
+        isCheckingVersion = false;
+    }
 };

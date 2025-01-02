@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
+import { ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
 import {
     defaultToast,
     defaultToastWithSubmitButton,
@@ -81,7 +81,7 @@ const useLanding = () => {
             //checkInternetToast(appLang?.toast?.offline);
             if (isConnected || isLoading) {
                 ipcRenderer.sendMessage('wp-end');
-                if ( !isLoading) {
+                if (!isLoading) {
                     setIsLoading(true);
                 }
                 toast.remove('ONLINE_STATUS');
@@ -106,31 +106,6 @@ const useLanding = () => {
             setPing(0);
         }
     }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
-
-    let isCheckingVersion = false;
-    const fetchReleaseVersion = async () => {
-        if (isCheckingVersion || isDev()) return;
-        isCheckingVersion = true;
-        try {
-            const response = await fetch(
-                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
-            );
-            if (response.ok) {
-                const data = await response.json();
-                const latestVersion = String(data?.tag_name);
-                const appVersion = String(packageJsonData?.version);
-                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
-                    hasNewUpdate = true;
-                }
-            } else {
-                console.log('Failed to fetch release version:', response.statusText);
-            }
-        } catch (error) {
-            console.log('Failed to fetch release version:', error);
-        } finally {
-            isCheckingVersion = false;
-        }
-    };
 
     useEffect(() => {
         //ipcRenderer.clean();
@@ -167,7 +142,7 @@ const useLanding = () => {
 
         cachedIpInfo = null;
         if (canCheckNewVer) {
-            fetchReleaseVersion();
+            checkNewUpdate(packageJsonData?.version);
             canCheckNewVer = false;
         }
 
@@ -261,7 +236,7 @@ const useLanding = () => {
         window.addEventListener('online', handleOnlineStatusChange);
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
-        
+
         return () => {
             window.removeEventListener('resize', resizeListener);
             window.removeEventListener('online', handleOnlineStatusChange);
