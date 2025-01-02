@@ -518,7 +518,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                         },
                         ProxyOverride: {
                             type: 'REG_SZ',
-                            value: 'localhost,<local>'
+                            value: ''
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
