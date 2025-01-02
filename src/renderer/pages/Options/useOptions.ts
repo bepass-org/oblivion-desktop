@@ -218,6 +218,7 @@ const useOptions = () => {
     const onClickBetaReleaseButton = useCallback(() => {
         setBetaRelease(!betaRelease);
         settings.set('betaRelease', !betaRelease);
+        localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
     }, [betaRelease]);
 
     const onKeyDownBetaReleaseButton = useCallback(

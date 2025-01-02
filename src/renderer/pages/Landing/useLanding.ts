@@ -28,7 +28,6 @@ let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
-let canCheckNewVer = true;
 let hasNewUpdate = false;
 
 const defaultNetStats: INetStats = {
@@ -156,14 +155,19 @@ const useLanding = () => {
 
         cachedIpInfo = null;
 
-        if (canCheckNewVer) {
-            const checkForUpdates = async () => {
-                hasNewUpdate =
-                    (await checkNewUpdate(packageJsonData?.version, betaRelease)) || false;
-            };
-            checkForUpdates();
-            canCheckNewVer = false;
-        }
+        const checkForUpdates = async () => {
+            const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
+            if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
+            if (typeof betaRelease === 'undefined') return;
+            try {
+                const comparison = await checkNewUpdate(packageJsonData?.version);
+                hasNewUpdate = typeof comparison === 'boolean' ? comparison : false;
+                localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        checkForUpdates();
 
         onEscapeKeyPressed(() => {
             setDrawerIsOpen(false);

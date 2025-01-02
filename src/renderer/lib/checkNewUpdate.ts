@@ -1,4 +1,6 @@
 import { isDev } from './utils';
+import { defaultSettings } from '../../defaultSettings';
+import { settings } from './settings';
 
 const comparison = (localVersion: any, apiVersion: any) => {
     const parts1 = localVersion
@@ -26,14 +28,13 @@ const comparison = (localVersion: any, apiVersion: any) => {
 };
 
 let isCheckingVersion = false;
-export const checkNewUpdate = async (
-    appVersion: string,
-    isBetaVersionChecking: boolean = false
-) => {
+export const checkNewUpdate = async (appVersion: string) => {
     if (isDev()) return false;
     if (isCheckingVersion) return false;
-    isCheckingVersion = true;
     try {
+        const betaRelease = await settings.get('betaRelease');
+        const isBetaVersionChecking =
+            typeof betaRelease === 'undefined' ? defaultSettings.betaRelease : betaRelease;
         const response = await fetch(
             `https://api.github.com/repos/bepass-org/oblivion-desktop/releases${isBetaVersionChecking ? '' : '/latest'}`
         );
