@@ -79,9 +79,11 @@ const useLanding = () => {
     const onChange = useCallback(() => {
         if (!navigator.onLine) {
             //checkInternetToast(appLang?.toast?.offline);
-            if (isConnected) {
+            if (isConnected || isLoading) {
                 ipcRenderer.sendMessage('wp-end');
-                setIsLoading(true);
+                if ( !isLoading) {
+                    setIsLoading(true);
+                }
                 toast.remove('ONLINE_STATUS');
             } else {
                 defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
