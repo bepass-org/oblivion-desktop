@@ -167,7 +167,7 @@ const useLanding = () => {
                 setTimeout(() => setDrawerIsOpen(false), 300);
             }
         };
-        const resizeListener = debounce(handleResize, 500);
+        handleResize();
 
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
@@ -241,7 +241,7 @@ const useLanding = () => {
             }
         }, 2000);
 
-        window.addEventListener('resize', resizeListener);
+        window.addEventListener('resize', handleResize);
         window.addEventListener('online', handleOnlineStatusChange);
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
@@ -251,7 +251,7 @@ const useLanding = () => {
         checkForUpdates();
 
         return () => {
-            window.removeEventListener('resize', resizeListener);
+            window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
         };
