@@ -123,7 +123,10 @@ const amharic: Language = {
         singbox_stack: 'እትም',
         singbox_stack_desc: 'እትም መመን ያሳይ',
         singbox_sniff: 'እንቅስቃሴ ይሳተፋል',
-        singbox_sniff_desc: 'እንቅስቃሴ ላይ የማስተናገድ ትኩረት ተቀንሷል'
+        singbox_sniff_desc: 'እንቅስቃሴ ላይ የማስተናገድ ትኩረት ተቀንሷል',
+        more_duties: 'ተጨማሪ ዕርምጃዎች',
+        beta_release: 'እባብ እንቅስቃሴ',
+        beta_release_desc: 'ስለ እንቅስቃሴ ከፊት በፊት ማህበረሰብ መረጃ ማግኘት'
     },
     tabs: {
         home: 'เชื่อมต่อ',

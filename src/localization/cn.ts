@@ -123,7 +123,10 @@ const chinese: Language = {
         singbox_stack: '堆栈',
         singbox_stack_desc: '设置堆栈类型',
         singbox_sniff: '嗅探',
-        singbox_sniff_desc: '启用嗅探并覆盖目标'
+        singbox_sniff_desc: '启用嗅探并覆盖目标',
+        more_duties: '更多职责',
+        beta_release: 'Beta 更新',
+        beta_release_desc: '了解预发布版本'
     },
     tabs: {
         home: '连接',

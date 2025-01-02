@@ -73,6 +73,7 @@ const useLanding = () => {
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
+    const [betaRelease, setBetaRelease] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -111,7 +112,15 @@ const useLanding = () => {
         //ipcRenderer.clean();
 
         settings
-            .getMultiple(['lang', 'ipData', 'method', 'proxyMode', 'shortcut', 'dataUsage'])
+            .getMultiple([
+                'lang',
+                'ipData',
+                'method',
+                'proxyMode',
+                'shortcut',
+                'dataUsage',
+                'betaRelease'
+            ])
             .then((values) => {
                 setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
                 setIpData(
@@ -135,6 +144,11 @@ const useLanding = () => {
                         ? defaultSettings.dataUsage
                         : values.dataUsage
                 );
+                setBetaRelease(
+                    typeof values.betaRelease === 'undefined'
+                        ? defaultSettings.betaRelease
+                        : values.betaRelease
+                );
             })
             .catch((error) => {
                 console.log('Error fetching settings:', error);
@@ -144,7 +158,8 @@ const useLanding = () => {
 
         if (canCheckNewVer) {
             const checkForUpdates = async () => {
-                hasNewUpdate = (await checkNewUpdate(packageJsonData?.version)) || false;
+                hasNewUpdate =
+                    (await checkNewUpdate(packageJsonData?.version, betaRelease)) || false;
             };
             checkForUpdates();
             canCheckNewVer = false;
@@ -485,7 +500,8 @@ const useLanding = () => {
         appVersion: packageJsonData?.version,
         shortcut,
         netStats,
-        dataUsage
+        dataUsage,
+        betaRelease
     };
 };
 export default useLanding;

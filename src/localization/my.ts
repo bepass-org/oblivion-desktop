@@ -125,7 +125,10 @@ const myanmar: Language = {
         singbox_stack: 'Stack',
         singbox_stack_desc: 'Stack အမျိုးအစားကိုသတ်မှတ်ပါ',
         singbox_sniff: 'Sniff',
-        singbox_sniff_desc: 'Sniffing ကိုဖွင့်ပြီး ရောက်ရှိမှုကို Override လုပ်ပါ'
+        singbox_sniff_desc: 'Sniffing ကိုဖွင့်ပြီး ရောက်ရှိမှုကို Override လုပ်ပါ',
+        more_duties: 'ပိုမိုတာဝန်များ',
+        beta_release: 'ဘီတာအပ်ဒိတ်',
+        beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'
     },
     tabs: {
         home: 'Connect',

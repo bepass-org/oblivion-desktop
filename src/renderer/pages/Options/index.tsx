@@ -38,7 +38,10 @@ export default function Options() {
         setForceClose,
         setShortcut,
         theme,
-        proxyMode
+        proxyMode,
+        onClickBetaReleaseButton,
+        onKeyDownBetaReleaseButton,
+        betaRelease
     } = useOptions();
 
     if (
@@ -47,7 +50,8 @@ export default function Options() {
         typeof openAtLogin === 'undefined' ||
         typeof forceClose === 'undefined' ||
         typeof shortcut === 'undefined' ||
-        typeof autoConnect === 'undefined'
+        typeof autoConnect === 'undefined' ||
+        typeof betaRelease === 'undefined'
     )
         return <div className='settings' />;
 
@@ -129,7 +133,7 @@ export default function Options() {
                     </div>
                     <div className='moreSettings'>
                         <i className='material-icons'>&#xe313;</i>
-                        {appLang?.settings?.more}
+                        {appLang?.settings?.more_duties}
                     </div>
                     <div className='settings' role='menu'>
                         <div
@@ -199,12 +203,33 @@ export default function Options() {
                             </div>
                             <div className='info'>{appLang?.settings?.force_close_desc}</div>
                         </div>
-                        {/* </div>
-                <div className='moreSettings'>
-                    <i className='material-icons'>&#xe313;</i>
-                    {appLang?.settings?.more}
-                </div>
-                <div className='settings' role='menu'> */}
+                    </div>
+                    <div className='moreSettings'>
+                        <i className='material-icons'>&#xe313;</i>
+                        {appLang?.settings?.more}
+                    </div>
+                    <div className='settings' role='menu'>
+                        <div
+                            role='button'
+                            className='item'
+                            onClick={onClickBetaReleaseButton}
+                            onKeyDown={onKeyDownBetaReleaseButton}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='beta-release'>
+                                {appLang?.settings?.beta_release}
+                            </label>
+                            <div className='value'>
+                                <div
+                                    tabIndex={-1}
+                                    id='beta-release'
+                                    className={classNames('checkbox', betaRelease ? 'checked' : '')}
+                                >
+                                    <i className='material-icons'>&#xe876;</i>
+                                </div>
+                            </div>
+                            <div className='info'>{appLang?.settings?.beta_release_desc}</div>
+                        </div>
                         <div
                             role='button'
                             className={'item'}

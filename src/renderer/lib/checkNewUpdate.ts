@@ -30,7 +30,8 @@ export const checkNewUpdate = async (
     appVersion: string,
     isBetaVersionChecking: boolean = false
 ) => {
-    if (isCheckingVersion || isDev()) return false;
+    if (isDev()) return false;
+    if (isCheckingVersion) return false;
     isCheckingVersion = true;
     try {
         const response = await fetch(
@@ -38,6 +39,7 @@ export const checkNewUpdate = async (
         );
         if (response.ok) {
             const data = await response.json();
+            //console.log(data);
             let latestVersion = String(data?.tag_name);
             if (isBetaVersionChecking) {
                 latestVersion = String(data?.[0]?.tag_name);

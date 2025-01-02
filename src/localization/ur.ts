@@ -125,7 +125,10 @@ const urdu: Language = {
         singbox_stack: 'اسٹیک',
         singbox_stack_desc: 'اسٹیک کی قسم سیٹ کریں',
         singbox_sniff: 'سنیفنگ',
-        singbox_sniff_desc: 'سنیفنگ فعال کریں اور منزل کو اووررائیڈ کریں'
+        singbox_sniff_desc: 'سنیفنگ فعال کریں اور منزل کو اووررائیڈ کریں',
+        more_duties: 'مزید ذمہ داریاں',
+        beta_release: 'بیٹا اپ ڈیٹ',
+        beta_release_desc: 'پری ریلیز ورژنز کے بارے میں آگاہ رہیں'
     },
     tabs: {
         home: 'کنیکٹ',

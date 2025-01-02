@@ -126,7 +126,10 @@ const spanish: Language = {
         singbox_stack: 'Pila',
         singbox_stack_desc: 'Establecer tipo de Pila',
         singbox_sniff: 'Sniff',
-        singbox_sniff_desc: 'Habilitar Sniffing y Anular Destino'
+        singbox_sniff_desc: 'Habilitar Sniffing y Anular Destino',
+        more_duties: 'Más responsabilidades',
+        beta_release: 'Actualización Beta',
+        beta_release_desc: 'Mantente informado sobre versiones previas al lanzamiento'
     },
     tabs: {
         home: 'Conectar',

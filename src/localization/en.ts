@@ -124,7 +124,10 @@ const english: Language = {
         singbox_stack: 'Stack',
         singbox_stack_desc: 'Set Stack Type',
         singbox_sniff: 'Sniff',
-        singbox_sniff_desc: 'Enable Sniffing & Override Destination'
+        singbox_sniff_desc: 'Enable Sniffing & Override Destination',
+        more_duties: 'Duties',
+        beta_release: 'Beta Update',
+        beta_release_desc: 'Stay informed about pre-release versions'
     },
     tabs: {
         home: 'Connect',
