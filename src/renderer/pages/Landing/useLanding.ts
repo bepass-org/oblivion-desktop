@@ -255,11 +255,13 @@ const useLanding = () => {
             } else {
                 defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
             }
-        }, 5000);
+        }, 2000);
 
         window.addEventListener('resize', resizeListener);
         window.addEventListener('online', handleOnlineStatusChange);
         window.addEventListener('offline', handleOnlineStatusChange);
+        handleOnlineStatusChange();
+        
         return () => {
             window.removeEventListener('resize', resizeListener);
             window.removeEventListener('online', handleOnlineStatusChange);
