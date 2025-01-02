@@ -30,7 +30,7 @@ export const checkNewUpdate = async (
     appVersion: string,
     isBetaVersionChecking: boolean = false
 ) => {
-    if (isCheckingVersion || isDev()) return;
+    if (isCheckingVersion || isDev()) return false;
     isCheckingVersion = true;
     try {
         const response = await fetch(

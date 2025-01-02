@@ -141,8 +141,12 @@ const useLanding = () => {
             });
 
         cachedIpInfo = null;
+
         if (canCheckNewVer) {
-            checkNewUpdate(packageJsonData?.version);
+            const checkForUpdates = async () => {
+                hasNewUpdate = (await checkNewUpdate(packageJsonData?.version)) || false;
+            };
+            checkForUpdates();
             canCheckNewVer = false;
         }
 
