@@ -39,7 +39,7 @@ export const checkNewUpdate = async (
         if (response.ok) {
             const data = await response.json();
             let latestVersion = String(data?.tag_name);
-            if ( isBetaVersionChecking ) {
+            if (isBetaVersionChecking) {
                 latestVersion = String(data?.[0]?.tag_name);
             }
             if (latestVersion && comparison(String(appVersion), latestVersion)) {
