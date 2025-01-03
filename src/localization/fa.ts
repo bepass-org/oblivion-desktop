@@ -124,7 +124,10 @@ const persian: Language = {
         singbox_stack: 'چینش',
         singbox_stack_desc: 'تنظیم نوع Stack',
         singbox_sniff: 'تحلیل بسته‌ها',
-        singbox_sniff_desc: 'فعالسازی Sniff و بازنویسی مقصد'
+        singbox_sniff_desc: 'فعالسازی Sniff و بازنویسی مقصد',
+        more_duties: 'وظایف',
+        beta_release: 'بروزرسانی بتا',
+        beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'
     },
     tabs: {
         home: 'اتصال',

@@ -123,7 +123,10 @@ const arabic: Language = {
         singbox_stack: 'الهيكل',
         singbox_stack_desc: 'تعيين نوع الهيكل',
         singbox_sniff: 'الاستنشاق',
-        singbox_sniff_desc: 'تمكين الاستنشاق وتجاوز الوجهة'
+        singbox_sniff_desc: 'تمكين الاستنشاق وتجاوز الوجهة',
+        more_duties: 'المزيد من الواجبات',
+        beta_release: 'تحديث النسخة التجريبية',
+        beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'
     },
     tabs: {
         home: 'اتصال',

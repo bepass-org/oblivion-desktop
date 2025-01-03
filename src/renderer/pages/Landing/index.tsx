@@ -32,7 +32,8 @@ export default function Landing() {
         appVersion,
         shortcut,
         netStats,
-        dataUsage
+        dataUsage,
+        betaRelease
     } = useLanding();
 
     return (
@@ -54,6 +55,7 @@ export default function Landing() {
                 hasNewUpdate={hasNewUpdate}
                 appVersion={appVersion}
                 proxyMode={proxyMode}
+                betaRelease={betaRelease}
             />
             <LandingBody
                 appLang={appLang}

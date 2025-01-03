@@ -124,7 +124,10 @@ const brazilianPortuguese: Language = {
         singbox_stack: 'Pilha',
         singbox_stack_desc: 'Definir Tipo de Pilha',
         singbox_sniff: 'Sniffing',
-        singbox_sniff_desc: 'Ativar farejamento e substituir destino'
+        singbox_sniff_desc: 'Ativar farejamento e substituir destino',
+        more_duties: 'Mais deveres',
+        beta_release: 'Atualização Beta',
+        beta_release_desc: 'Fique informado sobre versões pré-lançamento'
     },
     tabs: {
         home: 'Conectar',

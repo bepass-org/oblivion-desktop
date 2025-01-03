@@ -35,7 +35,8 @@ export type settingsKeys =
     | 'singBoxLog'
     | 'singBoxStack'
     | 'singBoxSniff'
-    | 'restartCounter';
+    | 'restartCounter'
+    | 'betaRelease';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -73,7 +74,8 @@ export const defaultSettings = {
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
     singBoxSniff: true,
-    restartCounter: 0
+    restartCounter: 0,
+    betaRelease: false
 };
 
 export const countries: { value: string; label: string }[] = [

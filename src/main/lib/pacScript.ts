@@ -23,7 +23,9 @@ export const createPacScript = async (hostIp: string, port: string | number) => 
     if (typeof routingRules === 'string' && routingRules !== '') {
         domainRules = routingRules
             .replace(/\n|<br>/g, '')
+            .replace(/app:[^,]+(,|$)/g, '')
             .split(',')
+            .filter((rule) => rule.trim() !== '')
             .map((rule) => {
                 const parts = rule.split(':');
                 return {
@@ -102,7 +104,7 @@ export const servePacScript = (port = 8087) => {
 
 export const killPacScriptServer = async () => {
     try {
-        await server.close();
+        server.close();
         log.info('pac script server closed.');
     } catch (error) {
         log.error(error);

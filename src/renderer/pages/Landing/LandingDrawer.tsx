@@ -13,6 +13,7 @@ interface LandingDrawerProps {
     toggleDrawer: () => void;
     appVersion: string;
     proxyMode: string;
+    betaRelease: boolean;
 }
 
 const LandingDrawer: FC<LandingDrawerProps> = ({
@@ -22,7 +23,8 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
     lang,
     toggleDrawer,
     appVersion,
-    proxyMode
+    proxyMode,
+    betaRelease
 }) => {
     return (
         <Drawer
@@ -88,7 +90,7 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                     <li className='divider' />
                     <li className={hasNewUpdate ? '' : 'hidden'} role='presentation'>
                         <a
-                            href='https://github.com/bepass-org/oblivion-desktop/releases/latest#download'
+                            href={`https://github.com/bepass-org/oblivion-desktop/releases${betaRelease ? '' : '/latest'}#download`}
                             target='_blank'
                             rel='noreferrer'
                             role='menuitem'

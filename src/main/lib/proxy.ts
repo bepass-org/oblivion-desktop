@@ -11,8 +11,7 @@ import { createPacScript, killPacScriptServer, servePacScript } from './pacScrip
 import { getTranslate } from '../../localization';
 
 const execPromise = promisify(exec);
-
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
 let oldProxyHost = '';
 let oldProxyPort = '';
@@ -22,6 +21,7 @@ const setRoutingRules = (value: any) => {
         'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
     if (typeof value === 'string' && value !== '') {
         const myRules = value
+            .replace(/app:[^,]+/g, '')
             .replace(/domain:/g, '')
             .replace(/geoip:/g, '')
             .replace(/ip:/g, '')
@@ -518,7 +518,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                         },
                         ProxyOverride: {
                             type: 'REG_SZ',
-                            value: 'localhost,<local>'
+                            value: ''
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',

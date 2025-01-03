@@ -24,6 +24,7 @@ const useOptions = () => {
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
+    const [betaRelease, setBetaRelease] = useState<boolean>(false);
 
     const appLang = useTranslate();
 
@@ -55,7 +56,8 @@ const useOptions = () => {
                 'autoConnect',
                 'forceClose',
                 'shortcut',
-                'proxyMode'
+                'proxyMode',
+                'betaRelease'
             ])
             .then((values) => {
                 setTheme(
@@ -90,6 +92,11 @@ const useOptions = () => {
                     typeof values.proxyMode === 'undefined'
                         ? defaultSettings.proxyMode
                         : values.proxyMode
+                );
+                setBetaRelease(
+                    typeof values.betaRelease === 'undefined'
+                        ? defaultSettings.betaRelease
+                        : values.betaRelease
                 );
             })
             .catch((error) => {
@@ -208,6 +215,22 @@ const useOptions = () => {
         [onClickRestore]
     );
 
+    const onClickBetaReleaseButton = useCallback(() => {
+        setBetaRelease(!betaRelease);
+        settings.set('betaRelease', !betaRelease);
+        localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
+    }, [betaRelease]);
+
+    const onKeyDownBetaReleaseButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickBetaReleaseButton();
+            }
+        },
+        [onClickBetaReleaseButton]
+    );
+
     return {
         theme,
         lang,
@@ -238,7 +261,10 @@ const useOptions = () => {
         setAutoConnect,
         setForceClose,
         setShortcut,
-        proxyMode
+        proxyMode,
+        onClickBetaReleaseButton,
+        onKeyDownBetaReleaseButton,
+        betaRelease
     };
 };
 

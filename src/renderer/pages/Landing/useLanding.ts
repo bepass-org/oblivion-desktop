@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
-import { isDev, ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
+import { ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
 import {
     defaultToast,
     defaultToastWithSubmitButton,
@@ -28,8 +28,6 @@ let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
 const cacheDuration = 10 * 1000;
 let connectedToIrIPOnceDisplayed = false;
-let canCheckNewVer = true;
-let hasNewUpdate = false;
 
 const defaultNetStats: INetStats = {
     sentSpeed: { value: -1, unit: 'N/A' },
@@ -70,18 +68,22 @@ const useLanding = () => {
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
-    const [shortcut, setShortcut] = useState<boolean>(false);
+    const [shortcut, setShortcut] = useState<boolean>();
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
+    const [betaRelease, setBetaRelease] = useState<boolean>(false);
+    const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
     const onChange = useCallback(() => {
         if (!navigator.onLine) {
             //checkInternetToast(appLang?.toast?.offline);
-            if (isConnected) {
+            if (isConnected || isLoading) {
                 ipcRenderer.sendMessage('wp-end');
-                setIsLoading(true);
+                if (!isLoading) {
+                    setIsLoading(true);
+                }
                 toast.remove('ONLINE_STATUS');
             } else {
                 defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
@@ -105,36 +107,19 @@ const useLanding = () => {
         }
     }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
 
-    let isCheckingVersion = false;
-    const fetchReleaseVersion = async () => {
-        if (isCheckingVersion || isDev()) return;
-        isCheckingVersion = true;
-        try {
-            const response = await fetch(
-                'https://api.github.com/repos/bepass-org/oblivion-desktop/releases/latest'
-            );
-            if (response.ok) {
-                const data = await response.json();
-                const latestVersion = String(data?.tag_name);
-                const appVersion = String(packageJsonData?.version);
-                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
-                    hasNewUpdate = true;
-                }
-            } else {
-                console.log('Failed to fetch release version:', response.statusText);
-            }
-        } catch (error) {
-            console.log('Failed to fetch release version:', error);
-        } finally {
-            isCheckingVersion = false;
-        }
-    };
-
     useEffect(() => {
         //ipcRenderer.clean();
 
         settings
-            .getMultiple(['lang', 'ipData', 'method', 'proxyMode', 'shortcut', 'dataUsage'])
+            .getMultiple([
+                'lang',
+                'ipData',
+                'method',
+                'proxyMode',
+                'shortcut',
+                'dataUsage',
+                'betaRelease'
+            ])
             .then((values) => {
                 setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
                 setIpData(
@@ -158,16 +143,17 @@ const useLanding = () => {
                         ? defaultSettings.dataUsage
                         : values.dataUsage
                 );
+                setBetaRelease(
+                    typeof values.betaRelease === 'undefined'
+                        ? defaultSettings.betaRelease
+                        : values.betaRelease
+                );
             })
             .catch((error) => {
                 console.log('Error fetching settings:', error);
             });
 
         cachedIpInfo = null;
-        if (canCheckNewVer) {
-            fetchReleaseVersion();
-            canCheckNewVer = false;
-        }
 
         onEscapeKeyPressed(() => {
             setDrawerIsOpen(false);
@@ -181,7 +167,7 @@ const useLanding = () => {
                 setTimeout(() => setDrawerIsOpen(false), 300);
             }
         };
-        const resizeListener = debounce(handleResize, 500);
+        handleResize();
 
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
@@ -255,13 +241,19 @@ const useLanding = () => {
             } else {
                 defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 7000);
             }
-        }, 5000);
+        }, 2000);
 
-        window.addEventListener('resize', resizeListener);
+        window.addEventListener('resize', handleResize);
         window.addEventListener('online', handleOnlineStatusChange);
         window.addEventListener('offline', handleOnlineStatusChange);
+        handleOnlineStatusChange();
+
+        const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
+        setHasNewUpdate(typeof hasUpdate !== 'undefined' && hasUpdate === 'true' ? true : false);
+        checkForUpdates();
+
         return () => {
-            window.removeEventListener('resize', resizeListener);
+            window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
         };
@@ -291,6 +283,22 @@ const useLanding = () => {
             Infinity
         );
         connectedToIrIPOnceDisplayed = true;
+    };
+
+    const checkForUpdates = async () => {
+        const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
+        if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
+        try {
+            const comparison = await checkNewUpdate(packageJsonData?.version);
+            setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
+            localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
+            localStorage.setItem(
+                'OBLIVION_NEWUPDATE',
+                typeof comparison === 'boolean' ? (comparison ? 'true' : 'false') : 'false'
+            );
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const getPing = async () => {
@@ -504,7 +512,8 @@ const useLanding = () => {
         appVersion: packageJsonData?.version,
         shortcut,
         netStats,
-        dataUsage
+        dataUsage,
+        betaRelease
     };
 };
 export default useLanding;
