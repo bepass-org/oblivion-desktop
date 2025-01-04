@@ -108,7 +108,7 @@ const useLanding = () => {
             setIsLoading(true);
             setPing(0);
         }
-    }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
+    }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode, method]);
 
     useEffect(() => {
         //ipcRenderer.clean();
