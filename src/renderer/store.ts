@@ -10,8 +10,6 @@ export interface IStore {
     setStatusText: (status: string) => void;
     proxyStatus: string;
     setProxyStatus: (status: string) => void;
-    proxyMethod: string;
-    setProxyMethod: (method: string) => void;
 }
 
 const appLang = getTranslate('en');
@@ -23,7 +21,5 @@ export const useStore = create<IStore>((set) => ({
     statusText: appLang.status.disconnected,
     setStatusText: (status: string) => set(() => ({ statusText: status })),
     proxyStatus: '',
-    setProxyStatus: (status: string) => set(() => ({ proxyStatus: status })),
-    proxyMethod: '',
-    setProxyMethod: (method: string) => set(() => ({ proxyMethod: method }))
+    setProxyStatus: (status: string) => set(() => ({ proxyStatus: status }))
 }));

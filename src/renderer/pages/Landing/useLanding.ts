@@ -47,9 +47,7 @@ const useLanding = () => {
         statusText,
         setStatusText,
         proxyStatus,
-        setProxyStatus,
-        proxyMethod,
-        setProxyMethod
+        setProxyStatus
     } = useStore();
     const [ipInfo, setIpInfo] = useState<IpConfig>({
         countryCode: false,
@@ -103,12 +101,11 @@ const useLanding = () => {
                 ip: ''
             });
             setProxyStatus(proxyMode);
-            setProxyMethod(method);
             ipcRenderer.sendMessage('wp-start');
             setIsLoading(true);
             setPing(0);
         }
-    }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode, method]);
+    }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
 
     useEffect(() => {
         //ipcRenderer.clean();
@@ -204,7 +201,6 @@ const useLanding = () => {
                     ip: ''
                 });
                 setProxyStatus(proxyMode);
-                setProxyMethod(method);
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
                 setPing(0);
@@ -386,9 +382,9 @@ const useLanding = () => {
     useEffect(() => {
         if (!ipInfo) return;
         if (typeof ipInfo?.countryCode != 'string') return;
-        if (proxyMethod === '' && ipInfo?.countryCode === 'ir') {
+        if (method === '' && ipInfo?.countryCode === 'ir') {
             ipToast();
-        } else if (proxyMethod === 'gool' && ipInfo?.countryCode === 'ir') {
+        } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
             ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
             setIsLoading(true);
             loadingToast(appLang.status.keep_trying);
@@ -401,7 +397,7 @@ const useLanding = () => {
         } else {
             toast.remove('ipChangedToIR');
         }
-    }, [proxyMethod, ipInfo, appLang.status.keep_trying]);
+    }, [method, ipInfo, appLang.status.keep_trying]);
 
     useEffect(() => {
         /*if (ipData) {
