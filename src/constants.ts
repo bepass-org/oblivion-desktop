@@ -66,6 +66,7 @@ export interface IConfig {
     tunSniff: boolean;
     plainDns: string;
     DoHDns: string;
+    tunEndpoint: string;
 }
 
 export interface IGeoConfig {
@@ -90,3 +91,16 @@ export interface IPlatformHelper {
     start(binPath: string): ICommand;
     running(processName: string): ICommand;
 }
+
+//Lists
+export const defaultWarpIPs = [
+    '162.159.192.0/24',
+    '162.159.193.0/24',
+    '162.159.195.0/24',
+    '188.114.96.0/24',
+    '188.114.97.0/24',
+    '188.114.98.0/24',
+    '188.114.99.0/24',
+    '2606:4700:d0::/64',
+    '2606:4700:d1::/64'
+];

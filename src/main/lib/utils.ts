@@ -190,3 +190,9 @@ export function extractPortsFromEndpoints(strData: string): number[] {
 
     return [];
 }
+
+export function formatEndpointForConfig(endpoint: string): string {
+    const ip = endpoint.replace(/:\d+$/, '').replace(/^\[/, '').replace(/\]$/, '');
+
+    return ip.includes(':') ? `${ip}/128` : `${ip}/32`;
+}

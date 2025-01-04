@@ -368,13 +368,14 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [port, dns, mtu, loglevel, stack, sniff] = await Promise.all([
+        const [port, dns, mtu, loglevel, stack, sniff, endpoint] = await Promise.all([
             settings.get('port'),
             settings.get('dns'),
             settings.get('singBoxMTU'),
             settings.get('singBoxLog'),
             settings.get('singBoxStack'),
-            settings.get('singBoxSniff')
+            settings.get('singBoxSniff'),
+            settings.get('endpoint')
         ]);
 
         return {
@@ -388,7 +389,8 @@ class SingBoxManager {
                 typeof dns === 'string'
                     ? (dohDnsServers.find((doh) => doh.key === dns)?.value ??
                       dohDnsServers[0].value)
-                    : dohDnsServers[0].value
+                    : dohDnsServers[0].value,
+            tunEndpoint: typeof endpoint === 'string' ? endpoint : defaultSettings.endpoint
         };
     }
 
