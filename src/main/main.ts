@@ -419,13 +419,11 @@ class OblivionDesktop {
         this.shutdownHandlersRegistered = true;
         try {
             if (process.platform === 'win32') {
-                app.on('session-end', () => {
+                app.on('quit', () => {
                     this.exitProcess();
                 });
-                ['SIGTERM', 'SIGINT', 'SIGHUP'].forEach((signal) => {
-                    process.on(signal, () => {
-                        this.exitProcess();
-                    });
+                process.on('SIGTERM', () => {
+                    this.exitProcess();
                 });
             } else {
                 powerMonitor.on('shutdown', async (event: Event) => {
