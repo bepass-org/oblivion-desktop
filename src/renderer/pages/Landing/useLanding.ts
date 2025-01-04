@@ -386,7 +386,7 @@ const useLanding = () => {
     useEffect(() => {
         if (!ipInfo) return;
         if (typeof ipInfo?.countryCode != 'string') return;
-        if (method === '' && ipInfo?.countryCode === 'ir') {
+        if (proxyMethod === '' && ipInfo?.countryCode === 'ir') {
             ipToast();
         } else if (proxyMethod === 'gool' && ipInfo?.countryCode === 'ir') {
             ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
@@ -401,7 +401,7 @@ const useLanding = () => {
         } else {
             toast.remove('ipChangedToIR');
         }
-    }, [method, ipInfo, appLang.status.keep_trying]);
+    }, [proxyMethod, ipInfo, appLang.status.keep_trying]);
 
     useEffect(() => {
         /*if (ipData) {
