@@ -377,7 +377,7 @@ class OblivionDesktop {
         });
     }
 
-    private handleShutdown() {
+    /*private handleShutdown() {
         if (this.state.mainWindow) {
             this.state.mainWindow.webContents.send('app-shutdown');
         }
@@ -390,7 +390,7 @@ class OblivionDesktop {
                 log.error('Error during shutdown:', error);
             }
         });
-    }
+    }*/
 
     private setupAppEvents(): void {
         app.on('second-instance', () => {
@@ -415,9 +415,10 @@ class OblivionDesktop {
 
         app.on('before-quit', (event) => {
             event.preventDefault();
+            this.exitProcess();
         });
 
-        if (process.platform !== 'win32') {
+        /*if (process.platform !== 'win32') {
             powerMonitor.on('shutdown', async (event: Event) => {
                 event.preventDefault();
                 this.handleShutdown();
@@ -426,7 +427,7 @@ class OblivionDesktop {
             app.on('session-end', async () => {
                 this.handleShutdown();
             });
-        }
+        }*/
 
         app.setAsDefaultProtocolClient('oblivion');
         app.on('open-url', (event: Event) => {
