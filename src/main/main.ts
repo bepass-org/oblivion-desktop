@@ -377,21 +377,6 @@ class OblivionDesktop {
         });
     }
 
-    /*private handleShutdown() {
-        if (this.state.mainWindow) {
-            this.state.mainWindow.webContents.send('app-shutdown');
-        }
-        return new Promise<void>(async (resolve, reject) => {
-            try {
-                this.exitProcess();
-                resolve();
-            } catch (error) {
-                reject(error);
-                log.error('Error during shutdown:', error);
-            }
-        });
-    }*/
-
     private setupAppEvents(): void {
         app.on('second-instance', () => {
             if (this.state.mainWindow) {
@@ -415,19 +400,22 @@ class OblivionDesktop {
 
         app.on('before-quit', (event) => {
             event.preventDefault();
-            this.exitProcess();
+            //this.exitProcess();
         });
 
-        /*if (process.platform !== 'win32') {
+        if (process.platform !== 'win32') {
             powerMonitor.on('shutdown', async (event: Event) => {
                 event.preventDefault();
-                this.handleShutdown();
+                this.exitProcess();
             });
         } else {
-            app.on('session-end', async () => {
-                this.handleShutdown();
+            app.on('session-end', () => {
+                this.exitProcess();
             });
-        }*/
+            process.on('SIGTERM', () => {
+                this.exitProcess();
+            });
+        }
 
         app.setAsDefaultProtocolClient('oblivion');
         app.on('open-url', (event: Event) => {
