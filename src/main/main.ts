@@ -86,6 +86,7 @@ class OblivionDesktop {
         await this.setupInitialConfiguration();
         this.setupIpcEvents();
         this.setupAppEvents();
+        this.handleShutdown();
     }
 
     private async setupInitialConfiguration(): Promise<void> {
@@ -403,20 +404,6 @@ class OblivionDesktop {
             //this.exitProcess();
         });
 
-        if (process.platform !== 'win32') {
-            powerMonitor.on('shutdown', async (event: Event) => {
-                event.preventDefault();
-                this.exitProcess();
-            });
-        } else {
-            app.on('session-end', () => {
-                this.exitProcess();
-            });
-            process.on('SIGTERM', () => {
-                this.exitProcess();
-            });
-        }
-
         app.setAsDefaultProtocolClient('oblivion');
         app.on('open-url', (event: Event) => {
             event.preventDefault();
@@ -424,6 +411,31 @@ class OblivionDesktop {
                 this.state.mainWindow.show();
             }
         });
+    }
+
+    private shutdownHandlersRegistered = false;
+    private handleShutdown(): void {
+        if (this.shutdownHandlersRegistered) return;
+        this.shutdownHandlersRegistered = true;
+        try {
+            if (process.platform === 'win32') {
+                app.on('session-end', () => {
+                    this.exitProcess();
+                });
+                ['SIGTERM', 'SIGINT', 'SIGHUP'].forEach((signal) => {
+                    process.on(signal, () => {
+                        this.exitProcess();
+                    });
+                });
+            } else {
+                powerMonitor.on('shutdown', async (event: Event) => {
+                    event.preventDefault();
+                    this.exitProcess();
+                });
+            }
+        } catch (error) {
+            log.error('Error setting up shutdown handlers:', error);
+        }
     }
 
     private async setupTray(): Promise<void> {
