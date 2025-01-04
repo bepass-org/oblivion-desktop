@@ -155,14 +155,20 @@ export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
     if (mainWindow) {
         mainWindow.hide();
     }
+
+    // Emit 'wp-end' and wait
     ipcMain.emit('wp-end', true);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    // Emit 'end-wp-and-exit-app' and wait
+    ipcMain.emit('end-wp-and-exit-app');
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
     ipcMain.on('exit', () => {
+        log.info('Exiting the application...');
         app.exit(0);
     });
-
-    ipcMain.emit('end-wp-and-exit-app');
 };
 
 export function extractPortsFromEndpoints(strData: string): number[] {
