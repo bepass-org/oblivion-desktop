@@ -32,8 +32,13 @@ import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './s
 
 // Types
 type GrpcMethod = 'Start' | 'Stop';
-interface GrpcResponse<T> { message: T; }
-interface GrpcError { message: string; code?: number; }
+interface GrpcResponse<T> {
+    message: T;
+}
+interface GrpcError {
+    message: string;
+    code?: number;
+}
 
 // Configuration
 const CONFIG = {
@@ -60,7 +65,7 @@ class SingBoxManager {
     private readonly platformHelper: IPlatformHelper;
 
     private readonly routingRuleParser: RoutingRuleParser;
-    
+
     private event?: IpcMainEvent;
 
     private appLang?: Language;
@@ -70,7 +75,7 @@ class SingBoxManager {
     private isListeningToHelper = false;
 
     private shouldBreakConnectionTest = false;
-    
+
     private responseStatus = '';
 
     constructor() {
@@ -87,11 +92,11 @@ class SingBoxManager {
         try {
             this.isSBRunning = true;
             this.appLang = appLang;
-            
+
             await this.setupConfigs();
-            if (!await this.ensureHelperIsRunning()) return false;
+            if (!(await this.ensureHelperIsRunning())) return false;
             await this.monitorHelperStatus();
-            
+
             return this.startService();
         } catch (error) {
             this.isSBRunning = false;
@@ -122,7 +127,7 @@ class SingBoxManager {
     }
 
     public async stopHelperOnStart(): Promise<void> {
-        if (!await this.isProcessRunning(helperFileName)) return;
+        if (!(await this.isProcessRunning(helperFileName))) return;
 
         log.info('Stopping Oblivion-Helper on startup...');
         this.helperClient.Exit({}, () => {});
@@ -132,7 +137,7 @@ class SingBoxManager {
 
     public async checkConnectionStatus(): Promise<boolean> {
         log.info('Waiting for connection...');
-        
+
         const checkAttempt = async (attempt: number): Promise<boolean> => {
             if (this.shouldBreakConnectionTest) return false;
 
@@ -140,8 +145,10 @@ class SingBoxManager {
             const timeoutId = setTimeout(() => controller.abort(), CONFIG.delays.connectionTimeout);
 
             try {
-                const response = await fetch(CONFIG.connection.testUrl, { signal: controller.signal });
-                
+                const response = await fetch(CONFIG.connection.testUrl, {
+                    signal: controller.signal
+                });
+
                 if (response.ok && !this.shouldBreakConnectionTest) {
                     await this.delay(CONFIG.delays.success);
                     log.info(`Connection established after ${attempt} attempts`);
@@ -232,11 +239,11 @@ class SingBoxManager {
             this.loadConfiguration(),
             this.loadGeoConfiguration()
         ]);
-        
+
         await this.setupGeoLists(geoConfig);
         const routingRules = await settings.get('routingRules');
         const rulesConfig = this.routingRuleParser.parse(routingRules);
-        
+
         createSbConfig(config, geoConfig, rulesConfig);
     }
 
@@ -279,7 +286,7 @@ class SingBoxManager {
 
     private getDoHDns(dns: any): string {
         if (typeof dns !== 'string') return dohDnsServers[0].value;
-        return dohDnsServers.find(doh => doh.key === dns)?.value ?? dohDnsServers[0].value;
+        return dohDnsServers.find((doh) => doh.key === dns)?.value ?? dohDnsServers[0].value;
     }
 
     private getSettingOrDefault<T>(value: any, defaultValue: T): T {
@@ -294,21 +301,15 @@ class SingBoxManager {
 
         if (geoConfig.geoIp !== 'none') addRuleSet(`geoip-${geoConfig.geoIp}.srs`);
         if (geoConfig.geoSite !== 'none') addRuleSet(`geosite-${geoConfig.geoSite}.srs`);
-        
+
         if (geoConfig.geoBlock) {
-            ['category-ads-all', 'malware', 'phishing', 'cryptominers'].forEach(type => 
+            ['category-ads-all', 'malware', 'phishing', 'cryptominers'].forEach((type) =>
                 addRuleSet(`geosite-${type}.srs`)
             );
-            ['malware', 'phishing'].forEach(type => 
-                addRuleSet(`geoip-${type}.srs`)
-            );
+            ['malware', 'phishing'].forEach((type) => addRuleSet(`geoip-${type}.srs`));
         }
 
-        fs.writeFileSync(
-            sbExportListPath, 
-            JSON.stringify({ interval: 7, urls }, null, 2), 
-            'utf-8'
-        );
+        fs.writeFileSync(sbExportListPath, JSON.stringify({ interval: 7, urls }, null, 2), 'utf-8');
         log.info(`ExportList config created at ${sbExportListPath}`);
     }
 
@@ -387,14 +388,14 @@ class SingBoxManager {
                     const failureType = method === 'Start' ? 'sb_start_failed' : 'sb_stop_failed';
                     this.replyEvent(failureType);
                     this.isSBRunning = method !== 'Start';
-                    
+
                     const errorMessage = `Helper Error: ${err.code} ${err.message}`;
                     log.error(errorMessage);
                     this.replyEvent(errorMessage);
                     reject(`Helper: ${err.message}`);
                     return;
                 }
-                
+
                 log.info(`Helper: ${response.message}`);
                 resolve(true);
             });
