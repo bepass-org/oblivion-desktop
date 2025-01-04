@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { BrowserWindow, app, ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import log from 'electron-log';
 import { defaultSettings } from '../../defaultSettings';
 
@@ -150,11 +150,8 @@ export function checkIpType(value: any, endpoint: any) {
     }
 }
 
-export const exitTheApp = async (mainWindow: BrowserWindow | null) => {
+export const exitTheApp = async () => {
     log.info('exiting the app...');
-    if (mainWindow) {
-        mainWindow.hide();
-    }
 
     // Emit 'wp-end' and wait
     ipcMain.emit('wp-end', true);

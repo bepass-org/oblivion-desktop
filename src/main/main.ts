@@ -297,13 +297,29 @@ class OblivionDesktop {
         });
     }
 
+    private async exitProcess() {
+        try {
+            this.state.connectionStatus = 'disconnected';
+            this.state.mainWindow?.hide();
+            this.state.appIcon?.destroy();
+            this.state.appIcon = null;
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await exitTheApp();
+            app.exit(0);
+            return;
+        } catch (error) {
+            log.error('Error while exiting the app:', error);
+            app.exit(1);
+            return;
+        }
+    }
+
     private async handleWindowClose(e: Event): Promise<void> {
         e.preventDefault();
         const forceClose = await settings.get('forceClose');
         if (typeof forceClose === 'boolean' && forceClose) {
             try {
-                await exitTheApp(this.state.mainWindow);
-                app.exit(0);
+                this.exitProcess();
             } catch (err) {
                 log.error('Error while exiting the app:', err);
             }
@@ -315,7 +331,7 @@ class OblivionDesktop {
     private registerQuitShortcut(): void {
         const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
         globalShortcut.register(shortcut, async () => {
-            await exitTheApp(this.state.mainWindow);
+            this.exitProcess();
         });
     }
 
@@ -367,9 +383,7 @@ class OblivionDesktop {
         }
         return new Promise<void>(async (resolve, reject) => {
             try {
-                if (this.state.mainWindow) {
-                    await exitTheApp(this.state.mainWindow);
-                }
+                this.exitProcess();
                 resolve();
             } catch (error) {
                 reject(error);
@@ -395,42 +409,22 @@ class OblivionDesktop {
                 this.createWindow().catch((err) => log.error('Create Window Error:', err));
         });
 
-        app.on('window-all-closed', async () => {
-            await exitTheApp(this.state.mainWindow);
+        app.on('window-all-closed', () => {
+            this.exitProcess();
         });
 
-        app.on('before-quit', async (event) => {
-            this.state.connectionStatus = 'disconnected';
-            if (process.platform === 'win32') {
-                event.preventDefault();
-                try {
-                    await exitTheApp(this.state.mainWindow);
-                    app.exit(0);
-                } catch (error) {
-                    log.error('Error while exiting the app:', error);
-                    app.exit(1);
-                }
-            }
+        app.on('before-quit', (event) => {
+            event.preventDefault();
         });
 
         if (process.platform !== 'win32') {
             powerMonitor.on('shutdown', async (event: Event) => {
                 event.preventDefault();
-                try {
-                    await this.handleShutdown();
-                    app.quit();
-                } catch {
-                    app.exit(1);
-                }
+                this.handleShutdown();
             });
         } else {
             app.on('session-end', async () => {
-                try {
-                    await this.handleShutdown();
-                    app.quit();
-                } catch {
-                    app.exit(1);
-                }
+                this.handleShutdown();
             });
         }
 
@@ -463,9 +457,13 @@ class OblivionDesktop {
 
     private updateTrayMenu(): void {
         if (!this.state.appIcon) return;
-
-        const template = this.createTrayMenuTemplate();
-        this.state.appIcon.setContextMenu(Menu.buildFromTemplate(template));
+        if (this.state.appIcon.isDestroyed()) return;
+        try {
+            const template = this.createTrayMenuTemplate();
+            this.state.appIcon.setContextMenu(Menu.buildFromTemplate(template));
+        } catch (err) {
+            console.error('Error updating tray menu:', err);
+        }
     }
 
     private createTrayMenuTemplate(): MenuItemConstructorOptions[] {
@@ -554,8 +552,8 @@ class OblivionDesktop {
             { label: '', type: 'separator' },
             {
                 label: this.state.appLang.systemTray.exit,
-                click: async () => {
-                    await exitTheApp(this.state.mainWindow);
+                click: () => {
+                    this.exitProcess();
                 }
             }
         ];
