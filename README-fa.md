@@ -236,7 +236,7 @@ Cloudflare Warp فراهم می‌کند.
 - [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (یوسف قبادی و مارک پشم‌فروش)
 - [Oblivion](https://github.com/bepass-org/oblivion)
-- [Oblivion Helper](https://github.com/ShadowZagrosDev/oblivion-helper)
+- [Oblivion Helper](https://github.com/ShadowZagrosDev/oblivion-helper) (GPLv3)
 - [Electron](https://www.electronjs.org/)
 - [React](https://github.com/facebook/react)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
