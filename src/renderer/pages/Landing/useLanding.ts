@@ -47,7 +47,9 @@ const useLanding = () => {
         statusText,
         setStatusText,
         proxyStatus,
-        setProxyStatus
+        setProxyStatus,
+        proxyMethod,
+        setProxyMethod
     } = useStore();
     const [ipInfo, setIpInfo] = useState<IpConfig>({
         countryCode: false,
@@ -101,6 +103,7 @@ const useLanding = () => {
                 ip: ''
             });
             setProxyStatus(proxyMode);
+            setProxyMethod(method);
             ipcRenderer.sendMessage('wp-start');
             setIsLoading(true);
             setPing(0);
@@ -201,6 +204,7 @@ const useLanding = () => {
                     ip: ''
                 });
                 setProxyStatus(proxyMode);
+                setProxyMethod(method);
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
                 setPing(0);
@@ -384,7 +388,7 @@ const useLanding = () => {
         if (typeof ipInfo?.countryCode != 'string') return;
         if (method === '' && ipInfo?.countryCode === 'ir') {
             ipToast();
-        } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
+        } else if (proxyMethod === 'gool' && ipInfo?.countryCode === 'ir') {
             ipcRenderer.sendMessage('wp-end', 'stop-from-gool');
             setIsLoading(true);
             loadingToast(appLang.status.keep_trying);
