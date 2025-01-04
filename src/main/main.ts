@@ -459,7 +459,7 @@ class OblivionDesktop {
             const template = this.createTrayMenuTemplate();
             this.state.appIcon.setContextMenu(Menu.buildFromTemplate(template));
         } catch (err) {
-            console.error('Error updating tray menu:', err);
+            log.error('Error updating tray menu:', err);
         }
     }
 
