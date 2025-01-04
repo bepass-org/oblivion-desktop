@@ -361,6 +361,23 @@ class OblivionDesktop {
         });
     }
 
+    private handleShutdown() {
+        if (this.state.mainWindow) {
+            this.state.mainWindow.webContents.send('app-shutdown');
+        }
+        return new Promise<void>(async (resolve, reject) => {
+            try {
+                if (this.state.mainWindow) {
+                    await exitTheApp(this.state.mainWindow);
+                }
+                resolve();
+            } catch (error) {
+                reject(error);
+                log.error('Error during shutdown:', error);
+            }
+        });
+    }
+
     private setupAppEvents(): void {
         app.on('second-instance', () => {
             if (this.state.mainWindow) {
@@ -400,19 +417,19 @@ class OblivionDesktop {
             powerMonitor.on('shutdown', async (event: Event) => {
                 event.preventDefault();
                 try {
-                    await exitTheApp(this.state.mainWindow);
+                    await this.handleShutdown();
                     app.quit();
                 } catch {
-                    app.quit();
+                    app.exit(1);
                 }
             });
         } else {
             app.on('session-end', async () => {
                 try {
-                    await exitTheApp(this.state.mainWindow);
+                    await this.handleShutdown();
                     app.quit();
                 } catch {
-                    app.quit();
+                    app.exit(1);
                 }
             });
         }
