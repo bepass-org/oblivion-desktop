@@ -34,20 +34,30 @@ const useOptions = () => {
 
     const getLocalIP = async () => {
         const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
-        const pc = new RTCPeerConnection({
-            iceServers: []
-        });
-        pc.createDataChannel('');
-        pc.createOffer().then((offer) => pc.setLocalDescription(offer));
-        pc.onicecandidate = (ice) => {
-            if (ice && ice.candidate && ice.candidate.candidate) {
-                const ipMatch = ipRegex.exec(ice.candidate.candidate);
-                if (ipMatch) {
-                    setLocalIp(ipMatch[0]);
-                    pc.onicecandidate = null;
+        return new Promise((resolve, reject) => {
+            const pc = new RTCPeerConnection({
+                iceServers: []
+            });
+            pc.createDataChannel('');
+            pc.onicecandidate = (iceEvent) => {
+                if (iceEvent.candidate && iceEvent.candidate.candidate) {
+                    const candidate = iceEvent.candidate.candidate;
+                    if (candidate.includes('udp')) {
+                        const ipMatch = ipRegex.exec(iceEvent.candidate.candidate);
+                        if (ipMatch) {
+                            resolve(ipMatch[0]);
+                            pc.close();
+                        }
+                    }
                 }
-            }
-        };
+            };
+            pc.createOffer()
+                .then((offer) => pc.setLocalDescription(offer))
+                .catch((err) => {
+                    reject(`Error creating offer: ${err.message}`);
+                    pc.close();
+                });
+        });
     };
 
     useEffect(() => {
@@ -104,7 +114,12 @@ const useOptions = () => {
             }
         });
 
-        getLocalIP();
+        getLocalIP()
+            .then((ip: any) => {
+                setLocalIp(ip);
+                //console.log(ip);
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     /*useEffect(() => {
