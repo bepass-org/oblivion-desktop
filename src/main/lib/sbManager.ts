@@ -194,6 +194,11 @@ class SingBoxManager {
 
     private async startHelper(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
+            if (!fs.existsSync(helperPath)) {
+                reject(`${this.appLang?.log.error_helper_not_found}`);
+                return;
+            }
+
             log.info('Starting Oblivion-Helper...');
 
             const command = this.platformHelper.start(helperPath);

@@ -173,7 +173,7 @@ const useLanding = () => {
             if (message === 'error_port_restart') {
                 loadingToast(appLang.log.error_port_restart);
             } else if (message === 'sb_preparing') {
-                loadingToast('Preparing ruleset...');
+                loadingToast(appLang.status.preparing_rulesets);
                 setTimeout(function () {
                     stopLoadingToast();
                 }, 3000);
@@ -182,7 +182,11 @@ const useLanding = () => {
                 setIsConnected(false);
                 stopLoadingToast();
                 setTimeout(function () {
-                    defaultToast('Downloading ruleset failed.', 'DOWNLOAD_FAILED', 3000);
+                    defaultToast(
+                        appLang.status.downloading_rulesets_failed,
+                        'DOWNLOAD_FAILED',
+                        3000
+                    );
                 }, 2000);
             } else if (message === 'sb_start_failed') {
                 stopLoadingToast();
