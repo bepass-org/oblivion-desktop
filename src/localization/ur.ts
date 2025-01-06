@@ -9,7 +9,9 @@ const urdu: Language = {
         disconnecting: 'ڈسکنیکٹ ہو رہا ہے...',
         disconnected: 'ڈسکنیکٹڈ',
         ip_check: 'آئی پی چیک ہو رہا ہے...',
-        keep_trying: 'براہ کرم دوبارہ کوشش کے لیے چند لمحے انتظار کریں...'
+        keep_trying: 'براہ کرم دوبارہ کوشش کے لیے چند لمحے انتظار کریں...',
+        preparing_rulesets: 'قواعد کا سیٹ تیار کیا جا رہا ہے...',
+        downloading_rulesets_failed: 'قواعد کا سیٹ ڈاؤن لوڈ کرنے میں ناکام.'
     },
     home: {
         title_warp_based: 'وارپ بیسڈ',
@@ -199,7 +201,8 @@ const urdu: Language = {
         error_singbox_failed_start: 'سنگ باکس کو شروع کرنے میں ناکامی!',
         error_wp_reset_peer: 'کلاؤڈفلئیر سے کنیکشن غیر متوقع طور پر منقطع ہو گیا!',
         error_failed_connection: 'کنکشن قائم کرنے میں ناکامی!',
-        error_canceled_by_user: 'عملیہ صارف کے ذریعہ منسوخ کر دیا گیا۔'
+        error_canceled_by_user: 'عملیہ صارف کے ذریعہ منسوخ کر دیا گیا۔',
+        error_helper_not_found: 'مددگار فائل ایپلیکیشن پیکیج کے ساتھ موجود نہیں!'
     },
     about: {
         title: 'ایپ کے بارے میں',

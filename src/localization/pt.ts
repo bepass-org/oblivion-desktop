@@ -9,7 +9,9 @@ const brazilianPortuguese: Language = {
         disconnecting: 'Desconectando ...',
         disconnected: 'Desconectado',
         ip_check: 'Verificando IP ...',
-        keep_trying: 'Por favor, espere um momento para tentar novamente...'
+        keep_trying: 'Por favor, espere um momento para tentar novamente...',
+        preparing_rulesets: 'Preparando conjuntos de regras...',
+        downloading_rulesets_failed: 'Falha ao baixar os conjuntos de regras.'
     },
     home: {
         title_warp_based: 'Baseado em Warp',
@@ -199,7 +201,9 @@ const brazilianPortuguese: Language = {
         error_singbox_failed_start: 'Falha ao iniciar a Caixa de Canto!',
         error_wp_reset_peer: 'A conexão com Cloudflare foi interrompida inesperadamente!',
         error_failed_connection: 'Falha ao estabelecer conexão!',
-        error_canceled_by_user: 'A operação foi cancelada pelo usuário.'
+        error_canceled_by_user: 'A operação foi cancelada pelo usuário.',
+        error_helper_not_found:
+            'O arquivo auxiliar não foi encontrado junto ao pacote do aplicativo!'
     },
     about: {
         title: 'Sobre o Aplicativo',

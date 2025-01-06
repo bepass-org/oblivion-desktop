@@ -9,7 +9,9 @@ const spanish: Language = {
         disconnecting: 'Desconectando ...',
         disconnected: 'Desconectado',
         ip_check: 'Comprobando IP ...',
-        keep_trying: 'Por favor espera un momento para intentar nuevamente...'
+        keep_trying: 'Por favor espera un momento para intentar nuevamente...',
+        preparing_rulesets: 'Preparando conjuntos de reglas...',
+        downloading_rulesets_failed: 'Error al descargar los conjuntos de reglas.'
     },
     home: {
         title_warp_based: 'Basado en Warp',
@@ -201,7 +203,9 @@ const spanish: Language = {
         error_singbox_failed_start: '¡No se pudo iniciar Sing-Box!',
         error_wp_reset_peer: '¡La conexión con Cloudflare se interrumpió inesperadamente!',
         error_failed_connection: '¡No se pudo establecer la conexión!',
-        error_canceled_by_user: 'La operación fue cancelada por el usuario.'
+        error_canceled_by_user: 'La operación fue cancelada por el usuario.',
+        error_helper_not_found:
+            '¡El archivo auxiliar no se encuentra junto al paquete de la aplicación!'
     },
     about: {
         title: 'Acerca de la Aplicación',

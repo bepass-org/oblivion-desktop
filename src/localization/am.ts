@@ -9,7 +9,9 @@ const amharic: Language = {
         disconnecting: 'እንደምንም ስም በማስተካከል ...',
         disconnected: 'ተለይተዋል',
         ip_check: 'IP ተመልከት ...',
-        keep_trying: 'እባኮትን አንደኛ ጊዜ ሞክሩ!'
+        keep_trying: 'እባኮትን አንደኛ ጊዜ ሞክሩ!',
+        preparing_rulesets: 'እየተዘጋጀ ነው የህጎች ዝርዝር...',
+        downloading_rulesets_failed: 'የህጎች ዝርዝር መካወት አልተሳካም።'
     },
     home: {
         title_warp_based: 'Warp በመሠረት',
@@ -190,7 +192,8 @@ const amharic: Language = {
         error_singbox_failed_start: 'Sing-Box እንደገና መጀመር አልቻልኩም።',
         error_wp_reset_peer: 'ከCloudflare ጋር መገናኘት አቋረጠ።',
         error_failed_connection: 'ግንኙነት አልተቋረጠም።',
-        error_canceled_by_user: 'እንዲሁ ተለዋዋጭ በተጠቃሚ ተሰርዟል።'
+        error_canceled_by_user: 'እንዲሁ ተለዋዋጭ በተጠቃሚ ተሰርዟል።',
+        error_helper_not_found: 'የረዳት ፋይል ከመተግበሪያ ጥቅል ጋር አልተገኘም!'
     },
     about: {
         title: 'ስለ አፕ',
