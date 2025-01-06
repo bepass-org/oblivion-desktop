@@ -115,7 +115,7 @@ export default function Options() {
                                 id='lan-selector'
                                 items={networkList}
                                 onChange={onChangeLanMode}
-                                value={hostIp}
+                                value={hostIp ? hostIp : networkList[0]?.value}
                                 label={appLang?.settings?.share_vpn}
                                 disabled={proxyMode === 'tun'}
                                 tabIndex={0}
