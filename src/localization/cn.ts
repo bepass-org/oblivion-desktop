@@ -65,7 +65,7 @@ const chinese: Language = {
         proxy_mode_desc: '选择代理模式',
         port: '代理端口',
         port_desc: '定义应用的代理端口',
-        share_vpn: '允许局域网连接',
+        share_vpn: '绑定地址',
         share_vpn_desc: '在局域网上共享代理',
         dns: 'DNS',
         dns_desc: '屏蔽广告和成人内容',

@@ -32,8 +32,6 @@ export default function Options() {
         setRoutingRules,
         handleCheckIpDataOnClick,
         handleCheckIpDataOnKeyDown,
-        handleShareVPNOnClick,
-        handleShareVPNOnKeyDown,
         handleDataUsageOnClick,
         ipData,
         onChangeProxyMode,
@@ -48,19 +46,20 @@ export default function Options() {
         port,
         proxyMode,
         routingRules,
-        shareVPN,
         showPortModal,
         showRoutingRulesModal,
         appLang,
         dataUsage,
-        methodIsPsiphon
+        methodIsPsiphon,
+        hostIp,
+        networkList,
+        onChangeLanMode
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
         //typeof autoSetProxy === 'undefined' ||
         typeof proxyMode === 'undefined' ||
-        typeof shareVPN === 'undefined' ||
         typeof dns === 'undefined' ||
         typeof routingRules === 'undefined' ||
         typeof dataUsage === 'undefined'
@@ -106,6 +105,22 @@ export default function Options() {
                                 tabIndex={0}
                             />
                             <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
+                        </div>
+                        <div
+                            role='button'
+                            className={classNames('item', proxyMode === 'tun' ? 'disabled' : '')}
+                            tabIndex={0}
+                        >
+                            <Dropdown
+                                id='lan-selector'
+                                items={networkList}
+                                onChange={onChangeLanMode}
+                                value={hostIp}
+                                label={appLang?.settings?.share_vpn}
+                                disabled={proxyMode === 'tun'}
+                                tabIndex={0}
+                            />
+                            <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                         </div>
                         <div
                             role='button'
@@ -172,30 +187,12 @@ export default function Options() {
                         </div>
                         <div
                             role='button'
-                            className={classNames('item', proxyMode === 'tun' ? 'disabled' : '')}
-                            onClick={handleShareVPNOnClick}
-                            onKeyDown={
-                                // TODO: The code needs refactoring
-                                handleShareVPNOnKeyDown
-                            }
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='share-vpn'>
-                                {appLang?.settings?.share_vpn}
-                            </label>
-                            <div className='value' id='share-vpn'>
-                                <div
-                                    tabIndex={-1}
-                                    className={classNames('checkbox', shareVPN ? 'checked' : '')}
-                                >
-                                    <i className='material-icons'>&#xe876;</i>
-                                </div>
-                            </div>
-                            <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
-                        </div>
-                        <div
-                            role='button'
-                            className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
+                            className={classNames(
+                                'item',
+                                proxyMode === 'none' || networkList[1]?.value === hostIp
+                                    ? 'disabled'
+                                    : ''
+                            )}
                             onClick={handleCheckIpDataOnClick}
                             onKeyDown={
                                 // TODO: The code needs refactoring

@@ -67,7 +67,7 @@ const spanish: Language = {
         proxy_mode_desc: 'Definir configuraciones de proxy',
         port: 'Puerto de Proxy',
         port_desc: 'Definir el puerto del proxy de la aplicación',
-        share_vpn: 'Compartir (LAN)',
+        share_vpn: 'Dirección de enlace',
         share_vpn_desc: 'Compartir un proxy en la red',
         dns: 'DNS',
         dns_desc: 'Bloquear anuncios y contenido para adultos',

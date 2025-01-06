@@ -66,7 +66,7 @@ const brazilianPortuguese: Language = {
         proxy_mode_desc: 'Definir Configurações de Proxy',
         port: 'Porta do Proxy',
         port_desc: 'Definir a porta proxy do aplicativo',
-        share_vpn: 'Compartilhar (LAN)',
+        share_vpn: 'Endereço de ligação',
         share_vpn_desc: 'Compartilhar um proxy na rede',
         dns: 'DNS',
         dns_desc: 'Bloquear anúncios & conteúdo adulto',

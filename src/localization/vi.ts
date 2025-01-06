@@ -66,7 +66,7 @@ const vietnamese: Language = {
         proxy_mode_desc: 'Định nghĩa cài đặt Proxy',
         port: 'Cổng Proxy',
         port_desc: 'Định nghĩa cổng proxy của ứng dụng',
-        share_vpn: 'Chia sẻ (LAN)',
+        share_vpn: 'Địa chỉ liên kết',
         share_vpn_desc: 'Chia sẻ proxy qua mạng',
         dns: 'DNS',
         dns_desc: 'Chặn quảng cáo & nội dung người lớn',

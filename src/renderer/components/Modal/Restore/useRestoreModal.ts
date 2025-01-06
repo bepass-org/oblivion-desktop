@@ -104,7 +104,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('ipData', defaultSettings.ipData);
         await settings.set('port', defaultSettings.port);
         await settings.set('proxyMode', defaultSettings.proxyMode);
-        await settings.set('shareVPN', defaultSettings.shareVPN);
+        //await settings.set('shareVPN', defaultSettings.shareVPN);
         await settings.set('routingRules', defaultSettings.routingRules);
         await settings.set('reserved', defaultSettings.reserved);
         await settings.set('scanResult', defaultSettings.scanResult);

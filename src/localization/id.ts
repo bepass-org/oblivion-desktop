@@ -67,7 +67,7 @@ const indonesia: Language = {
         proxy_mode_desc: 'Menentukan Pengaturan Proxy',
         port: 'Port Proxy',
         port_desc: 'Tentukan port proxy aplikasi',
-        share_vpn: 'Berbagi (LAN)',
+        share_vpn: 'Alamat ikat',
         share_vpn_desc: 'Bagikan proxy di jaringan',
         dns: 'DNS',
         dns_desc: 'Blokir iklan & konten dewasa',

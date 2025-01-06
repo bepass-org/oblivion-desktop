@@ -67,7 +67,7 @@ const turkish: Language = {
         proxy_mode_desc: 'Proxy Ayarlarını Tanımla',
         port: 'Proxy Portu',
         port_desc: 'Uygulama proxy portunu tanımlayın',
-        share_vpn: 'Paylaş (LAN)',
+        share_vpn: 'Bağlama adresi',
         share_vpn_desc: 'Ağda proxy paylaşımı',
         dns: 'DNS',
         dns_desc: 'Reklamları ve yetişkin içeriklerini engelle',

@@ -65,7 +65,7 @@ const myanmar: Language = {
         proxy_mode_desc: 'Proxy ဆက်တင်များကိုသတ်မှတ်ပါ',
         port: 'Proxy Port',
         port_desc: 'အက်ပလီကေးရှင်း proxy port ကိုသတ်မှတ်ပါ',
-        share_vpn: 'လမ်းကြောင်းမျှဝေ (LAN)',
+        share_vpn: 'ဖမ်းဆုပ်သောလိပ်စာ',
         share_vpn_desc: 'ကွန်ယက်တွင် proxy ကိုမျှဝေပါ',
         dns: 'DNS',
         dns_desc: 'ကြော်ငြာများနှင့် ပြင်းပြသောအကြောင်းအရာများကို ပိတ်လိုက်ပါ',

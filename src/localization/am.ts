@@ -65,7 +65,7 @@ const amharic: Language = {
         proxy_mode_desc: 'እንዲሰሩ ፕሮክሲ ቅንብሮች ተይዙ',
         port: 'ፕሮክሲ ፖርት',
         port_desc: 'ስምምነት ፕሮክሲ ፖርት ተይዙ',
-        share_vpn: 'እንዲጋሩ (LAN)',
+        share_vpn: 'አድራሻ መያዣ',
         share_vpn_desc: 'በኔትወርክ ፕሮክሲን እንዲጋሩ',
         dns: 'DNS',
         dns_desc: 'በፕሮክሲ ፍርምን አስተካክሉ',

@@ -19,7 +19,6 @@ const useOptions = () => {
     // TODO rename to networkConfiguration
     const [proxyMode, setProxyMode] = useState<string>('');
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
-    const [shareVPN, setShareVPN] = useState<undefined | boolean>();
     const [port, setPort] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const appLang = useTranslate();
@@ -29,10 +28,16 @@ const useOptions = () => {
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
     const [method, setMethod] = useState<undefined | string>('');
     const [dataUsage, setDataUsage] = useState<boolean>();
-    const [localIp, setLocalIp] = useState('0.0.0.0');
+    const [networkList, setNetworkList] = useState<{ value: string; label: string }[]>([
+        { value: '127.0.0.1', label: '127.0.0.1' },
+        { value: '0.0.0.0', label: '0.0.0.0' }
+    ]);
+    const [hostIp, setHostIp] = useState<undefined | string>('');
+
     const navigate = useNavigate();
 
     const getLocalIP = async () => {
+        if (networkList.length > 2) return false;
         const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
         return new Promise((resolve, reject) => {
             const pc = new RTCPeerConnection({
@@ -66,28 +71,31 @@ const useOptions = () => {
                 'ipData',
                 'port',
                 'proxyMode',
-                'shareVPN',
                 'dns',
                 'routingRules',
                 'lang',
                 'method',
-                'dataUsage'
+                'dataUsage',
+                'hostIP'
             ])
             .then((values) => {
+                setPort(typeof values.port === 'undefined' ? defaultSettings.port : values.port);
+                const checkProxy =
+                    typeof values.proxyMode === 'undefined'
+                        ? defaultSettings.proxyMode
+                        : values.proxyMode;
+                setProxyMode(checkProxy);
                 setIpData(
                     typeof values.ipData === 'undefined' ? defaultSettings.ipData : values.ipData
                 );
-                setPort(typeof values.port === 'undefined' ? defaultSettings.port : values.port);
-                setProxyMode(
-                    typeof values.proxyMode === 'undefined'
-                        ? defaultSettings.proxyMode
-                        : values.proxyMode
+                setDataUsage(
+                    typeof values.dataUsage === 'undefined'
+                        ? defaultSettings.dataUsage
+                        : values.dataUsage
                 );
-                setShareVPN(
-                    typeof values.shareVPN === 'undefined'
-                        ? defaultSettings.shareVPN
-                        : values.shareVPN
-                );
+                const checkHostIp =
+                    typeof values.hostIP === 'undefined' ? defaultSettings.hostIP : values.hostIP;
+                setHostIp(checkHostIp);
                 setDns(typeof values.dns === 'undefined' ? dnsServers[0].value : values.dns);
                 setRoutingRules(
                     typeof values.routingRules === 'undefined'
@@ -98,11 +106,12 @@ const useOptions = () => {
                 setMethod(
                     typeof values.method === 'undefined' ? defaultSettings.method : values.method
                 );
-                setDataUsage(
-                    typeof values.dataUsage === 'undefined'
-                        ? defaultSettings.dataUsage
-                        : values.dataUsage
-                );
+                if (checkHostIp === networkList[1]?.value || checkProxy === 'none') {
+                    setIpData(false);
+                    settings.set('ipData', false);
+                    setDataUsage(false);
+                    settings.set('dataUsage', false);
+                }
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);
@@ -116,8 +125,15 @@ const useOptions = () => {
 
         getLocalIP()
             .then((ip: any) => {
-                setLocalIp(ip);
-                //console.log(ip);
+                if (ip && ip !== '') {
+                    const exists = networkList.some((network) => network.value === ip);
+                    if (!exists) {
+                        setNetworkList((prev) => [
+                            ...prev,
+                            { value: ip, label: ip, key: `network-${ip}` }
+                        ]);
+                    }
+                }
             })
             .catch((err) => console.log(err));
     }, []);
@@ -165,7 +181,7 @@ const useOptions = () => {
                     setDataUsage(false);
                     settings.set('dataUsage', false);
                 } else if (event.target.value === 'tun') {
-                    setShareVPN(false);
+                    setHostIp(networkList[0].value);
                     /*if (method === 'psiphon') {
                         settings.set('method', 'gool');
                         setMethod('gool');
@@ -213,32 +229,32 @@ const useOptions = () => {
         [onClickRoutingRoles]
     );
 
-    const handleShareVPNOnClick = useCallback(() => {
-        if (proxyMode !== 'tun') {
-            setShareVPN(!shareVPN);
-            settings.set('shareVPN', !shareVPN);
+    const onChangeLanMode = useCallback(
+        (event: ChangeEvent<HTMLSelectElement>) => {
+            setHostIp(event.target.value);
+            settings.set('hostIP', event.target.value);
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
             setTimeout(function () {
-                settings.set('hostIP', !shareVPN ? localIp : '127.0.0.1');
+                if (event.target.value === networkList[1]?.value) {
+                    setIpData(false);
+                    setDataUsage(false);
+                    settings.set('ipData', false);
+                    settings.set('dataUsage', false);
+                }
             }, 1000);
-        }
-    }, [isConnected, isLoading, shareVPN, appLang, localIp, proxyMode]);
-
-    const handleShareVPNOnKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleShareVPNOnClick();
-            }
         },
-        [handleShareVPNOnClick]
+        [isConnected, isLoading, appLang, ipData, hostIp]
     );
 
     const handleCheckIpDataOnClick = useCallback(() => {
-        if (proxyMode !== 'none') {
-            setIpData(!ipData);
-            settings.set('ipData', !ipData);
+        if (proxyMode === 'none') {
+            return;
         }
+        if (hostIp === networkList[1]?.value) {
+            return;
+        }
+        setIpData(!ipData);
+        settings.set('ipData', !ipData);
         setTimeout(function () {
             if (ipData) {
                 setDataUsage(false);
@@ -246,7 +262,7 @@ const useOptions = () => {
                 ipcRenderer.sendMessage('net-stats', false);
             }
         }, 1000);
-    }, [ipData, proxyMode]);
+    }, [ipData, proxyMode, hostIp]);
 
     const handleCheckIpDataOnKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -280,7 +296,6 @@ const useOptions = () => {
 
     return {
         proxyMode,
-        shareVPN,
         port,
         showPortModal,
         ipData,
@@ -301,12 +316,13 @@ const useOptions = () => {
         onKeyDownClickPort,
         onClickRoutingRoles,
         onKeyDownRoutingRoles,
-        handleShareVPNOnClick,
-        handleShareVPNOnKeyDown,
         handleCheckIpDataOnClick,
         handleCheckIpDataOnKeyDown,
         handleDataUsageOnClick,
-        handleDataUsageOnKeyDown
+        handleDataUsageOnKeyDown,
+        hostIp,
+        networkList,
+        onChangeLanMode
     };
 };
 export default useOptions;

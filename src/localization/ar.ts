@@ -65,7 +65,7 @@ const arabic: Language = {
         proxy_mode_desc: 'تعريف إعدادات البروكسي',
         port: 'منفذ البروكسي',
         port_desc: 'تعريف منفذ بروكسي التطبيق',
-        share_vpn: 'مشاركة (LAN)',
+        share_vpn: 'عنوان الربط',
         share_vpn_desc: 'مشاركة بروكسي عبر الشبكة',
         dns: 'DNS',
         dns_desc: 'حظر الإعلانات والمحتوى للبالغين',

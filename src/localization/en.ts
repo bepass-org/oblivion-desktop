@@ -66,7 +66,7 @@ const english: Language = {
         proxy_mode_desc: 'Defining Proxy Settings',
         port: 'Proxy Port',
         port_desc: 'Define application proxy port',
-        share_vpn: 'Share (LAN)',
+        share_vpn: 'Bind Address',
         share_vpn_desc: 'Share a proxy on the network',
         dns: 'DNS',
         dns_desc: 'Block ads & adult content',
