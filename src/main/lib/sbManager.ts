@@ -29,7 +29,7 @@ import {
     IPlatformHelper
 } from '../../constants';
 import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './sbHelper';
-import { mapErrorCodeToLabel } from './utils';
+import { mapGrpcErrorCodeToLabel } from './utils';
 
 // Types
 type GrpcMethod = 'Start' | 'Stop';
@@ -397,7 +397,7 @@ class SingBoxManager {
 
                     //const errorMessage = `Helper Error: ${err.code} ${err.message}`;
                     const messagePart = err.message.substring(err.message.indexOf(':') + 1).trim();
-                    const errorCodeLabel = mapErrorCodeToLabel(err.code);
+                    const errorCodeLabel = mapGrpcErrorCodeToLabel(err.code);
                     const errorMessage = `Helper Error: [${errorCodeLabel}] ${messagePart}`;
                     log.error(errorMessage);
                     this.replyEvent(errorMessage);

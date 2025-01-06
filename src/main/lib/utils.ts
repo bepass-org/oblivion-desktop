@@ -200,7 +200,7 @@ export function formatEndpointForConfig(endpoint: string): string {
     return ip.includes(':') ? `${ip}/128` : `${ip}/32`;
 }
 
-export function mapErrorCodeToLabel(code: number | undefined): string {
+export function mapGrpcErrorCodeToLabel(code: number | undefined): string {
     if (code === undefined) {
         return 'Unknown Error';
     }
