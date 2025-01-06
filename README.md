@@ -230,7 +230,6 @@ provided by the following friends:
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [regedit](https://www.npmjs.com/package/regedit)
-- [sing-box](https://github.com/SagerNet/sing-box)
 - [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
