@@ -9,7 +9,9 @@ const arabic: Language = {
         disconnecting: 'جارٍ قطع الاتصال ...',
         disconnected: 'تم قطع الاتصال',
         ip_check: 'جارٍ فحص الـ IP ...',
-        keep_trying: 'يرجى الانتظار قليلاً لإعادة المحاولة...'
+        keep_trying: 'يرجى الانتظار قليلاً لإعادة المحاولة...',
+        preparing_rulesets: 'جارٍ إعداد مجموعات القواعد...',
+        downloading_rulesets_failed: 'فشل تنزيل مجموعات القواعد.'
     },
     home: {
         title_warp_based: 'مبني على Warp',
@@ -195,7 +197,8 @@ const arabic: Language = {
         error_singbox_failed_start: 'فشل في بدء تشغيل صندوق الغناء!',
         error_wp_reset_peer: 'تم قطع الاتصال بـ Cloudflare بشكل غير متوقع!',
         error_failed_connection: 'فشل في إنشاء الاتصال!',
-        error_canceled_by_user: 'تم إلغاء العملية من قبل المستخدم.'
+        error_canceled_by_user: 'تم إلغاء العملية من قبل المستخدم.',
+        error_helper_not_found: 'لم يتم العثور على ملف المساعد بجانب حزمة التطبيق!'
     },
     about: {
         title: 'حول التطبيق',

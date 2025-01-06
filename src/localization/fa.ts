@@ -9,7 +9,9 @@ const persian: Language = {
         disconnecting: 'قطع ارتباط ...',
         disconnected: 'متصل نیستید',
         ip_check: 'دریافت اطلاعات ...',
-        keep_trying: 'جهت تکرار تلاش، کمی صبر کنید ...'
+        keep_trying: 'جهت تکرار تلاش، کمی صبر کنید ...',
+        preparing_rulesets: 'درحال آماده‌سازی مجموعه قوانین...',
+        downloading_rulesets_failed: 'دانلود مجموعه قوانین با شکست مواجه شد.'
     },
     home: {
         title_warp_based: 'بر پایه وارپ',
@@ -198,7 +200,8 @@ const persian: Language = {
         error_singbox_failed_start: 'فعال‌کردن سینگ‌باکس با خطا مواجه شد!',
         error_wp_reset_peer: 'اتصال به کلودفلر به‌طور غیرمنتظره قطع شد!',
         error_failed_connection: 'اتصال موفقیت‌آمیز نبود!',
-        error_canceled_by_user: 'عملیات توسط کاربر لغو شد.'
+        error_canceled_by_user: 'عملیات توسط کاربر لغو شد.',
+        error_helper_not_found: 'فایل هلپر در کنار بسته برنامه یافت نشد!'
     },
     about: {
         title: 'درباره برنامه',

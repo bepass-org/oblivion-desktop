@@ -9,7 +9,9 @@ const vietnamese: Language = {
         disconnecting: 'Đang ngắt kết nối ...',
         disconnected: 'Đã ngắt kết nối',
         ip_check: 'Đang kiểm tra IP ...',
-        keep_trying: 'Vui lòng đợi một chút để thử lại...'
+        keep_trying: 'Vui lòng đợi một chút để thử lại...',
+        preparing_rulesets: 'Đang chuẩn bị các bộ quy tắc...',
+        downloading_rulesets_failed: 'Tải xuống các bộ quy tắc không thành công.'
     },
     home: {
         title_warp_based: 'Dựa trên Warp',
@@ -198,7 +200,8 @@ const vietnamese: Language = {
         error_singbox_failed_start: 'Không thể khởi động Hộp hát!',
         error_wp_reset_peer: 'Kết nối đến Cloudflare bị gián đoạn đột ngột!',
         error_failed_connection: 'Không thể thiết lập kết nối!',
-        error_canceled_by_user: 'Hoạt động đã bị hủy bởi người dùng.'
+        error_canceled_by_user: 'Hoạt động đã bị hủy bởi người dùng.',
+        error_helper_not_found: 'Tệp trợ giúp không được tìm thấy bên cạnh gói ứng dụng!'
     },
     about: {
         title: 'Giới thiệu về ứng dụng',

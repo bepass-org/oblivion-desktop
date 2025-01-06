@@ -31,21 +31,16 @@ import { getOsInfo, logMetadata } from './ipcListeners/log';
 import { customEvent } from './lib/customEvent';
 import { getTranslate } from '../localization';
 import { defaultSettings } from '../defaultSettings';
-import { geoDBs } from './config';
 import {
     appVersion,
     wpAssetPath,
     wpBinPath,
-    sbAssetPath,
-    sbBinPath,
     helperAssetPath,
     helperPath,
     versionFilePath,
     netStatsPath,
     netStatsAssetPath,
-    singBoxManager,
-    workingDirPath,
-    dbAssetDirPath
+    singBoxManager
 } from '../constants';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
@@ -108,17 +103,10 @@ class OblivionDesktop {
     }
 
     private async cleanupOldFiles(): Promise<void> {
-        const filesToClean = [wpBinPath, sbBinPath, helperPath, netStatsPath];
+        const filesToClean = [wpBinPath, helperPath, netStatsPath];
         filesToClean.forEach((file) => {
             if (fs.existsSync(file)) {
                 rimrafSync(file);
-            }
-        });
-
-        geoDBs.forEach((fileName) => {
-            const dbPath = path.join(workingDirPath, fileName);
-            if (fs.existsSync(dbPath)) {
-                rimrafSync(dbPath);
             }
         });
     }
@@ -126,7 +114,6 @@ class OblivionDesktop {
     private copyRequiredFiles(): void {
         const filePairs = [
             { src: wpAssetPath, dest: wpBinPath, name: 'wp' },
-            { src: sbAssetPath, dest: sbBinPath, name: 'sb' },
             { src: helperAssetPath, dest: helperPath, name: 'helper' },
             { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' }
         ];
@@ -139,19 +126,6 @@ class OblivionDesktop {
                 });
             } else if (!fs.existsSync(src)) {
                 log.info(`Copy halted: ${name} file does not exist.`);
-            }
-        });
-
-        geoDBs.forEach((fileName) => {
-            const dbAssetPath = path.join(dbAssetDirPath, fileName);
-            const dbWDPath = path.join(workingDirPath, fileName);
-            if (fs.existsSync(dbAssetPath) && !fs.existsSync(dbWDPath)) {
-                fs.copyFile(dbAssetPath, dbWDPath, (err) => {
-                    if (err) throw err;
-                    log.info(`${fileName} was copied to userData directory.`);
-                });
-            } else if (!fs.existsSync(dbAssetPath)) {
-                log.info(`Copy halted: ${fileName} file does not exist.`);
             }
         });
     }

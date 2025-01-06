@@ -9,7 +9,9 @@ const chinese: Language = {
         disconnecting: '断开连接中...',
         disconnected: '已断开连接',
         ip_check: '检查 IP 中...',
-        keep_trying: '请稍等片刻，再次尝试...'
+        keep_trying: '请稍等片刻，再次尝试...',
+        preparing_rulesets: '正在准备规则集...',
+        downloading_rulesets_failed: '下载规则集失败。'
     },
     home: {
         title_warp_based: '基于 Warp',
@@ -191,7 +193,8 @@ const chinese: Language = {
         error_singbox_failed_start: '启动 Sing-Box 失败!',
         error_wp_reset_peer: '与 Cloudflare 的连接意外中断！',
         error_failed_connection: '无法建立连接！',
-        error_canceled_by_user: '操作已被用户取消。'
+        error_canceled_by_user: '操作已被用户取消。',
+        error_helper_not_found: '未在应用程序包旁找到助手文件！'
     },
     about: {
         title: '关于应用',

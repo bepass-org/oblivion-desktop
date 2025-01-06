@@ -193,3 +193,53 @@ export function extractPortsFromEndpoints(strData: string): number[] {
 
     return [];
 }
+
+export function formatEndpointForConfig(endpoint: string): string {
+    const ip = endpoint.replace(/:\d+$/, '').replace(/^\[/, '').replace(/\]$/, '');
+
+    return ip.includes(':') ? `${ip}/128` : `${ip}/32`;
+}
+
+export function mapGrpcErrorCodeToLabel(code: number | undefined): string {
+    if (code === undefined) {
+        return 'Unknown Error';
+    }
+    switch (code) {
+        case 0:
+            return 'OK';
+        case 1:
+            return 'Cancelled';
+        case 2:
+            return 'Unknown Error';
+        case 3:
+            return 'Invalid Argument';
+        case 4:
+            return 'Deadline Exceeded';
+        case 5:
+            return 'Not Found';
+        case 6:
+            return 'Already Exists';
+        case 7:
+            return 'Permission Denied';
+        case 8:
+            return 'Resource Exhausted';
+        case 9:
+            return 'Failed Precondition';
+        case 10:
+            return 'Aborted';
+        case 11:
+            return 'Out of Range';
+        case 12:
+            return 'Unimplemented';
+        case 13:
+            return 'Internal Error';
+        case 14:
+            return 'Unavailable';
+        case 15:
+            return 'Data Loss';
+        case 16:
+            return 'Unauthenticated';
+        default:
+            return 'Unknown Error';
+    }
+}

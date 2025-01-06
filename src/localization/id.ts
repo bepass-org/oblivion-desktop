@@ -9,7 +9,9 @@ const indonesia: Language = {
         disconnecting: 'Memutuskan ...',
         disconnected: 'Terputus',
         ip_check: 'Mengecek IP ...',
-        keep_trying: 'Silakan tunggu sebentar untuk mencoba lagi...'
+        keep_trying: 'Silakan tunggu sebentar untuk mencoba lagi...',
+        preparing_rulesets: 'Sedang menyiapkan set aturan...',
+        downloading_rulesets_failed: 'Gagal mengunduh set aturan.'
     },
     home: {
         title_warp_based: 'Berbasis Warp',
@@ -197,7 +199,8 @@ const indonesia: Language = {
         error_singbox_failed_start: 'Gagal memulai Sing-Box!',
         error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!',
         error_failed_connection: 'Gagal menjalin koneksi!',
-        error_canceled_by_user: 'Operasi dibatalkan oleh pengguna.'
+        error_canceled_by_user: 'Operasi dibatalkan oleh pengguna.',
+        error_helper_not_found: 'File pembantu tidak ditemukan di sebelah paket aplikasi!'
     },
     about: {
         title: 'Tentang Aplikasi',

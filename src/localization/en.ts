@@ -9,7 +9,9 @@ const english: Language = {
         disconnecting: 'Disconnecting ...',
         disconnected: 'Disconnected',
         ip_check: 'Checking Ip ...',
-        keep_trying: 'Please wait a moment to try again...'
+        keep_trying: 'Please wait a moment to try again...',
+        preparing_rulesets: 'Preparing rulesets...',
+        downloading_rulesets_failed: 'Downloading rulesets failed.'
     },
     home: {
         title_warp_based: 'Warp Based',
@@ -197,7 +199,8 @@ const english: Language = {
         error_singbox_failed_start: 'Failed to start Sing-Box!',
         error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!',
         error_failed_connection: 'Failed to establish connection!',
-        error_canceled_by_user: 'The operation was canceled by the user.'
+        error_canceled_by_user: 'The operation was canceled by the user.',
+        error_helper_not_found: 'The helper file is not located alongside the application package!'
     },
     about: {
         title: 'About App',

@@ -5,13 +5,14 @@ import {
     sbConfigPath,
     sbLogPath,
     sbCachePath,
-    wpBinPath,
-    helperPath,
     ruleSetDirPath,
     IConfig,
     IGeoConfig,
-    IRoutingRules
+    IRoutingRules,
+    defaultWarpIPs
 } from '../../constants';
+import { defaultSettings } from '../../defaultSettings';
+import { formatEndpointForConfig } from './utils';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
     const logConfig =
@@ -29,11 +30,23 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             final: 'dns-remote',
             independent_cache: true,
             strategy: 'prefer_ipv4',
-            rules: [
+            servers: [
                 {
-                    outbound: ['any'],
-                    server: 'dns-direct'
+                    tag: 'dns-remote',
+                    address: config.DoHDns,
+                    address_resolver: 'dns-direct'
                 },
+                {
+                    tag: 'dns-direct',
+                    address: config.plainDns,
+                    detour: 'direct-out'
+                },
+                {
+                    tag: 'dns-block',
+                    address: 'rcode://success'
+                }
+            ],
+            rules: [
                 ...(geoConfig.geoBlock
                     ? [
                           {
@@ -59,47 +72,34 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                       ]
                     : []),
                 {
-                    process_path: [wpBinPath, helperPath],
-                    server: 'dns-direct'
-                }
-            ],
-            servers: [
-                {
-                    address: config.DoHDns,
-                    address_resolver: 'dns-direct',
-                    detour: 'socks-out',
-                    tag: 'dns-remote'
-                },
-                {
-                    address: config.plainDns,
-                    detour: 'direct-out',
-                    tag: 'dns-direct'
-                },
-                {
-                    address: 'rcode://success',
-                    tag: 'dns-block'
+                    network: ['tcp', 'udp'],
+                    server: 'dns-remote'
                 }
             ]
         },
         inbounds: [
             {
+                type: 'direct',
+                tag: 'dns-in',
                 listen: '0.0.0.0',
                 listen_port: 6450,
                 override_address: config.plainDns,
-                override_port: 53,
-                tag: 'dns-in',
-                type: 'direct'
+                override_port: 53
             },
             {
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: config.tunMtu,
-                address: ['172.19.0.1/30'],
+                address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
                 auto_route: true,
                 strict_route: true,
                 stack: config.tunStack,
                 sniff: config.tunSniff,
-                sniff_override_destination: config.tunSniff
+                sniff_override_destination: config.tunSniff,
+                route_exclude_address:
+                    config.tunEndpoint === defaultSettings.endpoint
+                        ? defaultWarpIPs
+                        : [formatEndpointForConfig(config.tunEndpoint)]
             }
         ],
         outbounds: [
@@ -126,16 +126,12 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         route: {
             rules: [
                 {
-                    outbound: 'dns-out',
-                    port: [53]
-                },
-                {
-                    inbound: ['dns-in'],
+                    port: 53,
                     outbound: 'dns-out'
                 },
                 {
-                    process_path: [wpBinPath, helperPath],
-                    outbound: 'direct-out'
+                    inbound: 'dns-in',
+                    outbound: 'dns-out'
                 },
                 ...(geoConfig.geoBlock
                     ? [
@@ -201,7 +197,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                       ]
                     : []),
                 {
-                    network: 'tcp',
+                    network: ['tcp', 'udp'],
                     outbound: 'socks-out'
                 },
                 {
@@ -221,10 +217,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                     {
                                         tag: `geoip-${geoConfig.geoIp}`,
                                         type: 'local',
-                                        format: 'source',
+                                        format: 'binary',
                                         path: path.join(
                                             ruleSetDirPath,
-                                            `geoip-${geoConfig.geoIp}.json`
+                                            `geoip-${geoConfig.geoIp}.srs`
                                         )
                                     }
                                 ]
@@ -234,10 +230,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                     {
                                         tag: `geosite-${geoConfig.geoSite}`,
                                         type: 'local',
-                                        format: 'source',
+                                        format: 'binary',
                                         path: path.join(
                                             ruleSetDirPath,
-                                            `geosite-${geoConfig.geoSite}.json`
+                                            `geosite-${geoConfig.geoSite}.srs`
                                         )
                                     }
                                 ]
@@ -247,41 +243,41 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                     {
                                         tag: 'geosite-category-ads-all',
                                         type: 'local',
-                                        format: 'source',
+                                        format: 'binary',
                                         path: path.join(
                                             ruleSetDirPath,
-                                            'geosite-category-ads-all.json'
+                                            'geosite-category-ads-all.srs'
                                         )
                                     },
                                     {
                                         tag: 'geosite-malware',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geosite-malware.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-malware.srs')
                                     },
                                     {
                                         tag: 'geosite-phishing',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geosite-phishing.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-phishing.srs')
                                     },
                                     {
                                         tag: 'geosite-cryptominers',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geosite-cryptominers.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-cryptominers.srs')
                                     },
                                     {
                                         tag: 'geoip-malware',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geoip-malware.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geoip-malware.srs')
                                     },
                                     {
                                         tag: 'geoip-phishing',
                                         type: 'local',
-                                        format: 'source',
-                                        path: path.join(ruleSetDirPath, 'geoip-phishing.json')
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geoip-phishing.srs')
                                     }
                                 ]
                               : [])

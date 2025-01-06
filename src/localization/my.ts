@@ -9,7 +9,9 @@ const myanmar: Language = {
         disconnecting: 'ခွဲထွက်နေသည် ...',
         disconnected: 'ခွဲထွက်ပြီး',
         ip_check: 'IP စစ်ဆေးနေသည် ...',
-        keep_trying: 'ကျေးဇူးပြု၍ ပြန်လည်ကြိုးစားရန် များစွာ စောင့်ဆိုင်းပါ ...'
+        keep_trying: 'ကျေးဇူးပြု၍ ပြန်လည်ကြိုးစားရန် များစွာ စောင့်ဆိုင်းပါ ...',
+        preparing_rulesets: 'Rulesets များကို ပြင်ဆင်နေသည်...',
+        downloading_rulesets_failed: 'Rulesets များကို ဒေါင်းလုပ်လုပ်ခြင်း မအောင်မြင်ပါ။'
     },
     home: {
         title_warp_based: 'Warp အခြေခံ',
@@ -198,7 +200,8 @@ const myanmar: Language = {
         error_singbox_failed_start: 'Sing-Box စတင်ရန် မအောင်မြင်ပါ။',
         error_wp_reset_peer: 'Cloudflare နှင့် ချိတ်ဆက်မှု ပျက်သွားသည်!',
         error_failed_connection: 'ချိတ်ဆက်မှုကို တည်ဆောက်၍ မရနိုင်ပါ။',
-        error_canceled_by_user: 'အသုံးပြုသူမှ အလုပ်လုပ်ကိုင်မှုကို မဆိုင်းငံ့သွားပါ။'
+        error_canceled_by_user: 'အသုံးပြုသူမှ အလုပ်လုပ်ကိုင်မှုကို မဆိုင်းငံ့သွားပါ။',
+        error_helper_not_found: 'အကူအညီဖိုင်ကို အပလီကေးရှင်းပက်ကေ့တစ်ခုနှင့်အတူ တွေ့ရှိမရပါ!'
     },
     about: {
         title: 'အက်ပ်အကြောင်း',

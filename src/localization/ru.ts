@@ -9,7 +9,9 @@ const russian: Language = {
         disconnecting: 'Отключение ...',
         disconnected: 'Отключено',
         ip_check: 'Проверка IP ...',
-        keep_trying: 'Пожалуйста, подождите немного, чтобы попытаться снова...'
+        keep_trying: 'Пожалуйста, подождите немного, чтобы попытаться снова...',
+        preparing_rulesets: 'Подготовка наборов правил...',
+        downloading_rulesets_failed: 'Не удалось загрузить наборы правил.'
     },
     home: {
         title_warp_based: 'На основе Warp',
@@ -199,7 +201,8 @@ const russian: Language = {
         error_singbox_failed_start: 'Не удалось запустить Sing-Box!',
         error_wp_reset_peer: 'Соединение с Cloudflare было неожиданно прервано!',
         error_failed_connection: 'Не удалось установить соединение!',
-        error_canceled_by_user: 'Операция была отменена пользователем.'
+        error_canceled_by_user: 'Операция была отменена пользователем.',
+        error_helper_not_found: 'Файл помощника не найден рядом с пакетом приложения!'
     },
     about: {
         title: 'О приложении',

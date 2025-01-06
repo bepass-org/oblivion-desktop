@@ -8,6 +8,8 @@ export interface Status {
     disconnected: string;
     ip_check: string;
     keep_trying: string;
+    preparing_rulesets: string;
+    downloading_rulesets_failed: string;
 }
 
 export interface Home {
@@ -193,6 +195,7 @@ export interface Log {
     error_wp_reset_peer: string;
     error_failed_connection: string;
     error_canceled_by_user: string;
+    error_helper_not_found: string;
 }
 
 export interface About {

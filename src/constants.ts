@@ -12,38 +12,36 @@ export const isLinux = process.platform === 'linux';
 // Constants
 export const appVersion = app.getVersion();
 export const wpFileName = `warp-plus${isWindows ? '.exe' : ''}`;
-export const sbAssetFileName = `sing-box${isWindows ? '.exe' : ''}`;
-export const sbWDFileName = `oblivion-sb${isWindows ? '.exe' : ''}`;
 export const helperFileName = `oblivion-helper${isWindows ? '.exe' : ''}`;
 export const netStatsFileName = `zag-netStats${isWindows ? '.exe' : ''}`;
 export const sbConfigName = 'sbConfig.json';
+export const sbExportListName = 'sbExportList.json';
 export const sbCacheName = 'sbCache.db';
 export const sbLogName = 'sing-box.log';
+export const protoName = `oblivion.proto`;
+export const ruleSetBaseUrl =
+    'https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/';
 
 // Paths
 const appPath = app.getAppPath().replace('/app.asar', '').replace('\\app.asar', '');
 export const binAssetPath = path.join(appPath, 'assets', 'bin');
 export const wpAssetPath = path.join(binAssetPath, wpFileName);
-export const sbAssetPath = path.join(binAssetPath, 'sing-box', sbAssetFileName);
-export const helperAssetPath = path.join(binAssetPath, helperFileName);
+export const helperAssetPath = path.join(binAssetPath, 'oblivion-helper', helperFileName);
 export const netStatsAssetPath = path.join(binAssetPath, netStatsFileName);
 export const regeditVbsDirPath = path.join(binAssetPath, 'vbs');
-export const protoAssetPath = path.join(appPath, 'assets', 'proto', 'oblivion.proto');
-export const dbAssetDirPath = path.join(appPath, 'assets', 'dbs');
+export const protoAssetPath = path.join(appPath, 'assets', 'proto', protoName);
 
 export const workingDirPath = app.getPath('userData');
 export const wpBinPath = path.join(workingDirPath, wpFileName);
-export const stuffPath = path.join(workingDirPath, 'stuff');
-export const sbBinPath = path.join(workingDirPath, sbWDFileName);
-export const sbConfigPath = path.join(workingDirPath, sbConfigName);
 export const helperPath = path.join(workingDirPath, helperFileName);
-export const netStatsPath = path.join(workingDirPath, netStatsFileName);
-export const helperConfigPath = path.join(workingDirPath, 'config.obv');
-//export const sbCachePath = path.join(workingDirPath, sbCacheName);
-export const versionFilePath = path.join(workingDirPath, 'ver.txt');
-export const ruleSetDirPath = path.join(workingDirPath, 'ruleset');
+export const sbConfigPath = path.join(workingDirPath, sbConfigName);
+export const sbExportListPath = path.join(workingDirPath, sbExportListName);
 export const sbLogPath = path.join(workingDirPath, sbLogName);
 export const sbCachePath = path.join(workingDirPath, sbCacheName);
+export const ruleSetDirPath = path.join(workingDirPath, 'ruleset');
+export const netStatsPath = path.join(workingDirPath, netStatsFileName);
+export const versionFilePath = path.join(workingDirPath, 'ver.txt');
+export const stuffPath = path.join(workingDirPath, 'stuff');
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
 
 // Managers
@@ -68,6 +66,7 @@ export interface IConfig {
     tunSniff: boolean;
     plainDns: string;
     DoHDns: string;
+    tunEndpoint: string;
 }
 
 export interface IGeoConfig {
@@ -82,3 +81,26 @@ export interface IRoutingRules {
     domainSuffixSet: string[];
     processSet: string[];
 }
+
+export interface ICommand {
+    command: string;
+    args?: string[];
+}
+
+export interface IPlatformHelper {
+    start(binPath: string): ICommand;
+    running(processName: string): ICommand;
+}
+
+//Lists
+export const defaultWarpIPs = [
+    '162.159.192.0/24',
+    '162.159.193.0/24',
+    '162.159.195.0/24',
+    '188.114.96.0/24',
+    '188.114.97.0/24',
+    '188.114.98.0/24',
+    '188.114.99.0/24',
+    '2606:4700:d0::/64',
+    '2606:4700:d1::/64'
+];

@@ -9,7 +9,9 @@ const turkish: Language = {
         disconnecting: 'Bağlantı kesiliyor ...',
         disconnected: 'Bağlantı kesildi',
         ip_check: 'IP kontrol ediliyor ...',
-        keep_trying: 'Tekrar denemek için lütfen bir süre bekleyin...'
+        keep_trying: 'Tekrar denemek için lütfen bir süre bekleyin...',
+        preparing_rulesets: 'Kurallar seti hazırlanıyor...',
+        downloading_rulesets_failed: 'Kurallar seti indirilemedi.'
     },
     home: {
         title_warp_based: 'Warp Tabanlı',
@@ -199,7 +201,8 @@ const turkish: Language = {
         error_singbox_failed_start: 'Sing-Box başlatılamadı!',
         error_wp_reset_peer: 'Cloudflare bağlantısı beklenmedik bir şekilde kesildi!',
         error_failed_connection: 'Bağlantı kurulamadı!',
-        error_canceled_by_user: 'İşlem kullanıcı tarafından iptal edildi.'
+        error_canceled_by_user: 'İşlem kullanıcı tarafından iptal edildi.',
+        error_helper_not_found: 'Yardımcı dosya uygulama paketinin yanında bulunamadı!'
     },
     about: {
         title: 'Uygulama Hakkında',
