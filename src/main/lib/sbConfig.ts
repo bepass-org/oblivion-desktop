@@ -205,12 +205,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ],
                     outbound: 'direct'
                 },
-                // LLMNR (Link-Local Multicast Name Resolution)
-                {
-                    network: 'udp',
-                    port: [5355],
-                    outbound: 'direct'
-                },
 
                 // Windows-specific ports
                 ...(isWindows
@@ -220,9 +214,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               port: [
                                   68, // DHCP client for network configuration
                                   137, // NetBIOS name service
-                                  138 // NetBIOS datagram service
-                                  // 88, // Kerberos authentication - conditionally direct
-                                  // 389 // LDAP for Active Directory - conditionally direct
+                                  138, // NetBIOS datagram service
+                                  88, // Kerberos authentication - conditionally direct
+                                  389, // LDAP for Active Directory - conditionally direct
+                                  5355 // LLMNR (Link-Local Multicast Name Resolution)
                               ],
                               outbound: 'direct'
                           },
@@ -230,9 +225,9 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               network: 'tcp',
                               port: [
                                   445, // SMB (Server Message Block) for file sharing
-                                  139 // NetBIOS session service
-                                  //88, // Kerberos authentication - conditionally direct
-                                  //389 // LDAP for Active Directory - conditionally direct
+                                  139, // NetBIOS session service
+                                  88, // Kerberos authentication - conditionally direct
+                                  389 // LDAP for Active Directory - conditionally direct
                               ],
                               outbound: 'direct'
                           }
@@ -248,7 +243,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                   631, // IPP (Internet Printing Protocol)
                                   3283, // Apple Net Assistant for screen sharing
                                   633, // Apple Configurator for device management
-                                  //548, // AFP (Apple Filing Protocol) - conditionally direct
+                                  548, // AFP (Apple Filing Protocol) - conditionally direct
                                   5900, // VNC/Screen sharing
                                   427 // SLP (Service Location Protocol)
                               ],
