@@ -9,7 +9,10 @@ import {
     IConfig,
     IGeoConfig,
     IRoutingRules,
-    defaultWarpIPs
+    defaultWarpIPs,
+    isLinux,
+    isWindows,
+    isDarwin
 } from '../../constants';
 import { defaultSettings } from '../../defaultSettings';
 import { formatEndpointForConfig } from './utils';
@@ -27,19 +30,19 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
     const configuration = {
         log: logConfig,
         dns: {
-            final: 'dns-remote',
             independent_cache: true,
             strategy: 'prefer_ipv4',
             servers: [
                 {
                     tag: 'dns-remote',
                     address: config.DoHDns,
-                    address_resolver: 'dns-direct'
+                    address_resolver: 'dns-direct',
+                    detour: 'proxy'
                 },
                 {
                     tag: 'dns-direct',
                     address: config.plainDns,
-                    detour: 'direct-out'
+                    detour: 'direct'
                 },
                 {
                     tag: 'dns-block',
@@ -47,32 +50,17 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 }
             ],
             rules: [
-                ...(geoConfig.geoBlock
-                    ? [
-                          {
-                              rule_set: [
-                                  'geosite-category-ads-all',
-                                  'geosite-malware',
-                                  'geosite-phishing',
-                                  'geosite-cryptominers',
-                                  'geoip-malware',
-                                  'geoip-phishing'
-                              ],
-                              disable_cache: true,
-                              server: 'dns-block'
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoSite !== 'none'
-                    ? [
-                          {
-                              rule_set: `geosite-${geoConfig.geoSite}`,
-                              server: 'dns-direct'
-                          }
-                      ]
-                    : []),
                 {
-                    network: ['tcp', 'udp'],
+                    outbound: 'block',
+                    server: 'dns-block',
+                    disable_cache: true
+                },
+                {
+                    outbound: 'direct',
+                    server: 'dns-direct'
+                },
+                {
+                    outbound: 'proxy',
                     server: 'dns-remote'
                 }
             ]
@@ -94,6 +82,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 auto_route: true,
                 strict_route: true,
                 stack: config.tunStack,
+                endpoint_independent_nat: true,
                 sniff: config.tunSniff,
                 sniff_override_destination: config.tunSniff,
                 route_exclude_address:
@@ -105,18 +94,18 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         outbounds: [
             {
                 type: 'socks',
-                tag: 'socks-out',
+                tag: 'proxy',
                 server: '127.0.0.1',
                 server_port: config.socksPort,
                 version: '5'
             },
             {
                 type: 'direct',
-                tag: 'direct-out'
+                tag: 'direct'
             },
             {
                 type: 'block',
-                tag: 'block-out'
+                tag: 'block'
             },
             {
                 type: 'dns',
@@ -126,11 +115,17 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         route: {
             rules: [
                 {
-                    port: 53,
-                    outbound: 'dns-out'
-                },
-                {
-                    inbound: 'dns-in',
+                    type: 'logical',
+                    mode: 'or',
+                    rules: [
+                        {
+                            inbound: 'dns-in'
+                        },
+                        {
+                            network: 'udp',
+                            port: 53
+                        }
+                    ],
                     outbound: 'dns-out'
                 },
                 ...(geoConfig.geoBlock
@@ -144,7 +139,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                   'geoip-malware',
                                   'geoip-phishing'
                               ],
-                              outbound: 'block-out'
+                              outbound: 'block'
                           }
                       ]
                     : []),
@@ -152,7 +147,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ? [
                           {
                               ip_cidr: rulesConfig.ipSet,
-                              outbound: 'direct-out'
+                              outbound: 'direct'
                           }
                       ]
                     : []),
@@ -160,7 +155,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ? [
                           {
                               domain: rulesConfig.domainSet,
-                              outbound: 'direct-out'
+                              outbound: 'direct'
                           }
                       ]
                     : []),
@@ -168,7 +163,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ? [
                           {
                               domain_suffix: rulesConfig.domainSuffixSet,
-                              outbound: 'direct-out'
+                              outbound: 'direct'
                           }
                       ]
                     : []),
@@ -176,7 +171,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ? [
                           {
                               process_name: rulesConfig.processSet,
-                              outbound: 'direct-out'
+                              outbound: 'direct'
                           }
                       ]
                     : []),
@@ -184,7 +179,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ? [
                           {
                               rule_set: `geoip-${geoConfig.geoIp}`,
-                              outbound: 'direct-out'
+                              outbound: 'direct'
                           }
                       ]
                     : []),
@@ -192,22 +187,108 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     ? [
                           {
                               rule_set: `geosite-${geoConfig.geoSite}`,
-                              outbound: 'direct-out'
+                              outbound: 'direct'
                           }
                       ]
                     : []),
                 {
-                    network: ['tcp', 'udp'],
-                    outbound: 'socks-out'
-                },
-                {
                     ip_is_private: true,
-                    outbound: 'direct-out'
+                    outbound: 'direct'
                 },
+
+                // Universal required ports for all platforms
                 {
-                    source_ip_is_private: true,
-                    outbound: 'direct-out'
-                }
+                    port: [
+                        123, // NTP (Network Time Protocol) for system time sync
+                        1900, // SSDP (Simple Service Discovery Protocol) for device discovery
+                        5353 // mDNS (Multicast DNS) for local network service discovery
+                    ],
+                    outbound: 'direct'
+                },
+                // LLMNR (Link-Local Multicast Name Resolution)
+                {
+                    network: 'udp',
+                    port: [5355],
+                    outbound: 'direct'
+                },
+
+                // Windows-specific ports
+                ...(isWindows
+                    ? [
+                          {
+                              network: 'udp',
+                              port: [
+                                  68, // DHCP client for network configuration
+                                  137, // NetBIOS name service
+                                  138 // NetBIOS datagram service
+                                  // 88, // Kerberos authentication - conditionally direct
+                                  // 389 // LDAP for Active Directory - conditionally direct
+                              ],
+                              outbound: 'direct'
+                          },
+                          {
+                              network: 'tcp',
+                              port: [
+                                  445, // SMB (Server Message Block) for file sharing
+                                  139 // NetBIOS session service
+                                  //88, // Kerberos authentication - conditionally direct
+                                  //389 // LDAP for Active Directory - conditionally direct
+                              ],
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+
+                // macOS-specific ports
+                ...(isDarwin
+                    ? [
+                          {
+                              network: 'tcp',
+                              port: [
+                                  631, // IPP (Internet Printing Protocol)
+                                  3283, // Apple Net Assistant for screen sharing
+                                  633, // Apple Configurator for device management
+                                  //548, // AFP (Apple Filing Protocol) - conditionally direct
+                                  5900, // VNC/Screen sharing
+                                  427 // SLP (Service Location Protocol)
+                              ],
+                              outbound: 'direct'
+                          },
+                          {
+                              network: 'udp',
+                              port: [
+                                  514, // Syslog for system logging
+                                  631, // IPP (UDP variant)
+                                  427 // SLP (Service Location Protocol)
+                              ],
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+
+                // Linux-specific ports
+                ...(isLinux
+                    ? [
+                          {
+                              network: 'tcp',
+                              port: [
+                                  111, // Portmapper/RPC for service registration
+                                  2049, // NFS (Network File System)
+                                  427 // SLP (Service Location Protocol)
+                              ],
+                              outbound: 'direct'
+                          },
+                          {
+                              network: 'udp',
+                              port: [
+                                  68, // DHCP client
+                                  111, // Portmapper/RPC (UDP variant)
+                                  427 // SLP (Service Location Protocol)
+                              ],
+                              outbound: 'direct'
+                          }
+                      ]
+                    : [])
             ],
             ...(geoConfig.geoIp !== 'none' || geoConfig.geoSite !== 'none' || geoConfig.geoBlock
                 ? {
@@ -284,7 +365,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                       ]
                   }
                 : undefined),
-            final: 'socks-out',
+            final: 'proxy',
             auto_detect_interface: true
         },
         experimental: {
