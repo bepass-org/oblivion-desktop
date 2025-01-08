@@ -181,7 +181,7 @@ const useOptions = () => {
                     setDataUsage(false);
                     settings.set('dataUsage', false);
                 } else if (event.target.value === 'tun') {
-                    setHostIp(networkList[0].value);
+                    //setHostIp(networkList[0].value);
                     /*if (method === 'psiphon') {
                         settings.set('method', 'gool');
                         setMethod('gool');

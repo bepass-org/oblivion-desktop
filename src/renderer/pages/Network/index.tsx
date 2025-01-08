@@ -106,18 +106,13 @@ export default function Options() {
                             />
                             <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
                         </div>
-                        <div
-                            role='button'
-                            className={classNames('item', proxyMode === 'tun' ? 'disabled' : '')}
-                            tabIndex={0}
-                        >
+                        <div role='button' className={'item'} tabIndex={0}>
                             <Dropdown
                                 id='lan-selector'
                                 items={networkList}
                                 onChange={onChangeLanMode}
                                 value={hostIp ? hostIp : networkList[0]?.value}
                                 label={appLang?.settings?.share_vpn}
-                                disabled={proxyMode === 'tun'}
                                 tabIndex={0}
                             />
                             <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
