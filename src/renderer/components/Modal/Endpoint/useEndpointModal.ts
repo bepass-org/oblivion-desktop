@@ -54,22 +54,21 @@ const useEndpointModal = (props: EndpointModalProps) => {
         };
     };
 
+    const defEndpoint = {
+        ipv4: [
+            '162.159.192.175:891',
+            '162.159.192.36:908',
+            '162.159.195.55:908',
+            '188.114.97.159:942',
+            '188.114.97.47:4233'
+        ],
+        ipv6: [
+            '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
+            '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
+            '[2606:4700:d0:0:799c:392:47ed:bf4e]:955'
+        ]
+    };
     const initSuggestion = useMemo(() => {
-        const defEndpoint = {
-            ipv4: [
-                //'188.114.98.224:2408',
-                '162.159.192.175:891',
-                '162.159.192.36:908',
-                '162.159.195.55:908',
-                '188.114.97.159:942',
-                '188.114.97.47:4233'
-            ],
-            ipv6: [
-                '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
-                '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
-                '[2606:4700:d0:0:799c:392:47ed:bf4e]:955'
-            ]
-        };
         const storedSuggestion = localStorage?.getItem('OBLIVION_SUGGESTION');
         let data = storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
         data = removeDuplicates(data);
@@ -102,7 +101,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
                 stopLoadingToast();
             }
         } catch (error) {
-            console.error('Failed to fetch Endpoints:', error);
+            console.log('Failed to fetch Endpoints:', error);
             updaterRef.current?.classList.add('hidden');
             stopLoadingToast();
         }
@@ -126,7 +125,14 @@ const useEndpointModal = (props: EndpointModalProps) => {
         };
     }, []);
 
-    useEffect(() => setShowModal(isOpen), [isOpen]);
+    useEffect(() => {
+        setShowModal(isOpen);
+
+        if (!isOpen) return;
+        if (suggestion?.ipv4?.length === defEndpoint.ipv4?.length) {
+            fetchEndpoints();
+        }
+    }, [isOpen]);
 
     const handleOnClose = useCallback(() => {
         setShowModal(false);
