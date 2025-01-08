@@ -254,7 +254,8 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [port, dns, mtu, loglevel, stack, sniff, endpoint] = await Promise.all([
+        const [hostIP, port, dns, mtu, loglevel, stack, sniff, endpoint] = await Promise.all([
+            settings.get('hostIP'),
             settings.get('port'),
             settings.get('dns'),
             settings.get('singBoxMTU'),
@@ -265,6 +266,7 @@ class SingBoxManager {
         ]);
 
         return {
+            socksIp: this.getSettingOrDefault(hostIP, defaultSettings.hostIP),
             socksPort: this.getSettingOrDefault(port, defaultSettings.port),
             tunMtu: this.getSettingOrDefault(mtu, defaultSettings.singBoxMTU),
             logLevel: this.getSettingOrDefault(loglevel, singBoxLog[0].value),

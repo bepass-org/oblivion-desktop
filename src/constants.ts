@@ -59,6 +59,7 @@ export interface INetStats {
 }
 
 export interface IConfig {
+    socksIp: string;
     socksPort: number;
     tunMtu: number;
     logLevel: string;

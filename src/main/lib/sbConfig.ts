@@ -95,7 +95,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             {
                 type: 'socks',
                 tag: 'proxy',
-                server: '127.0.0.1',
+                server: config.socksIp,
                 server_port: config.socksPort,
                 version: '5'
             },
