@@ -10,8 +10,8 @@ const persian: Language = {
         disconnected: 'متصل نیستید',
         ip_check: 'دریافت اطلاعات ...',
         keep_trying: 'جهت تکرار تلاش، کمی صبر کنید ...',
-        preparing_rulesets: 'درحال آماده‌سازی مجموعه قوانین...',
-        downloading_rulesets_failed: 'دانلود مجموعه قوانین با شکست مواجه شد.'
+        preparing_rulesets: 'درحال آماده‌سازی مجموعه قوانین ...',
+        downloading_rulesets_failed: 'دانلود مجموعه قوانین با خطا مواجه شد.'
     },
     home: {
         title_warp_based: 'بر پایه وارپ',
