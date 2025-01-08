@@ -49,6 +49,14 @@ const WINDOW_DIMENSIONS = {
     height: 650
 };
 
+process.on('uncaughtException', (err) => {
+    log.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    log.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 interface WindowState {
     mainWindow: BrowserWindow | null;
     appIcon: Tray | null;
@@ -92,14 +100,18 @@ class OblivionDesktop {
     }
 
     private async handleVersionCheck(): Promise<void> {
-        if (fs.existsSync(versionFilePath)) {
-            const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
-            if (savedVersion !== appVersion) {
-                await singBoxManager.stopHelperOnStart();
-                await this.cleanupOldFiles();
+        try {
+            if (fs.existsSync(versionFilePath)) {
+                const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
+                if (savedVersion !== appVersion) {
+                    await singBoxManager.stopHelperOnStart();
+                    await this.cleanupOldFiles();
+                }
             }
+            fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
+        } catch (err) {
+            log.error('Error during version check:', err);
         }
-        fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
     }
 
     private async cleanupOldFiles(): Promise<void> {
@@ -121,7 +133,10 @@ class OblivionDesktop {
         filePairs.forEach(({ src, dest, name }) => {
             if (fs.existsSync(src) && !fs.existsSync(dest)) {
                 fs.copyFile(src, dest, (err) => {
-                    if (err) throw err;
+                    if (err) {
+                        log.error(`Error copying ${name} binary:`, err);
+                        return;
+                    }
                     log.info(`${name} binary was copied to userData directory.`);
                 });
             } else if (!fs.existsSync(src)) {
@@ -317,7 +332,11 @@ class OblivionDesktop {
 
     private setupIpcEvents(): void {
         ipcMain.on('tray-menu', (event) => {
-            this.state.trayMenuEvent = event;
+            try {
+                this.state.trayMenuEvent = event;
+            } catch (err) {
+                log.error('Error handling tray-menu event:', err);
+            }
         });
 
         ipcMain.on('localization', async (_, newLang) => {
@@ -409,14 +428,18 @@ class OblivionDesktop {
     }
 
     private async setupTray(): Promise<void> {
-        this.state.userLang = String((await settings.get('lang')) || defaultSettings.lang);
-        this.state.appLang = getTranslate(this.state.userLang);
+        try {
+            this.state.userLang = String((await settings.get('lang')) || defaultSettings.lang);
+            this.state.appLang = getTranslate(this.state.userLang);
 
-        const trayIcon = this.createTrayIcon('disconnected');
-        this.state.appIcon = new Tray(trayIcon);
-        this.state.appIcon.setToolTip(APP_TITLE);
-        this.state.appIcon.on('click', () => this.redirectTo(''));
-        this.updateTrayMenu();
+            const trayIcon = this.createTrayIcon('disconnected');
+            this.state.appIcon = new Tray(trayIcon);
+            this.state.appIcon.setToolTip(APP_TITLE);
+            this.state.appIcon.on('click', () => this.redirectTo(''));
+            this.updateTrayMenu();
+        } catch (err) {
+            log.error('Error setting up tray:', err);
+        }
     }
 
     private createTrayIcon(status: string): NativeImage {
