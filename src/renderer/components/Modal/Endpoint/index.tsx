@@ -231,7 +231,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                     </div>
                     <div
                         className={classNames('btn', 'btn-update')}
-                        onClick={fetchEndpoints}
+                        onClick={() => fetchEndpoints(true)}
                         role='button'
                         ref={updaterRef}
                         tabIndex={0}

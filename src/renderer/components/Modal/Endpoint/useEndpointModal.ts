@@ -77,7 +77,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
 
     const [suggestion, setSuggestion] = useState<Suggestion>(initSuggestion);
 
-    const fetchEndpoints = async () => {
+    const fetchEndpoints = async (openInEnd: boolean = true) => {
         loadingToast(appLang?.toast?.please_wait);
         try {
             const response = await fetch(
@@ -88,20 +88,19 @@ const useEndpointModal = (props: EndpointModalProps) => {
                 if (data?.ipv4 && data?.ipv6) {
                     data = removeDuplicates(data);
                     setSuggestion(data);
-                    setTimeout(() => {
-                        setShowSuggestion(true);
-                    }, 1000);
                     localStorage.setItem('OBLIVION_SUGGESTION', JSON.stringify(data));
                 }
-                stopLoadingToast();
-                updaterRef.current?.classList.add('hidden');
             } else {
                 console.error('Failed to fetch Endpoints:', response.statusText);
-                updaterRef.current?.classList.add('hidden');
-                stopLoadingToast();
             }
         } catch (error) {
             console.log('Failed to fetch Endpoints:', error);
+        } finally {
+            if (openInEnd) {
+                setTimeout(() => {
+                    setShowSuggestion(true);
+                }, 1000);
+            }
             updaterRef.current?.classList.add('hidden');
             stopLoadingToast();
         }
@@ -111,8 +110,6 @@ const useEndpointModal = (props: EndpointModalProps) => {
         settings.get('scanResult').then((value) => {
             setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
         });
-
-        //fetchEndpoints();
 
         const handleClickOutside = (event: MouseEvent) => {
             if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
@@ -130,7 +127,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
 
         if (!isOpen) return;
         if (suggestion?.ipv4?.length === defEndpoint.ipv4?.length) {
-            fetchEndpoints();
+            fetchEndpoints(false);
         }
     }, [isOpen]);
 
