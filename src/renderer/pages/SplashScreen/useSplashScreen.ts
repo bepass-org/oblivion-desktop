@@ -7,6 +7,7 @@ const useSplashScreen = () => {
         setTimeout(
             () => {
                 setShow(false);
+                localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
             },
             isDev() ? 0 : 5000
         );
