@@ -36,8 +36,8 @@ export const getOsInfo = async () => {
     let getOsInfo = '';
     await osInfo()
         .then((data) => {
-            getOsInfo += data.distro ? data.distro + ' ' : '';
-            getOsInfo += (data.release ? '(' + data.release + ')' : os.release()) + ' ';
+            getOsInfo += (data.distro ? data.distro : process.platform) + ' ';
+            getOsInfo += '(' + (data.release ? data.release : os.release()) + ') ';
             getOsInfo += (data.arch ? data.arch : process.arch) + ' ';
             getOsInfo += data.build ? data.build : '';
         })
