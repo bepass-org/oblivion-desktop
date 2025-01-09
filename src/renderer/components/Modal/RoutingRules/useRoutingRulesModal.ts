@@ -60,8 +60,11 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
                 const match = cleanedEntry.match(entryRegex);
                 const ipMatch = cleanedEntry.match(ipRegex);
                 const ipRangeMatch = cleanedEntry.match(ipRangeRegex);
+                const isIpv6Like = /^ip:.*[:\[\]]/.test(cleanedEntry);
                 if (match || ipMatch || ipRangeMatch) {
-                    validEntriesSet.add(cleanedEntry);
+                    if (!isIpv6Like) {
+                        validEntriesSet.add(cleanedEntry);
+                    }
                 }
             }
         });
