@@ -76,20 +76,19 @@ class WarpPlusManager {
     //Public-Methods
     static restartApp() {
         let retryCount = 0;
-
-        const attemptRestart = () => {
+        const attemptRestart = async () => {
             try {
                 BrowserWindow.getAllWindows().forEach((win) => {
-                    if (!win.isDestroyed()) win.close();
+                    if (!win.isDestroyed()) win.destroy();
                 });
-
                 log.info('Relaunching app due to warp-plus error.');
                 app.relaunch();
-                app.quit();
+                await new Promise((resolve) => setTimeout(resolve, 1500));
+                app.exit(0);
+                return;
             } catch (error) {
                 retryCount++;
                 log.error(`Error during app restart (attempt ${retryCount}):`, error);
-
                 if (retryCount < MAX_RETRIES) {
                     log.info('Retrying app quit...');
                     setTimeout(attemptRestart, 1500);
@@ -98,7 +97,6 @@ class WarpPlusManager {
                 }
             }
         };
-
         setTimeout(attemptRestart, 5000);
     }
 
