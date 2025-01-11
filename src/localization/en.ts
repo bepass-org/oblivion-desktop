@@ -89,6 +89,8 @@ const english: Language = {
         force_close_desc: 'Do not stay in the system tray upon exit',
         shortcut: 'Navigator',
         shortcut_desc: 'Shortcuts on the home page',
+        sound_effect: 'Sound effect',
+        sound_effect_desc: 'Plays sound on successful connection',
         restore: 'Restore',
         restore_desc: 'Apply default application settings',
         scanner: 'Scanner Settings',

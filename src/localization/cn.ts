@@ -88,6 +88,8 @@ const chinese: Language = {
         force_close_desc: '退出时不要停留在系统托盘中',
         shortcut: '导航器',
         shortcut_desc: '主页上的快捷方式',
+        sound_effect: '声音效果',
+        sound_effect_desc: '成功连接时播放声音',
         restore: '恢复默认设置',
         restore_desc: '将应用设置还原为默认值',
         scanner: '扫描仪设置',

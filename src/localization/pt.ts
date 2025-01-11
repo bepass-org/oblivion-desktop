@@ -89,6 +89,8 @@ const brazilianPortuguese: Language = {
         force_close_desc: 'Não permanecer na bandeja do sistema ao sair',
         shortcut: 'Atalho',
         shortcut_desc: 'Atalhos na página inicial',
+        sound_effect: 'efeito sonoro',
+        sound_effect_desc: 'reproduz um som quando a conexão é bem-sucedida',
         restore: 'Restaurar',
         restore_desc: 'Aplicar configurações padrão do aplicativo',
         scanner: 'Configurações do Scanner',

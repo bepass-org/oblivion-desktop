@@ -88,6 +88,8 @@ const myanmar: Language = {
         force_close_desc: 'ထွက်ပါက system tray တွင်မထိုင်ပါ',
         shortcut: 'နောက်ပြန်ခလုတ်',
         shortcut_desc: 'ပင်မစာမျက်နှာတွင် shortcut များ',
+        sound_effect: 'အသံအကျိုးသက်ရောက်မှု',
+        sound_effect_desc: 'ချိတ်ဆက်မှုအောင်မြင်သောအခါအသံဖွင့်ပါသည်။',
         restore: 'ပြန်လည်ပြုပြင်ရန်',
         restore_desc: 'အကူအညီအခြေအနေကိုပြန်လည်သတ်မှတ်ပါ',
         scanner: 'စကင်နာဆက်တင်များ',

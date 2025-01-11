@@ -89,6 +89,8 @@ const vietnamese: Language = {
         force_close_desc: 'Không ở lại trong khay hệ thống sau khi thoát',
         shortcut: 'Điều hướng',
         shortcut_desc: 'Phím tắt trên trang chủ',
+        sound_effect: 'hiệu ứng âm thanh',
+        sound_effect_desc: 'phát âm thanh khi kết nối thành công',
         restore: 'Khôi phục',
         restore_desc: 'Áp dụng cài đặt mặc định của ứng dụng',
         scanner: 'Cài đặt máy quét',

@@ -88,6 +88,8 @@ export interface Settings {
     force_close_desc: string;
     shortcut: string;
     shortcut_desc: string;
+    sound_effect: string;
+    sound_effect_desc: string;
     restore: string;
     restore_desc: string;
     scanner: string;

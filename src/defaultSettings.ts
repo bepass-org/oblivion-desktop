@@ -36,7 +36,8 @@ export type settingsKeys =
     | 'singBoxStack'
     | 'singBoxSniff'
     | 'restartCounter'
-    | 'betaRelease';
+    | 'betaRelease'
+    | 'soundEffect';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -75,7 +76,8 @@ export const defaultSettings = {
     singBoxGeoBlock: false,
     singBoxSniff: true,
     restartCounter: 0,
-    betaRelease: false
+    betaRelease: false,
+    soundEffect: false
 };
 
 export const countries: { value: string; label: string }[] = [

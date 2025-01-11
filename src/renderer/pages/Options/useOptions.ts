@@ -23,6 +23,7 @@ const useOptions = () => {
     const [forceClose, setForceClose] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
+    const [soundEffect, setSoundEffect] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
 
@@ -56,6 +57,7 @@ const useOptions = () => {
                 'autoConnect',
                 'forceClose',
                 'shortcut',
+                'soundEffect',
                 'proxyMode',
                 'betaRelease'
             ])
@@ -87,6 +89,11 @@ const useOptions = () => {
                     typeof values.shortcut === 'undefined'
                         ? defaultSettings.shortcut
                         : values.shortcut
+                );
+                setSoundEffect(
+                    typeof values.soundEffect === 'undefined'
+                        ? defaultSettings.soundEffect
+                        : values.soundEffect
                 );
                 setProxyMode(
                     typeof values.proxyMode === 'undefined'
@@ -203,6 +210,21 @@ const useOptions = () => {
         [onClickShortcutButton]
     );
 
+    const onClickSoundEffectButton = useCallback(() => {
+        setSoundEffect(!soundEffect);
+        settings.set('soundEffect', !soundEffect);
+    }, [soundEffect]);
+
+    const onKeyDownSoundEffectButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickSoundEffectButton();
+            }
+        },
+        [onClickSoundEffectButton]
+    );
+
     const onClickRestore = useCallback(() => setShowRestoreModal(true), []);
 
     const onKeyDownRestore = useCallback(
@@ -264,7 +286,10 @@ const useOptions = () => {
         proxyMode,
         onClickBetaReleaseButton,
         onKeyDownBetaReleaseButton,
-        betaRelease
+        betaRelease,
+        soundEffect,
+        onClickSoundEffectButton,
+        onKeyDownSoundEffectButton
     };
 };
 

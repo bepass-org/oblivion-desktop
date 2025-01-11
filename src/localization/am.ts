@@ -88,6 +88,8 @@ const amharic: Language = {
         force_close_desc: 'በመዝጊያ ላይ ስርዓት ትሬይ ላይ አታቆማም',
         shortcut: 'አቀማመጥ',
         shortcut_desc: 'በመነሻ ገፅ ላይ ቅርጸ ተግባር ይኖራል',
+        sound_effect: 'የድምፅ ተፅዕኖ',
+        sound_effect_desc: 'በተሳካ መገናኘት ላይ ድምፅ ይጫወታል።',
         restore: 'እንደ አማራጭ ምላሽ',
         restore_desc: 'ተመናበረ ስምምነት ምትክ አቀርበዋል',
         scanner: 'እንቅስቃሴ ቅንብሮች',

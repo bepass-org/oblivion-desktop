@@ -90,6 +90,8 @@ const indonesia: Language = {
         force_close_desc: 'Jangan berada di baki sistem saat keluar',
         shortcut: 'Navigator',
         shortcut_desc: 'Pintasan di halaman beranda',
+        sound_effect: 'efek suara',
+        sound_effect_desc: 'memutar suara saat koneksi berhasil',
         restore: 'Pulihkan',
         restore_desc: 'Menerapkan pengaturan bawaan aplikasi',
         scanner: 'Pengaturan Pemindai',

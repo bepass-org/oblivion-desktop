@@ -43,6 +43,7 @@ export const netStatsPath = path.join(workingDirPath, netStatsFileName);
 export const versionFilePath = path.join(workingDirPath, 'ver.txt');
 export const stuffPath = path.join(workingDirPath, 'stuff');
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
+export const soundEffect = path.join(appPath, 'assets', 'sound', 'notification.mp3');
 
 // Managers
 export const singBoxManager = new SingBoxManager();

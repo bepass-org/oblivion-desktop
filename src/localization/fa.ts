@@ -88,6 +88,8 @@ const persian: Language = {
         force_close_desc: 'با خروج در نوار اعلان قرار نگیرد',
         shortcut: 'پیمایشگر',
         shortcut_desc: 'میانبرها در صفحه نخست',
+        sound_effect: 'جلوه صوتی',
+        sound_effect_desc: 'پخش صدا هنگام اتصال موفق',
         restore: 'بازگردانی',
         restore_desc: 'اعمال تنظیمات پیشفرض برنامه',
         scanner: 'تنظیمات اسکنر',

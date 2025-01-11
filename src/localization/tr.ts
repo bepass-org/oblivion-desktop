@@ -90,6 +90,8 @@ const turkish: Language = {
         force_close_desc: 'Çıkışta sistem tepsisinde kalma',
         shortcut: 'Kısayol',
         shortcut_desc: 'Ana sayfadaki kısayollar',
+        sound_effect: 'ses efekti',
+        sound_effect_desc: 'başarılı bir bağlantıda ses çalar',
         restore: 'Geri Yükle',
         restore_desc: 'Varsayılan uygulama ayarlarını uygula',
         scanner: 'Tarayıcı Ayarları',

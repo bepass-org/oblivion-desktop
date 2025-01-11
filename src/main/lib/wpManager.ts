@@ -20,8 +20,10 @@ import {
     regeditVbsDirPath,
     singBoxManager,
     netStatsManager,
-    logPath
+    logPath,
+    soundEffect
 } from '../../constants';
+import sound from 'sound-play';
 
 // Types and Enums
 enum ConnectionState {
@@ -47,6 +49,7 @@ interface WarpPlusState {
         ipData: boolean;
         dataUsage: boolean;
         restartCounter: number;
+        soundEffect: boolean;
     };
 }
 
@@ -151,6 +154,18 @@ class WarpPlusManager {
         }
     }
 
+    private static playSoundEffect() {
+        if (!state.settings.soundEffect) return;
+        sound
+            .play(soundEffect, 0.4)
+            .then(() => {
+                //console.log('Sound played successfully');
+            })
+            .catch((err) => {
+                console.error('Error playing sound:', err);
+            });
+    }
+
     //Private-Methods
     private static sendConnectionSignal() {
         // eslint-disable-next-line default-case
@@ -166,6 +181,7 @@ class WarpPlusManager {
             case ConnectionState.CONNECTED:
                 state.event?.reply('wp-start', true);
                 customEvent.emit('tray-icon', `connected-${state.settings.proxyMode}`);
+                this.playSoundEffect();
                 toast.remove('GUIDE');
 
                 if (
@@ -276,7 +292,8 @@ ipcMain.on('wp-start', async (event, arg) => {
         hostIP: String(settingsValues.hostIP || defaultSettings.hostIP),
         ipData: Boolean(settingsValues.ipData || defaultSettings.ipData),
         dataUsage: Boolean(settingsValues.dataUsage || defaultSettings.dataUsage),
-        restartCounter: Number(settingsValues.restartCounter || defaultSettings.restartCounter)
+        restartCounter: Number(settingsValues.restartCounter || defaultSettings.restartCounter),
+        soundEffect: Boolean(settingsValues.soundEffect || defaultSettings.soundEffect)
     };
 
     await removeFileIfExists(logPath);

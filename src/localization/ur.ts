@@ -89,6 +89,8 @@ const urdu: Language = {
         force_close_desc: 'ایگزٹ پر سسٹم ٹرے میں نہ رہیں',
         shortcut: 'نیویگیٹر',
         shortcut_desc: 'ہوم پیج پر شارٹ کٹس',
+        sound_effect: 'آواز کا اثر',
+        sound_effect_desc: 'کامیاب کنکشن پر آواز بجاتا ہے',
         restore: 'بحال کریں',
         restore_desc: 'ڈیفالٹ ایپلیکیشن ترتیبات لاگو کریں',
         scanner: 'سکینر کی ترتیبات',

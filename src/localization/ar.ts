@@ -88,6 +88,8 @@ const arabic: Language = {
         force_close_desc: 'عدم البقاء في علبة النظام بعد الخروج',
         shortcut: 'الملاحة',
         shortcut_desc: 'اختصارات في الصفحة الرئيسية',
+        sound_effect: 'تأثير صوتي',
+        sound_effect_desc: 'يشغّل صوتًا عند الاتصال الناجح',
         restore: 'استعادة',
         restore_desc: 'تطبيق الإعدادات الافتراضية للتطبيق',
         scanner: 'إعدادات الماسح الضوئي',

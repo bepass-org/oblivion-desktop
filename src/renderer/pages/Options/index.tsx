@@ -41,7 +41,10 @@ export default function Options() {
         proxyMode,
         onClickBetaReleaseButton,
         onKeyDownBetaReleaseButton,
-        betaRelease
+        betaRelease,
+        soundEffect,
+        onClickSoundEffectButton,
+        onKeyDownSoundEffectButton
     } = useOptions();
 
     if (
@@ -50,6 +53,7 @@ export default function Options() {
         typeof openAtLogin === 'undefined' ||
         typeof forceClose === 'undefined' ||
         typeof shortcut === 'undefined' ||
+        typeof soundEffect === 'undefined' ||
         typeof autoConnect === 'undefined' ||
         typeof betaRelease === 'undefined'
     )
@@ -129,6 +133,27 @@ export default function Options() {
                                 </div>
                             </div>
                             <div className='info'>{appLang?.settings?.shortcut_desc}</div>
+                        </div>
+                        <div
+                            role='button'
+                            className='item'
+                            onClick={onClickSoundEffectButton}
+                            onKeyDown={onKeyDownSoundEffectButton}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='soundEffect'>
+                                {appLang?.settings?.sound_effect}
+                            </label>
+                            <div className='value'>
+                                <div
+                                    tabIndex={-1}
+                                    id='soundEffect'
+                                    className={classNames('checkbox', soundEffect ? 'checked' : '')}
+                                >
+                                    <i className='material-icons'>&#xe876;</i>
+                                </div>
+                            </div>
+                            <div className='info'>{appLang?.settings?.sound_effect_desc}</div>
                         </div>
                     </div>
                     <div className='moreSettings'>

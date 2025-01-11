@@ -90,6 +90,8 @@ const spanish: Language = {
         force_close_desc: 'No dejar el programa en la bandeja del sistema al salir',
         shortcut: 'Navegador',
         shortcut_desc: 'Accesos directos en la página principal',
+        sound_effect: 'efecto de sonido',
+        sound_effect_desc: 'reproduce un sonido al conectarse con éxito',
         restore: 'Restaurar',
         restore_desc: 'Aplicar los ajustes predeterminados de la aplicación',
         scanner: 'Configuraciones del Escáner',
