@@ -108,7 +108,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     <div className='split'>
                                         {[...suggestion.ipv4.keys()]
                                             .sort((a, b) => b - a)
-                                            .slice(0, 15)
+                                            .slice(0, 25)
                                             .map((key, index) => (
                                                 <>
                                                     <div
