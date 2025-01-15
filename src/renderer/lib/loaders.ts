@@ -3,7 +3,7 @@ import { defaultSettings } from '../../defaultSettings';
 import { settings } from './settings';
 
 export const clearUpdateNotifOnStartup = () => {
-    if ( typeof localStorage === 'undefined' ) return;
+    if (typeof localStorage === 'undefined') return;
     localStorage?.setItem('OBLIVION_NEWUPDATE', 'false');
 };
 

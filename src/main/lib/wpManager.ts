@@ -21,9 +21,12 @@ import {
     singBoxManager,
     netStatsManager,
     logPath,
+    isLinux,
     soundEffect
 } from '../../constants';
+
 import sound from 'sound-play';
+import Aplay from 'node-aplay';
 
 // Types and Enums
 enum ConnectionState {
@@ -156,14 +159,16 @@ class WarpPlusManager {
 
     private static playSoundEffect() {
         if (!state.settings.soundEffect) return;
-        sound
-            .play(soundEffect, 0.5)
-            .then(() => {
-                //console.log('Sound played successfully');
-            })
-            .catch((err) => {
-                console.error('Error playing sound:', err);
-            });
+        try {
+            if (isLinux) {
+                const music = new Aplay(soundEffect);
+                music.play();
+            } else {
+                sound.play(soundEffect);
+            }
+        } catch (error) {
+            console.error('Error playing sound:', error);
+        }
     }
 
     //Private-Methods
