@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-## نسخه RELEASE_TAG برای ویندوز، لینوکس و مک منتشر شد.
+## نسخه پیش‌ازانتشار RELEASE_TAG برای ویندوز، لینوکس و مک منتشر شد.
 
 ### برخی‌از تغییرات برنامه:
 
@@ -12,7 +12,7 @@ https://github.com/bepass-org/oblivion-desktop/issues
 
 </div>
 
-## Version RELEASE_TAG has been released for Windows, Linux & macOS.
+## Pre-release RELEASE_TAG has been released for Windows, Linux & macOS.
 
 ### Some software changes:
 
