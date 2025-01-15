@@ -2,6 +2,11 @@ import { getDirectionByLang } from '../../localization';
 import { defaultSettings } from '../../defaultSettings';
 import { settings } from './settings';
 
+export const clearUpdateNotifOnStartup = () => {
+    if ( typeof localStorage === 'undefined' ) return;
+    localStorage?.setItem('OBLIVION_NEWUPDATE', 'false');
+};
+
 export const loadTheme = () => {
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
     settings.get('theme').then((theme) => {

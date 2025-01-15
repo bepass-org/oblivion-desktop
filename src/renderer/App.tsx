@@ -10,12 +10,13 @@ import 'assets/css/style.css';
 
 import SplashScreen from './pages/SplashScreen';
 import { openDevtoolsOnCtrlShiftI } from './lib/dx';
-import { loadLang, loadTheme } from './lib/loaders';
+import { clearUpdateNotifOnStartup, loadLang, loadTheme } from './lib/loaders';
 import { getIspName } from './lib/getIspName';
 import AppRoutes from './routes';
 
 export default function App() {
     useEffect(() => {
+        clearUpdateNotifOnStartup();
         openDevtoolsOnCtrlShiftI();
         loadTheme();
         loadLang();
