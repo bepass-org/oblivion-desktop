@@ -157,7 +157,7 @@ class WarpPlusManager {
     private static playSoundEffect() {
         if (!state.settings.soundEffect) return;
         sound
-            .play(soundEffect, 0.4)
+            .play(soundEffect, 0.5)
             .then(() => {
                 //console.log('Sound played successfully');
             })
