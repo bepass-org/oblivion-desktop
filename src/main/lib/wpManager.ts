@@ -123,6 +123,7 @@ class WarpPlusManager {
             this.sendConnectionSignal();
         } catch (error) {
             log.error('Error managing system proxy:', error);
+            state.event?.reply('wp-end', true);
             if (enable) await this.handleSystemProxy(false);
         }
     }
