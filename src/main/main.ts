@@ -9,7 +9,6 @@ import {
     nativeImage,
     IpcMainEvent,
     globalShortcut,
-    powerMonitor,
     BrowserWindowConstructorOptions,
     Event,
     NativeImage,
@@ -19,7 +18,7 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
-import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler';
+//import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
@@ -90,7 +89,7 @@ class OblivionDesktop {
         await this.setupInitialConfiguration();
         this.setupIpcEvents();
         this.setupAppEvents();
-        this.handleShutdown();
+        //this.handleShutdown();
     }
 
     private async setupInitialConfiguration(): Promise<void> {
@@ -393,9 +392,12 @@ class OblivionDesktop {
             this.exitProcess();
         });
 
-        app.on('before-quit', (event) => {
+        app.on('before-quit', async (event) => {
             event.preventDefault();
-            //this.exitProcess();
+            await exitTheApp();
+            await new Promise((resolve) => setTimeout(resolve, 2500));
+            log.info('Cleanup done, now quitting...');
+            app.quit();
         });
 
         app.setAsDefaultProtocolClient('oblivion');
@@ -407,7 +409,7 @@ class OblivionDesktop {
         });
     }
 
-    private shutdownHandlersRegistered = false;
+    /*private shutdownHandlersRegistered = false;
     private handleShutdown(): void {
         if (this.shutdownHandlersRegistered) return;
         this.shutdownHandlersRegistered = true;
@@ -426,7 +428,7 @@ class OblivionDesktop {
         } catch (error) {
             log.error('Error setting up shutdown handlers:', error);
         }
-    }
+    }*/
 
     private async setupTray(): Promise<void> {
         try {
@@ -623,13 +625,13 @@ class OblivionDesktop {
         logMetadata(osInfo);
     }
 
-    private async exitStrategy(): Promise<void> {
+    /*private async exitStrategy(): Promise<void> {
         try {
             if (process.platform === 'win32') {
                 //ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
                 ElectronShutdownHandler.on('shutdown', async (event) => {
                     event.preventDefault();
-                    console.log('Shutting down!');
+                    log.info('Shutting down!');
                     try {
                         await exitTheApp();
                     } catch (error) {
@@ -643,7 +645,7 @@ class OblivionDesktop {
         } catch (error) {
             log.error('Error setting up shutdown handlers:', error);
         }
-    }
+    }*/
 
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
@@ -652,7 +654,7 @@ class OblivionDesktop {
             await this.checkStartUp();
             await this.autoConnect();
             await this.setupMetaData();
-            await this.exitStrategy();
+            //await this.exitStrategy();
             log.info('od is ready!');
         });
     }
