@@ -19,6 +19,7 @@ import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
+import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
@@ -622,6 +623,28 @@ class OblivionDesktop {
         logMetadata(osInfo);
     }
 
+    private async exitStrategy(): Promise<void> {
+        try {
+            if (process.platform === 'win32') {
+                //ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
+                ElectronShutdownHandler.on('shutdown', async (event) => {
+                    event.preventDefault();
+                    console.log('Shutting down!');
+                    try {
+                        await exitTheApp();
+                    } catch (error) {
+                        log.error('Error during app exit process:', error);
+                    }
+                    await new Promise((resolve) => setTimeout(resolve, 1000));
+                    ElectronShutdownHandler.releaseShutdown();
+                    app.exit(0);
+                });
+            }
+        } catch (error) {
+            log.error('Error setting up shutdown handlers:', error);
+        }
+    }
+
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
             await this.createWindow();
@@ -629,6 +652,7 @@ class OblivionDesktop {
             await this.checkStartUp();
             await this.autoConnect();
             await this.setupMetaData();
+            await this.exitStrategy();
             log.info('od is ready!');
         });
     }
