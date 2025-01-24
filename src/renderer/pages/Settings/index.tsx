@@ -176,23 +176,11 @@ export default function Settings() {
                             </div>
                         </div>
                     </div>
-                    <div className='moreSettings'>
+                    {/* <div className='moreSettings'>
                         <i className='material-icons'>&#xe313;</i>
                         {appLang?.settings?.more}
                     </div>
                     <div className='settings' role='menu' tabIndex={0}>
-                        {/*<div
-                        className={classNames('item')}
-                        onClick={() => {
-                            setShowEndpointModal(true);
-                        }}
-                    >
-                        <label className='key'>{appLang?.settings?.endpoint}</label>
-                        <div className='value'>
-                            <span className='dirLeft'>{endpoint}</span>
-                        </div>
-                        <div className='info'>{appLang?.settings?.endpoint_desc}</div>
-                    </div>*/}
                         <div
                             role='button'
                             className='item'
@@ -214,7 +202,7 @@ export default function Settings() {
                             </div>
                             <div className='info'>{appLang?.settings?.license_desc}</div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <Toaster

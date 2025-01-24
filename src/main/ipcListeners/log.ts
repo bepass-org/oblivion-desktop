@@ -90,7 +90,7 @@ export const logMetadata = (osInfo: string) => {
             log.info('ipType:', checkIpType(data[11], data[3]));
             log.info('dataUsage:', checkDataUsage(data[6]));
             log.info('asn:', data[5] ? data[5] : 'UNK');
-            log.info('license:', hasLicense(data[2]));
+            //log.info('license:', hasLicense(data[2]));
             log.info('reserved:', checkReserved(data[7]));
             log.info('geo', checkGeoStatus(data[8], data[9], data[10]));
             log.info(`exe: ${app.getPath('exe')}`);
