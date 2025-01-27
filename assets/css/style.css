@@ -1174,7 +1174,7 @@ html[data-bs-theme='dark'] .shimmer {
 
 .splashScreen .splashScreenImg {
     background: transparent url('../img/splashScreen/light.png') no-repeat center center;
-    background-size: 85%;
+    background-size: 100%;
     width: 100%;
     height: 100vh;
     z-index: 4;
@@ -1201,22 +1201,42 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 20px;
+    bottom: 35px;
     float: right;
     width: 100%;
 }
 
-.splashScreen .loading .spinner {
-    animation: spinner 0.8s linear infinite;
-    border: 2px solid #ffa200;
-    border-right-color: transparent;
-    border-radius: 100%;
-    display: inline-block;
-    overflow: hidden;
-    text-indent: -9999px;
-    vertical-align: middle;
-    width: 18px;
-    height: 18px;
+.splashScreen .loading svg path:nth-child(1) {
+    stroke-dasharray: 2.42777px, 242.77666px;
+    stroke-dashoffset: 0;
+    -webkit-animation: anim 1.6s linear infinite;
+    animation: anim 1.6s linear infinite;
+    stroke: #727272;
+}
+.splashScreen .loading svg path:nth-child(2) {
+    stroke: #000;
+    opacity: 0.1;
+}
+[data-bs-theme='dark'] .splashScreen .loading svg path:nth-child(1) {
+    stroke: #fff;
+}
+[data-bs-theme='dark'] .splashScreen .loading svg path:nth-child(2) {
+    stroke: #ededed;
+    opacity: 0.1;
+}
+@keyframes anim {
+    12.5% {
+        stroke-dasharray: 33.98873px, 242.77666px;
+        stroke-dashoffset: -26.70543px;
+    }
+    43.75% {
+        stroke-dasharray: 84.97183px, 242.77666px;
+        stroke-dashoffset: -84.97183px;
+    }
+    100% {
+        stroke-dasharray: 2.42777px, 242.77666px;
+        stroke-dashoffset: -240.34889px;
+    }
 }
 
 .socialMedia {
