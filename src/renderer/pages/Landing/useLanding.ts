@@ -339,7 +339,7 @@ const useLanding = () => {
             const timeoutId = setTimeout(() => {
                 controller.abort();
             }, 5000);
-            const response = await fetch('https://1.1.1.1/cdn-cgi/trace', {
+            const response = await fetch(defaultSettings.testUrl, {
                 signal
             });
             const data = await response.text();
@@ -352,7 +352,10 @@ const useLanding = () => {
             const getLoc = parseLine('loc')?.toLowerCase() || false;
             const checkWarp = parseLine('warp') || '';
             const cfHost = parseLine('h') || 'off';
-            if (getLoc && cfHost === '1.1.1.1') {
+            if (
+                getLoc &&
+                (cfHost === '1.1.1.1' || cfHost === new URL(defaultSettings.testUrl).hostname)
+            ) {
                 if (
                     (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
                     checkWarp !== 'off'

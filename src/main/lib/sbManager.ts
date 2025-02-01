@@ -52,7 +52,7 @@ const CONFIG = {
     connection: {
         maxRetries: 10,
         endpoint: '127.0.0.1:50051',
-        testUrl: 'https://1.1.1.1/cdn-cgi/trace'
+        testUrl: defaultSettings.testUrl
     },
     status: {
         preparing: 'preparing',
