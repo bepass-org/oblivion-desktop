@@ -122,6 +122,8 @@ const persian: Language = {
         geo_rules_ip_desc: 'به‌کارگیری قوانین GeoIP',
         geo_rules_site: 'مسیریابی وب',
         geo_rules_site_desc: 'به‌کارگیری قوانین GeoSite',
+        geo_nsfw_block: 'فیلتر محتوا',
+        geo_nsfw_block_desc: 'مسدود کردن وب‌سایت‌های NSFW',
         more_helper: 'تنظیمات دستیار',
         singbox_log: 'گزارش‌دهی',
         singbox_log_desc: 'تنظیم سطح Log',

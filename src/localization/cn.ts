@@ -121,6 +121,8 @@ const chinese: Language = {
         geo_rules_ip_desc: '应用 GeoIP 规则',
         geo_rules_site: '网页路由',
         geo_rules_site_desc: '应用 GeoSite 规则',
+        geo_nsfw_block: '内容过滤',
+        geo_nsfw_block_desc: '屏蔽 NSFW 网站',
         more_helper: '助理设置',
         singbox_log: '日志记录',
         singbox_log_desc: '设置日志级别',

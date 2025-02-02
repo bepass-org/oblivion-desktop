@@ -121,6 +121,8 @@ const amharic: Language = {
         geo_rules_ip_desc: 'GeoIP ስም ማስተናገድ',
         geo_rules_site: 'የአውትባ ወሳኝ',
         geo_rules_site_desc: 'GeoSite አማካኝነት ስምንበት',
+        geo_nsfw_block: 'የማጣሪያ ይዘት',
+        geo_nsfw_block_desc: 'የ NSFW ድረ-ገጾችን መገደብ',
         more_helper: 'ማሳሰቢያ ቅንብሮች',
         singbox_log: 'እትም አንደኛ',
         singbox_log_desc: 'እትም ሁለትን በመመን የምሳሌዎች',

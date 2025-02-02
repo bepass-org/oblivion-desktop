@@ -123,6 +123,8 @@ const myanmar: Language = {
         geo_rules_ip_desc: 'GeoIP စည်းမျဉ်းများကိုလျှောက်ထားပါ',
         geo_rules_site: 'Web Routing',
         geo_rules_site_desc: 'GeoSite စည်းမျဉ်းများကိုလျှောက်ထားပါ',
+        geo_nsfw_block: 'အကြောင်းအရာ ဖILTER',
+        geo_nsfw_block_desc: 'NSFW ဝဘ်ဆိုဒ်များကို ပိတ်ဆို့မည်',
         more_helper: 'အကူအညီဆက်တင်များ',
         singbox_log: 'Logging',
         singbox_log_desc: 'Log အဆင့်ကိုသတ်မှတ်ပါ',

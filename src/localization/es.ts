@@ -124,6 +124,8 @@ const spanish: Language = {
         geo_rules_ip_desc: 'Aplicar reglas de GeoIP',
         geo_rules_site: 'Enrutamiento Web',
         geo_rules_site_desc: 'Aplicar reglas de GeoSite',
+        geo_nsfw_block: 'Filtro de contenido',
+        geo_nsfw_block_desc: 'Bloquear sitios web NSFW',
         more_helper: 'Configuraciones del Asistente',
         singbox_log: 'Registro',
         singbox_log_desc: 'Establecer Nivel de Registro',

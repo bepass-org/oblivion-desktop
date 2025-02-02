@@ -123,6 +123,8 @@ const indonesia: Language = {
         geo_rules_ip_desc: 'Menerapkan aturan GeoIP',
         geo_rules_site: 'Routing Web',
         geo_rules_site_desc: 'Menerapkan aturan GeoSite',
+        geo_nsfw_block: 'Penyaring Konten',
+        geo_nsfw_block_desc: 'Blokir situs web NSFW',
         more_helper: 'Pengaturan Asisten',
         singbox_log: 'Pencatatan',
         singbox_log_desc: 'Atur Tingkat Pencatatan',

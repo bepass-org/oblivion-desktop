@@ -123,6 +123,8 @@ const turkish: Language = {
         geo_rules_ip_desc: 'GeoIP kurallarını uygulama',
         geo_rules_site: 'Web Yönlendirme',
         geo_rules_site_desc: 'GeoSite kurallarını uygulama',
+        geo_nsfw_block: 'İçerik Filtresi',
+        geo_nsfw_block_desc: 'NSFW sitelerini engelle',
         more_helper: 'Yardımcı Ayarları',
         singbox_log: 'Kayıt',
         singbox_log_desc: 'Kayıt Seviyesi Ayarla',

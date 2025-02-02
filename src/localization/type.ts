@@ -121,6 +121,8 @@ export interface Settings {
     geo_rules_ip_desc: string;
     geo_rules_site: string;
     geo_rules_site_desc: string;
+    geo_nsfw_block: string;
+    geo_nsfw_block_desc: string;
     more_helper: string;
     singbox_log: string;
     singbox_log_desc: string;

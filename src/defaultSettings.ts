@@ -135,7 +135,7 @@ export const languages: { value: string; label: string }[] = [
 ];
 
 export const dnsServers: { value: string; label: string }[] = [
-    { value: '1.1.1.1', label: 'Cloudflare Standard' },
+    { value: '1.1.1.1', label: 'Cloudflare' },
     { value: '1.1.1.2', label: 'Cloudflare Security' },
     { value: '1.1.1.3', label: 'Cloudflare Family' }
 ];

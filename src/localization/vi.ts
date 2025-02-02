@@ -123,6 +123,8 @@ const vietnamese: Language = {
         geo_rules_ip_desc: 'Áp dụng các quy tắc GeoIP',
         geo_rules_site: 'Định tuyến Web',
         geo_rules_site_desc: 'Áp dụng các quy tắc GeoSite',
+        geo_nsfw_block: 'Bộ lọc nội dung',
+        geo_nsfw_block_desc: 'Chặn trang web NSFW',
         more_helper: 'Đối tượng Phật',
         singbox_log: 'Ghi Log',
         singbox_log_desc: 'Cài đặt Mức Log',

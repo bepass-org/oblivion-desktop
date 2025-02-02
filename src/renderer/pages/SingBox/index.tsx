@@ -129,7 +129,7 @@ export default function SingBox() {
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='geo_nsfw'>
-                                NSFW
+                                {appLang.settings.geo_nsfw_block}
                             </label>
                             <div className='value'>
                                 <div
@@ -139,7 +139,7 @@ export default function SingBox() {
                                     <i className='material-icons'></i>
                                 </div>
                             </div>
-                            <div className='info'>Block NSFW Websites</div>
+                            <div className='info'>{appLang.settings.geo_nsfw_block_desc}</div>
                         </div>
                     </div>
                     <div className='moreSettings'>

@@ -123,6 +123,8 @@ const urdu: Language = {
         geo_rules_ip_desc: 'GeoIP قواعد لاگو کریں',
         geo_rules_site: 'ویب روٹنگ',
         geo_rules_site_desc: 'GeoSite قواعد لاگو کریں',
+        geo_nsfw_block: 'مواد کی فلٹرنگ',
+        geo_nsfw_block_desc: 'NSFW ویب سائٹس کو بلاک کریں',
         more_helper: 'مددگار کی ترتیبات',
         singbox_log: 'لاگنگ',
         singbox_log_desc: 'لاگ سطح سیٹ کریں',

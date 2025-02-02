@@ -121,6 +121,8 @@ const arabic: Language = {
         geo_rules_ip_desc: 'تطبيق قواعد GeoIP',
         geo_rules_site: 'توجيه الويب',
         geo_rules_site_desc: 'تطبيق قواعد GeoSite',
+        geo_nsfw_block: 'تصفية المحتوى',
+        geo_nsfw_block_desc: 'حظر مواقع NSFW',
         more_helper: 'إعدادات المساعد',
         singbox_log: 'التسجيل',
         singbox_log_desc: 'تعيين مستوى التسجيل',

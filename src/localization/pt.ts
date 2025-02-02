@@ -122,6 +122,8 @@ const brazilianPortuguese: Language = {
         geo_rules_ip_desc: 'Aplicação das regras GeoIP',
         geo_rules_site: 'Roteamento Web',
         geo_rules_site_desc: 'Aplicação das regras GeoSite',
+        geo_nsfw_block: 'Filtro de Conteúdo',
+        geo_nsfw_block_desc: 'Bloquear sites NSFW',
         more_helper: 'Configurações do Assistente',
         singbox_log: 'Registro',
         singbox_log_desc: 'Definir Nível de Registro',

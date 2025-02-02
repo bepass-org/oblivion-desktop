@@ -122,6 +122,8 @@ const english: Language = {
         geo_rules_ip_desc: 'Applying GeoIP rules',
         geo_rules_site: 'Web Routing',
         geo_rules_site_desc: 'Applying GeoSite rules',
+        geo_nsfw_block: 'Content Filter',
+        geo_nsfw_block_desc: 'Block NSFW websites',
         more_helper: 'Assistant Settings',
         singbox_log: 'Logging',
         singbox_log_desc: 'Set Log Level',

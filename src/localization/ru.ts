@@ -123,6 +123,8 @@ const russian: Language = {
         geo_rules_ip_desc: 'Применение правил GeoIP',
         geo_rules_site: 'Веб-маршрутизация',
         geo_rules_site_desc: 'Применение правил GeoSite',
+        geo_nsfw_block: 'Фильтр контента',
+        geo_nsfw_block_desc: 'Блокировка сайтов NSFW',
         more_helper: 'Настройки ассистента',
         singbox_log: 'Журналирование',
         singbox_log_desc: 'Установить уровень журнала',
