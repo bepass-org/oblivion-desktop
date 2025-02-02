@@ -50,7 +50,7 @@ const CONFIG = {
     },
     connection: {
         maxRetries: 10,
-        endpoint: '127.0.0.1:50051'
+        grpcEndpoint: '127.0.0.1:50051'
     },
     status: {
         preparing: 'preparing',
@@ -136,6 +136,7 @@ class SingBoxManager {
 
     public async checkConnectionStatus(): Promise<boolean> {
         log.info('Waiting for connection...');
+
         const savedTestUrl = await settings.get('testUrl');
         const testUrl = this.getSettingOrDefault(savedTestUrl, defaultSettings.testUrl);
         log.info(`Testing connection via ${testUrl}`);
@@ -185,7 +186,7 @@ class SingBoxManager {
         });
         const proto: any = grpc.loadPackageDefinition(packageDefinition).oblivionHelper;
         return new proto.OblivionService(
-            CONFIG.connection.endpoint,
+            CONFIG.connection.grpcEndpoint,
             grpc.credentials.createInsecure()
         );
     }
