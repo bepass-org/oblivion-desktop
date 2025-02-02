@@ -121,6 +121,8 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxStack', singBoxStack[0].value);
         await settings.set('singBoxSniff', defaultSettings.singBoxSniff);
         await settings.set('restartCounter', defaultSettings.restartCounter);
+        await settings.set('singBoxGeoNSFW', defaultSettings.singBoxGeoNSFW);
+        await settings.set('testUrl', defaultSettings.testUrl);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
