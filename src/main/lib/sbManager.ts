@@ -136,6 +136,9 @@ class SingBoxManager {
 
     public async checkConnectionStatus(): Promise<boolean> {
         log.info('Waiting for connection...');
+        const savedTestUrl = await settings.get('testUrl');
+        const testUrl = this.getSettingOrDefault(savedTestUrl, defaultSettings.testUrl);
+        log.info(`Testing connection via ${testUrl}`);
 
         const checkAttempt = async (attempt: number): Promise<boolean> => {
             if (this.shouldBreakConnectionTest) return false;
@@ -144,13 +147,9 @@ class SingBoxManager {
             const timeoutId = setTimeout(() => controller.abort(), CONFIG.delays.connectionTimeout);
 
             try {
-                const testUrl = await settings.get('testUrl');
-                const response = await fetch(
-                    this.getSettingOrDefault(testUrl, defaultSettings.testUrl),
-                    {
-                        signal: controller.signal
-                    }
-                );
+                const response = await fetch(testUrl, {
+                    signal: controller.signal
+                });
 
                 if (response.ok && !this.shouldBreakConnectionTest) {
                     await this.delay(CONFIG.delays.success);
