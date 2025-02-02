@@ -14,26 +14,42 @@ let appLang = getTranslate('en');
 const randomCountry = () => countries[Math.floor(Math.random() * countries.length)]?.value || 'DE';
 
 export const getUserSettings = async () => {
-    const [endpoint, ipType, port, location, license, method, hostIP, rtt, reserved, lang, dns] =
-        await Promise.all([
-            settings.get('endpoint'),
-            settings.get('ipType'),
-            settings.get('port'),
-            settings.get('location'),
-            settings.get('license'),
-            settings.get('method'),
-            settings.get('hostIP'),
-            settings.get('rtt'),
-            settings.get('reserved'),
-            settings.get('lang'),
-            settings.get('dns')
-        ]);
+    const [
+        endpoint,
+        ipType,
+        port,
+        location,
+        license,
+        method,
+        hostIP,
+        rtt,
+        reserved,
+        lang,
+        dns,
+        testUrl
+    ] = await Promise.all([
+        settings.get('endpoint'),
+        settings.get('ipType'),
+        settings.get('port'),
+        settings.get('location'),
+        settings.get('license'),
+        settings.get('method'),
+        settings.get('hostIP'),
+        settings.get('rtt'),
+        settings.get('reserved'),
+        settings.get('lang'),
+        settings.get('dns'),
+        settings.get('testUrl')
+    ]);
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
     return [
         '--bind',
         `${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`,
         ...(typeof license === 'string' && license !== '' ? ['--key', license] : []),
+        ...(typeof testUrl === 'string' && testUrl !== '' && testUrl !== defaultSettings.testUrl
+            ? ['--test-url', testUrl]
+            : []),
         ...(typeof method === 'string'
             ? method === 'gool'
                 ? ['--gool']
