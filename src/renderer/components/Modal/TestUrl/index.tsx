@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import useTestUrlModal from './useTestUrlModal';
 import Input from '../../Input';
+import { defaultSettings } from '../../../../defaultSettings';
 
 interface TestUrlModalProps {
     title: string;
@@ -27,7 +28,7 @@ export default function TestUrlModal({
         onSaveModalClick,
         onSaveModalKeyDown,
         showModal,
-        handleClearTestUrlInput
+        setTestUrlInput
     } = useTestUrlModal({
         isOpen,
         onClose,
@@ -45,7 +46,25 @@ export default function TestUrlModal({
                     <div className='line'>
                         <div className='miniLine' />
                     </div>
-                    <h3>{title}</h3>
+                    <h3>
+                        {title}
+                        <div className='labels'>
+                            {testUrlInput !== defaultSettings.testUrl && (
+                                <>
+                                    <div
+                                        role='presentation'
+                                        className={classNames('label', 'label-warning')}
+                                        onClick={() => {
+                                            setTestUrlInput(defaultSettings.testUrl);
+                                        }}
+                                    >
+                                        <i className='material-icons'>&#xe145;</i>
+                                        {appLang?.modal?.endpoint_default}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </h3>
                     <div className='clearfix' />
                     <Input
                         id='modal_test_url_input'

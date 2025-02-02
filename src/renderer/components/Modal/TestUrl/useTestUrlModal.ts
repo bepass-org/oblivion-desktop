@@ -68,13 +68,13 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
         [setTestUrlInput]
     );
 
-    const handleClearTestUrlInput = useCallback(() => {
+    /*const handleClearTestUrlInput = useCallback(() => {
         setTestUrlInput('');
         setTestUrl('');
         settings.set('testUrl', '');
         settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         handleOnClose();
-    }, [setTestUrl, isConnected, isLoading, appLang, handleOnClose]);
+    }, [setTestUrl, isConnected, isLoading, appLang, handleOnClose]);*/
 
     return {
         appLang,
@@ -86,7 +86,7 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
         showModal,
         handleCancelButtonKeyDown,
         onSaveModalKeyDown,
-        handleClearTestUrlInput
+        setTestUrlInput
     };
 };
 
