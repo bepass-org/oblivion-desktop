@@ -8,7 +8,6 @@ import * as protoLoader from '@grpc/proto-loader';
 import {
     defaultSettings,
     dnsServers,
-    dohDnsServers,
     singBoxGeoIp,
     singBoxGeoSite,
     singBoxLog,
@@ -293,8 +292,8 @@ class SingBoxManager {
     }
 
     private getDoHDns(dns: any): string {
-        if (typeof dns !== 'string') return dohDnsServers[0].value;
-        return dohDnsServers.find((doh) => doh.key === dns)?.value ?? dohDnsServers[0].value;
+        if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
+        return `https://${dns}/dns-query`;
     }
 
     private getSettingOrDefault<T>(value: any, defaultValue: T): T {
