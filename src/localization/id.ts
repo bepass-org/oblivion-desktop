@@ -150,6 +150,8 @@ const indonesia: Language = {
         license_desc:
             'Program ini tidak memerlukan lisensi Warp untuk menjalankannya, tetapi jika Anda mau, Anda bisa memasukkan lisensi Anda di sini.',
         license_clear: 'Hapus',
+        test_url_title: 'URL Uji',
+        test_url_desc: 'Alamat uji konektivitas',
         port_title: 'Port Proxy',
         restore_title: 'Pulihkan Perubahan',
         restore_desc:

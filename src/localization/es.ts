@@ -151,6 +151,8 @@ const spanish: Language = {
         license_desc:
             'El programa no necesita necesariamente una licencia Warp para funcionar, pero si lo deseas, puedes ingresar tu licencia aquí.',
         license_clear: 'Limpiar',
+        test_url_title: 'URL de prueba',
+        test_url_desc: 'Dirección de prueba de conectividad',
         port_title: 'Puerto de Proxy',
         restore_title: 'Restaurar Cambios',
         restore_desc:

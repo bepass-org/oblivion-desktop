@@ -149,6 +149,8 @@ const english: Language = {
         license_desc:
             'The program does not necessarily need a Warp license to run, but if you wish, you can enter your license here.',
         license_clear: 'Clear',
+        test_url_title: 'Test Url',
+        test_url_desc: 'Connectivity test address',
         port_title: 'Proxy Port',
         restore_title: 'Restore Changes',
         restore_desc:

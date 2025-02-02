@@ -149,6 +149,8 @@ export interface Modal {
     license_title: string;
     license_desc: string;
     license_clear: string;
+    test_url_title: string;
+    test_url_desc: string;
     port_title: string;
     restore_title: string;
     restore_desc: string;

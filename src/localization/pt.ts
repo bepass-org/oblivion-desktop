@@ -149,6 +149,8 @@ const brazilianPortuguese: Language = {
         license_desc:
             'O programa não precisa necessariamente de uma licença Warp para rodar, mas se você quiser, pode inserir sua licença aqui.',
         license_clear: 'Limpar',
+        test_url_title: 'URL de Teste',
+        test_url_desc: 'Endereço de teste de conectividade',
         port_title: 'Porta do Proxy',
         restore_title: 'Restaurar Alterações',
         restore_desc:

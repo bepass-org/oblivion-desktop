@@ -150,6 +150,8 @@ const turkish: Language = {
         license_desc:
             'Program çalışması için Warp lisansı gerektirmez, ancak isterseniz lisansınızı buraya girebilirsiniz.',
         license_clear: 'Temizle',
+        test_url_title: 'Test URL',
+        test_url_desc: 'Bağlantı testi adresi',
         port_title: 'Proxy Portu',
         restore_title: 'Değişiklikleri Geri Yükle',
         restore_desc:

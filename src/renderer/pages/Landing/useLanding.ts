@@ -73,6 +73,7 @@ const useLanding = () => {
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
     const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
+    const [testUrl, setTestUrl] = useState<string>();
 
     const navigate = useNavigate();
 
@@ -118,7 +119,8 @@ const useLanding = () => {
                 'proxyMode',
                 'shortcut',
                 'dataUsage',
-                'betaRelease'
+                'betaRelease',
+                'testUrl'
             ])
             .then((values) => {
                 setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
@@ -147,6 +149,9 @@ const useLanding = () => {
                     typeof values.betaRelease === 'undefined'
                         ? defaultSettings.betaRelease
                         : values.betaRelease
+                );
+                setTestUrl(
+                    typeof values.testUrl === 'undefined' ? defaultSettings.testUrl : values.testUrl
                 );
             })
             .catch((error) => {
@@ -339,7 +344,7 @@ const useLanding = () => {
             const timeoutId = setTimeout(() => {
                 controller.abort();
             }, 5000);
-            const response = await fetch(defaultSettings.testUrl, {
+            const response = await fetch(String(testUrl), {
                 signal
             });
             const data = await response.text();
@@ -352,10 +357,7 @@ const useLanding = () => {
             const getLoc = parseLine('loc')?.toLowerCase() || false;
             const checkWarp = parseLine('warp') || '';
             const cfHost = parseLine('h') || 'off';
-            if (
-                getLoc &&
-                (cfHost === '1.1.1.1' || cfHost === new URL(defaultSettings.testUrl).hostname)
-            ) {
+            if (getLoc && (cfHost === '1.1.1.1' || cfHost === new URL(String(testUrl)).hostname)) {
                 if (
                     (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
                     checkWarp !== 'off'

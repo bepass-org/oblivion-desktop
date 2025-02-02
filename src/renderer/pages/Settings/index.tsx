@@ -3,8 +3,10 @@ import { Toaster } from 'react-hot-toast';
 import Nav from '../../components/Nav';
 import Tabs from '../../components/Tabs';
 import LicenseModal from '../../components/Modal/License';
+import TestUrlModal from '../../components/Modal/TestUrl';
 import useSettings from './useSettings';
 import Dropdown from '../../components/Dropdown';
+import { defaultSettings } from '../../../defaultSettings';
 
 export default function Settings() {
     const {
@@ -29,7 +31,13 @@ export default function Settings() {
         showLicenseModal,
         loading,
         locationItems,
-        proxyMode
+        proxyMode,
+        testUrl,
+        setTestUrl,
+        onCloseTestUrlModal,
+        onKeyDownTestUrl,
+        onOpenTestUrlModal,
+        showTestUrlModal
     } = useSettings();
 
     if (loading) return <div className='settings' />;
@@ -55,6 +63,13 @@ export default function Settings() {
                 title={appLang?.modal?.license_title}
                 isOpen={showLicenseModal}
                 onClose={onCloseLicenseModal}
+            />
+            <TestUrlModal
+                testUrl={testUrl || ''}
+                setTestUrl={setTestUrl}
+                title={appLang?.modal?.test_url_title}
+                isOpen={showTestUrlModal}
+                onClose={onCloseTestUrlModal}
             />
             <div className={classNames('myApp', 'normalPage')}>
                 <div className='container'>
@@ -176,12 +191,12 @@ export default function Settings() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className='moreSettings'>
+                    <div className='moreSettings'>
                         <i className='material-icons'>&#xe313;</i>
                         {appLang?.settings?.more}
                     </div>
                     <div className='settings' role='menu' tabIndex={0}>
-                        <div
+                        {/* <div
                             role='button'
                             className='item'
                             onClick={onOpenLicenseModal}
@@ -201,8 +216,31 @@ export default function Settings() {
                                 </span>
                             </div>
                             <div className='info'>{appLang?.settings?.license_desc}</div>
+                        </div> */}
+                        <div
+                            role='button'
+                            className='item'
+                            onClick={onOpenTestUrlModal}
+                            onKeyDown={onKeyDownTestUrl}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='flex-switch-check-checked-license'>
+                                {appLang?.modal?.test_url_title}
+                            </label>
+                            <div className='value' role='link'>
+                                <span
+                                    className='dirLeft'
+                                    id='flex-switch-check-checked-test-url'
+                                    tabIndex={-1}
+                                >
+                                    {testUrl && testUrl !== ''
+                                        ? new URL(testUrl).hostname
+                                        : defaultSettings.testUrl}
+                                </span>
+                            </div>
+                            <div className='info'>{appLang?.modal?.test_url_desc}</div>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
             </div>
             <Toaster

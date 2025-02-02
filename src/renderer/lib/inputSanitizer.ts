@@ -87,6 +87,28 @@ export const validateLicense = (license: string): string => {
     return /^[a-zA-Z0-9-]*$/.test(license) ? license : '';
 };
 
+export const validateTestUrl = (url: string): string => {
+    if (!url || typeof url !== 'string') {
+        return defaultSettings.testUrl;
+    }
+    url = url.trim();
+    if (url === '') {
+        return defaultSettings.testUrl;
+    }
+    if (url.startsWith('http://')) {
+        url = url.replace(/^http:/, 'https:');
+    }
+    if (!url.startsWith('https')) {
+        url = 'https://' + url;
+    }
+    if (!url.endsWith('/cdn-cgi/trace')) {
+        url = url.replace(/\/$/, '');
+        url = url + '/cdn-cgi/trace';
+    }
+    url = url.replace(/\/$/, '');
+    return url;
+};
+
 export const determineIpType = (endpoint: string, ipType: string): '' | 'v4' | 'v6' => {
     if (endpoint === defaultSettings.endpoint) {
         return ipType === 'v4' || ipType === 'v6' ? ipType : '';

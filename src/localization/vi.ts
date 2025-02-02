@@ -150,6 +150,8 @@ const vietnamese: Language = {
         license_desc:
             'Chương trình không cần giấy phép Warp để chạy, nhưng nếu bạn muốn, bạn có thể nhập giấy phép của mình ở đây.',
         license_clear: 'Xóa',
+        test_url_title: 'URL kiểm tra',
+        test_url_desc: 'Địa chỉ kiểm tra kết nối',
         port_title: 'Cổng Proxy',
         restore_title: 'Khôi phục thay đổi',
         restore_desc:

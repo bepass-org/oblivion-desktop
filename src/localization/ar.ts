@@ -148,6 +148,8 @@ const arabic: Language = {
         license_desc:
             'لا يتطلب تشغيل البرنامج رخصة Warp بالضرورة، ولكن إذا كنت ترغب، يمكنك إدخال الرخصة هنا.',
         license_clear: 'مسح',
+        test_url_title: 'عنوان رابط الاختبار',
+        test_url_desc: 'عنوان اختبار الاتصال',
         port_title: 'منفذ البروكسي',
         restore_title: 'استعادة التغييرات',
         restore_desc:

@@ -150,6 +150,8 @@ const urdu: Language = {
         license_desc:
             'پروگرام کو چلانے کے لیے ضروری طور پر وارپ لائسنس کی ضرورت نہیں ہے، لیکن اگر آپ چاہیں تو اپنا لائسنس یہاں داخل کر سکتے ہیں۔',
         license_clear: 'صاف کریں',
+        test_url_title: 'ٹیسٹ یو آر ایل',
+        test_url_desc: 'کنیکٹوٹی ٹیسٹ ایڈریس',
         port_title: 'پراکسی پورٹ',
         restore_title: 'تبدیلیاں بحال کریں',
         restore_desc:

@@ -51,7 +51,7 @@ const CONFIG = {
     connection: {
         maxRetries: 10,
         endpoint: '127.0.0.1:50051',
-        testUrl: defaultSettings.testUrl
+        testUrl: settings.get('testUrl')
     },
     status: {
         preparing: 'preparing',
@@ -145,7 +145,7 @@ class SingBoxManager {
             const timeoutId = setTimeout(() => controller.abort(), CONFIG.delays.connectionTimeout);
 
             try {
-                const response = await fetch(CONFIG.connection.testUrl, {
+                const response = await fetch(String(CONFIG.connection.testUrl), {
                     signal: controller.signal
                 });
 

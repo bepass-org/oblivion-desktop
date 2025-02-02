@@ -147,6 +147,8 @@ const amharic: Language = {
         license_title: 'ፈቃድ',
         license_desc: 'እባኮትን፣ ፕሮግራሙ እንደሆነ በዚህ ላይ ፈቃድዎን በመጠቀም ሊሄድ እንደሚችል እንዲሆን ፈቃድ አሳምንት አላስፈላጊ ነው።',
         license_clear: 'አጽዳ',
+        test_url_title: 'ቴስት ዩአርኤል',
+        test_url_desc: 'ግንኙነት ሙከራ አድራሻ',
         port_title: 'ፕሮክሲ ፖርት',
         restore_title: 'ለመመንገድ ስለሚሞከሩት ትንታኔ',
         restore_desc: 'ለመንገዶች እባኮትን እትም ማነተኝነት',

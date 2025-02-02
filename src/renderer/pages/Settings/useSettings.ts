@@ -23,6 +23,8 @@ const useSettings = () => {
     //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<undefined | string>('');
     const [proxyMode, setProxyMode] = useState<string>('');
+    const [testUrl, setTestUrl] = useState<string>();
+    const [showTestUrlModal, setShowTestUrlModal] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ const useSettings = () => {
 
     useEffect(() => {
         settings
-            .getMultiple(['location', 'license', 'method', 'proxyMode'])
+            .getMultiple(['location', 'license', 'method', 'proxyMode', 'testUrl'])
             .then((values) => {
                 setLocation(
                     typeof values.location === 'undefined'
@@ -53,6 +55,9 @@ const useSettings = () => {
                     typeof values.proxyMode === 'undefined'
                         ? defaultSettings.proxyMode
                         : values.proxyMode
+                );
+                setTestUrl(
+                    typeof values.testUrl === 'undefined' ? defaultSettings.testUrl : values.testUrl
                 );
             })
             .catch((error) => {
@@ -162,9 +167,26 @@ const useSettings = () => {
         [method]
     );
 
+    const onCloseTestUrlModal = useCallback(() => {
+        setShowTestUrlModal(false);
+    }, []);
+
+    const onOpenTestUrlModal = useCallback(() => setShowTestUrlModal(true), []);
+
+    const onKeyDownTestUrl = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onOpenTestUrlModal();
+            }
+        },
+        [onOpenTestUrlModal]
+    );
+
     const loading =
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
+        typeof testUrl === 'undefined' ||
         typeof method === 'undefined';
 
     return {
@@ -189,7 +211,13 @@ const useSettings = () => {
         onEnablePsiphon,
         onKeyDownPsiphon,
         onChangeLocation,
-        proxyMode
+        proxyMode,
+        testUrl,
+        setTestUrl,
+        onCloseTestUrlModal,
+        onKeyDownTestUrl,
+        onOpenTestUrlModal,
+        showTestUrlModal
     };
 };
 

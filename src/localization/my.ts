@@ -150,6 +150,8 @@ const myanmar: Language = {
         license_desc:
             'ဒီပရိုဂရမ်ကို လည်ပတ်ရန် Warp license တစ်ခု မလိုအပ်ပါဘူး၊ သို့သော် သင်သည် ဆန္ဒရှိလျှင်၊ ဤနေရာတွင် လိုင်စင်ကို ထည့်နိုင်ပါသည်။',
         license_clear: 'ရှင်းလင်းပါ',
+        test_url_title: 'စမ်းသပ် URL',
+        test_url_desc: 'ချိတ်ဆက်မှု စမ်းသပ်ရန်လိပ်စာ',
         port_title: 'Proxy Port',
         restore_title: 'ပြန်လည်ဆက်သွယ်မှု',
         restore_desc:
