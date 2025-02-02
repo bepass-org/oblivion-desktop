@@ -25,6 +25,7 @@ export default function SingBox() {
         singBoxGeoSite: geoSite,
         singBoxMTU: mtu,
         singBoxGeoBlock: geoBlock,
+        singBoxGeoNSFW: geoNSFW,
         singBoxLog: log,
         singBoxStack: stack,
         singBoxSniff: sniff,
@@ -37,6 +38,7 @@ export default function SingBox() {
         typeof geoSite === 'undefined' ||
         typeof mtu === 'undefined' ||
         typeof geoBlock === 'undefined' ||
+        typeof geoNSFW === 'undefined' ||
         typeof log === 'undefined' ||
         typeof stack === 'undefined' ||
         typeof sniff === 'undefined' ||
@@ -118,6 +120,26 @@ export default function SingBox() {
                                 </div>
                             </div>
                             <div className='info'>{appLang.settings.geo_block_desc}</div>
+                        </div>
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={() => handleToggleSetting('singBoxGeoNSFW')}
+                            onKeyDown={handleKeyDown('singBoxGeoNSFW')}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='geo_nsfw'>
+                                NSFW
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames('checkbox', geoNSFW ? 'checked' : '')}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>Block NSFW Websites</div>
                         </div>
                     </div>
                     <div className='moreSettings'>

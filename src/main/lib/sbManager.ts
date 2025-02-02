@@ -8,7 +8,6 @@ import * as protoLoader from '@grpc/proto-loader';
 import {
     defaultSettings,
     dnsServers,
-    dohDnsServers,
     singBoxGeoIp,
     singBoxGeoSite,
     singBoxLog,
@@ -279,22 +278,24 @@ class SingBoxManager {
     }
 
     private async loadGeoConfiguration(): Promise<IGeoConfig> {
-        const [ip, site, block] = await Promise.all([
+        const [ip, site, block, nsfw] = await Promise.all([
             settings.get('singBoxGeoIp'),
             settings.get('singBoxGeoSite'),
-            settings.get('singBoxGeoBlock')
+            settings.get('singBoxGeoBlock'),
+            settings.get('singBoxGeoNSFW')
         ]);
 
         return {
             geoIp: this.getSettingOrDefault(ip, singBoxGeoIp[0].geoIp),
             geoSite: this.getSettingOrDefault(site, singBoxGeoSite[0].geoSite),
-            geoBlock: this.getSettingOrDefault(block, defaultSettings.singBoxGeoBlock)
+            geoBlock: this.getSettingOrDefault(block, defaultSettings.singBoxGeoBlock),
+            geoNSFW: this.getSettingOrDefault(nsfw, defaultSettings.singBoxGeoNSFW)
         };
     }
 
     private getDoHDns(dns: any): string {
-        if (typeof dns !== 'string') return dohDnsServers[0].value;
-        return dohDnsServers.find((doh) => doh.key === dns)?.value ?? dohDnsServers[0].value;
+        if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
+        return `https://${dns}/dns-query`;
     }
 
     private getSettingOrDefault<T>(value: any, defaultValue: T): T {
@@ -316,6 +317,8 @@ class SingBoxManager {
             );
             ['malware', 'phishing'].forEach((type) => addRuleSet(`geoip-${type}.srs`));
         }
+
+        if (geoConfig.geoNSFW) addRuleSet(`geosite-nsfw.srs`);
 
         fs.writeFileSync(sbExportListPath, JSON.stringify({ interval: 7, urls }, null, 2), 'utf-8');
         log.info(`ExportList config created at ${sbExportListPath}`);

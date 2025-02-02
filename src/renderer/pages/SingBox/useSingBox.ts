@@ -47,6 +47,7 @@ const useSingBox = () => {
                     'singBoxGeoIp',
                     'singBoxGeoSite',
                     'singBoxGeoBlock',
+                    'singBoxGeoNSFW',
                     'singBoxLog',
                     'singBoxStack',
                     'singBoxSniff'

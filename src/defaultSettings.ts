@@ -32,6 +32,7 @@ export type settingsKeys =
     | 'singBoxGeoIp'
     | 'singBoxGeoSite'
     | 'singBoxGeoBlock'
+    | 'singBoxGeoNSFW'
     | 'singBoxLog'
     | 'singBoxStack'
     | 'singBoxSniff'
@@ -75,11 +76,12 @@ export const defaultSettings = {
     closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
+    singBoxGeoNSFW: false,
     singBoxSniff: true,
     restartCounter: 0,
     betaRelease: false,
     soundEffect: false,
-    testUrl: 'http://connectivity.cloudflareclient.com/cdn-cgi/trace'
+    testUrl: 'https://connectivity.cloudflareclient.com/cdn-cgi/trace'
 };
 
 export const countries: { value: string; label: string }[] = [
@@ -133,17 +135,9 @@ export const languages: { value: string; label: string }[] = [
 ];
 
 export const dnsServers: { value: string; label: string }[] = [
-    { value: '1.1.1.1', label: 'Cloudflare' },
-    { value: '8.8.8.8', label: 'Google' },
-    { value: '94.140.14.14', label: 'Adguard' },
-    { value: '94.140.14.15', label: 'Adguard Family' }
-];
-
-export const dohDnsServers: { key: string; value: string }[] = [
-    { key: '1.1.1.1', value: 'https://1.1.1.2/dns-query' },
-    { key: '8.8.8.8', value: 'https://dns.google/dns-query' },
-    { key: '94.140.14.14', value: 'https://dns.adguard-dns.com/dns-query' },
-    { key: '94.140.14.15', value: 'https://family.adguard-dns.com/dns-query' }
+    { value: '1.1.1.1', label: 'Cloudflare Standard' },
+    { value: '1.1.1.2', label: 'Cloudflare Security' },
+    { value: '1.1.1.3', label: 'Cloudflare Family' }
 ];
 
 export const singBoxGeoIp: { label: string; geoIp: string }[] = [
