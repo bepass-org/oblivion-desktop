@@ -36,7 +36,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 {
                     tag: 'dns-remote',
                     address: config.DoHDns,
-                    address_resolver: 'dns-direct',
                     detour: 'proxy'
                 },
                 {
@@ -66,14 +65,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             ]
         },
         inbounds: [
-            {
-                type: 'direct',
-                tag: 'dns-in',
-                listen: '0.0.0.0',
-                listen_port: 6450,
-                override_address: config.plainDns,
-                override_port: 53
-            },
             {
                 type: 'tun',
                 tag: 'tun-in',
@@ -114,20 +105,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         ],
         route: {
             rules: [
-                {
-                    type: 'logical',
-                    mode: 'or',
-                    rules: [
-                        {
-                            inbound: 'dns-in'
-                        },
-                        {
-                            network: 'udp',
-                            port: 53
-                        }
-                    ],
-                    outbound: 'dns-out'
-                },
+                { protocol: 'dns', outbound: 'dns-out' },
                 ...(geoConfig.geoBlock
                     ? [
                           {
