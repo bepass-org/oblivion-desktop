@@ -79,7 +79,7 @@ export const defaultSettings = {
     restartCounter: 0,
     betaRelease: false,
     soundEffect: false,
-    testUrl: 'http://connectivity.cloudflareclient.com/cdn-cgi/trace'
+    testUrl: 'https://connectivity.cloudflareclient.com/cdn-cgi/trace'
 };
 
 export const countries: { value: string; label: string }[] = [
