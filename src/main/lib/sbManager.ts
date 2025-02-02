@@ -278,16 +278,18 @@ class SingBoxManager {
     }
 
     private async loadGeoConfiguration(): Promise<IGeoConfig> {
-        const [ip, site, block] = await Promise.all([
+        const [ip, site, block, nsfw] = await Promise.all([
             settings.get('singBoxGeoIp'),
             settings.get('singBoxGeoSite'),
-            settings.get('singBoxGeoBlock')
+            settings.get('singBoxGeoBlock'),
+            settings.get('singBoxGeoNSFW')
         ]);
 
         return {
             geoIp: this.getSettingOrDefault(ip, singBoxGeoIp[0].geoIp),
             geoSite: this.getSettingOrDefault(site, singBoxGeoSite[0].geoSite),
-            geoBlock: this.getSettingOrDefault(block, defaultSettings.singBoxGeoBlock)
+            geoBlock: this.getSettingOrDefault(block, defaultSettings.singBoxGeoBlock),
+            geoNSFW: this.getSettingOrDefault(nsfw, defaultSettings.singBoxGeoNSFW)
         };
     }
 
@@ -315,6 +317,8 @@ class SingBoxManager {
             );
             ['malware', 'phishing'].forEach((type) => addRuleSet(`geoip-${type}.srs`));
         }
+
+        if (geoConfig.geoNSFW) addRuleSet(`geosite-nsfw.srs`);
 
         fs.writeFileSync(sbExportListPath, JSON.stringify({ interval: 7, urls }, null, 2), 'utf-8');
         log.info(`ExportList config created at ${sbExportListPath}`);

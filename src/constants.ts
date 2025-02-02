@@ -75,6 +75,7 @@ export interface IGeoConfig {
     geoIp: string;
     geoSite: string;
     geoBlock: boolean;
+    geoNSFW: boolean;
 }
 
 export interface IRoutingRules {

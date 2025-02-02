@@ -32,6 +32,7 @@ export type settingsKeys =
     | 'singBoxGeoIp'
     | 'singBoxGeoSite'
     | 'singBoxGeoBlock'
+    | 'singBoxGeoNSFW'
     | 'singBoxLog'
     | 'singBoxStack'
     | 'singBoxSniff'
@@ -75,6 +76,7 @@ export const defaultSettings = {
     closeHelper: true,
     singBoxMTU: 9000,
     singBoxGeoBlock: false,
+    singBoxGeoNSFW: false,
     singBoxSniff: true,
     restartCounter: 0,
     betaRelease: false,

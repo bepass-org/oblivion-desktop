@@ -121,6 +121,14 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
+                ...(geoConfig.geoNSFW
+                    ? [
+                          {
+                              rule_set: 'geosite-nsfw',
+                              outbound: 'block'
+                          }
+                      ]
+                    : []),
                 ...(rulesConfig.ipSet.length > 0
                     ? [
                           {
@@ -332,6 +340,16 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                         type: 'local',
                                         format: 'binary',
                                         path: path.join(ruleSetDirPath, 'geoip-phishing.srs')
+                                    }
+                                ]
+                              : []),
+                          ...(geoConfig.geoNSFW
+                              ? [
+                                    {
+                                        tag: 'geosite-nsfw',
+                                        type: 'local',
+                                        format: 'binary',
+                                        path: path.join(ruleSetDirPath, 'geosite-nsfw.srs')
                                     }
                                 ]
                               : [])
