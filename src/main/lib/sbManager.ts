@@ -256,16 +256,18 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [hostIP, port, dns, mtu, loglevel, stack, sniff, endpoint] = await Promise.all([
-            settings.get('hostIP'),
-            settings.get('port'),
-            settings.get('dns'),
-            settings.get('singBoxMTU'),
-            settings.get('singBoxLog'),
-            settings.get('singBoxStack'),
-            settings.get('singBoxSniff'),
-            settings.get('endpoint')
-        ]);
+        const [hostIP, port, dns, mtu, loglevel, stack, sniff, address, endpoint] =
+            await Promise.all([
+                settings.get('hostIP'),
+                settings.get('port'),
+                settings.get('dns'),
+                settings.get('singBoxMTU'),
+                settings.get('singBoxLog'),
+                settings.get('singBoxStack'),
+                settings.get('singBoxSniff'),
+                settings.get('singBoxAddrType'),
+                settings.get('endpoint')
+            ]);
 
         return {
             socksIp: this.getSettingOrDefault(hostIP, defaultSettings.hostIP),
@@ -274,6 +276,7 @@ class SingBoxManager {
             logLevel: this.getSettingOrDefault(loglevel, singBoxLog[0].value),
             tunStack: this.getSettingOrDefault(stack, singBoxStack[0].value),
             tunSniff: this.getSettingOrDefault(sniff, defaultSettings.singBoxSniff),
+            tunAddr: this.getTunAddr(address),
             plainDns: this.getSettingOrDefault(dns, dnsServers[0].value),
             DoHDns: this.getDoHDns(dns),
             tunEndpoint: this.getSettingOrDefault(endpoint, defaultSettings.endpoint)
@@ -299,6 +302,19 @@ class SingBoxManager {
     private getDoHDns(dns: any): string {
         if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
         return `https://${dns}/dns-query`;
+    }
+
+    private getTunAddr(addrType: any): string[] {
+        if (typeof addrType !== 'string') return ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'];
+
+        switch (addrType) {
+            case 'v4':
+                return ['172.19.0.1/30'];
+            case 'v6':
+                return ['fdfe:dcba:9876::1/126'];
+            default:
+                return ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'];
+        }
     }
 
     private getSettingOrDefault<T>(value: any, defaultValue: T): T {

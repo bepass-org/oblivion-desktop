@@ -5,7 +5,8 @@ import {
     singBoxGeoIp,
     singBoxGeoSite,
     singBoxLog,
-    singBoxStack
+    singBoxStack,
+    singBoxAddrType
 } from '../../../../defaultSettings';
 import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
@@ -117,11 +118,12 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxGeoIp', singBoxGeoIp[0].geoIp);
         await settings.set('singBoxGeoSite', singBoxGeoSite[0].geoSite);
         await settings.set('singBoxGeoBlock', defaultSettings.singBoxGeoBlock);
+        await settings.set('singBoxGeoNSFW', defaultSettings.singBoxGeoNSFW);
         await settings.set('singBoxLog', singBoxLog[0].value);
         await settings.set('singBoxStack', singBoxStack[0].value);
         await settings.set('singBoxSniff', defaultSettings.singBoxSniff);
+        await settings.set('singBoxAddrType', singBoxAddrType[0].value);
         await settings.set('restartCounter', defaultSettings.restartCounter);
-        await settings.set('singBoxGeoNSFW', defaultSettings.singBoxGeoNSFW);
         await settings.set('testUrl', defaultSettings.testUrl);
         //
         ipcRenderer.sendMessage('wp-end');

@@ -8,6 +8,7 @@ import {
     singBoxGeoSite,
     singBoxLog,
     singBoxStack,
+    singBoxAddrType,
     settingsKeys
 } from '../../../defaultSettings';
 
@@ -32,6 +33,8 @@ const useSingBox = () => {
                 return singBoxLog[0].value;
             case 'singBoxStack':
                 return singBoxStack[0].value;
+            case 'singBoxAddrType':
+                return singBoxAddrType[0].value;
             default:
                 return defaultSettings[key];
         }
@@ -50,7 +53,8 @@ const useSingBox = () => {
                     'singBoxGeoNSFW',
                     'singBoxLog',
                     'singBoxStack',
-                    'singBoxSniff'
+                    'singBoxSniff',
+                    'singBoxAddrType'
                 ];
                 const values = await settings.getMultiple(keysToFetch);
 
@@ -68,7 +72,7 @@ const useSingBox = () => {
             }
         };
 
-        fetchSettings().then((done) => console.log('Fetching settings:', done));
+        fetchSettings().then(() => console.log('Fetching settings'));
     }, []);
 
     const handleToggleSetting = useCallback(

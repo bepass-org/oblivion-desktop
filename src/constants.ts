@@ -69,6 +69,7 @@ export interface IConfig {
     plainDns: string;
     DoHDns: string;
     tunEndpoint: string;
+    tunAddr: string[];
 }
 
 export interface IGeoConfig {
