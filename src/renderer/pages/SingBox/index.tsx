@@ -271,7 +271,7 @@ export default function SingBox() {
                         </div>
 
                         <div className={classNames('item')}>
-                            <label className='key' htmlFor='adrress_type'>
+                            <label className='key' htmlFor='address_type'>
                                 Address
                             </label>
                             <div className='value'>
@@ -292,7 +292,7 @@ export default function SingBox() {
                                     ))}
                                 </select>
                             </div>
-                            <div className='info'>Set Interface Adrress Type</div>
+                            <div className='info'>Set Interface Address Type</div>
                         </div>
                     </div>
                 </div>
