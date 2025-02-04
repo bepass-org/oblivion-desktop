@@ -161,7 +161,7 @@ export function checkIpType(value: any, endpoint: any) {
 }
 
 export function checkTunAddrType(addrType: any): string {
-    if (typeof addrType !== 'string') return 'v4/v6';
+    if (typeof addrType !== 'string') return 'v64';
 
     return addrType;
 }
