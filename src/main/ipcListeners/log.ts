@@ -102,7 +102,7 @@ export const logMetadata = (osInfo: string) => {
             //log.info('license:', hasLicense(data[2]));
             log.info('reserved:', checkReserved(data[7]));
             log.info('geo', checkGeoStatus(data[8], data[9], data[10], data[11]));
-            log.info('testUrl', checkTestUrl(data[12]));
+            log.info('testUrl', checkTestUrl(data[14]));
             log.info(`exe: ${app.getPath('exe')}`);
             log.info(`userData: ${app.getPath('userData')}`);
             log.info(`logs: ${app.getPath('logs')}`);
