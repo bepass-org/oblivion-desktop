@@ -125,6 +125,8 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('singBoxAddrType', singBoxAddrType[0].value);
         await settings.set('restartCounter', defaultSettings.restartCounter);
         await settings.set('testUrl', defaultSettings.testUrl);
+        await settings.set('soundEffect', defaultSettings.soundEffect);
+        await settings.set('betaRelease', defaultSettings.betaRelease);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
