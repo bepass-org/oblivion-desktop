@@ -4,7 +4,13 @@ import Nav from '../../components/Nav';
 import useSingBox from './useSingBox';
 import MTUModal from '../../components/Modal/MTU';
 import Tabs from '../../components/Tabs';
-import { singBoxGeoIp, singBoxGeoSite, singBoxLog, singBoxStack } from '../../../defaultSettings';
+import {
+    singBoxGeoIp,
+    singBoxGeoSite,
+    singBoxLog,
+    singBoxStack,
+    singBoxAddrType
+} from '../../../defaultSettings';
 
 export default function SingBox() {
     const {
@@ -29,6 +35,7 @@ export default function SingBox() {
         singBoxLog: log,
         singBoxStack: stack,
         singBoxSniff: sniff,
+        singBoxAddrType: addrType,
         proxyMode
     } = settingsState;
 
@@ -42,6 +49,7 @@ export default function SingBox() {
         typeof log === 'undefined' ||
         typeof stack === 'undefined' ||
         typeof sniff === 'undefined' ||
+        typeof addrType === 'undefined' ||
         typeof proxyMode === 'undefined'
     )
         return <div className='settings' />;
@@ -260,6 +268,31 @@ export default function SingBox() {
                                 </div>
                             </div>
                             <div className='info'>{appLang.settings.singbox_sniff_desc}</div>
+                        </div>
+
+                        <div className={classNames('item')}>
+                            <label className='key' htmlFor='address_type'>
+                                Address
+                            </label>
+                            <div className='value'>
+                                <select
+                                    tabIndex={-1}
+                                    id='addrType'
+                                    onChange={handleSelectChange('singBoxAddrType')}
+                                    value={addrType as string}
+                                >
+                                    {singBoxAddrType.map((option) => (
+                                        <option
+                                            value={option.value}
+                                            tabIndex={0}
+                                            key={option.value}
+                                        >
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='info'>Set Interface Address Type</div>
                         </div>
                     </div>
                 </div>

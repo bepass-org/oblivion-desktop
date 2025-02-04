@@ -36,6 +36,7 @@ export type settingsKeys =
     | 'singBoxLog'
     | 'singBoxStack'
     | 'singBoxSniff'
+    | 'singBoxAddrType'
     | 'restartCounter'
     | 'betaRelease'
     | 'soundEffect'
@@ -203,4 +204,10 @@ export const singBoxStack: { value: string; label: string }[] = [
     { value: 'mixed', label: 'Mixed' },
     { value: 'system', label: 'System' },
     { value: 'gvisor', label: 'gVisor' }
+];
+
+export const singBoxAddrType: { value: string; label: string }[] = [
+    { value: 'v64', label: 'V4/V6' },
+    { value: 'v4', label: 'V4' },
+    { value: 'v6', label: 'V6' }
 ];

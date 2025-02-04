@@ -101,7 +101,7 @@ export function checkReserved(value: any) {
           : 'false';
 }
 
-export function checkGeoStatus(ip: any, site: any, block: any) {
+export function checkGeoStatus(ip: any, site: any, block: any, nsfw: any) {
     let status = '';
     status = 'Ip: ' + (typeof ip === 'string' ? String(ip) : 'none') + ', ';
     status += 'Site: ' + (typeof site === 'string' ? String(site) : 'none') + ', ';
@@ -112,6 +112,16 @@ export function checkGeoStatus(ip: any, site: any, block: any) {
                 ? 'true'
                 : 'false'
             : defaultSettings.singBoxGeoBlock
+              ? 'true'
+              : 'false') +
+        ', ';
+    status +=
+        'NSFW: ' +
+        (typeof nsfw === 'boolean'
+            ? nsfw
+                ? 'true'
+                : 'false'
+            : defaultSettings.singBoxGeoNSFW
               ? 'true'
               : 'false');
     return status;
@@ -148,6 +158,12 @@ export function checkIpType(value: any, endpoint: any) {
             return 'v4';
         }
     }
+}
+
+export function checkTunAddrType(addrType: any): string {
+    if (typeof addrType !== 'string') return 'v64';
+
+    return addrType;
 }
 
 export const exitTheApp = async () => {

@@ -69,7 +69,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 type: 'tun',
                 tag: 'tun-in',
                 mtu: config.tunMtu,
-                address: ['172.19.0.1/30', 'fdfe:dcba:9876::1/126'],
+                address: config.tunAddr,
                 auto_route: true,
                 strict_route: true,
                 stack: config.tunStack,
@@ -271,7 +271,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                       ]
                     : [])
             ],
-            ...(geoConfig.geoIp !== 'none' || geoConfig.geoSite !== 'none' || geoConfig.geoBlock
+            ...(geoConfig.geoIp !== 'none' ||
+            geoConfig.geoSite !== 'none' ||
+            geoConfig.geoBlock ||
+            geoConfig.geoNSFW
                 ? {
                       rule_set: [
                           ...(geoConfig.geoIp !== 'none'
