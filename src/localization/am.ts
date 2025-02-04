@@ -130,6 +130,8 @@ const amharic: Language = {
         singbox_stack_desc: 'እትም መመን ያሳይ',
         singbox_sniff: 'እንቅስቃሴ ይሳተፋል',
         singbox_sniff_desc: 'እንቅስቃሴ ላይ የማስተናገድ ትኩረት ተቀንሷል',
+        singbox_addressing: 'መድረሻ',
+        singbox_addressing_desc: 'የበገጠ በይነገጽ አይነት ማሰናጃ ይስተካከሉ',
         more_duties: 'ተጨማሪ ዕርምጃዎች',
         beta_release: 'እባብ እንቅስቃሴ',
         beta_release_desc: 'ስለ እንቅስቃሴ ከፊት በፊት ማህበረሰብ መረጃ ማግኘት'

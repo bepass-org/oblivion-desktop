@@ -131,6 +131,8 @@ const persian: Language = {
         singbox_stack_desc: 'تنظیم نوع Stack',
         singbox_sniff: 'تحلیل بسته‌ها',
         singbox_sniff_desc: 'فعالسازی Sniff و بازنویسی مقصد',
+        singbox_addressing: 'آدرس‌دهی',
+        singbox_addressing_desc: 'تنظیم نوع آدرس رابط',
         more_duties: 'وظایف',
         beta_release: 'بروزرسانی بتا',
         beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'

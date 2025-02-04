@@ -130,6 +130,8 @@ const chinese: Language = {
         singbox_stack_desc: '设置堆栈类型',
         singbox_sniff: '嗅探',
         singbox_sniff_desc: '启用嗅探并覆盖目标',
+        singbox_addressing: '寻址',
+        singbox_addressing_desc: '设置接口地址类型',
         more_duties: '更多职责',
         beta_release: 'Beta 更新',
         beta_release_desc: '了解预发布版本'

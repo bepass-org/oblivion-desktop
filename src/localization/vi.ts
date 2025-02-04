@@ -132,6 +132,8 @@ const vietnamese: Language = {
         singbox_stack_desc: 'Cài đặt Loại Ngăn Xếp',
         singbox_sniff: 'Nghe Gói',
         singbox_sniff_desc: 'Bật tính năng sniffing và ghi đè điểm đến',
+        singbox_addressing: 'Định địa chỉ',
+        singbox_addressing_desc: 'Đặt loại địa chỉ giao diện',
         more_duties: 'Nhiệm vụ thêm',
         beta_release: 'Cập nhật Beta',
         beta_release_desc: 'Cập nhật thông tin về các phiên bản trước khi phát hành'

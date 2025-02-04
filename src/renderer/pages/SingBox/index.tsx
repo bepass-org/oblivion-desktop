@@ -272,7 +272,7 @@ export default function SingBox() {
 
                         <div className={classNames('item')}>
                             <label className='key' htmlFor='address_type'>
-                                Address
+                                {appLang.settings.singbox_addressing}
                             </label>
                             <div className='value'>
                                 <select
@@ -292,7 +292,7 @@ export default function SingBox() {
                                     ))}
                                 </select>
                             </div>
-                            <div className='info'>Set Interface Address Type</div>
+                            <div className='info'>{appLang.settings.singbox_addressing_desc}</div>
                         </div>
                     </div>
                 </div>

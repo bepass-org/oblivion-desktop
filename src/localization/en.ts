@@ -131,6 +131,8 @@ const english: Language = {
         singbox_stack_desc: 'Set Stack Type',
         singbox_sniff: 'Sniff',
         singbox_sniff_desc: 'Enable Sniffing & Override Destination',
+        singbox_addressing: 'Addressing',
+        singbox_addressing_desc: 'Set Interface Address Type',
         more_duties: 'Duties',
         beta_release: 'Beta Update',
         beta_release_desc: 'Stay informed about pre-release versions'

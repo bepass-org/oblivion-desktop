@@ -130,6 +130,8 @@ export interface Settings {
     singbox_stack_desc: string;
     singbox_sniff: string;
     singbox_sniff_desc: string;
+    singbox_addressing: string;
+    singbox_addressing_desc: string;
     more_duties: string;
     beta_release: string;
     beta_release_desc: string;

@@ -130,6 +130,8 @@ const arabic: Language = {
         singbox_stack_desc: 'تعيين نوع الهيكل',
         singbox_sniff: 'الاستنشاق',
         singbox_sniff_desc: 'تمكين الاستنشاق وتجاوز الوجهة',
+        singbox_addressing: 'العنونة',
+        singbox_addressing_desc: 'قم بتعيين نوع عنوان الواجهة',
         more_duties: 'المزيد من الواجبات',
         beta_release: 'تحديث النسخة التجريبية',
         beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'

@@ -132,6 +132,8 @@ const myanmar: Language = {
         singbox_stack_desc: 'Stack အမျိုးအစားကိုသတ်မှတ်ပါ',
         singbox_sniff: 'Sniff',
         singbox_sniff_desc: 'Sniffing ကိုဖွင့်ပြီး ရောက်ရှိမှုကို Override လုပ်ပါ',
+        singbox_addressing: 'လိပ်စာတင်ခြင်း',
+        singbox_addressing_desc: 'Interface လိပ်စာအမျိုးအစားသတ်မှတ်ပါ',
         more_duties: 'ပိုမိုတာဝန်များ',
         beta_release: 'ဘီတာအပ်ဒိတ်',
         beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'

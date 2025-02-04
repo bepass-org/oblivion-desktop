@@ -132,6 +132,8 @@ const russian: Language = {
         singbox_stack_desc: 'Установить тип стека',
         singbox_sniff: 'Перехват',
         singbox_sniff_desc: 'Включить сканирование и переопределить назначение',
+        singbox_addressing: 'Адресация',
+        singbox_addressing_desc: 'Установите тип адреса интерфейса',
         more_duties: 'Дополнительные обязанности',
         beta_release: 'Бета-обновление',
         beta_release_desc: 'Будьте в курсе предварительных версий'
