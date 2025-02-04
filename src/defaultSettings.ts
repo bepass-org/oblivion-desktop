@@ -207,7 +207,7 @@ export const singBoxStack: { value: string; label: string }[] = [
 ];
 
 export const singBoxAddrType: { value: string; label: string }[] = [
-    { value: 'v64', label: 'V4/V6' },
-    { value: 'v4', label: 'V4' },
-    { value: 'v6', label: 'V6' }
+    { value: 'v64', label: 'Automatic' },
+    { value: 'v4', label: 'IPv4' },
+    { value: 'v6', label: 'IPv6' }
 ];
