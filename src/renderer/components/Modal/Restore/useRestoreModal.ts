@@ -68,7 +68,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         loadingToast(appLang?.toast?.please_wait);
         // in this page
         setForceClose(defaultSettings.forceClose);
-        setShortcut(defaultSettings.shortcut);
+        //setShortcut(defaultSettings.shortcut);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
         setAutoConnect(defaultSettings.autoConnect);
@@ -80,7 +80,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
             detectingSystemTheme ? 'dark' : 'light'
         );
         await settings.set('forceClose', defaultSettings.forceClose);
-        await settings.set('shortcut', defaultSettings.shortcut);
+        //await settings.set('shortcut', defaultSettings.shortcut);
         await settings.set('lang', defaultSettings.lang);
         changeLang(defaultSettings.lang);
         document.documentElement.setAttribute('lang', defaultSettings.lang);

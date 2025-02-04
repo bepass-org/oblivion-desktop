@@ -52,7 +52,7 @@ export default function Options() {
         typeof lang === 'undefined' ||
         typeof openAtLogin === 'undefined' ||
         typeof forceClose === 'undefined' ||
-        typeof shortcut === 'undefined' ||
+        //typeof shortcut === 'undefined' ||
         typeof soundEffect === 'undefined' ||
         typeof autoConnect === 'undefined' ||
         typeof betaRelease === 'undefined'
@@ -113,7 +113,7 @@ export default function Options() {
                             />
                             <div className='info'>{appLang?.settings?.lang_desc}</div>
                         </div>
-                        <div
+                        {/* <div
                             role='button'
                             className='item'
                             onClick={onClickShortcutButton}
@@ -133,7 +133,7 @@ export default function Options() {
                                 </div>
                             </div>
                             <div className='info'>{appLang?.settings?.shortcut_desc}</div>
-                        </div>
+                        </div> */}
                         <div
                             role='button'
                             className='item'

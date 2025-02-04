@@ -71,7 +71,7 @@ export const defaultSettings = {
     scanResult: '',
     profiles: '[]',
     forceClose: false,
-    shortcut: false,
+    shortcut: true,
     dataUsage: false,
     asn: 'UNK',
     closeHelper: true,

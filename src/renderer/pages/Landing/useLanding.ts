@@ -68,7 +68,7 @@ const useLanding = () => {
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
-    const [shortcut, setShortcut] = useState<boolean>();
+    //const [shortcut, setShortcut] = useState<boolean>();
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
@@ -117,7 +117,7 @@ const useLanding = () => {
                 'ipData',
                 'method',
                 'proxyMode',
-                'shortcut',
+                //'shortcut',
                 'dataUsage',
                 'betaRelease',
                 'testUrl'
@@ -135,11 +135,11 @@ const useLanding = () => {
                         ? defaultSettings.proxyMode
                         : values.proxyMode
                 );
-                setShortcut(
+                /*setShortcut(
                     typeof values.shortcut === 'undefined'
                         ? defaultSettings.shortcut
                         : values.shortcut
-                );
+                );*/
                 setDataUsage(
                     typeof values.dataUsage === 'undefined'
                         ? defaultSettings.dataUsage
@@ -519,7 +519,7 @@ const useLanding = () => {
         handleOnClickPing,
         proxyStatus,
         appVersion: packageJsonData?.version,
-        shortcut,
+        shortcut: true,
         netStats,
         dataUsage,
         betaRelease
