@@ -120,6 +120,8 @@ class SingBoxManager {
     }
 
     public async stopHelper(): Promise<void> {
+        if (!(await this.isProcessRunning(helperFileName))) return;
+        
         log.info('Stopping Oblivion-Helper...');
         this.helperClient.Exit({}, () => {});
         await this.delay(CONFIG.delays.statusMonitor);
