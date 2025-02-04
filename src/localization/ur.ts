@@ -154,6 +154,7 @@ const urdu: Language = {
         license_clear: 'صاف کریں',
         test_url_title: 'ٹیسٹ یو آر ایل',
         test_url_desc: 'کنیکٹوٹی ٹیسٹ ایڈریس',
+        test_url_update: 'تجاویز موصول کریں',
         port_title: 'پراکسی پورٹ',
         restore_title: 'تبدیلیاں بحال کریں',
         restore_desc:

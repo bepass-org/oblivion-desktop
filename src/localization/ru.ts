@@ -154,6 +154,7 @@ const russian: Language = {
         license_clear: 'Очистить',
         test_url_title: 'Тестовый URL',
         test_url_desc: 'Адрес тестирования подключения',
+        test_url_update: 'Получение предложений',
         port_title: 'Порт прокси',
         restore_title: 'Восстановить изменения',
         restore_desc:

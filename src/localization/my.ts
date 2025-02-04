@@ -154,6 +154,7 @@ const myanmar: Language = {
         license_clear: 'ရှင်းလင်းပါ',
         test_url_title: 'စမ်းသပ် URL',
         test_url_desc: 'ချိတ်ဆက်မှု စမ်းသပ်ရန်လိပ်စာ',
+        test_url_update: 'အကြံပြုချက်များလက်ခံခြင်း',
         port_title: 'Proxy Port',
         restore_title: 'ပြန်လည်ဆက်သွယ်မှု',
         restore_desc:

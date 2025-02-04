@@ -153,6 +153,7 @@ const brazilianPortuguese: Language = {
         license_clear: 'Limpar',
         test_url_title: 'URL de Teste',
         test_url_desc: 'Endereço de teste de conectividade',
+        test_url_update: 'Receber sugestões',
         port_title: 'Porta do Proxy',
         restore_title: 'Restaurar Alterações',
         restore_desc:

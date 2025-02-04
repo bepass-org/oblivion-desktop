@@ -152,6 +152,7 @@ const arabic: Language = {
         license_clear: 'مسح',
         test_url_title: 'عنوان رابط الاختبار',
         test_url_desc: 'عنوان اختبار الاتصال',
+        test_url_update: 'استقبال الاقتراحات',
         port_title: 'منفذ البروكسي',
         restore_title: 'استعادة التغييرات',
         restore_desc:

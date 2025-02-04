@@ -155,6 +155,7 @@ const spanish: Language = {
         license_clear: 'Limpiar',
         test_url_title: 'URL de prueba',
         test_url_desc: 'Dirección de prueba de conectividad',
+        test_url_update: 'Recibir sugerencias',
         port_title: 'Puerto de Proxy',
         restore_title: 'Restaurar Cambios',
         restore_desc:

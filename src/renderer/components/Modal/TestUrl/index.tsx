@@ -28,7 +28,13 @@ export default function TestUrlModal({
         onSaveModalClick,
         onSaveModalKeyDown,
         showModal,
-        setTestUrlInput
+        setTestUrlInput,
+        showSuggestion,
+        suggestionRef,
+        setShowSuggestion,
+        suggestion,
+        fetchTestUrl,
+        updaterRef
     } = useTestUrlModal({
         isOpen,
         onClose,
@@ -49,20 +55,69 @@ export default function TestUrlModal({
                     <h3>
                         {title}
                         <div className='labels'>
-                            {testUrlInput !== defaultSettings.testUrl && (
-                                <>
-                                    <div
-                                        role='presentation'
-                                        className={classNames('label', 'label-warning')}
-                                        onClick={() => {
-                                            setTestUrlInput(defaultSettings.testUrl);
-                                        }}
-                                    >
-                                        <i className='material-icons'>&#xe145;</i>
-                                        {appLang?.modal?.endpoint_default}
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-danger',
+                                    suggestion?.length > 0 ? '' : 'disabled'
+                                )}
+                                onClick={() => {
+                                    if (suggestion?.length > 0) {
+                                        setShowSuggestion((pre) => !pre);
+                                    }
+                                }}
+                                ref={suggestionRef}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                {appLang?.modal?.endpoint_suggested}
+                                <div
+                                    className={classNames(
+                                        'dropDownInLabel',
+                                        showSuggestion ? '' : 'hidden',
+                                        suggestion?.length > 0 ? 'splitter' : ''
+                                    )}
+                                    data-list={1}
+                                >
+                                    <div className='split'>
+                                        {[...suggestion.keys()].slice(0, 25).map((key, index) => (
+                                            <>
+                                                <div
+                                                    className={classNames(
+                                                        'item',
+                                                        suggestion[key] === testUrlInput
+                                                            ? 'disabled'
+                                                            : ''
+                                                    )}
+                                                    role='presentation'
+                                                    key={key}
+                                                    onClick={() => {
+                                                        setTestUrlInput(suggestion[key]);
+                                                        //setShowSuggestion(false);
+                                                    }}
+                                                >
+                                                    #{index + 1}
+                                                    <small> Url</small>
+                                                </div>
+                                            </>
+                                        ))}
                                     </div>
-                                </>
-                            )}
+                                </div>
+                            </div>
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-warning',
+                                    testUrlInput !== defaultSettings.testUrl ? '' : 'disabled'
+                                )}
+                                onClick={() => {
+                                    setTestUrlInput(defaultSettings.testUrl);
+                                }}
+                            >
+                                <i className='material-icons'>&#xe145;</i>
+                                {appLang?.modal?.endpoint_default}
+                            </div>
                         </div>
                     </h3>
                     <div className='clearfix' />
@@ -91,6 +146,20 @@ export default function TestUrlModal({
                         onKeyDown={onSaveModalKeyDown}
                     >
                         {appLang?.modal?.update}
+                    </div>
+                    <div
+                        className={classNames('btn', 'btn-update')}
+                        onClick={() => fetchTestUrl(true)}
+                        role='button'
+                        ref={updaterRef}
+                        tabIndex={0}
+                    >
+                        <i
+                            className='material-icons updater'
+                            title={appLang?.modal?.test_url_update}
+                        >
+                            &#xeb5a;
+                        </i>
                     </div>
                 </div>
             </div>

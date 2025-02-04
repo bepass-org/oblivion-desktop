@@ -153,6 +153,7 @@ const english: Language = {
         license_clear: 'Clear',
         test_url_title: 'Test Url',
         test_url_desc: 'Connectivity test address',
+        test_url_update: 'Receive suggestions',
         port_title: 'Proxy Port',
         restore_title: 'Restore Changes',
         restore_desc:

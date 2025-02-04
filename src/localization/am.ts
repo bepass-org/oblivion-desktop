@@ -151,6 +151,7 @@ const amharic: Language = {
         license_clear: 'አጽዳ',
         test_url_title: 'ቴስት ዩአርኤል',
         test_url_desc: 'ግንኙነት ሙከራ አድራሻ',
+        test_url_update: 'የሐሳብ አቀራረብ መቀበያ',
         port_title: 'ፕሮክሲ ፖርት',
         restore_title: 'ለመመንገድ ስለሚሞከሩት ትንታኔ',
         restore_desc: 'ለመንገዶች እባኮትን እትም ማነተኝነት',

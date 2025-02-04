@@ -154,6 +154,7 @@ const indonesia: Language = {
         license_clear: 'Hapus',
         test_url_title: 'URL Uji',
         test_url_desc: 'Alamat uji konektivitas',
+        test_url_update: 'Menerima saran',
         port_title: 'Port Proxy',
         restore_title: 'Pulihkan Perubahan',
         restore_desc:

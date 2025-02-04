@@ -1574,6 +1574,9 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     width: 162px;
     overflow: hidden;
 }
+.dialog .dialogBox .labels .label .dropDownInLabel.splitter[data-list='1'] {
+    width: 80px;
+}
 .dialog .dialogBox .labels .label .dropDownInLabel.splitter[data-list='3'] {
     width: 240px;
 }

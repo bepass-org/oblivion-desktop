@@ -153,6 +153,7 @@ const persian: Language = {
         license_clear: 'حذف',
         test_url_title: 'مسیر تست',
         test_url_desc: 'آدرس اینترنتی تست اتصال',
+        test_url_update: 'دریافت پیشنهادات',
         port_title: 'پورت پروکسی',
         restore_title: 'بازگردانی تغییرات',
         restore_desc:

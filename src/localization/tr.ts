@@ -154,6 +154,7 @@ const turkish: Language = {
         license_clear: 'Temizle',
         test_url_title: 'Test URL',
         test_url_desc: 'Bağlantı testi adresi',
+        test_url_update: 'Önerileri almak',
         port_title: 'Proxy Portu',
         restore_title: 'Değişiklikleri Geri Yükle',
         restore_desc:

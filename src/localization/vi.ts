@@ -154,6 +154,7 @@ const vietnamese: Language = {
         license_clear: 'Xóa',
         test_url_title: 'URL kiểm tra',
         test_url_desc: 'Địa chỉ kiểm tra kết nối',
+        test_url_update: 'Nhận đề xuất',
         port_title: 'Cổng Proxy',
         restore_title: 'Khôi phục thay đổi',
         restore_desc:
