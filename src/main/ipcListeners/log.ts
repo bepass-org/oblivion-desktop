@@ -14,7 +14,8 @@ import {
     hasLicense,
     checkReserved,
     checkGeoStatus,
-    checkIpType
+    checkIpType,
+    checkTunAddrType
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetPath, logPath } from '../../constants';
@@ -60,6 +61,8 @@ export const logMetadata = (osInfo: string) => {
     const singBoxGeoIp = settings.get('singBoxGeoIp');
     const singBoxGeoSite = settings.get('singBoxGeoSite');
     const singBoxGeoBlock = settings.get('singBoxGeoBlock');
+    const singBoxGeoNSFW = settings.get('singBoxGeoNSFW');
+    const singBoxAddrType = settings.get('singBoxAddrType');
     const ipType = settings.get('ipType');
 
     Promise.all([
@@ -74,6 +77,8 @@ export const logMetadata = (osInfo: string) => {
         singBoxGeoIp,
         singBoxGeoSite,
         singBoxGeoBlock,
+        singBoxGeoNSFW,
+        singBoxAddrType,
         ipType
     ])
         .then((data) => {
@@ -87,12 +92,13 @@ export const logMetadata = (osInfo: string) => {
             log.info('proxyMode:', checkProxyMode(data[1]));
             log.info('routingRules:', checkRoutingRules(data[4]));
             log.info('endpoint:', checkEndpoint(data[3]));
-            log.info('ipType:', checkIpType(data[11], data[3]));
+            log.info('ipType:', checkIpType(data[13], data[3]));
+            log.info('tunAddrType:', checkTunAddrType(data[12]));
             log.info('dataUsage:', checkDataUsage(data[6]));
             log.info('asn:', data[5] ? data[5] : 'UNK');
             //log.info('license:', hasLicense(data[2]));
             log.info('reserved:', checkReserved(data[7]));
-            log.info('geo', checkGeoStatus(data[8], data[9], data[10]));
+            log.info('geo', checkGeoStatus(data[8], data[9], data[10], data[11]));
             log.info(`exe: ${app.getPath('exe')}`);
             log.info(`userData: ${app.getPath('userData')}`);
             log.info(`logs: ${app.getPath('logs')}`);
