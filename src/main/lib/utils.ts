@@ -166,6 +166,10 @@ export function checkTunAddrType(addrType: any): string {
     return addrType;
 }
 
+export function checkTestUrl(value: any) {
+    return typeof value === 'string' ? value : defaultSettings.testUrl;
+}
+
 export const exitTheApp = async () => {
     log.info('exiting the app...');
 

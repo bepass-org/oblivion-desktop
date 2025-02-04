@@ -15,7 +15,8 @@ import {
     checkReserved,
     checkGeoStatus,
     checkIpType,
-    checkTunAddrType
+    checkTunAddrType,
+    checkTestUrl
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetPath, logPath } from '../../constants';
@@ -64,6 +65,7 @@ export const logMetadata = (osInfo: string) => {
     const singBoxGeoNSFW = settings.get('singBoxGeoNSFW');
     const singBoxAddrType = settings.get('singBoxAddrType');
     const ipType = settings.get('ipType');
+    const testUrl = settings.get('testUrl');
 
     Promise.all([
         method,
@@ -79,7 +81,8 @@ export const logMetadata = (osInfo: string) => {
         singBoxGeoBlock,
         singBoxGeoNSFW,
         singBoxAddrType,
-        ipType
+        ipType,
+        testUrl
     ])
         .then((data) => {
             log.info('------------------------MetaData------------------------');
@@ -99,6 +102,7 @@ export const logMetadata = (osInfo: string) => {
             //log.info('license:', hasLicense(data[2]));
             log.info('reserved:', checkReserved(data[7]));
             log.info('geo', checkGeoStatus(data[8], data[9], data[10], data[11]));
+            log.info('testUrl', checkTestUrl(data[12]));
             log.info(`exe: ${app.getPath('exe')}`);
             log.info(`userData: ${app.getPath('userData')}`);
             log.info(`logs: ${app.getPath('logs')}`);
