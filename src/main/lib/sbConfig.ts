@@ -271,7 +271,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                       ]
                     : [])
             ],
-            ...(geoConfig.geoIp !== 'none' || geoConfig.geoSite !== 'none' || geoConfig.geoBlock || geoConfig.geoNSFW
+            ...(geoConfig.geoIp !== 'none' ||
+            geoConfig.geoSite !== 'none' ||
+            geoConfig.geoBlock ||
+            geoConfig.geoNSFW
                 ? {
                       rule_set: [
                           ...(geoConfig.geoIp !== 'none'
