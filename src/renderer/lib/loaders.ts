@@ -3,8 +3,9 @@ import { defaultSettings } from '../../defaultSettings';
 import { settings } from './settings';
 
 export const clearUpdateNotifOnStartup = () => {
-    if (typeof localStorage === 'undefined') return;
-    localStorage?.setItem('OBLIVION_NEWUPDATE', 'false');
+    if (typeof window === 'undefined') return;
+    localStorage?.removeItem('OBLIVION_CHECKUPDATE');
+    localStorage?.removeItem('OBLIVION_NEWUPDATE');
 };
 
 export const loadTheme = () => {
