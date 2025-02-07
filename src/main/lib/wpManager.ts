@@ -5,7 +5,6 @@ import treeKill from 'tree-kill';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import path from 'path';
 import { exec } from 'child_process';
 import { isDev, removeFileIfExists, shouldProxySystem } from './utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from './proxy';
@@ -25,7 +24,8 @@ import {
     logPath,
     isLinux,
     soundEffect,
-    isWindows
+    isWindows,
+    exclusionsPath
 } from '../../constants';
 
 import sound from 'sound-play';
@@ -111,7 +111,6 @@ class WarpPlusManager {
 
     static async addToExclusions() {
         if (!isWindows) return;
-        const folderName = 'oblivion-desktop';
         const batContent = `@echo off
             chcp 65001 >nul
             :: Check for admin privileges
@@ -121,23 +120,16 @@ class WarpPlusManager {
                 exit /b
             )
             :: === Windows Defender Exclusion ===
-            powershell -Command "Add-MpPreference -ExclusionPath 'C:\\ProgramData\\${folderName}'"
-            powershell -Command "Add-MpPreference -ExclusionPath 'C:\\Program Files\\${folderName}'"
-            for /d %%U in (C:\\Users\\*) do (
-                powershell -Command "Add-MpPreference -ExclusionPath '%%U\\AppData\\Roaming\\${folderName}'"
-            )
+            powershell -Command "Add-MpPreference -ExclusionPath '${wpAssetPath}'"
+            powershell -Command "Add-MpPreference -ExclusionPath '${wpBinPath}'"
             :: === Bitdefender Exclusion ===
             if exist "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" (
-                "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "C:\\ProgramData\\${folderName}"
-                "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "C:\\Program Files\\${folderName}"
-                for /d %%U in (C:\\Users\\*) do (
-                    "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "%%U\\AppData\\Roaming\\${folderName}"
-                )
+                "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpAssetPath}"
+                "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpBinPath}"
             )
-            exit`;
-        const batPath = path.join(app.getPath('temp'), 'exclusions.bat');
-        fs.writeFileSync(batPath, batContent, { encoding: 'utf8' });
-        exec(`powershell -Command "Start-Process '${batPath}' -Verb RunAs"`, (err) => {
+        exit`;
+        fs.writeFileSync(exclusionsPath, batContent, { encoding: 'utf8' });
+        exec(`powershell -Command "Start-Process '${exclusionsPath}' -Verb RunAs"`, (err) => {
             if (err) log.error('⚠️ Failed to execute exclusion script:', err);
         });
     }

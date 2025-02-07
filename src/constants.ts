@@ -44,6 +44,7 @@ export const versionFilePath = path.join(workingDirPath, 'ver.txt');
 export const stuffPath = path.join(workingDirPath, 'stuff');
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
 export const soundEffect = path.join(appPath, 'assets', 'sound', 'notification.wav');
+export const exclusionsPath = path.join(app?.getPath('temp'), 'exclusions.bat');
 
 // Managers
 export const singBoxManager = new SingBoxManager();
