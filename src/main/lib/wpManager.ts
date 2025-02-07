@@ -116,16 +116,24 @@ class WarpPlusManager {
             :: Check for admin privileges
             net session >nul 2>&1
             if %errorLevel% neq 0 (
+                echo 🔹 Requesting administrator privileges...
                 powershell -Command "Start-Process '%~f0' -Verb RunAs"
                 exit /b
             )
+            echo ✅ Running with administrator privileges.
+            
             :: === Windows Defender Exclusion ===
+            echo 🔹 Adding exclusions to Windows Defender...
             powershell -Command "Add-MpPreference -ExclusionPath '${wpAssetPath}'"
             powershell -Command "Add-MpPreference -ExclusionPath '${wpBinPath}'"
+            echo ✅ Windows Defender exclusions added.
+
             :: === Bitdefender Exclusion ===
             if exist "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" (
+                echo 🔹 Adding exclusions to Bitdefender...
                 "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpAssetPath}"
                 "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpBinPath}"
+                echo ✅ Bitdefender exclusions added.
             )
         exit`;
         fs.writeFileSync(exclusionsPath, batContent, { encoding: 'utf8' });
