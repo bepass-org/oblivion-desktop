@@ -97,13 +97,13 @@ class WarpPlusManager {
                 log.error(`Error during app restart (attempt ${retryCount}):`, error);
                 if (retryCount < MAX_RETRIES) {
                     log.info('Retrying app quit...');
-                    setTimeout(attemptRestart, 1500);
+                    setTimeout(attemptRestart, 3000);
                 } else {
                     log.error('Max retry limit reached. Could not restart app.');
                 }
             }
         };
-        setTimeout(attemptRestart, 5000);
+        setTimeout(attemptRestart, 7500);
     }
 
     static async handleSystemProxy(enable: boolean) {
