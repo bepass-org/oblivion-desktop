@@ -1,11 +1,10 @@
-import { app, ipcMain, BrowserWindow } from 'electron';
-import { spawn, ChildProcess, execSync } from 'child_process';
+import { app, ipcMain, BrowserWindow, dialog, shell } from 'electron';
+import { spawn, ChildProcess, execSync, execFile } from 'child_process';
 import toast from 'react-hot-toast';
 import treeKill from 'tree-kill';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
-import { exec } from 'child_process';
 import { isDev, removeFileIfExists, shouldProxySystem } from './utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from './proxy';
 import { getOsInfo, logMetadata } from '../ipcListeners/log';
@@ -121,7 +120,32 @@ class WarpPlusManager {
     }
 
     static async addToExclusions() {
-        if (!isWindows) return;
+        const result: any = await dialog.showMessageBox({
+            type: 'question',
+            buttons: ['No', 'Yes', 'View Guide'],
+            defaultId: 1,
+            title: 'Add to Exceptions',
+            message:
+                'احتمالا فایل وارپ‌پلاس اشتباها به‌دلیل اعلان فالس پازیتیو و تشخیص اشتباه آنتی‌ویروس قرنطینه شده و عملکرد برنامه رو برای دسترسی آزاد به اینترنت دچار مشکل کرده.\nبرنامه می‌تونه درصورت اعطای سطح دسترسی، فایل مذکور رو در برخی‌از آنتی‌ویروس‌ها به لیست استثنائات اضافه کنه. انجام بشه؟'
+        });
+        if (typeof result.response === 'number') {
+            console.log(result.response);
+            if (result.response === 0) {
+                this.restartApp();
+                return;
+            }
+            if (result.response === 2) {
+                try {
+                    await shell.openExternal(
+                        'https://github.com/bepass-org/oblivion-desktop/wiki/The-warp-plus-file-is-not-found'
+                    );
+                } catch (err:any) {
+                    log.error('Failed to open link:', err.message || err);
+                }
+                this.restartApp();
+                return;
+            }
+        }
         const windowsDrive = this.getWinDrive();
         const batContent = `@echo off
             chcp 65001 >nul
@@ -164,8 +188,22 @@ class WarpPlusManager {
             )
         exit`;
         fs.writeFileSync(exclusionsPath, batContent, { encoding: 'utf8' });
-        exec(`powershell -Command "Start-Process '${exclusionsPath}' -Verb RunAs"`, (err) => {
-            if (err) log.error('⚠️ Failed to execute exclusion script:', err);
+        const process = execFile(
+            'powershell',
+            ['-Command', `Start-Process '${exclusionsPath}' -Verb RunAs -Wait`],
+            (err) => {
+                if (err) {
+                    log.error('⚠️ Failed to execute exclusion script:', err);
+                    this.restartApp();
+                    return;
+                }
+            }
+        );
+        process.on('close', (code) => {
+            if (code !== 0) {
+                log.error(`❌ Script exited with code ${code}`);
+            }
+            this.restartApp();
         });
     }
 
@@ -198,8 +236,11 @@ class WarpPlusManager {
 
             if (fs.existsSync(wpAssetPath) && state.settings.restartCounter < 2) {
                 await settings.set('restartCounter', state.settings.restartCounter + 1);
-                await this.addToExclusions();
-                this.restartApp();
+                if (isWindows) {
+                    this.addToExclusions();
+                } else {
+                    this.restartApp();
+                }
             }
             return;
         }
