@@ -128,7 +128,6 @@ class WarpPlusManager {
             message: state.appLang.log.error_wp_exclusions
         });
         if (typeof result.response === 'number') {
-            console.log(result.response);
             if (result.response === 0) {
                 this.restartApp();
                 return;
