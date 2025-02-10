@@ -106,10 +106,10 @@ class WarpPlusManager {
                 }
             }
         };
-        setTimeout(attemptRestart, 7500);
+        setTimeout(attemptRestart, 5000);
     }
 
-    static getWinDrive() {
+    private static getWinDrive() {
         try {
             const drive = execSync('powershell -Command "$env:SystemDrive"', {
                 encoding: 'utf8'
