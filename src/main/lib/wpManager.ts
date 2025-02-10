@@ -121,18 +121,23 @@ class WarpPlusManager {
     }
 
     static async addToExclusions() {
-        if ( !isWindows ) return;
+        if (!isWindows) return;
         const windowsDrive = this.getWinDrive();
         const batContent = `@echo off
             chcp 65001 >nul
             set win_drive=${windowsDrive}
+            :: Define color codes
+            :: Define PowerShell-based color output
+            set COLOR_GREEN=powershell -NoProfile -Command "Write-Host '[Success]' -ForegroundColor Green"
+            set COLOR_RED=powershell -NoProfile -Command "Write-Host '[Error]' -ForegroundColor Red"
+            set COLOR_RESET=REM
             :: Check for admin privileges
             net session >nul 2>&1
             if %errorLevel% neq 0 (
                 powershell -Command "Start-Process '%~f0' -Verb RunAs"
                 exit /b
             )
-            echo ✅ Running with administrator privileges.
+            %COLOR_GREEN% Running with administrator privileges.
             :: === Windows Defender Check ===
             powershell -Command "Get-MpComputerStatus" >nul 2>&1
             if %errorLevel% neq 0 (
@@ -140,19 +145,22 @@ class WarpPlusManager {
             ) else (
                 powershell -Command "Add-MpPreference -ExclusionPath '${wpAssetPath}'"
                 powershell -Command "Add-MpPreference -ExclusionPath '${wpBinPath}'"
-                echo ✅ Windows Defender exclusions added.
+                %COLOR_GREEN% Windows Defender exclusions added.
+                timeout /t 3 >nul
             )
             :: === Bitdefender Check ===
             if exist "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" (
                 "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpAssetPath}"
                 "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpBinPath}"
-                echo ✅ Bitdefender exclusions added.
+                %COLOR_GREEN% Bitdefender exclusions added.
+                timeout /t 3 >nul
             ) else (
                 set bitdefender_missing=1
             )
             :: Exit if both security programs are missing
             if defined defender_missing if defined bitdefender_missing (
-                echo ❌ No compatible antivirus found. Exiting ...
+                %COLOR_RED% No compatible antivirus found. Exiting ...
+                timeout /t 3 >nul
                 exit /b
             )
         exit`;
