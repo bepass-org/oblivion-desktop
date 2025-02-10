@@ -1,5 +1,5 @@
 import { app, ipcMain, BrowserWindow } from 'electron';
-import { spawn, ChildProcess } from 'child_process';
+import { spawn, ChildProcess, execSync } from 'child_process';
 import toast from 'react-hot-toast';
 import treeKill from 'tree-kill';
 import settings from 'electron-settings';
@@ -109,10 +109,23 @@ class WarpPlusManager {
         setTimeout(attemptRestart, 7500);
     }
 
+    static getWinDrive() {
+        try {
+            const drive = execSync('powershell -Command "$env:SystemDrive"', {
+                encoding: 'utf8'
+            }).trim();
+            return drive || 'C:\\';
+        } catch (error) {
+            return 'C:\\';
+        }
+    }
+
     static async addToExclusions() {
-        if (!isWindows) return;
+        if ( !isWindows ) return;
+        const windowsDrive = this.getWinDrive();
         const batContent = `@echo off
             chcp 65001 >nul
+            set win_drive=${windowsDrive}
             :: Check for admin privileges
             net session >nul 2>&1
             if %errorLevel% neq 0 (
@@ -121,19 +134,31 @@ class WarpPlusManager {
                 exit /b
             )
             echo ✅ Running with administrator privileges.
-            
-            :: === Windows Defender Exclusion ===
-            echo 🔹 Adding exclusions to Windows Defender...
-            powershell -Command "Add-MpPreference -ExclusionPath '${wpAssetPath}'"
-            powershell -Command "Add-MpPreference -ExclusionPath '${wpBinPath}'"
-            echo ✅ Windows Defender exclusions added.
-
-            :: === Bitdefender Exclusion ===
-            if exist "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" (
+            :: === Windows Defender Check ===
+            powershell -Command "Get-MpComputerStatus" >nul 2>&1
+            if %errorLevel% neq 0 (
+                echo ⚠️ Windows Defender not found.
+                set defender_missing=1
+            ) else (
+                echo 🔹 Adding exclusions to Windows Defender...
+                powershell -Command "Add-MpPreference -ExclusionPath '${wpAssetPath}'"
+                powershell -Command "Add-MpPreference -ExclusionPath '${wpBinPath}'"
+                echo ✅ Windows Defender exclusions added.
+            )
+            :: === Bitdefender Check ===
+            if exist "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" (
                 echo 🔹 Adding exclusions to Bitdefender...
-                "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpAssetPath}"
-                "C:\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpBinPath}"
+                "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpAssetPath}"
+                "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpBinPath}"
                 echo ✅ Bitdefender exclusions added.
+            ) else (
+                echo ⚠️ Bitdefender not found.
+                set bitdefender_missing=1
+            )
+            :: Exit if both security programs are missing
+            if defined defender_missing if defined bitdefender_missing (
+                echo ❌ No compatible antivirus found. Exiting ...
+                exit /b
             )
         exit`;
         fs.writeFileSync(exclusionsPath, batContent, { encoding: 'utf8' });
