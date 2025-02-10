@@ -129,7 +129,6 @@ class WarpPlusManager {
             :: Check for admin privileges
             net session >nul 2>&1
             if %errorLevel% neq 0 (
-                echo 🔹 Requesting administrator privileges...
                 powershell -Command "Start-Process '%~f0' -Verb RunAs"
                 exit /b
             )
@@ -137,22 +136,18 @@ class WarpPlusManager {
             :: === Windows Defender Check ===
             powershell -Command "Get-MpComputerStatus" >nul 2>&1
             if %errorLevel% neq 0 (
-                echo ⚠️ Windows Defender not found.
                 set defender_missing=1
             ) else (
-                echo 🔹 Adding exclusions to Windows Defender...
                 powershell -Command "Add-MpPreference -ExclusionPath '${wpAssetPath}'"
                 powershell -Command "Add-MpPreference -ExclusionPath '${wpBinPath}'"
                 echo ✅ Windows Defender exclusions added.
             )
             :: === Bitdefender Check ===
             if exist "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" (
-                echo 🔹 Adding exclusions to Bitdefender...
                 "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpAssetPath}"
                 "%win_drive%\\Program Files\\Bitdefender\\Bitdefender Security\\bdagent.exe" /addexclusion "${wpBinPath}"
                 echo ✅ Bitdefender exclusions added.
             ) else (
-                echo ⚠️ Bitdefender not found.
                 set bitdefender_missing=1
             )
             :: Exit if both security programs are missing
