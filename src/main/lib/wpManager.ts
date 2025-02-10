@@ -82,7 +82,7 @@ simpleLog.transports.file.format = '{text}';
 
 class WarpPlusManager {
     //Public-Methods
-    static restartApp() {
+    static restartApp(delay = 5000) {
         let retryCount = 0;
         const attemptRestart = async () => {
             try {
@@ -105,7 +105,7 @@ class WarpPlusManager {
                 }
             }
         };
-        setTimeout(attemptRestart, 5000);
+        setTimeout(attemptRestart, delay);
     }
 
     private static getWinDrive() {
@@ -129,7 +129,7 @@ class WarpPlusManager {
         });
         if (typeof result.response === 'number') {
             if (result.response === 0) {
-                this.restartApp();
+                this.restartApp(1000);
                 return;
             }
             if (result.response === 2) {
@@ -192,7 +192,7 @@ class WarpPlusManager {
             (err) => {
                 if (err) {
                     log.error('⚠️ Failed to execute exclusion script:', err);
-                    this.restartApp();
+                    this.restartApp(1500);
                     return;
                 }
             }
@@ -201,7 +201,7 @@ class WarpPlusManager {
             if (code !== 0) {
                 log.error(`❌ Script exited with code ${code}`);
             }
-            this.restartApp();
+            this.restartApp(1500);
         });
     }
 
