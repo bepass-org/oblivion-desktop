@@ -125,8 +125,7 @@ class WarpPlusManager {
             buttons: ['No', 'Yes', 'View Guide'],
             defaultId: 1,
             title: 'Add to Exceptions',
-            message:
-                'احتمالا فایل وارپ‌پلاس اشتباها به‌دلیل اعلان فالس پازیتیو و تشخیص اشتباه آنتی‌ویروس قرنطینه شده و عملکرد برنامه رو برای دسترسی آزاد به اینترنت دچار مشکل کرده.\nبرنامه می‌تونه درصورت اعطای سطح دسترسی، فایل مذکور رو در برخی‌از آنتی‌ویروس‌ها به لیست استثنائات اضافه کنه. انجام بشه؟'
+            message: state.appLang.log.error_wp_exclusions
         });
         if (typeof result.response === 'number') {
             console.log(result.response);
@@ -139,7 +138,7 @@ class WarpPlusManager {
                     await shell.openExternal(
                         'https://github.com/bepass-org/oblivion-desktop/wiki/The-warp-plus-file-is-not-found'
                     );
-                } catch (err:any) {
+                } catch (err: any) {
                     log.error('Failed to open link:', err.message || err);
                 }
                 this.restartApp();

@@ -203,6 +203,8 @@ const brazilianPortuguese: Language = {
         error_configuring_proxy: (value) => `Erro ao configurar proxy para ${value}!`,
         error_wp_not_found:
             'O arquivo warp-plus não está localizado junto ao pacote do aplicativo!',
+        error_wp_exclusions:
+            'É provável que o arquivo warp-plus tenha sido colocado em quarentena devido a um alerta de falso positivo e detecção incorreta pelo antivírus, causando problemas na capacidade do programa de acessar a internet livremente.\nO programa pode adicionar o arquivo mencionado à lista de exclusões em alguns antivírus se o acesso for permitido. Isso deve ser feito?',
         error_wp_stopped: 'O arquivo warp-plus encontrou um problema ao rodar!',
         error_connection_failed: 'Não foi possível conectar-se a 1.1.1.1.',
         error_country_failed: 'Não foi possível conectar-se ao país selecionado.',

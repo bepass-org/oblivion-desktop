@@ -197,6 +197,7 @@ export interface Log {
     error_configuration_not_supported: string;
     error_configuring_proxy: (value: string) => string;
     error_wp_not_found: string;
+    error_wp_exclusions: string;
     error_wp_stopped: string;
     error_connection_failed: string;
     error_singbox_failed_stop: string;

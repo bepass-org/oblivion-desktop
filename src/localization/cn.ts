@@ -195,6 +195,8 @@ const chinese: Language = {
             '您的操作系统不支持代理配置，但您可以手动使用 Warp 代理。',
         error_configuring_proxy: (value) => `为 ${value} 配置代理时出错！`,
         error_wp_not_found: 'warp-plus 文件不在应用程序包旁边。',
+        error_wp_exclusions:
+            '很可能由于误报和杀毒软件错误检测，warp-plus 文件被隔离，导致程序无法正常访问互联网。\n如果授权访问，程序可以将该文件添加到某些杀毒软件的排除列表中。是否执行此操作？',
         error_wp_stopped: 'warp-plus 文件在运行时遇到了问题！',
         error_connection_failed: '无法连接到1.1.1.1。',
         error_country_failed: '无法连接到所选国家.',

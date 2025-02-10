@@ -201,6 +201,8 @@ const english: Language = {
             'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
         error_configuring_proxy: (value) => `Error configuring proxy for ${value}!`,
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
+        error_wp_exclusions:
+            'The warp-plus file has likely been quarantined due to a false positive alert and incorrect detection by the antivirus, causing issues with the program’s ability to access the internet freely.\nThe program can add the mentioned file to the exclusions list in certain antiviruses if access permission is granted. Should this be done?',
         error_wp_stopped: 'The warp-plus file has encountered an issue running!',
         error_connection_failed: 'Connection to 1.1.1.1 was not possible.',
         error_country_failed: 'Cannot connect to the selected country.',

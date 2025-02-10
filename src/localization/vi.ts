@@ -202,6 +202,8 @@ const vietnamese: Language = {
             'Cấu hình proxy không được hỗ trợ trên hệ điều hành của bạn, nhưng bạn có thể sử dụng Warp Proxy thủ công.',
         error_configuring_proxy: (value) => `Lỗi cấu hình proxy cho ${value}!`,
         error_wp_not_found: 'Tệp warp-plus không được tìm thấy cùng với gói ứng dụng!',
+        error_wp_exclusions:
+            'Rất có thể tệp warp-plus đã bị cách ly do cảnh báo dương tính giả và phát hiện sai bởi phần mềm diệt virus, gây ra vấn đề với khả năng của chương trình để truy cập internet một cách tự do.\nChương trình có thể thêm tệp này vào danh sách loại trừ trong một số phần mềm diệt virus nếu được cấp quyền truy cập. Có nên thực hiện điều này không?',
         error_wp_stopped: 'Tệp warp-plus gặp vấn đề khi chạy!',
         error_connection_failed: 'Không thể kết nối với 1.1.1.1.',
         error_country_failed: 'Không thể kết nối với quốc gia đã chọn.',
