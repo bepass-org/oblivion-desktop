@@ -127,7 +127,6 @@ class WarpPlusManager {
             chcp 65001 >nul
             set win_drive=${windowsDrive}
             :: Define color codes
-            :: Define PowerShell-based color output
             set COLOR_GREEN=powershell -NoProfile -Command "Write-Host '[Success]' -ForegroundColor Green"
             set COLOR_RED=powershell -NoProfile -Command "Write-Host '[Error]' -ForegroundColor Red"
             set COLOR_RESET=REM
