@@ -45,7 +45,7 @@ export const stuffPath = path.join(workingDirPath, 'stuff');
 export const logPath = path.join(app?.getPath('logs'), 'main.log');
 export const soundEffect = path.join(appPath, 'assets', 'sound', 'notification.wav');
 export const exclusionsPath = path.join(app?.getPath('temp'), 'exclusions.bat');
-export const updaterPath = path.join(workingDirPath, `oblivion-updater`);
+export const updaterPath = path.join(workingDirPath, `oblivion-updater${isWindows ? '.exe' : ''}`);
 
 // Managers
 export const singBoxManager = new SingBoxManager();

@@ -395,14 +395,14 @@ class OblivionDesktop {
                         async () => {
                             log.info('Download completed!');
                             this.state.mainWindow?.setProgressBar(-1);
-                            const newUpdaterPath = updaterPath + '.exe';
-                            fs.copyFile(updaterPath, newUpdaterPath, (copyErr) => {
+                            const tempUpdaterPath = updaterPath + '_';
+                            fs.copyFile(tempUpdaterPath, updaterPath, (copyErr) => {
                                 if (copyErr) {
                                     log.error('⚠️ Failed to copy updater file:', copyErr);
                                     return;
                                 }
-                                log.info(`✅ Updater copied successfully: ${newUpdaterPath}`);
-                                fs.rm(updaterPath, { force: true }, (unlinkErr) => {
+                                log.info(`✅ Updater copied successfully: ${updaterPath}`);
+                                fs.rm(tempUpdaterPath, { force: true }, (unlinkErr) => {
                                     if (unlinkErr) {
                                         log.warn(
                                             '⚠️ Could not delete old updater file:',
@@ -412,7 +412,7 @@ class OblivionDesktop {
                                         log.info('✅ Old updater file deleted.');
                                     }
                                     setTimeout(() => {
-                                        const child = spawn(newUpdaterPath, [], {
+                                        const child = spawn(updaterPath, [], {
                                             detached: true,
                                             stdio: 'ignore'
                                         });
