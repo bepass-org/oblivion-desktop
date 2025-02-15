@@ -43,7 +43,9 @@ const indonesia: Language = {
         config_added:
             'Konfigurasi telah berhasil ditambahkan, dan untuk menggunakannya, Anda harus mengklik koneksi.',
         profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.',
-        endpoint_added: 'Endpoint berhasil diganti.'
+        endpoint_added: 'Endpoint berhasil diganti.',
+        new_update:
+            'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?'
     },
     settings: {
         title: 'Pengaturan Warp',

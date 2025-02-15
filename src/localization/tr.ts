@@ -43,7 +43,9 @@ const turkish: Language = {
         config_added:
             'Yapılandırma başarıyla eklendi ve kullanmak için bağlantıya tıklamanız gerekiyor.',
         profile_added: 'Uç nokta başarıyla profile eklendi.',
-        endpoint_added: 'Uç nokta başarıyla değiştirildi.'
+        endpoint_added: 'Uç nokta başarıyla değiştirildi.',
+        new_update:
+            'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?'
     },
     settings: {
         title: 'Warp Ayarları',

@@ -42,7 +42,9 @@ const brazilianPortuguese: Language = {
         config_added:
             'A configuração foi adicionada com sucesso, e para usá-la, você deve clicar na conexão.',
         profile_added: 'O ponto final foi adicionado com sucesso ao perfil.',
-        endpoint_added: 'O endpoint foi substituído com sucesso.'
+        endpoint_added: 'O endpoint foi substituído com sucesso.',
+        new_update:
+            'Uma nova versão do aplicativo está disponível. Você gostaria de baixá-la e prepará-la para instalação?'
     },
     settings: {
         title: 'Configurações do Warp',

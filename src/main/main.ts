@@ -383,7 +383,7 @@ class OblivionDesktop {
                     type: 'question',
                     buttons: ['No', 'Yes'],
                     defaultId: 0,
-                    message: 'نسخه جدیدی از برنامه در دسترس است. آن‌را دریافت و آماده نصب کنم؟'
+                    message: this.state.appLang.toast.new_update
                 });
                 if (result.response === 1) {
                     await this.downloadUpdate(

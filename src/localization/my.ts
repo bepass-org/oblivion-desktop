@@ -41,7 +41,8 @@ const myanmar: Language = {
         hardware_usage: 'ဤကွက်ရင်း ကို ဖွင့်ပါသည်။',
         config_added: 'အပ်ဒိတ် ပြောင်းလဲမှု ပြုလုပ်ခဲ့ပါသည်။',
         profile_added: 'နောက်ဆုံး လုပ်ဆောင်ထားသော End-point ၏ profile ဖွင့်နေပါသည်။',
-        endpoint_added: 'Endpoint ရှင်းလင်းတယ်'
+        endpoint_added: 'Endpoint ရှင်းလင်းတယ်',
+        new_update: 'အပ်ဒိတ်အသစ်ရနိုင်ပါသည်။ ဒေါင်းလုပ်ပြီး ထည့်သွင်းရန် ပြင်ဆင်လိုပါသလား။'
     },
     settings: {
         title: 'Warp ဆက်တင်များ',

@@ -43,7 +43,9 @@ const spanish: Language = {
         config_added:
             'La configuración ha sido añadida con éxito, y para usarla debes hacer clic en la conexión.',
         profile_added: 'El endpoint ha sido añadido correctamente al perfil.',
-        endpoint_added: 'El endpoint fue reemplazado correctamente.'
+        endpoint_added: 'El endpoint fue reemplazado correctamente.',
+        new_update:
+            'Hay una nueva versión de la aplicación disponible. ¿Te gustaría descargarla y prepararla para la instalación?'
     },
     settings: {
         title: 'Configuraciones de Warp',

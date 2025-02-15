@@ -41,6 +41,7 @@ export interface Toast {
     config_added: string;
     profile_added: string;
     endpoint_added: string;
+    new_update: string;
 }
 
 export interface Settings {

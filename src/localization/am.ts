@@ -41,7 +41,8 @@ const amharic: Language = {
         hardware_usage: 'ይህን አማራጭ ማድረግ በማህተም ሁኔታ በሁሉም ማንሣብ አሰፋላለት!',
         config_added: 'እንደምንም ቅኝት ሰጠውም!',
         profile_added: 'አዲስ ነባሪ አውታረ ስር ያሳዩ!',
-        endpoint_added: 'ተስተካክለት አሳዩ፣ ያስተካከልል።'
+        endpoint_added: 'ተስተካክለት አሳዩ፣ ያስተካከልል።',
+        new_update: 'የመተግበሪያው አዲስ ስሪት ዝግጁ ነው። እንዲያው አውርዶ ለመግጠም ዝግጁ ይደረጋል?'
     },
     settings: {
         title: 'የዋርፕ ቅንብሮች',

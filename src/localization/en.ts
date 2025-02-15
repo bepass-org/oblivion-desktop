@@ -42,7 +42,9 @@ const english: Language = {
         config_added:
             'The configuration has been successfully added, and to use it, you must click on the connection.',
         profile_added: 'The endpoint has been successfully added to the profile.',
-        endpoint_added: 'The endpoint was successfully replaced.'
+        endpoint_added: 'The endpoint was successfully replaced.',
+        new_update:
+            'A new version of the app is available. Would you like to download and prepare it for installation?'
     },
     settings: {
         title: 'Warp Settings',
