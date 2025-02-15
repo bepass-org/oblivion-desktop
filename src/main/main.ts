@@ -12,7 +12,8 @@ import {
     BrowserWindowConstructorOptions,
     Event,
     NativeImage,
-    MenuItemConstructorOptions
+    MenuItemConstructorOptions,
+    dialog
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
@@ -40,8 +41,12 @@ import {
     versionFilePath,
     netStatsPath,
     netStatsAssetPath,
-    singBoxManager
+    singBoxManager,
+    updaterPath
 } from '../constants';
+import { spawn } from 'child_process';
+import https from 'https';
+import packageJsonData from '../../package.json';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
 const WINDOW_DIMENSIONS = {
@@ -157,7 +162,7 @@ class OblivionDesktop {
             frame: true,
             resizable: true,
             fullscreenable: true,
-            icon: this.getAssetPath('oblivion.png'),
+            icon: this.getAssetPath(packageJsonData.shortName + '.png'),
             webPreferences: {
                 nativeWindowOpen: false,
                 devTools: isDev(),
@@ -369,6 +374,126 @@ class OblivionDesktop {
             this.state.connectionStatus = newStatus;
             this.updateTrayMenu();
         });
+
+        ipcMain.on('download-update', async (_event, latestVersion: string) => {
+            if (!this.state.mainWindow) return;
+            if (process.platform !== 'win32') return;
+            try {
+                const result: any = await dialog.showMessageBox({
+                    type: 'question',
+                    buttons: ['No', 'Yes'],
+                    defaultId: 0,
+                    message: 'نسخه جدیدی از برنامه در دسترس است. آن‌را دریافت و آماده نصب کنم؟'
+                });
+                if (result.response === 1) {
+                    await this.downloadUpdate(
+                        `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${process.platform === 'win32' ? 'win' : ''}-${process.arch}.exe`,
+                        (percent: any) => {
+                            log.info(`Download: ${percent}%`);
+                            this.state.mainWindow?.setProgressBar(percent / 100);
+                        },
+                        async () => {
+                            log.info('Download completed!');
+                            this.state.mainWindow?.setProgressBar(-1);
+                            const newUpdaterPath = updaterPath + '.exe';
+                            fs.copyFile(updaterPath, newUpdaterPath, (copyErr) => {
+                                if (copyErr) {
+                                    log.error('⚠️ Failed to copy updater file:', copyErr);
+                                    return;
+                                }
+                                log.info(`✅ Updater copied successfully: ${newUpdaterPath}`);
+                                fs.rm(updaterPath, { force: true }, (unlinkErr) => {
+                                    if (unlinkErr) {
+                                        log.warn(
+                                            '⚠️ Could not delete old updater file:',
+                                            unlinkErr
+                                        );
+                                    } else {
+                                        log.info('✅ Old updater file deleted.');
+                                    }
+                                    setTimeout(() => {
+                                        const child = spawn(newUpdaterPath, [], {
+                                            detached: true,
+                                            stdio: 'ignore'
+                                        });
+                                        child.unref();
+                                        log.info('✅ Updater executed successfully.');
+                                        this.exitProcess();
+                                    }, 2500);
+                                });
+                            });
+                        }
+                    );
+                }
+            } catch (err) {
+                log.error('Error handling download-update event:', err);
+            }
+        });
+    }
+
+    private async downloadUpdate(
+        url: string,
+        onProgress: (percent: number) => void,
+        onDone: () => void
+    ) {
+        const file = fs.createWriteStream(updaterPath);
+        let receivedBytes = 0;
+        let totalBytes = 0;
+        let lastUpdateTime = Date.now();
+        const request = https.get(url, (response) => {
+            if (
+                response.statusCode &&
+                response.statusCode >= 300 &&
+                response.statusCode < 400 &&
+                response.headers.location
+            ) {
+                log.info(`Redirecting to: ${response.headers.location}`);
+                return this.downloadUpdate(response.headers.location, onProgress, onDone);
+            }
+            totalBytes = parseInt(response.headers['content-length'] || '0', 10);
+            if (!totalBytes) {
+                log.warn('Warning: Content-Length header is missing or zero.');
+            }
+            response.pipe(file);
+            response.on('data', (chunk) => {
+                receivedBytes += chunk.length;
+                const percent = totalBytes ? ((receivedBytes / totalBytes) * 100).toFixed(2) : '0';
+                if (Date.now() - lastUpdateTime >= 1500) {
+                    lastUpdateTime = Date.now();
+                    onProgress(Number(percent));
+                }
+            });
+            file.on('finish', () => {
+                log.info('File stream finished, closing...');
+                file.close();
+            });
+            file.on('close', () => {
+                fs.stat(updaterPath, (err, stats) => {
+                    if (err) {
+                        log.error('File stat error:', err);
+                        return;
+                    }
+                    if (stats.size === 0) {
+                        log.error('Download failed: File size is 0 bytes.');
+                        return;
+                    }
+                    log.info(`File successfully written to disk: ${updaterPath}`);
+                    setTimeout(() => {
+                        onDone();
+                    }, 2500);
+                });
+            });
+            response.on('error', (err) => {
+                log.error('Download error:', err);
+            });
+            file.on('error', (err) => {
+                log.error('File write error:', err);
+            });
+        });
+        request.on('error', (err) => {
+            log.error('Request error:', err);
+        });
+        request.end();
     }
 
     private setupAppEvents(): void {
@@ -400,7 +525,7 @@ class OblivionDesktop {
             app.quit();
         });
 
-        app.setAsDefaultProtocolClient('oblivion');
+        app.setAsDefaultProtocolClient(packageJsonData.shortName);
         app.on('open-url', (event: Event) => {
             event.preventDefault();
             if (this.state.mainWindow) {

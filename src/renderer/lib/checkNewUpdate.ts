@@ -1,6 +1,7 @@
-import { isDev } from './utils';
+import { ipcRenderer, isDev } from './utils';
 import { defaultSettings } from '../../defaultSettings';
 import { settings } from './settings';
+import packageJsonData from '../../../package.json';
 
 const comparison = (localVersion: any, apiVersion: any) => {
     const parts1 = localVersion
@@ -37,7 +38,7 @@ export const checkNewUpdate = async (appVersion: string) => {
         const isBetaVersionChecking =
             typeof betaRelease === 'undefined' ? defaultSettings.betaRelease : betaRelease;
         const response = await fetch(
-            `https://api.github.com/repos/bepass-org/oblivion-desktop/releases${isBetaVersionChecking ? '' : '/latest'}`
+            `https://api.github.com/repos/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases${isBetaVersionChecking ? '' : '/latest'}`
         );
         if (response.ok) {
             const data = await response.json();
@@ -47,6 +48,7 @@ export const checkNewUpdate = async (appVersion: string) => {
                 latestVersion = String(data?.[0]?.tag_name);
             }
             if (latestVersion && comparison(String(appVersion), latestVersion)) {
+                ipcRenderer.sendMessage('download-update', latestVersion);
                 return true;
             }
         } else {
