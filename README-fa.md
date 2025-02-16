@@ -165,8 +165,8 @@ Cloudflare Warp فراهم می‌کند.
                 <td>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/macOS-DMG arm64-F0F0F1.svg?logo=apple"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.zip"><img src="https://img.shields.io/badge/macOS-ZIP arm64-F0F0F1.svg?logo=apple" /></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/macOS-DMG x64-cccccc.svg?logo=apple"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.zip"><img src="https://img.shields.io/badge/macOS-ZIP x64-cccccc.svg?logo=apple" /></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/macOS-DMG x64-9e9e9e.svg?logo=apple"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.zip"><img src="https://img.shields.io/badge/macOS-ZIP x64-9e9e9e.svg?logo=apple" /></a>
                 </td>
                 <td>10.15+</td>
             </tr>
@@ -187,7 +187,7 @@ Cloudflare Warp فراهم می‌کند.
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/Android-APK Universal-044d29.svg?logo=android"></a>
+                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/Android-APK Universal-7abf7a.svg?logo=android"></a>
                     <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/Android-APK Universal-044d29.svg?logo=googleplay"></a>
                 </td>
                 <td>6+</td>
