@@ -154,8 +154,8 @@ technology
                 <td>macOS</td>
                 <td>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/DMG-arm64-F0F0F1.svg?logo=apple"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/DMG-x64-5D5D5D.svg?logo=apple"></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.zip"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.zip"><img src="https://img.shields.io/badge/ZIP-arm64-F0F0F1.svg?logo=apple" /></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/DMG-x64-5D5D5D.svg?logo=apple"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.zip"><img src="https://img.shields.io/badge/ZIP-x64-5D5D5D.svg?logo=apple" /></a>
                 </td>
                 <td>10.15+</td>
@@ -164,10 +164,11 @@ technology
                 <td>Linux</td>
                 <td>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/DEB-x64-DC470E.svg?logo=debian"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/DEB-arm64-DC470E.svg?logo=debian"></a><br>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/RPM-x64-01ABD2.svg?logo=redhat"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a><br>    
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/tar.xz-x64-EDC204.svg?logo=linux"></a>
+                    <br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/DEB-arm64-DC470E.svg?logo=debian"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/RPM-arm64-01ABD2.svg?logo=redhat"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/tar.xz-arm64-EDC204.svg?logo=linux"></a>         
                 </td>
                 <td>
