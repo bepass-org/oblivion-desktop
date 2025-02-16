@@ -387,6 +387,7 @@ class OblivionDesktop {
                     message: this.state.appLang.toast.new_update
                 });
                 if (result.response === 1) {
+                    this.redirectTo('/');
                     await this.downloadUpdate(
                         `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${process.platform === 'win32' ? 'win' : ''}-${process.arch}.exe`,
                         (percent: any) => {
@@ -453,6 +454,7 @@ class OblivionDesktop {
             totalBytes = parseInt(response.headers['content-length'] || '0', 10);
             if (!totalBytes) {
                 log.warn('Warning: Content-Length header is missing or zero.');
+                return;
             }
             response.pipe(file);
             response.on('data', (chunk) => {
@@ -461,20 +463,27 @@ class OblivionDesktop {
                 if (Date.now() - lastUpdateTime >= 1500) {
                     lastUpdateTime = Date.now();
                     onProgress(Number(percent));
+                    this.state.mainWindow?.webContents.send('download-progress', {
+                        status: 'pending',
+                        percent: Number(percent)
+                    });
                 }
             });
             file.on('finish', () => {
                 log.info('File stream finished, closing...');
+                this.onDownloadError();
                 file.close();
             });
             file.on('close', () => {
                 fs.stat(downloadedPath, (err, stats) => {
                     if (err) {
                         log.error('File stat error:', err);
+                        this.onDownloadError();
                         return;
                     }
                     if (stats.size === 0) {
                         log.error('Download failed: File size is 0 bytes.');
+                        this.onDownloadError();
                         return;
                     }
                     log.info(`File successfully written to disk: ${downloadedPath}`);
@@ -485,15 +494,28 @@ class OblivionDesktop {
             });
             response.on('error', (err) => {
                 log.error('Download error:', err);
+                this.onDownloadError();
+                return;
             });
             file.on('error', (err) => {
                 log.error('File write error:', err);
+                this.onDownloadError();
+                return;
             });
         });
         request.on('error', (err) => {
             log.error('Request error:', err);
+            this.onDownloadError();
         });
         request.end();
+    }
+
+    private onDownloadError() {
+        this.state.mainWindow?.webContents.send('download-progress', {
+            status: 'error',
+            percent: 0
+        });
+        this.state.mainWindow?.setProgressBar(0);
     }
 
     private setupAppEvents(): void {

@@ -15,7 +15,8 @@ export type Channels =
     | 'net-stats'
     | 'speed-test'
     | 'process-url'
-    | 'download-update';
+    | 'download-update'
+    | 'download-progress';
 
 const electronHandler = {
     ipcRenderer: {

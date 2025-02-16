@@ -74,6 +74,10 @@ const useLanding = () => {
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
     const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
+    const [downloadProgress, setDownloadProgress] = useState<any>({
+        status: 'pending',
+        percent: 0
+    });
 
     const navigate = useNavigate();
 
@@ -223,6 +227,10 @@ const useLanding = () => {
             if (args.key === 'changePage') {
                 navigate(args.msg);
             }
+        });
+
+        ipcRenderer.on('download-progress', (args: any) => {
+            setDownloadProgress(args);
         });
 
         ipcRenderer.on('wp-start', (ok: any) => {
@@ -514,7 +522,8 @@ const useLanding = () => {
         shortcut: true,
         netStats,
         dataUsage,
-        betaRelease
+        betaRelease,
+        downloadProgress
     };
 };
 export default useLanding;

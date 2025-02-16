@@ -2385,3 +2385,22 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 .speedTest .results .resultCard h2 small {
     font-size: 14px;
 }
+
+.progressBar {
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.progressBar div {
+    height: 3px;
+    transition: width 0.3s ease-in-out;
+    float: left;
+}
+.progressBar.green div {
+    background: #4caf50;
+}
+.progressBar.red div {
+    background: tomato;
+}

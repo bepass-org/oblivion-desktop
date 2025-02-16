@@ -7,6 +7,7 @@ import LandingHeader from './LandingHeader';
 import LandingBody from './LandingBody';
 import Tabs from '../../components/Tabs';
 import ConfigHandler from '../../components/ConfigHandler';
+import DownloadProgressBar from './DownloadProgressBar';
 
 export default function Landing() {
     const {
@@ -33,7 +34,8 @@ export default function Landing() {
         shortcut,
         netStats,
         dataUsage,
-        betaRelease
+        betaRelease,
+        downloadProgress
     } = useLanding();
 
     return (
@@ -84,6 +86,7 @@ export default function Landing() {
                 reverseOrder={false}
                 containerStyle={{ bottom: shortcut ? '70px' : '16px' }}
             />
+            <DownloadProgressBar data={downloadProgress} />
         </>
     );
 }
