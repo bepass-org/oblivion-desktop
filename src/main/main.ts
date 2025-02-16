@@ -42,6 +42,7 @@ import {
     netStatsPath,
     netStatsAssetPath,
     singBoxManager,
+    downloadedPath,
     updaterPath
 } from '../constants';
 import { spawn } from 'child_process';
@@ -395,14 +396,13 @@ class OblivionDesktop {
                         async () => {
                             log.info('Download completed!');
                             this.state.mainWindow?.setProgressBar(-1);
-                            const tempUpdaterPath = updaterPath + '_';
-                            fs.copyFile(tempUpdaterPath, updaterPath, (copyErr) => {
+                            fs.copyFile(downloadedPath, updaterPath, (copyErr) => {
                                 if (copyErr) {
                                     log.error('⚠️ Failed to copy updater file:', copyErr);
                                     return;
                                 }
                                 log.info(`✅ Updater copied successfully: ${updaterPath}`);
-                                fs.rm(tempUpdaterPath, { force: true }, (unlinkErr) => {
+                                fs.rm(downloadedPath, { force: true }, (unlinkErr) => {
                                     if (unlinkErr) {
                                         log.warn(
                                             '⚠️ Could not delete old updater file:',
@@ -436,7 +436,7 @@ class OblivionDesktop {
         onProgress: (percent: number) => void,
         onDone: () => void
     ) {
-        const file = fs.createWriteStream(updaterPath);
+        const file = fs.createWriteStream(downloadedPath);
         let receivedBytes = 0;
         let totalBytes = 0;
         let lastUpdateTime = Date.now();
@@ -468,7 +468,7 @@ class OblivionDesktop {
                 file.close();
             });
             file.on('close', () => {
-                fs.stat(updaterPath, (err, stats) => {
+                fs.stat(downloadedPath, (err, stats) => {
                     if (err) {
                         log.error('File stat error:', err);
                         return;
@@ -477,7 +477,7 @@ class OblivionDesktop {
                         log.error('Download failed: File size is 0 bytes.');
                         return;
                     }
-                    log.info(`File successfully written to disk: ${updaterPath}`);
+                    log.info(`File successfully written to disk: ${downloadedPath}`);
                     setTimeout(() => {
                         onDone();
                     }, 2500);
