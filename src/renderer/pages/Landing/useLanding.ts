@@ -259,7 +259,9 @@ const useLanding = () => {
 
         const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
         setHasNewUpdate(typeof hasUpdate !== 'undefined' && hasUpdate === 'true' ? true : false);
-        checkForUpdates();
+        if (!isLoading) {
+            setTimeout(checkForUpdates, 2500);
+        }
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -377,7 +379,6 @@ const useLanding = () => {
                 setTimeout(getIpLocation, 7500);
             }
             clearTimeout(timeoutId);
-            toast.remove('ipLocationStatus');
         } catch (error) {
             /*setIpInfo({
                 countryCode: false,
@@ -406,47 +407,38 @@ const useLanding = () => {
                 setPing(0);
             }, 3500);
         } else {
-            toast.remove('ipChangedToIR');
+            toast.remove('IRAN_IP');
         }
     }, [method, ipInfo, appLang.status.keep_trying]);
 
     useEffect(() => {
-        /*if (ipData) {
-            getIpLocation();
-        }
-        if (ping === 0) {
-            if ((isConnected && !ipData) || (isConnected && ipInfo?.countryCode)) {
-                getPing();
-            }
-        }*/
-
-        if (isLoading || !isConnected) {
-            toast.remove('ipChangedToIR');
-            toast.remove('ipLocationStatus');
-        }
-
-        if (isConnected && isLoading) {
-            setStatusText(`${appLang?.status?.disconnecting}`);
-        } else if (!isConnected && isLoading) {
-            /*setIpInfo({
-                countryCode: false,
-                ip: ''
-            });*/
-            setStatusText(`${appLang?.status?.connecting}`);
-        } else if (isConnected && ipInfo?.countryCode) {
-            setStatusText(`${appLang?.status?.connected_confirm}`);
-        } else if (isConnected && !ipInfo?.countryCode && ipData) {
-            if (proxyStatus !== 'none') {
-                setStatusText(`${appLang?.status?.ip_check}`);
-                getIpLocation();
+        if (isConnected) {
+            if (isLoading) {
+                setStatusText(`${appLang?.status?.disconnecting}`);
             } else {
-                setStatusText(`${appLang?.status?.connected}`);
+                setTimeout(checkForUpdates, 2500);
+                if (ipInfo?.countryCode) {
+                    setStatusText(`${appLang?.status?.connected_confirm}`);
+                } else {
+                    if (ipData) {
+                        if (proxyStatus !== 'none') {
+                            setStatusText(`${appLang?.status?.ip_check}`);
+                            getIpLocation();
+                        } else {
+                            setStatusText(`${appLang?.status?.connected}`);
+                        }
+                    } else {
+                        setStatusText(`${appLang?.status?.connected}`);
+                    }
+                }
             }
-        } else if (isConnected && !ipData) {
-            setStatusText(`${appLang?.status?.connected}`);
         } else {
-            setStatusText(`${appLang?.status?.disconnected}`);
             toast.remove('IRAN_IP');
+            if (isLoading) {
+                setStatusText(`${appLang?.status?.connecting}`);
+            } else {
+                setStatusText(`${appLang?.status?.disconnected}`);
+            }
         }
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
