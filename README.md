@@ -136,7 +136,7 @@ technology
             <tr>
                 <td>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Windows-Setup x64-0C88D8.svg?logo=gitforwindows"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Windows-Portablex64-005AA8.svg?logo=gitforwindows"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Windows-Portable x64-005AA8.svg?logo=gitforwindows"></a>
                     <br>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-arm64.exe"><img src="https://img.shields.io/badge/Windows-Setup arm64-0C88D8.svg?logo=gitforwindows"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-win-arm64.zip"><img src="https://img.shields.io/badge/Windows-Portable arm64-005AA8.svg?logo=gitforwindows"></a>
@@ -152,8 +152,8 @@ technology
                 <td>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/macOS-DMG arm64-F0F0F1.svg?logo=apple"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.zip"><img src="https://img.shields.io/badge/macOS-ZIP arm64-F0F0F1.svg?logo=apple" /></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/macOS-DMG x64-5D5D5D.svg?logo=apple"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.zip"><img src="https://img.shields.io/badge/macOS-ZIP x64-5D5D5D.svg?logo=apple" /></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/macOS-DMG x64-cccccc.svg?logo=apple"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.zip"><img src="https://img.shields.io/badge/macOS-ZIP x64-cccccc.svg?logo=apple" /></a>
                 </td>
                 <td>10.15+</td>
             </tr>
@@ -181,7 +181,7 @@ technology
             </tr>
             <tr>
                 <td>
-                    <small>iOS: Coming Soon ...</small>
+                    iOS<small>: Coming Soon ...</small>
                 </td>
                 <td></td>
             </tr>
