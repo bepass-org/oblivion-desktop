@@ -194,7 +194,7 @@ Cloudflare Warp فراهم می‌کند.
             </tr>
             <tr>
                 <td>
-                    آی‌او‌اس<small>: بزودی ...</small>
+                    <img src="https://img.shields.io/badge/iOS-Comming soon ...-044d29.svg?logo=ios">
                 </td>
                 <td></td>
             </tr>
