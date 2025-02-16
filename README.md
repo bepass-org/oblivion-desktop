@@ -128,7 +128,6 @@ technology
     <table>
         <thead align="left">
             <tr>
-                <th></th>
                 <th>OS / Arch</th>
                 <th>Compatibility</th>
             </tr>
