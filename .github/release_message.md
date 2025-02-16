@@ -41,12 +41,12 @@ https://github.com/bepass-org/oblivion-desktop/issues
             <tr>
                 <td>Windows</td>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-0C88D8.svg?logo=windows"></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-arm64.exe"><img src="https://img.shields.io/badge/Setup-arm64-0C88D8.svg?logo=windows"></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-ia32.exe"><img src="https://img.shields.io/badge/Setup-x86-0C88D8.svg?logo=windows"></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-005AA8.svg?logo=windows"></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-arm64.zip"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=windows"></a><br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-ia32.zip"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=windows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-0C88D8.svg?logo=gitforwindows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-arm64.exe"><img src="https://img.shields.io/badge/Setup-arm64-0C88D8.svg?logo=gitforwindows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-ia32.exe"><img src="https://img.shields.io/badge/Setup-x86-0C88D8.svg?logo=gitforwindows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-005AA8.svg?logo=gitforwindows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-arm64.zip"><img src="https://img.shields.io/badge/Portable-arm64-005AA8.svg?logo=gitforwindows"></a><br>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/RELEASE_TAG/oblivion-desktop-win-ia32.zip"><img src="https://img.shields.io/badge/Portable-x86-005AA8.svg?logo=gitforwindows"></a><br>
                 </td>
                 <td>
                     10+<br>
