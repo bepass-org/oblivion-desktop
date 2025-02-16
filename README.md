@@ -181,7 +181,7 @@ technology
             </tr>
             <tr>
                 <td>
-                    <img src="https://img.shields.io/badge/iOS-Comming soon ...-044d29.svg?logo=ios">
+                    <img src="https://img.shields.io/badge/iOS-Coming soon ...-pink.svg?logo=mac">
                 </td>
                 <td></td>
             </tr>
