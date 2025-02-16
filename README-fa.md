@@ -127,7 +127,7 @@ Cloudflare Warp فراهم می‌کند.
                 :white_check_mark: پینگ<br>
                 :white_check_mark: دسترس‌پذیری<br>
                 :white_check_mark: تست سرعت<br>
-                :white_large_square: بروزرسانی داخلی<br>
+                :white_check_mark: بروزرسانی داخلی <small>(ویندوز)</small><br>
                 :white_large_square: قطع اضطراری
             </td>
         </tr>
