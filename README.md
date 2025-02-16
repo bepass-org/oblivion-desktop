@@ -174,7 +174,7 @@ technology
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/Android-APK Universal-7abf7a.svg?logo=android"></a>
+                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/Android-APK Universal-0d7365.svg?logo=android"></a>
                     <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/Android-APK Universal-044d29.svg?logo=googleplay"></a>
                 </td>
                 <td>6+</td>
