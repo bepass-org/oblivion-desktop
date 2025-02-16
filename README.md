@@ -173,17 +173,16 @@ technology
                     KDE
                 </td>
             </tr>
-            <td>Android</td>
+            <td></td>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a>
-                    <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=googleplay"></a>
+                    <a href="https://github.com/bepass-org/oblivion/releases/latest"><img src="https://img.shields.io/badge/Android-APK Universal-044d29.svg?logo=android"></a>
+                    <a href="https://play.google.com/store/apps/details?id=org.bepass.oblivion"><img src="https://img.shields.io/badge/Android-APK Universal-044d29.svg?logo=googleplay"></a>
                 </td>
                 <td>6+</td>
             </tr>
             <tr>
-                <td>iOS</td>
                 <td>
-                    <small>Coming Soon ...</small>
+                    <small>iOS: Coming Soon ...</small>
                 </td>
                 <td></td>
             </tr>
