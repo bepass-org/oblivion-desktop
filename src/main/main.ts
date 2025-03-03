@@ -545,20 +545,23 @@ class OblivionDesktop {
                 event.preventDefault();
                 await exitTheApp();
                 await new Promise((resolve) => setTimeout(resolve, 2500));
+                app.quit();
             });
             powerMonitor.on('suspend', async (event: any) => {
                 event.preventDefault();
                 await exitTheApp();
                 await new Promise((resolve) => setTimeout(resolve, 2500));
+                app.quit();
             });
         }
 
         app.on('before-quit', async (event) => {
-            event.preventDefault();
-            await exitTheApp();
-            await new Promise((resolve) => setTimeout(resolve, 2500));
-            log.info('Cleanup done, now quitting...');
-            app.quit();
+            if (process.platform === 'darwin') {
+                event.preventDefault();
+                await exitTheApp();
+                await new Promise((resolve) => setTimeout(resolve, 2500));
+                app.quit();
+            }
         });
 
         app.on('quit', () => {
