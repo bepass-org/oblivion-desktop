@@ -203,7 +203,7 @@ class WarpPlusManager {
             }
             if (fs.existsSync(exclusionsPath)) {
                 fs.rm(exclusionsPath, { force: true }, (unlinkErr) => {
-                    //
+                    log.warn('⚠️ Could not delete exclusionsPath file:', unlinkErr);
                 });
             }
             this.restartApp(1500);
