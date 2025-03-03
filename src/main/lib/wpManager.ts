@@ -201,6 +201,11 @@ class WarpPlusManager {
             if (code !== 0) {
                 log.error(`❌ Script exited with code ${code}`);
             }
+            if (fs.existsSync(exclusionsPath)) {
+                fs.rm(exclusionsPath, { force: true }, (unlinkErr) => {
+                    //
+                });
+            }
             this.restartApp(1500);
         });
     }
