@@ -13,8 +13,7 @@ import {
     Event,
     NativeImage,
     MenuItemConstructorOptions,
-    dialog,
-    powerMonitor
+    dialog
 } from 'electron';
 import path from 'path';
 import fs from 'fs';
@@ -541,26 +540,9 @@ class OblivionDesktop {
             await this.exitProcess();
         });
 
-        if (process.platform !== 'darwin') {
-            powerMonitor.on('shutdown', async () => {
-                await this.exitProcess();
-            });
-            powerMonitor.on('suspend', async () => {
-                await this.exitProcess();
-            });
-        }
-
         app.on('before-quit', async (event) => {
-            if (process.platform === 'darwin') {
-                event.preventDefault();
-                await this.exitProcess();
-            }
-        });
-
-        app.on('quit', () => {
-            if (process.platform !== 'darwin') {
-                powerMonitor.emit('shutdown');
-            }
+            event.preventDefault();
+            await this.exitProcess();
         });
 
         app.setAsDefaultProtocolClient(packageJsonData.shortName);
