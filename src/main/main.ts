@@ -16,12 +16,10 @@ import {
     dialog,
     powerMonitor
 } from 'electron';
-import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
-//import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
@@ -228,16 +226,6 @@ class OblivionDesktop {
 
         const menuBuilder = new MenuBuilder(this.state.mainWindow);
         menuBuilder.buildMenu();
-
-        if (process.platform === 'win32') {
-            ElectronShutdownHandler.setWindowHandle(this.state.mainWindow.getNativeWindowHandle());
-            ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
-            ElectronShutdownHandler.on('shutdown', async () => {
-                ElectronShutdownHandler.releaseShutdown();
-                this.state.mainWindow?.webContents.send('shutdown');
-                await this.exitProcess();
-            });
-        }
     }
 
     /* private async installDevTools(): Promise<void> {
