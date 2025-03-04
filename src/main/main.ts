@@ -296,13 +296,20 @@ class OblivionDesktop {
 
     private async exitProcess() {
         try {
-            this.state.connectionStatus = 'disconnected';
+            this.state.connectionStatus = 'disconnecting';
             this.state.mainWindow?.hide();
             this.state.appIcon?.destroy();
             this.state.appIcon = null;
             await new Promise((resolve) => setTimeout(resolve, 1000));
             await exitTheApp();
-            app.exit(0);
+            await new Promise((resolve) => setTimeout(resolve, 2500));
+            this.state.connectionStatus = 'disconnected';
+            const checkExit = setInterval(() => {
+                if (this.state.connectionStatus === 'disconnected') {
+                    clearInterval(checkExit);
+                    app.quit();
+                }
+            }, 500);
             return;
         } catch (error) {
             log.error('Error while exiting the app:', error);
@@ -536,31 +543,25 @@ class OblivionDesktop {
                 this.createWindow().catch((err) => log.error('Create Window Error:', err));
         });
 
-        app.on('window-all-closed', () => {
-            this.exitProcess();
+        app.on('window-all-closed', async () => {
+            await this.exitProcess();
         });
 
         if (process.platform !== 'darwin') {
             powerMonitor.on('shutdown', async (event: any) => {
                 event.preventDefault();
-                await exitTheApp();
-                await new Promise((resolve) => setTimeout(resolve, 2500));
-                app.quit();
+                await this.exitProcess();
             });
             powerMonitor.on('suspend', async (event: any) => {
                 event.preventDefault();
-                await exitTheApp();
-                await new Promise((resolve) => setTimeout(resolve, 2500));
-                app.quit();
+                await this.exitProcess();
             });
         }
 
         app.on('before-quit', async (event) => {
             if (process.platform === 'darwin') {
                 event.preventDefault();
-                await exitTheApp();
-                await new Promise((resolve) => setTimeout(resolve, 2500));
-                app.quit();
+                await this.exitProcess();
             }
         });
 
