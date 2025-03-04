@@ -16,6 +16,7 @@ import {
     dialog,
     powerMonitor
 } from 'electron';
+import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler';
 import path from 'path';
 import fs from 'fs';
 import settings from 'electron-settings';
@@ -227,6 +228,15 @@ class OblivionDesktop {
 
         const menuBuilder = new MenuBuilder(this.state.mainWindow);
         menuBuilder.buildMenu();
+
+        ElectronShutdownHandler.setWindowHandle(this.state.mainWindow.getNativeWindowHandle());
+        ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
+
+        ElectronShutdownHandler.on('shutdown', async () => {
+            ElectronShutdownHandler.releaseShutdown();
+            this.state.mainWindow?.webContents.send('shutdown');
+            await this.exitProcess();
+        });
     }
 
     /* private async installDevTools(): Promise<void> {
@@ -304,12 +314,7 @@ class OblivionDesktop {
             await exitTheApp();
             await new Promise((resolve) => setTimeout(resolve, 2500));
             this.state.connectionStatus = 'disconnected';
-            const checkExit = setInterval(() => {
-                if (this.state.connectionStatus === 'disconnected') {
-                    clearInterval(checkExit);
-                    app.quit();
-                }
-            }, 500);
+            app.quit();
             return;
         } catch (error) {
             log.error('Error while exiting the app:', error);
@@ -548,12 +553,10 @@ class OblivionDesktop {
         });
 
         if (process.platform !== 'darwin') {
-            powerMonitor.on('shutdown', async (event: any) => {
-                event.preventDefault();
+            powerMonitor.on('shutdown', async () => {
                 await this.exitProcess();
             });
-            powerMonitor.on('suspend', async (event: any) => {
-                event.preventDefault();
+            powerMonitor.on('suspend', async () => {
                 await this.exitProcess();
             });
         }
