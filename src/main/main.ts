@@ -229,14 +229,15 @@ class OblivionDesktop {
         const menuBuilder = new MenuBuilder(this.state.mainWindow);
         menuBuilder.buildMenu();
 
-        ElectronShutdownHandler.setWindowHandle(this.state.mainWindow.getNativeWindowHandle());
-        ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
-
-        ElectronShutdownHandler.on('shutdown', async () => {
-            ElectronShutdownHandler.releaseShutdown();
-            this.state.mainWindow?.webContents.send('shutdown');
-            await this.exitProcess();
-        });
+        if (process.platform === 'win32') {
+            ElectronShutdownHandler.setWindowHandle(this.state.mainWindow.getNativeWindowHandle());
+            ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
+            ElectronShutdownHandler.on('shutdown', async () => {
+                ElectronShutdownHandler.releaseShutdown();
+                this.state.mainWindow?.webContents.send('shutdown');
+                await this.exitProcess();
+            });
+        }
     }
 
     /* private async installDevTools(): Promise<void> {
