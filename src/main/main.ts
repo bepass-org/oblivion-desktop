@@ -541,16 +541,18 @@ class OblivionDesktop {
         });
 
         app.on('before-quit', async (event) => {
-            event.preventDefault();
-            await this.exitProcess();
+            //event.preventDefault();
+            //await this.exitProcess();
         });
 
-        process.on('beforeExit', async () => {
+        app.on('will-quit', async (event) => {
+            event.preventDefault();
             try {
                 await this.exitProcess();
             } catch (error) {
-                log.error('Error during beforeExit:', error);
+                console.error('Error during cleanup:', error);
             }
+            app.exit(0);
         });
 
         app.setAsDefaultProtocolClient(packageJsonData.shortName);
