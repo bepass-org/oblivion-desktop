@@ -545,6 +545,14 @@ class OblivionDesktop {
             await this.exitProcess();
         });
 
+        process.on('beforeExit', async () => {
+            try {
+                await this.exitProcess();
+            } catch (error) {
+                log.error('Error during beforeExit:', error);
+            }
+        });
+
         app.setAsDefaultProtocolClient(packageJsonData.shortName);
         app.on('open-url', (event: Event) => {
             event.preventDefault();
@@ -553,27 +561,6 @@ class OblivionDesktop {
             }
         });
     }
-
-    /*private shutdownHandlersRegistered = false;
-    private handleShutdown(): void {
-        if (this.shutdownHandlersRegistered) return;
-        this.shutdownHandlersRegistered = true;
-        try {
-            if (process.platform === 'win32') {
-                process.on('beforeExit', async () => {
-                    await this.exitProcess();
-                    await new Promise((resolve) => setTimeout(resolve, 1500));
-                });
-            } else {
-                powerMonitor.on('shutdown', async (event: Event) => {
-                    event.preventDefault();
-                    this.exitProcess();
-                });
-            }
-        } catch (error) {
-            log.error('Error setting up shutdown handlers:', error);
-        }
-    }*/
 
     private async setupTray(): Promise<void> {
         try {
