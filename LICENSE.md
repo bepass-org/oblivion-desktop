@@ -1,6 +1,6 @@
 # Restrictive License - No Sale and Modification Limitation
 
-Copyright © 2024 Oblivion Desktop
+Copyright © 2025 Oblivion Desktop
 
 This software is provided under a specific license.
 
@@ -15,7 +15,7 @@ Development of the software is only possible through project participation.
 
 # لایسنس محدود - عدم امکان فروش و محدودیت تغییرات
 
-کپی‌رایت © ۱۴۰۳ Oblivion Desktop
+کپی‌رایت © ۱۴۰۴ Oblivion Desktop
 
 این نرم‌افزار طبق یک لایسنس خاص ارائه می‌شود.
 
