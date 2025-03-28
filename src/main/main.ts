@@ -762,12 +762,14 @@ class OblivionDesktop {
     private async exitStrategy(): Promise<void> {
         try {
             if (process.platform === 'win32') {
-                const { app: electronApp } = require('electron');
-                const { powerMonitor } = require('electron');
-                powerMonitor.on('shutdown', async (event: any) => {
-                    event.preventDefault();
-                    this.exitProcess();
-                    electronApp.exit();
+                const { systemEvents } = require('electron');
+                systemEvents.on('session-end', async () => {
+                    return new Promise<void>((resolve) => {
+                        setTimeout(() => {
+                            this.exitProcess();
+                            resolve();
+                        }, 1000);
+                    });
                 });
             }
         } catch (error) {
