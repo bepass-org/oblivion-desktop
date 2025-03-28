@@ -759,27 +759,21 @@ class OblivionDesktop {
         logMetadata(osInfo);
     }
 
-    /*private async exitStrategy(): Promise<void> {
+    private async exitStrategy(): Promise<void> {
         try {
             if (process.platform === 'win32') {
-                //ElectronShutdownHandler.blockShutdown('Please wait for some data to be saved');
-                ElectronShutdownHandler.on('shutdown', async (event) => {
+                const { app: electronApp } = require('electron');
+                const { powerMonitor } = require('electron');
+                powerMonitor.on('shutdown', async (event: any) => {
                     event.preventDefault();
-                    log.info('Shutting down!');
-                    try {
-                        await exitTheApp();
-                    } catch (error) {
-                        log.error('Error during app exit process:', error);
-                    }
-                    await new Promise((resolve) => setTimeout(resolve, 1000));
-                    ElectronShutdownHandler.releaseShutdown();
-                    app.exit(0);
+                    this.exitProcess();
+                    electronApp.exit();
                 });
             }
         } catch (error) {
             log.error('Error setting up shutdown handlers:', error);
         }
-    }*/
+    }
 
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
@@ -788,7 +782,7 @@ class OblivionDesktop {
             await this.checkStartUp();
             await this.autoConnect();
             await this.setupMetaData();
-            //await this.exitStrategy();
+            await this.exitStrategy();
             log.info('od is ready!');
         });
     }
