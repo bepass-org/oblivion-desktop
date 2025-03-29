@@ -545,6 +545,9 @@ class OblivionDesktop {
         app.on('before-quit', async (event) => {
             //event.preventDefault();
             //await this.exitProcess();
+        });
+
+        app.on('session-end', async () => {
             await this.disableProxyQuickly();
         });
 
