@@ -42,11 +42,13 @@ import {
     netStatsAssetPath,
     singBoxManager,
     downloadedPath,
-    updaterPath
+    updaterPath,
+    regeditVbsDirPath
 } from '../constants';
 import { spawn } from 'child_process';
 import https from 'https';
 import packageJsonData from '../../package.json';
+import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
 const WINDOW_DIMENSIONS = {
@@ -543,6 +545,7 @@ class OblivionDesktop {
         app.on('before-quit', async (event) => {
             //event.preventDefault();
             //await this.exitProcess();
+            await this.disableProxyQuickly();
         });
 
         app.on('will-quit', async (event) => {
@@ -759,7 +762,7 @@ class OblivionDesktop {
         logMetadata(osInfo);
     }
 
-    private async exitStrategy(): Promise<void> {
+    /*private async exitStrategy(): Promise<void> {
         try {
             if (process.platform === 'win32') {
                 const { systemEvents } = require('electron');
@@ -775,6 +778,24 @@ class OblivionDesktop {
         } catch (error) {
             log.error('Error setting up shutdown handlers:', error);
         }
+    }*/
+
+    private async disableProxyQuickly(): Promise<void> {
+        if (process.platform !== 'win32') return;
+        try {
+            const registryPath =
+                'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings';
+            const proxySettings: RegistryPutItem = {
+                ProxyServer: { type: 'REG_SZ', value: '' },
+                ProxyOverride: { type: 'REG_SZ', value: '' },
+                AutoConfigURL: { type: 'REG_SZ', value: '' },
+                ProxyEnable: { type: 'REG_DWORD', value: 0 }
+            };
+            regeditModule.setExternalVBSLocation(regeditVbsDirPath);
+            await regedit.putValue({ [registryPath]: proxySettings });
+        } catch (error) {
+            log.error(`Error while disabling system proxy: ${error}`);
+        }
     }
 
     public async handleAppReady(): Promise<void> {
@@ -784,7 +805,7 @@ class OblivionDesktop {
             await this.checkStartUp();
             await this.autoConnect();
             await this.setupMetaData();
-            await this.exitStrategy();
+            //await this.exitStrategy();
             log.info('od is ready!');
         });
     }
