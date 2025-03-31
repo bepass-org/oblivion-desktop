@@ -551,6 +551,10 @@ class OblivionDesktop {
             await this.disableProxyQuickly();
         });
 
+        app.on('quit', async () => {
+            await this.disableProxyQuickly();
+        });
+
         app.on('will-quit', async (event) => {
             event.preventDefault();
             try {
