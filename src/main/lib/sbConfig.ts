@@ -15,13 +15,11 @@ import {
     isDarwin
 } from '../../constants';
 import { defaultSettings } from '../../defaultSettings';
-import { formatEndpointForConfig } from './utils';
+import { formatEndpointForConfig, isIpBasedDoH } from './utils';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
-    const isCfDns =
-        config.plainDns === '1.1.1.1' ||
-        config.plainDns === '1.1.1.2' ||
-        config.plainDns === '1.1.1.3';
+
+    console.log(config.DoHDns, isIpBasedDoH(config.DoHDns));
 
     const logConfig =
         config.logLevel === 'disabled'
@@ -42,14 +40,14 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     tag: 'dns-remote',
                     address: config.DoHDns,
                     detour: 'proxy',
-                    ...(!isCfDns && { address_resolver: 'dns-cf' })
+                    ...(!isIpBasedDoH(config.DoHDns) && { address_resolver: 'dns-cf' })
                 },
                 {
                     tag: 'dns-direct',
                     address: config.plainDns,
                     detour: 'direct'
                 },
-                ...(!isCfDns
+                ...(!isIpBasedDoH(config.DoHDns)
                     ? [
                           {
                               tag: 'dns-cf',
