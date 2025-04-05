@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { app, ipcMain } from 'electron';
 import log from 'electron-log';
-import { defaultSettings } from '../../defaultSettings';
+import { defaultSettings, dnsServers } from '../../defaultSettings';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -168,6 +168,10 @@ export function checkTunAddrType(addrType: any): string {
 
 export function checkTestUrl(value: any) {
     return typeof value === 'string' ? value : defaultSettings.testUrl;
+}
+
+export function checkDNS(value: any) {
+    return typeof value === 'string' ? value : dnsServers[0].value;
 }
 
 export const exitTheApp = async () => {
