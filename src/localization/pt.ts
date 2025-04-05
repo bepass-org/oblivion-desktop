@@ -177,6 +177,7 @@ const brazilianPortuguese: Language = {
         mtu_title: 'Valor MTU',
         mtu_desc:
             'A Unidade Máxima de Transmissão (MTU) refere-se ao tamanho máximo dos pacotes de dados, que deve ser definido entre 1000 e 9999.',
+        custom_dns_title: 'DNS personalizado',
         confirm: 'Confirmo',
         update: 'Atualizar',
         cancel: 'Cancelar'

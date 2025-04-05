@@ -178,6 +178,7 @@ const turkish: Language = {
         mtu_title: 'MTU Değeri',
         mtu_desc:
             'Maksimum İletim Birimi (MTU), veri paketlerinin maksimum boyutunu ifade eder ve 1000 ile 9999 arasında ayarlanmalıdır.',
+        custom_dns_title: 'Özel DNS',
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
         cancel: 'İptal'

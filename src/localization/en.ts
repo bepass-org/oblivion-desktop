@@ -177,6 +177,7 @@ const english: Language = {
         mtu_title: 'MTU Value',
         mtu_desc:
             'Maximum Transmission Unit (MTU) refers to the maximum size of data packets, which should be set between 1000 and 9999.',
+        custom_dns_title: 'Custom DNS',
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'

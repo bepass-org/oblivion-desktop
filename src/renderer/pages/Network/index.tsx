@@ -77,7 +77,7 @@ export default function Options() {
         <>
             <Nav title={appLang?.settings?.network} />
             <DnsModal
-                title='Custom DNS'
+                title={appLang?.modal?.custom_dns_title}
                 isOpen={showDnsModal}
                 onClose={onCloseDnsModal}
                 plainDns={plainDns || ''}

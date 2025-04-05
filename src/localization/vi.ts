@@ -178,6 +178,7 @@ const vietnamese: Language = {
         mtu_title: 'Giá trị MTU',
         mtu_desc:
             'Đơn vị Truyền tối đa (MTU) đề cập đến kích thước tối đa của các gói dữ liệu, nên được đặt trong khoảng từ 1000 đến 9999.',
+        custom_dns_title: 'DNS tùy chỉnh',
         confirm: 'Tôi xác nhận',
         update: 'Cập nhật',
         cancel: 'Hủy'

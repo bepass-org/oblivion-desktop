@@ -170,6 +170,7 @@ const amharic: Language = {
         profile_limitation: (value) => `${value} አማካኝነቶችን በአንደኛ አካባቢ ይጠቀሙ`,
         mtu_title: 'እምነት ምክር',
         mtu_desc: 'እምነትን እንዲበረከት ማንኛውም ምክር በምርጥ ቁጥር።',
+        custom_dns_title: 'የተለየ DNS',
         confirm: 'እባኮትን ይዘው',
         update: 'አዳዲስ ይደርሳሉ',
         cancel: 'ተመካከተ'

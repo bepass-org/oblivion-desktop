@@ -174,6 +174,7 @@ const arabic: Language = {
         mtu_title: 'قيمة MTU',
         mtu_desc:
             'تشير وحدة الإرسال القصوى (MTU) إلى الحد الأقصى لحجم حزم البيانات، والتي يجب تعيينها بين 1000 و 9999.',
+        custom_dns_title: 'نظام أسماء النطاقات المخصص',
         confirm: 'أؤكد',
         update: 'تحديث',
         cancel: 'إلغاء'

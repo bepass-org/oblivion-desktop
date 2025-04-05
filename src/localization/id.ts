@@ -178,6 +178,7 @@ const indonesia: Language = {
         mtu_title: 'Nilai MTU',
         mtu_desc:
             'Maximum Transmission Unit (MTU) mengacu pada ukuran maksimum paket data, yang harus diatur antara 1000 hingga 9999.',
+        custom_dns_title: 'DNS Kustom',
         confirm: 'Saya mengerti',
         update: 'Perbarui',
         cancel: 'Batalkan'
