@@ -25,9 +25,24 @@ const useDnsModal = (props: DnsModalProps) => {
     }, [setShowModal, onClose]);
 
     const onSaveModalClick = useCallback(() => {
-        setCustomDns(plainDnsInput, dohInput);
+        const cleanedPlain = plainDnsInput.replace(/https?:\/\//gi, '').replace(/\//g, '');
+        let fixedDoh = dohInput.trim();
+        if (!fixedDoh || fixedDoh.length === 0) {
+            fixedDoh = `https://${cleanedPlain}/dns-query`;
+        } else {
+            if (!/^https:\/\//i.test(fixedDoh)) {
+                fixedDoh = `https://${fixedDoh}`;
+            }
+            fixedDoh = fixedDoh.replace(/\/+$/, '');
+            if (!fixedDoh.endsWith('/dns-query')) {
+                fixedDoh += '/dns-query';
+            }
+        }
+        setPlainDnsInput(cleanedPlain);
+        setDohInput(fixedDoh);
+        setCustomDns(cleanedPlain, fixedDoh);
         handleOnClose();
-    }, [plainDnsInput, dohInput, plainDns, DoH, setCustomDns]);
+    }, [plainDnsInput, dohInput, plainDns, DoH, setCustomDns, handleOnClose]);
 
     const onSaveModalKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
