@@ -177,6 +177,7 @@ const persian: Language = {
         mtu_title: 'مقدار MTU',
         mtu_desc:
             'حداکثر واحد انتقال یا MTU، به حداکثر اندازه بسته‌های داده اشاره دارد، که باید بین ۱۰۰۰ تا ۹۹۹۹ تنظیم شوند.',
+        custom_dns_title: 'مقدار DNS',
         update: 'بروزرسانی',
         cancel: 'انصراف'
     },

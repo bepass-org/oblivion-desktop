@@ -171,6 +171,7 @@ const chinese: Language = {
         profile_limitation: (value) => `您最多可以添加 ${value} 个端点。`,
         mtu_title: 'MTU 值',
         mtu_desc: '最大传输单元 (MTU) 是指数据包的最大大小，应设置在 1000 到 9999 之间。',
+        custom_dns_title: '自定义 DNS',
         confirm: '确认',
         update: '更新',
         cancel: '取消'

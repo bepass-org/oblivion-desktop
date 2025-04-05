@@ -171,6 +171,7 @@ export interface Modal {
     profile_endpoint: string;
     profile_limitation: (value: string) => string;
     mtu_title: string;
+    custom_dns_title: string;
     mtu_desc: string;
     confirm: string;
     update: string;

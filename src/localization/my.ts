@@ -177,6 +177,7 @@ const myanmar: Language = {
         mtu_title: 'MTU တန်ဖိုး',
         mtu_desc:
             'Maximum Transmission Unit (MTU) သည် ဒေတာပုံသေ၏ အရွယ်အစားကို သတ်မှတ်သည်။ 1000 မှ 9999 အတွင်းတွင် သတ်မှတ်ပါ။',
+        custom_dns_title: 'စိတ်ကြိုက် DNS',
         confirm: 'ကန့်သတ်ပါ',
         update: 'အပ်ဒိတ်',
         cancel: 'အနှိပ်ပါ'
