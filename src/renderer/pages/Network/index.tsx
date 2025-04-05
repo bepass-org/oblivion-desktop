@@ -80,9 +80,7 @@ export default function Options() {
                 isOpen={showDnsModal}
                 onClose={onCloseDnsModal}
                 plainDns={plainDns || ''}
-                //setPlainDns={setPlainDns}
                 DoH={doh || ''}
-                //setDoH={setDoh}
                 setDefaultDns={setDefaultDns}
                 setCustomDns={setCustomDns}
             />
