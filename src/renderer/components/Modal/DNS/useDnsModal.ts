@@ -7,11 +7,12 @@ interface DnsModalProps {
     DoH: string;
     onClose: () => void;
     setDefaultDns: () => void;
+    cleanDns: () => void;
     setCustomDns: (plainDns: string, doh: string) => void;
 }
 
 const useDnsModal = (props: DnsModalProps) => {
-    const { isOpen, plainDns, DoH, onClose, setDefaultDns, setCustomDns } = props;
+    const { isOpen, plainDns, DoH, onClose, setDefaultDns, cleanDns, setCustomDns } = props;
     const [showModal, setShowModal] = useState<boolean>(isOpen);
     const [plainDnsInput, setPlainDnsInput] = useState<string>(plainDns);
     const [dohInput, setDohInput] = useState<string>(DoH);
@@ -60,6 +61,13 @@ const useDnsModal = (props: DnsModalProps) => {
     const handleClearInputs = useCallback(() => {
         setPlainDnsInput('');
         setDohInput('');
+        cleanDns();
+        handleOnClose();
+    }, []);
+
+    const handleSetDefault = useCallback(() => {
+        setPlainDnsInput('');
+        setDohInput('');
         setDefaultDns();
         handleOnClose();
     }, []);
@@ -104,7 +112,8 @@ const useDnsModal = (props: DnsModalProps) => {
         handleOnClose,
         onSaveModalClick,
         onSaveModalKeyDown,
-        handleClearInputs
+        handleClearInputs,
+        handleSetDefault
     };
 };
 

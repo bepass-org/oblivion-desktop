@@ -9,6 +9,7 @@ interface DnsModalProps {
     DoH: string;
     onClose: () => void;
     setDefaultDns: () => void;
+    cleanDns: () => void;
     setCustomDns: (plainDns: string, doh: string) => void;
 }
 
@@ -19,6 +20,7 @@ export default function DnsModal({
     DoH,
     onClose,
     setDefaultDns,
+    cleanDns,
     setCustomDns
 }: DnsModalProps) {
     const {
@@ -33,13 +35,15 @@ export default function DnsModal({
         handleOnClose,
         onSaveModalClick,
         onSaveModalKeyDown,
-        handleClearInputs
+        handleClearInputs,
+        handleSetDefault
     } = useDnsModal({
         isOpen,
         plainDns,
         DoH,
         onClose,
         setDefaultDns,
+        cleanDns,
         setCustomDns
     });
 
@@ -56,6 +60,17 @@ export default function DnsModal({
                     <h3>
                         {title}
                         <div className='labels'>
+                            <div
+                                role='presentation'
+                                className={classNames(
+                                    'label',
+                                    'label-default',
+                                    plainDnsInput === '' && dohInput === '' ? 'hidden' : ''
+                                )}
+                                onClick={handleSetDefault}
+                            >
+                                Default
+                            </div>
                             <div
                                 role='presentation'
                                 className={classNames(

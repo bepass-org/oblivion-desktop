@@ -59,6 +59,7 @@ export default function Options() {
         plainDns,
         doh,
         setDefaultDns,
+        cleanDns,
         setCustomDns,
         setShowDnsModal
     } = useOptions();
@@ -83,6 +84,7 @@ export default function Options() {
                 plainDns={plainDns || ''}
                 DoH={doh || ''}
                 setDefaultDns={setDefaultDns}
+                cleanDns={cleanDns}
                 setCustomDns={setCustomDns}
             />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>

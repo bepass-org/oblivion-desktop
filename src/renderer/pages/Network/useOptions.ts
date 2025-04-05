@@ -223,6 +223,12 @@ const useOptions = () => {
 
     const setDefaultDns = useCallback(async () => {
         setDns(dnsServers[0].value);
+        await settings.set('dns', dnsServers[0].value);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, []);
+
+    const cleanDns = useCallback(async () => {
+        setDns(dnsServers[0].value);
         setPlainDns('');
         setDoh('');
         await settings.set('plainDns', '');
@@ -368,6 +374,7 @@ const useOptions = () => {
         plainDns,
         doh,
         setDefaultDns,
+        cleanDns,
         setCustomDns,
         setShowDnsModal
     };
