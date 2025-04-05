@@ -33,6 +33,9 @@ const useOptions = () => {
         { value: '0.0.0.0', label: '0.0.0.0' }
     ]);
     const [hostIp, setHostIp] = useState<undefined | string>('');
+    const [showDnsModal, setShowDnsModal] = useState<boolean>(false);
+    const [plainDns, setPlainDns] = useState<undefined | string>();
+    const [doh, setDoh] = useState<undefined | string>();
 
     const navigate = useNavigate();
 
@@ -76,7 +79,9 @@ const useOptions = () => {
                 'lang',
                 'method',
                 'dataUsage',
-                'hostIP'
+                'hostIP',
+                'plainDns',
+                'DoH'
             ])
             .then((values) => {
                 setPort(typeof values.port === 'undefined' ? defaultSettings.port : values.port);
@@ -106,6 +111,12 @@ const useOptions = () => {
                 setMethod(
                     typeof values.method === 'undefined' ? defaultSettings.method : values.method
                 );
+                setPlainDns(
+                    typeof values.plainDns === 'undefined'
+                        ? defaultSettings.plainDns
+                        : values.plainDns
+                );
+                setDoh(typeof values.DoH === 'undefined' ? defaultSettings.DoH : values.DoH);
                 if (checkHostIp === networkList[1]?.value || checkProxy === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
@@ -194,8 +205,40 @@ const useOptions = () => {
 
     const onChangeDNS = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
-            setDns(event.target.value);
-            settings.set('dns', event.target.value);
+            const dnsValue = event.target.value;
+            if (dnsValue == 'custom') {
+                setShowDnsModal(true);
+            } else {
+                setDns(dnsValue);
+                settings.set('dns', dnsValue);
+                settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+            }
+        },
+        [isConnected, isLoading, appLang]
+    );
+
+    const onCloseDnsModal = useCallback(() => {
+        setShowDnsModal(false);
+    }, []);
+
+    const setDefaultDns = useCallback(async () => {
+        setDns(dnsServers[0].value);
+        setPlainDns('');
+        setDoh('');
+        await settings.set('plainDns', '');
+        await settings.set('DoH', '');
+        await settings.set('dns', dnsServers[0].value);
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, []);
+
+    const setCustomDns = useCallback(
+        async (newPlainDns: string, newDoh: string) => {
+            setPlainDns(newPlainDns);
+            setDoh(newDoh);
+            setDns('custom');
+            await settings.set('plainDns', newPlainDns);
+            await settings.set('DoH', newDoh);
+            await settings.set('dns', dnsServers[3].value);
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
         [isConnected, isLoading, appLang]
@@ -292,8 +335,6 @@ const useOptions = () => {
         [handleDataUsageOnClick]
     );
 
-    const methodIsPsiphon = useMemo(() => method === 'psiphon', [method]);
-
     return {
         proxyMode,
         port,
@@ -304,7 +345,6 @@ const useOptions = () => {
         showRoutingRulesModal,
         appLang,
         dataUsage,
-        methodIsPsiphon,
         setPort,
         setRoutingRules,
         countRoutingRules,
@@ -322,7 +362,13 @@ const useOptions = () => {
         handleDataUsageOnKeyDown,
         hostIp,
         networkList,
-        onChangeLanMode
+        onChangeLanMode,
+        showDnsModal,
+        onCloseDnsModal,
+        plainDns,
+        doh,
+        setDefaultDns,
+        setCustomDns
     };
 };
 export default useOptions;

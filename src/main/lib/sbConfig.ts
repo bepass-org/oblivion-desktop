@@ -18,6 +18,11 @@ import { defaultSettings } from '../../defaultSettings';
 import { formatEndpointForConfig } from './utils';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
+    const isCfDns =
+        config.plainDns === '1.1.1.1' ||
+        config.plainDns === '1.1.1.2' ||
+        config.plainDns === '1.1.1.3';
+
     const logConfig =
         config.logLevel === 'disabled'
             ? { disabled: true }
@@ -36,13 +41,23 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 {
                     tag: 'dns-remote',
                     address: config.DoHDns,
-                    detour: 'proxy'
+                    detour: 'proxy',
+                    ...(!isCfDns && { address_resolver: 'dns-cf' })
                 },
                 {
                     tag: 'dns-direct',
                     address: config.plainDns,
                     detour: 'direct'
                 },
+                ...(!isCfDns
+                    ? [
+                          {
+                              tag: 'dns-cf',
+                              address: '1.1.1.1',
+                              detour: 'direct'
+                          }
+                      ]
+                    : []),
                 {
                     tag: 'dns-block',
                     address: 'rcode://success'
