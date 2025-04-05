@@ -66,7 +66,7 @@ export default function DnsModal({
                                 onClick={handleClearInputs}
                             >
                                 <i className='material-icons'>&#xf0ff;</i>
-                                Clear
+                                {appLang?.modal?.license_clear}
                             </div>
                         </div>
                     </h3>
