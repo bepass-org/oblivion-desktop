@@ -1432,6 +1432,19 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     color: #ffa200;
 }
 
+.dialog .dialogBox label {
+    float: left;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 300;
+}
+.dialog .dialogBox label:not(.firstItem) {
+    margin-top: 20px;
+}
+.dialog .dialogBox label[dir='ltr'] {
+    text-align: left;
+}
+
 .dialog .dialogBox input,
 .dialog .dialogBox textarea {
     float: right;

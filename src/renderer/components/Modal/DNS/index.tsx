@@ -70,8 +70,10 @@ export default function DnsModal({
                             </div>
                         </div>
                     </h3>
-                    <p>Plain DNS Server</p>
                     <div className='clearfix' />
+                    <label htmlFor='modal_dns_input' className='firstItem' dir='ltr'>
+                        Plain DNS Server:
+                    </label>
                     <Input
                         id='modal_dns_input'
                         value={plainDnsInput}
@@ -80,8 +82,10 @@ export default function DnsModal({
                         type='text'
                         placeholder='1.1.1.1'
                     />
-                    <p>DoH(DNS-over-HTTPS) Server</p>
                     <div className='clearfix' />
+                    <label htmlFor='modal_doh_input' dir='ltr'>
+                        DoH (DNS-over-HTTPS) Server:
+                    </label>
                     <Input
                         id='modal_doh_input'
                         value={dohInput}
