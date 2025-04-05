@@ -25,7 +25,10 @@ const useDnsModal = (props: DnsModalProps) => {
     }, [setShowModal, onClose]);
 
     const onSaveModalClick = useCallback(() => {
-        const cleanedPlain = plainDnsInput.replace(/https?:\/\//gi, '').replace(/\//g, '');
+        const cleanedPlain = plainDnsInput
+            ?.replace(/https?:\/\//gi, '')
+            ?.split('/')[0]
+            ?.replace(/\//g, '');
         let fixedDoh = dohInput.trim();
         if (!fixedDoh || fixedDoh.length === 0) {
             fixedDoh = `https://${cleanedPlain}/dns-query`;
@@ -33,7 +36,7 @@ const useDnsModal = (props: DnsModalProps) => {
             if (!/^https:\/\//i.test(fixedDoh)) {
                 fixedDoh = `https://${fixedDoh}`;
             }
-            fixedDoh = fixedDoh.replace(/\/+$/, '');
+            fixedDoh = fixedDoh?.replace(/\/+$/, '');
             if (!fixedDoh.endsWith('/dns-query')) {
                 fixedDoh += '/dns-query';
             }
