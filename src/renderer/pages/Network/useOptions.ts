@@ -368,7 +368,8 @@ const useOptions = () => {
         plainDns,
         doh,
         setDefaultDns,
-        setCustomDns
+        setCustomDns,
+        setShowDnsModal
     };
 };
 export default useOptions;

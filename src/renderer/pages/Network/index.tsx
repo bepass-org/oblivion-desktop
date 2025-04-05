@@ -59,7 +59,8 @@ export default function Options() {
         plainDns,
         doh,
         setDefaultDns,
-        setCustomDns
+        setCustomDns,
+        setShowDnsModal
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -167,14 +168,33 @@ export default function Options() {
                             <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                         </div>
                         <div className={classNames('item')}>
-                            <Dropdown
-                                id='flex-switch-check-checked-dns'
-                                onChange={onChangeDNS}
-                                value={dns}
-                                label={appLang?.settings?.dns}
-                                tabIndex={-1}
-                                items={dnsServers}
-                            />
+                            {dns === 'custom' ? (
+                                <>
+                                    <label className='key' htmlFor='flex-switch-check-checked-dns'>
+                                        {appLang?.settings?.dns}
+                                    </label>
+                                    <div
+                                        className='value'
+                                        id='flex-switch-check-checked-dns'
+                                        onClick={() => {
+                                            setShowDnsModal(true);
+                                        }}
+                                    >
+                                        <span className='dirLeft' dir='auto' tabIndex={-1}>
+                                            Custom
+                                        </span>
+                                    </div>
+                                </>
+                            ) : (
+                                <Dropdown
+                                    id='flex-switch-check-checked-dns'
+                                    onChange={onChangeDNS}
+                                    value={dns}
+                                    label={appLang?.settings?.dns}
+                                    tabIndex={-1}
+                                    items={dnsServers}
+                                />
+                            )}
                             <div className='info'>{appLang?.settings?.dns_desc}</div>
                         </div>
                         <div
