@@ -18,9 +18,6 @@ import { defaultSettings } from '../../defaultSettings';
 import { formatEndpointForConfig, isIpBasedDoH } from './utils';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
-
-    console.log(config.DoHDns, isIpBasedDoH(config.DoHDns));
-
     const logConfig =
         config.logLevel === 'disabled'
             ? { disabled: true }

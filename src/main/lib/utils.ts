@@ -268,7 +268,7 @@ export function isIpBasedDoH(url: string): boolean {
     try {
         const parsedUrl = new URL(url);
         const hostname = parsedUrl.hostname;
-        
+
         const ipv4Pattern = /^(?:\d{1,3}\.){3}\d{1,3}$/;
         const ipv6Pattern = /^\[?[a-fA-F0-9:]+\]?$/;
 
@@ -276,4 +276,4 @@ export function isIpBasedDoH(url: string): boolean {
     } catch (error) {
         return false;
     }
-  }
+}
