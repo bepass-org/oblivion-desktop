@@ -180,8 +180,12 @@ export default function Options() {
                                             setShowDnsModal(true);
                                         }}
                                     >
-                                        <span className='dirLeft' dir='auto' tabIndex={-1}>
-                                            Custom
+                                        <span className='dirLeft' dir='ltr' tabIndex={-1}>
+                                            {plainDns !== ''
+                                                ? plainDns
+                                                      ?.replace(/^https?:\/\//, '')
+                                                      ?.split('/')[0]
+                                                : 'Custom'}
                                         </span>
                                     </div>
                                 </>
