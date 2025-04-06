@@ -31,17 +31,10 @@ const useDnsModal = (props: DnsModalProps) => {
             ?.split('/')[0]
             ?.replace(/\//g, '');
         let fixedDoh = dohInput.trim();
-        if (!fixedDoh || fixedDoh.length === 0) {
-            fixedDoh = `https://${cleanedPlain}/dns-query`;
-        } else {
-            if (!/^https:\/\//i.test(fixedDoh)) {
-                fixedDoh = `https://${fixedDoh}`;
-            }
-            fixedDoh = fixedDoh?.replace(/\/+$/, '');
-            if (!fixedDoh.endsWith('/dns-query')) {
-                fixedDoh += '/dns-query';
-            }
+        if (!/^https?:\/\//i.test(fixedDoh)) {
+            fixedDoh = `https://${fixedDoh}`;
         }
+        fixedDoh = fixedDoh?.replace(/\/+$/, '');
         setPlainDnsInput(cleanedPlain);
         setDohInput(fixedDoh);
         setCustomDns(cleanedPlain, fixedDoh);
