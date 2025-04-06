@@ -61,7 +61,7 @@ export const defaultSettings = {
     ipData: true,
     routingRules: '',
     autoSetProxy: true,
-    proxyMode: 'system',
+    proxyMode: 'tun',
     shareVPN: false,
     hostIP: '127.0.0.1',
     method: 'gool',
