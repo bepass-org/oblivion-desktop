@@ -83,6 +83,8 @@ const chinese: Language = {
         open_login_desc: '系统启动时打开',
         auto_connect: '自动连接',
         auto_connect_desc: '应用程序打开时连接',
+        start_minimized: '启动时最小化',
+        start_minimized_desc: '应用程序打开时最小化',
         system_tray: '隐藏系统托盘',
         system_tray_desc: '不在任务栏显示应用图标',
         force_close: '强制关闭',

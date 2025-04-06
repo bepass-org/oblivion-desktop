@@ -86,6 +86,8 @@ const spanish: Language = {
         open_login_desc: 'Abrir al inicio del sistema',
         auto_connect: 'Conexión Automática',
         auto_connect_desc: 'Conectar al abrir la aplicación',
+        start_minimized: 'Iniciar minimizado',
+        start_minimized_desc: 'Minimizar cuando se abre la aplicación',
         system_tray: 'Bandeja del sistema',
         system_tray_desc: 'No colocar el ícono del programa en la barra de tareas',
         force_close: 'Cerrar Forzadamente',

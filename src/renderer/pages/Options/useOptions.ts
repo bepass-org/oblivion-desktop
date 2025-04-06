@@ -20,6 +20,7 @@ const useOptions = () => {
     const [lang, setLang] = useState<string>('');
     const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
+    const [startMinimized, setStartMinimized] = useState<undefined | boolean>();
     const [forceClose, setForceClose] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
@@ -55,6 +56,7 @@ const useOptions = () => {
                 'lang',
                 'openAtLogin',
                 'autoConnect',
+                'startMinimized',
                 'forceClose',
                 'shortcut',
                 'soundEffect',
@@ -79,6 +81,11 @@ const useOptions = () => {
                     typeof values.autoConnect === 'undefined'
                         ? defaultSettings.autoConnect
                         : values.autoConnect
+                );
+                setStartMinimized(
+                    typeof values.startMinimized === 'undefined'
+                        ? defaultSettings.startMinimized
+                        : values.startMinimized
                 );
                 setForceClose(
                     typeof values.forceClose === 'undefined'
@@ -178,6 +185,21 @@ const useOptions = () => {
             }
         },
         [onClickAutoConnectButton]
+    );
+
+    const onClickStartMinimizedButton = useCallback(() => {
+        setStartMinimized(!startMinimized);
+        settings.set('startMinimized', !startMinimized);
+    }, [startMinimized]);
+
+    const onKeyDownStartMinimizedButton = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                onClickStartMinimizedButton();
+            }
+        },
+        [onClickStartMinimizedButton]
     );
 
     const onClickForceCloseButton = useCallback(() => {
@@ -289,7 +311,11 @@ const useOptions = () => {
         betaRelease,
         soundEffect,
         onClickSoundEffectButton,
-        onKeyDownSoundEffectButton
+        onKeyDownSoundEffectButton,
+        startMinimized,
+        setStartMinimized,
+        onClickStartMinimizedButton,
+        onKeyDownStartMinimizedButton
     };
 };
 

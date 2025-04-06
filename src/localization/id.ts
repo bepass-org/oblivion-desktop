@@ -86,6 +86,8 @@ const indonesia: Language = {
         open_login_desc: 'Buka saat sistem dinyalakan',
         auto_connect: 'Koneksi Otomatis',
         auto_connect_desc: 'Hubungkan saat aplikasi dibuka',
+        start_minimized: 'Mulai diminimalkan',
+        start_minimized_desc: 'Minimalkan saat aplikasi dibuka',
         system_tray: 'Baki Sistem',
         system_tray_desc: 'Tidak menempatkan ikon program di bilah tugas',
         force_close: 'Paksa Tutup',

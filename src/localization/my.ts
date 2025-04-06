@@ -83,6 +83,8 @@ const myanmar: Language = {
         open_login_desc: 'စနစ်စတင်ခြင်းအခါတွင်ဖွင့်ပါ',
         auto_connect: 'အလိုအလျောက်ချိတ်ဆက်မှု',
         auto_connect_desc: 'အက်ပလီကေးရှင်းဖွင့်သည့်အခါချိတ်ဆက်ပါ',
+        start_minimized: 'စတင်ရာမှာမင်းနိုက်တက်',
+        start_minimized_desc: 'အက်ပလီကေးရှင်းဖွင့်သည့်အခါ မင်းနိုက်တက်',
         system_tray: 'စနစ် tray',
         system_tray_desc: 'အစီအစဉ်ကို taskbar တွင်မထားပါ',
         force_close: 'ခါးသုတ်ပိတ်ရန်',

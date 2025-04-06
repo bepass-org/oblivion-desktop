@@ -86,6 +86,8 @@ const turkish: Language = {
         open_login_desc: 'Sistem başlangıcında aç',
         auto_connect: 'Otomatik Bağlantı',
         auto_connect_desc: 'Uygulama açıldığında bağlan',
+        start_minimized: 'Başlatıldığında Küçült',
+        start_minimized_desc: 'Uygulama açıldığında küçült',
         system_tray: 'Sistem Tepsisi',
         system_tray_desc: 'Görev çubuğunda program simgesi yerleştirme',
         force_close: 'Zorla Kapat',

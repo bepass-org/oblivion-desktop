@@ -83,6 +83,8 @@ const persian: Language = {
         open_login_desc: 'بازشدن هنگام روشن\u200Cشدن سیستم',
         auto_connect: 'اتصال خودکار',
         auto_connect_desc: 'متصل‌شدن هنگام بازشدن برنامه',
+        start_minimized: 'اجرای کمینه',
+        start_minimized_desc: 'کمینه‌شدن هنگام بازشدن برنامه',
         system_tray: 'مخفی\u200Cسازی',
         system_tray_desc: 'قرار نگرفتن آیکون برنامه در تسک\u200Cبار',
         force_close: 'بستن اجباری',

@@ -84,6 +84,8 @@ const russian: Language = {
         open_login_desc: 'Открывать при запуске системы',
         auto_connect: 'Автоматическое подключение',
         auto_connect_desc: 'Подключаться при открытии приложения',
+        start_minimized: 'Запуск с минимизированным окном',
+        start_minimized_desc: 'Минимизировать при запуске приложения',
         system_tray: 'Системный трей',
         system_tray_desc: 'Не размещать значок программы на панели задач',
         force_close: 'Принудительное закрытие',

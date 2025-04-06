@@ -85,6 +85,8 @@ const urdu: Language = {
         open_login_desc: 'سسٹم اسٹارٹ اپ پر کھولیں',
         auto_connect: 'خودکار کنکشن',
         auto_connect_desc: 'ایپ کھلتے ہی کنکٹ کریں',
+        start_minimized: 'شروع ہونے پر کم سے کم',
+        start_minimized_desc: 'ایپلیکیشن کھلتے ہی کم کرنا',
         system_tray: 'سسٹم ٹرے',
         system_tray_desc: 'پروگرام آئیکون کو ٹاسک بار میں نہ رکھیں',
         force_close: 'زبردستی بند کریں',

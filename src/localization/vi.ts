@@ -85,6 +85,8 @@ const vietnamese: Language = {
         open_login_desc: 'Mở khi khởi động hệ thống',
         auto_connect: 'Kết nối tự động',
         auto_connect_desc: 'Kết nối khi mở ứng dụng',
+        start_minimized: 'Khởi động thu nhỏ',
+        start_minimized_desc: 'Thu nhỏ khi ứng dụng mở',
         system_tray: 'Khây hệ thống',
         system_tray_desc: 'Không đặt biểu tượng chương trình trong thanh tác vụ',
         force_close: 'Đóng bắt buộc',

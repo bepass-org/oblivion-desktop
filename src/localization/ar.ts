@@ -83,6 +83,8 @@ const arabic: Language = {
         open_login_desc: 'فتح عند بدء تشغيل النظام',
         auto_connect: 'الاتصال التلقائي',
         auto_connect_desc: 'الاتصال عند فتح التطبيق',
+        start_minimized: 'بدء مصغر',
+        start_minimized_desc: 'تصغير عند فتح التطبيق',
         system_tray: 'علبة النظام',
         system_tray_desc: 'عدم وضع أيقونة البرنامج في شريط المهام',
         force_close: 'الإغلاق القسري',

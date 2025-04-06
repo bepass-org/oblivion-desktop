@@ -85,6 +85,8 @@ const english: Language = {
         open_login_desc: 'Open at system startup',
         auto_connect: 'Auto Connection',
         auto_connect_desc: 'Connect when app opens',
+        start_minimized: 'Start Minimized',
+        start_minimized_desc: 'Minimize when the app opens',
         system_tray: 'System Tray',
         system_tray_desc: 'Not placing the program icon in the taskbar',
         force_close: 'Force Close',

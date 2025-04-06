@@ -44,13 +44,18 @@ export default function Options() {
         betaRelease,
         soundEffect,
         onClickSoundEffectButton,
-        onKeyDownSoundEffectButton
+        onKeyDownSoundEffectButton,
+        startMinimized,
+        setStartMinimized,
+        onClickStartMinimizedButton,
+        onKeyDownStartMinimizedButton
     } = useOptions();
 
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
         typeof openAtLogin === 'undefined' ||
+        typeof startMinimized === 'undefined' ||
         typeof forceClose === 'undefined' ||
         //typeof shortcut === 'undefined' ||
         typeof soundEffect === 'undefined' ||
@@ -67,6 +72,7 @@ export default function Options() {
                 setForceClose={setForceClose}
                 setLang={setLang}
                 setOpenAtLogin={setOpenAtLogin}
+                setStartMinimized={setStartMinimized}
                 setAutoConnect={setAutoConnect}
                 setShortcut={setShortcut}
                 title={appLang?.modal?.restore_title}
@@ -185,6 +191,34 @@ export default function Options() {
                                 </div>
                             </div>
                             <div className='info'>{appLang?.settings?.open_login_desc}</div>
+                        </div>
+                        <div
+                            role='button'
+                            className='item'
+                            onClick={onClickStartMinimizedButton}
+                            onKeyDown={onKeyDownStartMinimizedButton}
+                            tabIndex={0}
+                        >
+                            <label
+                                className='key'
+                                htmlFor='open-login'
+                                // role='label'
+                            >
+                                {appLang?.settings?.start_minimized}
+                            </label>
+                            <div className='value'>
+                                <div
+                                    tabIndex={-1}
+                                    id='open-login'
+                                    className={classNames(
+                                        'checkbox',
+                                        startMinimized ? 'checked' : ''
+                                    )}
+                                >
+                                    <i className='material-icons'>&#xe876;</i>
+                                </div>
+                            </div>
+                            <div className='info'>{appLang?.settings?.start_minimized_desc}</div>
                         </div>
                         <div
                             role='button'

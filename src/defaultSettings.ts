@@ -20,6 +20,7 @@ export type settingsKeys =
     | 'rtt'
     | 'openAtLogin'
     | 'autoConnect'
+    | 'startMinimized'
     | 'reserved'
     | 'scanResult'
     | 'profiles'
@@ -69,6 +70,7 @@ export const defaultSettings = {
     rtt: '1s',
     openAtLogin: false,
     autoConnect: false,
+    startMinimized: false,
     reserved: true,
     scanResult: '',
     profiles: '[]',

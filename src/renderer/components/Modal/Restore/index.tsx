@@ -8,6 +8,7 @@ interface RestoreModalProps {
     setTheme: (value: string) => void;
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
+    setStartMinimized: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
     setForceClose: (value: boolean) => void;
     setShortcut: (value: boolean) => void;
@@ -20,6 +21,7 @@ export default function RestoreModal({
     setTheme,
     setLang,
     setOpenAtLogin,
+    setStartMinimized,
     setAutoConnect,
     setForceClose,
     setShortcut
@@ -31,6 +33,7 @@ export default function RestoreModal({
             setTheme,
             setLang,
             setOpenAtLogin,
+            setStartMinimized,
             setAutoConnect,
             setForceClose,
             setShortcut

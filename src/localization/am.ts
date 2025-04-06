@@ -83,6 +83,8 @@ const amharic: Language = {
         open_login_desc: 'በስርዓት መነሻ እንዲክፈት',
         auto_connect: 'በስምምነት ተገናኝ',
         auto_connect_desc: 'አፕሊኬሽን በማክፈት እንዲገናኝ',
+        start_minimized: 'እንደተቆሰረ እንደመነሻ እንቀሳቅስ',
+        start_minimized_desc: 'ሲነሳ በመተግበሪያ ተቆም እንደተቆሰረ',
         system_tray: 'ስርዓት ትሬይ',
         system_tray_desc: 'በመስክ ላይ አፕሊኬሽን አምባልን አታሳይም',
         force_close: 'ግፊት ቅጣት',

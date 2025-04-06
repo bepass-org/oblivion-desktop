@@ -83,6 +83,8 @@ export interface Settings {
     open_login_desc: string;
     auto_connect: string;
     auto_connect_desc: string;
+    start_minimized: string;
+    start_minimized_desc: string;
     system_tray: string;
     system_tray_desc: string;
     force_close: string;

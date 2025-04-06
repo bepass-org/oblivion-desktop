@@ -21,6 +21,7 @@ interface RestoreModalProps {
     setTheme: (value: string) => void;
     setLang: (value: string) => void;
     setOpenAtLogin: (value: boolean) => void;
+    setStartMinimized: (value: boolean) => void;
     setAutoConnect: (value: boolean) => void;
     setForceClose: (value: boolean) => void;
     setShortcut: (value: boolean) => void;
@@ -33,6 +34,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         setTheme,
         setLang,
         setOpenAtLogin,
+        setStartMinimized,
         setAutoConnect,
         setForceClose,
         setShortcut
@@ -71,6 +73,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         //setShortcut(defaultSettings.shortcut);
         setLang(defaultSettings.lang);
         setOpenAtLogin(defaultSettings.openAtLogin);
+        setStartMinimized(defaultSettings.startMinimized);
         setAutoConnect(defaultSettings.autoConnect);
         // TODO Promise.all
         await settings.set('theme', detectingSystemTheme ? 'dark' : 'light');
@@ -89,6 +92,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
             getDirectionByLang(defaultSettings.lang as LanguageType)
         );
         await settings.set('openAtLogin', defaultSettings.openAtLogin);
+        await settings.set('startMinimized', defaultSettings.startMinimized);
         await settings.set('autoConnect', defaultSettings.autoConnect);
         handleOnClose();
         // other settings
