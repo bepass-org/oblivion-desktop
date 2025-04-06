@@ -69,7 +69,10 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
             }
         });
         const validEntries = Array.from(validEntriesSet);
-        return validEntries.length > 0 ? validEntries.join(',\n') : '';
+        const priorityEntries = validEntries.filter((entry) => entry.startsWith('domain:!'));
+        const otherEntries = validEntries.filter((entry) => !entry.startsWith('domain:!'));
+        const orderedEntries = [...priorityEntries, ...otherEntries];
+        return orderedEntries.length > 0 ? orderedEntries.join(',\n') : '';
     }, []);
 
     const onSaveModal = useCallback(() => {
