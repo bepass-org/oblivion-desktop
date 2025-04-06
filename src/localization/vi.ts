@@ -153,7 +153,7 @@ const vietnamese: Language = {
         license_title: 'Giấy phép',
         license_desc:
             'Chương trình không cần giấy phép Warp để chạy, nhưng nếu bạn muốn, bạn có thể nhập giấy phép của mình ở đây.',
-        license_clear: 'Xóa',
+        form_clear: 'Xóa',
         test_url_title: 'URL kiểm tra',
         test_url_desc: 'Địa chỉ kiểm tra kết nối',
         test_url_update: 'Nhận đề xuất',
@@ -166,7 +166,7 @@ const vietnamese: Language = {
             'Chỉ các quy tắc định tuyến cho tên miền, ip và ứng dụng sẽ ảnh hưởng đến cấu hình Tun.',
         routing_rules_alert_system:
             'Ngoại trừ quy tắc định tuyến ứng dụng, các quy tắc khác sẽ ảnh hưởng đến cấu hình Proxy Hệ thống.',
-        endpoint_default: 'Mặc định',
+        form_default: 'Mặc định',
         endpoint_suggested: 'Đề xuất',
         endpoint_latest: 'Mới nhất',
         endpoint_update: 'Nhận điểm kết thúc đề xuất',
@@ -178,6 +178,7 @@ const vietnamese: Language = {
         mtu_title: 'Giá trị MTU',
         mtu_desc:
             'Đơn vị Truyền tối đa (MTU) đề cập đến kích thước tối đa của các gói dữ liệu, nên được đặt trong khoảng từ 1000 đến 9999.',
+        custom_dns_title: 'DNS tùy chỉnh',
         confirm: 'Tôi xác nhận',
         update: 'Cập nhật',
         cancel: 'Hủy'

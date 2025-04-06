@@ -26,6 +26,7 @@ export const getUserSettings = async () => {
         reserved,
         lang,
         dns,
+        plainDns,
         testUrl
     ] = await Promise.all([
         settings.get('endpoint'),
@@ -39,9 +40,20 @@ export const getUserSettings = async () => {
         settings.get('reserved'),
         settings.get('lang'),
         settings.get('dns'),
+        settings.get('plainDns'),
         settings.get('testUrl')
     ]);
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+
+    const finalDns =
+        typeof dns === 'string' &&
+        dns === 'custom' &&
+        typeof plainDns === 'string' &&
+        plainDns !== ''
+            ? plainDns
+            : typeof dns === 'string' && dns !== '' && dns !== '1.1.1.1' && dns !== 'custom'
+              ? dns
+              : '';
 
     return [
         '--bind',
@@ -76,12 +88,7 @@ export const getUserSettings = async () => {
                       : defaultSettings.endpoint
               ]),
         ...(typeof reserved === 'boolean' && !reserved ? ['--reserved', '0,0,0'] : []),
-        ...(typeof dns === 'string' &&
-        dns !== '' &&
-        dns !== '1.1.1.1' &&
-        ((typeof method === 'string' && method !== 'psiphon') || typeof method !== 'string')
-            ? ['--dns', dns]
-            : [])
+        ...(finalDns !== '' ? ['--dns', finalDns] : [])
     ];
 };
 

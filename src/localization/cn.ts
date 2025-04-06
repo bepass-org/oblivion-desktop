@@ -150,7 +150,7 @@ const chinese: Language = {
         license_title: '许可证',
         license_desc:
             '应用不一定需要 Warp 许可证才能运行，但如果您愿意，可以在此处输入您的许可证。',
-        license_clear: '清除',
+        form_clear: '清除',
         test_url_title: '测试 URL',
         test_url_desc: '连接测试地址',
         test_url_update: '接收建议',
@@ -160,7 +160,7 @@ const chinese: Language = {
         routing_rules_sample: '示例',
         routing_rules_alert_tun: '只有域名、ip和应用的路由规则会影响Tun配置。',
         routing_rules_alert_system: '除了应用路由规则，其他规则将影响系统代理配置。',
-        endpoint_default: '默认',
+        form_default: '默认',
         endpoint_suggested: '建议',
         endpoint_latest: '最新的',
         endpoint_update: '接收建议的端点',
@@ -171,6 +171,7 @@ const chinese: Language = {
         profile_limitation: (value) => `您最多可以添加 ${value} 个端点。`,
         mtu_title: 'MTU 值',
         mtu_desc: '最大传输单元 (MTU) 是指数据包的最大大小，应设置在 1000 到 9999 之间。',
+        custom_dns_title: '自定义 DNS',
         confirm: '确认',
         update: '更新',
         cancel: '取消'

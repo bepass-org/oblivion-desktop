@@ -152,7 +152,7 @@ const english: Language = {
         license_title: 'License',
         license_desc:
             'The program does not necessarily need a Warp license to run, but if you wish, you can enter your license here.',
-        license_clear: 'Clear',
+        form_clear: 'Clear',
         test_url_title: 'Test Url',
         test_url_desc: 'Connectivity test address',
         test_url_update: 'Receive suggestions',
@@ -165,7 +165,7 @@ const english: Language = {
             'Only the routing rules for domain, ip & app will affect the Tun configuration.',
         routing_rules_alert_system:
             'Except for the app routing rule, other rules will affect the System Proxy configuration.',
-        endpoint_default: 'Default',
+        form_default: 'Default',
         endpoint_suggested: 'Suggested',
         endpoint_latest: 'Latest',
         endpoint_update: 'Receive suggested endpoints',
@@ -177,6 +177,7 @@ const english: Language = {
         mtu_title: 'MTU Value',
         mtu_desc:
             'Maximum Transmission Unit (MTU) refers to the maximum size of data packets, which should be set between 1000 and 9999.',
+        custom_dns_title: 'Custom DNS',
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel'

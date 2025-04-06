@@ -258,7 +258,7 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [hostIP, port, dns, mtu, loglevel, stack, sniff, address, endpoint] =
+        const [hostIP, port, dns, mtu, loglevel, stack, sniff, address, endpoint, plainDns, doh] =
             await Promise.all([
                 settings.get('hostIP'),
                 settings.get('port'),
@@ -268,7 +268,9 @@ class SingBoxManager {
                 settings.get('singBoxStack'),
                 settings.get('singBoxSniff'),
                 settings.get('singBoxAddrType'),
-                settings.get('endpoint')
+                settings.get('endpoint'),
+                settings.get('plainDns'),
+                settings.get('DoH')
             ]);
 
         return {
@@ -279,8 +281,8 @@ class SingBoxManager {
             tunStack: this.getSettingOrDefault(stack, singBoxStack[0].value),
             tunSniff: this.getSettingOrDefault(sniff, defaultSettings.singBoxSniff),
             tunAddr: this.getTunAddr(address),
-            plainDns: this.getSettingOrDefault(dns, dnsServers[0].value),
-            DoHDns: this.getDoHDns(dns),
+            plainDns: this.getPlainDns(dns, plainDns),
+            DoHDns: this.getDoHDns(dns, doh),
             tunEndpoint: this.getSettingOrDefault(endpoint, defaultSettings.endpoint)
         };
     }
@@ -301,9 +303,16 @@ class SingBoxManager {
         };
     }
 
-    private getDoHDns(dns: any): string {
+    private getPlainDns(dns: any, plainDns: any): string {
+        if (typeof dns !== 'string') return dnsServers[0].value;
+        if (dns === 'custom' && plainDns === '') return dnsServers[0].value;
+        return dns === 'custom' ? plainDns : dns;
+    }
+
+    private getDoHDns(dns: any, doh: any): string {
         if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
-        return `https://${dns}/dns-query`;
+        if (dns === 'custom' && doh === '') return `https://${dnsServers[0].value}/dns-query`;
+        return dns === 'custom' ? doh : `https://${dns}/dns-query`;
     }
 
     private getTunAddr(addrType: any): string[] {

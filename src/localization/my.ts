@@ -152,7 +152,7 @@ const myanmar: Language = {
         license_title: 'လိုင်စင်',
         license_desc:
             'ဒီပရိုဂရမ်ကို လည်ပတ်ရန် Warp license တစ်ခု မလိုအပ်ပါဘူး၊ သို့သော် သင်သည် ဆန္ဒရှိလျှင်၊ ဤနေရာတွင် လိုင်စင်ကို ထည့်နိုင်ပါသည်။',
-        license_clear: 'ရှင်းလင်းပါ',
+        form_clear: 'ရှင်းလင်းပါ',
         test_url_title: 'စမ်းသပ် URL',
         test_url_desc: 'ချိတ်ဆက်မှု စမ်းသပ်ရန်လိပ်စာ',
         test_url_update: 'အကြံပြုချက်များလက်ခံခြင်း',
@@ -165,7 +165,7 @@ const myanmar: Language = {
             'Domain, IP နှင့် App အတွက်သာ Routing စည်းမျဉ်းများသည် Tun configuration ကို အကျိုးသက်ရောက်ပါမည်။',
         routing_rules_alert_system:
             'App Routing စည်းမျဉ်းမှ အပြောင်းအလဲသည် အခြား rules များကို ဆက်သွယ်မှု Proxy configuration တွင် တည်ရှိပါမည်။',
-        endpoint_default: 'ပုံမှန်',
+        form_default: 'ပုံမှန်',
         endpoint_suggested: 'အကြံပြု',
         endpoint_latest: 'နောက်ဆုံး',
         endpoint_update: 'Suggested Endpoints လက်ခံပါ',
@@ -177,6 +177,7 @@ const myanmar: Language = {
         mtu_title: 'MTU တန်ဖိုး',
         mtu_desc:
             'Maximum Transmission Unit (MTU) သည် ဒေတာပုံသေ၏ အရွယ်အစားကို သတ်မှတ်သည်။ 1000 မှ 9999 အတွင်းတွင် သတ်မှတ်ပါ။',
+        custom_dns_title: 'စိတ်ကြိုက် DNS',
         confirm: 'ကန့်သတ်ပါ',
         update: 'အပ်ဒိတ်',
         cancel: 'အနှိပ်ပါ'

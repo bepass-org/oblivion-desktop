@@ -40,6 +40,8 @@ export type settingsKeys =
     | 'restartCounter'
     | 'betaRelease'
     | 'soundEffect'
+    | 'plainDns'
+    | 'DoH'
     | 'testUrl';
 
 const date = new Date();
@@ -82,7 +84,9 @@ export const defaultSettings = {
     restartCounter: 0,
     betaRelease: false,
     soundEffect: false,
-    testUrl: 'https://connectivity.cloudflareclient.com/cdn-cgi/trace'
+    testUrl: 'https://connectivity.cloudflareclient.com/cdn-cgi/trace',
+    plainDns: '',
+    DoH: ''
 };
 
 export const countries: { value: string; label: string }[] = [
@@ -138,7 +142,8 @@ export const languages: { value: string; label: string }[] = [
 export const dnsServers: { value: string; label: string }[] = [
     { value: '1.1.1.1', label: 'Cloudflare' },
     { value: '1.1.1.2', label: 'Cloudflare Security' },
-    { value: '1.1.1.3', label: 'Cloudflare Family' }
+    { value: '1.1.1.3', label: 'Cloudflare Family' },
+    { value: 'custom', label: 'Custom' }
 ];
 
 export const singBoxGeoIp: { label: string; geoIp: string }[] = [

@@ -15,7 +15,7 @@ import {
     isDarwin
 } from '../../constants';
 import { defaultSettings } from '../../defaultSettings';
-import { formatEndpointForConfig } from './utils';
+import { formatEndpointForConfig, isIpBasedDoH } from './utils';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
     const logConfig =
@@ -36,13 +36,23 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 {
                     tag: 'dns-remote',
                     address: config.DoHDns,
-                    detour: 'proxy'
+                    detour: 'proxy',
+                    ...(!isIpBasedDoH(config.DoHDns) && { address_resolver: 'dns-cf' })
                 },
                 {
                     tag: 'dns-direct',
                     address: config.plainDns,
                     detour: 'direct'
                 },
+                ...(!isIpBasedDoH(config.DoHDns)
+                    ? [
+                          {
+                              tag: 'dns-cf',
+                              address: '1.1.1.1',
+                              detour: 'direct'
+                          }
+                      ]
+                    : []),
                 {
                     tag: 'dns-block',
                     address: 'rcode://success'

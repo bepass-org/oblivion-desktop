@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { app, ipcMain } from 'electron';
 import log from 'electron-log';
-import { defaultSettings } from '../../defaultSettings';
+import { defaultSettings, dnsServers } from '../../defaultSettings';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -170,6 +170,10 @@ export function checkTestUrl(value: any) {
     return typeof value === 'string' ? value : defaultSettings.testUrl;
 }
 
+export function checkDNS(value: any) {
+    return typeof value === 'string' ? value : dnsServers[0].value;
+}
+
 export const exitTheApp = async () => {
     log.info('exiting the app...');
 
@@ -261,5 +265,19 @@ export function mapGrpcErrorCodeToLabel(code: number | undefined): string {
             return 'Unauthenticated';
         default:
             return 'Unknown Error';
+    }
+}
+
+export function isIpBasedDoH(url: string): boolean {
+    try {
+        const parsedUrl = new URL(url);
+        const hostname = parsedUrl.hostname;
+
+        const ipv4Pattern = /^(?:\d{1,3}\.){3}\d{1,3}$/;
+        const ipv6Pattern = /^\[?[a-fA-F0-9:]+\]?$/;
+
+        return ipv4Pattern.test(hostname) || ipv6Pattern.test(hostname);
+    } catch (error) {
+        return false;
     }
 }

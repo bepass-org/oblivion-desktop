@@ -127,6 +127,8 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('testUrl', defaultSettings.testUrl);
         await settings.set('soundEffect', defaultSettings.soundEffect);
         await settings.set('betaRelease', defaultSettings.betaRelease);
+        await settings.set('plainDns', defaultSettings.plainDns);
+        await settings.set('DoH', defaultSettings.DoH);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);

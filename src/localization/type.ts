@@ -151,7 +151,7 @@ export interface Modal {
     endpoint_title: string;
     license_title: string;
     license_desc: string;
-    license_clear: string;
+    form_clear: string;
     test_url_title: string;
     test_url_desc: string;
     test_url_update: string;
@@ -161,7 +161,7 @@ export interface Modal {
     routing_rules_sample: string;
     routing_rules_alert_system: string;
     routing_rules_alert_tun: string;
-    endpoint_default: string;
+    form_default: string;
     endpoint_suggested: string;
     endpoint_latest: string;
     endpoint_update: string;
@@ -171,6 +171,7 @@ export interface Modal {
     profile_endpoint: string;
     profile_limitation: (value: string) => string;
     mtu_title: string;
+    custom_dns_title: string;
     mtu_desc: string;
     confirm: string;
     update: string;

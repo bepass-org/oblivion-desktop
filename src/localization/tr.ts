@@ -153,7 +153,7 @@ const turkish: Language = {
         license_title: 'Lisans',
         license_desc:
             'Program çalışması için Warp lisansı gerektirmez, ancak isterseniz lisansınızı buraya girebilirsiniz.',
-        license_clear: 'Temizle',
+        form_clear: 'Temizle',
         test_url_title: 'Test URL',
         test_url_desc: 'Bağlantı testi adresi',
         test_url_update: 'Önerileri almak',
@@ -166,7 +166,7 @@ const turkish: Language = {
             'Yalnızca etki alanı, ip ve uygulama için yönlendirme kuralları Tun yapılandırmasını etkileyecektir.',
         routing_rules_alert_system:
             'Uygulama yönlendirme kuralı dışında, diğer kurallar Sistem Proxy yapılandırmasını etkileyecektir.',
-        endpoint_default: 'Varsayılan',
+        form_default: 'Varsayılan',
         endpoint_suggested: 'Önerilen',
         endpoint_latest: 'En Son',
         endpoint_update: "Önerilen endpoint'leri al",
@@ -178,6 +178,7 @@ const turkish: Language = {
         mtu_title: 'MTU Değeri',
         mtu_desc:
             'Maksimum İletim Birimi (MTU), veri paketlerinin maksimum boyutunu ifade eder ve 1000 ile 9999 arasında ayarlanmalıdır.',
+        custom_dns_title: 'Özel DNS',
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
         cancel: 'İptal'

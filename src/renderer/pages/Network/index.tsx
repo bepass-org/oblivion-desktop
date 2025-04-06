@@ -8,6 +8,7 @@ import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
 //import { platform } from '../../lib/utils';
+import DnsModal from '../../components/Modal/DNS';
 
 const proxyModes = [
     {
@@ -50,10 +51,17 @@ export default function Options() {
         showRoutingRulesModal,
         appLang,
         dataUsage,
-        methodIsPsiphon,
         hostIp,
         networkList,
-        onChangeLanMode
+        onChangeLanMode,
+        showDnsModal,
+        onCloseDnsModal,
+        plainDns,
+        doh,
+        setDefaultDns,
+        cleanDns,
+        setCustomDns,
+        setShowDnsModal
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -69,6 +77,16 @@ export default function Options() {
     return (
         <>
             <Nav title={appLang?.settings?.network} />
+            <DnsModal
+                title={appLang?.modal?.custom_dns_title}
+                isOpen={showDnsModal}
+                onClose={onCloseDnsModal}
+                plainDns={plainDns || ''}
+                DoH={doh || ''}
+                setDefaultDns={setDefaultDns}
+                cleanDns={cleanDns}
+                setCustomDns={setCustomDns}
+            />
             <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <div className='container'>
                     <Tabs active='network' proxyMode={proxyMode} />
@@ -151,34 +169,39 @@ export default function Options() {
                             </div>
                             <div className='info'>{appLang?.settings?.routing_rules_desc}</div>
                         </div>
-                        <div
-                            className={classNames(
-                                'item',
-                                proxyMode === 'tun' ||
-                                    ((proxyMode === undefined || proxyMode === 'system') &&
-                                        !methodIsPsiphon)
-                                    ? ''
-                                    : 'disabled'
+                        <div className={classNames('item')}>
+                            {dns === 'custom' ? (
+                                <>
+                                    <label className='key' htmlFor='flex-switch-check-checked-dns'>
+                                        {appLang?.settings?.dns}
+                                    </label>
+                                    <div
+                                        className='value'
+                                        id='flex-switch-check-checked-dns'
+                                        onClick={() => {
+                                            setShowDnsModal(true);
+                                        }}
+                                    >
+                                        <span className='dirLeft' dir='ltr' tabIndex={-1}>
+                                            {plainDns !== ''
+                                                ? plainDns
+                                                      ?.replace(/^https?:\/\//, '')
+                                                      ?.split('/')[0]
+                                                : 'Custom'}
+                                        </span>
+                                    </div>
+                                </>
+                            ) : (
+                                <Dropdown
+                                    id='flex-switch-check-checked-dns'
+                                    onChange={onChangeDNS}
+                                    value={dns}
+                                    label={appLang?.settings?.dns}
+                                    tabIndex={-1}
+                                    items={dnsServers}
+                                />
                             )}
-                        >
-                            <Dropdown
-                                id='flex-switch-check-checked-dns'
-                                onChange={onChangeDNS}
-                                value={dns}
-                                label={appLang?.settings?.dns}
-                                tabIndex={-1}
-                                disabled={
-                                    proxyMode === 'none' ||
-                                    ((proxyMode === undefined || proxyMode === 'system') &&
-                                        methodIsPsiphon)
-                                }
-                                items={dnsServers}
-                            />
-                            <div className='info'>
-                                {!methodIsPsiphon
-                                    ? appLang?.settings?.dns_desc
-                                    : appLang?.settings?.dns_error}
-                            </div>
+                            <div className='info'>{appLang?.settings?.dns_desc}</div>
                         </div>
                         <div
                             role='button'

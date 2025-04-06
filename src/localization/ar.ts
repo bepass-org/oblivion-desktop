@@ -150,7 +150,7 @@ const arabic: Language = {
         license_title: 'الرخصة',
         license_desc:
             'لا يتطلب تشغيل البرنامج رخصة Warp بالضرورة، ولكن إذا كنت ترغب، يمكنك إدخال الرخصة هنا.',
-        license_clear: 'مسح',
+        form_clear: 'مسح',
         test_url_title: 'عنوان رابط الاختبار',
         test_url_desc: 'عنوان اختبار الاتصال',
         test_url_update: 'استقبال الاقتراحات',
@@ -162,7 +162,7 @@ const arabic: Language = {
         routing_rules_alert_tun: 'فقط قواعد التوجيه للدومين، ip والتطبيق ستؤثر على تكوين Tun.',
         routing_rules_alert_system:
             'باستثناء قاعدة توجيه التطبيق، ستؤثر القواعد الأخرى على تكوين نظام الوكيل.',
-        endpoint_default: 'افتراضي',
+        form_default: 'افتراضي',
         endpoint_suggested: 'مقترح',
         endpoint_latest: 'الأحدث',
         endpoint_update: 'تلقي نقاط النهاية المقترحة',
@@ -174,6 +174,7 @@ const arabic: Language = {
         mtu_title: 'قيمة MTU',
         mtu_desc:
             'تشير وحدة الإرسال القصوى (MTU) إلى الحد الأقصى لحجم حزم البيانات، والتي يجب تعيينها بين 1000 و 9999.',
+        custom_dns_title: 'نظام أسماء النطاقات المخصص',
         confirm: 'أؤكد',
         update: 'تحديث',
         cancel: 'إلغاء'

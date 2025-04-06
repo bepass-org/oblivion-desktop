@@ -152,7 +152,7 @@ const brazilianPortuguese: Language = {
         license_title: 'Licença',
         license_desc:
             'O programa não precisa necessariamente de uma licença Warp para rodar, mas se você quiser, pode inserir sua licença aqui.',
-        license_clear: 'Limpar',
+        form_clear: 'Limpar',
         test_url_title: 'URL de Teste',
         test_url_desc: 'Endereço de teste de conectividade',
         test_url_update: 'Receber sugestões',
@@ -165,7 +165,7 @@ const brazilianPortuguese: Language = {
             'Apenas as regras de roteamento para domínio, ip e aplicativo afetarão a configuração do Tun.',
         routing_rules_alert_system:
             'Exceto pela regra de roteamento de aplicativo, as outras regras afetarão a configuração do Proxy do Sistema.',
-        endpoint_default: 'Padrão',
+        form_default: 'Padrão',
         endpoint_suggested: 'Sugerido',
         endpoint_latest: 'Mais Recente',
         endpoint_update: 'Receber endpoints sugeridos',
@@ -177,6 +177,7 @@ const brazilianPortuguese: Language = {
         mtu_title: 'Valor MTU',
         mtu_desc:
             'A Unidade Máxima de Transmissão (MTU) refere-se ao tamanho máximo dos pacotes de dados, que deve ser definido entre 1000 e 9999.',
+        custom_dns_title: 'DNS personalizado',
         confirm: 'Confirmo',
         update: 'Atualizar',
         cancel: 'Cancelar'

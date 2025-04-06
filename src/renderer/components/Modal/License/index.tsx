@@ -58,7 +58,7 @@ export default function LicenseModal({
                                 onClick={handleClearLicenseInput}
                             >
                                 <i className='material-icons'>&#xf0ff;</i>
-                                {appLang?.modal?.license_clear}
+                                {appLang?.modal?.form_clear}
                             </div>
                         </div>
                     </h3>
