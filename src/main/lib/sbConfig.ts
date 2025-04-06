@@ -18,6 +18,11 @@ import { defaultSettings } from '../../defaultSettings';
 import { formatEndpointForConfig, isIpBasedDoH } from './utils';
 
 export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConfig: IRoutingRules) {
+    const domainSetDirect = rulesConfig.domainSet.filter((d) => !d.startsWith('!'));
+    const domainSetException = rulesConfig.domainSet
+        .filter((d) => d.startsWith('!'))
+        .map((d) => d.slice(1));
+
     const logConfig =
         config.logLevel === 'disabled'
             ? { disabled: true }
@@ -147,10 +152,18 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
-                ...(rulesConfig.domainSet.length > 0
+                ...(domainSetException.length > 0
                     ? [
                           {
-                              domain: rulesConfig.domainSet,
+                              domain: domainSetException,
+                              outbound: 'proxy'
+                          }
+                      ]
+                    : []),
+                ...(domainSetDirect.length > 0
+                    ? [
+                          {
+                              domain: domainSetDirect,
                               outbound: 'direct'
                           }
                       ]
