@@ -64,11 +64,12 @@ export default function DnsModal({
                                 role='presentation'
                                 className={classNames(
                                     'label',
-                                    'label-default',
-                                    plainDnsInput === '' && dohInput === '' ? 'hidden' : ''
+                                    'label-warning',
+                                    plainDns === '' && DoH === '' ? 'hidden' : ''
                                 )}
                                 onClick={handleSetDefault}
                             >
+                                <i className='material-icons'>&#xe042;</i>
                                 {appLang?.modal?.form_default}
                             </div>
                             <div
@@ -76,7 +77,7 @@ export default function DnsModal({
                                 className={classNames(
                                     'label',
                                     'label-default',
-                                    plainDnsInput === '' && dohInput === '' ? 'hidden' : ''
+                                    plainDns === '' && DoH === '' ? 'hidden' : ''
                                 )}
                                 onClick={handleClearInputs}
                             >
