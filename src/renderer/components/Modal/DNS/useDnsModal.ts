@@ -59,8 +59,6 @@ const useDnsModal = (props: DnsModalProps) => {
     }, []);
 
     const handleSetDefault = useCallback(() => {
-        setPlainDnsInput('');
-        setDohInput('');
         setDefaultDns();
         handleOnClose();
     }, []);
