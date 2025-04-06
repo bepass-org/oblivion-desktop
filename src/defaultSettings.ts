@@ -216,3 +216,19 @@ export const singBoxAddrType: { value: string; label: string }[] = [
     { value: 'v4', label: 'IPv4' },
     { value: 'v6', label: 'IPv6' }
 ];
+
+export const defaultRoutingRules: { type: string; value: string }[] = [
+    { type: 'ip', value: '127.0.0.1' },
+    { type: 'domain', value: '*.ir' },
+    { type: 'domain', value: 'dolat.ir' },
+    { type: 'domain', value: 'apps.apple.com' },
+    { type: 'app', value: 'Figma' },
+    { type: 'domain', value: 'figma.com' },
+    { type: 'domain', value: 'github.com' },
+    { type: 'domain', value: 'objects.githubusercontent.com' },
+    { type: 'domain', value: 'meet.google.com' },
+    { type: 'domain', value: 'bargheman.com' },
+    { type: 'domain', value: 'digikala.com' },
+    { type: 'domain', value: 'web.whatsapp.com' },
+    { type: 'domain', value: 'aparat.com' }
+];

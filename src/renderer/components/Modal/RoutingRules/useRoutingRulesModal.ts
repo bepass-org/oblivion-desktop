@@ -3,7 +3,7 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
-import { defaultSettings } from '../../../../defaultSettings';
+import { defaultSettings, defaultRoutingRules } from '../../../../defaultSettings';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -129,7 +129,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
 
     const handleSetRoutingRulesSimple = useCallback(() => {
         setRoutingRulesInput(
-            `domain:dolat.ir,\ndomain:apple.com,\nip:127.0.0.1,\ndomain:*.ir,\napp:Figma`
+            defaultRoutingRules.map((rule) => `${rule.type}:${rule.value}`).join(',\n')
         );
     }, [setRoutingRulesInput]);
 
