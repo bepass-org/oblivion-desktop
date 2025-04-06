@@ -153,7 +153,7 @@ const indonesia: Language = {
         license_title: 'Lisensi',
         license_desc:
             'Program ini tidak memerlukan lisensi Warp untuk menjalankannya, tetapi jika Anda mau, Anda bisa memasukkan lisensi Anda di sini.',
-        license_clear: 'Hapus',
+        form_clear: 'Hapus',
         test_url_title: 'URL Uji',
         test_url_desc: 'Alamat uji konektivitas',
         test_url_update: 'Menerima saran',
@@ -166,7 +166,7 @@ const indonesia: Language = {
             'Hanya aturan perutean untuk domain, ip, dan aplikasi yang akan mempengaruhi konfigurasi Tun.',
         routing_rules_alert_system:
             'Kecuali aturan perutean aplikasi, aturan lainnya akan mempengaruhi konfigurasi Proxy Sistem.',
-        endpoint_default: 'Bawaan',
+        form_default: 'Bawaan',
         endpoint_suggested: 'Disarankan',
         endpoint_latest: 'Terkini',
         endpoint_update: 'Menerima titik akhir yang disarankan',

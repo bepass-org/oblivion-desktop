@@ -154,7 +154,7 @@ const spanish: Language = {
         license_title: 'Licencia',
         license_desc:
             'El programa no necesita necesariamente una licencia Warp para funcionar, pero si lo deseas, puedes ingresar tu licencia aquí.',
-        license_clear: 'Limpiar',
+        form_clear: 'Limpiar',
         test_url_title: 'URL de prueba',
         test_url_desc: 'Dirección de prueba de conectividad',
         test_url_update: 'Recibir sugerencias',
@@ -167,7 +167,7 @@ const spanish: Language = {
             'Solo las reglas de enrutamiento para dominio, IP y aplicación afectarán la configuración de Tun.',
         routing_rules_alert_system:
             'Excepto por la regla de enrutamiento de la aplicación, las otras reglas afectarán la configuración del Proxy del Sistema.',
-        endpoint_default: 'Predeterminado',
+        form_default: 'Predeterminado',
         endpoint_suggested: 'Sugerido',
         endpoint_latest: 'Último',
         endpoint_update: 'Recibir endpoints sugeridos',

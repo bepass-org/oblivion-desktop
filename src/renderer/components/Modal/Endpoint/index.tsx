@@ -199,7 +199,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                 onClick={setEndpointDefault}
                             >
                                 <i className='material-icons'>&#xe145;</i>
-                                {appLang?.modal?.endpoint_default}
+                                {appLang?.modal?.form_default}
                             </div>
                         </div>
                     </h3>

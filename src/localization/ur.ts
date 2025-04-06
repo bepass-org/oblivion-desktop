@@ -153,7 +153,7 @@ const urdu: Language = {
         license_title: 'لائسنس',
         license_desc:
             'پروگرام کو چلانے کے لیے ضروری طور پر وارپ لائسنس کی ضرورت نہیں ہے، لیکن اگر آپ چاہیں تو اپنا لائسنس یہاں داخل کر سکتے ہیں۔',
-        license_clear: 'صاف کریں',
+        form_clear: 'صاف کریں',
         test_url_title: 'ٹیسٹ یو آر ایل',
         test_url_desc: 'کنیکٹوٹی ٹیسٹ ایڈریس',
         test_url_update: 'تجاویز موصول کریں',
@@ -166,7 +166,7 @@ const urdu: Language = {
             'صرف ڈومین، آئی پی، اور ایپ کے لیے روٹنگ رولز "تن" کنفیگریشن کو متاثر کریں گے۔',
         routing_rules_alert_system:
             'ایپ روٹنگ رول کے علاوہ دیگر تمام رولز "سسٹم پراکسی" کنفیگریشن کو متاثر کریں گے۔',
-        endpoint_default: 'ڈیفالٹ',
+        form_default: 'ڈیفالٹ',
         endpoint_suggested: 'تجویز کردہ',
         endpoint_latest: 'تازہ ترین',
         endpoint_update: 'تجویز کردہ اینڈپوائنٹ وصول کریں',

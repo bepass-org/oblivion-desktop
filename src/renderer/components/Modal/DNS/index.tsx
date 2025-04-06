@@ -69,7 +69,7 @@ export default function DnsModal({
                                 )}
                                 onClick={handleSetDefault}
                             >
-                                Default
+                                {appLang?.modal?.form_default}
                             </div>
                             <div
                                 role='presentation'
@@ -81,7 +81,7 @@ export default function DnsModal({
                                 onClick={handleClearInputs}
                             >
                                 <i className='material-icons'>&#xf0ff;</i>
-                                {appLang?.modal?.license_clear}
+                                {appLang?.modal?.form_clear}
                             </div>
                         </div>
                     </h3>

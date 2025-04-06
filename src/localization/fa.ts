@@ -151,7 +151,7 @@ const persian: Language = {
         license_title: 'لایسنس',
         license_desc:
             'برنامه برای اجرا لزوماً به لایسنس وارپ نیاز نداشته، اما درصورت تمایل می\u200Cتوانید لایسنس خود را اینجا وارد کنید.',
-        license_clear: 'حذف',
+        form_clear: 'حذف',
         test_url_title: 'مسیر تست',
         test_url_desc: 'آدرس اینترنتی تست اتصال',
         test_url_update: 'دریافت پیشنهادات',
@@ -164,7 +164,7 @@ const persian: Language = {
             'فقط قوانین مسیریابی domain, ip و app بر روی پیکربندی Tun اثرگذار خواهند بود.',
         routing_rules_alert_system:
             'به‌جز قانون مسیریابی app، سایر قوانین بر روی پیکربندی System Proxy اثرگذار هستند.',
-        endpoint_default: 'پیشفرض',
+        form_default: 'پیشفرض',
         endpoint_suggested: 'پیشنهادی',
         endpoint_latest: 'اخیر',
         endpoint_update: 'دریافت اندپوینت‌های پیشنهادی',
