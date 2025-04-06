@@ -73,8 +73,10 @@ const useDnsModal = (props: DnsModalProps) => {
     }, []);
 
     const handleCancelButtonClick = useCallback(() => {
+        setPlainDnsInput(plainDns);
+        setDohInput(DoH);
         handleOnClose();
-    }, [handleOnClose]);
+    }, [handleOnClose, plainDns, DoH]);
 
     const handleCancelButtonKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
