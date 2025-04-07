@@ -47,6 +47,7 @@ export const soundEffect = path.join(appPath, 'assets', 'sound', 'notification.w
 export const exclusionsPath = path.join(app?.getPath('temp'), 'exclusions.bat');
 export const downloadedPath = path.join(app?.getPath('temp'), `oblivion-temp`);
 export const updaterPath = path.join(workingDirPath, `oblivion-updater${isWindows ? '.exe' : ''}`);
+export const windowPosition = path.join(workingDirPath, 'windowPosition.json');
 
 // Managers
 export const singBoxManager = new SingBoxManager();

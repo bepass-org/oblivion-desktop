@@ -43,7 +43,8 @@ import {
     singBoxManager,
     downloadedPath,
     updaterPath,
-    regeditVbsDirPath
+    regeditVbsDirPath,
+    windowPosition
 } from '../constants';
 import { spawn } from 'child_process';
 import https from 'https';
@@ -152,6 +153,56 @@ class OblivionDesktop {
         });
     }
 
+    private getLastWindowPosition(): { x: number; y: number } | null {
+        if (fs.existsSync(windowPosition)) {
+            try {
+                const positionData = fs.readFileSync(windowPosition, 'utf-8');
+                const { x, y } = JSON.parse(positionData);
+                return { x, y };
+            } catch (err) {
+                console.error('Error reading window position:', err);
+            }
+        }
+        return null;
+    }
+
+    private saveWindowPosition(x: any, y: any) {
+        const positionData = JSON.stringify({ x, y });
+        fs.writeFileSync(windowPosition, positionData, 'utf-8');
+    }
+
+    private getValidWindowPosition(x: number, y: number): { x: number; y: number } | null {
+        const displays = screen.getAllDisplays();
+        const windowWidth = WINDOW_DIMENSIONS.width;
+        const windowHeight = WINDOW_DIMENSIONS.height;
+        const windowRect = {
+            left: x,
+            top: y,
+            right: x + windowWidth,
+            bottom: y + windowHeight
+        };
+        const MIN_VISIBLE_AREA = windowWidth * windowHeight * 0.3;
+        const isVisibleEnough = displays.some((display) => {
+            const bounds = display.workArea;
+            const overlapWidth = Math.max(
+                0,
+                Math.min(windowRect.right, bounds.x + bounds.width) -
+                    Math.max(windowRect.left, bounds.x)
+            );
+            const overlapHeight = Math.max(
+                0,
+                Math.min(windowRect.bottom, bounds.y + bounds.height) -
+                    Math.max(windowRect.top, bounds.y)
+            );
+            const overlapArea = overlapWidth * overlapHeight;
+            return overlapArea >= MIN_VISIBLE_AREA;
+        });
+        if (!isVisibleEnough) {
+            return null;
+        }
+        return { x, y };
+    }
+
     private createWindowConfig(): BrowserWindowConstructorOptions {
         const config: any = {
             title: APP_TITLE,
@@ -177,7 +228,15 @@ class OblivionDesktop {
             }
         };
 
-        if (isDev() && useCustomWindowXY && !openDevToolsInFullScreen) {
+        const lastPosition = this.getLastWindowPosition();
+        if (lastPosition) {
+            const validPosition = this.getValidWindowPosition(lastPosition.x, lastPosition.y);
+            if (validPosition) {
+                config.x = validPosition.x;
+                config.y = validPosition.y;
+                config.center = false;
+            }
+        } else if (isDev() && useCustomWindowXY && !openDevToolsInFullScreen) {
             const primaryDisplay = screen.getPrimaryDisplay();
             const { width: displayWidth, height: displayHeight } = primaryDisplay.workAreaSize;
             config.x = displayWidth - WINDOW_DIMENSIONS.width - 60;
@@ -222,8 +281,21 @@ class OblivionDesktop {
 
         const config = this.createWindowConfig();
         this.state.mainWindow = new BrowserWindow(config);
+        this.state.mainWindow.on('move', () => {
+            if (this.state.mainWindow) {
+                const position = this.state.mainWindow.getBounds();
+                this.saveWindowPosition(position.x, position.y);
+            }
+        });
         await this.setupWindowEvents();
         await this.state.mainWindow.loadURL(this.resolveHtmlPath('index.html'));
+        screen.on('display-metrics-changed', () => {
+            if (this.state.mainWindow) {
+                this.state.mainWindow.setResizable(true);
+                const bounds = this.state.mainWindow.getBounds();
+                this.state.mainWindow.setBounds(bounds);
+            }
+        });
 
         const menuBuilder = new MenuBuilder(this.state.mainWindow);
         menuBuilder.buildMenu();
