@@ -289,13 +289,6 @@ class OblivionDesktop {
         });
         await this.setupWindowEvents();
         await this.state.mainWindow.loadURL(this.resolveHtmlPath('index.html'));
-        screen.on('display-metrics-changed', () => {
-            if (this.state.mainWindow) {
-                this.state.mainWindow.setResizable(true);
-                const bounds = this.state.mainWindow.getBounds();
-                this.state.mainWindow.setBounds(bounds);
-            }
-        });
 
         const menuBuilder = new MenuBuilder(this.state.mainWindow);
         menuBuilder.buildMenu();
