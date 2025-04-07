@@ -547,32 +547,41 @@ class OblivionDesktop {
                 this.createWindow().catch((err) => log.error('Create Window Error:', err));
         });
 
+        let isQuitting = false;
         app.on('window-all-closed', async () => {
-            await this.exitProcess();
+            if (process.platform !== 'darwin' && !isQuitting) {
+                isQuitting = true;
+                await this.exitProcess();
+                app.quit();
+            }
         });
 
         app.on('before-quit', async (event) => {
-            event.preventDefault();
-            await this.exitProcess();
-        });
-
-        app.on('session-end', async () => {
-            await this.disableProxyQuickly();
-        });
-
-        app.on('quit', async () => {
-            await this.disableProxyQuickly();
+            if (!isQuitting) {
+                event.preventDefault();
+                isQuitting = true;
+                await this.exitProcess();
+                app.quit();
+            }
         });
 
         app.on('will-quit', async (event) => {
-            event.preventDefault();
+            /*event.preventDefault();
             try {
                 await this.exitProcess();
             } catch (error) {
                 console.error('Error during cleanup:', error);
             }
-            app.exit(0);
+            app.exit(0);*/
         });
+
+        /*app.on('session-end', async () => {
+            await this.disableProxyQuickly();
+        });
+
+        app.on('quit', async () => {
+            await this.disableProxyQuickly();
+        });*/
 
         app.setAsDefaultProtocolClient(packageJsonData.shortName);
         app.on('open-url', (event: Event) => {
