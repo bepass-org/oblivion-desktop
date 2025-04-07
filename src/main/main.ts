@@ -267,11 +267,7 @@ class OblivionDesktop {
         this.state.mainWindow.on('ready-to-show', async () => {
             const startMinimized = await settings.get('startMinimized');
             if (typeof startMinimized === 'boolean' && startMinimized) {
-                try {
-                    this.state.mainWindow?.minimize();
-                } catch (err) {
-                    console.error('Error minimizing the window:', err);
-                }
+                this.state.mainWindow?.minimize();
             } else {
                 this.state.mainWindow?.show();
             }
