@@ -2,7 +2,7 @@ import fs from 'fs';
 import axios from 'axios';
 import decompress from 'decompress';
 import { doesDirectoryExist, doesFileExist } from '../src/main/lib/utils';
-import { wpVersion, helperVersion, netStatsVersion } from '../src/main/config';
+import { wpVersion, helperVersion, netStatsVersion, proxyResetVersion } from '../src/main/config';
 
 const forceDownload = process.argv[2] === 'force';
 const platform = process.argv[3] || process.platform;
@@ -70,6 +70,7 @@ async function dlUnzipMove(url: string, binPath: string, zipFileName: string) {
 const warpPlusUrlBase = `https://github.com/bepass-org/warp-plus/releases/download/v${wpVersion}/warp-plus_`;
 const helperUrlBase = `https://github.com/ShadowZagrosDev/oblivion-helper/releases/download/v${helperVersion}/oblivion-helper-`;
 const netStatsUrlBase = `https://github.com/ShadowZagrosDev/Zag-NetStats/releases/download/v${netStatsVersion}/zag-netStats-`;
+const proxyResetUrlBase = `https://github.com/ircfspace/proxyReset/releases/download/v${proxyResetVersion}/proxy-reset-`;
 
 const warpPlusUrls: Record<string, Record<string, string>> = {
     linux: {
@@ -119,6 +120,14 @@ const netStatsUrls: Record<string, Record<string, string>> = {
     }
 };
 
+const proxyResetUrls: Record<string, Record<string, string>> = {
+    win32: {
+        x64: proxyResetUrlBase + 'x64.zip',
+        arm64: proxyResetUrlBase + 'arm64.zip',
+        ia32: proxyResetUrlBase + 'ia32.zip'
+    }
+};
+
 const removeFile = async (filePath: string) => {
     const isExist = await doesFileExist(filePath);
     if (isExist) {
@@ -143,6 +152,14 @@ async function handleDownload() {
         './assets/bin',
         `zag-netStats-v${netStatsVersion}.zip`
     );
+
+    if (platform === 'win32') {
+        await dlUnzipMove(
+            proxyResetUrls[platform][arch],
+            './assets/bin',
+            `proxy-reset-v${proxyResetVersion}.zip`
+        );
+    }
 }
 
 const notSupported = () => console.log('Your platform/architecture is not supported.');

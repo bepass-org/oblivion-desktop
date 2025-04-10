@@ -44,7 +44,9 @@ import {
     downloadedPath,
     updaterPath,
     regeditVbsDirPath,
-    windowPosition
+    windowPosition,
+    proxyResetPath,
+    proxyResetAssetPath
 } from '../constants';
 import { spawn } from 'child_process';
 import https from 'https';
@@ -124,6 +126,9 @@ class OblivionDesktop {
 
     private async cleanupOldFiles(): Promise<void> {
         const filesToClean = [wpBinPath, helperPath, netStatsPath];
+        if (process.platform === 'win32') {
+            filesToClean.push(proxyResetPath);
+        }
         filesToClean.forEach((file) => {
             if (fs.existsSync(file)) {
                 rimrafSync(file);
@@ -137,6 +142,9 @@ class OblivionDesktop {
             { src: helperAssetPath, dest: helperPath, name: 'helper' },
             { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' }
         ];
+        if (process.platform === 'win32') {
+            filePairs.push({ src: proxyResetAssetPath, dest: proxyResetPath, name: 'proxyReset' });
+        }
 
         filePairs.forEach(({ src, dest, name }) => {
             if (fs.existsSync(src) && !fs.existsSync(dest)) {
@@ -887,15 +895,7 @@ class OblivionDesktop {
     private async registerStartupProxyReset(): Promise<void> {
         if (process.platform !== 'win32') return;
         try {
-            const nodePath = process.execPath;
-            const scriptPath = path.join(
-                process.resourcesPath,
-                'app',
-                'dist',
-                'scripts',
-                'proxyReset.js'
-            );
-            const appPath = `"${nodePath}" "${scriptPath}"`;
+            const appPath = `"${proxyResetPath}"`;
             const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
             const values: RegistryPutItem = {
                 ['OblivionProxyReset']: {
@@ -919,7 +919,7 @@ class OblivionDesktop {
             await this.autoConnect();
             await this.setupMetaData();
             //await this.exitStrategy();
-            //await this.registerStartupProxyReset();
+            await this.registerStartupProxyReset();
             log.info('od is ready!');
         });
     }
