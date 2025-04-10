@@ -1,4 +1,4 @@
-import { regeditVbsDirPath } from '../src/constants';
+import { regeditVbsDirPath } from '../constants';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
 
 const disableProxyQuickly = async () => {
@@ -6,7 +6,7 @@ const disableProxyQuickly = async () => {
     try {
         const registryPath =
             'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings';
-        const proxySettings: RegistryPutItem = {
+        const proxySettings = {
             ProxyServer: { type: 'REG_SZ', value: '' },
             ProxyOverride: { type: 'REG_SZ', value: '' },
             AutoConfigURL: { type: 'REG_SZ', value: '' },

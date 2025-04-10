@@ -887,7 +887,15 @@ class OblivionDesktop {
     private async registerStartupProxyReset(): Promise<void> {
         if (process.platform !== 'win32') return;
         try {
-            const appPath = `"${process.execPath}" "${path.join(__dirname, 'scripts/proxyReset.ts')}"`;
+            const nodePath = process.execPath;
+            const scriptPath = path.join(
+                process.resourcesPath,
+                'app',
+                'dist',
+                'scripts',
+                'proxyReset.js'
+            );
+            const appPath = `"${nodePath}" "${scriptPath}"`;
             const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
             const values: RegistryPutItem = {
                 ['OblivionProxyReset']: {
