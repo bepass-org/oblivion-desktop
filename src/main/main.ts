@@ -919,7 +919,7 @@ class OblivionDesktop {
             await this.autoConnect();
             await this.setupMetaData();
             //await this.exitStrategy();
-            await this.registerStartupProxyReset();
+            //await this.registerStartupProxyReset();
             log.info('od is ready!');
         });
     }

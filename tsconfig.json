@@ -12,9 +12,7 @@
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "allowJs": true,
-        "rootDir": "src",
-        "outDir": "release/app/dist"
+        "outDir": ".erb/dll"
     },
-    "include": ["src/**/*"],
-    "exclude": ["test", "release/build", "release/app/dist"]
+    "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
 }
