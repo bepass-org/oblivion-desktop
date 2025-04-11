@@ -120,6 +120,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         ],
         route: {
             rules: [
+                { ip_is_private: true, outbound: 'direct' },
                 { protocol: 'dns', outbound: 'dns-out' },
                 ...(geoConfig.geoBlock
                     ? [
@@ -200,10 +201,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
-                {
-                    ip_is_private: true,
-                    outbound: 'direct'
-                },
 
                 // Universal required ports for all platforms
                 {
