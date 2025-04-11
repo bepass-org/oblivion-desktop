@@ -120,8 +120,8 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         ],
         route: {
             rules: [
-                { ip_is_private: true, outbound: 'direct' },
                 { protocol: 'dns', outbound: 'dns-out' },
+                { ip_is_private: true, outbound: 'direct' },
                 ...(geoConfig.geoBlock
                     ? [
                           {
