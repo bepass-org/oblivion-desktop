@@ -6,6 +6,7 @@ import RestoreModal from '../../components/Modal/Restore';
 import Tabs from '../../components/Tabs';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
+import { platform } from '../../lib/utils';
 
 export default function Options() {
     const {
@@ -169,9 +170,9 @@ export default function Options() {
                     <div className='settings' role='menu'>
                         <div
                             role='button'
-                            className='item'
-                            onClick={onClickAutoStartButton}
-                            onKeyDown={onKeyDownAutoStartButton}
+                            className={classNames('item', platform === 'linux' ? 'disabled' : '')}
+                            onClick={platform !== 'linux' ? onClickAutoStartButton : undefined}
+                            onKeyDown={platform !== 'linux' ? onKeyDownAutoStartButton : undefined}
                             tabIndex={0}
                         >
                             <label
