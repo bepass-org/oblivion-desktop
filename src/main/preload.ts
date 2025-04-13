@@ -60,4 +60,8 @@ const electronHandler = {
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
 
+contextBridge.exposeInMainWorld('platformAPI', {
+    getPlatform: () => process.platform
+});
+
 export type ElectronHandler = typeof electronHandler;

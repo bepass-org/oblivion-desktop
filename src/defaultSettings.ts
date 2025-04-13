@@ -48,6 +48,11 @@ export type settingsKeys =
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
 
+const platform =
+    typeof window !== 'undefined' && window.platformAPI
+        ? window.platformAPI.getPlatform()
+        : 'unknown';
+
 export const defaultSettings = {
     scan: true,
     endpoint: 'engage.cloudflareclient.com:2408',
@@ -62,7 +67,7 @@ export const defaultSettings = {
     ipData: true,
     routingRules: '',
     autoSetProxy: true,
-    proxyMode: 'tun',
+    proxyMode: platform === 'win32' ? 'system' : 'tun',
     shareVPN: false,
     hostIP: '127.0.0.1',
     method: 'gool',
