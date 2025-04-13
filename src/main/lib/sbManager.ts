@@ -25,10 +25,12 @@ import {
     IConfig,
     IGeoConfig,
     ruleSetBaseUrl,
-    IPlatformHelper
+    IPlatformHelper,
+    regeditVbsDirPath
 } from '../../constants';
 import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './sbHelper';
 import { mapGrpcErrorCodeToLabel } from './utils';
+import { disableProxy } from './proxy';
 
 // Types
 type GrpcMethod = 'Start' | 'Stop';
@@ -205,6 +207,12 @@ class SingBoxManager {
             }
 
             log.info('Starting Oblivion-Helper...');
+
+            try {
+                disableProxy(regeditVbsDirPath);
+            } catch (error) {
+                log.error('Error managing system proxy:', error);
+            }
 
             const command = this.platformHelper.start(helperPath);
             const helperProcess = spawn(command.command, command.args, {

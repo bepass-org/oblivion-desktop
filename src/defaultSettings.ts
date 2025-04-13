@@ -48,10 +48,10 @@ export type settingsKeys =
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
 
-const platform =
+/*const platform =
     typeof window !== 'undefined' && window.platformAPI
         ? window.platformAPI.getPlatform()
-        : 'unknown';
+        : 'unknown';*/
 
 export const defaultSettings = {
     scan: true,
@@ -67,7 +67,7 @@ export const defaultSettings = {
     ipData: true,
     routingRules: '',
     autoSetProxy: true,
-    proxyMode: platform === 'win32' ? 'system' : 'tun',
+    proxyMode: 'tun',
     shareVPN: false,
     hostIP: '127.0.0.1',
     method: 'gool',

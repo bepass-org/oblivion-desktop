@@ -497,7 +497,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
     const lang = await settings.get('lang');
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
-    if (!shouldProxySystem(proxyMode)) {
+    if (proxyMode === 'none') {
         log.info('skipping system proxy disable.');
         return;
     }
