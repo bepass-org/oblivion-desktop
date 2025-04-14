@@ -122,6 +122,18 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             rules: [
                 { protocol: 'dns', outbound: 'dns-out' },
                 { ip_is_private: true, outbound: 'direct' },
+                ...(config.socksIp
+                    ? [
+                          {
+                              ip_cidr: [
+                                  config.socksIp === '0.0.0.0'
+                                      ? '0.0.0.0/0'
+                                      : `${config.socksIp}/32`
+                              ],
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
                 ...(geoConfig.geoBlock
                     ? [
                           {
