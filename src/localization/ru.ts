@@ -137,6 +137,8 @@ const russian: Language = {
         singbox_sniff_desc: 'Включить сканирование и переопределить назначение',
         singbox_addressing: 'Адресация',
         singbox_addressing_desc: 'Установите тип адреса интерфейса',
+        singbox_udp_block: 'Блокировать UDP',
+        singbox_udp_block_desc: 'Полная блокировка всего UDP-трафика',
         more_duties: 'Дополнительные обязанности',
         beta_release: 'Бета-обновление',
         beta_release_desc: 'Будьте в курсе предварительных версий'

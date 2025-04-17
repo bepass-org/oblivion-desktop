@@ -138,6 +138,8 @@ const indonesia: Language = {
         singbox_sniff_desc: 'Aktifkan Sniffing & Override Tujuan',
         singbox_addressing: 'Pengalamatan',
         singbox_addressing_desc: 'Atur Jenis Alamat Antarmuka',
+        singbox_udp_block: 'Blokir UDP',
+        singbox_udp_block_desc: 'Blokir semua lalu lintas UDP sepenuhnya',
         more_duties: 'Tugas lebih',
         beta_release: 'Pembaruan Beta',
         beta_release_desc: 'Tetap terinformasi tentang versi pra-rilis'

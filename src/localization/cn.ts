@@ -135,6 +135,8 @@ const chinese: Language = {
         singbox_sniff_desc: '启用嗅探并覆盖目标',
         singbox_addressing: '寻址',
         singbox_addressing_desc: '设置接口地址类型',
+        singbox_udp_block: '阻止 UDP',
+        singbox_udp_block_desc: '完全阻止所有 UDP 流量',
         more_duties: '更多职责',
         beta_release: 'Beta 更新',
         beta_release_desc: '了解预发布版本'

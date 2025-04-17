@@ -139,6 +139,8 @@ const spanish: Language = {
         singbox_sniff_desc: 'Habilitar Sniffing y Anular Destino',
         singbox_addressing: 'Direccionamiento',
         singbox_addressing_desc: 'Establecer tipo de dirección de interfaz',
+        singbox_udp_block: 'Bloquear UDP',
+        singbox_udp_block_desc: 'Bloquear completamente todo el tráfico UDP',
         more_duties: 'Más responsabilidades',
         beta_release: 'Actualización Beta',
         beta_release_desc: 'Mantente informado sobre versiones previas al lanzamiento'

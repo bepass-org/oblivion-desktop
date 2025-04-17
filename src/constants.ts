@@ -77,6 +77,7 @@ export interface IConfig {
     DoHDns: string;
     tunEndpoint: string;
     tunAddr: string[];
+    udpBlock: boolean;
 }
 
 export interface IGeoConfig {

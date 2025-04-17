@@ -135,6 +135,8 @@ export interface Settings {
     singbox_sniff_desc: string;
     singbox_addressing: string;
     singbox_addressing_desc: string;
+    singbox_udp_block: string;
+    singbox_udp_block_desc: string;
     more_duties: string;
     beta_release: string;
     beta_release_desc: string;

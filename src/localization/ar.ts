@@ -135,6 +135,8 @@ const arabic: Language = {
         singbox_sniff_desc: 'تمكين الاستنشاق وتجاوز الوجهة',
         singbox_addressing: 'العنونة',
         singbox_addressing_desc: 'قم بتعيين نوع عنوان الواجهة',
+        singbox_udp_block: 'حظر UDP',
+        singbox_udp_block_desc: 'حظر كامل لحركة مرور UDP',
         more_duties: 'المزيد من الواجبات',
         beta_release: 'تحديث النسخة التجريبية',
         beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'

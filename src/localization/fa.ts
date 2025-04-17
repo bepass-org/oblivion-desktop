@@ -136,6 +136,8 @@ const persian: Language = {
         singbox_sniff_desc: 'فعالسازی Sniff و بازنویسی مقصد',
         singbox_addressing: 'آدرس‌دهی',
         singbox_addressing_desc: 'تنظیم نوع آدرس رابط',
+        singbox_udp_block: 'بستن UDP',
+        singbox_udp_block_desc: 'مسدودسازی کامل ترافیک UDP',
         more_duties: 'وظایف',
         beta_release: 'بروزرسانی بتا',
         beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'

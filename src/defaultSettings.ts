@@ -38,6 +38,7 @@ export type settingsKeys =
     | 'singBoxStack'
     | 'singBoxSniff'
     | 'singBoxAddrType'
+    | 'singBoxUdpBlock'
     | 'restartCounter'
     | 'betaRelease'
     | 'soundEffect'
@@ -88,6 +89,7 @@ export const defaultSettings = {
     singBoxGeoBlock: false,
     singBoxGeoNSFW: false,
     singBoxSniff: true,
+    singBoxUdpBlock: false,
     restartCounter: 0,
     betaRelease: false,
     soundEffect: false,

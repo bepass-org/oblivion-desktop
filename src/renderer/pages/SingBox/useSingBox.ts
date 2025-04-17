@@ -54,7 +54,8 @@ const useSingBox = () => {
                     'singBoxLog',
                     'singBoxStack',
                     'singBoxSniff',
-                    'singBoxAddrType'
+                    'singBoxAddrType',
+                    'singBoxUdpBlock'
                 ];
                 const values = await settings.getMultiple(keysToFetch);
 

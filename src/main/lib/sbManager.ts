@@ -266,20 +266,33 @@ class SingBoxManager {
     }
 
     private async loadConfiguration(): Promise<IConfig> {
-        const [hostIP, port, dns, mtu, loglevel, stack, sniff, address, endpoint, plainDns, doh] =
-            await Promise.all([
-                settings.get('hostIP'),
-                settings.get('port'),
-                settings.get('dns'),
-                settings.get('singBoxMTU'),
-                settings.get('singBoxLog'),
-                settings.get('singBoxStack'),
-                settings.get('singBoxSniff'),
-                settings.get('singBoxAddrType'),
-                settings.get('endpoint'),
-                settings.get('plainDns'),
-                settings.get('DoH')
-            ]);
+        const [
+            hostIP,
+            port,
+            dns,
+            mtu,
+            loglevel,
+            stack,
+            sniff,
+            address,
+            endpoint,
+            plainDns,
+            doh,
+            singBoxUdpBlock
+        ] = await Promise.all([
+            settings.get('hostIP'),
+            settings.get('port'),
+            settings.get('dns'),
+            settings.get('singBoxMTU'),
+            settings.get('singBoxLog'),
+            settings.get('singBoxStack'),
+            settings.get('singBoxSniff'),
+            settings.get('singBoxAddrType'),
+            settings.get('endpoint'),
+            settings.get('plainDns'),
+            settings.get('DoH'),
+            settings.get('singBoxUdpBlock')
+        ]);
 
         return {
             socksIp: this.getSettingOrDefault(hostIP, defaultSettings.hostIP),
@@ -291,7 +304,8 @@ class SingBoxManager {
             tunAddr: this.getTunAddr(address),
             plainDns: this.getPlainDns(dns, plainDns),
             DoHDns: this.getDoHDns(dns, doh),
-            tunEndpoint: this.getSettingOrDefault(endpoint, defaultSettings.endpoint)
+            tunEndpoint: this.getSettingOrDefault(endpoint, defaultSettings.endpoint),
+            udpBlock: this.getSettingOrDefault(singBoxUdpBlock, defaultSettings.singBoxUdpBlock)
         };
     }
 

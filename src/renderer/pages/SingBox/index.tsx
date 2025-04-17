@@ -36,6 +36,7 @@ export default function SingBox() {
         singBoxStack: stack,
         singBoxSniff: sniff,
         singBoxAddrType: addrType,
+        singBoxUdpBlock: udpBlock,
         proxyMode
     } = settingsState;
 
@@ -49,6 +50,7 @@ export default function SingBox() {
         typeof log === 'undefined' ||
         typeof stack === 'undefined' ||
         typeof sniff === 'undefined' ||
+        typeof udpBlock === 'undefined' ||
         typeof addrType === 'undefined' ||
         typeof proxyMode === 'undefined'
     )
@@ -205,7 +207,6 @@ export default function SingBox() {
                             </div>
                             <div className='info'>{appLang.settings.singbox_log_desc}</div>
                         </div>
-
                         <div className={classNames('item')}>
                             <label className='key' htmlFor='stack'>
                                 {appLang.settings.singbox_stack}
@@ -230,7 +231,6 @@ export default function SingBox() {
                             </div>
                             <div className='info'>{appLang.settings.singbox_stack_desc}</div>
                         </div>
-
                         <div
                             role='button'
                             className='item'
@@ -248,7 +248,6 @@ export default function SingBox() {
                             </div>
                             <div className='info'>{appLang.settings.mtu_desc}</div>
                         </div>
-
                         <div
                             role='button'
                             className={classNames('item')}
@@ -269,7 +268,6 @@ export default function SingBox() {
                             </div>
                             <div className='info'>{appLang.settings.singbox_sniff_desc}</div>
                         </div>
-
                         <div className={classNames('item')}>
                             <label className='key' htmlFor='address_type'>
                                 {appLang.settings.singbox_addressing}
@@ -293,6 +291,26 @@ export default function SingBox() {
                                 </select>
                             </div>
                             <div className='info'>{appLang.settings.singbox_addressing_desc}</div>
+                        </div>
+                        <div
+                            role='button'
+                            className={classNames('item')}
+                            onClick={() => handleToggleSetting('singBoxUdpBlock')}
+                            onKeyDown={handleKeyDown('singBoxUdpBlock')}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='singBoxUdpBlock'>
+                                {appLang.settings.singbox_udp_block}
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames('checkbox', udpBlock ? 'checked' : '')}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>{appLang.settings.singbox_udp_block_desc}</div>
                         </div>
                     </div>
                 </div>

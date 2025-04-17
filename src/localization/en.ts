@@ -137,6 +137,8 @@ const english: Language = {
         singbox_sniff_desc: 'Enable Sniffing & Override Destination',
         singbox_addressing: 'Addressing',
         singbox_addressing_desc: 'Set Interface Address Type',
+        singbox_udp_block: 'Block UDP',
+        singbox_udp_block_desc: 'Completely block all UDP traffic',
         more_duties: 'Duties',
         beta_release: 'Beta Update',
         beta_release_desc: 'Stay informed about pre-release versions'

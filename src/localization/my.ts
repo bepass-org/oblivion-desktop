@@ -137,6 +137,8 @@ const myanmar: Language = {
         singbox_sniff_desc: 'Sniffing ကိုဖွင့်ပြီး ရောက်ရှိမှုကို Override လုပ်ပါ',
         singbox_addressing: 'လိပ်စာတင်ခြင်း',
         singbox_addressing_desc: 'Interface လိပ်စာအမျိုးအစားသတ်မှတ်ပါ',
+        singbox_udp_block: 'UDP ကိုပိတ်မည်',
+        singbox_udp_block_desc: 'UDP traffic အားလုံးကိုလုံးဝပိတ်မည်',
         more_duties: 'ပိုမိုတာဝန်များ',
         beta_release: 'ဘီတာအပ်ဒိတ်',
         beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'

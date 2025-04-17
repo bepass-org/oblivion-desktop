@@ -121,6 +121,14 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         route: {
             rules: [
                 { protocol: 'dns', outbound: 'dns-out' },
+                ...(config.udpBlock
+                    ? [
+                          {
+                              network: 'udp',
+                              outbound: 'block'
+                          }
+                      ]
+                    : []),
                 { ip_is_private: true, outbound: 'direct' },
                 ...(config.socksIp
                     ? [
