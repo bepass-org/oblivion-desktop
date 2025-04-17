@@ -894,18 +894,25 @@ class OblivionDesktop {
 
     private async registerStartupProxyReset(): Promise<void> {
         if (process.platform !== 'win32') return;
+        const appPath = `"${proxyResetPath}"`;
+        const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
+        const valueName = 'OblivionProxyReset';
         try {
-            const appPath = `"${proxyResetPath}"`;
-            const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
+            regeditModule.setExternalVBSLocation(regeditVbsDirPath);
+            const result = await regedit.list([registryPath]);
+            const existingValue = result[registryPath]?.values?.[valueName]?.value;
+            if (existingValue === appPath) {
+                //log.info('Proxy reset script already registered in startup.');
+                return;
+            }
             const values: RegistryPutItem = {
-                ['OblivionProxyReset']: {
+                [valueName]: {
                     value: appPath,
                     type: 'REG_SZ'
                 }
             };
-            regeditModule.setExternalVBSLocation(regeditVbsDirPath);
             await regedit.putValue({ [registryPath]: values });
-            console.log('Proxy reset script registered in startup.');
+            log.info('Proxy reset script registered in startup.');
         } catch (err) {
             console.error('Failed to register proxy reset:', err);
         }
