@@ -457,7 +457,11 @@ class SingBoxManager {
                     const errorCodeLabel = mapGrpcErrorCodeToLabel(err.code);
                     const errorMessage = `Helper Error: [${errorCodeLabel}] ${messagePart}`;
                     log.error(errorMessage);
-                    this.replyEvent(errorMessage);
+                    if (errorMessage.includes('set ipv6 address: Element not found')) {
+                        this.replyEvent('sb_error_ipv6');
+                    } else {
+                        this.replyEvent(errorMessage);
+                    }
                     reject(`Helper: ${err.message}`);
                     return;
                 }

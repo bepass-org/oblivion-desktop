@@ -218,7 +218,9 @@ const indonesia: Language = {
         error_wp_reset_peer: 'Koneksi ke Cloudflare terputus secara tak terduga!',
         error_failed_connection: 'Gagal menjalin koneksi!',
         error_canceled_by_user: 'Operasi dibatalkan oleh pengguna.',
-        error_helper_not_found: 'File pembantu tidak ditemukan di sebelah paket aplikasi!'
+        error_helper_not_found: 'File pembantu tidak ditemukan di sebelah paket aplikasi!',
+        error_singbox_ipv6_address:
+            'Sistem operasi Anda tidak mendukung IPv6. Silakan pergi ke pengaturan Sing-box dan ubah pengalamatan ke IPv4.'
     },
     about: {
         title: 'Tentang Aplikasi',

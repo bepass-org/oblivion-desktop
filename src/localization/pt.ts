@@ -221,7 +221,9 @@ const brazilianPortuguese: Language = {
         error_failed_connection: 'Falha ao estabelecer conexão!',
         error_canceled_by_user: 'A operação foi cancelada pelo usuário.',
         error_helper_not_found:
-            'O arquivo auxiliar não foi encontrado junto ao pacote do aplicativo!'
+            'O arquivo auxiliar não foi encontrado junto ao pacote do aplicativo!',
+        error_singbox_ipv6_address:
+            'Seu sistema operacional não suporta IPv6. Por favor, vá para as configurações do Sing-box e altere o endereçamento para IPv4.'
     },
     about: {
         title: 'Sobre o Aplicativo',

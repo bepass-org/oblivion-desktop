@@ -211,7 +211,8 @@ const chinese: Language = {
         error_wp_reset_peer: '与 Cloudflare 的连接意外中断！',
         error_failed_connection: '无法建立连接！',
         error_canceled_by_user: '操作已被用户取消。',
-        error_helper_not_found: '未在应用程序包旁找到助手文件！'
+        error_helper_not_found: '未在应用程序包旁找到助手文件！',
+        error_singbox_ipv6_address: '您的操作系统不支持IPv6。请前往Sing-box设置并将地址更改为IPv4。'
     },
     about: {
         title: '关于应用',

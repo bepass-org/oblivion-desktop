@@ -219,7 +219,9 @@ const russian: Language = {
         error_wp_reset_peer: 'Соединение с Cloudflare было неожиданно прервано!',
         error_failed_connection: 'Не удалось установить соединение!',
         error_canceled_by_user: 'Операция была отменена пользователем.',
-        error_helper_not_found: 'Файл помощника не найден рядом с пакетом приложения!'
+        error_helper_not_found: 'Файл помощника не найден рядом с пакетом приложения!',
+        error_singbox_ipv6_address:
+            'Ваша операционная система не поддерживает IPv6. Пожалуйста, перейдите в настройки Sing-box и измените адресацию на IPv4.'
     },
     about: {
         title: 'О приложении',

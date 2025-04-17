@@ -220,7 +220,9 @@ const turkish: Language = {
         error_wp_reset_peer: 'Cloudflare bağlantısı beklenmedik bir şekilde kesildi!',
         error_failed_connection: 'Bağlantı kurulamadı!',
         error_canceled_by_user: 'İşlem kullanıcı tarafından iptal edildi.',
-        error_helper_not_found: 'Yardımcı dosya uygulama paketinin yanında bulunamadı!'
+        error_helper_not_found: 'Yardımcı dosya uygulama paketinin yanında bulunamadı!',
+        error_singbox_ipv6_address:
+            "İşletim sisteminiz IPv6'yı desteklemiyor. Lütfen Sing-box ayarlarına gidin ve adreslemeyi IPv4'e değiştirin."
     },
     about: {
         title: 'Uygulama Hakkında',

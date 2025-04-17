@@ -204,6 +204,11 @@ const useLanding = () => {
             } else if (message === 'sb_stop_failed') {
                 setIsLoading(false);
                 setIsConnected(true);
+            } else if (message === 'sb_error_ipv6') {
+                stopLoadingToast();
+                setIsLoading(false);
+                setIsConnected(false);
+                defaultToast(appLang.log.error_singbox_ipv6_address, 'IPV6_FAILED', 3000);
             } else {
                 defaultToast(message, 'GUIDE', 7000);
             }

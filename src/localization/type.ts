@@ -212,6 +212,7 @@ export interface Log {
     error_failed_connection: string;
     error_canceled_by_user: string;
     error_helper_not_found: string;
+    error_singbox_ipv6_address: string;
 }
 
 export interface About {

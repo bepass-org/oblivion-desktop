@@ -223,7 +223,9 @@ const spanish: Language = {
         error_failed_connection: '¡No se pudo establecer la conexión!',
         error_canceled_by_user: 'La operación fue cancelada por el usuario.',
         error_helper_not_found:
-            '¡El archivo auxiliar no se encuentra junto al paquete de la aplicación!'
+            '¡El archivo auxiliar no se encuentra junto al paquete de la aplicación!',
+        error_singbox_ipv6_address:
+            'Tu sistema operativo no es compatible con IPv6. Por favor, ve a la configuración de Sing-box y cambia la dirección a IPv4.'
     },
     about: {
         title: 'Acerca de la Aplicación',

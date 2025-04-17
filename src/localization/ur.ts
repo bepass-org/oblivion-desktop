@@ -220,7 +220,9 @@ const urdu: Language = {
         error_wp_reset_peer: 'کلاؤڈفلئیر سے کنیکشن غیر متوقع طور پر منقطع ہو گیا!',
         error_failed_connection: 'کنکشن قائم کرنے میں ناکامی!',
         error_canceled_by_user: 'عملیہ صارف کے ذریعہ منسوخ کر دیا گیا۔',
-        error_helper_not_found: 'مددگار فائل ایپلیکیشن پیکیج کے ساتھ موجود نہیں!'
+        error_helper_not_found: 'مددگار فائل ایپلیکیشن پیکیج کے ساتھ موجود نہیں!',
+        error_singbox_ipv6_address:
+            'آپ کا آپریٹنگ سسٹم IPv6 کی حمایت نہیں کرتا۔ براہ کرم Sing-box کی سیٹنگز میں جائیں اور ایڈریسنگ کو IPv4 پر تبدیل کریں۔'
     },
     about: {
         title: 'ایپ کے بارے میں',

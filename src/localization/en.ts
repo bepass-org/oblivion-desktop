@@ -218,7 +218,9 @@ const english: Language = {
         error_wp_reset_peer: 'The connection to Cloudflare was unexpectedly interrupted!',
         error_failed_connection: 'Failed to establish connection!',
         error_canceled_by_user: 'The operation was canceled by the user.',
-        error_helper_not_found: 'The helper file is not located alongside the application package!'
+        error_helper_not_found: 'The helper file is not located alongside the application package!',
+        error_singbox_ipv6_address:
+            'Your OS does not support IPv6. Please go to the Sing-box settings and change the addressing to IPv4.'
     },
     about: {
         title: 'About App',

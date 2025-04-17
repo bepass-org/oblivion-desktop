@@ -210,7 +210,8 @@ const amharic: Language = {
         error_wp_reset_peer: 'ከCloudflare ጋር መገናኘት አቋረጠ።',
         error_failed_connection: 'ግንኙነት አልተቋረጠም።',
         error_canceled_by_user: 'እንዲሁ ተለዋዋጭ በተጠቃሚ ተሰርዟል።',
-        error_helper_not_found: 'የረዳት ፋይል ከመተግበሪያ ጥቅል ጋር አልተገኘም!'
+        error_helper_not_found: 'የረዳት ፋይል ከመተግበሪያ ጥቅል ጋር አልተገኘም!',
+        error_singbox_ipv6_address: 'እባኮትን ወደ ሲንግ-ቦክስ ቅንብሮች ተመልከትና አድራሻን እንደ IPv4 ለማሻሻል ተመዝግቡ።'
     },
     about: {
         title: 'ስለ አፕ',

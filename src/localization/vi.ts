@@ -219,7 +219,9 @@ const vietnamese: Language = {
         error_wp_reset_peer: 'Kết nối đến Cloudflare bị gián đoạn đột ngột!',
         error_failed_connection: 'Không thể thiết lập kết nối!',
         error_canceled_by_user: 'Hoạt động đã bị hủy bởi người dùng.',
-        error_helper_not_found: 'Tệp trợ giúp không được tìm thấy bên cạnh gói ứng dụng!'
+        error_helper_not_found: 'Tệp trợ giúp không được tìm thấy bên cạnh gói ứng dụng!',
+        error_singbox_ipv6_address:
+            'Hệ điều hành của bạn không hỗ trợ IPv6. Vui lòng vào cài đặt Sing-box và thay đổi địa chỉ thành IPv4.'
     },
     about: {
         title: 'Giới thiệu về ứng dụng',

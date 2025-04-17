@@ -215,7 +215,9 @@ const arabic: Language = {
         error_wp_reset_peer: 'تم قطع الاتصال بـ Cloudflare بشكل غير متوقع!',
         error_failed_connection: 'فشل في إنشاء الاتصال!',
         error_canceled_by_user: 'تم إلغاء العملية من قبل المستخدم.',
-        error_helper_not_found: 'لم يتم العثور على ملف المساعد بجانب حزمة التطبيق!'
+        error_helper_not_found: 'لم يتم العثور على ملف المساعد بجانب حزمة التطبيق!',
+        error_singbox_ipv6_address:
+            'نظام التشغيل الخاص بك لا يدعم IPv6. يرجى الانتقال إلى إعدادات سينج-بوكس وتغيير العنوان إلى IPv4.'
     },
     about: {
         title: 'حول التطبيق',

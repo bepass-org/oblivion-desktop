@@ -218,7 +218,9 @@ const persian: Language = {
         error_wp_reset_peer: 'اتصال به کلودفلر به‌طور غیرمنتظره قطع شد!',
         error_failed_connection: 'اتصال موفقیت‌آمیز نبود!',
         error_canceled_by_user: 'عملیات توسط کاربر لغو شد.',
-        error_helper_not_found: 'فایل هلپر در کنار بسته برنامه یافت نشد!'
+        error_helper_not_found: 'فایل هلپر در کنار بسته برنامه یافت نشد!',
+        error_singbox_ipv6_address:
+            'سیستم‌عامل شما از IPv6 پشتیبانی نمی‌کند؛ به تنظیمات سینگ‌باکس رفته و آدرس‌دهی را به IPv4 تغییر دهید.'
     },
     about: {
         title: 'درباره برنامه',
