@@ -91,14 +91,14 @@ class OblivionDesktop {
 
     private async initialize(): Promise<void> {
         if (!app.requestSingleInstanceLock()) {
-            if (!isDev()) {
+            /*if (!isDev()) {
                 dialog.showMessageBox({
                     type: 'info',
                     title: APP_TITLE,
                     message: this.state.appLang.toast.exit_pending,
                     buttons: ['Ok']
                 });
-            }
+            }*/
             log.info('Instance already running.');
             app.exit(0);
             return;
