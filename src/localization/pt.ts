@@ -44,7 +44,9 @@ const brazilianPortuguese: Language = {
         profile_added: 'O ponto final foi adicionado com sucesso ao perfil.',
         endpoint_added: 'O endpoint foi substituído com sucesso.',
         new_update:
-            'Uma nova versão do aplicativo está disponível. Você gostaria de baixá-la e prepará-la para instalação?'
+            'Uma nova versão do aplicativo está disponível. Você gostaria de baixá-la e prepará-la para instalação?',
+        exit_pending:
+            'A aplicação está a concluir o processo de saída; por favor, aguarde um momento antes de a iniciar novamente.'
     },
     settings: {
         title: 'Configurações do Warp',

@@ -45,7 +45,9 @@ const spanish: Language = {
         profile_added: 'El endpoint ha sido añadido correctamente al perfil.',
         endpoint_added: 'El endpoint fue reemplazado correctamente.',
         new_update:
-            'Hay una nueva versión de la aplicación disponible. ¿Te gustaría descargarla y prepararla para la instalación?'
+            'Hay una nueva versión de la aplicación disponible. ¿Te gustaría descargarla y prepararla para la instalación?',
+        exit_pending:
+            'La aplicación está completando su proceso de salida; por favor, espere un momento antes de volver a iniciarla.'
     },
     settings: {
         title: 'Configuraciones de Warp',

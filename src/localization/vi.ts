@@ -44,7 +44,9 @@ const vietnamese: Language = {
         profile_added: 'Điểm cuối đã được thêm thành công vào hồ sơ.',
         endpoint_added: 'Điểm cuối đã được thay thế thành công.',
         new_update:
-            'Một phiên bản mới của ứng dụng có sẵn. Bạn có muốn tải xuống và chuẩn bị cài đặt không?'
+            'Một phiên bản mới của ứng dụng có sẵn. Bạn có muốn tải xuống và chuẩn bị cài đặt không?',
+        exit_pending:
+            'Ứng dụng đang hoàn tất quá trình thoát; vui lòng đợi một chút trước khi khởi chạy lại.'
     },
     settings: {
         title: 'Cài đặt Warp',

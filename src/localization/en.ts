@@ -44,7 +44,9 @@ const english: Language = {
         profile_added: 'The endpoint has been successfully added to the profile.',
         endpoint_added: 'The endpoint was successfully replaced.',
         new_update:
-            'A new version of the app is available. Would you like to download and prepare it for installation?'
+            'A new version of the app is available. Would you like to download and prepare it for installation?',
+        exit_pending:
+            'The application is completing its exit process; please wait a moment before launching it again.'
     },
     settings: {
         title: 'Warp Settings',

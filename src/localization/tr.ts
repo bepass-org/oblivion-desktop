@@ -45,7 +45,9 @@ const turkish: Language = {
         profile_added: 'Uç nokta başarıyla profile eklendi.',
         endpoint_added: 'Uç nokta başarıyla değiştirildi.',
         new_update:
-            'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?'
+            'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?',
+        exit_pending:
+            'Uygulama çıkış sürecini tamamlıyor; lütfen tekrar başlatmadan önce bir süre bekleyin.'
     },
     settings: {
         title: 'Warp Ayarları',

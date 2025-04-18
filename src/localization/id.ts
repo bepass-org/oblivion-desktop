@@ -45,7 +45,9 @@ const indonesia: Language = {
         profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.',
         endpoint_added: 'Endpoint berhasil diganti.',
         new_update:
-            'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?'
+            'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?',
+        exit_pending:
+            'Aplikasi sedang menyelesaikan proses keluar; harap tunggu sebentar sebelum membukanya kembali.'
     },
     settings: {
         title: 'Pengaturan Warp',

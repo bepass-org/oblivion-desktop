@@ -91,6 +91,14 @@ class OblivionDesktop {
 
     private async initialize(): Promise<void> {
         if (!app.requestSingleInstanceLock()) {
+            if (!isDev()) {
+                dialog.showMessageBox({
+                    type: 'info',
+                    title: APP_TITLE,
+                    message: this.state.appLang.toast.exit_pending,
+                    buttons: ['Ok']
+                });
+            }
             log.info('Instance already running.');
             app.exit(0);
             return;
@@ -463,6 +471,7 @@ class OblivionDesktop {
             try {
                 const result: any = await dialog.showMessageBox({
                     type: 'question',
+                    title: APP_TITLE,
                     buttons: ['No', 'Yes'],
                     defaultId: 0,
                     message: this.state.appLang.toast.new_update
@@ -874,7 +883,7 @@ class OblivionDesktop {
         }
     }*/
 
-    private async disableProxyQuickly(): Promise<void> {
+    /*private async disableProxyQuickly(): Promise<void> {
         if (process.platform !== 'win32') return;
         try {
             const registryPath =
@@ -890,7 +899,7 @@ class OblivionDesktop {
         } catch (error) {
             log.error(`Error while disabling system proxy: ${error}`);
         }
-    }
+    }*/
 
     private async registerStartupProxyReset(): Promise<void> {
         if (process.platform !== 'win32') return;
