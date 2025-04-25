@@ -13,37 +13,29 @@ import { getTranslate } from '../../localization';
 const execPromise = promisify(exec);
 import { spawn } from 'child_process';
 
-let oldProxyHost = '';
-let oldProxyPort = '';
+let appLang = getTranslate('en');
+
+const DEFAULT_ROUTING_RULES = 'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
+const REGEDIT_PATH = 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings';
 
 const setRoutingRules = (value: any) => {
-    const defValue =
-        'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
-    if (typeof value === 'string' && value !== '') {
-        const myRules = value
-            .replace(/app:[^,]+/g, '')
-            .replace(/domain:/g, '')
-            .replace(/geoip:/g, '')
-            .replace(/ip:/g, '')
-            .replace(/range:/g, '')
-            .replace(/\n|<br>/g, '')
-            .trim();
-        return defValue + ',' + myRules;
-    } else {
-        return defValue;
-    }
+    if (typeof value !== 'string' || value === '') return DEFAULT_ROUTING_RULES;
+
+    return DEFAULT_ROUTING_RULES + ',' + value
+        .replace(/app:[^,]+/g, '')
+        .replace(/(domain|geoip|ip|range):/g, '')
+        .replace(/\n|<br>/g, '')
+        .trim();
 };
 
 // TODO reset to prev proxy settings on disable
 // TODO refactor (move each os functions to it's own file)
 
 // tweaking windows proxy settings using regedit
-const windowsProxySettings = (args: RegistryPutItem, regeditVbsDirPath: string) => {
+const windowsProxySettings = (config: RegistryPutItem, regeditVbsDirPath: string) => {
     regeditModule.setExternalVBSLocation(regeditVbsDirPath);
     return regedit.putValue({
-        'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings': {
-            ...args
-        }
+        [REGEDIT_PATH]: config
     });
 };
 
@@ -237,8 +229,9 @@ const macOSNetworkSetup = (args: string[]) => {
     });
 };
 
-const getMacOSActiveNetworkHardwarePorts = async (isIpSet: boolean = false): Promise<string[]> => {
+const getMacOSActiveNetworkHardwarePorts = async (requireIP: boolean = false): Promise<string[]> => {
     console.log('getMacOSActiveNetworkHardwarePorts');
+    
     try {
         const { stdout } = await execPromise('networksetup -listallnetworkservices');
         log.info('networksetup -listallnetworkservices:', stdout);
@@ -246,14 +239,11 @@ const getMacOSActiveNetworkHardwarePorts = async (isIpSet: boolean = false): Pro
         const hardwarePorts: string[] = [];
         await Promise.all(
             lines.map(async (line) => {
-                if (
-                    line === 'An asterisk (*) denotes that a network service is disabled.' ||
-                    line === '' ||
-                    line.startsWith('*')
-                ) {
-                    return;
-                }
-                if (isIpSet) {
+                if (line === '' || line.startsWith('*') || 
+                    line === 'An asterisk (*) denotes that a network service is disabled.') return;
+    
+
+                if (requireIP) {
                     const { stdout: serviceContent } = await execPromise(
                         `networksetup -getinfo "${line}"`
                     );
@@ -270,9 +260,7 @@ const getMacOSActiveNetworkHardwarePorts = async (isIpSet: boolean = false): Pro
                 }
             })
         );
-        if (hardwarePorts.length === 0) {
-            throw new Error('Active Network Devices not found.');
-        }
+        if (hardwarePorts.length === 0) throw new Error('No active network ports found');
         return hardwarePorts;
     } catch (error) {
         log.error(`Error getting active network hardware ports: ${error}`);
@@ -283,9 +271,7 @@ const getMacOSActiveNetworkHardwarePorts = async (isIpSet: boolean = false): Pro
 export const checkProxyState = async (): Promise<boolean> => {
     try {
         if (process.platform === 'win32') {
-            const { stdout } = await execPromise(
-                'reg query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" /v ProxyEnable'
-            );
+            const { stdout } = await execPromise(`reg query "${REGEDIT_PATH}" /v ProxyEnable`);
             return stdout.includes('0x1');
         } else if (process.platform === 'darwin') {
             const hardwarePorts: string[] = await getMacOSActiveNetworkHardwarePorts();
@@ -312,7 +298,7 @@ export const checkProxyState = async (): Promise<boolean> => {
             );
             return isSet;
         } else if (process.platform === 'linux') {
-            if (await isGnome()) {
+            if (isGnome()) {
                 const { stdout: gnomeStdout } = await execPromise(
                     'gsettings get org.gnome.system.proxy mode'
                 );
@@ -339,8 +325,6 @@ export const checkProxyState = async (): Promise<boolean> => {
     }
 };
 
-let appLang = getTranslate('en');
-
 export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainEvent) => {
     const proxyMode = await settings.get('proxyMode');
     //const psiphon = (await settings.get('psiphon')) || defaultSettings.psiphon;
@@ -366,7 +350,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                 if (method === 'psiphon') {
                     await createPacScript(String(hostIP), String(port));
                     pacServeUrl = await servePacScript(Number(port) + 1);
-                    log.info('pacServeUrl:', pacServeUrl);
+                    log.info('PAC server URL:', pacServeUrl);
                 }
                 await windowsProxySettings(
                     {
@@ -506,28 +490,15 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
 
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
-            if (method === 'psiphon') {
-                killPacScriptServer();
-            }
+            if (method === 'psiphon') killPacScriptServer();
+            
             try {
                 await windowsProxySettings(
                     {
-                        ProxyServer: {
-                            type: 'REG_SZ',
-                            value: ''
-                        },
-                        ProxyOverride: {
-                            type: 'REG_SZ',
-                            value: ''
-                        },
-                        AutoConfigURL: {
-                            type: 'REG_SZ',
-                            value: ''
-                        },
-                        ProxyEnable: {
-                            type: 'REG_DWORD',
-                            value: 0
-                        }
+                        ProxyServer: { type: 'REG_SZ', value: '' },
+                        ProxyOverride: { type: 'REG_SZ', value: '' },
+                        AutoConfigURL: { type: 'REG_SZ', value: '' },
+                        ProxyEnable: { type: 'REG_DWORD', value: 0 },
                     },
                     regeditVbsDirPath
                 );
@@ -599,7 +570,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
         });
     } else {
         return new Promise<void>((resolve) => {
-            log.error('system proxy is not supported on your platform.');
+            log.error('Unsupported platform for disabling proxy.');
             resolve();
         });
     }
