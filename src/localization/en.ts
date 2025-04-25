@@ -8,8 +8,8 @@ const english: Language = {
         connected_confirm: 'Connected',
         disconnecting: 'Disconnecting ...',
         disconnected: 'Disconnected',
-        ip_check: 'Checking Ip ...',
-        keep_trying: 'Please wait a moment to try again...',
+        ip_check: 'Verifying IP address...',
+        keep_trying: 'Please wait before attempting again...',
         preparing_rulesets: 'Preparing rulesets...',
         downloading_rulesets_failed: 'Downloading rulesets failed.'
     },
@@ -25,13 +25,13 @@ const english: Language = {
         drawer_update_label: 'New Update',
         drawer_speed_test: 'Speed Test',
         drawer_about: 'About App',
-        drawer_lang: 'Language Change',
+        drawer_lang: 'Change Language',
         drawer_singbox: 'Tunnel Settings'
     },
     toast: {
         ip_check_please_wait: 'Please wait a few seconds to retry the check!',
         ir_location:
-            'Cloudflare has connected to an IP with an Iranian location, which is different from your actual IP. You can use it to bypass filtering, but not sanctions. Don\'t worry! You can change the location in the settings using the "Gool" or "psiphon" option.',
+            'Cloudflare has connected to an Iranian IP (different from your actual IP). This can bypass filtering but not sanctions. You can change locations using "Gool" or "Psiphon" in settings.',
         btn_submit: 'Understood',
         copied: 'Copied!',
         cleared: 'The log has been cleared!',
@@ -69,7 +69,7 @@ const english: Language = {
         proxy_mode: 'Configuration',
         proxy_mode_desc: 'Defining Proxy Settings',
         port: 'Proxy Port',
-        port_desc: 'Define application proxy port',
+        port_desc: 'Set local proxy listening port',
         share_vpn: 'Bind Address',
         share_vpn_desc: 'Share a proxy on the network',
         dns: 'DNS',
@@ -179,7 +179,7 @@ const english: Language = {
         profile_title: 'Profile',
         profile_name: 'Title',
         profile_endpoint: 'Endpoint',
-        profile_limitation: (value) => `You can add a maximum of ${value} endpoints.`,
+        profile_limitation: (value) => `Maximum ${value} endpoints allowed.`,
         mtu_title: 'MTU Value',
         mtu_desc:
             'Maximum Transmission Unit (MTU) refers to the maximum size of data packets, which should be set between 1000 and 9999.',
@@ -208,7 +208,7 @@ const english: Language = {
         error_desktop_not_supported: 'Desktop environment is not supported!',
         error_configuration_not_supported:
             'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
-        error_configuring_proxy: (value) => `Error configuring proxy for ${value}!`,
+        error_configuring_proxy: (value) => `Failed to configure proxy for ${value}!`,
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
         error_wp_exclusions:
             'The warp-plus file has likely been quarantined due to a false positive alert and incorrect detection by the antivirus, causing issues with the program’s ability to access the internet freely.\nThe program can add the mentioned file to the exclusions list in certain antiviruses if access permission is granted. Should this be done?',
@@ -226,8 +226,8 @@ const english: Language = {
     },
     about: {
         title: 'About App',
-        desc: 'This program is an unofficial, but reliable version of the Oblivion app for Windows, Linux, and Mac.\nThe Oblivion Desktop program is modeled after the user interface of the original version developed by Yousef Ghobadi. It was written, it was prepared for the purpose of free access to the Internet, and any name change or commercial use of it is not allowed.',
-        slogan: 'Internet, for all or none!'
+        desc: 'This is an unofficial but reliable desktop version of Oblivion for Windows, Linux, and macOS.\nModeled after Yousef Ghobadi\'s original interface, this software promotes free internet access. Name changes or commercial use are prohibited.',
+        slogan: 'Internet for all, or none at all!'
     },
     systemTray: {
         connect: 'Connect',
@@ -240,23 +240,21 @@ const english: Language = {
         settings_scanner: 'Scanner',
         settings_app: 'Application',
         about: 'About',
-        log: 'Log',
+        log: 'Logs',
         speed_test: 'Speed Test',
         exit: 'Exit'
     },
     update: {
         available: 'Update Available',
-        available_message: (value) =>
-            `A new version of the ${value} is available. Do you want to update now?`,
+        available_message: (value) => `New ${value} version available. Update now?`,
         ready: 'Update Ready',
-        ready_message: (value) =>
-            `A new version of the ${value} is ready. It will be installed after a restart. Do you want to restart now?`
+        ready_message: (value) => `${value} update prepared. Restart to install now?`
     },
     speedTest: {
         title: 'Speed Test',
         initializing: 'Speed test initializing ...',
-        click_start: 'Click the button to start the speed test',
-        error_msg: 'An error occurred during the speed test. Please try again.',
+        click_start: 'Click to begin speed test',
+        error_msg: 'Speed test failed. Please try again.',
         server_unavailable: 'Speed test server unavailable',
         download_speed: 'Download Speed',
         upload_speed: 'Upload Speed',
