@@ -226,11 +226,16 @@ class SingBoxManager {
             });
 
             helperProcess.stderr?.on('data', (err: Buffer) => {
-                const errorMessage = err.toString();
+                const errorMessage = err.toString().toLowerCase();
                 if (
                     errorMessage.includes('denied') ||
                     errorMessage.includes('dismissed') ||
-                    errorMessage.includes('canceled')
+                    errorMessage.includes('canceled') ||
+                    errorMessage.includes('no tty present') ||
+                    errorMessage.includes('a password is required') ||
+                    errorMessage.includes('no askpass program specified') ||
+                    errorMessage.includes('operation was cancelled') ||
+                    errorMessage.includes('authentication is required')
                 ) {
                     reject(`${this.appLang?.log.error_canceled_by_user}`);
                 }
