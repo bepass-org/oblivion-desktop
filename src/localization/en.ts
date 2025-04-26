@@ -227,7 +227,7 @@ const english: Language = {
     about: {
         title: 'About App',
         desc: 'This is an unofficial but reliable desktop version of Oblivion for Windows, Linux, and macOS.\nModeled after Yousef Ghobadi\'s original interface, this software promotes free internet access. Name changes or commercial use are prohibited.',
-        slogan: 'Internet for all, or none at all!'
+        slogan: 'Internet, for all or none!'
     },
     systemTray: {
         connect: 'Connect',
