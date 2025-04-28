@@ -223,7 +223,8 @@ const indonesia: Language = {
         error_canceled_by_user: 'Operasi dibatalkan oleh pengguna.',
         error_helper_not_found: 'File pembantu tidak ditemukan di sebelah paket aplikasi!',
         error_singbox_ipv6_address:
-            'Sistem operasi Anda tidak mendukung IPv6. Silakan pergi ke pengaturan Sing-box dan ubah pengalamatan ke IPv4.'
+            'Sistem operasi Anda tidak mendukung IPv6. Silakan pergi ke pengaturan Sing-box dan ubah pengalamatan ke IPv4.',
+        error_local_date: 'Pastikan tanggal dan waktu sistem Anda diatur dengan benar!'
     },
     about: {
         title: 'Tentang Aplikasi',

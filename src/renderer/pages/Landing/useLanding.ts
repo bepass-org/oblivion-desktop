@@ -18,6 +18,7 @@ import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 import { INetStats } from '../../../constants';
+import { isSystemDateValid } from '../../lib/systemDateValidator';
 
 export type IpConfig = {
     countryCode: string | boolean;
@@ -83,6 +84,10 @@ const useLanding = () => {
     const navigate = useNavigate();
 
     const onChange = useCallback(() => {
+        if (!isSystemDateValid()) {
+            defaultToast(appLang?.log?.error_local_date, 'GUIDE', 7000);
+            return;
+        }
         if (!navigator.onLine) {
             //checkInternetToast(appLang?.toast?.offline);
             if (isConnected || isLoading) {

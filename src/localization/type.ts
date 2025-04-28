@@ -215,6 +215,7 @@ export interface Log {
     error_canceled_by_user: string;
     error_helper_not_found: string;
     error_singbox_ipv6_address: string;
+    error_local_date: string;
 }
 
 export interface About {

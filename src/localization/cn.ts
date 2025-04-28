@@ -214,7 +214,9 @@ const chinese: Language = {
         error_failed_connection: '无法建立连接！',
         error_canceled_by_user: '操作已被用户取消。',
         error_helper_not_found: '未在应用程序包旁找到助手文件！',
-        error_singbox_ipv6_address: '您的操作系统不支持IPv6。请前往Sing-box设置并将地址更改为IPv4。'
+        error_singbox_ipv6_address:
+            '您的操作系统不支持IPv6。请前往Sing-box设置并将地址更改为IPv4。',
+        error_local_date: '请确保您的系统日期和时间设置正确！'
     },
     about: {
         title: '关于应用',

@@ -228,7 +228,9 @@ const spanish: Language = {
         error_helper_not_found:
             '¡El archivo auxiliar no se encuentra junto al paquete de la aplicación!',
         error_singbox_ipv6_address:
-            'Tu sistema operativo no es compatible con IPv6. Por favor, ve a la configuración de Sing-box y cambia la dirección a IPv4.'
+            'Tu sistema operativo no es compatible con IPv6. Por favor, ve a la configuración de Sing-box y cambia la dirección a IPv4.',
+        error_local_date:
+            '¡Asegúrate de que la fecha y la hora de tu sistema estén configuradas correctamente!'
     },
     about: {
         title: 'Acerca de la Aplicación',

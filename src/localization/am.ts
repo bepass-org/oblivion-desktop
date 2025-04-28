@@ -213,7 +213,8 @@ const amharic: Language = {
         error_failed_connection: 'ግንኙነት አልተቋረጠም።',
         error_canceled_by_user: 'እንዲሁ ተለዋዋጭ በተጠቃሚ ተሰርዟል።',
         error_helper_not_found: 'የረዳት ፋይል ከመተግበሪያ ጥቅል ጋር አልተገኘም!',
-        error_singbox_ipv6_address: 'እባኮትን ወደ ሲንግ-ቦክስ ቅንብሮች ተመልከትና አድራሻን እንደ IPv4 ለማሻሻል ተመዝግቡ።'
+        error_singbox_ipv6_address: 'እባኮትን ወደ ሲንግ-ቦክስ ቅንብሮች ተመልከትና አድራሻን እንደ IPv4 ለማሻሻል ተመዝግቡ።',
+        error_local_date: 'እባክዎ የስርዓትዎን ቀን እና ሰዓት ትክክል እንዲሆን ያዘጋጁ!'
     },
     about: {
         title: 'ስለ አፕ',

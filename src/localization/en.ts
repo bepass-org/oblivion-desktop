@@ -223,7 +223,8 @@ const english: Language = {
         error_canceled_by_user: 'The operation was canceled by the user.',
         error_helper_not_found: 'The helper file is not located alongside the application package!',
         error_singbox_ipv6_address:
-            'Your OS does not support IPv6. Please go to the Sing-box settings and change the addressing to IPv4.'
+            'Your OS does not support IPv6. Please go to the Sing-box settings and change the addressing to IPv4.',
+        error_local_date: "Make sure your system's date and time are set correctly!"
     },
     about: {
         title: 'About App',
