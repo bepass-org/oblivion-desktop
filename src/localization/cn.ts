@@ -43,7 +43,8 @@ const chinese: Language = {
         profile_added: '端点已成功添加到个人资料中。',
         endpoint_added: '终端已成功替换。',
         new_update: '有新版本的应用可用。您想下载并准备安装吗？',
-        exit_pending: '应用程序正在完成退出过程；请稍等片刻后再重新启动。'
+        exit_pending: '应用程序正在完成退出过程；请稍等片刻后再重新启动。',
+        help_btn: '帮助'
     },
     settings: {
         title: 'Warp 设置',

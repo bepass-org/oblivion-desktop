@@ -47,7 +47,8 @@ const turkish: Language = {
         new_update:
             'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?',
         exit_pending:
-            'Uygulama çıkış sürecini tamamlıyor; lütfen tekrar başlatmadan önce bir süre bekleyin.'
+            'Uygulama çıkış sürecini tamamlıyor; lütfen tekrar başlatmadan önce bir süre bekleyin.',
+        help_btn: 'Yardım'
     },
     settings: {
         title: 'Warp Ayarları',

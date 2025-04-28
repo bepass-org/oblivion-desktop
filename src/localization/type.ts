@@ -43,6 +43,7 @@ export interface Toast {
     endpoint_added: string;
     new_update: string;
     exit_pending: string;
+    help_btn: string;
 }
 
 export interface Settings {

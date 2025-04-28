@@ -47,7 +47,8 @@ const indonesia: Language = {
         new_update:
             'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?',
         exit_pending:
-            'Aplikasi sedang menyelesaikan proses keluar; harap tunggu sebentar sebelum membukanya kembali.'
+            'Aplikasi sedang menyelesaikan proses keluar; harap tunggu sebentar sebelum membukanya kembali.',
+        help_btn: 'Bantuan'
     },
     settings: {
         title: 'Pengaturan Warp',

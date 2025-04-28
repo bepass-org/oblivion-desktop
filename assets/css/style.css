@@ -1142,6 +1142,30 @@ html[data-bs-theme='dark'] .shimmer {
     padding: 10px 10px 10px 0;
 }
 
+.toastHelp {
+    float: left;
+    border: none;
+    font-size: 14px;
+    font-weight: 200;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.7;
+    padding: 2px 7px;
+    background: #1e1e1e;
+    color: #fff;
+    border-radius: 4px;
+    margin: -2px 10px 0 0;
+}
+[dir='ltr'] .toastHelp {
+    float: right;
+    margin: -2px 0 0 10px;
+}
+.toastHelp:focus,
+.toastHelp:hover {
+    opacity: 1;
+    text-decoration: none;
+    color: orange;
+}
+
 .splashScreen {
     float: left;
     width: 100%;

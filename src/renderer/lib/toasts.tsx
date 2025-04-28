@@ -10,7 +10,7 @@ const defaultToastStyle = {
 };
 
 export const defaultToast = (msg = '', id = 'ID', duration = 5000) => {
-    toast(msg, {
+    toast(<div dangerouslySetInnerHTML={{ __html: msg }}></div>, {
         id: id,
         duration: duration,
         style: defaultToastStyle
@@ -18,6 +18,21 @@ export const defaultToast = (msg = '', id = 'ID', duration = 5000) => {
     setTimeout(() => {
         toast.remove(id);
     }, duration + 200);
+};
+
+export const defaultToastWithHelp = (
+    msg = '',
+    linkRef = '',
+    linkText = '',
+    id = 'ID',
+    duration = 5000
+) => {
+    let text = msg;
+    if (linkRef !== '') {
+        //text += `<div class="clearfix"></div>`;
+        text += `<a href="${linkRef}" class="toastHelp" target="_blank">${linkText}</a>`;
+    }
+    defaultToast(text, id, duration);
 };
 
 export const defaultToastWithSubmitButton = (

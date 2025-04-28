@@ -46,7 +46,8 @@ const english: Language = {
         new_update:
             'A new version of the app is available. Would you like to download and prepare it for installation?',
         exit_pending:
-            'The application is completing its exit process; please wait a moment before launching it again.'
+            'The application is completing its exit process; please wait a moment before launching it again.',
+        help_btn: 'Help'
     },
     settings: {
         title: 'Warp Settings',
@@ -226,7 +227,7 @@ const english: Language = {
     },
     about: {
         title: 'About App',
-        desc: 'This is an unofficial but reliable desktop version of Oblivion for Windows, Linux, and macOS.\nModeled after Yousef Ghobadi\'s original interface, this software promotes free internet access. Name changes or commercial use are prohibited.',
+        desc: "This is an unofficial but reliable desktop version of Oblivion for Windows, Linux, and macOS.\nModeled after Yousef Ghobadi's original interface, this software promotes free internet access. Name changes or commercial use are prohibited.",
         slogan: 'Internet, for all or none!'
     },
     systemTray: {

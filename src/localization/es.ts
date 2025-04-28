@@ -47,7 +47,8 @@ const spanish: Language = {
         new_update:
             'Hay una nueva versión de la aplicación disponible. ¿Te gustaría descargarla y prepararla para la instalación?',
         exit_pending:
-            'La aplicación está completando su proceso de salida; por favor, espere un momento antes de volver a iniciarla.'
+            'La aplicación está completando su proceso de salida; por favor, espere un momento antes de volver a iniciarla.',
+        help_btn: 'Ayuda'
     },
     settings: {
         title: 'Configuraciones de Warp',
