@@ -18,17 +18,22 @@ let oldProxyPort = '';
 
 let appLang = getTranslate('en');
 
-const DEFAULT_ROUTING_RULES = 'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
+const DEFAULT_ROUTING_RULES =
+    'localhost,127.*,10.*,172.16.*,172.17.*,172.18.*,172.19.*,172.20.*,172.21.*,172.22.*,172.23.*,172.24.*,172.25.*,172.26.*,172.27.*,172.28.*,172.29.*,172.30.*,172.31.*,192.168.*,<local>';
 const REGEDIT_PATH = 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings';
 
 const setRoutingRules = (value: any) => {
     if (typeof value !== 'string' || value === '') return DEFAULT_ROUTING_RULES;
 
-    return DEFAULT_ROUTING_RULES + ',' + value
-        .replace(/app:[^,]+/g, '')
-        .replace(/(domain|geoip|ip|range):/g, '')
-        .replace(/\n|<br>/g, '')
-        .trim();
+    return (
+        DEFAULT_ROUTING_RULES +
+        ',' +
+        value
+            .replace(/app:[^,]+/g, '')
+            .replace(/(domain|geoip|ip|range):/g, '')
+            .replace(/\n|<br>/g, '')
+            .trim()
+    );
 };
 
 // TODO reset to prev proxy settings on disable
@@ -232,9 +237,11 @@ const macOSNetworkSetup = (args: string[]) => {
     });
 };
 
-const getMacOSActiveNetworkHardwarePorts = async (requireIP: boolean = false): Promise<string[]> => {
+const getMacOSActiveNetworkHardwarePorts = async (
+    requireIP: boolean = false
+): Promise<string[]> => {
     console.log('getMacOSActiveNetworkHardwarePorts');
-    
+
     try {
         const { stdout } = await execPromise('networksetup -listallnetworkservices');
         log.info('networksetup -listallnetworkservices:', stdout);
@@ -242,9 +249,12 @@ const getMacOSActiveNetworkHardwarePorts = async (requireIP: boolean = false): P
         const hardwarePorts: string[] = [];
         await Promise.all(
             lines.map(async (line) => {
-                if (line === '' || line.startsWith('*') || 
-                    line === 'An asterisk (*) denotes that a network service is disabled.') return;
-    
+                if (
+                    line === '' ||
+                    line.startsWith('*') ||
+                    line === 'An asterisk (*) denotes that a network service is disabled.'
+                )
+                    return;
 
                 if (requireIP) {
                     const { stdout: serviceContent } = await execPromise(
@@ -494,14 +504,14 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
             if (method === 'psiphon') killPacScriptServer();
-            
+
             try {
                 await windowsProxySettings(
                     {
                         ProxyServer: { type: 'REG_SZ', value: '' },
                         ProxyOverride: { type: 'REG_SZ', value: '' },
                         AutoConfigURL: { type: 'REG_SZ', value: '' },
-                        ProxyEnable: { type: 'REG_DWORD', value: 0 },
+                        ProxyEnable: { type: 'REG_DWORD', value: 0 }
                     },
                     regeditVbsDirPath
                 );
