@@ -198,7 +198,7 @@ const urdu: Language = {
         error_access_denied: 'پروگرام کو "ایڈمنسٹریٹر کے طور پر چلائیں"۔',
         error_failed_set_endpoint:
             'اینڈپوائنٹ ویلیو کو چیک کریں یا تبدیل کریں، یا دوبارہ کوشش کریں۔',
-        error_warp_identity: 'کلاؤڈفلئیر میں توثیق کی غلطی؛ دوبارہ کوشش کریں۔',
+        error_warp_identity: 'کلاؤڈفلئیر میں توثیق کی غلطی!',
         error_script_failed: 'پروگرام کو ایک مسئلہ درپیش آیا؛ دوبارہ کوشش کریں۔',
         error_object_null: 'پروگرام کو ایک مسئلہ درپیش آیا؛ دوبارہ کوشش کریں۔',
         error_port_already_in_use: (value) =>

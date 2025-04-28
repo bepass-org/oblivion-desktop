@@ -189,7 +189,7 @@ const chinese: Language = {
         error_too_many_connected: '许可证使用限制已满；去掉它。',
         error_access_denied: '以管理员身份运行程序。',
         error_failed_set_endpoint: '检查或替换端点值，或重试。',
-        error_warp_identity: 'cloudflare 中的身份验证错误；再试一次。',
+        error_warp_identity: 'cloudflare 中的身份验证错误!',
         error_script_failed: '程序遇到错误；再试一次。',
         error_object_null: '程序遇到错误；再试一次。',
         error_port_already_in_use: (value) => `端口 ${value} 正在被另一个程序使用；更改。`,

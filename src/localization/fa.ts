@@ -196,7 +196,7 @@ const persian: Language = {
         error_access_denied: 'برنامه را به‌صورت Run as Administrator اجرا کنید.',
         error_failed_set_endpoint:
             'خطای تنظیم اندپوینت؛ مقدار آن‌را بررسی کرده یا دوباره تلاش کنید.',
-        error_warp_identity: 'خطای احراز هویت در کلودفلر؛ دوباره تلاش کنید.',
+        error_warp_identity: 'خطای احراز هویت در کلودفلر!',
         error_script_failed: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_object_null: 'برنامه با خطا مواجه شد؛ دوباره تلاش کنید.',
         error_port_already_in_use: (value) =>

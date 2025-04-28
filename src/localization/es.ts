@@ -199,7 +199,7 @@ const spanish: Language = {
         error_access_denied: 'Ejecuta el programa como Administrador.',
         error_failed_set_endpoint:
             'Verifica o reemplaza el valor del endpoint, o intenta nuevamente.',
-        error_warp_identity: 'Error de autenticación en Cloudflare; Intenta nuevamente.',
+        error_warp_identity: 'Error de autenticación en Cloudflare!',
         error_script_failed: 'El programa encontró un error; Intenta nuevamente.',
         error_object_null: 'El programa encontró un error; Intenta nuevamente.',
         error_port_already_in_use: (value) =>

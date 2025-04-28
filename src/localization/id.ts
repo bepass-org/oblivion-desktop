@@ -197,7 +197,7 @@ const indonesia: Language = {
         error_too_many_connected: 'Batas penggunaan lisensi sudah terisi.',
         error_access_denied: 'Jalankan program sebagai Administrator.',
         error_failed_set_endpoint: 'Periksa atau ganti nilai titik akhir, atau coba lagi.',
-        error_warp_identity: 'Kesalahan otentikasi di cloudflare; Coba lagi.',
+        error_warp_identity: 'Kesalahan otentikasi di cloudflare!',
         error_script_failed: 'Program mengalami kesalahan; Coba lagi.',
         error_object_null: 'Program mengalami kesalahan; Coba lagi.',
         error_port_already_in_use: (value) => `Port ${value} sedang digunakan program lain.`,

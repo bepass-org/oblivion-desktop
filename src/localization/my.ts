@@ -196,7 +196,7 @@ const myanmar: Language = {
         error_too_many_connected: 'License သုံးစွဲအကန့်အသတ် ပြည့်ခဲ့ပါသည်; ဖျက်ပစ်ပါ။',
         error_access_denied: 'ပရိုဂရမ်ကို Administrator အဖြစ် Run ပြုလုပ်ပါ။',
         error_failed_set_endpoint: 'Endpoint မတတ်နိုင်ပါ။ Endpoint ရွေးလဲပါ။',
-        error_warp_identity: 'Cloudflare တွင် Authentication အမှားဖြစ်နေပါသည်။ ထပ်၍ ကြိုးစားပါ။',
+        error_warp_identity: 'Cloudflare တွင် အတည်ပြုမှုအမှား ဖြစ်ပွားခဲ့သည်။',
         error_script_failed: 'ပရိုဂရမ်မှ အမှားဖြစ်ပွားနေပါသည်။ ထပ်၍ ကြိုးစားပါ။',
         error_object_null: 'ပရိုဂရမ်မှ အမှားဖြစ်ပွားနေပါသည်။ ထပ်၍ ကြိုးစားပါ။',
         error_port_already_in_use: (value) =>

@@ -196,7 +196,7 @@ const english: Language = {
         error_too_many_connected: 'The license usage limit is filled; Remove it.',
         error_access_denied: 'Run the program as Run as Administrator.',
         error_failed_set_endpoint: 'Check or replace the endpoint value, or try again.',
-        error_warp_identity: 'Authentication error in cloudflare; Try again.',
+        error_warp_identity: 'Authentication error in cloudflare!',
         error_script_failed: 'The program encountered an error; Try again.',
         error_object_null: 'The program encountered an error; Try again.',
         error_port_already_in_use: (value) =>

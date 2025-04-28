@@ -25,7 +25,7 @@ export const defaultToastWithHelp = (
     linkRef = '',
     linkText = '',
     id = 'ID',
-    duration = 5000
+    duration = 7000
 ) => {
     let text = msg;
     if (linkRef !== '') {

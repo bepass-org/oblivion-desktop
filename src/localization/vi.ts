@@ -197,7 +197,7 @@ const vietnamese: Language = {
         error_too_many_connected: 'Giới hạn sử dụng giấy phép đã đạt; Vui lòng xóa.',
         error_access_denied: 'Chạy chương trình với quyền quản trị viên.',
         error_failed_set_endpoint: 'Kiểm tra hoặc thay đổi giá trị điểm kết thúc, hoặc thử lại.',
-        error_warp_identity: 'Lỗi xác thực trên Cloudflare; Thử lại.',
+        error_warp_identity: 'Lỗi xác thực trên Cloudflare!',
         error_script_failed: 'Chương trình gặp lỗi; Thử lại.',
         error_object_null: 'Chương trình gặp lỗi; Thử lại.',
         error_port_already_in_use: (value) =>

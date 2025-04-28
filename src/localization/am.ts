@@ -188,7 +188,7 @@ const amharic: Language = {
         error_too_many_connected: 'ፈቃድ ማንበብ ይተለምታል፣ እባኮትን አምጣት።',
         error_access_denied: 'ፕሮግራሙን እንደ አስተዳዳሪ ተቀባበር እንደሚሰሩ ይሞክሩ።',
         error_failed_set_endpoint: 'እባኮትን ቅንብርን ተመልከቱ ወይም ሙሉ ተመልከቱ።',
-        error_warp_identity: 'የካልድፍሌር መለኪያ ስህተት፣ እባኮትን ተመልከቱ።',
+        error_warp_identity: 'የእይታ ማረጋገጫ ስህተት በክላውድፍሌር!',
         error_script_failed: 'ፕሮግራሙ ስህተት ተከስቷል፣ እባኮትን ተመልከቱ።',
         error_object_null: 'ፕሮግራሙ ስህተት ተከስቷል፣ እባኮትን ተመልከቱ።',
         error_port_already_in_use: (value) => `ፖርት ${value} ከሌላ ፕሮግራም ተጠቃሚ ነው፣ ለማሻሻል ተቀይሩ።`,

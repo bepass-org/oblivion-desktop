@@ -192,7 +192,7 @@ const arabic: Language = {
         error_too_many_connected: 'تم استيفاء حد استخدام الرخصة؛ قم بإزالتها.',
         error_access_denied: 'قم بتشغيل البرنامج كـ "تشغيل كمسؤول".',
         error_failed_set_endpoint: 'تحقق أو استبدل قيمة نقطة النهاية، أو حاول مرة أخرى.',
-        error_warp_identity: 'خطأ في التحقق من الهوية على Cloudflare؛ حاول مرة أخرى.',
+        error_warp_identity: 'خطأ في التحقق من الهوية على Cloudflare!',
         error_script_failed: 'واجه البرنامج خطأ؛ حاول مرة أخرى.',
         error_object_null: 'واجه البرنامج خطأ؛ حاول مرة أخرى.',
         error_port_already_in_use: (value) =>

@@ -8,6 +8,7 @@ import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
 import {
     defaultToast,
+    defaultToastWithHelp,
     defaultToastWithSubmitButton,
     loadingToast,
     stopLoadingToast
@@ -208,7 +209,19 @@ const useLanding = () => {
                 stopLoadingToast();
                 setIsLoading(false);
                 setIsConnected(false);
-                defaultToast(appLang.log.error_singbox_ipv6_address, 'IPV6_FAILED', 3000);
+                defaultToastWithHelp(
+                    appLang.log.error_singbox_ipv6_address,
+                    'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-the-set-ipv6-address:-Element-not-found-Error',
+                    appLang.toast.help_btn,
+                    'GUIDE'
+                );
+            } else if (message === 'error_warp_identity') {
+                defaultToastWithHelp(
+                    appLang.log.error_warp_identity,
+                    'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-proxy-connection-issues-on-certain-networks',
+                    appLang.toast.help_btn,
+                    'GUIDE'
+                );
             } else {
                 defaultToast(message, 'GUIDE', 7000);
             }

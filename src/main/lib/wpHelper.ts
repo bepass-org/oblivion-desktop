@@ -113,7 +113,9 @@ const wpErrorTranslation: Record<string, (params: { [key: string]: string }) => 
     'Too many connected devices': () => appLang.log.error_too_many_connected,
     'Access is denied': () => appLang.log.error_access_denied,
     'failed to set endpoint': () => appLang.log.error_failed_set_endpoint,
-    'load primary warp identity': () => appLang.log.error_warp_identity,
+    'load primary warp identity': () => {
+        return 'error_warp_identity';
+    },
     'script failed to run': () => appLang.log.error_script_failed,
     'object null is not iterable': () => appLang.log.error_object_null,
     'parse args: unknown flag': () => appLang.log.error_unknown_flag,

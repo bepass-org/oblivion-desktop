@@ -198,7 +198,7 @@ const russian: Language = {
         error_access_denied: 'Запустите программу от имени администратора.',
         error_failed_set_endpoint:
             'Проверьте или замените значение конечной точки или повторите попытку.',
-        error_warp_identity: 'Ошибка аутентификации в Cloudflare; Попробуйте еще раз.',
+        error_warp_identity: 'Ошибка аутентификации в Cloudflare!',
         error_script_failed: 'В программе произошла ошибка; Попробуйте еще раз.',
         error_object_null: 'В программе произошла ошибка; Попробуйте еще раз.',
         error_port_already_in_use: (value) =>

@@ -198,7 +198,7 @@ const turkish: Language = {
         error_access_denied: 'Programı Yönetici Olarak Çalıştırın.',
         error_failed_set_endpoint:
             'Endpoint değerini kontrol edin veya değiştirin, ardından tekrar deneyin.',
-        error_warp_identity: 'Cloudflare kimlik doğrulama hatası; Tekrar deneyin.',
+        error_warp_identity: 'Cloudflare kimlik doğrulama hatası!',
         error_script_failed: 'Program bir hata ile karşılaştı; Tekrar deneyin.',
         error_object_null: 'Program bir hata ile karşılaştı; Tekrar deneyin.',
         error_port_already_in_use: (value) =>
