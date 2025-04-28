@@ -8,9 +8,9 @@ const english: Language = {
         connected_confirm: 'Connected',
         disconnecting: 'Disconnecting ...',
         disconnected: 'Disconnected',
-        ip_check: 'Verifying IP address...',
-        keep_trying: 'Please wait before attempting again...',
-        preparing_rulesets: 'Preparing rulesets...',
+        ip_check: 'Verifying IP ...',
+        keep_trying: 'Please wait before attempting again ...',
+        preparing_rulesets: 'Preparing rulesets ...',
         downloading_rulesets_failed: 'Downloading rulesets failed.'
     },
     home: {
