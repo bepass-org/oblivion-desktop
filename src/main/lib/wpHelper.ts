@@ -119,11 +119,11 @@ const wpErrorTranslation: Record<string, (params: { [key: string]: string }) => 
     'parse args: unknown flag': () => appLang.log.error_unknown_flag,
     'context deadline exceeded': () => appLang.log.error_deadline_exceeded,
     'connection test failed': () => appLang.log.error_connection_failed,
-    'parse args: --country': () => appLang.log.error_country_failed,
-    'connection reset by peer': () => {
+    'parse args: --country': () => appLang.log.error_country_failed
+    /*'connection reset by peer': () => {
         //disconnectApp();
         return appLang.log.error_wp_reset_peer;
-    }
+    }*/
 };
 
 export const handleWpErrors = (strData: string, port: string, ipcEvent?: IpcMainEvent) => {
