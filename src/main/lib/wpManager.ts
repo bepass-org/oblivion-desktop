@@ -220,12 +220,6 @@ class WarpPlusManager {
             return this.sendConnectionSignal();
         }
         try {
-            if (!state.shouldApplySystemProxy) {
-                log.info(
-                    'The commands to disable and then re-enable the systemProxy were skipped, which occurred under conditions where the location had reverted from the gool method to Iran.'
-                );
-                return false;
-            }
             const proxyFunc = enable ? enableSystemProxy : disableSystemProxy;
             await proxyFunc(regeditVbsDirPath, state.event);
             state.connectionState = enable
@@ -377,7 +371,14 @@ class WarpPlusManager {
         ) {
             state.event?.reply('wp-end', false);
         } else {
-            await this.handleSystemProxy(false);
+            if (!state.shouldApplySystemProxy) {
+                log.info(
+                    'The commands to disable and then re-enable the systemProxy were skipped, which occurred under conditions where the location had reverted from the gool method to Iran.'
+                );
+            }
+            else {
+                await this.handleSystemProxy(false);
+            }
             state.connectionState = ConnectionState.DISCONNECTED;
             this.sendConnectionSignal();
             log.info('WarpPlus process exited.');
