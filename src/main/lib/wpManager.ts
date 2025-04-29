@@ -375,8 +375,7 @@ class WarpPlusManager {
                 log.info(
                     'The commands to disable and then re-enable the systemProxy were skipped, which occurred under conditions where the location had reverted from the gool method to Iran.'
                 );
-            }
-            else {
+            } else {
                 await this.handleSystemProxy(false);
             }
             state.connectionState = ConnectionState.DISCONNECTED;
