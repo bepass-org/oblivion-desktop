@@ -46,6 +46,7 @@ interface WarpPlusState {
     event?: Electron.IpcMainEvent;
     shouldStartSingBox: boolean;
     shouldStopSingBox: boolean;
+    shouldApplySystemProxy: boolean;
     connectionState: ConnectionState;
     settings: {
         proxyMode: string;
@@ -71,6 +72,7 @@ const state: WarpPlusState = {
     appLang: getTranslate('en'),
     shouldStartSingBox: true,
     shouldStopSingBox: true,
+    shouldApplySystemProxy: true,
     connectionState: ConnectionState.DISCONNECTED,
     settings: { ...defaultSettings }
 };
@@ -217,8 +219,13 @@ class WarpPlusManager {
                 : ConnectionState.DISCONNECTED;
             return this.sendConnectionSignal();
         }
-
         try {
+            if (!state.shouldApplySystemProxy) {
+                log.info(
+                    'The commands to disable and then re-enable the systemProxy were skipped, which occurred under conditions where the location had reverted from the gool method to Iran.'
+                );
+                return false;
+            }
             const proxyFunc = enable ? enableSystemProxy : disableSystemProxy;
             await proxyFunc(regeditVbsDirPath, state.event);
             state.connectionState = enable
@@ -431,6 +438,7 @@ ipcMain.on('wp-start', async (event, arg) => {
 
 ipcMain.on('wp-end', async (event, arg) => {
     state.shouldStopSingBox = arg !== 'stop-from-gool';
+    state.shouldApplySystemProxy = arg !== 'stop-from-gool';
     try {
         WarpPlusManager.killChild();
     } catch (error) {
