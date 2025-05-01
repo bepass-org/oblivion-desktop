@@ -235,7 +235,8 @@ class SingBoxManager {
                     errorMessage.includes('a password is required') ||
                     errorMessage.includes('no askpass program specified') ||
                     errorMessage.includes('operation was cancelled') ||
-                    errorMessage.includes('authentication is required')
+                    errorMessage.includes('authentication is required') ||
+                    errorMessage.includes('not authorized')
                 ) {
                     reject(`${this.appLang?.log.error_canceled_by_user}`);
                 }
