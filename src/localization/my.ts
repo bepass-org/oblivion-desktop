@@ -116,7 +116,7 @@ const myanmar: Language = {
         routing_rules_items: 'ပစ္စည်းများ',
         profile: 'ပရိုဖိုင်',
         profile_desc: 'သင်၏ saved endpoint များ',
-        singbox: 'Singbox ဆက်တင်များ',
+        singbox: 'Tunnel ကွက်ရင်း',
         close_singbox: 'စနစ်တက်သည့်အခါတင်မဟုတ်ပါ',
         close_singbox_desc: 'Sing-box ကိုဆက်တင်ရင်လိုအပ်ချက်များကိုပိတ်ပါ',
         close_helper: 'ဂုဏ်မခံကောင်းပြန်ရေး',
@@ -147,12 +147,12 @@ const myanmar: Language = {
         beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'
     },
     tabs: {
-        home: 'Connect',
+        home: 'ချိတ်ဆက်ပါ',
         warp: 'Warp',
-        network: 'Network',
-        scanner: 'Scanner',
-        app: 'App',
-        singbox: 'Singbox'
+        network: 'အင်တာနက်',
+        scanner: 'စကင်နာ',
+        app: 'အက်ပ်',
+        singbox: 'တန်နယ်'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -223,7 +223,7 @@ const myanmar: Language = {
         error_canceled_by_user: 'အသုံးပြုသူမှ အလုပ်လုပ်ကိုင်မှုကို မဆိုင်းငံ့သွားပါ။',
         error_helper_not_found: 'အကူအညီဖိုင်ကို အပလီကေးရှင်းပက်ကေ့တစ်ခုနှင့်အတူ တွေ့ရှိမရပါ!',
         error_singbox_ipv6_address:
-            'သင်၏အော်ပရေတာစနစ်သည် IPv6 ကိုထောက်ခံခြင်းမရှိပါ။ ကျေးဇူးပြု၍ Sing-box ကိုပြောင်းရန် ဆက်တင်များသို့သွားပြီး IPv4 သို့လိပ်စာကိုပြောင်းပါ။',
+            'သင်၏အပလီကေးရှင်းစနစ်သည် IPv6 ကို မပံ့ပိုးပါ။ ကျေးဇူးပြုပြီး တန်နယ်ဆက်တင်များသို့သွားပြီး လိပ်စာကို IPv4 သို့ပြောင်းပါ။',
         error_local_date:
             'သင့်စနစ်၏ ရက်စွဲနှင့် အချိန်ကို မှန်ကန်စွာ သတ်မှတ်ထားခြင်းဖြစ်ကြောင်း သေချာပါစေ။'
     },

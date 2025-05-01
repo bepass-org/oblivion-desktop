@@ -113,7 +113,7 @@ const amharic: Language = {
         routing_rules_items: 'አሁን የታወቀ አንባሳት',
         profile: 'መለያ',
         profile_desc: 'እንዲሁም የታወቀ ተመልከት ማስተላለፊያ',
-        singbox: 'ስንግቦክስ ቅንብሮች',
+        singbox: 'ታክክል ቅኝት',
         close_singbox: 'ተዘግተው ይቆሟል',
         close_singbox_desc: 'በአቅም የማስተናገድ ተቋማት ተቀንሳል',
         close_helper: 'ማሳሰቢያ ተቆራከር',
@@ -149,7 +149,7 @@ const amharic: Language = {
         network: 'เครือข่าย',
         scanner: 'เครื่องสแกน',
         app: 'แอป',
-        singbox: 'ซิงบ็อกซ์'
+        singbox: 'ቱኔል'
     },
     modal: {
         endpoint_title: 'እንቅስቃሴ',
@@ -213,7 +213,8 @@ const amharic: Language = {
         error_failed_connection: 'ግንኙነት አልተቋረጠም።',
         error_canceled_by_user: 'እንዲሁ ተለዋዋጭ በተጠቃሚ ተሰርዟል።',
         error_helper_not_found: 'የረዳት ፋይል ከመተግበሪያ ጥቅል ጋር አልተገኘም!',
-        error_singbox_ipv6_address: 'እባኮትን ወደ ሲንግ-ቦክስ ቅንብሮች ተመልከትና አድራሻን እንደ IPv4 ለማሻሻል ተመዝግቡ።',
+        error_singbox_ipv6_address:
+            'አንደኛ የእርስዎ ኦፕሬቲንግ ሲስተም IPv6 አይደግፍም። እባክዎ ወደ ቱነል ቅንብሮች ይሂዱና አድራሻውን ወደ IPv4 ይቀይሩ።',
         error_local_date: 'እባክዎ የስርዓትዎን ቀን እና ሰዓት ትክክል እንዲሆን ያዘጋጁ!'
     },
     about: {

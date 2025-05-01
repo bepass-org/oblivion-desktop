@@ -116,7 +116,7 @@ const english: Language = {
         routing_rules_items: 'Items',
         profile: 'Profile',
         profile_desc: 'Endpoints saved by you',
-        singbox: 'Singbox Settings',
+        singbox: 'Tunnel Settings',
         close_singbox: 'Stop operation',
         close_singbox_desc: 'Automatically close sing-box on disconnect',
         close_helper: 'Stop helper',
@@ -152,7 +152,7 @@ const english: Language = {
         network: 'Network',
         scanner: 'Scanner',
         app: 'App',
-        singbox: 'Singbox'
+        singbox: 'Tunnel'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -223,7 +223,7 @@ const english: Language = {
         error_canceled_by_user: 'The operation was canceled by the user.',
         error_helper_not_found: 'The helper file is not located alongside the application package!',
         error_singbox_ipv6_address:
-            'Your OS does not support IPv6. Please go to the Sing-box settings and change the addressing to IPv4.',
+            'Your OS does not support IPv6. Please go to the tunnel settings and change the addressing to IPv4.',
         error_local_date: "Make sure your system's date and time are set correctly!"
     },
     about: {

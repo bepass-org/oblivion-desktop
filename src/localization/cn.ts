@@ -113,7 +113,7 @@ const chinese: Language = {
         routing_rules_items: '项目',
         profile: '个人资料',
         profile_desc: '您保存的端点',
-        singbox: 'Singbox 设置',
+        singbox: '隧道设置',
         close_singbox: '停止操作',
         close_singbox_desc: '断开连接时自动关闭 sing-box',
         close_helper: '停止助手',
@@ -149,7 +149,7 @@ const chinese: Language = {
         network: '网络',
         scanner: '扫描仪',
         app: '应用',
-        singbox: 'Singbox'
+        singbox: '隧道'
     },
     modal: {
         endpoint_title: '端点',
@@ -215,7 +215,7 @@ const chinese: Language = {
         error_canceled_by_user: '操作已被用户取消。',
         error_helper_not_found: '未在应用程序包旁找到助手文件！',
         error_singbox_ipv6_address:
-            '您的操作系统不支持IPv6。请前往Sing-box设置并将地址更改为IPv4。',
+            '您的操作系统不支持 IPv6。请前往隧道设置并将地址类型更改为 IPv4。',
         error_local_date: '请确保您的系统日期和时间设置正确！'
     },
     about: {

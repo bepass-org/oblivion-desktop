@@ -116,7 +116,7 @@ const brazilianPortuguese: Language = {
         routing_rules_items: 'Itens',
         profile: 'Perfil',
         profile_desc: 'Endpoints salvos por você',
-        singbox: 'Configurações do Singbox',
+        singbox: 'Configurações de Túnel',
         close_singbox: 'Parar operação',
         close_singbox_desc: 'Fechar sing-box automaticamente ao desconectar',
         close_helper: 'Parar assistente',
@@ -152,7 +152,7 @@ const brazilianPortuguese: Language = {
         network: 'Rede',
         scanner: 'Scanner',
         app: 'Aplicativo',
-        singbox: 'Caixa de Canto'
+        singbox: 'Túnel'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -226,7 +226,7 @@ const brazilianPortuguese: Language = {
         error_helper_not_found:
             'O arquivo auxiliar não foi encontrado junto ao pacote do aplicativo!',
         error_singbox_ipv6_address:
-            'Seu sistema operacional não suporta IPv6. Por favor, vá para as configurações do Sing-box e altere o endereçamento para IPv4.',
+            'Seu sistema operacional não é compatível com IPv6. Por favor, vá até as configurações do túnel e mude o endereçamento para IPv4.',
         error_local_date:
             'Certifique-se de que a data e a hora do seu sistema estejam configuradas corretamente!'
     },

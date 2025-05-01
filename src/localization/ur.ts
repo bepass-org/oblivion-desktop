@@ -117,7 +117,7 @@ const urdu: Language = {
         routing_rules_items: 'اشیاء',
         profile: 'پروفائل',
         profile_desc: 'آپ کے ذریعے محفوظ کیے گئے اینڈپوائنٹس',
-        singbox: 'سنگ باکس کی ترتیبات',
+        singbox: 'ٹنل کی ترتیبات',
         close_singbox: 'آپریشن بند کریں',
         close_singbox_desc: 'ڈسکنیکٹ پر خودکار طور پر سنگ باکس بند کریں',
         close_helper: 'مددگار بند کریں',
@@ -153,7 +153,7 @@ const urdu: Language = {
         network: 'نیٹ ورک',
         scanner: 'سکینر',
         app: 'ایپ',
-        singbox: 'سنگ باکس'
+        singbox: 'ٹنل'
     },
     modal: {
         endpoint_title: 'اینڈپوائنٹ',
@@ -225,7 +225,7 @@ const urdu: Language = {
         error_canceled_by_user: 'عملیہ صارف کے ذریعہ منسوخ کر دیا گیا۔',
         error_helper_not_found: 'مددگار فائل ایپلیکیشن پیکیج کے ساتھ موجود نہیں!',
         error_singbox_ipv6_address:
-            'آپ کا آپریٹنگ سسٹم IPv6 کی حمایت نہیں کرتا۔ براہ کرم Sing-box کی سیٹنگز میں جائیں اور ایڈریسنگ کو IPv4 پر تبدیل کریں۔',
+            'آپریٹنگ سسٹم IPv6 کو سپورٹ نہیں کرتا۔ براہ کرم ٹنل سیٹنگز پر جائیں اور ایڈریسنگ کو IPv4 پر تبدیل کریں۔',
         error_local_date: 'یقین دہانی کریں کہ آپ کے سسٹم کی تاریخ اور وقت درست سیٹ کیے گئے ہیں!'
     },
     about: {

@@ -113,7 +113,7 @@ const arabic: Language = {
         routing_rules_items: 'العناصر',
         profile: 'الملف الشخصي',
         profile_desc: 'نقاط النهاية المحفوظة من قبلك',
-        singbox: 'إعدادات Singbox',
+        singbox: 'إعدادات النفق',
         close_singbox: 'إيقاف العملية',
         close_singbox_desc: 'إغلاق sing-box تلقائيًا عند قطع الاتصال',
         close_helper: 'إيقاف المساعد',
@@ -145,11 +145,11 @@ const arabic: Language = {
     },
     tabs: {
         home: 'اتصال',
-        warp: 'Warp',
+        warp: 'وارب',
         network: 'الشبكة',
         scanner: 'الماسح الضوئي',
         app: 'التطبيق',
-        singbox: 'صندوق الغناء'
+        singbox: 'نفق'
     },
     modal: {
         endpoint_title: 'نقطة النهاية',
@@ -219,7 +219,7 @@ const arabic: Language = {
         error_canceled_by_user: 'تم إلغاء العملية من قبل المستخدم.',
         error_helper_not_found: 'لم يتم العثور على ملف المساعد بجانب حزمة التطبيق!',
         error_singbox_ipv6_address:
-            'نظام التشغيل الخاص بك لا يدعم IPv6. يرجى الانتقال إلى إعدادات سينج-بوكس وتغيير العنوان إلى IPv4.',
+            'نظام التشغيل الخاص بك لا يدعم IPv6. يرجى الذهاب إلى إعدادات النفق وتغيير العنوان إلى IPv4.',
         error_local_date: 'تأكد من ضبط التاريخ والوقت في نظامك بشكل صحيح!'
     },
     about: {
@@ -233,7 +233,7 @@ const arabic: Language = {
         connected: 'متصل',
         disconnecting: 'جارٍ قطع الاتصال ...',
         settings: 'الإعدادات',
-        settings_warp: 'Warp',
+        settings_warp: 'وارب',
         settings_network: 'الشبكة',
         settings_scanner: 'الماسح الضوئي',
         settings_app: 'التطبيق',

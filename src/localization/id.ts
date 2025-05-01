@@ -117,7 +117,7 @@ const indonesia: Language = {
         routing_rules_items: 'Item',
         profile: 'Profil',
         profile_desc: 'Titik akhir yang disimpan oleh Anda',
-        singbox: 'Pengaturan Singbox',
+        singbox: 'Pengaturan Terowongan',
         close_singbox: 'Hentikan operasi',
         close_singbox_desc: 'Otomatis tutup sing-box saat terputus',
         close_helper: 'Hentikan pembantu',
@@ -150,10 +150,10 @@ const indonesia: Language = {
     tabs: {
         home: 'Hubungkan',
         warp: 'Warp',
-        network: 'Network',
-        scanner: 'Scanner',
-        app: 'App',
-        singbox: 'Singbox'
+        network: 'Jaringan',
+        scanner: 'Pemindai',
+        app: 'Aplikasi',
+        singbox: 'Terowongan'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -223,7 +223,7 @@ const indonesia: Language = {
         error_canceled_by_user: 'Operasi dibatalkan oleh pengguna.',
         error_helper_not_found: 'File pembantu tidak ditemukan di sebelah paket aplikasi!',
         error_singbox_ipv6_address:
-            'Sistem operasi Anda tidak mendukung IPv6. Silakan pergi ke pengaturan Sing-box dan ubah pengalamatan ke IPv4.',
+            'Sistem operasi Anda tidak mendukung IPv6. Silakan pergi ke pengaturan tunnel dan ubah pengalamatan ke IPv4.',
         error_local_date: 'Pastikan tanggal dan waktu sistem Anda diatur dengan benar!'
     },
     about: {

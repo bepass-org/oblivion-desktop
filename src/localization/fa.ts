@@ -115,7 +115,7 @@ const persian: Language = {
         routing_rules_items: 'مورد',
         profile: 'پروفایل',
         profile_desc: 'اندپوینت‌های ذخیره‌شده توسط شما',
-        singbox: 'تنظیمات سینگ‌باکس',
+        singbox: 'تنظیمات تانل',
         close_singbox: 'توقف عملیات',
         close_singbox_desc: 'بستن خودکار سینگ‌باکس هنگام لغو اتصال',
         close_helper: 'توقف دستیار',
@@ -151,7 +151,7 @@ const persian: Language = {
         network: 'شبکه',
         scanner: 'اسکنر',
         app: 'برنامه',
-        singbox: 'سینگ‌باکس'
+        singbox: 'تانل'
     },
     modal: {
         endpoint_title: 'اندپوینت',
@@ -223,7 +223,7 @@ const persian: Language = {
         error_canceled_by_user: 'عملیات توسط کاربر لغو شد.',
         error_helper_not_found: 'فایل هلپر در کنار بسته برنامه یافت نشد!',
         error_singbox_ipv6_address:
-            'سیستم‌عامل شما از IPv6 پشتیبانی نمی‌کند؛ به تنظیمات سینگ‌باکس رفته و آدرس‌دهی را به IPv4 تغییر دهید.',
+            'سیستم‌عامل شما از IPv6 پشتیبانی نمی‌کند؛ به تنظیمات تانل رفته و آدرس‌دهی را به IPv4 تغییر دهید.',
         error_local_date: 'از تنظیم بودن تاریخ و ساعت سیستم‌عامل اطمینان حاصل کنید!'
     },
     about: {

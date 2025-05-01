@@ -117,7 +117,7 @@ const vietnamese: Language = {
         routing_rules_items: 'Các mục',
         profile: 'Hồ sơ',
         profile_desc: 'Điểm kết thúc được bạn lưu',
-        singbox: 'Cài đặt Singbox',
+        singbox: 'Cài đặt Đường hầm',
         close_singbox: 'Dừng hoạt động',
         close_singbox_desc: 'Tự động đóng sing-box khi ngắt kết nối',
         close_helper: 'Dừng trợ lý',
@@ -153,7 +153,7 @@ const vietnamese: Language = {
         network: 'Mạng',
         scanner: 'Máy quét',
         app: 'Ứng dụng',
-        singbox: 'Hộp hát'
+        singbox: 'Đường hầm'
     },
     modal: {
         endpoint_title: 'Điểm kết thúc',
@@ -224,7 +224,7 @@ const vietnamese: Language = {
         error_canceled_by_user: 'Hoạt động đã bị hủy bởi người dùng.',
         error_helper_not_found: 'Tệp trợ giúp không được tìm thấy bên cạnh gói ứng dụng!',
         error_singbox_ipv6_address:
-            'Hệ điều hành của bạn không hỗ trợ IPv6. Vui lòng vào cài đặt Sing-box và thay đổi địa chỉ thành IPv4.',
+            'Hệ điều hành của bạn không hỗ trợ IPv6. Vui lòng vào cài đặt đường hầm và đổi địa chỉ thành IPv4.',
         error_local_date:
             'Hãy đảm bảo rằng ngày và giờ của hệ thống của bạn được thiết lập chính xác!'
     },

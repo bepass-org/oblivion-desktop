@@ -117,7 +117,7 @@ const russian: Language = {
         routing_rules_items: 'Предметы',
         profile: 'Профиль',
         profile_desc: 'Сохраненные вами конечные точки',
-        singbox: 'Настройки Singbox',
+        singbox: 'Настройки туннеля',
         close_singbox: 'Остановка операции',
         close_singbox_desc: 'Автоматически закрывать Singbox при отключении',
         close_helper: 'Остановка помощника',
@@ -153,7 +153,7 @@ const russian: Language = {
         network: 'Сеть',
         scanner: 'Сканер',
         app: 'заявка',
-        singbox: 'Singbox'
+        singbox: 'Туннель'
     },
     modal: {
         endpoint_title: 'Конечная точка',
@@ -225,7 +225,7 @@ const russian: Language = {
         error_canceled_by_user: 'Операция была отменена пользователем.',
         error_helper_not_found: 'Файл помощника не найден рядом с пакетом приложения!',
         error_singbox_ipv6_address:
-            'Ваша операционная система не поддерживает IPv6. Пожалуйста, перейдите в настройки Sing-box и измените адресацию на IPv4.',
+            'Ваша операционная система не поддерживает IPv6. Пожалуйста, перейдите в настройки туннеля и измените тип адресации на IPv4.',
         error_local_date: 'Убедитесь, что дата и время вашей системы установлены правильно!'
     },
     about: {

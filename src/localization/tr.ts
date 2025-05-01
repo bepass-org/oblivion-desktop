@@ -117,7 +117,7 @@ const turkish: Language = {
         routing_rules_items: 'Öğeler',
         profile: 'Profil',
         profile_desc: "Tarafınızdan kaydedilen endpoint'ler",
-        singbox: 'Singbox Ayarları',
+        singbox: 'Tünel Ayarlar',
         close_singbox: 'İşlemi durdur',
         close_singbox_desc: "Bağlantı kesildiğinde sing-box'ı otomatik olarak kapat",
         close_helper: 'Yardımcıyı durdur',
@@ -153,7 +153,7 @@ const turkish: Language = {
         network: 'Ağ',
         scanner: 'Tarayıcı',
         app: 'Uygulama',
-        singbox: 'Singbox'
+        singbox: 'Tünel'
     },
     modal: {
         endpoint_title: 'Endpoint',
@@ -225,7 +225,7 @@ const turkish: Language = {
         error_canceled_by_user: 'İşlem kullanıcı tarafından iptal edildi.',
         error_helper_not_found: 'Yardımcı dosya uygulama paketinin yanında bulunamadı!',
         error_singbox_ipv6_address:
-            "İşletim sisteminiz IPv6'yı desteklemiyor. Lütfen Sing-box ayarlarına gidin ve adreslemeyi IPv4'e değiştirin.",
+            'İşletim sisteminiz IPv6 desteklemiyor. Lütfen tünel ayarlarına gidin ve adreslemeyi IPv4 olarak değiştirin.',
         error_local_date: 'Sisteminizin tarih ve saatinin doğru ayarlandığından emin olun!'
     },
     about: {
