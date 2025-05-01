@@ -1,7 +1,8 @@
 import { IpcMainEvent } from 'electron';
 import settings from 'electron-settings';
+import log from 'electron-log';
 import { countries, defaultSettings } from '../../defaultSettings';
-import { removeDirIfExists } from './utils';
+import { checkTestUrl, removeDirIfExists } from './utils';
 import { getTranslate } from '../../localization';
 import { stuffPath } from '../../constants';
 import WarpPlusManager from './wpManager';
@@ -137,4 +138,35 @@ export const handleWpErrors = (strData: string, port: string, ipcEvent?: IpcMain
             );
         }
     });
+};
+
+export const isSystemTimeValid = async (): Promise<boolean> => {
+    try {
+        const testUrl = await settings.get('testUrl');
+        const response = await fetch(checkTestUrl(testUrl));
+        if (!response.ok) throw new Error('Failed to fetch Cloudflare trace');
+
+        const text = await response.text();
+        const lines = text.trim().split('\n');
+        const tsLine = lines.find((line) => line.startsWith('ts='));
+
+        if (!tsLine) throw new Error('Timestamp not found in trace');
+
+        const serverTimestamp = parseFloat(tsLine.split('=')[1]) * 1000;
+        const serverDate = new Date(serverTimestamp);
+        const localDate = new Date();
+
+        const timeDiff = Math.abs(serverDate.getTime() - localDate.getTime());
+        const maxAllowedDiff = 5 * 60 * 1000; // 5 minutes
+        const minValidYear = 2025;
+
+        if (localDate.getFullYear() < minValidYear) return false;
+        if (timeDiff > maxAllowedDiff) return false;
+
+        return true;
+    } catch (error: any) {
+        log.warn('Time check failed, fallback:', error?.message || 'Unknown error');
+        const now = new Date();
+        return now.getFullYear() >= 2025;
+    }
 };

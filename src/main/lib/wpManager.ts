@@ -8,7 +8,7 @@ import fs from 'fs';
 import { isDev, removeFileIfExists, shouldProxySystem } from './utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from './proxy';
 import { getOsInfo, logMetadata } from '../ipcListeners/log';
-import { getUserSettings, handleWpErrors } from './wpHelper';
+import { getUserSettings, handleWpErrors, isSystemTimeValid } from './wpHelper';
 import { defaultSettings } from '../../defaultSettings';
 import { customEvent } from './customEvent';
 import { showWpLogs } from '../dxConfig';
@@ -422,17 +422,23 @@ ipcMain.on('wp-start', async (event, arg) => {
     const osInfo = await getOsInfo();
     logMetadata(osInfo);
 
-    await WarpPlusManager.handleSystemProxy(true);
-
-    if (
-        state.settings.proxyMode === 'tun' &&
-        state.shouldStartSingBox &&
-        !(await singBoxManager.startSingBox(state.appLang, event))
-    ) {
+    if (!(await isSystemTimeValid())) {
         event.reply('wp-end', true);
+        event.reply('guide-toast', state.appLang?.log?.error_local_date);
         WarpPlusManager.killChild();
     } else {
-        await WarpPlusManager.startWarpPlus();
+        await WarpPlusManager.handleSystemProxy(true);
+
+        if (
+            state.settings.proxyMode === 'tun' &&
+            state.shouldStartSingBox &&
+            !(await singBoxManager.startSingBox(state.appLang, event))
+        ) {
+            event.reply('wp-end', true);
+            WarpPlusManager.killChild();
+        } else {
+            await WarpPlusManager.startWarpPlus();
+        }
     }
 });
 
