@@ -278,7 +278,7 @@
                 }
             ],
             "description": "Unofficial Warp Client",
-            "category": "Utility",
+            "category": "Network",
             "icon": "assets"
         },
         "directories": {
