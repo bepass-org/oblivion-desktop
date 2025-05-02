@@ -627,7 +627,15 @@ class OblivionDesktop {
 
         let isQuitting = false;
         app.on('window-all-closed', async () => {
-            if (process.platform !== 'darwin' && !isQuitting) {
+            if (!isQuitting) {
+                isQuitting = true;
+                await this.exitProcess();
+                app.quit();
+            }
+        });
+
+        process.on('SIGTERM', async () => {
+            if (!isQuitting) {
                 isQuitting = true;
                 await this.exitProcess();
                 app.quit();
