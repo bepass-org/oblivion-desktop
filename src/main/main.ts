@@ -561,8 +561,12 @@ class OblivionDesktop {
             });
             file.on('finish', () => {
                 log.info('File stream finished, closing...');
-                this.onDownloadError();
-                file.close();
+                //this.onDownloadError();
+                if (file && typeof file.close === 'function') {
+                    file.close();
+                } else {
+                    log.warn('Tried to close file, but file is undefined or close is not a function');
+                }
             });
             file.on('close', () => {
                 fs.stat(downloadedPath, (err, stats) => {
