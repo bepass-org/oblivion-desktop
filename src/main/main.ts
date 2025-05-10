@@ -348,8 +348,10 @@ class OblivionDesktop {
         this.state.mainWindow.on('ready-to-show', async () => {
             const startMinimized = await settings.get('startMinimized');
             if (typeof startMinimized === 'boolean' && startMinimized) {
+                this.state.mainWindow?.setSkipTaskbar(true);
                 this.state.mainWindow?.minimize();
             } else {
+                this.state.mainWindow?.setSkipTaskbar(false);
                 this.state.mainWindow?.show();
             }
             this.openDevTools();
@@ -368,6 +370,7 @@ class OblivionDesktop {
 
         (this.state.mainWindow as any).on('minimize', async (e: Event) => {
             e.preventDefault();
+            this.state.mainWindow?.setSkipTaskbar(false);
         });
 
         this.state.mainWindow.on('focus', () => this.registerQuitShortcut());
@@ -565,7 +568,9 @@ class OblivionDesktop {
                 if (file && typeof file.close === 'function') {
                     file.close();
                 } else {
-                    log.warn('Tried to close file, but file is undefined or close is not a function');
+                    log.warn(
+                        'Tried to close file, but file is undefined or close is not a function'
+                    );
                 }
             });
             file.on('close', () => {
