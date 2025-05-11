@@ -228,6 +228,7 @@ export const singBoxAddrType: { value: string; label: string }[] = [
 
 export const defaultRoutingRules: { type: string; value: string }[] = [
     { type: 'ip', value: '127.0.0.1' },
+    { type: 'domain', value: '!test.ir' },
     { type: 'domain', value: '*.ir' },
     { type: 'domain', value: 'dolat.ir' },
     { type: 'domain', value: 'apps.apple.com' },
