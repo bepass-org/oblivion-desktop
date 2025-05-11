@@ -55,7 +55,6 @@ export default function RoutingRulesModal({
                                 className={classNames(
                                     'label',
                                     'label-warning',
-                                    'pull-right',
                                     routingRulesInput === '' ? '' : 'hidden'
                                 )}
                                 onClick={handleSetRoutingRulesSimple}
@@ -63,6 +62,14 @@ export default function RoutingRulesModal({
                                 <i className='material-icons'>&#xe145;</i>
                                 {appLang?.modal?.routing_rules_sample}
                             </div>
+                            <a
+                                href='https://github.com/bepass-org/oblivion-desktop/wiki/How-to-use-Routing-Rules'
+                                target='_blank'
+                                role='presentation'
+                                className={classNames('label', 'label-default')}
+                            >
+                                {appLang?.toast?.help_btn}
+                            </a>
                         </div>
                     </h3>
                     <Textarea
