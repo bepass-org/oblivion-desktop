@@ -413,6 +413,11 @@ class OblivionDesktop {
             }
         } else {
             this.state.mainWindow?.hide();
+            if (process.platform === 'darwin') {
+                app?.dock?.hide();
+            } else if (process.platform === 'linux') {
+                this.state.mainWindow?.setSkipTaskbar(true);
+            }
         }
     }
 
@@ -840,6 +845,11 @@ class OblivionDesktop {
             this.createWindow().catch((err) => log.error('Create Window Error:', err));
         } else {
             this.state.mainWindow.show();
+            if (process.platform === 'linux') {
+                this.state.mainWindow?.setSkipTaskbar(false);
+            } else if (process.platform === 'darwin') {
+                app?.dock?.show();
+            }
             if (route) {
                 this.state.trayMenuEvent?.reply('tray-menu', {
                     key: 'changePage',
