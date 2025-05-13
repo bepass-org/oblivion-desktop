@@ -185,11 +185,16 @@ export const exitTheApp = async () => {
     ipcMain.emit('end-wp-and-exit-app');
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // make sure to kill wp process before exit(for linux(windows and mac kill child processes by default))
-    ipcMain.on('exit', () => {
+    // make sure to kill wp process before exit (for linux(windows and mac kill child processes by default))
+    if (process.platform === 'darwin') {
         log.info('Exiting the application...');
         app.exit(0);
-    });
+    } else {
+        ipcMain.on('exit', () => {
+            log.info('Exiting the application...');
+            app.exit(0);
+        });
+    }
 };
 
 export function extractPortsFromEndpoints(strData: string): number[] {
