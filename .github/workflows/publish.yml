@@ -69,13 +69,13 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'ubuntu-22.04'
-              run: npm exec electron-builder -- --linux deb rpm tar.xz --x64 --publish onTagOrDraft
+              run: npm exec electron-builder -- --linux deb rpm tar.xz AppImage --x64 --publish onTagOrDraft
 
             - name: Publish releases GNU Linux arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               if: matrix.os == 'ubuntu-24.04'
-              run: npm exec electron-builder -- --linux deb rpm tar.xz --arm64 --publish onTagOrDraft
+              run: npm exec electron-builder -- --linux deb rpm tar.xz AppImage --arm64 --publish onTagOrDraft
 
             - name: Delete unwanted files
               uses: mknejp/delete-release-assets@v1
