@@ -175,10 +175,12 @@ Cloudflare Warp فراهم می‌کند.
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/Linux-DEB x64-DC470E.svg?logo=debian"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/Linux-RPM x64-01ABD2.svg?logo=redhat"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/Linux-tar.xz x64-EDC204.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.AppImage"><img src="https://img.shields.io/badge/Linux-AppImage x64-bf7645.svg?logo=linux"></a>
                     <br>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/Linux-DEB arm64-DC470E.svg?logo=debian"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/Linux-RPM arm64-01ABD2.svg?logo=redhat"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/Linux-tar.xz arm64-EDC204.svg?logo=linux"></a>         
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/Linux-tar.xz arm64-EDC204.svg?logo=linux"></a>   
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
                 </td>
                 <td>
                     گنوم<br>
