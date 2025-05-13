@@ -44,7 +44,8 @@ export type settingsKeys =
     | 'soundEffect'
     | 'plainDns'
     | 'DoH'
-    | 'testUrl';
+    | 'testUrl'
+    | 'updaterVersion';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -95,7 +96,8 @@ export const defaultSettings = {
     soundEffect: false,
     testUrl: 'https://connectivity.cloudflareclient.com/cdn-cgi/trace',
     plainDns: '',
-    DoH: ''
+    DoH: '',
+    updaterVersion: null
 };
 
 export const countries: { value: string; label: string }[] = [
