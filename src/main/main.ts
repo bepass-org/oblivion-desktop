@@ -74,6 +74,7 @@ interface WindowState {
     connectionStatus: string;
     trayMenuEvent?: IpcMainEvent;
     userLang: string;
+    proxyMode: string | null;
     appLang: ReturnType<typeof getTranslate>;
 }
 
@@ -83,6 +84,7 @@ class OblivionDesktop {
         appIcon: null,
         connectionStatus: 'disconnected',
         userLang: 'en',
+        proxyMode: null,
         appLang: getTranslate('en')
     };
 
@@ -114,6 +116,7 @@ class OblivionDesktop {
     private async setupInitialConfiguration(): Promise<void> {
         devPlayground();
         log.info('Creating new od instance...');
+        this.state.proxyMode = (await settings.get('proxyMode')) as string;
         await this.handleVersionCheck();
         this.copyRequiredFiles();
     }
@@ -744,6 +747,24 @@ class OblivionDesktop {
             this.state.connectionStatus === 'connecting'
         );
 
+        const changeProxyMode = (value: string) => {
+            if (!this.state.mainWindow) return;
+            this.state.mainWindow.webContents.send('change-proxy-mode', value);
+            this.state.proxyMode = value;
+            this.updateTrayMenu();
+        };
+
+        const proxyModeLabel = (mode: string): string => {
+            const labels: Record<string, string> = {
+                system: 'System proxy',
+                tun: 'Tun'
+            };
+
+            const label = labels[mode] ?? 'None';
+            const prefix = this.state.proxyMode === mode ? '✓  ' : '   ';
+            return `${prefix}${label}`;
+        };
+
         return [
             {
                 label: APP_TITLE,
@@ -765,6 +786,28 @@ class OblivionDesktop {
                     this.updateTrayMenu();
                 }
             },
+            {
+                label: this.state.appLang.settings.proxy_mode,
+                enabled: this.state.connectionStatus === 'disconnected',
+                submenu: [
+                    {
+                        label: proxyModeLabel('none'),
+                        type: 'normal',
+                        click: () => changeProxyMode('none')
+                    },
+                    {
+                        label: proxyModeLabel('system'),
+                        type: 'normal',
+                        click: () => changeProxyMode('system')
+                    },
+                    {
+                        label: proxyModeLabel('tun'),
+                        type: 'normal',
+                        click: () => changeProxyMode('tun')
+                    }
+                ]
+            },
+            { label: '', type: 'separator' },
             {
                 label: this.state.appLang.systemTray.settings,
                 submenu: [
