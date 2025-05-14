@@ -116,7 +116,7 @@ class OblivionDesktop {
     private async setupInitialConfiguration(): Promise<void> {
         devPlayground();
         log.info('Creating new od instance...');
-        this.state.proxyMode = await settings.get('proxyMode') as string;
+        this.state.proxyMode = (await settings.get('proxyMode')) as string;
         await this.handleVersionCheck();
         this.copyRequiredFiles();
     }
@@ -747,7 +747,6 @@ class OblivionDesktop {
         }
     }
 
-
     private createTrayMenuTemplate(): MenuItemConstructorOptions[] {
         const connectLabel = this.getConnectionLabel();
         const canToggleConnection = !(
@@ -755,24 +754,23 @@ class OblivionDesktop {
             this.state.connectionStatus === 'connecting'
         );
 
-
-        const changeProxyMode = (value: string)=> {
-            if(!this.state.mainWindow) return;
-            this.state.mainWindow.webContents.send('change-proxy-mode', value)
+        const changeProxyMode = (value: string) => {
+            if (!this.state.mainWindow) return;
+            this.state.mainWindow.webContents.send('change-proxy-mode', value);
             this.state.proxyMode = value;
-            this.updateTrayMenu()
-        }
-
-      const proxyModeLabel = (mode: string): string => {
-        const labels: Record<string, string> = {
-          system: 'System proxy',
-          tun: 'Tun',
+            this.updateTrayMenu();
         };
 
-        const label = labels[mode] ?? 'None';
-        const prefix = this.state.proxyMode === mode ? '✓  ' : '   ';
-        return `${prefix}${label}`;
-      };
+        const proxyModeLabel = (mode: string): string => {
+            const labels: Record<string, string> = {
+                system: 'System proxy',
+                tun: 'Tun'
+            };
+
+            const label = labels[mode] ?? 'None';
+            const prefix = this.state.proxyMode === mode ? '✓  ' : '   ';
+            return `${prefix}${label}`;
+        };
 
         return [
             {

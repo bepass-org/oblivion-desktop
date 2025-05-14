@@ -8,7 +8,7 @@ import Dropdown from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
 //import { platform } from '../../lib/utils';
 import DnsModal from '../../components/Modal/DNS';
-import {useOptionsContext} from "../../context/GlobalContext";
+import { useOptionsContext } from '../../context/GlobalContext';
 
 const proxyModes = [
     {

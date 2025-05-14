@@ -8,7 +8,7 @@ import Scanner from '../pages/Scanner';
 import Network from '../pages/Network';
 import Speed from '../pages/SpeedTest';
 import SingBox from '../pages/SingBox';
-import {GlobalProvider} from "../context/GlobalContext";
+import { GlobalProvider } from '../context/GlobalContext';
 
 const AppRoutes = () => {
     return (

@@ -1,6 +1,6 @@
-import React, {createContext, useContext, useEffect} from 'react';
-import {ipcRenderer} from "../lib/utils";
-import useOptions from "../pages/Network/useOptions";
+import React, { createContext, useContext, useEffect } from 'react';
+import { ipcRenderer } from '../lib/utils';
+import useOptions from '../pages/Network/useOptions';
 
 const GlobalContext = createContext<ReturnType<typeof useOptions> | null>(null);
 
@@ -15,11 +15,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
             ipcRenderer.removeAllListeners('change-proxy-mode');
         };
     }, []);
-    return (
-        <GlobalContext.Provider value={options}>
-            {children}
-        </GlobalContext.Provider>
-    );
+    return <GlobalContext.Provider value={options}>{children}</GlobalContext.Provider>;
 };
 
 export const useOptionsContext = () => {
