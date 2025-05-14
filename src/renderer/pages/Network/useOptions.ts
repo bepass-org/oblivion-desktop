@@ -32,41 +32,13 @@ const useOptions = () => {
         { value: '127.0.0.1', label: '127.0.0.1' },
         { value: '0.0.0.0', label: '0.0.0.0' }
     ]);
+    const [checkingLocalIp, setCheckingLocalIp] = useState<boolean>();
     const [hostIp, setHostIp] = useState<undefined | string>('');
     const [showDnsModal, setShowDnsModal] = useState<boolean>(false);
     const [plainDns, setPlainDns] = useState<undefined | string>();
     const [doh, setDoh] = useState<undefined | string>();
 
     const navigate = useNavigate();
-
-    const getLocalIP = async () => {
-        if (networkList.length > 2) return false;
-        const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}/;
-        return new Promise((resolve, reject) => {
-            const pc = new RTCPeerConnection({
-                iceServers: []
-            });
-            pc.createDataChannel('');
-            pc.onicecandidate = (iceEvent) => {
-                if (iceEvent.candidate && iceEvent.candidate.candidate) {
-                    const candidate = iceEvent.candidate.candidate;
-                    if (candidate.includes('udp')) {
-                        const ipMatch = ipRegex.exec(iceEvent.candidate.candidate);
-                        if (ipMatch) {
-                            resolve(ipMatch[0]);
-                            pc.close();
-                        }
-                    }
-                }
-            };
-            pc.createOffer()
-                .then((offer) => pc.setLocalDescription(offer))
-                .catch((err) => {
-                    reject(`Error creating offer: ${err.message}`);
-                    pc.close();
-                });
-        });
-    };
 
     useEffect(() => {
         settings
@@ -117,7 +89,7 @@ const useOptions = () => {
                         : values.plainDns
                 );
                 setDoh(typeof values.DoH === 'undefined' ? defaultSettings.DoH : values.DoH);
-                if (checkHostIp === networkList[1]?.value || checkProxy === 'none') {
+                if (checkProxy === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
                     setDataUsage(false);
@@ -134,19 +106,24 @@ const useOptions = () => {
             }
         });
 
-        getLocalIP()
-            .then((ip: any) => {
-                if (ip && ip !== '') {
-                    const exists = networkList.some((network) => network.value === ip);
-                    if (!exists) {
-                        setNetworkList((prev) => [
-                            ...prev,
-                            { value: ip, label: ip, key: `network-${ip}` }
-                        ]);
-                    }
-                }
-            })
-            .catch((err) => console.log(err));
+        setCheckingLocalIp(true);
+        ipcRenderer.sendMessage('local-ips');
+        ipcRenderer.on('local-ips', async (data: any) => {
+            const ipList = data as string[];
+            const uniqueIPs = Array.from(new Set(ipList));
+            setNetworkList((prev) => {
+                const existingIPs = new Set(prev.map((item) => item.value));
+                const newItems = uniqueIPs
+                    .filter((ip: string) => !existingIPs.has(ip))
+                    .map((ip: string) => ({
+                        value: ip,
+                        label: ip,
+                        key: `network-${ip}`
+                    }));
+                return [...prev, ...newItems];
+            });
+            setCheckingLocalIp(false);
+        });
     }, []);
 
     /*useEffect(() => {
@@ -283,14 +260,14 @@ const useOptions = () => {
             setHostIp(event.target.value);
             settings.set('hostIP', event.target.value);
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-            setTimeout(function () {
+            /*setTimeout(function () {
                 if (event.target.value === networkList[1]?.value) {
                     setIpData(false);
                     setDataUsage(false);
                     settings.set('ipData', false);
                     settings.set('dataUsage', false);
                 }
-            }, 1000);
+            }, 1000);*/
         },
         [isConnected, isLoading, appLang, ipData, hostIp]
     );
@@ -299,9 +276,9 @@ const useOptions = () => {
         if (proxyMode === 'none') {
             return;
         }
-        if (hostIp === networkList[1]?.value) {
+        /*if (hostIp === networkList[1]?.value) {
             return;
-        }
+        }*/
         setIpData(!ipData);
         settings.set('ipData', !ipData);
         setTimeout(function () {
@@ -376,7 +353,8 @@ const useOptions = () => {
         setDefaultDns,
         cleanDns,
         setCustomDns,
-        setShowDnsModal
+        setShowDnsModal,
+        checkingLocalIp
     };
 };
 export default useOptions;

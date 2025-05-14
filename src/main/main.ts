@@ -52,6 +52,7 @@ import { spawn } from 'child_process';
 import https from 'https';
 import packageJsonData from '../../package.json';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
+import { networkInterfaces } from 'systeminformation';
 import Settings from '../renderer/pages/Settings';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
@@ -414,6 +415,9 @@ class OblivionDesktop {
             }
         } else {
             this.state.mainWindow?.hide();
+            if (process.platform === 'darwin') {
+                app?.dock?.hide();
+            }
         }
     }
 
@@ -451,6 +455,13 @@ class OblivionDesktop {
                     openAtLogin: newStatus
                 });
             }
+        });
+
+        ipcMain.on('local-ips', async (event) => {
+            const netData = await networkInterfaces();
+            const interfaces = Array.isArray(netData) ? netData : [netData];
+            const getList = interfaces.filter((i) => i.ip4 && !i.internal).map((i) => i.ip4);
+            event.reply('local-ips', getList);
         });
 
         ipcMain.on('open-devtools', async () => {
@@ -854,6 +865,9 @@ class OblivionDesktop {
             this.createWindow().catch((err) => log.error('Create Window Error:', err));
         } else {
             this.state.mainWindow.show();
+            if (process.platform === 'darwin') {
+                app?.dock?.show();
+            }
             if (route) {
                 this.state.trayMenuEvent?.reply('tray-menu', {
                     key: 'changePage',

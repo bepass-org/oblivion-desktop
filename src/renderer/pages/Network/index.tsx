@@ -61,7 +61,8 @@ export default function Options() {
         setDefaultDns,
         cleanDns,
         setCustomDns,
-        setShowDnsModal
+        setShowDnsModal,
+        checkingLocalIp
     } = useOptions();
     if (
         typeof ipData === 'undefined' ||
@@ -132,6 +133,7 @@ export default function Options() {
                                 value={hostIp ? hostIp : networkList[0]?.value}
                                 label={appLang?.settings?.share_vpn}
                                 tabIndex={0}
+                                isLoading={checkingLocalIp}
                             />
                             <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                         </div>
@@ -205,12 +207,7 @@ export default function Options() {
                         </div>
                         <div
                             role='button'
-                            className={classNames(
-                                'item',
-                                proxyMode === 'none' || networkList[1]?.value === hostIp
-                                    ? 'disabled'
-                                    : ''
-                            )}
+                            className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                             onClick={handleCheckIpDataOnClick}
                             onKeyDown={
                                 // TODO: The code needs refactoring

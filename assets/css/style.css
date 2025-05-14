@@ -828,6 +828,28 @@ html[data-bs-theme='dark'] .shimmer {
     border-color: #2b2e3b;
 }
 
+.settings .item .loader {
+    float: left;
+    width: 10px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(farthest-side, #ffa516 94%, #0000) top/2px 2px no-repeat,
+        conic-gradient(#0000 30%, #ffa516);
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 2px), #000 0);
+    animation: loaderAnim 1s infinite linear;
+    margin: 8px 0 0 7px;
+}
+[dir='ltr'] .settings .item .loader {
+    float: right;
+    margin: 8px 7px 0 0;
+}
+@keyframes loaderAnim {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
 .settings .item.disabled {
     opacity: 0.3;
 }

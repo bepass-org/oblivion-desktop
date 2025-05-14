@@ -97,7 +97,7 @@ export class RoutingRuleParser {
 
     private processDomainRule(value: string, result: IRoutingRules): void {
         if (value.startsWith('*')) {
-            result.domainSuffixSet.push(value.substring(1));
+            result.domainSuffixSet.push(value.substring(2));
         } else {
             result.domainSet.push(value.replace('www.', ''));
         }

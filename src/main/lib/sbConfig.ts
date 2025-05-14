@@ -238,6 +238,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           {
                               network: 'udp',
                               port: [
+                                  123, // The NTP port uses UDP and UDP may be blocked by the user
                                   68, // DHCP client for network configuration
                                   137, // NetBIOS name service
                                   138, // NetBIOS datagram service
