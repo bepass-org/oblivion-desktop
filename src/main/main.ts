@@ -967,7 +967,9 @@ class OblivionDesktop {
     private async getNetworkList() {
         const netData = await networkInterfaces();
         const interfaces = Array.isArray(netData) ? netData : [netData];
-        const getList = interfaces.filter((i) => i.ip4 && !i.internal).map((i) => i.ip4);
+        const getList = interfaces
+            .filter((i) => i.ip4 && !i.internal && !i.ip4.startsWith('169.254.'))
+            .map((i) => i.ip4);
         settings.set('networkList', JSON.stringify(getList));
         return getList;
     }
