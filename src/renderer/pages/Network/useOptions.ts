@@ -109,12 +109,19 @@ const useOptions = () => {
         setCheckingLocalIp(true);
         ipcRenderer.sendMessage('local-ips');
         ipcRenderer.on('local-ips', async (data: any) => {
-            const formattedList = await data.map((ip: string) => ({
-                value: ip,
-                label: ip,
-                key: `network-${ip}`
-            }));
-            setNetworkList((prev) => [...prev, ...formattedList]);
+            const ipList = data as string[];
+            const uniqueIPs = Array.from(new Set(ipList));
+            setNetworkList((prev) => {
+                const existingIPs = new Set(prev.map((item) => item.value));
+                const newItems = uniqueIPs
+                    .filter((ip: string) => !existingIPs.has(ip))
+                    .map((ip: string) => ({
+                        value: ip,
+                        label: ip,
+                        key: `network-${ip}`
+                    }));
+                return [...prev, ...newItems];
+            });
             setCheckingLocalIp(false);
         });
     }, []);
@@ -269,9 +276,9 @@ const useOptions = () => {
         if (proxyMode === 'none') {
             return;
         }
-        if (hostIp === networkList[1]?.value) {
+        /*if (hostIp === networkList[1]?.value) {
             return;
-        }
+        }*/
         setIpData(!ipData);
         settings.set('ipData', !ipData);
         setTimeout(function () {
