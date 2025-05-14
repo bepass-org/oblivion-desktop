@@ -795,6 +795,7 @@ class OblivionDesktop {
             },
             {
                 label: this.state.appLang.settings.proxy_mode,
+                enabled: this.state.connectionStatus === 'disconnected',
                 submenu: [
                     {
                         label: proxyModeLabel('none'),
@@ -813,6 +814,7 @@ class OblivionDesktop {
                     }
                 ]
             },
+            { label: '', type: 'separator' },
             {
                 label: this.state.appLang.systemTray.settings,
                 submenu: [
