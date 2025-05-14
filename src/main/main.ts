@@ -52,6 +52,7 @@ import { spawn } from 'child_process';
 import https from 'https';
 import packageJsonData from '../../package.json';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
+import { networkInterfaces } from 'systeminformation';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
 const WINDOW_DIMENSIONS = {
@@ -455,6 +456,13 @@ class OblivionDesktop {
                     openAtLogin: newStatus
                 });
             }
+        });
+
+        ipcMain.on('local-ips', async (event) => {
+            const netData = await networkInterfaces();
+            const interfaces = Array.isArray(netData) ? netData : [netData];
+            const getList = interfaces.filter((i) => i.ip4 && !i.internal).map((i) => i.ip4);
+            event.reply('local-ips', getList);
         });
 
         ipcMain.on('open-devtools', async () => {

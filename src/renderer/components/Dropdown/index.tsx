@@ -11,6 +11,7 @@ interface DropdownProps {
     onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
     disabled?: boolean;
     tabIndex?: number;
+    isLoading?: boolean;
 }
 const Dropdown: FC<DropdownProps> = ({
     id,
@@ -19,7 +20,8 @@ const Dropdown: FC<DropdownProps> = ({
     value,
     label,
     disabled,
-    tabIndex = 0
+    tabIndex = 0,
+    isLoading = false
 }) => {
     return (
         <>
@@ -42,6 +44,7 @@ const Dropdown: FC<DropdownProps> = ({
                         </option>
                     ))}
                 </select>
+                {isLoading && <div className='loader' />}
             </div>
         </>
     );
