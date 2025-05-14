@@ -4,6 +4,7 @@ export type Channels =
     | 'ipc-example'
     | 'open-devtools'
     | 'wp-start'
+    | 'wp-change'
     | 'wp-end'
     | 'get-logs'
     | 'settings'

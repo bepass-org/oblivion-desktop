@@ -29,6 +29,7 @@ import {
 
 import sound from 'sound-play';
 import Aplay from 'node-aplay';
+import fa from "../../localization/fa";
 
 // Types and Enums
 enum ConnectionState {
@@ -466,5 +467,18 @@ ipcMain.on('end-wp-and-exit-app', async (event) => {
         event.reply('wp-end', false);
     }
 });
+
+ipcMain.on('wp-change', async (event, arg: { proxyMode?: string }) => {
+    if(arg.proxyMode){
+        try {
+          const proxyFunc =
+              arg.proxyMode === 'system' ? enableSystemProxy : disableSystemProxy;
+          await proxyFunc(regeditVbsDirPath, state.event);
+        }catch (error){
+          log.error('Error change proxy mode:', error);
+          state.event?.reply('wp-end', true);
+        }
+    }
+})
 
 export default WarpPlusManager;

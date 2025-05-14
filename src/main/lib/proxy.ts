@@ -349,10 +349,10 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     const lang = await settings.get('lang');
     appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
 
-    if (!shouldProxySystem(proxyMode)) {
-        log.info('skipping set system proxy');
-        return;
-    }
+    // if (!shouldProxySystem(proxyMode)) {
+    //     log.info('skipping set system proxy');
+    //     return;
+    // }
 
     log.info('trying to set system proxy...');
 

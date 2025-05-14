@@ -161,11 +161,10 @@ const useOptions = () => {
         (input: ChangeEvent<HTMLSelectElement> | string) => {
             const value = typeof input === 'string' ? input : input.target.value;
 
-            if (proxyMode === value) return;
-
             setProxyMode(value);
             settings.set('proxyMode', value);
-            settingsHaveChangedToast({ isConnected, isLoading, appLang });
+            // settingsHaveChangedToast({ isConnected, isLoading, appLang });
+            ipcRenderer.sendMessage('wp-change',{ proxyMode: value });
 
             setTimeout(() => {
                 if (value === 'none') {
