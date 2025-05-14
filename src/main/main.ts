@@ -491,6 +491,26 @@ class OblivionDesktop {
                     message: this.state.appLang.toast.new_update
                 });
                 if (result.response === 1) {
+                    const launchUpdater = (filePath: string) => {
+                        setTimeout(() => {
+                            const child = spawn(filePath, [], {
+                                detached: true,
+                                stdio: 'ignore'
+                            });
+                            child.unref();
+                            log.info('✅ Updater executed successfully.');
+                            this.exitProcess();
+                        }, 2500);
+                    };
+
+                    if (fs.existsSync(updaterPath)) {
+                        const updaterVersion = await settings.get('updaterVersion');
+                        if (updaterVersion === latestVersion) {
+                            launchUpdater(updaterPath);
+                            return;
+                        }
+                    }
+
                     this.redirectTo('/');
                     await this.downloadUpdate(
                         `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${process.platform === 'win32' ? 'win' : ''}-${process.arch}.exe`,
@@ -516,15 +536,8 @@ class OblivionDesktop {
                                     } else {
                                         log.info('✅ Old updater file deleted.');
                                     }
-                                    setTimeout(() => {
-                                        const child = spawn(updaterPath, [], {
-                                            detached: true,
-                                            stdio: 'ignore'
-                                        });
-                                        child.unref();
-                                        log.info('✅ Updater executed successfully.');
-                                        this.exitProcess();
-                                    }, 2500);
+                                    settings.set('updaterVersion', latestVersion);
+                                    launchUpdater(updaterPath);
                                 });
                             });
                         }
