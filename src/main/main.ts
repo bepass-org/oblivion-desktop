@@ -53,7 +53,6 @@ import https from 'https';
 import packageJsonData from '../../package.json';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
 import { networkInterfaces } from 'systeminformation';
-import Settings from '../renderer/pages/Settings';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
 const WINDOW_DIMENSIONS = {
