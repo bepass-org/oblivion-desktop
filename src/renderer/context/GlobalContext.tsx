@@ -10,10 +10,6 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
         ipcRenderer.on('change-proxy-mode', (value: any) => {
             options.onChangeProxyMode(value);
         });
-
-        return () => {
-            ipcRenderer.removeAllListeners('change-proxy-mode');
-        };
     }, []);
     return <GlobalContext.Provider value={options}>{children}</GlobalContext.Provider>;
 };

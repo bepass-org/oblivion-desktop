@@ -759,7 +759,6 @@ class OblivionDesktop {
                 system: 'System proxy',
                 tun: 'Tun'
             };
-
             const label = labels[mode] ?? 'None';
             const prefix = this.state.proxyMode === mode ? '✓  ' : '   ';
             return `${prefix}${label}`;
@@ -787,6 +786,7 @@ class OblivionDesktop {
                 }
             },
             {
+                id: 'proxyMode',
                 label: this.state.appLang.settings.proxy_mode,
                 enabled: this.state.connectionStatus === 'disconnected',
                 submenu: [

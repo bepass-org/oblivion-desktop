@@ -31,6 +31,7 @@ import {
 import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './sbHelper';
 import { mapGrpcErrorCodeToLabel } from './utils';
 import { disableProxy } from './proxy';
+import { customEvent } from './customEvent';
 
 // Types
 type GrpcMethod = 'Start' | 'Stop';
@@ -238,6 +239,7 @@ class SingBoxManager {
                     errorMessage.includes('authentication is required') ||
                     errorMessage.includes('not authorized')
                 ) {
+                    customEvent.emit('tray-icon', 'disconnected');
                     reject(`${this.appLang?.log.error_canceled_by_user}`);
                 }
             });
