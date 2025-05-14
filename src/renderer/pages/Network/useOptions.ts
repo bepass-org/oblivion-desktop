@@ -89,7 +89,7 @@ const useOptions = () => {
                         : values.plainDns
                 );
                 setDoh(typeof values.DoH === 'undefined' ? defaultSettings.DoH : values.DoH);
-                if (checkHostIp === networkList[1]?.value || checkProxy === 'none') {
+                if (checkProxy === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
                     setDataUsage(false);
@@ -253,14 +253,14 @@ const useOptions = () => {
             setHostIp(event.target.value);
             settings.set('hostIP', event.target.value);
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-            setTimeout(function () {
+            /*setTimeout(function () {
                 if (event.target.value === networkList[1]?.value) {
                     setIpData(false);
                     setDataUsage(false);
                     settings.set('ipData', false);
                     settings.set('dataUsage', false);
                 }
-            }, 1000);
+            }, 1000);*/
         },
         [isConnected, isLoading, appLang, ipData, hostIp]
     );

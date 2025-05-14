@@ -207,12 +207,7 @@ export default function Options() {
                         </div>
                         <div
                             role='button'
-                            className={classNames(
-                                'item',
-                                proxyMode === 'none' || networkList[1]?.value === hostIp
-                                    ? 'disabled'
-                                    : ''
-                            )}
+                            className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
                             onClick={handleCheckIpDataOnClick}
                             onKeyDown={
                                 // TODO: The code needs refactoring
