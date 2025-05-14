@@ -17,7 +17,8 @@ export type Channels =
     | 'process-url'
     | 'download-update'
     | 'download-progress'
-    | 'local-ips';
+    | 'local-ips'
+    | 'change-proxy-mode';
 
 const electronHandler = {
     ipcRenderer: {

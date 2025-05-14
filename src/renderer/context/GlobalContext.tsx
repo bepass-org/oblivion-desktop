@@ -7,7 +7,7 @@ const GlobalContext = createContext<ReturnType<typeof useOptions> | null>(null);
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     const options = useOptions();
     useEffect(() => {
-        ipcRenderer.on('change-proxy-mode', (value: string) => {
+        ipcRenderer.on('change-proxy-mode', (value: any) => {
             options.onChangeProxyMode(value);
         });
 
