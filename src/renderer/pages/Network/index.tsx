@@ -4,11 +4,11 @@ import Nav from '../../components/Nav';
 import PortModal from '../../components/Modal/Port';
 import Tabs from '../../components/Tabs';
 import RoutingRulesModal from '../../components/Modal/RoutingRules';
-import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
 //import { platform } from '../../lib/utils';
 import DnsModal from '../../components/Modal/DNS';
+import {useOptionsContext} from "../../context/GlobalContext";
 
 const proxyModes = [
     {
@@ -25,7 +25,7 @@ const proxyModes = [
     }
 ];
 
-export default function Options() {
+export default function Network() {
     const {
         countRoutingRules,
         dns,
@@ -63,7 +63,7 @@ export default function Options() {
         setCustomDns,
         setShowDnsModal,
         checkingLocalIp
-    } = useOptions();
+    } = useOptionsContext();
     if (
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||

@@ -158,17 +158,22 @@ const useOptions = () => {
     }, []);
 
     const onChangeProxyMode = useCallback(
-        (event: ChangeEvent<HTMLSelectElement>) => {
-            setProxyMode(event.target.value);
-            settings.set('proxyMode', event.target.value);
-            settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-            setTimeout(function () {
-                if (event.target.value === 'none') {
+        (input: ChangeEvent<HTMLSelectElement> | string) => {
+            const value = typeof input === 'string' ? input : input.target.value;
+
+            if(proxyMode === value) return
+
+            setProxyMode(value);
+            settings.set('proxyMode', value);
+            settingsHaveChangedToast({ isConnected, isLoading, appLang });
+
+            setTimeout(() => {
+                if (value === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
                     setDataUsage(false);
                     settings.set('dataUsage', false);
-                } else if (event.target.value === 'tun') {
+                } else if (value === 'tun') {
                     //setHostIp(networkList[0].value);
                     /*if (method === 'psiphon') {
                         settings.set('method', 'gool');
@@ -179,6 +184,7 @@ const useOptions = () => {
         },
         [isConnected, isLoading, appLang]
     );
+
 
     const onChangeDNS = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
