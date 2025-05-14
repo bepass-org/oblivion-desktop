@@ -53,7 +53,8 @@ const useOptions = () => {
                 'dataUsage',
                 'hostIP',
                 'plainDns',
-                'DoH'
+                'DoH',
+                'networkList'
             ])
             .then((values) => {
                 setPort(typeof values.port === 'undefined' ? defaultSettings.port : values.port);
@@ -89,6 +90,24 @@ const useOptions = () => {
                         : values.plainDns
                 );
                 setDoh(typeof values.DoH === 'undefined' ? defaultSettings.DoH : values.DoH);
+                if (typeof values.networkList !== 'undefined') {
+                    setNetworkList((prev) => {
+                        try {
+                            const rawItems = JSON.parse(values.networkList);
+                            const normalized = rawItems.map((item: any) =>
+                                typeof item === 'string' ? { value: item, label: item } : item
+                            );
+                            const combined = [...prev, ...normalized];
+                            const unique = Array.from(
+                                new Map(combined.map((item) => [item.value, item])).values()
+                            );
+                            return unique;
+                        } catch (e) {
+                            console.error('Invalid JSON for networkList:', e);
+                            return prev;
+                        }
+                    });
+                }
                 if (checkProxy === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
@@ -104,25 +123,6 @@ const useOptions = () => {
             if (args.key === 'changePage') {
                 navigate(args.msg);
             }
-        });
-
-        setCheckingLocalIp(true);
-        ipcRenderer.sendMessage('local-ips');
-        ipcRenderer.on('local-ips', async (data: any) => {
-            const ipList = data as string[];
-            const uniqueIPs = Array.from(new Set(ipList));
-            setNetworkList((prev) => {
-                const existingIPs = new Set(prev.map((item) => item.value));
-                const newItems = uniqueIPs
-                    .filter((ip: string) => !existingIPs.has(ip))
-                    .map((ip: string) => ({
-                        value: ip,
-                        label: ip,
-                        key: `network-${ip}`
-                    }));
-                return [...prev, ...newItems];
-            });
-            setCheckingLocalIp(false);
         });
     }, []);
 

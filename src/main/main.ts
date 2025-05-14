@@ -456,13 +456,6 @@ class OblivionDesktop {
             }
         });
 
-        ipcMain.on('local-ips', async (event) => {
-            const netData = await networkInterfaces();
-            const interfaces = Array.isArray(netData) ? netData : [netData];
-            const getList = interfaces.filter((i) => i.ip4 && !i.internal).map((i) => i.ip4);
-            event.reply('local-ips', getList);
-        });
-
         ipcMain.on('open-devtools', async () => {
             this.state.mainWindow?.webContents.openDevTools();
         });
@@ -971,6 +964,14 @@ class OblivionDesktop {
         }
     }
 
+    private async getNetworkList() {
+        const netData = await networkInterfaces();
+        const interfaces = Array.isArray(netData) ? netData : [netData];
+        const getList = interfaces.filter((i) => i.ip4 && !i.internal).map((i) => i.ip4);
+        settings.set('networkList', JSON.stringify(getList));
+        return getList;
+    }
+
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
             await this.createWindow();
@@ -978,6 +979,7 @@ class OblivionDesktop {
             await this.checkStartUp();
             await this.autoConnect();
             await this.setupMetaData();
+            await this.getNetworkList();
             //await this.exitStrategy();
             await this.registerStartupProxyReset();
             log.info('od is ready!');

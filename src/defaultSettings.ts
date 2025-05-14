@@ -45,7 +45,8 @@ export type settingsKeys =
     | 'plainDns'
     | 'DoH'
     | 'testUrl'
-    | 'updaterVersion';
+    | 'updaterVersion'
+    | 'networkList';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -97,7 +98,8 @@ export const defaultSettings = {
     testUrl: 'https://connectivity.cloudflareclient.com/cdn-cgi/trace',
     plainDns: '',
     DoH: '',
-    updaterVersion: null
+    updaterVersion: null,
+    networkList: '[]'
 };
 
 export const countries: { value: string; label: string }[] = [
