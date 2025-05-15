@@ -752,6 +752,7 @@ class OblivionDesktop {
             this.state.mainWindow.webContents.send('change-proxy-mode', value);
             this.state.proxyMode = value;
             this.updateTrayMenu();
+            this.redirectTo('/network');
         };
 
         const proxyModeLabel = (mode: string): string => {
