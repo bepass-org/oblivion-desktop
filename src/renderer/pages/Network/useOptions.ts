@@ -175,9 +175,8 @@ const useOptions = () => {
     const onChangeProxyMode = useCallback(
         (input: ChangeEvent<HTMLSelectElement> | string) => {
             const value = typeof input === 'string' ? input : input.target.value;
-
-            if (proxyMode === value) return;
-
+            //if (proxyMode === value) return;
+            
             setProxyMode(value);
             settings.set('proxyMode', value);
             settingsHaveChangedToast({ isConnected, isLoading, appLang });
