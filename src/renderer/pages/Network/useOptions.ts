@@ -181,6 +181,7 @@ const useOptions = () => {
             setProxyMode(value);
             settings.set('proxyMode', value);
             settingsHaveChangedToast({ isConnected, isLoading, appLang });
+            ipcRenderer.sendMessage('tray-state', { proxyMode: value });
 
             setTimeout(() => {
                 if (value === 'none') {

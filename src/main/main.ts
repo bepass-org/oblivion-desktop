@@ -451,6 +451,14 @@ class OblivionDesktop {
             this.state.appIcon?.focus();
         });
 
+        ipcMain.on('tray-state', async (event, value: any) => {
+            if (!this.state.mainWindow) return;
+            if ('proxyMode' in value) {
+                this.state.proxyMode = value.proxyMode;
+            }
+            this.updateTrayMenu();
+        });
+
         ipcMain.on('startup', async (_, newStatus) => {
             if (!isDev()) {
                 app.setLoginItemSettings({
@@ -750,8 +758,8 @@ class OblivionDesktop {
         const changeProxyMode = (value: string) => {
             if (!this.state.mainWindow) return;
             this.state.mainWindow.webContents.send('change-proxy-mode', value);
-            this.state.proxyMode = value;
-            this.updateTrayMenu();
+            //this.state.proxyMode = value;
+            //this.updateTrayMenu();
             this.redirectTo('/network');
         };
 

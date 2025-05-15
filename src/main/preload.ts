@@ -18,7 +18,8 @@ export type Channels =
     | 'download-update'
     | 'download-progress'
     | 'local-ips'
-    | 'change-proxy-mode';
+    | 'change-proxy-mode'
+    | 'tray-state';
 
 const electronHandler = {
     ipcRenderer: {
