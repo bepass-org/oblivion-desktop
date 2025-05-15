@@ -126,6 +126,21 @@ const useOptions = () => {
         });
     }, []);
 
+    const filteredNetworkList = useMemo(() => {
+        return networkList.filter((item) => {
+            if (proxyMode === 'none') return true;
+            return item.value !== '0.0.0.0';
+        });
+    }, [networkList, proxyMode]);
+
+    useEffect(() => {
+        if (proxyMode !== 'none' && hostIp === '0.0.0.0') {
+            const fallbackIp = '127.0.0.1';
+            setHostIp(fallbackIp);
+            settings.set('hostIP', fallbackIp);
+        }
+    }, [proxyMode, hostIp]);
+
     /*useEffect(() => {
         if (dataUsage) {
             defaultToast(`${appLang?.toast?.hardware_usage}`, 'DATA_USAGE');
@@ -349,7 +364,7 @@ const useOptions = () => {
         handleDataUsageOnClick,
         handleDataUsageOnKeyDown,
         hostIp,
-        networkList,
+        networkList: filteredNetworkList,
         onChangeLanMode,
         showDnsModal,
         onCloseDnsModal,
