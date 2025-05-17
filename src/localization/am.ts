@@ -139,6 +139,8 @@ const amharic: Language = {
         singbox_addressing_desc: 'የበገጠ በይነገጽ አይነት ማሰናጃ ይስተካከሉ',
         singbox_udp_block: 'የUDP መንገድን መዝጋት',
         singbox_udp_block_desc: 'የUDP ትራፊክን በፍጹም መንገድ መዝጋት',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'የ Discord መከላከያን መዝገብ ማስፈታት',
         more_duties: 'ተጨማሪ ዕርምጃዎች',
         beta_release: 'እባብ እንቅስቃሴ',
         beta_release_desc: 'ስለ እንቅስቃሴ ከፊት በፊት ማህበረሰብ መረጃ ማግኘት'

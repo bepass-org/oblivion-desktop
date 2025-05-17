@@ -143,6 +143,8 @@ const urdu: Language = {
         singbox_addressing_desc: 'انٹرفیس ایڈریس کی قسم سیٹ کریں',
         singbox_udp_block: 'UDP بلاک کریں',
         singbox_udp_block_desc: 'UDP ٹریفک کو مکمل طور پر بلاک کریں',
+        singbox_discord_bypass: 'ڈسکارڈ',
+        singbox_discord_bypass_desc: 'ڈسکارڈ کی فلٹرنگ کو عبور کریں',
         more_duties: 'مزید ذمہ داریاں',
         beta_release: 'بیٹا اپ ڈیٹ',
         beta_release_desc: 'پری ریلیز ورژنز کے بارے میں آگاہ رہیں'

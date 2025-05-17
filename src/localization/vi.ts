@@ -143,6 +143,8 @@ const vietnamese: Language = {
         singbox_addressing_desc: 'Đặt loại địa chỉ giao diện',
         singbox_udp_block: 'Chặn UDP',
         singbox_udp_block_desc: 'Chặn hoàn toàn tất cả lưu lượng UDP',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'Vượt qua bộ lọc Discord',
         more_duties: 'Nhiệm vụ thêm',
         beta_release: 'Cập nhật Beta',
         beta_release_desc: 'Cập nhật thông tin về các phiên bản trước khi phát hành'

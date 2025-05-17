@@ -139,6 +139,8 @@ const chinese: Language = {
         singbox_addressing_desc: '设置接口地址类型',
         singbox_udp_block: '阻止 UDP',
         singbox_udp_block_desc: '完全阻止所有 UDP 流量',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: '绕过 Discord 过滤',
         more_duties: '更多职责',
         beta_release: 'Beta 更新',
         beta_release_desc: '了解预发布版本'

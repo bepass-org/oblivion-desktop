@@ -12,7 +12,13 @@ import {
     settingsKeys
 } from '../../../defaultSettings';
 
-type SettingValue<T> = T extends boolean ? boolean : T extends number ? number : string;
+type SettingValue<T> = T extends boolean
+    ? boolean
+    : T extends number
+      ? number
+      : T extends string
+        ? string
+        : null;
 
 const useSingBox = () => {
     useGoBackOnEscape();
@@ -55,7 +61,8 @@ const useSingBox = () => {
                     'singBoxStack',
                     'singBoxSniff',
                     'singBoxAddrType',
-                    'singBoxUdpBlock'
+                    'singBoxUdpBlock',
+                    'singBoxDiscordBypass'
                 ];
                 const values = await settings.getMultiple(keysToFetch);
 

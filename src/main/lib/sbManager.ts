@@ -290,7 +290,8 @@ class SingBoxManager {
             endpoint,
             plainDns,
             doh,
-            singBoxUdpBlock
+            singBoxUdpBlock,
+            singBoxDiscordBypass
         ] = await Promise.all([
             settings.get('hostIP'),
             settings.get('port'),
@@ -303,7 +304,8 @@ class SingBoxManager {
             settings.get('endpoint'),
             settings.get('plainDns'),
             settings.get('DoH'),
-            settings.get('singBoxUdpBlock')
+            settings.get('singBoxUdpBlock'),
+            settings.get('singBoxDiscordBypass')
         ]);
 
         return {
@@ -317,7 +319,11 @@ class SingBoxManager {
             plainDns: this.getPlainDns(dns, plainDns),
             DoHDns: this.getDoHDns(dns, doh),
             tunEndpoint: this.getSettingOrDefault(endpoint, defaultSettings.endpoint),
-            udpBlock: this.getSettingOrDefault(singBoxUdpBlock, defaultSettings.singBoxUdpBlock)
+            udpBlock: this.getSettingOrDefault(singBoxUdpBlock, defaultSettings.singBoxUdpBlock),
+            discordBypass: this.getSettingOrDefault(
+                singBoxDiscordBypass,
+                defaultSettings.singBoxDiscordBypass
+            )
         };
     }
 

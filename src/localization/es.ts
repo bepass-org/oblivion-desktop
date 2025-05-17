@@ -144,6 +144,8 @@ const spanish: Language = {
         singbox_addressing_desc: 'Establecer tipo de dirección de interfaz',
         singbox_udp_block: 'Bloquear UDP',
         singbox_udp_block_desc: 'Bloquear completamente todo el tráfico UDP',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'Bypass del filtrado de Discord',
         more_duties: 'Más responsabilidades',
         beta_release: 'Actualización Beta',
         beta_release_desc: 'Mantente informado sobre versiones previas al lanzamiento'

@@ -143,6 +143,8 @@ const russian: Language = {
         singbox_addressing_desc: 'Установите тип адреса интерфейса',
         singbox_udp_block: 'Блокировать UDP',
         singbox_udp_block_desc: 'Полная блокировка всего UDP-трафика',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'Обход фильтрации Discord',
         more_duties: 'Дополнительные обязанности',
         beta_release: 'Бета-обновление',
         beta_release_desc: 'Будьте в курсе предварительных версий'

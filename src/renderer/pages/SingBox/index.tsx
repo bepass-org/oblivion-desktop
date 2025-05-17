@@ -37,6 +37,7 @@ export default function SingBox() {
         singBoxSniff: sniff,
         singBoxAddrType: addrType,
         singBoxUdpBlock: udpBlock,
+        singBoxDiscordBypass: discordBypass,
         proxyMode
     } = settingsState;
 
@@ -51,6 +52,7 @@ export default function SingBox() {
         typeof stack === 'undefined' ||
         typeof sniff === 'undefined' ||
         typeof udpBlock === 'undefined' ||
+        typeof discordBypass === 'undefined' ||
         typeof addrType === 'undefined' ||
         typeof proxyMode === 'undefined'
     )
@@ -180,7 +182,7 @@ export default function SingBox() {
                     </div>
                     <div className='moreSettings'>
                         <i className='material-icons'></i>
-                        {appLang?.settings?.more}
+                        {appLang?.settings?.more_duties}
                     </div>
                     <div className='settings' role='menu' tabIndex={0}>
                         <div className={classNames('item')}>
@@ -295,8 +297,18 @@ export default function SingBox() {
                         <div
                             role='button'
                             className={classNames('item')}
-                            onClick={() => handleToggleSetting('singBoxUdpBlock')}
-                            onKeyDown={handleKeyDown('singBoxUdpBlock')}
+                            onClick={() => {
+                                handleToggleSetting('singBoxUdpBlock');
+                                if (!udpBlock && discordBypass) {
+                                    handleToggleSetting('singBoxDiscordBypass');
+                                }
+                            }}
+                            onKeyDown={() => {
+                                handleKeyDown('singBoxUdpBlock');
+                                if (!udpBlock && discordBypass) {
+                                    handleKeyDown('singBoxUdpBlock');
+                                }
+                            }}
                             tabIndex={0}
                         >
                             <label className='key' htmlFor='singBoxUdpBlock'>
@@ -311,6 +323,45 @@ export default function SingBox() {
                                 </div>
                             </div>
                             <div className='info'>{appLang.settings.singbox_udp_block_desc}</div>
+                        </div>
+                    </div>
+                    <div className='moreSettings'>
+                        <i className='material-icons'>&#xe313;</i>
+                        {appLang?.settings?.more}
+                    </div>
+                    <div className='settings' role='menu' tabIndex={0}>
+                        <div
+                            role='button'
+                            className={classNames('item', udpBlock ? 'disabled' : '')}
+                            onClick={() => {
+                                if (!udpBlock) {
+                                    handleToggleSetting('singBoxDiscordBypass');
+                                }
+                            }}
+                            onKeyDown={() => {
+                                if (!udpBlock) {
+                                    handleKeyDown('singBoxDiscordBypass');
+                                }
+                            }}
+                            tabIndex={0}
+                        >
+                            <label className='key' htmlFor='singBoxDiscordBypass'>
+                                {appLang.settings.singbox_discord_bypass}
+                            </label>
+                            <div className='value'>
+                                <div
+                                    className={classNames(
+                                        'checkbox',
+                                        discordBypass ? 'checked' : ''
+                                    )}
+                                    tabIndex={-1}
+                                >
+                                    <i className='material-icons'></i>
+                                </div>
+                            </div>
+                            <div className='info'>
+                                {appLang.settings.singbox_discord_bypass_desc}
+                            </div>
                         </div>
                     </div>
                 </div>

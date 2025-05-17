@@ -143,6 +143,8 @@ const indonesia: Language = {
         singbox_addressing_desc: 'Atur Jenis Alamat Antarmuka',
         singbox_udp_block: 'Blokir UDP',
         singbox_udp_block_desc: 'Blokir semua lalu lintas UDP sepenuhnya',
+        singbox_discord_bypass: 'Membuka Blokir Discord',
+        singbox_discord_bypass_desc: 'Melewati pemblokiran Discord',
         more_duties: 'Tugas lebih',
         beta_release: 'Pembaruan Beta',
         beta_release_desc: 'Tetap terinformasi tentang versi pra-rilis'

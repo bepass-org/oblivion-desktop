@@ -142,6 +142,8 @@ const myanmar: Language = {
         singbox_addressing_desc: 'Interface လိပ်စာအမျိုးအစားသတ်မှတ်ပါ',
         singbox_udp_block: 'UDP ကိုပိတ်မည်',
         singbox_udp_block_desc: 'UDP traffic အားလုံးကိုလုံးဝပိတ်မည်',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'Discord ဖျက်တားမှုကိုကျော်လွှားခြင်း',
         more_duties: 'ပိုမိုတာဝန်များ',
         beta_release: 'ဘီတာအပ်ဒိတ်',
         beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'

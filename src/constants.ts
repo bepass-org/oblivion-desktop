@@ -78,6 +78,7 @@ export interface IConfig {
     tunEndpoint: string;
     tunAddr: string[];
     udpBlock: boolean;
+    discordBypass: boolean;
 }
 
 export interface IGeoConfig {

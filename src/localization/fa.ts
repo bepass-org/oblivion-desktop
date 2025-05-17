@@ -141,6 +141,8 @@ const persian: Language = {
         singbox_addressing_desc: 'تنظیم نوع آدرس رابط',
         singbox_udp_block: 'بستن UDP',
         singbox_udp_block_desc: 'مسدودسازی کامل ترافیک UDP',
+        singbox_discord_bypass: 'دیسکورد',
+        singbox_discord_bypass_desc: 'دورزدن فیلترینگ دیسکورد',
         more_duties: 'وظایف',
         beta_release: 'بروزرسانی بتا',
         beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'

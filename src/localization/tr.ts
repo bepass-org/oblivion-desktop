@@ -143,6 +143,8 @@ const turkish: Language = {
         singbox_addressing_desc: 'Arayüz Adres Türünü Ayarlayın',
         singbox_udp_block: "UDP'yi Engelle",
         singbox_udp_block_desc: 'Tüm UDP trafiğini tamamen engelle',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'Discord engellemesini aşma',
         more_duties: 'Daha fazla görev',
         beta_release: 'Beta Güncellemesi',
         beta_release_desc: 'Önizleme sürümleri hakkında bilgi sahibi olun'

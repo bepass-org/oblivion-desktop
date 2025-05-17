@@ -142,6 +142,29 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
+                ...(config.discordBypass
+                    ? [
+                          {
+                              domain: ['full:updates.discord.com'],
+                              outbound: 'proxy'
+                          },
+                          {
+                              network: 'udp',
+                              outbound: 'direct'
+                          },
+                          {
+                              domain: [
+                                  'full:discord.com',
+                                  'full:*.discord.com',
+                                  'full:discordapp.com',
+                                  'full:*.discordapp.com',
+                                  'full:discord.gg',
+                                  'full:*.discord.gg'
+                              ],
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
                 ...(geoConfig.geoBlock
                     ? [
                           {

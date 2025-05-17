@@ -142,6 +142,8 @@ const brazilianPortuguese: Language = {
         singbox_addressing_desc: 'Definir Tipo de Endereço da Interface',
         singbox_udp_block: 'Bloquear UDP',
         singbox_udp_block_desc: 'Bloquear completamente todo o tráfego UDP',
+        singbox_discord_bypass: 'Discord',
+        singbox_discord_bypass_desc: 'Ignorar o bloqueio do Discord',
         more_duties: 'Mais deveres',
         beta_release: 'Atualização Beta',
         beta_release_desc: 'Fique informado sobre versões pré-lançamento'

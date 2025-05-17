@@ -139,6 +139,8 @@ const arabic: Language = {
         singbox_addressing_desc: 'قم بتعيين نوع عنوان الواجهة',
         singbox_udp_block: 'حظر UDP',
         singbox_udp_block_desc: 'حظر كامل لحركة مرور UDP',
+        singbox_discord_bypass: 'ديزكورد',
+        singbox_discord_bypass_desc: 'تجاوز حجب ديزكورد',
         more_duties: 'المزيد من الواجبات',
         beta_release: 'تحديث النسخة التجريبية',
         beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'
