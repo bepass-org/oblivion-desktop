@@ -116,7 +116,7 @@
     "devDependencies": {
         "@electron/notarize": "^2.5.0",
         "@electron/rebuild": "^3.7.2",
-        "@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
+        "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
         "@svgr/webpack": "^8.1.0",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.3.0",
