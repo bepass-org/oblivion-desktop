@@ -5,4 +5,4 @@ updates:
       schedule:
           interval: 'weekly' # or "daily" or "monthly"
       allow:
-          - update-type: 'version-update:semver-compatible'
+          - update-type: 'version-update:semver-major'
