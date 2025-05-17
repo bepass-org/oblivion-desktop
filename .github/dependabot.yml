@@ -3,6 +3,8 @@ updates:
     - package-ecosystem: 'npm'
       directory: '/'
       schedule:
-          interval: 'weekly' # or "daily" or "monthly"
-      allow:
-          - update-type: 'version-update:semver-major'
+          interval: 'weekly'
+      ignore:
+          - dependency-name: '*'
+            update-types:
+                - 'version-update:semver-major'
