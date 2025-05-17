@@ -168,7 +168,7 @@
         "sass-loader": "^16.0.5",
         "style-loader": "^4.0.0",
         "terser-webpack-plugin": "^5.3.14",
-        "ts-jest": "^29.3.3",
+        "ts-jest": "^29.3.4",
         "ts-loader": "^9.5.2",
         "ts-node": "^10.9.2",
         "tsconfig-paths-webpack-plugin": "^4.2.0",
