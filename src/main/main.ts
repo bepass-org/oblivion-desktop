@@ -121,12 +121,12 @@ class OblivionDesktop {
         devPlayground();
         log.info('Creating new od instance...');
         this.state.proxyMode = (await settings.get('proxyMode')) as string;
-        this.state.isFirstRun = false;
         await this.handleVersionCheck();
         this.copyRequiredFiles();
     }
 
     private async handleVersionCheck(): Promise<void> {
+        this.state.isFirstRun = false;
         try {
             if (fs.existsSync(versionFilePath)) {
                 const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
@@ -135,6 +135,8 @@ class OblivionDesktop {
                     await singBoxManager.stopHelperOnStart();
                     await this.cleanupOldFiles();
                 }
+            } else {
+                this.state.isFirstRun = true;
             }
             fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
         } catch (err) {
@@ -1037,12 +1039,11 @@ class OblivionDesktop {
 
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
-            if (this.state.isFirstRun) {
-                app.relaunch({ args: process.argv.filter((arg) => arg !== '--squirrel-firstrun') });
-                app.exit(0);
-                return;
-            }
             await this.createWindow();
+            if (this.state.isFirstRun) {
+                this.state.appIcon?.destroy();
+                this.state.appIcon = null;
+            }
             await this.setupTray();
             await this.checkStartUp();
             await this.autoConnect();
