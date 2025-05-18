@@ -121,14 +121,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
         route: {
             rules: [
                 { protocol: 'dns', outbound: 'dns-out' },
-                ...(config.udpBlock
-                    ? [
-                          {
-                              network: 'udp',
-                              outbound: 'block'
-                          }
-                      ]
-                    : []),
                 { ip_is_private: true, outbound: 'direct' },
                 ...(config.socksIp
                     ? [
@@ -149,6 +141,10 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               outbound: 'proxy'
                           },
                           {
+                              process_name: [
+                                  'Discord' + (isWindows ? '.exe' : ''),
+                                  'discord' + (isWindows ? '.exe' : '')
+                              ],
                               network: 'udp',
                               outbound: 'direct'
                           },
@@ -162,6 +158,14 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                   'full:*.discord.gg'
                               ],
                               outbound: 'direct'
+                          }
+                      ]
+                    : []),
+                ...(config.udpBlock
+                    ? [
+                          {
+                              network: 'udp',
+                              outbound: 'block'
                           }
                       ]
                     : []),

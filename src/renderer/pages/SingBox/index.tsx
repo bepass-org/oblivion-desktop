@@ -299,15 +299,15 @@ export default function SingBox() {
                             className={classNames('item')}
                             onClick={() => {
                                 handleToggleSetting('singBoxUdpBlock');
-                                if (!udpBlock && discordBypass) {
+                                /*if (!udpBlock && discordBypass) {
                                     handleToggleSetting('singBoxDiscordBypass');
-                                }
+                                }*/
                             }}
                             onKeyDown={() => {
                                 handleKeyDown('singBoxUdpBlock');
-                                if (!udpBlock && discordBypass) {
+                                /*if (!udpBlock && discordBypass) {
                                     handleKeyDown('singBoxUdpBlock');
-                                }
+                                }*/
                             }}
                             tabIndex={0}
                         >
@@ -332,16 +332,16 @@ export default function SingBox() {
                     <div className='settings' role='menu' tabIndex={0}>
                         <div
                             role='button'
-                            className={classNames('item', udpBlock ? 'disabled' : '')}
+                            className={classNames('item' /*udpBlock ? 'disabled' : ''*/)}
                             onClick={() => {
-                                if (!udpBlock) {
-                                    handleToggleSetting('singBoxDiscordBypass');
-                                }
+                                //if (!udpBlock) {
+                                handleToggleSetting('singBoxDiscordBypass');
+                                //}
                             }}
                             onKeyDown={() => {
-                                if (!udpBlock) {
-                                    handleKeyDown('singBoxDiscordBypass');
-                                }
+                                //if (!udpBlock) {
+                                handleKeyDown('singBoxDiscordBypass');
+                                //}
                             }}
                             tabIndex={0}
                         >
