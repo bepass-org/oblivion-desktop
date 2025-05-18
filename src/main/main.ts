@@ -393,9 +393,9 @@ class OblivionDesktop {
             this.state.mainWindow?.hide();
             this.state.appIcon?.destroy();
             this.state.appIcon = null;
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            //await new Promise((resolve) => setTimeout(resolve, 1000));
             await exitTheApp();
-            await new Promise((resolve) => setTimeout(resolve, 2500));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
             this.state.connectionStatus = 'disconnected';
             app.quit();
             return;
