@@ -128,13 +128,13 @@ const useOptions = () => {
 
     const filteredNetworkList = useMemo(() => {
         return networkList.filter((item) => {
-            if (proxyMode === 'none') return true;
+            if (proxyMode !== 'system') return true;
             return item.value !== '0.0.0.0';
         });
     }, [networkList, proxyMode]);
 
     useEffect(() => {
-        if (proxyMode !== 'none' && hostIp === '0.0.0.0') {
+        if (proxyMode === 'system' && hostIp === '0.0.0.0') {
             const fallbackIp = '127.0.0.1';
             setHostIp(fallbackIp);
             settings.set('hostIP', fallbackIp);
