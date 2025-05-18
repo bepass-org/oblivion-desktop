@@ -187,6 +187,11 @@ const useLanding = () => {
         ipcRenderer.on('guide-toast', (message: any) => {
             if (message === 'error_port_restart') {
                 loadingToast(appLang.log.error_port_restart);
+            } else if (message === 'sb_error_tun0') {
+                setIsLoading(false);
+                setIsConnected(false);
+                stopLoadingToast();
+                defaultToast(appLang.log.error_script_failed, 'GUIDE', 7000);
             } else if (message === 'sb_preparing') {
                 loadingToast(appLang.status.preparing_rulesets);
                 setTimeout(function () {
