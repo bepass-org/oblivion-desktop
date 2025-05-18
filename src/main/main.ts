@@ -46,7 +46,9 @@ import {
     regeditVbsDirPath,
     windowPosition,
     proxyResetPath,
-    proxyResetAssetPath
+    proxyResetAssetPath,
+    isWindows,
+    isDarwin
 } from '../constants';
 import { spawn } from 'child_process';
 import https from 'https';
@@ -59,6 +61,8 @@ const WINDOW_DIMENSIONS = {
     width: 400,
     height: 650
 };
+
+const isFirstRun = isWindows && process.argv?.includes('--squirrel-firstrun');
 
 process.on('uncaughtException', (err) => {
     log.error('Uncaught Exception:', err);
@@ -138,7 +142,7 @@ class OblivionDesktop {
 
     private async cleanupOldFiles(): Promise<void> {
         const filesToClean = [wpBinPath, helperPath, netStatsPath];
-        if (process.platform === 'win32') {
+        if (isWindows) {
             filesToClean.push(proxyResetPath);
         }
         filesToClean.forEach((file) => {
@@ -154,7 +158,7 @@ class OblivionDesktop {
             { src: helperAssetPath, dest: helperPath, name: 'helper' },
             { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' }
         ];
-        if (process.platform === 'win32') {
+        if (isWindows) {
             filePairs.push({ src: proxyResetAssetPath, dest: proxyResetPath, name: 'proxyReset' });
         }
 
@@ -417,21 +421,21 @@ class OblivionDesktop {
             }
         } else {
             this.state.mainWindow?.hide();
-            if (process.platform === 'darwin') {
+            if (isDarwin) {
                 app?.dock?.hide();
             }
         }
     }
 
     private registerQuitShortcut(): void {
-        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+        const shortcut = isDarwin ? 'CommandOrControl+Q' : 'Ctrl+Q';
         globalShortcut.register(shortcut, async () => {
             this.exitProcess();
         });
     }
 
     private unregisterQuitShortcut(): void {
-        const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Q' : 'Ctrl+Q';
+        const shortcut = isDarwin ? 'CommandOrControl+Q' : 'Ctrl+Q';
         globalShortcut.unregister(shortcut);
     }
 
@@ -485,7 +489,7 @@ class OblivionDesktop {
 
         ipcMain.on('download-update', async (_event, latestVersion: string) => {
             if (!this.state.mainWindow) return;
-            if (process.platform !== 'win32') return;
+            if (!isWindows) return;
             try {
                 const result: any = await dialog.showMessageBox({
                     type: 'question',
@@ -517,7 +521,7 @@ class OblivionDesktop {
 
                     this.redirectTo('/');
                     await this.downloadUpdate(
-                        `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${process.platform === 'win32' ? 'win' : ''}-${process.arch}.exe`,
+                        `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${isWindows ? 'win' : ''}-${process.arch}.exe`,
                         (percent: any) => {
                             log.info(`Download: ${percent}%`);
                             this.state.mainWindow?.setProgressBar(percent / 100);
@@ -736,7 +740,7 @@ class OblivionDesktop {
         const iconPath = this.getAssetPath(`img/status/${status}.png`);
         const icon = nativeImage.createFromPath(iconPath);
         if (icon.isEmpty()) log.error(`Failed to load trayIcon: ${iconPath}`);
-        return process.platform !== 'win32' ? icon.resize({ width: 16, height: 16 }) : icon;
+        return !isWindows ? icon.resize({ width: 16, height: 16 }) : icon;
     }
 
     private updateTrayMenu(): void {
@@ -912,7 +916,7 @@ class OblivionDesktop {
         } else {
             this.state.mainWindow.show();
             this.state.mainWindow?.setSkipTaskbar(false);
-            if (process.platform === 'darwin') {
+            if (isDarwin) {
                 app?.dock?.show();
             }
             if (route) {
@@ -959,7 +963,7 @@ class OblivionDesktop {
 
     /*private async exitStrategy(): Promise<void> {
         try {
-            if (process.platform === 'win32') {
+            if (isWindows) {
                 const { systemEvents } = require('electron');
                 systemEvents.on('session-end', async () => {
                     return new Promise<void>((resolve) => {
@@ -976,7 +980,7 @@ class OblivionDesktop {
     }*/
 
     /*private async disableProxyQuickly(): Promise<void> {
-        if (process.platform !== 'win32') return;
+        if (!isWindows) return;
         try {
             const registryPath =
                 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings';
@@ -994,7 +998,7 @@ class OblivionDesktop {
     }*/
 
     private async registerStartupProxyReset(): Promise<void> {
-        if (process.platform !== 'win32') return;
+        if (!isWindows) return;
         const appPath = `"${proxyResetPath}"`;
         const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
         const valueName = 'OblivionProxyReset';
@@ -1031,6 +1035,11 @@ class OblivionDesktop {
 
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
+            if (isFirstRun) {
+                app.relaunch({ args: process.argv.filter((arg) => arg !== '--squirrel-firstrun') });
+                app.exit(0);
+                return;
+            }
             await this.createWindow();
             await this.setupTray();
             await this.checkStartUp();
