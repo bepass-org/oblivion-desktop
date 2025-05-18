@@ -62,8 +62,6 @@ const WINDOW_DIMENSIONS = {
     height: 650
 };
 
-const isFirstRun = isWindows && process.argv?.includes('--squirrel-firstrun');
-
 process.on('uncaughtException', (err) => {
     log.error('Uncaught Exception:', err);
 });
@@ -80,6 +78,7 @@ interface WindowState {
     userLang: string;
     proxyMode: string | null;
     appLang: ReturnType<typeof getTranslate>;
+    isFirstRun: boolean;
 }
 
 class OblivionDesktop {
@@ -89,7 +88,8 @@ class OblivionDesktop {
         connectionStatus: 'disconnected',
         userLang: 'en',
         proxyMode: null,
-        appLang: getTranslate('en')
+        appLang: getTranslate('en'),
+        isFirstRun: false
     };
 
     constructor() {
@@ -121,6 +121,7 @@ class OblivionDesktop {
         devPlayground();
         log.info('Creating new od instance...');
         this.state.proxyMode = (await settings.get('proxyMode')) as string;
+        this.state.isFirstRun = false;
         await this.handleVersionCheck();
         this.copyRequiredFiles();
     }
@@ -130,6 +131,7 @@ class OblivionDesktop {
             if (fs.existsSync(versionFilePath)) {
                 const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
                 if (savedVersion !== appVersion) {
+                    this.state.isFirstRun = true;
                     await singBoxManager.stopHelperOnStart();
                     await this.cleanupOldFiles();
                 }
@@ -1035,7 +1037,7 @@ class OblivionDesktop {
 
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
-            if (isFirstRun) {
+            if (this.state.isFirstRun) {
                 app.relaunch({ args: process.argv.filter((arg) => arg !== '--squirrel-firstrun') });
                 app.exit(0);
                 return;
