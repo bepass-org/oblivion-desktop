@@ -1041,8 +1041,10 @@ class OblivionDesktop {
         app.whenReady().then(async () => {
             await this.createWindow();
             if (this.state.isFirstRun) {
-                this.state.appIcon?.destroy();
-                this.state.appIcon = null;
+                app.relaunch();
+                await new Promise((resolve) => setTimeout(resolve, 1500));
+                app.exit(0);
+                return;
             }
             await this.setupTray();
             await this.checkStartUp();
