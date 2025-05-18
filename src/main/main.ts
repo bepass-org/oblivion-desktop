@@ -720,7 +720,9 @@ class OblivionDesktop {
             this.state.userLang = String((await settings.get('lang')) || defaultSettings.lang);
             this.state.appLang = getTranslate(this.state.userLang);
 
+            this.state.connectionStatus = 'disconnected';
             const trayIcon = this.createTrayIcon('disconnected');
+
             this.state.appIcon = new Tray(trayIcon);
             this.state.appIcon.setToolTip(APP_TITLE);
             this.state.appIcon.on('click', () => this.redirectTo(''));
