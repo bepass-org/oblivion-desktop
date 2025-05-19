@@ -478,7 +478,8 @@ class SingBoxManager {
                     if (errorMessage.includes('set ipv6 address: Element not found')) {
                         this.replyEvent('sb_error_ipv6');
                     } else if (
-                        errorMessage.includes('configure tun interface: Cannot create a file')
+                        errorMessage.includes('Cannot create a file') ||
+                        errorMessage.includes('system cannot find the file specified')
                     ) {
                         this.replyEvent('sb_error_tun0');
                     } else {
