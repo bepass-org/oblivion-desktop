@@ -296,7 +296,7 @@ const useLanding = () => {
         const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
         setHasNewUpdate(typeof hasUpdate !== 'undefined' && hasUpdate === 'true' ? true : false);
         if (!isLoading) {
-            setTimeout(checkForUpdates, 2500);
+            setTimeout(checkForUpdates, 10000);
         }
 
         return () => {
@@ -452,7 +452,7 @@ const useLanding = () => {
             if (isLoading) {
                 setStatusText(`${appLang?.status?.disconnecting}`);
             } else {
-                setTimeout(checkForUpdates, 2500);
+                setTimeout(checkForUpdates, 10000);
                 if (ipInfo?.countryCode) {
                     setStatusText(`${appLang?.status?.connected_confirm}`);
                 } else {
