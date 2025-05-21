@@ -2448,10 +2448,45 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 
 .progressBar {
     width: 100%;
-    overflow: hidden;
+    height: 3px;
     position: fixed;
     top: 0;
     left: 0;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        #c4c4c4 25%,
+        transparent 25%,
+        transparent 50%,
+        #c4c4c4 50%,
+        #c4c4c4 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 30px 30px;
+    animation: moveStripes 0.5s linear infinite;
+    will-change: background-position;
+}
+[data-bs-theme='dark'] .progressBar {
+    background: linear-gradient(
+        135deg,
+        #5e5e5e 25%,
+        transparent 25%,
+        transparent 50%,
+        #5e5e5e 50%,
+        #5e5e5e 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 30px 30px;
+}
+@keyframes moveStripes {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 30px 0;
+    }
 }
 .progressBar div {
     height: 3px;
