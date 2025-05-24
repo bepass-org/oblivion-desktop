@@ -734,6 +734,9 @@ class OblivionDesktop {
             this.state.appIcon = new Tray(trayIcon);
             this.state.appIcon.setToolTip(APP_TITLE);
             this.state.appIcon.on('click', () => this.redirectTo(''));
+            this.state.appIcon.on('right-click', () => {
+                this.state.appIcon?.popUpContextMenu();
+            });
             this.updateTrayMenu();
         } catch (err) {
             log.error('Error setting up tray:', err);
