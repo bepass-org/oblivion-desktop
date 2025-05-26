@@ -79,6 +79,7 @@ interface WindowState {
     proxyMode: string | null;
     appLang: ReturnType<typeof getTranslate>;
     isFirstRun: boolean;
+    hasNewUpdate: boolean;
 }
 
 class OblivionDesktop {
@@ -89,7 +90,8 @@ class OblivionDesktop {
         userLang: 'en',
         proxyMode: null,
         appLang: getTranslate('en'),
-        isFirstRun: false
+        isFirstRun: false,
+        hasNewUpdate: false
     };
 
     constructor() {
@@ -482,18 +484,18 @@ class OblivionDesktop {
 
         customEvent.on('tray-icon', (newStatus: string) => {
             if (!this.state.appIcon) return;
-
             if (newStatus.startsWith('connected') || newStatus === 'disconnected') {
                 const newIcon = this.createTrayIcon(newStatus);
                 this.state.appIcon.setImage(newIcon);
             }
-
             this.state.connectionStatus = newStatus;
             this.updateTrayMenu();
         });
 
         ipcMain.on('download-update', async (_event, latestVersion: string) => {
             if (!this.state.mainWindow) return;
+            this.state.hasNewUpdate = true;
+            customEvent.emit('tray-icon', this.state.connectionStatus);
             if (!isWindows) return;
             try {
                 const result: any = await dialog.showMessageBox({
@@ -734,7 +736,11 @@ class OblivionDesktop {
 
             this.state.appIcon = new Tray(trayIcon);
             this.state.appIcon.setToolTip(APP_TITLE);
-            this.state.appIcon.on('click', () => this.redirectTo(''));
+            this.state.appIcon.on('click', () => {
+                this.state.hasNewUpdate = false;
+                customEvent.emit('tray-icon', this.state.connectionStatus);
+                this.redirectTo('');
+            });
             /*this.state.appIcon.on('right-click', () => {
                 this.state.appIcon?.popUpContextMenu();
             });*/
@@ -745,7 +751,9 @@ class OblivionDesktop {
     }
 
     private createTrayIcon(status: string): NativeImage {
-        const iconPath = this.getAssetPath(`img/status/${status}.png`);
+        const iconPath = this.getAssetPath(
+            `img/status/${this.state.hasNewUpdate ? 'badge/' : ''}${status}.png`
+        );
         const icon = nativeImage.createFromPath(iconPath);
         if (icon.isEmpty()) log.error(`Failed to load trayIcon: ${iconPath}`);
         return !isWindows ? icon.resize({ width: 16, height: 16 }) : icon;
