@@ -135,9 +135,10 @@ class OblivionDesktop {
                     await singBoxManager.stopHelperOnStart();
                     await this.cleanupOldFiles();
                 }
-            } else {
-                this.state.isFirstRun = true;
             }
+            /*else {
+                this.state.isFirstRun = true;
+            }*/
             fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
         } catch (err) {
             log.error('Error during version check:', err);
