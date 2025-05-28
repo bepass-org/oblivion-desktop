@@ -1,9 +1,7 @@
 name: Release to PPA
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build-and-upload:
