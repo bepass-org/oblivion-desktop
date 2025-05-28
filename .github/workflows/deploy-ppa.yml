@@ -1,0 +1,58 @@
+name: Release to PPA
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    env:
+      GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+      LAUNCHPAD_USERNAME: ${{ secrets.LAUNCHPAD_USERNAME }}
+      LAUNCHPAD_PASSWORD: ${{ secrets.LAUNCHPAD_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up GPG
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" > private.key
+          gpg --batch --import private.key
+          gpg --list-secret-keys --keyid-format LONG
+          git config --global user.signingkey "$GPG_KEY_ID"
+          git config --global commit.gpgsign true
+          git config --global user.name "oblivion-desktop"
+          git config --global user.email "ircfspace@gmail.com"
+
+      - name: Install packaging tools
+        run: sudo apt update && sudo apt install -y devscripts debhelper dput gnupg lintian
+
+      - name: Build .deb package
+        run: |
+          dpkg-buildpackage -us -uc
+        working-directory: .
+
+      - name: Setup dput config
+        run: |
+          mkdir -p ~/.dput.cf.d
+          echo "[ppa]" > ~/.dput.cf.d/ppa
+          echo "fqdn = ppa.launchpad.net" >> ~/.dput.cf.d/ppa
+          echo "method = ftp" >> ~/.dput.cf.d/ppa
+          echo "incoming = ~${{ secrets.LAUNCHPAD_USERNAME }}/ubuntu/" >> ~/.dput.cf.d/ppa
+          echo "login = ${{ secrets.LAUNCHPAD_USERNAME }}" >> ~/.dput.cf.d/ppa
+          echo "allow_unsigned_uploads = 0" >> ~/.dput.cf.d/ppa
+
+      - name: Sign .changes and .dsc files
+        run: |
+          VERSION=$(dpkg-parsechangelog --show-field Version)
+          DEB_CHANGES=$(ls ../*${VERSION}_source.changes)
+          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ../*.dsc
+          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign "$DEB_CHANGES"
+
+      - name: Upload to Launchpad PPA
+        run: |
+          echo "${{ secrets.LAUNCHPAD_PASSWORD }}" | dput ppa ../*source.changes
