@@ -41,7 +41,7 @@ jobs:
       - name: Install packaging tools
         run: |
           sudo apt update
-          sudo apt install -y devscripts debhelper dh-make dput gnupg lintian
+          sudo apt install -y build-essential devscripts debhelper dh-make dput gnupg lintian jq
 
       - name: Create debian directory structure with dh_make
         run: |
