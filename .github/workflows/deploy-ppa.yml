@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y jq devscripts debhelper dput gnupg lintian curl
+          sudo apt install -y jq devscripts debhelper dh-make dput gnupg lintian curl
 
       - name: Get latest release info from GitHub
         id: get_release
@@ -28,23 +28,26 @@ jobs:
           VERSION=$(echo "$latest_release_json" | jq -r .tag_name | sed 's/^v//')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-          # Extract URLs for amd64 and arm64 deb files
           AMD64_URL=$(echo "$latest_release_json" | jq -r '.assets[] | select(.name=="oblivion-desktop-linux-amd64.deb") | .browser_download_url')
           ARM64_URL=$(echo "$latest_release_json" | jq -r '.assets[] | select(.name=="oblivion-desktop-linux-arm64.deb") | .browser_download_url')
 
           echo "AMD64_URL=$AMD64_URL" >> $GITHUB_ENV
           echo "ARM64_URL=$ARM64_URL" >> $GITHUB_ENV
 
-      - name: Prepare packaging directory
+      - name: Prepare packaging directory and download deb files
         run: |
           rm -rf ${PACKAGE_NAME}-${VERSION}
           mkdir ${PACKAGE_NAME}-${VERSION}
           cd ${PACKAGE_NAME}-${VERSION}
-
           curl -L $AMD64_URL -o oblivion-desktop-linux-amd64.deb
           curl -L $ARM64_URL -o oblivion-desktop-linux-arm64.deb
-
           cd ..
+
+      - name: Check dh_make availability
+        run: |
+          which dh_make
+          dh_make --version
+        working-directory: ${PACKAGE_NAME}-${VERSION}
 
       - name: Create debian directory with changelog
         run: |
@@ -71,7 +74,6 @@ jobs:
 
       - name: Sign changes and dsc files
         run: |
-          cd ..
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}_source.changes
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}.dsc
 
