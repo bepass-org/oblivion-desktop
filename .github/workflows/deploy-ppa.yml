@@ -13,68 +13,66 @@ jobs:
       LAUNCHPAD_PASSWORD: ${{ secrets.LAUNCHPAD_PASSWORD }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt install -y jq devscripts debhelper dh-make dput gnupg lintian build-essential
+          sudo apt-get update
+          sudo apt-get install -y jq devscripts debhelper dh-make dput gnupg lintian build-essential
 
-      - name: Extract package info from package.json
-        id: package_info
+      - name: Extract package name and version
+        id: extract
         run: |
           echo "PACKAGE_NAME=$(jq -r '.name' package.json)" >> $GITHUB_ENV
           echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
-          DESCRIPTION=$(jq -r '.description' package.json)
-          echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
-          echo "MAINTAINER_EMAIL=${{ secrets.LAUNCHPAD_USERNAME }}" >> $GITHUB_ENV
 
-      - name: Prepare debian directory and control files
+      - name: Prepare debian directory
         run: |
-          rm -rf debian
-          mkdir -p debian
+          rm -rf ${PACKAGE_NAME}-${VERSION}
+          mkdir ${PACKAGE_NAME}-${VERSION}
+          cp -r * ${PACKAGE_NAME}-${VERSION}/
+          cd ${PACKAGE_NAME}-${VERSION}
 
-          cat > debian/control << EOF
-Source: $PACKAGE_NAME
-Section: utils
-Priority: optional
-Maintainer: Oblivion Desktop <$MAINTAINER_EMAIL>
-Build-Depends: debhelper (>= 12), build-essential
-Standards-Version: 4.5.1
-Homepage: https://github.com/bepass-org/oblivion-desktop
+          # Rename directory to format package-version
+          mv ../${PACKAGE_NAME}-${VERSION} ../${PACKAGE_NAME}-${VERSION}
 
-Package: $PACKAGE_NAME
-Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}
-Description: $DESCRIPTION
-EOF
+          # Run dh_make in single (native) mode, yes to all prompts
+          dh_make -s -y -p ${PACKAGE_NAME}_${VERSION}
 
-          DATE=$(date -R)
-          cat > debian/changelog << EOF
-$PACKAGE_NAME ($VERSION) unstable; urgency=medium
+          # Remove example files to avoid build errors
+          rm -f debian/*.ex debian/*.EX debian/README.*
+
+          # Create minimal changelog file (overwrite)
+          cat > debian/changelog <<EOF
+${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium
 
   * Initial release.
 
- -- Oblivion Desktop <$MAINTAINER_EMAIL>  $DATE
+ -- Oblivion Desktop <${LAUNCHPAD_USERNAME}>  $(date -R)
 EOF
 
-      - name: Setup GPG
+      - name: Setup GPG for signing
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" > private.key
           gpg --batch --import private.key
           git config --global user.signingkey "$GPG_KEY_ID"
           git config --global commit.gpgsign true
           git config --global user.name "Oblivion Desktop"
-          git config --global user.email "$MAINTAINER_EMAIL"
+          git config --global user.email "${LAUNCHPAD_USERNAME}"
 
       - name: Build source package
-        run: debuild -S -sa -k$GPG_KEY_ID
-
-      - name: Sign source package files
         run: |
+          cd ${PACKAGE_NAME}-${VERSION}
+          debuild -S -sa -k"$GPG_KEY_ID"
+
+      - name: Sign changes and dsc files
+        run: |
+          VERSION=${VERSION}
+          cd ..
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}_source.changes
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}.dsc
 
       - name: Upload to Launchpad PPA
-        run: dput ppa ${PACKAGE_NAME}_${VERSION}_source.changes
+        run: |
+          dput ppa ${PACKAGE_NAME}_${VERSION}_source.changes
