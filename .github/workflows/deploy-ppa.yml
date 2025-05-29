@@ -24,7 +24,6 @@ jobs:
         id: get_release
         run: |
           latest_release_json=$(curl -s https://api.github.com/repos/${GITHUB_REPO}/releases/latest)
-          echo "$latest_release_json" > release.json
           VERSION=$(echo "$latest_release_json" | jq -r .tag_name | sed 's/^v//')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
@@ -41,20 +40,18 @@ jobs:
           cd ${PACKAGE_NAME}-${VERSION}
           curl -L $AMD64_URL -o oblivion-desktop-linux-amd64.deb
           curl -L $ARM64_URL -o oblivion-desktop-linux-arm64.deb
-          cd ..
 
       - name: Check dh_make availability
         run: |
           which dh_make
           dh_make --version
-        working-directory: ${PACKAGE_NAME}-${VERSION}
+          echo "dh_make is available and working."
 
       - name: Create debian directory with changelog
         run: |
           cd ${PACKAGE_NAME}-${VERSION}
           dh_make --createorig -s -y -p ${PACKAGE_NAME}_${VERSION}
           sed -i "1s/^/${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium\n\n  * Imported from GitHub releases.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)\n\n/" debian/changelog
-          cd ..
 
       - name: Set up GPG
         run: |
@@ -70,7 +67,6 @@ jobs:
         run: |
           cd ${PACKAGE_NAME}-${VERSION}
           debuild -S -sa -k$GPG_KEY_ID
-          cd ..
 
       - name: Sign changes and dsc files
         run: |
