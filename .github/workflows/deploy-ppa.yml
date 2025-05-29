@@ -13,7 +13,7 @@ jobs:
       LAUNCHPAD_PASSWORD: ${{ secrets.LAUNCHPAD_PASSWORD }}
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install dependencies
@@ -21,23 +21,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq devscripts debhelper dh-make dput gnupg lintian build-essential
 
-      - name: Extract package name and version
+      - name: Extract package name and version from package.json
         id: extract
         run: |
           echo "PACKAGE_NAME=$(jq -r '.name' package.json)" >> $GITHUB_ENV
           echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
 
-      - name: Prepare debian directory
+      - name: Prepare Debian packaging directory
         run: |
           rm -rf ${PACKAGE_NAME}-${VERSION}
           mkdir ${PACKAGE_NAME}-${VERSION}
           cp -r . ${PACKAGE_NAME}-${VERSION}/
           cd ${PACKAGE_NAME}-${VERSION}
-
           dh_make -s -y -p ${PACKAGE_NAME}_${VERSION}
-
           rm -f debian/*.ex debian/*.EX debian/README.*
-
           cat > debian/changelog <<EOF
 ${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium
 
@@ -46,7 +43,7 @@ ${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium
  -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)
 EOF
 
-      - name: Setup GPG for signing
+      - name: Setup GPG for signing commits and packages
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" > private.key
           gpg --batch --import private.key
@@ -66,6 +63,6 @@ EOF
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}_source.changes
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}.dsc
 
-      - name: Upload to Launchpad PPA
+      - name: Upload source package to Launchpad PPA
         run: |
           dput ppa ${PACKAGE_NAME}_${VERSION}_source.changes
