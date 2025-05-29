@@ -24,14 +24,25 @@ jobs:
           git config --global user.signingkey "$GPG_KEY_ID"
           git config --global commit.gpgsign true
           git config --global user.name "oblivion-desktop"
-          git config --global user.email "ircfspace@gmail.com"
+          git config --global user.email "${{ secrets.LAUNCHPAD_USERNAME }}"
 
       - name: Install packaging tools
-        run: sudo apt update && sudo apt install -y devscripts debhelper dput gnupg lintian
+        run: |
+          sudo apt update
+          sudo apt install -y devscripts debhelper dh-make dput gnupg lintian
+
+      - name: Create debian directory structure with dh_make
+        run: |
+          if [ ! -d debian ]; then
+            dh_make --createorig -s -y
+          fi
+
+      - name: Update changelog file
+        run: |
+          sed -i '1s/^/oblivion-desktop (1.0.0) unstable; urgency=medium\n\n  * Initial release.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  '"$(date -R)"'\n\n/' debian/changelog
 
       - name: Build .deb package
-        run: |
-          dpkg-buildpackage -us -uc
+        run: dpkg-buildpackage -us -uc
         working-directory: .
 
       - name: Setup dput config
