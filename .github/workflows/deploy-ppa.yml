@@ -31,25 +31,19 @@ jobs:
         run: |
           rm -rf ${PACKAGE_NAME}-${VERSION}
           mkdir ${PACKAGE_NAME}-${VERSION}
-          cp -r * ${PACKAGE_NAME}-${VERSION}/
+          cp -r . ${PACKAGE_NAME}-${VERSION}/
           cd ${PACKAGE_NAME}-${VERSION}
 
-          # Rename directory to format package-version
-          mv ../${PACKAGE_NAME}-${VERSION} ../${PACKAGE_NAME}-${VERSION}
-
-          # Run dh_make in single (native) mode, yes to all prompts
           dh_make -s -y -p ${PACKAGE_NAME}_${VERSION}
 
-          # Remove example files to avoid build errors
           rm -f debian/*.ex debian/*.EX debian/README.*
 
-          # Create minimal changelog file (overwrite)
           cat > debian/changelog <<EOF
 ${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium
 
   * Initial release.
 
- -- Oblivion Desktop <${LAUNCHPAD_USERNAME}>  $(date -R)
+ -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)
 EOF
 
       - name: Setup GPG for signing
@@ -68,7 +62,6 @@ EOF
 
       - name: Sign changes and dsc files
         run: |
-          VERSION=${VERSION}
           cd ..
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}_source.changes
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}.dsc
