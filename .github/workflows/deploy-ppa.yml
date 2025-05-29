@@ -1,4 +1,4 @@
-name: Release to PPA from GitHub Release deb files
+name: Build and Release to Launchpad PPA
 
 on:
   workflow_dispatch:
@@ -11,68 +11,49 @@ jobs:
       GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       LAUNCHPAD_USERNAME: ${{ secrets.LAUNCHPAD_USERNAME }}
       LAUNCHPAD_PASSWORD: ${{ secrets.LAUNCHPAD_PASSWORD }}
-      GITHUB_REPO: "bepass-org/oblivion-desktop"
       PACKAGE_NAME: "oblivion-desktop"
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y jq devscripts debhelper dh-make dput gnupg lintian curl
+          sudo apt install -y jq devscripts debhelper dh-make dput gnupg lintian
 
-      - name: Get latest release info from GitHub
-        id: get_release
+      - name: Get version from package.json
+        id: get_version
         run: |
-          latest_release_json=$(curl -s https://api.github.com/repos/${GITHUB_REPO}/releases/latest)
-          VERSION=$(echo "$latest_release_json" | jq -r .tag_name | sed 's/^v//')
+          VERSION=$(jq -r '.version' package.json)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-          AMD64_URL=$(echo "$latest_release_json" | jq -r '.assets[] | select(.name=="oblivion-desktop-linux-amd64.deb") | .browser_download_url')
-          ARM64_URL=$(echo "$latest_release_json" | jq -r '.assets[] | select(.name=="oblivion-desktop-linux-arm64.deb") | .browser_download_url')
-
-          echo "AMD64_URL=$AMD64_URL" >> $GITHUB_ENV
-          echo "ARM64_URL=$ARM64_URL" >> $GITHUB_ENV
-
-      - name: Prepare packaging directory and download deb files
+      - name: Prepare debian directory with dh_make
         run: |
-          rm -rf ${PACKAGE_NAME}-${VERSION}
-          mkdir ${PACKAGE_NAME}-${VERSION}
-          cd ${PACKAGE_NAME}-${VERSION}
-          curl -L $AMD64_URL -o oblivion-desktop-linux-amd64.deb
-          curl -L $ARM64_URL -o oblivion-desktop-linux-arm64.deb
-
-      - name: Check dh_make availability
-        run: |
-          which dh_make
-          dh_make --version
-          echo "dh_make is available and working."
-
-      - name: Create debian directory with changelog
-        run: |
-          cd ${PACKAGE_NAME}-${VERSION}
+          rm -rf debian
           dh_make --createorig -s -y -p ${PACKAGE_NAME}_${VERSION}
-          sed -i "1s/^/${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium\n\n  * Imported from GitHub releases.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)\n\n/" debian/changelog
+          
+          sed -i "1s/.*/${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium\n\n  * Initial release from GitHub Actions.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)/" debian/changelog
 
-      - name: Set up GPG
+      - name: Setup GPG for signing
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" > private.key
           gpg --batch --import private.key
           gpg --list-secret-keys --keyid-format LONG
           git config --global user.signingkey "$GPG_KEY_ID"
           git config --global commit.gpgsign true
-          git config --global user.name "oblivion-desktop"
+          git config --global user.name "Oblivion Desktop"
           git config --global user.email "${{ secrets.LAUNCHPAD_USERNAME }}"
 
       - name: Build source package
         run: |
-          cd ${PACKAGE_NAME}-${VERSION}
           debuild -S -sa -k$GPG_KEY_ID
 
-      - name: Sign changes and dsc files
+      - name: Sign source package files
         run: |
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}_source.changes
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}.dsc
 
-      - name: Upload to Launchpad PPA
+      - name: Upload source package to Launchpad PPA
         run: |
           dput ppa ${PACKAGE_NAME}_${VERSION}_source.changes
