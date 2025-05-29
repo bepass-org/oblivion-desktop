@@ -16,6 +16,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Read version from package.json and rename directory
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "Version found: $VERSION"
+          PACKAGE_NAME="oblivion-desktop"
+          DIR_NAME="${PACKAGE_NAME}-${VERSION}"
+          mv "$(pwd)" "$(dirname "$(pwd)")/$DIR_NAME"
+          cd "$(dirname "$(pwd)")/$DIR_NAME"
+          echo "Renamed directory to $DIR_NAME"
+        shell: bash
+
       - name: Set up GPG
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" > private.key
@@ -34,34 +48,13 @@ jobs:
       - name: Create debian directory structure with dh_make
         run: |
           if [ ! -d debian ]; then
-            dh_make --createorig -s -y
+            dh_make --createorig -s -y -p oblivion-desktop_${VERSION}
           fi
 
       - name: Update changelog file
         run: |
-          sed -i '1s/^/oblivion-desktop (1.0.0) unstable; urgency=medium\n\n  * Initial release.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  '"$(date -R)"'\n\n/' debian/changelog
+          sed -i "1s/^/oblivion-desktop (${VERSION}) unstable; urgency=medium\n\n  * Initial release.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)\n\n/" debian/changelog
 
       - name: Build .deb package
         run: dpkg-buildpackage -us -uc
         working-directory: .
-
-      - name: Setup dput config
-        run: |
-          mkdir -p ~/.dput.cf.d
-          echo "[ppa]" > ~/.dput.cf.d/ppa
-          echo "fqdn = ppa.launchpad.net" >> ~/.dput.cf.d/ppa
-          echo "method = ftp" >> ~/.dput.cf.d/ppa
-          echo "incoming = ~${{ secrets.LAUNCHPAD_USERNAME }}/ubuntu/" >> ~/.dput.cf.d/ppa
-          echo "login = ${{ secrets.LAUNCHPAD_USERNAME }}" >> ~/.dput.cf.d/ppa
-          echo "allow_unsigned_uploads = 0" >> ~/.dput.cf.d/ppa
-
-      - name: Sign .changes and .dsc files
-        run: |
-          VERSION=$(dpkg-parsechangelog --show-field Version)
-          DEB_CHANGES=$(ls ../*${VERSION}_source.changes)
-          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ../*.dsc
-          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign "$DEB_CHANGES"
-
-      - name: Upload to Launchpad PPA
-        run: |
-          echo "${{ secrets.LAUNCHPAD_PASSWORD }}" | dput ppa ../*source.changes
