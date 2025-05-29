@@ -1,4 +1,4 @@
-name: Release to PPA
+name: Release to PPA from GitHub Release deb files
 
 on:
   workflow_dispatch:
@@ -11,22 +11,47 @@ jobs:
       GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       LAUNCHPAD_USERNAME: ${{ secrets.LAUNCHPAD_USERNAME }}
       LAUNCHPAD_PASSWORD: ${{ secrets.LAUNCHPAD_PASSWORD }}
+      GITHUB_REPO: "bepass-org/oblivion-desktop"
+      PACKAGE_NAME: "oblivion-desktop"
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Read version from package.json and copy to versioned directory
+      - name: Install dependencies
         run: |
-          VERSION=$(jq -r '.version' package.json)
+          sudo apt update
+          sudo apt install -y jq devscripts debhelper dput gnupg lintian curl
+
+      - name: Get latest release info from GitHub
+        id: get_release
+        run: |
+          latest_release_json=$(curl -s https://api.github.com/repos/${GITHUB_REPO}/releases/latest)
+          echo "$latest_release_json" > release.json
+          VERSION=$(echo "$latest_release_json" | jq -r .tag_name | sed 's/^v//')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          PACKAGE_NAME="oblivion-desktop"
-          DIR_NAME="${PACKAGE_NAME}-${VERSION}"
-          cp -r . "../$DIR_NAME"
-        shell: bash
+
+          # Extract URLs for amd64 and arm64 deb files
+          AMD64_URL=$(echo "$latest_release_json" | jq -r '.assets[] | select(.name=="oblivion-desktop-linux-amd64.deb") | .browser_download_url')
+          ARM64_URL=$(echo "$latest_release_json" | jq -r '.assets[] | select(.name=="oblivion-desktop-linux-arm64.deb") | .browser_download_url')
+
+          echo "AMD64_URL=$AMD64_URL" >> $GITHUB_ENV
+          echo "ARM64_URL=$ARM64_URL" >> $GITHUB_ENV
+
+      - name: Prepare packaging directory
+        run: |
+          rm -rf ${PACKAGE_NAME}-${VERSION}
+          mkdir ${PACKAGE_NAME}-${VERSION}
+          cd ${PACKAGE_NAME}-${VERSION}
+
+          curl -L $AMD64_URL -o oblivion-desktop-linux-amd64.deb
+          curl -L $ARM64_URL -o oblivion-desktop-linux-arm64.deb
+
+          cd ..
+
+      - name: Create debian directory with changelog
+        run: |
+          cd ${PACKAGE_NAME}-${VERSION}
+          dh_make --createorig -s -y -p ${PACKAGE_NAME}_${VERSION}
+          sed -i "1s/^/${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium\n\n  * Imported from GitHub releases.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)\n\n/" debian/changelog
+          cd ..
 
       - name: Set up GPG
         run: |
@@ -38,45 +63,18 @@ jobs:
           git config --global user.name "oblivion-desktop"
           git config --global user.email "${{ secrets.LAUNCHPAD_USERNAME }}"
 
-      - name: Install packaging tools
+      - name: Build source package
         run: |
-          sudo apt update
-          sudo apt install -y build-essential devscripts debhelper dh-make dput gnupg lintian jq
+          cd ${PACKAGE_NAME}-${VERSION}
+          debuild -S -sa -k$GPG_KEY_ID
+          cd ..
 
-      - name: Create debian directory structure with dh_make
+      - name: Sign changes and dsc files
         run: |
-          if [ ! -d debian ]; then
-            dh_make --createorig -s -y -p oblivion-desktop_${{ env.VERSION }}
-          fi
-        working-directory: ../oblivion-desktop-${{ env.VERSION }}
-
-      - name: Update changelog file
-        run: |
-          sed -i "1s/^/oblivion-desktop (${VERSION}) unstable; urgency=medium\n\n  * Initial release.\n\n -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)\n\n/" debian/changelog
-        working-directory: ../oblivion-desktop-${{ env.VERSION }}
-
-      - name: Build .deb package
-        run: dpkg-buildpackage -us -uc
-        working-directory: ../oblivion-desktop-${{ env.VERSION }}
-
-      - name: List files after build (for debug)
-        run: ls -l ../
-      
-      - name: Sign .changes and .dsc files
-        run: |
-          VERSION=$(dpkg-parsechangelog --show-field Version)
-          PACKAGE_NAME="oblivion-desktop"
-          DIR_NAME="${PACKAGE_NAME}-${VERSION}"
-          cd ../
-          DEB_CHANGES=$(ls ${DIR_NAME}/*${VERSION}_source.changes)
-          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${DIR_NAME}/*.dsc
-          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign "$DEB_CHANGES"
-        shell: bash
+          cd ..
+          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}_source.changes
+          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${PACKAGE_NAME}_${VERSION}.dsc
 
       - name: Upload to Launchpad PPA
         run: |
-          VERSION=$(dpkg-parsechangelog --show-field Version)
-          PACKAGE_NAME="oblivion-desktop"
-          DIR_NAME="${PACKAGE_NAME}-${VERSION}"
-          dput ppa ${DIR_NAME}/*source.changes
-        shell: bash
+          dput ppa ${PACKAGE_NAME}_${VERSION}_source.changes
