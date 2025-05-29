@@ -59,24 +59,24 @@ jobs:
         run: dpkg-buildpackage -us -uc
         working-directory: ../oblivion-desktop-${{ env.VERSION }}
 
-      - name: Setup dput config
-        run: |
-          mkdir -p ~/.dput.cf.d
-          echo "[ppa]" > ~/.dput.cf.d/ppa
-          echo "fqdn = ppa.launchpad.net" >> ~/.dput.cf.d/ppa
-          echo "method = ftp" >> ~/.dput.cf.d/ppa
-          echo "incoming = ~${{ secrets.LAUNCHPAD_USERNAME }}/ubuntu/" >> ~/.dput.cf.d/ppa
-          echo "login = ${{ secrets.LAUNCHPAD_USERNAME }}" >> ~/.dput.cf.d/ppa
-          echo "allow_unsigned_uploads = 0" >> ~/.dput.cf.d/ppa
-
+      - name: List files after build (for debug)
+        run: ls -l ../
+      
       - name: Sign .changes and .dsc files
         run: |
           VERSION=$(dpkg-parsechangelog --show-field Version)
-          DEB_CHANGES=$(ls ../*${VERSION}_source.changes)
-          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ../*.dsc
+          PACKAGE_NAME="oblivion-desktop"
+          DIR_NAME="${PACKAGE_NAME}-${VERSION}"
+          cd ../
+          DEB_CHANGES=$(ls ${DIR_NAME}/*${VERSION}_source.changes)
+          gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign ${DIR_NAME}/*.dsc
           gpg --batch --yes -u "$GPG_KEY_ID" --armor --detach-sign "$DEB_CHANGES"
-        working-directory: ../oblivion-desktop-${{ env.VERSION }}
+        shell: bash
 
       - name: Upload to Launchpad PPA
         run: |
-          echo "${{ secrets.LAUNCHPAD_PASSWORD }}" | dput ppa ../*source.changes
+          VERSION=$(dpkg-parsechangelog --show-field Version)
+          PACKAGE_NAME="oblivion-desktop"
+          DIR_NAME="${PACKAGE_NAME}-${VERSION}"
+          dput ppa ${DIR_NAME}/*source.changes
+        shell: bash
