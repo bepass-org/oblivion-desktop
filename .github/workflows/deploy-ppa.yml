@@ -13,7 +13,7 @@ jobs:
       LAUNCHPAD_PASSWORD: ${{ secrets.LAUNCHPAD_PASSWORD }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install dependencies
@@ -30,7 +30,7 @@ jobs:
           echo "DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
           echo "MAINTAINER_EMAIL=${{ secrets.LAUNCHPAD_USERNAME }}" >> $GITHUB_ENV
 
-      - name: Create debian directory and control files
+      - name: Prepare debian directory and control files
         run: |
           rm -rf debian
           mkdir -p debian
@@ -48,7 +48,7 @@ Package: $PACKAGE_NAME
 Architecture: any
 Depends: \${shlibs:Depends}, \${misc:Depends}
 Description: $DESCRIPTION
- EOF
+EOF
 
           DATE=$(date -R)
           cat > debian/changelog << EOF
