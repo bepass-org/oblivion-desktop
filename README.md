@@ -160,7 +160,7 @@ technology
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/Linux-DEB x64-DC470E.svg?logo=debian"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/GNU+Linux-DEB x64-DC470E.svg?logo=debian"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/Linux-RPM x64-01ABD2.svg?logo=redhat"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/Linux-tar.xz x64-EDC204.svg?logo=linux"></a>
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Linux-AppImage x64-bf7645.svg?logo=linux"></a>
@@ -172,7 +172,7 @@ technology
                 </td>
                 <td>
                     Gnome<br>
-                    KDE
+                    KDE<br>
                     GNU/Linux (glibc)
                 </td>
             </tr>
@@ -195,7 +195,7 @@ technology
 
 ## Faced a bug? 🐛
 
-Take a look at [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
+Take a look at our comprehensive [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
 in [issues](https://github.com/bepass-org/oblivion-desktop/issues) (open
 and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did not
 find your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose)!
@@ -242,4 +242,3 @@ Oblivion Desktop made possible by contributors of Bepass and you! ✌️
 We all appreciate your help and support. Here is a comprehensive contribution guide: ([Contribution Guide](CONTRIBUTING.md))
 
 <img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
-Custom WireGuard® implementation in Go providing enterprise-level encryption with minimal overhead.
