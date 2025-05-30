@@ -17,7 +17,7 @@
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
 
-> Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
+> Unofficial Desktop version of the mobile VPN: [Oblivion](https://github.com/bepass-org/oblivion)
 
 <b>"Internet, for all or none!"</b>
 
@@ -31,9 +31,10 @@ technology
 
 ## Features
 
-- **Secure VPN**: Custom WireGuard implementation in Go.
-- **Open Source**: Built with transparency & community contribution in mind, leveraging the power of GitHub Actions for automated builds.
-- **User-Friendly**: Simple, intuitive interface.
+- **High-grade VPN Security**: Custom WireGuard® implementation in Golang providing enterprise-level encryption with minimal overhead.
+- **Free and Open Source**: Built with transparency & community contribution in mind, leveraging the power of GitHub Actions for automated builds.Community-driven development with transparent builds via GitHub Actions.
+- **Intuitive Yet Powerful**: Clean interface designed for ease of use while offering advanced configuration options.
+- **Modern Tech Stack**: TypeScript frontend with a high-performance Golang backend featuring our optimized WireGuard® implementation.
 
 ![oblivion.jpg](screenshot/oblivion.jpg)
 
@@ -172,6 +173,7 @@ technology
                 <td>
                     Gnome<br>
                     KDE
+                    GNU/Linux (glibc)
                 </td>
             </tr>
             <tr>
@@ -191,14 +193,14 @@ technology
     </table>
 </div>
 
-## Faced Bug 🐞?
+## Faced a bug? 🐛
 
-checkout [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
+Take a look at [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
 in [issues](https://github.com/bepass-org/oblivion-desktop/issues) (open
-and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you didn't
-get your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
+and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did not
+find your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose)!
 
-## Get Involved
+## Get involved!
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
 suggest features, or need some help, we'd love to hear from you!  
@@ -208,7 +210,7 @@ and [Developer Docs](DOCS.md).
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
-## Know more
+## Read more...
 
 * [FAQ.md](FAQ.md)
 * [License.md](LICENSE.md)
@@ -218,8 +220,7 @@ and [Developer Docs](DOCS.md).
 
 ## Acknowledgements
 
-This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
-provided by the following friends:
+This project owes its existence to the groundbreaking work of others. We extend our sincere gratitude to the following contributors and innovators whose work inspired and enabled our efforts:
 
 - [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
@@ -237,6 +238,8 @@ provided by the following friends:
 
 ## Contributors
 
-Oblivion Desktop made possible by you. ✌️ We appreciate your help and support. 🧡 ([Contribution Guide](CONTRIBUTING.md))
+Oblivion Desktop made possible by contributors of Bepass and you! ✌️
+We all appreciate your help and support. Here is a comprehensive contribution guide: ([Contribution Guide](CONTRIBUTING.md))
 
 <img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
+Custom WireGuard® implementation in Go providing enterprise-level encryption with minimal overhead.
