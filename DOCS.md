@@ -1,25 +1,25 @@
 # Dev Docs
 
-this is an [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
+Oblivion Desktop is an [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
 ](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
-in a nutshell it's a GUI that interacts with [warp-plus](https://github.com/bepass-org/warp-plus/) binary and changes system proxy setting.
+In a nutshell, Oblivion Desktop is a GUI program that interacts with "[WARP+](https://github.com/bepass-org/warp-plus/)"'s binary executable and changes the system's proxy settings.
 
 <!-- and [sing-box](https://sing-box.sagernet.org/alig) binaries. -->
 
 ## Getting Started
 
-1. make sure you have [node](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
+1. Make sure you have [Node.js](https://nodejs.org/) and [NPM](https://www.npmjs.com/) installed on your system.
 
-2. clone this repo
+2. Clone this repository (`$ git clone https://github.com/bepass-org/oblivion-desktop.git`)
 
-3. install packages
+3. Install the program's dependencies:
 
 ```shell
 npm install
 ```
 
-4. run the development server
+4. Run the development server:
 
 ```shell
 npm run dev # or npm start
@@ -27,7 +27,7 @@ npm run dev # or npm start
 
 ## Packaging for Production (build from the source)
 
-To package for the local platform:
+To package for your local platform:
 
 ```shell
 npm run package
@@ -41,15 +41,17 @@ npm run package:windows
 npm run package:mac
 ```
 
-when commands finish you shall have your production build(s) at: `release/build`
+When the command(s) finish, you are to have your production build(s) at `release/build`!
 
 for more specific builds checkout: https://www.electron.build/cli
+For more specific builds, take a look at [this](https://electron.build/cli)!
 
 ## IPC (sending data between main and renderer)
 
 as you may be familiar with electron already.  
-we need to use [IPC](https://www.electronjs.org/docs/latest/tutorial/ipc) in order to send and receive data between main and renderer.  
-checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example.
+As you are probably familiar with [Electron](https://electron.build/) already;
+We need to use [IPC](https://www.electronjs.org/docs/latest/tutorial/ipc) in order to send and receive data between main and renderer.  
+Take a loot at `src/main/ipc.ts` and `src/renderer/index.tsx` for an in-action example.
 
 # Codebase Terminology
 For clarity when working with the TypeScript codebase:
