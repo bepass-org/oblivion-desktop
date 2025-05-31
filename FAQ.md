@@ -66,24 +66,24 @@ Warp-Plus توسط سایر توسعه‌دهندگان به پیش میره.
 
 ## What is the purpose of the Oblivion Desktop app?
 
-This application is an unofficial yet reliable version of the Oblivion or Forgetfulness app provided for Windows, Linux,
-and Mac. The Oblivion Desktop app is designed with the aim of providing unrestricted access to the internet by adopting
+This application is an unofficial yet reliable version of the Oblivion or forgetfulness app provided for Windows, Linux,
+and MacOS. The Oblivion Desktop program is designed with the purpose of providing unrestricted access to the internet by adopting
 the user interface pattern of the original version developed by Youssef Ghobadi.
 
 ## How does this application work?
 
 The Oblivion Desktop app essentially functions as a secure VPN for bypassing filtering and circumventing sanctions,
-utilizing the Warp-Plus core.
+utilizing the WARP+ core.
 
 ## Why does my IP sometimes show as Iranian?
 
-The displayed IP is not the user's actual IP; rather, the Warp Cloudflare service sometimes assigns one of its own IPs
+The displayed IP is not the user's actual IP; rather, the Cloudflare WARP service sometimes assigns one of its own IPs
 to correspond with the user's location and may display Iran as the location. In such cases, it's practically impossible
 to bypass sanctions.
 
-## How can I change my Warp IP?
+## How can I change my WARP IP?
 
-Methods such as Gol and Psiphon in the application settings provide users with the capability to change their IP to a
+Methods such as Gool and Psiphon in the application settings provide users with the capability to change their IP to a
 location other than Iran. It is recommended to explore these options, especially in situations of internet disruption.
 
 ## Where is the original creator of WarpInWarp?
@@ -93,14 +93,14 @@ ago. However, development of Oblivion and Warp-Plus is currently progressing und
 
 ## Is Oblivion secure?
 
-Both the Oblivion and Oblivion Desktop apps, as well as the Warp-Plus core, are open-source and their source code is
+Both the Oblivion and Oblivion Desktop programs, as well as the WARP+ core, are open-source (FOSS) and their source code is
 available on GitHub. Additionally, project builds are automatically performed by GitHub Actions.
 
-## Is the Warp Cloudflare service secure?
+## Is the WARP Cloudflare service secure?
 
-Warp encrypts a larger amount of outgoing traffic from your device, preventing anyone from interfering with your work.
+WARP encrypts a larger amount of outgoing traffic from your device, preventing anyone from interfering with your work.
 
-## What is the aim of this free service?
+## What is the purpose of this free and open source program (FOSS program)?
 
 To realize the slogan of "Internet for all or for none," as well as to provide free access to the internet, especially
 for underserved populations.
