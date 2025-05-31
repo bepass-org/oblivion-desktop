@@ -51,11 +51,48 @@ as you may be familiar with electron already.
 we need to use [IPC](https://www.electronjs.org/docs/latest/tutorial/ipc) in order to send and receive data between main and renderer.  
 checkout `src/main/ipc.ts` and `src/renderer/index.tsx` for an in action example.
 
-## Notes
+# Codebase Terminology
+For clarity when working with the TypeScript codebase:
 
-- (after wp updates) to get the latest wp version, that app is using. run: `npm i`.
-- `wp` refers to `warp-plus` in source.
-- `od` refers to `oblivion desktop` in source.
-- `hp` refers to `oblivion helper` in source.
+### Dependencies
+After Warp+ (wp) updates, always refresh dependencies:
 
-happy hacking 😉
+```bash
+npm install
+Code Abbreviations
+```
+
+<b>wp:</b> WARP+ module (Cloudflare integration)
+
+<b>od:</b> Oblivion Desktop core functionality
+
+<b>hp:</b> OblivionHelper utility package
+
+<b>TypeScript Conventions</b>
+
+- All abbreviations should be typed explicitly:
+```ts
+interface WpConfig { /* Warp-plus settings */ }
+type OdState = /* OblivionDesktop state */;
+Avoid inline abbreviations - use proper type aliases
+```
+
+- Document abbreviations in JSDoc:
+```ts
+/** @param wpConfig - Warp-plus configuration object */
+Maintenance
+```
+The project uses:
+
+Strict TypeScript (strict: true)
+
+Consistent ESLint rules
+
+Pre-commit type checking## Notes
+
+- (After WP updates;) to get the latest WP version, that app is using. run: `npm i`.
+- `wp` refers to `warp-plus` in the source code.
+- `od` refers to `oblivion desktop` in the source code.
+- `hp` refers to `oblivion helper` in the source code.
+
+Happy hacking! 😉
