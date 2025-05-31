@@ -6,11 +6,11 @@
 - اپ‌های Oblivion و Oblivion Deskop و همینطور هسته Warp-Plus متن‌باز هستن و سورسشون در گیت‌هاب قرار گرفته، ضمن اینکه
   بیلد پروژه‌ها به‌صورت خودکار توسط گیت‌هاب اکشن انجام می‌شن.
 - وارپ به‌وسیله رمزنگاری مقدار بیشتری از ترافیک خروجی از دستگاهتون، اجازه نمیده هیچ‌کس در کار شما سرک بکشه.
-- نتیجه بررسی برنامه در virusTotal فاقد هرگونه ایراد بوده است
+- نتیجه بررسی برنامه در VirusTotal فاقد هرگونه ایراد بوده است.
 
 ![virustotal.jpg](screenshot/virustotal.jpg)
 
-# App Security
+# Application Security
 
 The open-source Oblivion application, recognized as one of the most secure and reliable VPN providers, has played a crucial role in providing unrestricted internet access for Iranian users during recent disruptions going on in Iran.
 
