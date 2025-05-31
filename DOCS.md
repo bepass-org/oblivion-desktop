@@ -1,4 +1,4 @@
-# Dev Docs
+# DEVELOPER DOCUMENTATION
 
 Oblivion Desktop is an [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
 ](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
