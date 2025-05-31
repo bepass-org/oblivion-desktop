@@ -97,4 +97,6 @@ Pre-commit type checking## Notes
 - `od` refers to `oblivion desktop` in the source code.
 - `hp` refers to `oblivion helper` in the source code.
 
+Note: On Linux/MacOS, configuration files for the program are in `~/.config/oblivion-desktop` (that's `/home/user/.config/oblivion-desktop` as realpath) - **do not touch these files.**
+
 Happy hacking! 😉
