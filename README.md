@@ -58,7 +58,7 @@ technology.
             </td>
         </tr>
         <tr>
-            <td>Network configuration</td>
+            <td>Network configurations</td>
             <td>
                 :white_check_mark: Proxy <small>(No changes)</small><br>
                 :white_check_mark: System Proxy <small>(With PAC)</small><br>
@@ -66,14 +66,14 @@ technology.
             </td>
         </tr>
         <tr>
-            <td>Routing Rules</td>
+            <td>Routing rules</td>
             <td>
                 :white_check_mark: System Proxy<br>
                 :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>
-            <td>System Tray</td>
+            <td>System tray</td>
             <td>
                 :white_check_mark:  Minimize<br>
                 :white_check_mark: BootUp<br>
