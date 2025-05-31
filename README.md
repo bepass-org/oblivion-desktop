@@ -38,7 +38,7 @@ technology.
 
 ![oblivion.jpg](screenshot/oblivion.jpg)
 
-## Quick Overview
+## Overview
 
 <div align=left>
 <table>
@@ -52,17 +52,17 @@ technology.
         <tr>
             <td>Method</td>
             <td>
-                :white_check_mark:  Warp & Warp+ <br>
+                :white_check_mark:  WARP & WARP+ <br>
                 :white_check_mark:  Gool<br>
                 :white_check_mark:  Cfon <small>(Psiphon)</small>
             </td>
         </tr>
         <tr>
-            <td>Network Configuration</td>
+            <td>Network configuration</td>
             <td>
-                :white_check_mark: Proxy <small>(No Change)</small><br>
-                :white_check_mark: System Proxy <small>(with PAC)</small><br>
-                :white_check_mark: TUN <small>(with SingBox)</small>
+                :white_check_mark: Proxy <small>(No changes)</small><br>
+                :white_check_mark: System Proxy <small>(With PAC)</small><br>
+                :white_check_mark: TUN <small>(With [https://github.com/Chocolate4U/Iran-sing-box-rules](SingBox))</small>
             </td>
         </tr>
         <tr>
@@ -231,7 +231,7 @@ This project owes its existence to the groundbreaking work of others. We extend 
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [regedit](https://www.npmjs.com/package/regedit)
-- [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
+- [Iran SingBox Rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
 - [And others! 🧡](package.json) ()
