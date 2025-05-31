@@ -171,8 +171,8 @@ technology.
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/GNU/Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
                 </td>
                 <td>
-                    Gnome<br>
-                    KDE<br>
+                    Gnome (gsettings)<br>
+                    KDE (kio)<br>
                     GNU/Linux (glibc)
                 </td>
             </tr>
