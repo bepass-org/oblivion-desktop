@@ -14,8 +14,8 @@
     </p>
 </div>
 
-Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
-technology
+Oblivion provides a secure, optimised internet access through a user-friendly Windows/Linux/MacOS app using Cloudflare WARP's
+technology.
 
 > Unofficial Desktop version of the mobile VPN: [Oblivion](https://github.com/bepass-org/oblivion)
 
@@ -203,7 +203,7 @@ find your answer, then [create a new issue](https://github.com/bepass-org/oblivi
 ## Get involved!
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
-suggest features, or need some help, we'd love to hear from you!  
+suggest features, or need some help, we'd love to hear from you!
 Check out
 our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md)
 and [Developer Docs](DOCS.md).
@@ -234,7 +234,7 @@ This project owes its existence to the groundbreaking work of others. We extend 
 - [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
-- [and others 🧡](package.json)
+- [And others! 🧡](package.json) ()
 
 ## Contributors
 
