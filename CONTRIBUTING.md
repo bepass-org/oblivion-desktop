@@ -1,4 +1,4 @@
-# Contribution Guide
+# CONTRIBUTION GUIDE
 
 Thank you for your interest in contributing to Oblivion Desktop! We appreciate your help and support. - We have tried our best to provide some documentation on how to contribute to this project; here are some guidelines:
 
