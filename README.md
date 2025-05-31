@@ -160,15 +160,15 @@ technology
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/GNU+Linux-DEB x64-DC470E.svg?logo=debian"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/GNU+Linux-RPM x64-01ABD2.svg?logo=redhat"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/GNU+Linux-tar.xz x64-EDC204.svg?logo=linux"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/GNU+Linux-AppImage x64-bf7645.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/GNU/Linux-DEB x64-DC470E.svg?logo=debian"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/GNU/Linux-RPM x64-01ABD2.svg?logo=redhat"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/GNU/Linux-tar.xz x64-EDC204.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/GNU/Linux-AppImage x64-bf7645.svg?logo=linux"></a>
                     <br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/GNU+Linux-DEB arm64-DC470E.svg?logo=debian"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/GNU+Linux-RPM arm64-01ABD2.svg?logo=redhat"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/GNU+Linux-tar.xz arm64-EDC204.svg?logo=linux"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/GNU+Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/GNU/Linux-DEB arm64-DC470E.svg?logo=debian"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/GNU/Linux-RPM arm64-01ABD2.svg?logo=redhat"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/GNU/Linux-tar.xz arm64-EDC204.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/GNU/Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
                 </td>
                 <td>
                     Gnome<br>
@@ -185,7 +185,7 @@ technology
             </tr>
             <tr>
                 <td>
-                    <img src="https://img.shields.io/badge/iOS-Coming soon ...-pink.svg?logo=apple">
+                    <img src="https://img.shields.io/badge/iOS-Coming soon...-pink.svg?logo=apple">
                 </td>
                 <td></td>
             </tr>
