@@ -93,7 +93,7 @@ ago. However, development of Oblivion and Warp-Plus is currently progressing und
 
 ## Is Oblivion secure?
 
-Both the Oblivion and Oblivion Desktop programs, as well as the WARP-Plus core, are open-source (FOSS) and their source code is
+Both the Oblivion and Oblivion Desktop programs, as well as the WARP-Plus core, are open-source and their source code is
 available on GitHub. Additionally, project builds are automatically performed by GitHub Actions.
 
 ## Is the WARP Cloudflare service secure?
