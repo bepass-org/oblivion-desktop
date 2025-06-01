@@ -195,9 +195,13 @@ export default function Options() {
                         </div>
                         <div
                             role='button'
-                            className='item'
-                            onClick={onClickStartMinimizedButton}
-                            onKeyDown={onKeyDownStartMinimizedButton}
+                            className={classNames('item', platform === 'darwin' ? 'disabled' : '')}
+                            onClick={
+                                platform !== 'darwin' ? onClickStartMinimizedButton : undefined
+                            }
+                            onKeyDown={
+                                platform !== 'darwin' ? onKeyDownStartMinimizedButton : undefined
+                            }
                             tabIndex={0}
                         >
                             <label

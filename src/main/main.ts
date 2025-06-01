@@ -428,9 +428,9 @@ class OblivionDesktop {
             }
         } else {
             this.state.mainWindow?.hide();
-            if (isDarwin) {
+            /*if (isDarwin) {
                 app?.dock?.hide();
-            }
+            }*/
         }
     }
 
@@ -934,9 +934,9 @@ class OblivionDesktop {
         } else {
             this.state.mainWindow.show();
             this.state.mainWindow?.setSkipTaskbar(false);
-            if (isDarwin) {
-                //app?.dock?.show();
-            }
+            /*if (isDarwin) {
+                app?.dock?.show();
+            }*/
             if (route) {
                 this.state.trayMenuEvent?.reply('tray-menu', {
                     key: 'changePage',
