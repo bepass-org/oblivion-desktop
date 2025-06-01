@@ -1,7 +1,7 @@
 name: Build and Upload to Launchpad PPA
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build-and-upload:
