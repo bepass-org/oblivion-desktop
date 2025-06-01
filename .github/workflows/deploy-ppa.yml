@@ -40,7 +40,7 @@ ${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium
 
   * Initial release.
 
- -- Oblivion Desktop <${{ secrets.LAUNCHPAD_USERNAME }}>  $(date -R)
+ -- Oblivion Desktop <$LAUNCHPAD_USERNAME>  $(date -R)
 EOF
 
       - name: Setup GPG for signing commits and packages
@@ -50,7 +50,7 @@ EOF
           git config --global user.signingkey "$GPG_KEY_ID"
           git config --global commit.gpgsign true
           git config --global user.name "Oblivion Desktop"
-          git config --global user.email "${LAUNCHPAD_USERNAME}"
+          git config --global user.email "$LAUNCHPAD_USERNAME"
 
       - name: Build source package
         run: |
