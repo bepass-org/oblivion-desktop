@@ -3,7 +3,7 @@
 Oblivion Desktop is an [Electron](https://www.electronjs.org/) project bootstrapped with [Electron React Boilerplate.
 ](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
-In a nutshell, Oblivion Desktop is a GUI program that interacts with "[WARP+](https://github.com/bepass-org/warp-plus/)"'s binary executable and changes the system's proxy settings.
+In a nutshell, Oblivion Desktop is a GUI program that interacts with "[WARP-Plus](https://github.com/bepass-org/warp-plus/)"'s binary executable and changes the system's proxy settings.
 
 <!-- and [sing-box](https://sing-box.sagernet.org/alig) binaries. -->
 
@@ -57,14 +57,14 @@ Take a loot at `src/main/ipc.ts` and `src/renderer/index.tsx` for an in-action e
 For clarity when working with the TypeScript codebase:
 
 ### Dependencies
-After Warp+ (wp) updates, always refresh dependencies:
+After Warp-Plus (wp) updates, always refresh dependencies:
 
 ```bash
 npm install
 Code Abbreviations
 ```
 
-<b>wp:</b> WARP+ module (Cloudflare integration)
+<b>wp:</b> WARP-Plus module (Cloudflare integration)
 
 <b>od:</b> Oblivion Desktop core functionality
 
