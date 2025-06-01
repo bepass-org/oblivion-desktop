@@ -73,7 +73,7 @@ the user interface pattern of the original version developed by Youssef Ghobadi.
 ## How does this application work?
 
 The Oblivion Desktop app essentially functions as a secure VPN for bypassing filtering and circumventing sanctions,
-utilizing the WARP+ core.
+utilizing the WARP-Plus core.
 
 ## Why does my IP sometimes show as Iranian?
 
@@ -93,14 +93,14 @@ ago. However, development of Oblivion and Warp-Plus is currently progressing und
 
 ## Is Oblivion secure?
 
-Both the Oblivion and Oblivion Desktop programs, as well as the WARP+ core, are open-source (FOSS) and their source code is
+Both the Oblivion and Oblivion Desktop programs, as well as the WARP-Plus core, are open-source (FOSS) and their source code is
 available on GitHub. Additionally, project builds are automatically performed by GitHub Actions.
 
 ## Is the WARP Cloudflare service secure?
 
 WARP encrypts a larger amount of outgoing traffic from your device, preventing anyone from interfering with your work.
 
-## What is the purpose of this free and open source program (FOSS program)?
+## What is the purpose of this program?
 
 To realize the slogan of "Internet for all or for none," as well as to provide free access to the internet, especially
 for underserved populations.
