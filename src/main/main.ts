@@ -935,7 +935,7 @@ class OblivionDesktop {
             this.state.mainWindow.show();
             this.state.mainWindow?.setSkipTaskbar(false);
             if (isDarwin) {
-                app?.dock?.show();
+                //app?.dock?.show();
             }
             if (route) {
                 this.state.trayMenuEvent?.reply('tray-menu', {
