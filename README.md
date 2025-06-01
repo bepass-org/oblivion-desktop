@@ -52,7 +52,7 @@ technology.
         <tr>
             <td>Method</td>
             <td>
-                :white_check_mark:  WARP & WARP-Plus <br>
+                :white_check_mark:  WARP & WARP+ <br>
                 :white_check_mark:  Gool<br>
                 :white_check_mark:  Cfon <small>(Psiphon)</small>
             </td>
