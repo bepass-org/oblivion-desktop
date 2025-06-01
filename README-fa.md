@@ -183,8 +183,8 @@ Cloudflare Warp فراهم می‌کند.
                     <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/GNU/Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
                 </td>
                 <td>
-                    گنوم<br>
-                    کی‌دی‌ای<br>
+                    گنوم (جی‌ستینگز)<br>
+                    کی‌دی‌ای (کیو)<br>
                     جی‌لیبیسی (glibc)
                 </td>
             </tr>
