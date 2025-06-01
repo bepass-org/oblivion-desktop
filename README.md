@@ -234,7 +234,7 @@ This project owes its existence to the groundbreaking work of others. We extend 
 - [Iran SingBox Rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
-- [And others! 🧡](package.json) ()
+- [And others! 🧡](package.json)
 
 ## Contributors
 
