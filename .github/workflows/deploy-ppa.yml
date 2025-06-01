@@ -35,13 +35,7 @@ jobs:
           cd ${PACKAGE_NAME}-${VERSION}
           dh_make -s -y -p ${PACKAGE_NAME}_${VERSION}
           rm -f debian/*.ex debian/*.EX debian/README.*
-          cat > debian/changelog <<EOF
-${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium
-
-  * Initial release.
-
- -- Oblivion Desktop <$LAUNCHPAD_USERNAME>  $(date -R)
-EOF
+          printf "%s\n" "${PACKAGE_NAME} (${VERSION}) unstable; urgency=medium" "" "  * Initial release." "" " -- Oblivion Desktop <$LAUNCHPAD_USERNAME>  $(date -R)" > debian/changelog
 
       - name: Setup GPG for signing commits and packages
         run: |
