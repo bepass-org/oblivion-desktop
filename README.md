@@ -52,7 +52,7 @@ technology.
         <tr>
             <td>Method</td>
             <td>
-                :white_check_mark:  WARP & WARP+ <br>
+                :white_check_mark:  WARP & WARP-Plus <br>
                 :white_check_mark:  Gool<br>
                 :white_check_mark:  Cfon <small>(Psiphon)</small>
             </td>
@@ -62,7 +62,7 @@ technology.
             <td>
                 :white_check_mark: Proxy <small>(No changes)</small><br>
                 :white_check_mark: System Proxy <small>(With PAC)</small><br>
-                :white_check_mark: TUN <small>(With [https://github.com/Chocolate4U/Iran-sing-box-rules](SingBox))</small>
+                :white_check_mark: TUN <small>With Sing-Box</small>
             </td>
         </tr>
         <tr>
@@ -231,7 +231,7 @@ This project owes its existence to the groundbreaking work of others. We extend 
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [regedit](https://www.npmjs.com/package/regedit)
-- [Iran SingBox Rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
+- [Iran Sing-Box Rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
 - [And others! 🧡](package.json)
