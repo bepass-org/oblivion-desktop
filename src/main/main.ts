@@ -410,9 +410,7 @@ class OblivionDesktop {
             this.state.mainWindow?.hide();
             this.state.appIcon?.destroy();
             this.state.appIcon = null;
-            //await new Promise((resolve) => setTimeout(resolve, 1000));
             await exitTheApp();
-            await new Promise((resolve) => setTimeout(resolve, 1500));
             this.state.connectionStatus = 'disconnected';
             app.quit();
             
@@ -1057,6 +1055,11 @@ class OblivionDesktop {
         return getList;
     }
 
+    private sleep(ms: number): Promise<void> {
+        // eslint-disable-next-line no-promise-executor-return
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     public async handleAppReady(): Promise<void> {
         app.whenReady().then(async () => {
             try {
@@ -1064,7 +1067,7 @@ class OblivionDesktop {
                 if (this.state.isFirstRun) {
                     this.state.isFirstRun = false;
                     app.relaunch();
-                    await new Promise((resolve) => setTimeout(resolve, 1500));
+                    await this.sleep(1500);
                     app.exit(0);
                     return;
                 }

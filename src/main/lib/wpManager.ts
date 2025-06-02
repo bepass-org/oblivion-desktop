@@ -93,7 +93,6 @@ class WarpPlusManager {
                 });
                 log.info('Relaunching app due to warp-plus error.');
                 app.relaunch();
-                await new Promise((resolve) => setTimeout(resolve, 1500));
                 app.exit(0);
                 
             } catch (error) {

@@ -1,3 +1,4 @@
+/* eslint-disable global-require, import/no-dynamic-require */
 export const cfFlag = (code: string | boolean): string => {
     const flagMapping: Record<string, string> = {
         ir: 'iran',

@@ -36,22 +36,22 @@ export function readLogFile(value: string) {
 }
 
 export const getOsInfo = async () => {
-    let getOsInfo = '';
+    let getOsInfoLog = '';
     await osInfo()
         .then((data) => {
-            getOsInfo += (data.distro ? data.distro : process.platform) + ' ';
-            getOsInfo += '(' + (data.release ? data.release : os.release()) + ') ';
-            getOsInfo += (data.arch ? data.arch : process.arch) + ' ';
-            getOsInfo += data.build ? data.build : '';
+            getOsInfoLog += (data.distro ? data.distro : process.platform) + ' ';
+            getOsInfoLog += '(' + (data.release ? data.release : os.release()) + ') ';
+            getOsInfoLog += (data.arch ? data.arch : process.arch) + ' ';
+            getOsInfoLog += data.build ? data.build : '';
         })
         .catch((err) => {
             log.error(err);
-            getOsInfo = process.platform + ' ' + os.release() + ' ' + process.arch;
+            getOsInfoLog = process.platform + ' ' + os.release() + ' ' + process.arch;
         });
-    return getOsInfo;
+    return getOsInfoLog;
 };
 
-export const logMetadata = (osInfo: string) => {
+export const logMetadata = (osInfoVal: string) => {
     const method = settings.get('method');
     const proxyMode = settings.get('proxyMode');
     const license = settings.get('license');
@@ -89,7 +89,7 @@ export const logMetadata = (osInfo: string) => {
     ])
         .then((data) => {
             log.info('------------------------MetaData------------------------');
-            log.info(`running on: ${osInfo}`);
+            log.info(`running on: ${osInfoVal}`);
             log.info(`at od: v${packageJsonData.version}`);
             log.info(`at wp: v${wpVersion}`);
             log.info(`at hp: v${helperVersion}`);

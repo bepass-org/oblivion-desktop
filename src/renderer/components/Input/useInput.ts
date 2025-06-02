@@ -34,7 +34,8 @@ const useInput = (value: string, onChange: (event: ChangeEvent<HTMLInputElement>
         const menuHeight = 100;
         const maxX = window.innerWidth - menuWidth;
         const parent = inputRef.current?.offsetParent as HTMLElement;
-        const maxY = parent?.clientHeight + 15 - menuHeight;
+        const parentHeight = parent?.clientHeight ?? 0; 
+        const maxY = parentHeight + 15 - menuHeight;
         const left = Math.min(positionX, maxX);
         const top = Math.min(positionY, maxY);
 

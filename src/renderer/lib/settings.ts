@@ -31,13 +31,13 @@ export class settings {
 
         return new Promise((resolve, reject) => {
             ipcRenderer.on('settings', (res: any) => {
-                const filteredObj: any = {};
                 try {
-                    for (const [key, value] of Object.entries(res)) {
+                    const filteredObj = Object.entries(res).reduce((acc:any, [key, value]) => {
                         if (keys.includes(key)) {
-                            filteredObj[key] = value;
+                            acc[key] = value;
                         }
-                    }
+                        return acc;
+                    }, {});
                     resolve(filteredObj);
                 } catch (error) {
                     console.error('settings - ipcRenderer.on - error:', error);

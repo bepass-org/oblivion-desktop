@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 const DownloadProgressBar = ({ data }: any) => {
     const [latestPercent, setLatestPercent] = useState<number>(0);
 
-    if (!data) return null;
-
     useEffect(() => {
         if (data?.percent > 0) {
             setLatestPercent(data.percent);
         }
     }, [data?.percent]);
+
+    if (!data) return null;
 
     return (
         <div

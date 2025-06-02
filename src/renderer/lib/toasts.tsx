@@ -10,6 +10,7 @@ const defaultToastStyle = {
 };
 
 export const defaultToast = (msg = '', id = 'ID', duration = 5000) => {
+    /* eslint-disable-next-line react/no-danger */
     toast(<div dangerouslySetInnerHTML={{ __html: msg }} />, {
         id: id,
         duration: duration,

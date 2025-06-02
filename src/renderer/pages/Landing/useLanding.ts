@@ -83,6 +83,66 @@ const useLanding = () => {
 
     const navigate = useNavigate();
 
+    const getIpLocation = async () => {
+        if (isFetching || isLoading || !isConnected) return;
+        isFetching = true;
+        try {
+            const currentTime = Date.now();
+            if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
+                setIpInfo(cachedIpInfo);
+                return;
+            }
+            const traceStarted = window.performance.now();
+            const controller = new AbortController();
+            const signal = controller.signal;
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+            }, 5000);
+            const response = await fetch(String(testUrl), {
+                signal
+            });
+            const data = await response.text();
+            const parseLine = (key: string) =>
+                data
+                    .split('\n')
+                    .find((line) => line.startsWith(`${key}=`))
+                    ?.split('=')[1];
+            const getIp = parseLine('ip') || '127.0.0.1';
+            const getLoc = parseLine('loc')?.toLowerCase() || false;
+            const checkWarp = parseLine('warp') || '';
+            const cfHost = parseLine('h') || 'off';
+            if (getLoc && (cfHost === '1.1.1.1' || cfHost === new URL(String(testUrl)).hostname)) {
+                if (
+                    (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
+                    checkWarp !== 'off'
+                ) {
+                    const ipInfo2 = {
+                        countryCode: getLoc,
+                        ip: getIp
+                    };
+                    cachedIpInfo = ipInfo2;
+                    lastFetchTime = currentTime;
+                    setIpInfo(ipInfo2);
+                    setPing(Math.round(window.performance.now() - traceStarted));
+                } else {
+                    setTimeout(getIpLocation, 7500);
+                }
+            } else {
+                setTimeout(getIpLocation, 7500);
+            }
+            clearTimeout(timeoutId);
+        } catch (error) {
+            /*setIpInfo({
+                countryCode: false,
+                ip: '127.0.0.1'
+            });*/
+            setTimeout(getIpLocation, 10000);
+            //onChange();
+        } finally {
+            isFetching = false;
+        }
+    };
+
     const onChange = useCallback(() => {
         if (!isSystemDateValid()) {
             defaultToast(appLang?.log?.error_local_date, 'GUIDE', 7000);
@@ -376,66 +436,6 @@ const useLanding = () => {
             http.send();
         } catch (error) {
             setPing(-1);
-        }
-    };
-
-    const getIpLocation = async () => {
-        if (isFetching || isLoading || !isConnected) return;
-        isFetching = true;
-        try {
-            const currentTime = Date.now();
-            if (cachedIpInfo && currentTime - lastFetchTime < cacheDuration) {
-                setIpInfo(cachedIpInfo);
-                return;
-            }
-            const traceStarted = window.performance.now();
-            const controller = new AbortController();
-            const signal = controller.signal;
-            const timeoutId = setTimeout(() => {
-                controller.abort();
-            }, 5000);
-            const response = await fetch(String(testUrl), {
-                signal
-            });
-            const data = await response.text();
-            const parseLine = (key: string) =>
-                data
-                    .split('\n')
-                    .find((line) => line.startsWith(`${key}=`))
-                    ?.split('=')[1];
-            const getIp = parseLine('ip') || '127.0.0.1';
-            const getLoc = parseLine('loc')?.toLowerCase() || false;
-            const checkWarp = parseLine('warp') || '';
-            const cfHost = parseLine('h') || 'off';
-            if (getLoc && (cfHost === '1.1.1.1' || cfHost === new URL(String(testUrl)).hostname)) {
-                if (
-                    (method === 'psiphon' && checkWarp === 'off' && getLoc !== 'ir') ||
-                    checkWarp !== 'off'
-                ) {
-                    const ipInfo2 = {
-                        countryCode: getLoc,
-                        ip: getIp
-                    };
-                    cachedIpInfo = ipInfo2;
-                    lastFetchTime = currentTime;
-                    setIpInfo(ipInfo2);
-                    setPing(Math.round(window.performance.now() - traceStarted));
-                } else {
-                    setTimeout(getIpLocation, 7500);
-                }
-            } else {
-                setTimeout(getIpLocation, 7500);
-            }
-            clearTimeout(timeoutId);
-        } catch (error) {
-            /*setIpInfo({
-                countryCode: false,
-                ip: '127.0.0.1'
-            });*/
-            setTimeout(getIpLocation, 10000);
-            //onChange();
-        } finally {
-            isFetching = false;
         }
     };
 

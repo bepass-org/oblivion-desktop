@@ -54,7 +54,7 @@ export const loadSettings = () => {
     settings
         .getMultiple(keyList)
         .then(async (values) => {
-            for (const key of keyList) {
+            const promises = keyList.map(async (key) => {
                 if (key === 'theme') {
                     if (typeof values.theme === 'undefined') {
                         const defaultTheme = detectingSystemTheme ? 'dark' : 'light';
@@ -65,7 +65,8 @@ export const loadSettings = () => {
                         await settings.set(key, defaultSettings[key]);
                     }
                 }
-            }
+            });
+            await Promise.all(promises);
         })
         .catch((error) => {
             console.error('Error fetching settings:', error);

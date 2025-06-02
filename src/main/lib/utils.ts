@@ -179,11 +179,9 @@ export const exitTheApp = async () => {
 
     // Emit 'wp-end' and wait
     ipcMain.emit('wp-end', true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Emit 'end-wp-and-exit-app' and wait
     ipcMain.emit('end-wp-and-exit-app');
-    //await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // make sure to kill wp process before exit (for linux(windows and mac kill child processes by default))
     if (process.platform === 'darwin') {

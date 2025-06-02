@@ -80,6 +80,7 @@ export const validateCountry = (location: string, method: string): string => {
 
 export const validateLicense = (license: string): string => {
     license = license.trim();
+    // eslint-disable-next-line no-control-regex
     license = license.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
     if (license.length < 3) {
         return '';
@@ -185,17 +186,6 @@ export const parseEndpointConfig = (pastedText: string): ConfigType | null => {
     };
 };
 
-export const validateConfig = (pastedText: string): ConfigType | null => {
-    if (pastedText.startsWith('oblivion://profile')) {
-        return parseProfileConfig(pastedText);
-    } else if (pastedText.startsWith('oblivion://endpoint')) {
-        return parseEndpointConfig(pastedText);
-    } else if (pastedText.startsWith('oblivion://')) {
-        return parseConnectionConfig(pastedText);
-    }
-    return null;
-};
-
 export const parseConnectionConfig = (pastedText: string): ConfigType | null => {
     const match = /^oblivion:\/\/(warp|psiphon|gool)@([^?]*)\??(.*)$/i.exec(pastedText);
     if (!match) return null;
@@ -214,6 +204,17 @@ export const parseConnectionConfig = (pastedText: string): ConfigType | null => 
         ipType,
         reserved
     };
+};
+
+export const validateConfig = (pastedText: string): ConfigType | null => {
+    if (pastedText.startsWith('oblivion://profile')) {
+        return parseProfileConfig(pastedText);
+    } else if (pastedText.startsWith('oblivion://endpoint')) {
+        return parseEndpointConfig(pastedText);
+    } else if (pastedText.startsWith('oblivion://')) {
+        return parseConnectionConfig(pastedText);
+    }
+    return null;
 };
 
 export const removeLeadingZeros = (input: any) => {
