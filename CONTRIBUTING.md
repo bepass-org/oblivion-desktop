@@ -24,15 +24,15 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
     The current translation is done from English to other languages. Persian and English are translated manually, while other languages are translated with the help of AI. Your contributions to improving the translation and providing feedback are welcome.
 
     - We prioritize translations for languages spoken in regions with systemic internet censorship that broadly restricts access to information, similar to the digital environments in Iran, China, and Russia. Our program focuses on supporting communities where:
-			(a) Internet restrictions disproportionately impacts general freedoms of expression and access to information
-			(b) Censorship extends beyond targeted law enforcement against illegal activities.
-		For countries where online restrictions are primarily applied to combat criminal content (e.g., child exploitation materials, terrorist propaganda, or hate speech), English remains the supported interface language. This allows us to concentrate our limited resources where they can have the greatest impact in promoting open access to information. We evaluate all translation requests against these criteria to ensure alignment with our mission of fighting unjust censorship.
+      (a) Internet restrictions disproportionately impacts general freedoms of expression and access to information
+      (b) Censorship extends beyond targeted law enforcement against illegal activities.
+      For countries where online restrictions are primarily applied to combat criminal content (e.g., child exploitation materials, terrorist propaganda, or hate speech), English remains the supported interface language. This allows us to concentrate our limited resources where they can have the greatest impact in promoting open access to information. We evaluate all translation requests against these criteria to ensure alignment with our mission of fighting unjust censorship.
     - If you want to edit the translated text in this application, you can directly edit the files in the [src/localization](src/localization) directory.
     - If you're interested in translating markdown (.md) files for new languages, simply create the language file next to the original file. (We will take care of the directory structure if needed.)
 
 - ### 💬 Discussions
 
-	If you have any questions, suggestions, complaints, or concerns that are not addressed in our document(s), please feel free to open an [issue](https://github.com/bepass-org/oblivion-desktop/issues) or directory contact us as we are willing to discuss about this project at any time.
+    If you have any questions, suggestions, complaints, or concerns that are not addressed in our document(s), please feel free to open an [issue](https://github.com/bepass-org/oblivion-desktop/issues) or directory contact us as we are willing to discuss about this project at any time.
 
 ### ⚠️ Warning!
 

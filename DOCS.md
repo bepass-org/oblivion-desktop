@@ -54,9 +54,11 @@ We need to use [IPC](https://www.electronjs.org/docs/latest/tutorial/ipc) in ord
 Take a loot at `src/main/ipc.ts` and `src/renderer/index.tsx` for an in-action example.
 
 # Codebase Terminology
+
 For clarity when working with the TypeScript codebase:
 
 ### Dependencies
+
 After Warp-Plus (wp) updates, always refresh dependencies:
 
 ```bash
@@ -73,6 +75,7 @@ Code Abbreviations
 <b>TypeScript Conventions</b>
 
 - All abbreviations should be typed explicitly:
+
 ```ts
 interface WpConfig { /* Warp-plus settings */ }
 type OdState = /* OblivionDesktop state */;
@@ -80,10 +83,12 @@ Avoid inline abbreviations - use proper type aliases
 ```
 
 - Document abbreviations in JSDoc:
+
 ```ts
 /** @param wpConfig - Warp-plus configuration object */
-Maintenance
+Maintenance;
 ```
+
 The project uses:
 
 Strict TypeScript (strict: true)
