@@ -56,7 +56,7 @@ export const loadSettings = () => {
         .then(async (values) => {
             for (const key of keyList) {
                 if (key === 'theme') {
-                    if (typeof values['theme'] === 'undefined') {
+                    if (typeof values.theme === 'undefined') {
                         const defaultTheme = detectingSystemTheme ? 'dark' : 'light';
                         await settings.set('theme', defaultTheme);
                     }

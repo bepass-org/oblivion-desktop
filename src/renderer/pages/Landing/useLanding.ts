@@ -118,6 +118,34 @@ const useLanding = () => {
         }
     }, [appLang?.toast?.offline, isLoading, isConnected, proxyMode]);
 
+    const handleOnClickIp = () => {
+        const getTime = new Date().getTime();
+        if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
+            setIpInfo({
+                countryCode: false,
+                ip: ''
+            });
+            return;
+        }
+        getIpLocation();
+    };
+
+    const checkForUpdates = async () => {
+        const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
+        if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
+        try {
+            const comparison = await checkNewUpdate(packageJsonData?.version);
+            setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
+            localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
+            localStorage.setItem(
+                'OBLIVION_NEWUPDATE',
+                typeof comparison === 'boolean' ? (comparison ? 'true' : 'false') : 'false'
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         //ipcRenderer.clean();
 
@@ -332,22 +360,6 @@ const useLanding = () => {
         connectedToIrIPOnceDisplayed = true;
     };
 
-    const checkForUpdates = async () => {
-        const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
-        if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
-        try {
-            const comparison = await checkNewUpdate(packageJsonData?.version);
-            setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
-            localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
-            localStorage.setItem(
-                'OBLIVION_NEWUPDATE',
-                typeof comparison === 'boolean' ? (comparison ? 'true' : 'false') : 'false'
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     const getPing = async () => {
         try {
             if (!ipInfo?.countryCode) {
@@ -429,7 +441,7 @@ const useLanding = () => {
 
     useEffect(() => {
         if (!ipInfo) return;
-        if (typeof ipInfo?.countryCode != 'string') return;
+        if (typeof ipInfo?.countryCode !== 'string') return;
         if (method === '' && ipInfo?.countryCode === 'ir') {
             ipToast();
         } else if (method === 'gool' && ipInfo?.countryCode === 'ir') {
@@ -504,18 +516,6 @@ const useLanding = () => {
             onChange();
         }
     }, [isConnected, isLoading, onChange]);
-
-    const handleOnClickIp = () => {
-        const getTime = new Date().getTime();
-        if (cachedIpInfo && getTime - lastFetchTime < cacheDuration) {
-            setIpInfo({
-                countryCode: false,
-                ip: ''
-            });
-            return;
-        }
-        getIpLocation();
-    };
 
     const handleOnClickPing = () => {
         if (ping >= 0) {

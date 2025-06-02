@@ -103,7 +103,7 @@ export const validateTestUrl = (url: string): string => {
     }
     if (!url.endsWith('/cdn-cgi/trace')) {
         url = url.replace(/\/$/, '');
-        url = url + '/cdn-cgi/trace';
+        url += '/cdn-cgi/trace';
     }
     url = url.replace(/\/$/, '');
     return url;
@@ -217,7 +217,7 @@ export const parseConnectionConfig = (pastedText: string): ConfigType | null => 
 };
 
 export const removeLeadingZeros = (input: any) => {
-    let numberString = input.toString();
+    const numberString = input.toString();
     if (numberString.startsWith('0')) {
         return numberString.replace(/^0+/, '');
     }

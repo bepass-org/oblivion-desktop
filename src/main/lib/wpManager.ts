@@ -5,6 +5,8 @@ import treeKill from 'tree-kill';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
+import sound from 'sound-play';
+import Aplay from 'node-aplay';
 import { isDev, removeFileIfExists, shouldProxySystem } from './utils';
 import { disableProxy as disableSystemProxy, enableProxy as enableSystemProxy } from './proxy';
 import { getOsInfo, logMetadata } from '../ipcListeners/log';
@@ -27,8 +29,6 @@ import {
     exclusionsPath
 } from '../../constants';
 
-import sound from 'sound-play';
-import Aplay from 'node-aplay';
 
 // Types and Enums
 enum ConnectionState {
@@ -95,7 +95,7 @@ class WarpPlusManager {
                 app.relaunch();
                 await new Promise((resolve) => setTimeout(resolve, 1500));
                 app.exit(0);
-                return;
+                
             } catch (error) {
                 retryCount++;
                 log.error(`Error during app restart (attempt ${retryCount}):`, error);
@@ -195,7 +195,7 @@ class WarpPlusManager {
                 if (err) {
                     log.error('⚠️ Failed to execute exclusion script:', err);
                     this.restartApp(1500);
-                    return;
+                    
                 }
             }
         );

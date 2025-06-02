@@ -203,7 +203,7 @@ const useOptions = () => {
     const onChangeDNS = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
             const dnsValue = event.target.value;
-            if (dnsValue == 'custom') {
+            if (dnsValue === 'custom') {
                 setShowDnsModal(true);
             } else {
                 setDns(dnsValue);

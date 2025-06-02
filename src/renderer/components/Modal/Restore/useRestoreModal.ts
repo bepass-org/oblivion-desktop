@@ -1,4 +1,5 @@
 import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     defaultSettings,
     dnsServers,
@@ -12,7 +13,6 @@ import { settings } from '../../../lib/settings';
 import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
 import useTranslate from '../../../../localization/useTranslate';
-import { useNavigate } from 'react-router-dom';
 import { loadingToast, stopLoadingToast } from '../../../lib/toasts';
 
 interface RestoreModalProps {

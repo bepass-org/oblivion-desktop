@@ -76,7 +76,7 @@ const LandingHeader: FC<LandingHeaderProps> = ({
                     <i className={classNames('material-icons', 'log')}>&#xe868;</i>
                 </Link>
                 {showPasteOption && (
-                    <div onClick={handleIconClick} tabIndex={0}>
+                    <div onClick={handleIconClick}>
                         <i className={classNames('material-icons', 'navPaste')}>&#xea8e;</i>
                     </div>
                 )}

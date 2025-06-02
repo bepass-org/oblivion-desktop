@@ -22,6 +22,10 @@ import log from 'electron-log';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
+import { spawn } from 'child_process';
+import https from 'https';
+import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
+import { networkInterfaces } from 'systeminformation';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev, isDebug } from './lib/utils';
 import { openDevToolsByDefault, openDevToolsInFullScreen, useCustomWindowXY } from './dxConfig';
@@ -51,11 +55,7 @@ import {
     isDarwin,
     isLinux
 } from '../constants';
-import { spawn } from 'child_process';
-import https from 'https';
 import packageJsonData from '../../package.json';
-import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
-import { networkInterfaces } from 'systeminformation';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
 const WINDOW_DIMENSIONS = {
@@ -415,11 +415,11 @@ class OblivionDesktop {
             await new Promise((resolve) => setTimeout(resolve, 1500));
             this.state.connectionStatus = 'disconnected';
             app.quit();
-            return;
+            
         } catch (error) {
             log.error('Error while exiting the app:', error);
             app.exit(1);
-            return;
+            
         }
     }
 
@@ -639,12 +639,12 @@ class OblivionDesktop {
             response.on('error', (err) => {
                 log.error('Download error:', err);
                 this.onDownloadError();
-                return;
+                
             });
             file.on('error', (err) => {
                 log.error('File write error:', err);
                 this.onDownloadError();
-                return;
+                
             });
         });
         request.on('error', (err) => {

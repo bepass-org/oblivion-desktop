@@ -47,7 +47,7 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
 
     const initSuggestion = useMemo(() => {
         const storedSuggestion = localStorage?.getItem('OBLIVION_TEST_URL');
-        let data = storedSuggestion ? JSON.parse(storedSuggestion) : JSON.parse('[]');
+        const data = storedSuggestion ? JSON.parse(storedSuggestion) : JSON.parse('[]');
         return data;
     }, []);
 
@@ -60,7 +60,7 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
                 'https://raw.githubusercontent.com/ircfspace/testUrl/refs/heads/main/url.json'
             );
             if (response.ok) {
-                let data = await response.json();
+                const data = await response.json();
                 if (data?.length > 0) {
                     setSuggestion(data);
                     localStorage.setItem('OBLIVION_TEST_URL', JSON.stringify(data));

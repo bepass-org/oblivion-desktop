@@ -11,7 +11,7 @@ const ConfigHandler = ({ isConnected, isLoading, appLang }: any) => {
 
         const handlePaste = (event: ClipboardEvent) => {
             event.preventDefault();
-            let pastedText = event.clipboardData?.getData('Text') || '';
+            const pastedText = event.clipboardData?.getData('Text') || '';
             saveConfig(pastedText, isConnected, isLoading, appLang);
             setTimeout(async () => {
                 try {

@@ -2,7 +2,7 @@ import settings from 'electron-settings';
 import { IpcMainEvent } from 'electron';
 import log from 'electron-log';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import { defaultSettings } from '../../defaultSettings';
 import { shouldProxySystem } from './utils';
@@ -11,7 +11,6 @@ import { createPacScript, killPacScriptServer, servePacScript } from './pacScrip
 import { getTranslate } from '../../localization';
 
 const execPromise = promisify(exec);
-import { spawn } from 'child_process';
 
 let oldProxyHost = '';
 let oldProxyPort = '';
