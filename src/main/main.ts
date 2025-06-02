@@ -48,7 +48,8 @@ import {
     proxyResetPath,
     proxyResetAssetPath,
     isWindows,
-    isDarwin
+    isDarwin,
+    isLinux
 } from '../constants';
 import { spawn } from 'child_process';
 import https from 'https';
@@ -1052,23 +1053,31 @@ class OblivionDesktop {
     }
 
     public async handleAppReady(): Promise<void> {
+        if (isLinux) {
+            app.commandLine.appendSwitch('gtk-version', '3');
+            app.commandLine.appendSwitch('no-sandbox');
+        }
         app.whenReady().then(async () => {
-            await this.createWindow();
-            if (this.state.isFirstRun) {
-                this.state.isFirstRun = false;
-                app.relaunch();
-                await new Promise((resolve) => setTimeout(resolve, 1500));
-                app.exit(0);
-                return;
+            try {
+                await this.createWindow();
+                if (this.state.isFirstRun) {
+                    this.state.isFirstRun = false;
+                    app.relaunch();
+                    await new Promise((resolve) => setTimeout(resolve, 1500));
+                    app.exit(0);
+                    return;
+                }
+                await this.setupTray();
+                await this.checkStartUp();
+                await this.autoConnect();
+                await this.setupMetaData();
+                await this.getNetworkList();
+                //await this.exitStrategy();
+                await this.registerStartupProxyReset();
+                log.info('od is ready!');
+            } catch (error) {
+                log.error('Error during app ready handling:', error);
             }
-            await this.setupTray();
-            await this.checkStartUp();
-            await this.autoConnect();
-            await this.setupMetaData();
-            await this.getNetworkList();
-            //await this.exitStrategy();
-            await this.registerStartupProxyReset();
-            log.info('od is ready!');
         });
     }
 }
