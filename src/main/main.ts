@@ -63,6 +63,11 @@ const WINDOW_DIMENSIONS = {
     height: 650
 };
 
+if (isLinux) {
+    app.commandLine.appendSwitch('gtk-version', '3');
+    app.commandLine.appendSwitch('no-sandbox');
+}
+
 process.on('uncaughtException', (err) => {
     log.error('Uncaught Exception:', err);
 });
@@ -1053,10 +1058,6 @@ class OblivionDesktop {
     }
 
     public async handleAppReady(): Promise<void> {
-        if (isLinux) {
-            app.commandLine.appendSwitch('gtk-version', '3');
-            app.commandLine.appendSwitch('no-sandbox');
-        }
         app.whenReady().then(async () => {
             try {
                 await this.createWindow();
