@@ -14,10 +14,10 @@
     </p>
 </div>
 
-Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
-technology
+Oblivion provides a secure, optimised internet access through a user-friendly Windows/Linux/MacOS app using Cloudflare WARP's
+technology.
 
-> Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
+> Unofficial Desktop version of the mobile VPN: [Oblivion](https://github.com/bepass-org/oblivion)
 
 <b>"Internet, for all or none!"</b>
 
@@ -31,13 +31,14 @@ technology
 
 ## Features
 
-- **Secure VPN**: Custom WireGuard implementation in Go.
-- **Open Source**: Built with transparency & community contribution in mind, leveraging the power of GitHub Actions for automated builds.
-- **User-Friendly**: Simple, intuitive interface.
+- **High-grade VPN Security**: Custom WireGuard® implementation in Golang providing enterprise-level encryption with minimal overhead.
+- **Free and Open Source**: Built with transparency & community contribution in mind, leveraging the power of GitHub Actions for automated builds.Community-driven development with transparent builds via GitHub Actions.
+- **Intuitive Yet Powerful**: Clean interface designed for ease of use while offering advanced configuration options.
+- **Modern Tech Stack**: TypeScript frontend with a high-performance Golang backend featuring our optimized WireGuard® implementation.
 
 ![oblivion.jpg](screenshot/oblivion.jpg)
 
-## Quick Overview
+## Overview
 
 <div align=left>
 <table>
@@ -51,28 +52,28 @@ technology
         <tr>
             <td>Method</td>
             <td>
-                :white_check_mark:  Warp & Warp+ <br>
+                :white_check_mark:  WARP & WARP+ <br>
                 :white_check_mark:  Gool<br>
                 :white_check_mark:  Cfon <small>(Psiphon)</small>
             </td>
         </tr>
         <tr>
-            <td>Network Configuration</td>
+            <td>Network configurations</td>
             <td>
-                :white_check_mark: Proxy <small>(No Change)</small><br>
-                :white_check_mark: System Proxy <small>(with PAC)</small><br>
-                :white_check_mark: TUN <small>(with SingBox)</small>
+                :white_check_mark: Proxy <small>(No changes)</small><br>
+                :white_check_mark: System Proxy <small>(With PAC)</small><br>
+                :white_check_mark: TUN <small>With Sing-Box</small>
             </td>
         </tr>
         <tr>
-            <td>Routing Rules</td>
+            <td>Routing rules</td>
             <td>
                 :white_check_mark: System Proxy<br>
                 :white_check_mark: GeoDB
             </td>
         </tr>
         <tr>
-            <td>System Tray</td>
+            <td>System tray</td>
             <td>
                 :white_check_mark:  Minimize<br>
                 :white_check_mark: BootUp<br>
@@ -159,19 +160,20 @@ technology
             </tr>
             <tr>
                 <td>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/Linux-DEB x64-DC470E.svg?logo=debian"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/Linux-RPM x64-01ABD2.svg?logo=redhat"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/Linux-tar.xz x64-EDC204.svg?logo=linux"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Linux-AppImage x64-bf7645.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/GNU/Linux-DEB x64-DC470E.svg?logo=debian"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/GNU/Linux-RPM x64-01ABD2.svg?logo=redhat"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x64.tar.xz"><img src="https://img.shields.io/badge/GNU/Linux-tar.xz x64-EDC204.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/GNU/Linux-AppImage x64-bf7645.svg?logo=linux"></a>
                     <br>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/Linux-DEB arm64-DC470E.svg?logo=debian"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/Linux-RPM arm64-01ABD2.svg?logo=redhat"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/Linux-tar.xz arm64-EDC204.svg?logo=linux"></a>
-                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.deb"><img src="https://img.shields.io/badge/GNU/Linux-DEB arm64-DC470E.svg?logo=debian"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-aarch64.rpm"><img src="https://img.shields.io/badge/GNU/Linux-RPM arm64-01ABD2.svg?logo=redhat"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.tar.xz"><img src="https://img.shields.io/badge/GNU/Linux-tar.xz arm64-EDC204.svg?logo=linux"></a>
+                    <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-arm64.AppImage"><img src="https://img.shields.io/badge/GNU/Linux-AppImage arm64-bf7645.svg?logo=linux"></a>
                 </td>
                 <td>
-                    Gnome<br>
-                    KDE
+                    Gnome (gsettings)<br>
+                    KDE (kio)<br>
+                    GNU/Linux (glibc)
                 </td>
             </tr>
             <tr>
@@ -183,7 +185,7 @@ technology
             </tr>
             <tr>
                 <td>
-                    <img src="https://img.shields.io/badge/iOS-Coming soon ...-pink.svg?logo=apple">
+                    <img src="https://img.shields.io/badge/iOS-Coming soon...-pink.svg?logo=apple">
                 </td>
                 <td></td>
             </tr>
@@ -191,24 +193,24 @@ technology
     </table>
 </div>
 
-## Faced Bug 🐞?
+## Faced a bug? 🐛
 
-checkout [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
+Take a look at our comprehensive [wiki](https://github.com/bepass-org/oblivion-desktop/wiki) and search
 in [issues](https://github.com/bepass-org/oblivion-desktop/issues) (open
-and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you didn't
-get your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose).
+and [closed](https://github.com/bepass-org/oblivion-desktop/issues?q=is%3Aissue+is%3Aclosed) ones!) and if you did not
+find your answer, then [create a new issue](https://github.com/bepass-org/oblivion-desktop/issues/new/choose)!
 
-## Get Involved
+## Get involved!
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
-suggest features, or need some help, we'd love to hear from you!  
+suggest features, or need some help, we'd love to hear from you!
 Check out
 our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md)
 and [Developer Docs](DOCS.md).
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive)](https://starchart.cc/bepass-org/oblivion-desktop)
 
-## Know more
+## Read more...
 
 * [FAQ.md](FAQ.md)
 * [License.md](LICENSE.md)
@@ -218,8 +220,7 @@ and [Developer Docs](DOCS.md).
 
 ## Acknowledgements
 
-This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
-provided by the following friends:
+This project owes its existence to the groundbreaking work of others. We extend our sincere gratitude to the following contributors and innovators whose work inspired and enabled our efforts:
 
 - [Cloudflare Warp](https://www.cloudflare.com/application/terms/)
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
@@ -230,13 +231,14 @@ provided by the following friends:
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [regedit](https://www.npmjs.com/package/regedit)
-- [Iran Sing-box rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
+- [Iran Sing-Box Rules](https://github.com/Chocolate4U/Iran-sing-box-rules)
 - [Shabnam Font](https://rastikerdar.github.io/shabnam-font/) (Saber Rastikerdar)
 - [Zag-NetStats](https://github.com/ShadowZagrosDev/Zag-NetStats)
-- [and others 🧡](package.json)
+- [And others! 🧡](package.json)
 
 ## Contributors
 
-Oblivion Desktop made possible by you. ✌️ We appreciate your help and support. 🧡 ([Contribution Guide](CONTRIBUTING.md))
+Oblivion Desktop made possible by contributors of Bepass and you! ✌️
+We all appreciate your help and support. Here is a comprehensive contribution guide: ([Contribution Guide](CONTRIBUTING.md))
 
 <img src="https://contrib.rocks/image?repo=bepass-org/oblivion-desktop" align="center" alt="Contributors" />
