@@ -117,3 +117,14 @@ export const defaultWarpIPs = [
     '2606:4700:d0::/64',
     '2606:4700:d1::/64'
 ];
+
+export const gtk4Paths = [
+    '/usr/lib/libgtk-4.so',
+    '/usr/lib/libgtk-4.so.1',
+    '/usr/lib64/libgtk-4.so',
+    '/usr/lib64/libgtk-4.so.1',
+    '/usr/lib/x86_64-linux-gnu/libgtk-4.so',
+    '/usr/lib/x86_64-linux-gnu/libgtk-4.so.1',
+    '/usr/local/lib/libgtk-4.so',
+    '/usr/local/lib/libgtk-4.so.1'
+];

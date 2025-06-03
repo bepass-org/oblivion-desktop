@@ -16,7 +16,7 @@ import {
     dialog
 } from 'electron';
 import path from 'path';
-import fs from 'fs';
+import fs, { existsSync } from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
@@ -53,7 +53,8 @@ import {
     proxyResetAssetPath,
     isWindows,
     isDarwin,
-    isLinux
+    isLinux,
+    gtk4Paths
 } from '../constants';
 import packageJsonData from '../../package.json';
 
@@ -64,7 +65,10 @@ const WINDOW_DIMENSIONS = {
 };
 
 if (isLinux) {
-    app.commandLine.appendSwitch('gtk-version', '3');
+    const hasGtk4 = gtk4Paths.some((p) => existsSync(p));
+    if (!hasGtk4) {
+        app.commandLine.appendSwitch('gtk-version', '3');
+    }
     //app.commandLine.appendSwitch('no-sandbox');
 }
 
@@ -413,11 +417,9 @@ class OblivionDesktop {
             await exitTheApp();
             this.state.connectionStatus = 'disconnected';
             app.quit();
-            
         } catch (error) {
             log.error('Error while exiting the app:', error);
             app.exit(1);
-            
         }
     }
 
@@ -637,12 +639,10 @@ class OblivionDesktop {
             response.on('error', (err) => {
                 log.error('Download error:', err);
                 this.onDownloadError();
-                
             });
             file.on('error', (err) => {
                 log.error('File write error:', err);
                 this.onDownloadError();
-                
             });
         });
         request.on('error', (err) => {
@@ -1057,7 +1057,7 @@ class OblivionDesktop {
 
     private sleep(ms: number): Promise<void> {
         // eslint-disable-next-line no-promise-executor-return
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     public async handleAppReady(): Promise<void> {
