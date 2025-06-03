@@ -161,93 +161,6 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           }
                       ]
                     : []),
-                ...(config.udpBlock
-                    ? [
-                          {
-                              network: 'udp',
-                              outbound: 'block'
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoBlock
-                    ? [
-                          {
-                              rule_set: [
-                                  'geosite-category-ads-all',
-                                  'geosite-malware',
-                                  'geosite-phishing',
-                                  'geosite-cryptominers',
-                                  'geoip-malware',
-                                  'geoip-phishing'
-                              ],
-                              outbound: 'block'
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoNSFW
-                    ? [
-                          {
-                              rule_set: 'geosite-nsfw',
-                              outbound: 'block'
-                          }
-                      ]
-                    : []),
-                ...(rulesConfig.ipSet.length > 0
-                    ? [
-                          {
-                              ip_cidr: rulesConfig.ipSet,
-                              outbound: 'direct'
-                          }
-                      ]
-                    : []),
-                ...(domainSetException.length > 0
-                    ? [
-                          {
-                              domain: domainSetException,
-                              outbound: 'proxy'
-                          }
-                      ]
-                    : []),
-                ...(domainSetDirect.length > 0
-                    ? [
-                          {
-                              domain: domainSetDirect,
-                              outbound: 'direct'
-                          }
-                      ]
-                    : []),
-                ...(rulesConfig.domainSuffixSet.length > 0
-                    ? [
-                          {
-                              domain_suffix: rulesConfig.domainSuffixSet,
-                              outbound: 'direct'
-                          }
-                      ]
-                    : []),
-                ...(rulesConfig.processSet.length > 0
-                    ? [
-                          {
-                              process_name: rulesConfig.processSet,
-                              outbound: 'direct'
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoIp !== 'none'
-                    ? [
-                          {
-                              rule_set: `geoip-${geoConfig.geoIp}`,
-                              outbound: 'direct'
-                          }
-                      ]
-                    : []),
-                ...(geoConfig.geoSite !== 'none'
-                    ? [
-                          {
-                              rule_set: `geosite-${geoConfig.geoSite}`,
-                              outbound: 'direct'
-                          }
-                      ]
-                    : []),
 
                 // Universal required ports for all platforms
                 {
@@ -334,6 +247,100 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                   111, // Portmapper/RPC (UDP variant)
                                   427 // SLP (Service Location Protocol)
                               ],
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+
+                {
+                    domain: ['full:time.windows.com', 'full:*.pool.ntp.org', 'full:time.apple.com'],
+                    outbound: 'direct'
+                },
+
+                ...(config.udpBlock
+                    ? [
+                          {
+                              network: 'udp',
+                              outbound: 'block'
+                          }
+                      ]
+                    : []),
+
+                ...(geoConfig.geoBlock
+                    ? [
+                          {
+                              rule_set: [
+                                  'geosite-category-ads-all',
+                                  'geosite-malware',
+                                  'geosite-phishing',
+                                  'geosite-cryptominers',
+                                  'geoip-malware',
+                                  'geoip-phishing'
+                              ],
+                              outbound: 'block'
+                          }
+                      ]
+                    : []),
+                ...(geoConfig.geoNSFW
+                    ? [
+                          {
+                              rule_set: 'geosite-nsfw',
+                              outbound: 'block'
+                          }
+                      ]
+                    : []),
+                ...(rulesConfig.ipSet.length > 0
+                    ? [
+                          {
+                              ip_cidr: rulesConfig.ipSet,
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+                ...(domainSetException.length > 0
+                    ? [
+                          {
+                              domain: domainSetException,
+                              outbound: 'proxy'
+                          }
+                      ]
+                    : []),
+                ...(domainSetDirect.length > 0
+                    ? [
+                          {
+                              domain: domainSetDirect,
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+                ...(rulesConfig.domainSuffixSet.length > 0
+                    ? [
+                          {
+                              domain_suffix: rulesConfig.domainSuffixSet,
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+                ...(rulesConfig.processSet.length > 0
+                    ? [
+                          {
+                              process_name: rulesConfig.processSet,
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+                ...(geoConfig.geoIp !== 'none'
+                    ? [
+                          {
+                              rule_set: `geoip-${geoConfig.geoIp}`,
+                              outbound: 'direct'
+                          }
+                      ]
+                    : []),
+                ...(geoConfig.geoSite !== 'none'
+                    ? [
+                          {
+                              rule_set: `geosite-${geoConfig.geoSite}`,
                               outbound: 'direct'
                           }
                       ]
