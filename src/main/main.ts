@@ -65,7 +65,7 @@ const WINDOW_DIMENSIONS = {
 
 if (isLinux) {
     app.commandLine.appendSwitch('gtk-version', '3');
-    app.commandLine.appendSwitch('no-sandbox');
+    //app.commandLine.appendSwitch('no-sandbox');
 }
 
 process.on('uncaughtException', (err) => {
