@@ -65,7 +65,8 @@ export default function RoutingRulesModal({
                             <a
                                 href='https://github.com/bepass-org/oblivion-desktop/wiki/How-to-use-Routing-Rules'
                                 target='_blank'
-                                className={classNames('label', 'label-default')} rel="noreferrer"
+                                className={classNames('label', 'label-default')}
+                                rel='noreferrer'
                             >
                                 {appLang?.toast?.help_btn}
                             </a>

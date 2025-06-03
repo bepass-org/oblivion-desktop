@@ -29,7 +29,6 @@ import {
     exclusionsPath
 } from '../../constants';
 
-
 // Types and Enums
 enum ConnectionState {
     DISCONNECTED,
@@ -94,7 +93,6 @@ class WarpPlusManager {
                 log.info('Relaunching app due to warp-plus error.');
                 app.relaunch();
                 app.exit(0);
-                
             } catch (error) {
                 retryCount++;
                 log.error(`Error during app restart (attempt ${retryCount}):`, error);
@@ -194,7 +192,6 @@ class WarpPlusManager {
                 if (err) {
                     log.error('⚠️ Failed to execute exclusion script:', err);
                     this.restartApp(1500);
-                    
                 }
             }
         );

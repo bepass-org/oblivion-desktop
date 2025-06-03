@@ -32,7 +32,7 @@ export class settings {
         return new Promise((resolve, reject) => {
             ipcRenderer.on('settings', (res: any) => {
                 try {
-                    const filteredObj = Object.entries(res).reduce((acc:any, [key, value]) => {
+                    const filteredObj = Object.entries(res).reduce((acc: any, [key, value]) => {
                         if (keys.includes(key)) {
                             acc[key] = value;
                         }
