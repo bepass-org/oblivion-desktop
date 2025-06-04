@@ -253,7 +253,16 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     : []),
 
                 {
-                    domain: ['full:time.windows.com', 'full:*.pool.ntp.org', 'full:time.apple.com'],
+                    domain: [
+                        'full:time.windows.com',
+                        'full:*.pool.ntp.org',
+                        'full:time.apple.com',
+                        'full:time.nist.gov',
+                        'full:ntp.ubuntu.com',
+                        'full:ntp2.aliyun.com',
+                        'full:ntp.aliyun.com',
+                        'full:*.ntp.org'
+                    ],
                     outbound: 'direct'
                 },
 
