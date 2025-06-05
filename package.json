@@ -12,7 +12,7 @@
         "url": "https://github.com/bepass-org/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "2.97.0",
+    "version": "2.97.4",
     "license": "Restrictive",
     "main": "./.erb/dll/main.bundle.dev.js",
     "scripts": {
