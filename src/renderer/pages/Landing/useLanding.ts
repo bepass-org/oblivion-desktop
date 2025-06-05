@@ -206,6 +206,16 @@ const useLanding = () => {
         }
     };
 
+    const resetCheckUpdateFlag = () => {
+        return setInterval(
+            () => {
+                localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
+                setTimeout(checkForUpdates, 10000);
+            },
+            3 * 60 * 60 * 1000
+        );
+    };
+
     useEffect(() => {
         //ipcRenderer.clean();
 
@@ -386,11 +396,13 @@ const useLanding = () => {
         if (!isLoading) {
             setTimeout(checkForUpdates, 10000);
         }
+        const resetCheckUpdateIntervalId = resetCheckUpdateFlag();
 
         return () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
+            clearInterval(resetCheckUpdateIntervalId);
         };
     }, []);
 
