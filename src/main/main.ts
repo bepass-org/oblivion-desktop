@@ -533,6 +533,7 @@ class OblivionDesktop {
                     }
 
                     this.redirectTo('/');
+                    this.state.mainWindow?.setProgressBar(0);
                     await this.downloadUpdate(
                         `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${isWindows ? 'win' : ''}-${process.arch}.exe`,
                         (percent: any) => {
