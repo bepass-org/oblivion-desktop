@@ -140,18 +140,19 @@ class OblivionDesktop {
     private async handleVersionCheck(): Promise<void> {
         this.state.isFirstRun = false;
         try {
-            if (fs.existsSync(versionFilePath)) {
-                const savedVersion = fs.readFileSync(versionFilePath, 'utf-8');
-                if (savedVersion !== appVersion) {
-                    this.state.isFirstRun = true;
-                    await singBoxManager.stopHelperOnStart();
-                    await this.cleanupOldFiles();
-                }
+            let savedVersion: string | null = null;
+            try {
+                await fs.promises.access(versionFilePath, fs.constants.F_OK);
+                savedVersion = await fs.promises.readFile(versionFilePath, 'utf-8');
+            } catch {
+                //
             }
-            /*else {
+            if (savedVersion === null || savedVersion !== appVersion) {
                 this.state.isFirstRun = true;
-            }*/
-            fs.writeFileSync(versionFilePath, appVersion, 'utf-8');
+                await singBoxManager.stopHelperOnStart();
+                await this.cleanupOldFiles();
+            }
+            await fs.promises.writeFile(versionFilePath, appVersion, 'utf-8');
         } catch (err) {
             log.error('Error during version check:', err);
         }
