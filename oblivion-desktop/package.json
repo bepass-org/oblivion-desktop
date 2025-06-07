@@ -1,0 +1,320 @@
+{
+    "name": "oblivion-desktop",
+    "description": "unofficial desktop version of oblivion",
+    "shortName": "oblivion",
+    "author": "ircfspace+kiomarzsss <ircfspace@gmail.com> (https://ircf.space/)",
+    "homepage": "https://github.com/bepass-org/oblivion-desktop#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bepass-org/oblivion-desktop.git"
+    },
+    "bugs": {
+        "url": "https://github.com/bepass-org/oblivion-desktop/issues",
+        "email": "ircfspace@gmail.com"
+    },
+    "version": "2.97.6",
+    "license": "Restrictive",
+    "main": "./.erb/dll/main.bundle.dev.js",
+    "scripts": {
+        "eval": "eval process.",
+        "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
+        "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
+        "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
+        "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
+        "prepare": "ts-node script/dlBins.ts && husky",
+        "postinstall": "ts-node ./script/postinstall.ts",
+        "postinstall:darwin-linux": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
+        "postinstall:windows": "ts-node script/makeRegeditVBSAvailable.ts && ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
+        "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
+        "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never && npm run build:dll",
+        "package:linux": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder --linux --dir --publish never && npm run build:dll",
+        "package:mac": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder  --mac --dir --publish never && npm run build:dll",
+        "package:windows": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder --windows --dir  --publish never && npm run build:dll",
+        "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
+        "prestart": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.dev.ts",
+        "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run prestart && npm run start:renderer",
+        "dev": "npm start",
+        "start:main": "concurrently -k \"cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --watch --config ./.erb/configs/webpack.config.main.dev.ts\" \"electronmon .\"",
+        "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
+        "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
+        "test": "jest",
+        "format": "prettier --write . --config .prettierrc --ignore-path .prettierignore --cache",
+        "format:check": "prettier . --check --cache --config .prettierrc --ignore-path .prettierignore",
+        "tsc": "tsc --noEmit --incremental",
+        "changeVersion": "ts-node ./script/changeVersion"
+    },
+    "browserslist": [],
+    "prettier": {
+        "singleQuote": true,
+        "overrides": [
+            {
+                "files": [
+                    ".prettierrc",
+                    ".eslintrc"
+                ],
+                "options": {
+                    "parser": "json"
+                }
+            }
+        ]
+    },
+    "jest": {
+        "moduleDirectories": [
+            "node_modules",
+            "release/app/node_modules",
+            "src"
+        ],
+        "moduleFileExtensions": [
+            "js",
+            "jsx",
+            "ts",
+            "tsx",
+            "json"
+        ],
+        "moduleNameMapper": {
+            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/.erb/mocks/fileMock.js",
+            "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+        },
+        "setupFiles": [
+            "./.erb/scripts/check-build-exists.ts"
+        ],
+        "testEnvironment": "jsdom",
+        "testEnvironmentOptions": {
+            "url": "http://localhost/"
+        },
+        "testPathIgnorePatterns": [
+            "release/app/dist",
+            ".erb/dll"
+        ],
+        "transform": {
+            "\\.(ts|tsx|js|jsx)$": "ts-jest"
+        }
+    },
+    "dependencies": {
+        "@cloudflare/speedtest": "^1.5.1",
+        "@grpc/grpc-js": "^1.13.4",
+        "@grpc/proto-loader": "^0.7.15",
+        "axios": "^1.9.0",
+        "classnames": "^2.5.1",
+        "electron-log": "^5.4.0",
+        "electron-settings": "^4.0.4",
+        "lodash": "^4.17.21",
+        "node-aplay": "^1.0.3",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-hot-toast": "^2.5.2",
+        "react-modern-drawer": "^1.4.0",
+        "react-router-dom": "^7.6.2",
+        "react-swipe-component": "^3.0.0",
+        "regedit": "^5.1.4",
+        "serve-handler": "^6.1.5",
+        "sound-play": "^1.1.0",
+        "systeminformation": "^5.27.1",
+        "tree-kill": "^1.2.2",
+        "zustand": "^4.5.7"
+    },
+    "devDependencies": {
+        "@electron/notarize": "^2.5.0",
+        "@electron/rebuild": "^3.7.2",
+        "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
+        "@svgr/webpack": "^8.1.0",
+        "@testing-library/jest-dom": "^6.6.3",
+        "@testing-library/react": "^16.3.0",
+        "@types/decompress": "^4.2.7",
+        "@types/detect-port": "^1.3.5",
+        "@types/electron": "^1.4.38",
+        "@types/jest": "^29.5.14",
+        "@types/lodash": "^4.17.17",
+        "@types/node": "^22.15.29",
+        "@types/react": "^18.3.23",
+        "@types/react-dom": "^18.3.7",
+        "@types/serve-handler": "^6.1.4",
+        "@types/sound-play": "^1.1.3",
+        "@types/webpack-bundle-analyzer": "^4.7.0",
+        "@typescript-eslint/eslint-plugin": "^6.7.0",
+        "@typescript-eslint/parser": "^6.7.0",
+        "chalk": "^4.1.2",
+        "concurrently": "^9.1.2",
+        "cross-env": "^7.0.3",
+        "css-loader": "^7.1.2",
+        "css-minimizer-webpack-plugin": "^7.0.2",
+        "decompress": "^4.2.1",
+        "detect-port": "^1.6.1",
+        "electron": "^36.4.0",
+        "electron-builder": "^26.0.12",
+        "electronmon": "^2.0.3",
+        "eslint": "^8.49.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-erb": "^4.1.0-0",
+        "eslint-import-resolver-typescript": "^3.10.1",
+        "eslint-import-resolver-webpack": "^0.13.10",
+        "eslint-plugin-compat": "^4.2.0",
+        "eslint-plugin-import": "^2.28.1",
+        "eslint-plugin-jest": "^27.4.0",
+        "eslint-plugin-jsx-a11y": "^6.10.2",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "file-loader": "^6.2.0",
+        "html-webpack-plugin": "^5.6.3",
+        "husky": "^9.1.7",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^29.7.0",
+        "mini-css-extract-plugin": "^2.9.2",
+        "prettier": "^3.5.3",
+        "react-refresh": "^0.17.0",
+        "rimraf": "^6.0.1",
+        "sass": "^1.89.1",
+        "sass-loader": "^16.0.5",
+        "style-loader": "^4.0.0",
+        "terser-webpack-plugin": "^5.3.14",
+        "ts-jest": "^29.3.4",
+        "ts-loader": "^9.5.2",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths-webpack-plugin": "^4.2.0",
+        "typescript": "^5.8.3",
+        "webpack": "^5.99.9",
+        "webpack-bundle-analyzer": "^4.10.2",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.2.2",
+        "webpack-merge": "^6.0.1"
+    },
+    "build": {
+        "productName": "oblivion-desktop",
+        "executableName": "oblivion-desktop",
+        "appId": "org.desktop.oblivion",
+        "artifactName": "oblivion-desktop-${os}-${arch}.${ext}",
+        "asar": true,
+        "asarUnpack": "**\\*.{node,dll}",
+        "beforePack": "./script/beforePackHook.js",
+        "files": [
+            "dist",
+            "node_modules",
+            "package.json",
+            "assets/bin/**"
+        ],
+        "afterSign": ".erb/scripts/notarize.js",
+        "protocols": [
+            {
+                "name": "Oblivion Protocol",
+                "schemes": [
+                    "oblivion"
+                ]
+            }
+        ],
+        "mac": {
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
+            ],
+            "identity": null
+        },
+        "dmg": {
+            "writeUpdateInfo": true
+        },
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "arm64",
+                        "ia32"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "x64",
+                        "arm64",
+                        "ia32"
+                    ]
+                }
+            ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "differentialPackage": false,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "runAfterFinish": true,
+            "shortcutName": "Oblivion Desktop"
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "AppImage",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "deb",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "rpm",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "tar.xz",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
+            ],
+            "description": "Unofficial Warp Client",
+            "category": "Network",
+            "icon": "assets"
+        },
+        "directories": {
+            "app": "release/app",
+            "buildResources": "assets",
+            "output": "release/build"
+        },
+        "extraResources": [
+            "./assets/**"
+        ],
+        "publish": {
+            "provider": "github",
+            "owner": "bepass-org",
+            "repo": "oblivion-desktop",
+            "publishAutoUpdate": true,
+            "private": false,
+            "releaseType": "draft"
+        }
+    },
+    "engines": {
+        "node": ">=20.x",
+        "npm": ">=10.x"
+    },
+    "electronmon": {
+        "patterns": [
+            "!**/**",
+            "src/main/**",
+            ".erb/dll/**"
+        ],
+        "logLevel": "quiet"
+    }
+}

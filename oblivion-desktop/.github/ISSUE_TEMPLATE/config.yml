@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Wiki
+      url: https://github.com/bepass-org/oblivion-desktop/wiki
+      about: A set of guidelines for using the application and troubleshooting issues.
+    - name: FAQ
+      url: https://github.com/bepass-org/oblivion-desktop/blob/main/FAQ.md
+      about: Before asking a question or presenting a problem, read through the frequently asked questions.
+    - name: In Progress
+      url: https://github.com/orgs/bepass-org/projects/4/views/1
+      about: a List of work in progress & items planned for development ...
