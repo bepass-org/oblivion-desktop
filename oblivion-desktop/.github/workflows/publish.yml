@@ -1,0 +1,95 @@
+name: Publish
+
+permissions: write-all
+
+on:
+    push:
+        tags:
+            - '*'
+
+jobs:
+    publish:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            matrix:
+                os: [ubuntu-22.04, ubuntu-24.04, windows-latest, macos-13, macos-14]
+
+        steps:
+            - name: Checkout git repo
+              uses: actions/checkout@v4
+
+            - name: Prepare Release Message
+              run: |
+                  sed 's|RELEASE_TAG|${{ github.ref_name }}|g' ./.github/release_message.md >> release.md
+
+            - name: Set Release Message
+              uses: softprops/action-gh-release@v2
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  body_path: './release.md'
+                  draft: true
+
+            - name: Install Node and NPM
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+                  cache: npm
+
+            - name: Install and build
+              run: |
+                  npm install
+                  if [ "$RUNNER_OS" == "macOS" ]; then
+                    npm install dmg-license
+                  fi
+                  npm run build
+              shell: bash
+
+            - name: Publish releases mac x64
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'macos-13'
+              run: npm exec electron-builder -- --mac dmg zip --x64 --publish onTagOrDraft
+
+            - name: Publish releases mac arm64
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'macos-14'
+              run: npm exec electron-builder -- --mac dmg zip --arm64 --publish onTagOrDraft
+
+            - name: Publish releases windows
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'windows-latest'
+              run: npm exec electron-builder -- --publish onTagOrDraft
+
+            - name: Publish releases GNU Linux x64
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'ubuntu-22.04'
+              run: npm exec electron-builder -- --linux deb rpm tar.xz AppImage --x64 --publish onTagOrDraft
+
+            - name: Publish releases GNU Linux arm64
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os == 'ubuntu-24.04'
+              run: npm exec electron-builder -- --linux deb rpm tar.xz AppImage --arm64 --publish onTagOrDraft
+
+            - name: Delete unwanted files
+              uses: mknejp/delete-release-assets@v1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  tag: ${{ github.ref_name }}
+                  fail-if-no-assets: false
+                  assets: |
+                      oblivion-desktop-win.exe
+                      oblivion-desktop-mac-arm64.zip.blockmap
+                      oblivion-desktop-mac-x64.zip.blockmap
+                      latest-linux-arm64.yml
+                      latest-linux.yml
+                      latest-mac.yml
+                      latest.yml
+                      oblivion-desktop-mac-arm64.dmg.blockmap
+                      oblivion-desktop-mac-x64.dmg.blockmap
