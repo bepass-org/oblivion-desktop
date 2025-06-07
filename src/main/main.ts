@@ -154,6 +154,7 @@ class OblivionDesktop {
             }
             await fs.promises.writeFile(versionFilePath, appVersion, 'utf-8');
         } catch (err) {
+            this.state.isFirstRun = false;
             log.error('Error during version check:', err);
         }
     }
