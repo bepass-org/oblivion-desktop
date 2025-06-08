@@ -37,7 +37,7 @@ export const loadLang = () => {
 };
 
 type SettingsKeys = keyof typeof defaultSettings;
-export const loadSettings = () => {
+export const loadSettings = async () => {
     const keyList: SettingsKeys[] = [
         'hostIP',
         'port',
@@ -51,23 +51,20 @@ export const loadSettings = () => {
         'lang',
         'theme'
     ];
-    settings
-        .getMultiple(keyList)
-        .then(async (values) => {
-            for (const key of keyList) {
+    try {
+        const values = await settings.getMultiple(keyList);
+        for (const key of keyList) {
+            const value = values[key];
+            if (typeof value === 'undefined') {
                 if (key === 'theme') {
-                    if (typeof values.theme === 'undefined') {
-                        const defaultTheme = detectingSystemTheme ? 'dark' : 'light';
-                        await settings.set('theme', defaultTheme);
-                    }
+                    const defaultTheme = detectingSystemTheme ? 'dark' : 'light';
+                    await settings.set(key, defaultTheme);
                 } else {
-                    if (typeof values[key] === 'undefined') {
-                        await settings.set(key, defaultSettings[key]);
-                    }
+                    await settings.set(key, defaultSettings[key]);
                 }
             }
-        })
-        .catch((error) => {
-            console.error('Error fetching settings:', error);
-        });
+        }
+    } catch (error) {
+        console.error('Error fetching settings:', error);
+    }
 };
