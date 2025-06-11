@@ -38,6 +38,13 @@ export default function Landing() {
         downloadProgress
     } = useLanding();
 
+    if (
+        typeof proxyMode === 'undefined' ||
+        typeof dataUsage === 'undefined' ||
+        typeof betaRelease === 'undefined'
+    )
+        return <div className='homeScreen' />;
+
     return (
         <>
             <ConfigHandler isConnected={isConnected} isLoading={isLoading} appLang={appLang} />
