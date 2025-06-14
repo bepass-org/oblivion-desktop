@@ -56,7 +56,7 @@ export class RoutingRuleParser {
     parse(routingRules: any): IRoutingRules {
         const result: IRoutingRules = {
             ipSet: [],
-            domainSet: [],
+            domainSet: ['api.cloudflareclient.com'],
             domainSuffixSet: [],
             processSet: []
         };
