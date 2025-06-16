@@ -94,7 +94,7 @@
         "@cloudflare/speedtest": "^1.5.1",
         "@grpc/grpc-js": "^1.13.4",
         "@grpc/proto-loader": "^0.7.15",
-        "axios": "^1.9.0",
+        "axios": "^1.10.0",
         "classnames": "^2.5.1",
         "electron-log": "^5.4.1",
         "electron-settings": "^4.0.4",
