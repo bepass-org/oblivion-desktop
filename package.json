@@ -134,7 +134,7 @@
         "@typescript-eslint/eslint-plugin": "^6.7.0",
         "@typescript-eslint/parser": "^6.7.0",
         "chalk": "^4.1.2",
-        "concurrently": "^9.1.2",
+        "concurrently": "^9.2.0",
         "cross-env": "^7.0.3",
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.2",
