@@ -161,7 +161,7 @@
         "identity-obj-proxy": "^3.0.0",
         "jest": "^29.7.0",
         "mini-css-extract-plugin": "^2.9.2",
-        "prettier": "^3.5.3",
+        "prettier": "^3.6.0",
         "react-refresh": "^0.17.0",
         "rimraf": "^6.0.1",
         "sass": "^1.89.2",
