@@ -212,7 +212,7 @@ class SingBoxManager {
             try {
                 disableProxy(regeditVbsDirPath);
             } catch (error) {
-                log.error('Error managing system proxy:', error);
+                //log.error('Error managing system proxy:', error);
             }
 
             const command = this.platformHelper.start(helperPath);
