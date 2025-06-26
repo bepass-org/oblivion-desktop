@@ -77,7 +77,12 @@ process.on('uncaughtException', (err) => {
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-    log.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    console.error('Unhandled Rejection occurred!');
+    console.error('Reason:', reason ?? 'No reason provided');
+    console.error('Promise:', promise);
+    if (reason instanceof Error) {
+        console.error(reason.stack);
+    }
 });
 
 interface WindowState {
