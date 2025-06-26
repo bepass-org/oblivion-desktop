@@ -9,9 +9,7 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
     if you have programming skills that can be helpful:
     Pick up issues/tasks from [issues page](https://github.com/bepass-org/oblivion-desktop/issues) or the [project board](https://github.com/orgs/bepass-org/projects/4) or suggest your own features, fixes, etc.  
      Before starting a new task, please coordinate with the collaborators to ensure no one else is working on it.
-
     - #### Setup your development environment
-
         - Fork this [repository](https://github.com/bepass-org/oblivion-desktop)
         - Follow the instructions in the [DOCS.md](DOCS.md) to set up your development environment and bring up your development server
         - Make your changes and create a pull request (PR)
@@ -22,7 +20,6 @@ Thank you for your interest in contributing to Oblivion Desktop! We appreciate y
 - ### 🌐 Translating to other languages
 
     The current translation is done from English to other languages. Persian and English are translated manually, while other languages are translated with the help of AI. Your contributions to improving the translation and providing feedback are welcome.
-
     - We prioritize translations for languages spoken in regions with systemic internet censorship that broadly restricts access to information, similar to the digital environments in Iran, China, and Russia. Our program focuses on supporting communities where:
       (a) Internet restrictions disproportionately impacts general freedoms of expression and access to information
       (b) Censorship extends beyond targeted law enforcement against illegal activities.

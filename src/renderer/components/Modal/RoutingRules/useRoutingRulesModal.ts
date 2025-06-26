@@ -20,7 +20,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     const [proxyMode, setProxyMode] = useState<string>('');
 
     useEffect(() => {
-        setShowModal(isOpen), [isOpen];
+        (setShowModal(isOpen), [isOpen]);
         settings.get('proxyMode').then((value) => {
             setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
         });
