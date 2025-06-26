@@ -96,10 +96,7 @@ export const validateTestUrl = (url: string): string => {
     if (url === '') {
         return defaultSettings.testUrl;
     }
-    if (url.startsWith('http://')) {
-        url = url.replace(/^http:/, 'https:');
-    }
-    if (!url.startsWith('https')) {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
     }
     if (!url.endsWith('/cdn-cgi/trace')) {
