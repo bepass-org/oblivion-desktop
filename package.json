@@ -109,7 +109,7 @@
         "regedit": "^5.1.4",
         "serve-handler": "^6.1.5",
         "sound-play": "^1.1.0",
-        "systeminformation": "^5.27.6",
+        "systeminformation": "^5.27.7",
         "tree-kill": "^1.2.2",
         "zustand": "^4.5.7"
     },
