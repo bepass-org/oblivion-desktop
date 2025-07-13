@@ -234,7 +234,7 @@ export default function Settings() {
                                     tabIndex={-1}
                                 >
                                     {testUrl && testUrl !== ''
-                                        ? new URL(testUrl).hostname
+                                        ? new URL(testUrl).hostname?.replace(/^www\./, '')
                                         : defaultSettings.testUrl}
                                 </span>
                             </div>

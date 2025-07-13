@@ -1624,6 +1624,8 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     height: 120px;
     overflow: hidden;
     overflow-y: auto;
+    z-index: 1;
+    cursor: default;
 }
 [dir='ltr'] .dialog .dialogBox .labels .label .dropDownInLabel {
     left: inherit;
