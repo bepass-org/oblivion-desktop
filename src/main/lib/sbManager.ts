@@ -52,7 +52,7 @@ const CONFIG = {
         connectionTimeout: 3000
     },
     connection: {
-        maxRetries: 10,
+        maxRetries: 15,
         grpcEndpoint: '127.0.0.1:50051'
     },
     status: {
