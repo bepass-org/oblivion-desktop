@@ -23,10 +23,8 @@ export default function Settings() {
         onEnablePsiphon,
         onEnableWarp,
         onKeyDownGool,
-        onKeyDownLicense,
         onKeyDownPsiphon,
         onKeyDownWarp,
-        onOpenLicenseModal,
         setLicense,
         showLicenseModal,
         loading,
@@ -45,18 +43,6 @@ export default function Settings() {
     return (
         <>
             <Nav title={appLang?.settings?.title} />
-            {/*<EndpointModal
-                {...{
-                    endpoint,
-                    setEndpoint
-                }}
-                title={appLang?.modal?.endpoint_title}
-                isOpen={showEndpointModal}
-                onClose={() => {
-                    setShowEndpointModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
-            />*/}
             <LicenseModal
                 license={license || ''}
                 setLicense={setLicense}
@@ -75,40 +61,6 @@ export default function Settings() {
                 <div className='container'>
                     <Tabs active='settings' proxyMode={proxyMode} />
                     <div className='settings' role='menu'>
-                        {/*<div
-                        className={'item'}
-                        onClick={() => {
-                            setScan(!scan);
-                            settings.set('scan', !scan);
-                            settingsHaveChanged();
-                        }}
-                    >
-                        <label className='key'>اسکنر</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', scan ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>جستجو در IP و پورت‌های وارپ</div>
-                    </div>
-                    <div className='item hidden'>
-                        <label className='key'>نوع IP</label>
-                        <div className='value'>
-                            <select
-                                onChange={(e) => {
-                                    setIpType(e.target.value);
-                                    settings.set('ipType', e.target.value);
-                                    settingsHaveChanged();
-                                }}
-                                value={ipType}
-                            >
-                                <option value=''>Automatic</option>
-                                <option value='-4'>IPv4</option>
-                                <option value='-6'>IPv6</option>
-                            </select>
-                        </div>
-                        <div className='info'>برای اندپوینت تصادفی</div>
-                    </div>*/}
                         <div className='grouped' role='radiogroup'>
                             <div
                                 role='button'
@@ -196,27 +148,6 @@ export default function Settings() {
                         {appLang?.settings?.more}
                     </div>
                     <div className='settings' role='menu' tabIndex={0}>
-                        {/* <div
-                            role='button'
-                            className='item'
-                            onClick={onOpenLicenseModal}
-                            onKeyDown={onKeyDownLicense}
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='flex-switch-check-checked-license'>
-                                {appLang?.settings?.license}
-                            </label>
-                            <div className='value' role='link'>
-                                <span
-                                    className='dirLeft'
-                                    id='flex-switch-check-checked-license'
-                                    tabIndex={-1}
-                                >
-                                    {license || 'Free'}
-                                </span>
-                            </div>
-                            <div className='info'>{appLang?.settings?.license_desc}</div>
-                        </div> */}
                         <div
                             role='button'
                             className='item'

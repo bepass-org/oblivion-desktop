@@ -4,6 +4,7 @@ import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
 import { removeLeadingZeros } from '../../../lib/inputSanitizer';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 interface PortModalProps {
     isOpen: boolean;
@@ -47,30 +48,14 @@ const usePortModal = (props: PortModalProps) => {
         handleOnClose();
     }, [isValidPort, portInput, defValue, setPort, isConnected, isLoading, appLang, handleOnClose]);
 
-    const onSaveModalKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModalClick();
-            }
-        },
-        [onSaveModalClick]
-    );
+    const onSaveModalKeyDown = useButtonKeyDown(onSaveModalClick);
 
     const handleCancelButtonClick = useCallback(() => {
         setPortInput(port);
         handleOnClose();
     }, [port, handleOnClose]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handlePortInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setPortInput(Number(event.target.value));

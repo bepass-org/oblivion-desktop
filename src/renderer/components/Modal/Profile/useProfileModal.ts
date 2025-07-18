@@ -1,4 +1,4 @@
-import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
@@ -6,6 +6,7 @@ import { defaultSettings } from '../../../../defaultSettings';
 import { defaultToast } from '../../../lib/toasts';
 import { Profile } from '../../../pages/Scanner/useScanner';
 import { sanitizeProfileName, validEndpoint } from '../../../lib/inputSanitizer';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 type ProfileModalProps = {
     isOpen: boolean;
@@ -118,14 +119,7 @@ const useProfileModal = (props: ProfileModalProps) => {
         profileEndpoint
     ]);
 
-    const onUpdateKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                onSaveModal();
-            }
-        },
-        [onSaveModal]
-    );
+    const onUpdateKeyDown = useButtonKeyDown(onSaveModal);
 
     const handleCancelButtonClick = useCallback(() => {
         setProfiles(profiles);
@@ -135,14 +129,7 @@ const useProfileModal = (props: ProfileModalProps) => {
         handleOnClose();
     }, [profiles, setProfiles, handleOnClose, setProfileName, setProfileEndpoint]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     return {
         showModal,

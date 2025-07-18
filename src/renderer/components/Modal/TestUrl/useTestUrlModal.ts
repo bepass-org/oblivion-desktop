@@ -1,17 +1,10 @@
-import {
-    ChangeEvent,
-    KeyboardEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
-} from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { settings } from '../../../lib/settings';
 import { useStore } from '../../../store';
 import useTranslate from '../../../../localization/useTranslate';
 import { loadingToast, settingsHaveChangedToast, stopLoadingToast } from '../../../lib/toasts';
 import { validateTestUrl } from '../../../lib/inputSanitizer';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 interface TestUrlModalProps {
     isOpen: boolean;
@@ -45,13 +38,13 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
         };
     }, []);
 
-    const initSuggestion = useMemo(() => {
+    const initSuggestion: string[] = useMemo(() => {
         const storedSuggestion = localStorage?.getItem('OBLIVION_TEST_URL');
         const data = storedSuggestion ? JSON.parse(storedSuggestion) : JSON.parse('[]');
         return data;
     }, []);
 
-    const [suggestion, setSuggestion] = useState<any>(initSuggestion);
+    const [suggestion, setSuggestion] = useState<string[]>(initSuggestion);
 
     const fetchTestUrl = async (openInEnd: boolean = true) => {
         loadingToast(appLang?.toast?.please_wait);
@@ -95,30 +88,14 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
         handleOnClose();
     }, [handleOnClose, testUrlInput, setTestUrl, isConnected, isLoading, appLang]);
 
-    const onSaveModalKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModalClick();
-            }
-        },
-        [onSaveModalClick]
-    );
+    const onSaveModalKeyDown = useButtonKeyDown(onSaveModalClick);
 
     const handleCancelButtonClick = useCallback(() => {
         setTestUrlInput(testUrl);
         handleOnClose();
     }, [testUrl, handleOnClose]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handleTestUrlInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -126,14 +103,6 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
         },
         [setTestUrlInput]
     );
-
-    /*const handleClearTestUrlInput = useCallback(() => {
-        setTestUrlInput('');
-        setTestUrl('');
-        settings.set('testUrl', '');
-        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
-        handleOnClose();
-    }, [setTestUrl, isConnected, isLoading, appLang, handleOnClose]);*/
 
     return {
         appLang,

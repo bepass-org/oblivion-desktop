@@ -1,12 +1,14 @@
 import { ChangeEvent, FC } from 'react';
 
+export type DropdownItem = {
+    label: string;
+    value: string;
+};
+
 interface DropdownProps {
     label?: string;
     id: string;
-    items: {
-        label: string;
-        value: string;
-    }[];
+    items: DropdownItem[];
     value: string;
     onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
     disabled?: boolean;

@@ -23,14 +23,11 @@ export default function Options() {
         onKeyDownAutoConnectButton,
         onClickForceCloseButton,
         onKeyDownForceCloseButton,
-        onClickShortcutButton,
-        onKeyDownShortcutButton,
         onKeyDownChangeTheme,
         onKeyDownRestore,
         openAtLogin,
         autoConnect,
         forceClose,
-        shortcut,
         showRestoreModal,
         setTheme,
         setLang,
@@ -58,7 +55,6 @@ export default function Options() {
         typeof openAtLogin === 'undefined' ||
         typeof startMinimized === 'undefined' ||
         typeof forceClose === 'undefined' ||
-        //typeof shortcut === 'undefined' ||
         typeof soundEffect === 'undefined' ||
         typeof autoConnect === 'undefined' ||
         typeof betaRelease === 'undefined'
@@ -120,27 +116,6 @@ export default function Options() {
                             />
                             <div className='info'>{appLang?.settings?.lang_desc}</div>
                         </div>
-                        {/* <div
-                            role='button'
-                            className='item'
-                            onClick={onClickShortcutButton}
-                            onKeyDown={onKeyDownShortcutButton}
-                            tabIndex={0}
-                        >
-                            <label className='key' htmlFor='shortcut'>
-                                {appLang?.settings?.shortcut}
-                            </label>
-                            <div className='value'>
-                                <div
-                                    tabIndex={-1}
-                                    id='shortcut'
-                                    className={classNames('checkbox', shortcut ? 'checked' : '')}
-                                >
-                                    <i className='material-icons'>&#xe876;</i>
-                                </div>
-                            </div>
-                            <div className='info'>{appLang?.settings?.shortcut_desc}</div>
-                        </div> */}
                         <div
                             role='button'
                             className='item'

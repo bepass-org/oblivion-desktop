@@ -24,14 +24,6 @@ export default function Debug() {
                         className={classNames('logOptions', logIsEmpty ? 'hidden' : '')}
                         role='menubar'
                     >
-                        {/*<i
-                            className='material-icons'
-                            onClick={(e: any) => {
-                                handleClearLog(
-                                    e
-                                );
-                            }}
-                        >&#xf0ff;</i>*/}
                         {log?.length > 1000 &&
                             (autoScroll ? (
                                 <div

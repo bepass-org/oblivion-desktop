@@ -15,7 +15,7 @@ function changeJson(filePath: string, key: string, value: string, callback: Func
         }
         const json = JSON.parse(data);
         json[key] = value;
-        fs.writeFile(filePath, JSON.stringify(json), 'utf8', (error2: any) => {
+        fs.writeFile(filePath, JSON.stringify(json), 'utf8', (error2) => {
             if (error2) {
                 console.error(error2);
                 return;
