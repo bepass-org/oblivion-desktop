@@ -61,8 +61,6 @@ const CONFIG = {
     }
 } as const;
 
-type SettingsValue = settings
-
 class SingBoxManager {
     private readonly helperClient: any;
 
@@ -183,7 +181,7 @@ class SingBoxManager {
     }
 
     // Private Helper Methods
-    private createGrpcClient(): any {
+    private createGrpcClient() {
         const packageDefinition = protoLoader.loadSync(protoAssetPath, {
             keepCase: true,
             longs: String,

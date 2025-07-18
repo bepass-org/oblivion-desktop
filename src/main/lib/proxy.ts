@@ -215,7 +215,7 @@ const macOSNetworkSetup = (args: string[]) => {
 
     return new Promise((resolve, reject) => {
         let output = '';
-        child.stdout.on('data', async (data: any) => {
+        child.stdout.on('data', async (data) => {
             const strData = data.toString();
             output += strData;
         });
@@ -224,12 +224,12 @@ const macOSNetworkSetup = (args: string[]) => {
             resolve(output);
         });
 
-        child.stderr.on('data', (err: any) => {
+        child.stderr.on('data', (err) => {
             log.error(`Error: ${err.toString()}`);
             reject(err);
         });
 
-        child.on('error', (err: any) => {
+        child.on('error', (err) => {
             log.error(`Spawn Error: ${err}`);
             reject(err);
         });

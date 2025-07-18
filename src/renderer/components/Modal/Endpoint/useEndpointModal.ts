@@ -32,7 +32,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
 
-    const removeDuplicates = (endpoints: any) => {
+    const removeDuplicates = (endpoints: Suggestion) => {
         if (!endpoints?.ipv4 && !endpoints?.ipv6) {
             return {
                 ipv4: [],

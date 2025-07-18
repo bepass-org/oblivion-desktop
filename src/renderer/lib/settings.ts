@@ -24,7 +24,7 @@ export class settings {
         });
     }
 
-    public static async getMultiple(keys: any): Promise<any> {
+    public static async getMultiple(keys: string[]): Promise<any> {
         ipcRenderer.sendMessage('settings', {
             mode: 'getAll'
         });
