@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { useStore } from '../../store';
@@ -9,6 +9,8 @@ import { settingsHaveChangedToast } from '../../lib/toasts';
 import { defaultSettings, dnsServers } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
+import { DropdownItem } from '../../components/Dropdown';
+import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 
 const useOptions = () => {
     const { isConnected, isLoading } = useStore();
@@ -22,21 +24,21 @@ const useOptions = () => {
     const [port, setPort] = useState<number>();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const appLang = useTranslate();
-    const [ipData, setIpData] = useState<undefined | boolean>();
-    const [dns, setDns] = useState<undefined | string>();
+    const [ipData, setIpData] = useState<boolean>();
+    const [dns, setDns] = useState<string>();
     const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
-    const [method, setMethod] = useState<undefined | string>('');
+    const [method, setMethod] = useState<string>('');
     const [dataUsage, setDataUsage] = useState<boolean>();
-    const [networkList, setNetworkList] = useState<{ value: string; label: string }[]>([
+    const [networkList, setNetworkList] = useState<DropdownItem[]>([
         { value: '127.0.0.1', label: '127.0.0.1' },
         { value: '0.0.0.0', label: '0.0.0.0' }
     ]);
     const [checkingLocalIp, setCheckingLocalIp] = useState<boolean>();
-    const [hostIp, setHostIp] = useState<undefined | string>('');
+    const [hostIp, setHostIp] = useState<string>('');
     const [showDnsModal, setShowDnsModal] = useState<boolean>(false);
-    const [plainDns, setPlainDns] = useState<undefined | string>();
-    const [doh, setDoh] = useState<undefined | string>();
+    const [plainDns, setPlainDns] = useState<string>();
+    const [doh, setDoh] = useState<string>();
 
     const navigate = useNavigate();
 
@@ -126,7 +128,7 @@ const useOptions = () => {
         });
     }, []);
 
-    const filteredNetworkList = useMemo(() => {
+    const filteredNetworkList: DropdownItem[] = useMemo(() => {
         return networkList.filter((item) => {
             if (proxyMode !== 'system') return true;
             return item.value !== '0.0.0.0';
@@ -249,15 +251,7 @@ const useOptions = () => {
 
     const onClickPort = useCallback(() => setShowPortModal(true), []);
 
-    const onKeyDownClickPort = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickPort();
-            }
-        },
-        [onClickPort]
-    );
+    const onKeyDownClickPort = useButtonKeyDown(onClickPort);
 
     const onClickRoutingRoles = useCallback(() => {
         if (proxyMode !== 'none') {
@@ -265,15 +259,7 @@ const useOptions = () => {
         }
     }, [proxyMode]);
 
-    const onKeyDownRoutingRoles = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickRoutingRoles();
-            }
-        },
-        [onClickRoutingRoles]
-    );
+    const onKeyDownRoutingRoles = useButtonKeyDown(onClickRoutingRoles);
 
     const onChangeLanMode = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
@@ -310,15 +296,7 @@ const useOptions = () => {
         }, 1000);
     }, [ipData, proxyMode, hostIp]);
 
-    const handleCheckIpDataOnKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCheckIpDataOnClick();
-            }
-        },
-        [handleCheckIpDataOnClick]
-    );
+    const handleCheckIpDataOnKeyDown = useButtonKeyDown(handleCheckIpDataOnClick);
 
     const handleDataUsageOnClick = useCallback(() => {
         if (ipData) {
@@ -328,15 +306,7 @@ const useOptions = () => {
         ipcRenderer.sendMessage('net-stats', isConnected && !dataUsage && ipData);
     }, [dataUsage, ipData, isConnected]);
 
-    const handleDataUsageOnKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleDataUsageOnClick();
-            }
-        },
-        [handleDataUsageOnClick]
-    );
+    const handleDataUsageOnKeyDown = useButtonKeyDown(handleDataUsageOnClick);
 
     return {
         proxyMode,

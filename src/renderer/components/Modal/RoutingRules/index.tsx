@@ -8,7 +8,6 @@ interface RoutingRulesModalProps {
     onClose: () => void;
     routingRules: string;
     setRoutingRules: (value: string) => void;
-    proxyMode: string;
 }
 
 export default function RoutingRulesModal({

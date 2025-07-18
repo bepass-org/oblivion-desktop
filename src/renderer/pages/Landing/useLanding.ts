@@ -25,6 +25,11 @@ export type IpConfig = {
     ip: string;
 };
 
+type DownloadProgress = {
+    status: string;
+    percent: number;
+};
+
 let isFetching = false;
 let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
@@ -55,28 +60,23 @@ const useLanding = () => {
         countryCode: false,
         ip: ''
     });
-    //const [online, setOnline] = useState<boolean>(navigator?.onLine);
 
-    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+    const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
     const toggleDrawer = () => {
         setDrawerIsOpen((prevState) => !prevState);
     };
 
-    //const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState<string>();
     const [ipData, setIpData] = useState<boolean>();
-    //const [psiphon, setPsiphon] = useState<undefined | boolean>();
-    //const [gool, setGool] = useState<undefined | boolean>();
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
     const [proxyMode, setProxyMode] = useState<string>('');
-    //const [shortcut, setShortcut] = useState<boolean>();
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
     const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
-    const [downloadProgress, setDownloadProgress] = useState<any>({
+    const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
         status: 'pending',
         percent: 0
     });

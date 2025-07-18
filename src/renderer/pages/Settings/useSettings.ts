@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -7,32 +7,22 @@ import { countries, defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
+import { DropdownItem } from '../../components/Dropdown';
+import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 
 const useSettings = () => {
     const appLang = useTranslate();
     const { isConnected, isLoading } = useStore();
 
-    //const [scan, setScan] = useState(true);
-    //const [endpoint, setEndpoint] = useState();
-    //const [showEndpointModal, setShowEndpointModal] = useState(false);
-    //const [ipType, setIpType] = useState<undefined | string>();
-    //const [psiphon, setPsiphon] = useState<undefined | boolean>();
-    const [location, setLocation] = useState<undefined | string>();
+    const [location, setLocation] = useState<string>();
     const [license, setLicense] = useState<string>();
     const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
-    //const [gool, setGool] = useState<undefined | boolean>();
-    const [method, setMethod] = useState<undefined | string>('');
+    const [method, setMethod] = useState<string>('');
     const [proxyMode, setProxyMode] = useState<string>('');
     const [testUrl, setTestUrl] = useState<string>();
     const [showTestUrlModal, setShowTestUrlModal] = useState<boolean>(false);
 
     const navigate = useNavigate();
-
-    /*useEffect(() => {
-        if (endpoint === '' || endpoint === defaultSettings.endpoint) {
-            setScan(true);
-        }
-    }, [endpoint]);*/
 
     useGoBackOnEscape();
 
@@ -77,15 +67,7 @@ const useSettings = () => {
 
     const onOpenLicenseModal = useCallback(() => setShowLicenseModal(true), []);
 
-    const onKeyDownLicense = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onOpenLicenseModal();
-            }
-        },
-        [onOpenLicenseModal]
-    );
+    const onKeyDownLicense = useButtonKeyDown(onOpenLicenseModal);
 
     const onEnableWarp = useCallback(() => {
         setMethod('');
@@ -93,15 +75,7 @@ const useSettings = () => {
         settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
     }, [isConnected, isLoading, appLang]);
 
-    const onKeyDownWarp = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onEnableWarp();
-            }
-        },
-        [onEnableWarp]
-    );
+    const onKeyDownWarp = useButtonKeyDown(onEnableWarp);
 
     const onEnableGool = useCallback(() => {
         setMethod('gool');
@@ -109,15 +83,7 @@ const useSettings = () => {
         settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
     }, [isConnected, isLoading, appLang]);
 
-    const onKeyDownGool = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onEnableGool();
-            }
-        },
-        [onEnableGool]
-    );
+    const onKeyDownGool = useButtonKeyDown(onEnableGool);
 
     const onEnablePsiphon = useCallback(() => {
         //if (proxyMode !== 'tun') {
@@ -127,15 +93,7 @@ const useSettings = () => {
         //}
     }, [isConnected, isLoading, appLang]);
 
-    const onKeyDownPsiphon = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onEnablePsiphon();
-            }
-        },
-        [onEnablePsiphon]
-    );
+    const onKeyDownPsiphon = useButtonKeyDown(onEnablePsiphon);
 
     const onChangeLocation = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
@@ -146,7 +104,7 @@ const useSettings = () => {
         [isConnected, isLoading, appLang]
     );
 
-    const locationItems = useMemo(
+    const locationItems: DropdownItem[] = useMemo(
         () => [
             {
                 value: '',
@@ -173,15 +131,7 @@ const useSettings = () => {
 
     const onOpenTestUrlModal = useCallback(() => setShowTestUrlModal(true), []);
 
-    const onKeyDownTestUrl = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onOpenTestUrlModal();
-            }
-        },
-        [onOpenTestUrlModal]
-    );
+    const onKeyDownTestUrl = useButtonKeyDown(onOpenTestUrlModal);
 
     const loading =
         typeof location === 'undefined' ||

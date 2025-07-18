@@ -1,4 +1,4 @@
-import { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     defaultSettings,
@@ -14,6 +14,7 @@ import { ipcRenderer } from '../../../lib/utils';
 import { changeLang, getDirectionByLang, LanguageType } from '../../../../localization';
 import useTranslate from '../../../../localization/useTranslate';
 import { loadingToast, stopLoadingToast } from '../../../lib/toasts';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 interface RestoreModalProps {
     isOpen: boolean;
@@ -56,15 +57,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         setTimeout(onClose, 300);
     }, [onClose]);
 
-    const onCancelKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleOnClose();
-            }
-        },
-        [handleOnClose]
-    );
+    const onCancelKeyDown = useButtonKeyDown(handleOnClose);
 
     const onSaveModal = useCallback(async () => {
         loadingToast(appLang?.toast?.please_wait);
@@ -153,15 +146,7 @@ const useRestoreModal = (props: RestoreModalProps) => {
         handleOnClose
     ]);
 
-    const onConfirmKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModal();
-            }
-        },
-        [onSaveModal]
-    );
+    const onConfirmKeyDown = useButtonKeyDown(onSaveModal);
 
     return {
         showModal,

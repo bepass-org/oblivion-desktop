@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -8,6 +8,8 @@ import { settingsHaveChangedToast } from '../../lib/toasts';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { toPersianNumber } from '../../lib/toPersianNumber';
+import { DropdownItem } from '../../components/Dropdown';
+import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 
 export type Profile = {
     endpoint: string;
@@ -22,9 +24,9 @@ const useScanner = () => {
     const [profiles, setProfiles] = useState<Profile[]>([]);
     const [showEndpointModal, setShowEndpointModal] = useState<boolean>(false);
     const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
-    const [ipType, setIpType] = useState<undefined | string>();
-    const [rtt, setRtt] = useState<undefined | string>();
-    const [reserved, setReserved] = useState<undefined | boolean>();
+    const [ipType, setIpType] = useState<string>();
+    const [rtt, setRtt] = useState<string>();
+    const [reserved, setReserved] = useState<boolean>();
     const [lang, setLang] = useState<string>('');
     const [proxyMode, setProxyMode] = useState<string>('');
 
@@ -79,15 +81,7 @@ const useScanner = () => {
 
     const onOpenEndpointModal = useCallback(() => setShowEndpointModal(true), []);
 
-    const onKeyDownEndpoint = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onOpenEndpointModal();
-            }
-        },
-        [onOpenEndpointModal]
-    );
+    const onKeyDownEndpoint = useButtonKeyDown(onOpenEndpointModal);
 
     const onChangeType = useCallback(
         (event: ChangeEvent<HTMLSelectElement>) => {
@@ -112,15 +106,7 @@ const useScanner = () => {
         settings.set('reserved', !reserved);
     }, [reserved]);
 
-    const onKeyDownReservedButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickReservedButton();
-            }
-        },
-        [onClickReservedButton]
-    );
+    const onKeyDownReservedButton = useButtonKeyDown(onClickReservedButton);
 
     const onCloseProfileModal = useCallback(() => {
         setShowProfileModal(false);
@@ -128,15 +114,7 @@ const useScanner = () => {
 
     const onOpenProfileModal = useCallback(() => setShowProfileModal(true), []);
 
-    const onKeyDownProfile = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onOpenProfileModal();
-            }
-        },
-        [onOpenProfileModal]
-    );
+    const onKeyDownProfile = useButtonKeyDown(onOpenProfileModal);
 
     const countProfiles = useCallback(
         (value: { name: string; endpoint: string }[] | undefined) => {
@@ -154,7 +132,7 @@ const useScanner = () => {
         [appLang?.settings?.routing_rules_disabled, appLang?.settings?.routing_rules_items, lang]
     );
 
-    const ipSelectorItems = useMemo(
+    const ipSelectorItems: DropdownItem[] = useMemo(
         () => [
             {
                 value: '',
@@ -169,7 +147,7 @@ const useScanner = () => {
         [appLang?.settings?.scanner_ip_type_auto]
     );
 
-    const rttSelectorItems = useMemo(
+    const rttSelectorItems: DropdownItem[] = useMemo(
         () => [
             {
                 value: '1s',

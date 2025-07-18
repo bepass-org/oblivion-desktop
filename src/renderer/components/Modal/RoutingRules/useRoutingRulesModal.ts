@@ -1,9 +1,10 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
 import { defaultSettings, defaultRoutingRules } from '../../../../defaultSettings';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -99,30 +100,14 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         setRoutingRules
     ]);
 
-    const onUpdateKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModal();
-            }
-        },
-        [onSaveModal]
-    );
+    const onUpdateKeyDown = useButtonKeyDown(onSaveModal);
 
     const handleCancelButtonClick = useCallback(() => {
         setRoutingRulesInput(routingRules);
         handleOnClose();
     }, [routingRules, handleOnClose]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handleRoutingRulesInput = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {

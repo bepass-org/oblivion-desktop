@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import { settings } from './settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { defaultToast } from './toasts';
+import { Language } from '../../localization/type';
 
 type ConfigType =
     | {
@@ -214,19 +215,19 @@ export const validateConfig = (pastedText: string): ConfigType | null => {
     return null;
 };
 
-export const removeLeadingZeros = (input: any) => {
+export const removeLeadingZeros = (input: number) => {
     const numberString = input.toString();
     if (numberString.startsWith('0')) {
-        return numberString.replace(/^0+/, '');
+        return Number(numberString.replace(/^0+/, ''));
     }
-    return numberString;
+    return Number(numberString);
 };
 
 export const saveConfig = (
     pastedText: string,
     isConnected: boolean,
     isLoading: boolean,
-    appLang: any
+    appLang: Language
 ) => {
     if (typeof pastedText !== 'string') {
         return false;

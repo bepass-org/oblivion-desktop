@@ -1,5 +1,4 @@
 import { ipcMain, IpcMainEvent } from 'electron';
-import settings from 'electron-settings';
 import log from 'electron-log';
 import { spawn, exec } from 'child_process';
 import fs from 'fs';
@@ -32,6 +31,7 @@ import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './s
 import { mapGrpcErrorCodeToLabel } from './utils';
 import { disableProxy } from './proxy';
 import { customEvent } from './customEvent';
+import { settings } from '../../renderer/lib/settings';
 
 // Types
 type GrpcMethod = 'Start' | 'Stop';
@@ -181,7 +181,7 @@ class SingBoxManager {
     }
 
     // Private Helper Methods
-    private createGrpcClient(): any {
+    private createGrpcClient() {
         const packageDefinition = protoLoader.loadSync(protoAssetPath, {
             keepCase: true,
             longs: String,

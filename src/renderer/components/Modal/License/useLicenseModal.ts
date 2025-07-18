@@ -1,9 +1,10 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { settings } from '../../../lib/settings';
 import { useStore } from '../../../store';
 import useTranslate from '../../../../localization/useTranslate';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
 import { validateLicense } from '../../../lib/inputSanitizer';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 interface LicenseModalProps {
     isOpen: boolean;
@@ -36,30 +37,14 @@ const useLicenseModal = (props: LicenseModalProps) => {
         handleOnClose();
     }, [handleOnClose, licenseInput, setLicense, isConnected, isLoading, appLang]);
 
-    const onSaveModalKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModalClick();
-            }
-        },
-        [onSaveModalClick]
-    );
+    const onSaveModalKeyDown = useButtonKeyDown(onSaveModalClick);
 
     const handleCancelButtonClick = useCallback(() => {
         setLicenseInput(license);
         handleOnClose();
     }, [license, handleOnClose]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handleLicenseInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {

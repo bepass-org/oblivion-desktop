@@ -134,17 +134,6 @@ export default function Scanner() {
                             <div className='info'>{appLang?.settings?.scanner_reserved_desc}</div>
                         </div>
                     </div>
-                    {/*<div
-                    className={classNames(
-                        'appToast',
-                        endpoint === defaultSettings.endpoint ? 'hidden' : ''
-                    )}
-                >
-                    <div>
-                        <i className='material-icons'>&#xe0f0;</i>
-                        {appLang?.settings?.scanner_alert}
-                    </div>
-                </div>*/}
                     <div className='moreSettings'>
                         <i className='material-icons'>&#xe313;</i>
                         {appLang?.settings?.more}

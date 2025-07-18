@@ -1,7 +1,8 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 //import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { removeLeadingZeros } from '../../../lib/inputSanitizer';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 //import { useStore } from '../../../store';
 //import { settingsHaveChangedToast } from '../../../lib/toasts';
 
@@ -14,7 +15,6 @@ interface MtuModalProps {
 }
 
 const useMTUModal = (props: MtuModalProps) => {
-    //const { isConnected, isLoading } = useStore();
     const { isOpen, onClose, mtu, setMtu, defValue } = props;
     const [mtuInput, setMtuInput] = useState<number>(mtu);
     const [showModal, setShowModal] = useState<boolean>(isOpen);
@@ -47,30 +47,14 @@ const useMTUModal = (props: MtuModalProps) => {
         handleOnClose();
     }, [isValidMtu, mtuInput, defValue, setMtu, handleOnClose]);
 
-    const onSaveModalKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModalClick();
-            }
-        },
-        [onSaveModalClick]
-    );
+    const onSaveModalKeyDown = useButtonKeyDown(onSaveModalClick);
 
     const handleCancelButtonClick = useCallback(() => {
         setMtuInput(mtu);
         handleOnClose();
     }, [mtu, handleOnClose]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handleMtuInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setMtuInput(Number(event.target.value));

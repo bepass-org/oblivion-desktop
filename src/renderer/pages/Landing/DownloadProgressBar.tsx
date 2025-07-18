@@ -1,7 +1,16 @@
 import classNames from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 
-const DownloadProgressBar = ({ data }: any) => {
+type DownloadProgress = {
+    percent: number;
+    status: string;
+};
+
+interface DownloadProgressBarProps {
+    data: DownloadProgress;
+}
+
+const DownloadProgressBar: FC<DownloadProgressBarProps> = ({ data }) => {
     const [latestPercent, setLatestPercent] = useState<number>(0);
 
     useEffect(() => {

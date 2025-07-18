@@ -1,3 +1,5 @@
+import { DropdownItem } from './renderer/components/Dropdown';
+
 export type settingsKeys =
     | 'scan'
     | 'endpoint'
@@ -104,7 +106,7 @@ export const defaultSettings = {
     networkList: '[]'
 };
 
-export const countries: { value: string; label: string }[] = [
+export const countries: DropdownItem[] = [
     { value: 'AU', label: '🇦🇺 Australia' },
     { value: 'AT', label: '🇦🇹 Austria' },
     { value: 'BE', label: '🇧🇪 Belgium' },
@@ -141,7 +143,7 @@ export const countries: { value: string; label: string }[] = [
     { value: 'US', label: '🇺🇸 United States' }
 ];
 
-export const languages: { value: string; label: string }[] = [
+export const languages: DropdownItem[] = [
     { value: 'fa', label: 'فارسی' },
     { value: 'en', label: 'English' },
     { value: 'cn', label: '中文' },
@@ -154,7 +156,7 @@ export const languages: { value: string; label: string }[] = [
     { value: 'ur', label: 'اردو' }
 ];
 
-export const dnsServers: { value: string; label: string }[] = [
+export const dnsServers: DropdownItem[] = [
     { value: '1.1.1.1', label: 'Cloudflare' },
     { value: '1.1.1.2', label: 'Cloudflare Security' },
     { value: '1.1.1.3', label: 'Cloudflare Family' },
@@ -209,7 +211,7 @@ export const singBoxGeoSite: { label: string; geoSite: string }[] = [
     }
 ];
 
-export const singBoxLog: { value: string; label: string }[] = [
+export const singBoxLog: DropdownItem[] = [
     { value: 'disabled', label: 'Disabled' },
     { value: 'trace', label: 'Trace' },
     { value: 'debug', label: 'Debug' },
@@ -220,13 +222,13 @@ export const singBoxLog: { value: string; label: string }[] = [
     { value: 'panic', label: 'Panic' }
 ];
 
-export const singBoxStack: { value: string; label: string }[] = [
+export const singBoxStack: DropdownItem[] = [
     { value: 'mixed', label: 'Mixed' },
     { value: 'system', label: 'System' },
     { value: 'gvisor', label: 'gVisor' }
 ];
 
-export const singBoxAddrType: { value: string; label: string }[] = [
+export const singBoxAddrType: DropdownItem[] = [
     { value: 'v64', label: 'Automatic' },
     { value: 'v4', label: 'IPv4' },
     { value: 'v6', label: 'IPv6' }

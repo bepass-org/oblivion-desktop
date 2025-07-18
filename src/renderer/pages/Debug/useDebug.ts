@@ -16,7 +16,6 @@ import useTranslate from '../../../localization/useTranslate';
 const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const logRef = useRef<HTMLParagraphElement>(null);
-    //const [isBottom, setIsBottom] = useState(true);
     const appLang = useTranslate();
     const navigate = useNavigate();
 

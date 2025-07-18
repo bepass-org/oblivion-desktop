@@ -11,7 +11,6 @@ import {
     checkProxyMode,
     checkRoutingRules,
     doesFileExist,
-    hasLicense,
     checkReserved,
     checkGeoStatus,
     checkIpType,
@@ -25,7 +24,7 @@ import { wpVersion, helperVersion } from '../config';
 
 export function readLogFile(value: string) {
     return new Promise((resolve, reject) => {
-        fs.readFile(value, 'utf8', (err: any, data: any) => {
+        fs.readFile(value, 'utf8', (err, data) => {
             if (err) {
                 reject(err);
             } else {

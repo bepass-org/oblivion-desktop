@@ -4,13 +4,13 @@ import Nav from '../../components/Nav';
 import PortModal from '../../components/Modal/Port';
 import Tabs from '../../components/Tabs';
 import RoutingRulesModal from '../../components/Modal/RoutingRules';
-import Dropdown from '../../components/Dropdown';
+import Dropdown, { DropdownItem } from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
 //import { platform } from '../../lib/utils';
 import DnsModal from '../../components/Modal/DNS';
 import { useOptionsContext } from '../../context/GlobalContext';
 
-const proxyModes = [
+const proxyModes: DropdownItem[] = [
     {
         value: 'none',
         label: 'None'
@@ -67,7 +67,6 @@ export default function Network() {
     if (
         typeof ipData === 'undefined' ||
         typeof port === 'undefined' ||
-        //typeof autoSetProxy === 'undefined' ||
         typeof proxyMode === 'undefined' ||
         typeof dns === 'undefined' ||
         typeof routingRules === 'undefined' ||
@@ -92,28 +91,6 @@ export default function Network() {
                 <div className='container'>
                     <Tabs active='network' proxyMode={proxyMode} />
                     <div className='settings' role='menu'>
-                        {/*<div
-                        className={classNames('item', autoSetProxy ? 'checked' : '')}
-                        onClick={() => {
-                            setAutoSetProxy(!autoSetProxy);
-                            settings.set('autoSetProxy', !autoSetProxy);
-                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function() {
-                                if (autoSetProxy) {
-                                    setIpData(false);
-                                    settings.set('ipData', false);
-                                }
-                            }, 1000);
-                        }}
-                    >
-                        <label className='key' role='label'>{appLang?.settings?.auto_set_proxy}</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', autoSetProxy ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
-                    </div>*/}
                         <div className='item' role='presentation'>
                             <Dropdown
                                 id='proxy-mode-selector'
@@ -264,7 +241,6 @@ export default function Network() {
             <RoutingRulesModal
                 routingRules={routingRules}
                 setRoutingRules={setRoutingRules}
-                proxyMode={proxyMode}
                 title={appLang?.settings?.routing_rules}
                 isOpen={showRoutingRulesModal}
                 onClose={onCloseRoutingRulesModal}

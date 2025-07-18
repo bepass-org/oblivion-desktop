@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
@@ -12,16 +12,17 @@ import {
     getLanguageName
 } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
+import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 
 const useOptions = () => {
     useGoBackOnEscape();
 
-    const [theme, setTheme] = useState<undefined | string>();
+    const [theme, setTheme] = useState<string>();
     const [lang, setLang] = useState<string>('');
-    const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
-    const [autoConnect, setAutoConnect] = useState<undefined | boolean>();
-    const [startMinimized, setStartMinimized] = useState<undefined | boolean>();
-    const [forceClose, setForceClose] = useState<undefined | boolean>();
+    const [openAtLogin, setOpenAtLogin] = useState<boolean>();
+    const [autoConnect, setAutoConnect] = useState<boolean>();
+    const [startMinimized, setStartMinimized] = useState<boolean>();
+    const [forceClose, setForceClose] = useState<boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [soundEffect, setSoundEffect] = useState<boolean>(false);
@@ -135,15 +136,7 @@ const useOptions = () => {
         document.documentElement.setAttribute('data-bs-theme', tmp);
     }, [theme]);
 
-    const onKeyDownChangeTheme = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickChangeTheme();
-            }
-        },
-        [onClickChangeTheme]
-    );
+    const onKeyDownChangeTheme = useButtonKeyDown(onClickChangeTheme);
 
     const onChangeLanguage = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
         const language = e.target.value;
@@ -162,102 +155,46 @@ const useOptions = () => {
         ipcRenderer.sendMessage('startup', !openAtLogin);
     }, [openAtLogin]);
 
-    const onKeyDownAutoStartButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickAutoStartButton();
-            }
-        },
-        [onClickAutoStartButton]
-    );
+    const onKeyDownAutoStartButton = useButtonKeyDown(onClickAutoStartButton);
 
     const onClickAutoConnectButton = useCallback(() => {
         setAutoConnect(!autoConnect);
         settings.set('autoConnect', !autoConnect);
     }, [autoConnect]);
 
-    const onKeyDownAutoConnectButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickAutoConnectButton();
-            }
-        },
-        [onClickAutoConnectButton]
-    );
+    const onKeyDownAutoConnectButton = useButtonKeyDown(onClickAutoConnectButton);
 
     const onClickStartMinimizedButton = useCallback(() => {
         setStartMinimized(!startMinimized);
         settings.set('startMinimized', !startMinimized);
     }, [startMinimized]);
 
-    const onKeyDownStartMinimizedButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickStartMinimizedButton();
-            }
-        },
-        [onClickStartMinimizedButton]
-    );
+    const onKeyDownStartMinimizedButton = useButtonKeyDown(onClickStartMinimizedButton);
 
     const onClickForceCloseButton = useCallback(() => {
         setForceClose(!forceClose);
         settings.set('forceClose', !forceClose);
     }, [forceClose]);
 
-    const onKeyDownForceCloseButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickForceCloseButton();
-            }
-        },
-        [onClickForceCloseButton]
-    );
+    const onKeyDownForceCloseButton = useButtonKeyDown(onClickForceCloseButton);
 
     const onClickShortcutButton = useCallback(() => {
         setShortcut(!shortcut);
         settings.set('shortcut', !shortcut);
     }, [shortcut]);
 
-    const onKeyDownShortcutButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickShortcutButton();
-            }
-        },
-        [onClickShortcutButton]
-    );
+    const onKeyDownShortcutButton = useButtonKeyDown(onClickShortcutButton);
 
     const onClickSoundEffectButton = useCallback(() => {
         setSoundEffect(!soundEffect);
         settings.set('soundEffect', !soundEffect);
     }, [soundEffect]);
 
-    const onKeyDownSoundEffectButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickSoundEffectButton();
-            }
-        },
-        [onClickSoundEffectButton]
-    );
+    const onKeyDownSoundEffectButton = useButtonKeyDown(onClickSoundEffectButton);
 
     const onClickRestore = useCallback(() => setShowRestoreModal(true), []);
 
-    const onKeyDownRestore = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickRestore();
-            }
-        },
-        [onClickRestore]
-    );
+    const onKeyDownRestore = useButtonKeyDown(onClickRestore);
 
     const onClickBetaReleaseButton = useCallback(() => {
         setBetaRelease(!betaRelease);
@@ -265,15 +202,7 @@ const useOptions = () => {
         localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
     }, [betaRelease]);
 
-    const onKeyDownBetaReleaseButton = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickBetaReleaseButton();
-            }
-        },
-        [onClickBetaReleaseButton]
-    );
+    const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);
 
     return {
         theme,

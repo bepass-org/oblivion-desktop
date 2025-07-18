@@ -1,5 +1,6 @@
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import useTranslate from '../../../../localization/useTranslate';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 interface DnsModalProps {
     isOpen: boolean;
@@ -41,15 +42,7 @@ const useDnsModal = (props: DnsModalProps) => {
         handleOnClose();
     }, [plainDnsInput, dohInput, plainDns, DoH, setCustomDns, handleOnClose]);
 
-    const onSaveModalKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onSaveModalClick();
-            }
-        },
-        [onSaveModalClick]
-    );
+    const onSaveModalKeyDown = useButtonKeyDown(onSaveModalClick);
 
     const handleClearInputs = useCallback(() => {
         setPlainDnsInput('');
@@ -69,15 +62,7 @@ const useDnsModal = (props: DnsModalProps) => {
         handleOnClose();
     }, [handleOnClose, plainDns, DoH]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handlePlainDnsInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {

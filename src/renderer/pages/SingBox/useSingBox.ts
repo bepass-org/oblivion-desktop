@@ -11,25 +11,22 @@ import {
     singBoxAddrType,
     settingsKeys
 } from '../../../defaultSettings';
+import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 
-type SettingValue<T> = T extends boolean
-    ? boolean
-    : T extends number
-      ? number
-      : T extends string
-        ? string
-        : null;
+type SettingValue = string | number | boolean | null;
+
+type SettingsState = {
+    [key in settingsKeys]?: SettingValue;
+};
 
 const useSingBox = () => {
     useGoBackOnEscape();
     const appLang = useTranslate();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
 
-    const [settingsState, setSettingsState] = useState<{
-        [key in settingsKeys]?: SettingValue<any>;
-    }>({});
+    const [settingsState, setSettingsState] = useState<SettingsState>({});
 
-    const getDefaultValue = (key: settingsKeys): SettingValue<any> => {
+    const getDefaultValue = (key: settingsKeys): SettingValue => {
         switch (key) {
             case 'singBoxGeoIp':
                 return singBoxGeoIp[0].geoIp;
@@ -66,13 +63,10 @@ const useSingBox = () => {
                 ];
                 const values = await settings.getMultiple(keysToFetch);
 
-                const newState = keysToFetch.reduce(
-                    (acc, key) => {
-                        acc[key] = values[key] ?? getDefaultValue(key);
-                        return acc;
-                    },
-                    {} as { [key in settingsKeys]?: SettingValue<any> }
-                );
+                const newState = keysToFetch.reduce((acc, key) => {
+                    acc[key] = values[key] ?? getDefaultValue(key);
+                    return acc;
+                }, {} as SettingsState);
 
                 setSettingsState(newState);
             } catch (error) {
@@ -118,15 +112,7 @@ const useSingBox = () => {
 
     const onClickMtu = useCallback(() => setShowPortModal(!showPortModal), [showPortModal]);
 
-    const onKeyDownClickMtu = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                onClickMtu();
-            }
-        },
-        [onClickMtu]
-    );
+    const onKeyDownClickMtu = useButtonKeyDown(onClickMtu);
 
     const setMtu = useCallback((newMtu: number) => {
         settings.set('singBoxMTU', newMtu).then(() => {
