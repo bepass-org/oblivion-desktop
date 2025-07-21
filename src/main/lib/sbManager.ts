@@ -1,5 +1,7 @@
 import { ipcMain, IpcMainEvent } from 'electron';
 import log from 'electron-log';
+import settings from 'electron-settings';
+
 import { spawn, exec } from 'child_process';
 import fs from 'fs';
 import * as grpc from '@grpc/grpc-js';
@@ -31,7 +33,6 @@ import { WindowsHelper, LinuxHelper, DarwinHelper, RoutingRuleParser } from './s
 import { mapGrpcErrorCodeToLabel } from './utils';
 import { disableProxy } from './proxy';
 import { customEvent } from './customEvent';
-import { settings } from '../../renderer/lib/settings';
 
 // Types
 type GrpcMethod = 'Start' | 'Stop';
