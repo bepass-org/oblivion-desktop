@@ -136,8 +136,8 @@ class WarpPlusManager {
                     await shell.openExternal(
                         'https://github.com/bepass-org/oblivion-desktop/wiki/The-warp-plus-file-is-not-found'
                     );
-                } catch (err: any) {
-                    log.error('Failed to open link:', err.message || err);
+                } catch (err) {
+                    log.error('Failed to open link:', (err as Error).message || err);
                 }
                 this.restartApp();
                 return;

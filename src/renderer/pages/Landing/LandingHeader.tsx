@@ -2,6 +2,7 @@ import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { saveConfig } from '../../lib/inputSanitizer';
+import { Language } from '../../../localization/type';
 
 interface LandingHeaderProps {
     toggleDrawer: () => void;
@@ -9,7 +10,7 @@ interface LandingHeaderProps {
     handleMenuOnKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
     isConnected: boolean;
     isLoading: boolean;
-    appLang: any;
+    appLang: Language;
 }
 
 const LandingHeader: FC<LandingHeaderProps> = ({

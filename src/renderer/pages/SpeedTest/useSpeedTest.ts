@@ -1,30 +1,24 @@
+import { ResultSummary } from '@cloudflare/speedtest';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { defaultToast } from '../../lib/toasts';
 
-interface TestResults {
-    download?: number;
-    upload?: number;
-    latency?: number;
-    jitter?: number;
-}
-
 const MB_CONVERSION = 1_000_000;
 
 export const useSpeedTest = () => {
     const appLang = useTranslate();
-    const [testResults, setTestResults] = useState<TestResults | undefined>(undefined);
-    const [isRunning, setIsRunning] = useState(false);
-    const [isFinished, setIsFinished] = useState(false);
-    const [testButtonText, setTestButtonText] = useState('play_arrow');
+    const [testResults, setTestResults] = useState<ResultSummary>();
+    const [isRunning, setIsRunning] = useState<boolean>(false);
+    const [isFinished, setIsFinished] = useState<boolean>(false);
+    const [testButtonText, setTestButtonText] = useState<string>('play_arrow');
 
     useEffect(() => {
         if (!navigator.onLine) {
             defaultToast(appLang?.toast?.offline, 'ONLINE_STATUS', 3000);
         }
 
-        ipcRenderer.on('speed-test', (event: any, data: any) => {
+        ipcRenderer.on('speed-test', (event, data: any) => {
             switch (event) {
                 case 'started':
                     setIsRunning(true);

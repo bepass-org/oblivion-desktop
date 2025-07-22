@@ -151,8 +151,8 @@ class OblivionDesktop {
             try {
                 await fs.promises.access(versionFilePath, fs.constants.F_OK);
                 savedVersion = await fs.promises.readFile(versionFilePath, 'utf-8');
-            } catch (readErr: any) {
-                log.error('Version file not found or unreadable:', readErr.message);
+            } catch (readErr) {
+                log.error('Version file not found or unreadable:', (readErr as Error).message);
             }
             if (savedVersion === null || savedVersion !== appVersion) {
                 this.state.isFirstRun = true;
@@ -161,8 +161,8 @@ class OblivionDesktop {
             }
             try {
                 await fs.promises.writeFile(versionFilePath, appVersion, 'utf-8');
-            } catch (writeErr: any) {
-                log.error('Failed to write version file:', writeErr.message);
+            } catch (writeErr) {
+                log.error('Failed to write version file:', (writeErr as Error).message);
                 throw writeErr;
             }
         } catch (err) {
@@ -221,7 +221,7 @@ class OblivionDesktop {
         return null;
     }
 
-    private saveWindowPosition(x: any, y: any) {
+    private saveWindowPosition(x: number, y: number) {
         const positionData = JSON.stringify({ x, y });
         fs.writeFileSync(windowPosition, positionData, 'utf-8');
     }
@@ -550,7 +550,7 @@ class OblivionDesktop {
                     this.state.mainWindow?.setProgressBar(0);
                     await this.downloadUpdate(
                         `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/download/${latestVersion}/${packageJsonData.name}-${isWindows ? 'win' : ''}-${process.arch}.exe`,
-                        (percent: any) => {
+                        (percent) => {
                             log.info(`Download: ${percent}%`);
                             this.state.mainWindow?.setProgressBar(percent / 100);
                         },

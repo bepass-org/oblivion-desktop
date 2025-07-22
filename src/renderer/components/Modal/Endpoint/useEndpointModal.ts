@@ -1,18 +1,11 @@
-import {
-    ChangeEvent,
-    KeyboardEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
-} from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useStore } from '../../../store';
 import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { defaultSettings } from '../../../../defaultSettings';
 import { loadingToast, settingsHaveChangedToast, stopLoadingToast } from '../../../lib/toasts';
 import { Profile } from '../../../pages/Scanner/useScanner';
+import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -39,7 +32,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
 
-    const removeDuplicates = (endpoints: any) => {
+    const removeDuplicates = (endpoints: Suggestion) => {
         if (!endpoints?.ipv4 && !endpoints?.ipv6) {
             return {
                 ipv4: [],
@@ -151,14 +144,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleOnClose();
     }, [endpointInput, defValue, setEndpoint, isConnected, isLoading, appLang, handleOnClose]);
 
-    const onUpdateKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                onSaveModal();
-            }
-        },
-        [onSaveModal]
-    );
+    const onUpdateKeyDown = useButtonKeyDown(onSaveModal);
 
     const setEndpointSuggestion = useCallback((item: string) => {
         setEndpointInput(item);
@@ -173,14 +159,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleOnClose();
     }, [endpoint, handleOnClose]);
 
-    const handleCancelButtonKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.key === 'Enter') {
-                handleCancelButtonClick();
-            }
-        },
-        [handleCancelButtonClick]
-    );
+    const handleCancelButtonKeyDown = useButtonKeyDown(handleCancelButtonClick);
 
     const handleEndpointInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {

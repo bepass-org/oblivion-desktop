@@ -1,6 +1,7 @@
 import { ipcMain, IpcMainEvent } from 'electron';
-import settings from 'electron-settings';
 import log from 'electron-log';
+import settings from 'electron-settings';
+
 import { spawn, exec } from 'child_process';
 import fs from 'fs';
 import * as grpc from '@grpc/grpc-js';
@@ -181,7 +182,7 @@ class SingBoxManager {
     }
 
     // Private Helper Methods
-    private createGrpcClient(): any {
+    private createGrpcClient() {
         const packageDefinition = protoLoader.loadSync(protoAssetPath, {
             keepCase: true,
             longs: String,

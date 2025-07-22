@@ -30,7 +30,7 @@ type LanguageType =
     | 'am'
     | 'my';
 
-const useTranslate = () => {
+const useTranslate = (): Language => {
     const getLanguage = () => {
         return (localStorage.getItem('lang') || defaultSettings.lang) as LanguageType;
     };

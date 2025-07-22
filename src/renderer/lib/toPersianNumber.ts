@@ -11,5 +11,5 @@ export const toPersianNumber = (
     if (doNotConvertFloat && n.includes('.')) {
         return n;
     }
-    return n.replace(/\d/g, (x: any) => farsiDigits[x]);
+    return n.replace(/\d/g, (x) => farsiDigits[Number(x)]);
 };

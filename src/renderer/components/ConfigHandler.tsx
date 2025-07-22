@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { saveConfig } from '../lib/inputSanitizer';
+import { Language } from '../../localization/type';
 
-const ConfigHandler = ({ isConnected, isLoading, appLang }: any) => {
+interface ConfigHandlerProps {
+    isConnected: boolean;
+    isLoading: boolean;
+    appLang: Language;
+}
+
+const ConfigHandler: FC<ConfigHandlerProps> = ({ isConnected, isLoading, appLang }) => {
     useEffect(() => {
-        /*ipcRenderer.on('process-url', (url: any) => {
-            if (typeof url === 'string' && url !== '') {
-                saveConfig(url, isConnected, isLoading, appLang);
-            }
-        });*/
-
         const handlePaste = (event: ClipboardEvent) => {
             event.preventDefault();
             const pastedText = event.clipboardData?.getData('Text') || '';
