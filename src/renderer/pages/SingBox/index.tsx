@@ -11,6 +11,7 @@ import {
     singBoxStack,
     singBoxAddrType
 } from '../../../defaultSettings';
+import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 export default function SingBox() {
     const {
@@ -42,21 +43,24 @@ export default function SingBox() {
     } = settingsState;
 
     if (
-        typeof closeHelper === 'undefined' ||
-        typeof geoIp === 'undefined' ||
-        typeof geoSite === 'undefined' ||
-        typeof mtu === 'undefined' ||
-        typeof geoBlock === 'undefined' ||
-        typeof geoNSFW === 'undefined' ||
-        typeof log === 'undefined' ||
-        typeof stack === 'undefined' ||
-        typeof sniff === 'undefined' ||
-        typeof udpBlock === 'undefined' ||
-        typeof discordBypass === 'undefined' ||
-        typeof addrType === 'undefined' ||
-        typeof proxyMode === 'undefined'
-    )
+        isAnyUndefined(
+            closeHelper,
+            geoIp,
+            geoSite,
+            mtu,
+            geoBlock,
+            geoNSFW,
+            log,
+            stack,
+            sniff,
+            udpBlock,
+            discordBypass,
+            addrType,
+            proxyMode
+        )
+    ) {
         return <div className='settings' />;
+    }
 
     return (
         <>

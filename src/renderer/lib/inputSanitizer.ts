@@ -3,6 +3,7 @@ import { settings } from './settings';
 import { countries, defaultSettings } from '../../defaultSettings';
 import { defaultToast } from './toasts';
 import { Language } from '../../localization/type';
+import { withDefault } from './withDefault';
 
 type ConfigType =
     | {
@@ -54,10 +55,7 @@ export const newProfile = (savedProfiles: any, newName: string, newEndpoint: str
         return false;
     }
     if (!Array.isArray(savedProfiles)) {
-        savedProfiles =
-            typeof savedProfiles === 'undefined'
-                ? JSON.parse(defaultSettings.profiles)
-                : JSON.parse(savedProfiles);
+        savedProfiles = JSON.parse(withDefault(savedProfiles, defaultSettings.profiles));
     }
     if (savedProfiles.length > 7) {
         return false;

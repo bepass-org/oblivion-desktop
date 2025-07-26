@@ -5,6 +5,7 @@ import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
 import { defaultSettings, defaultRoutingRules } from '../../../../defaultSettings';
 import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
+import { withDefault } from '../../../lib/withDefault';
 
 interface RoutingRulesModalProps {
     isOpen: boolean;
@@ -23,7 +24,7 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
     useEffect(() => {
         (setShowModal(isOpen), [isOpen]);
         settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
+            setProxyMode(withDefault(value, defaultSettings.proxyMode));
         });
     });
 

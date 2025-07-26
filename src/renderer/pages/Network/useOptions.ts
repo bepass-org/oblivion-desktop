@@ -11,6 +11,8 @@ import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { DropdownItem } from '../../components/Dropdown';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
+import { withDefault } from '../../lib/withDefault';
+import { typeIsNotUndefined } from '../../lib/isAnyUndefined';
 
 const useOptions = () => {
     const { isConnected, isLoading } = useStore();
@@ -28,13 +30,11 @@ const useOptions = () => {
     const [dns, setDns] = useState<string>();
     const [routingRules, setRoutingRules] = useState<string>();
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
-    const [method, setMethod] = useState<string>('');
     const [dataUsage, setDataUsage] = useState<boolean>();
     const [networkList, setNetworkList] = useState<DropdownItem[]>([
         { value: '127.0.0.1', label: '127.0.0.1' },
         { value: '0.0.0.0', label: '0.0.0.0' }
     ]);
-    const [checkingLocalIp, setCheckingLocalIp] = useState<boolean>();
     const [hostIp, setHostIp] = useState<string>('');
     const [showDnsModal, setShowDnsModal] = useState<boolean>(false);
     const [plainDns, setPlainDns] = useState<string>();
@@ -59,40 +59,18 @@ const useOptions = () => {
                 'networkList'
             ])
             .then((values) => {
-                setPort(typeof values.port === 'undefined' ? defaultSettings.port : values.port);
-                const checkProxy =
-                    typeof values.proxyMode === 'undefined'
-                        ? defaultSettings.proxyMode
-                        : values.proxyMode;
+                const checkProxy = withDefault(values.proxyMode, defaultSettings.proxyMode);
+                setPort(withDefault(values.port, defaultSettings.port));
                 setProxyMode(checkProxy);
-                setIpData(
-                    typeof values.ipData === 'undefined' ? defaultSettings.ipData : values.ipData
-                );
-                setDataUsage(
-                    typeof values.dataUsage === 'undefined'
-                        ? defaultSettings.dataUsage
-                        : values.dataUsage
-                );
-                const checkHostIp =
-                    typeof values.hostIP === 'undefined' ? defaultSettings.hostIP : values.hostIP;
-                setHostIp(checkHostIp);
-                setDns(typeof values.dns === 'undefined' ? dnsServers[0].value : values.dns);
-                setRoutingRules(
-                    typeof values.routingRules === 'undefined'
-                        ? defaultSettings.routingRules
-                        : values.routingRules
-                );
-                setLang(typeof values.lang === 'undefined' ? defaultSettings.lang : values.lang);
-                setMethod(
-                    typeof values.method === 'undefined' ? defaultSettings.method : values.method
-                );
-                setPlainDns(
-                    typeof values.plainDns === 'undefined'
-                        ? defaultSettings.plainDns
-                        : values.plainDns
-                );
-                setDoh(typeof values.DoH === 'undefined' ? defaultSettings.DoH : values.DoH);
-                if (typeof values.networkList !== 'undefined') {
+                setIpData(withDefault(values.ipData, defaultSettings.ipData));
+                setDataUsage(withDefault(values.dataUsage, defaultSettings.dataUsage));
+                setHostIp(withDefault(values.hostIP, defaultSettings.hostIP));
+                setDns(withDefault(values.dns, dnsServers[0].value)||"");
+                setRoutingRules(withDefault(values.routingRules, defaultSettings.routingRules));
+                setLang(withDefault(values.lang, defaultSettings.lang));
+                setPlainDns(withDefault(values.plainDns, defaultSettings.plainDns));
+                setDoh(withDefault(values.DoH, defaultSettings.DoH));
+                if (typeIsNotUndefined(values.networkList)) {
                     setNetworkList((prev) => {
                         try {
                             const rawItems = JSON.parse(values.networkList);
@@ -343,8 +321,7 @@ const useOptions = () => {
         setDefaultDns,
         cleanDns,
         setCustomDns,
-        setShowDnsModal,
-        checkingLocalIp
+        setShowDnsModal
     };
 };
 export default useOptions;

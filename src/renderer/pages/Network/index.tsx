@@ -9,6 +9,7 @@ import { dnsServers } from '../../../defaultSettings';
 //import { platform } from '../../lib/utils';
 import DnsModal from '../../components/Modal/DNS';
 import { useOptionsContext } from '../../context/GlobalContext';
+import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 const proxyModes: DropdownItem[] = [
     {
@@ -61,18 +62,12 @@ export default function Network() {
         setDefaultDns,
         cleanDns,
         setCustomDns,
-        setShowDnsModal,
-        checkingLocalIp
+        setShowDnsModal
     } = useOptionsContext();
-    if (
-        typeof ipData === 'undefined' ||
-        typeof port === 'undefined' ||
-        typeof proxyMode === 'undefined' ||
-        typeof dns === 'undefined' ||
-        typeof routingRules === 'undefined' ||
-        typeof dataUsage === 'undefined'
-    )
+
+    if (isAnyUndefined(ipData, port, proxyMode, dns, routingRules, dataUsage)) {
         return <div className='settings' />;
+    }
 
     return (
         <>
@@ -110,7 +105,6 @@ export default function Network() {
                                 value={hostIp ? hostIp : networkList[0]?.value}
                                 label={appLang?.settings?.share_vpn}
                                 tabIndex={0}
-                                isLoading={checkingLocalIp}
                             />
                             <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
                         </div>

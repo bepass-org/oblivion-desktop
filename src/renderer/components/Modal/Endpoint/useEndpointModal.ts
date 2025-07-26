@@ -6,6 +6,7 @@ import { defaultSettings } from '../../../../defaultSettings';
 import { loadingToast, settingsHaveChangedToast, stopLoadingToast } from '../../../lib/toasts';
 import { Profile } from '../../../pages/Scanner/useScanner';
 import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
+import { withDefault } from '../../../lib/withDefault';
 
 type EndpointModalProps = {
     isOpen: boolean;
@@ -101,7 +102,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
 
     useEffect(() => {
         settings.get('scanResult').then((value) => {
-            setScanResult(typeof value === 'undefined' ? defaultSettings.scanResult : value);
+            setScanResult(withDefault(value, defaultSettings.scanResult));
         });
 
         const handleClickOutside = (event: MouseEvent) => {
