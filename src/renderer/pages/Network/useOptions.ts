@@ -23,12 +23,12 @@ const useOptions = () => {
     // TODO rename to networkConfiguration
     const [proxyMode, setProxyMode] = useState<string>('');
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
-    const [port, setPort] = useState<number>();
+    const [port, setPort] = useState<number>(defaultSettings.port);
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
     const appLang = useTranslate();
     const [ipData, setIpData] = useState<boolean>();
-    const [dns, setDns] = useState<string>();
-    const [routingRules, setRoutingRules] = useState<string>();
+    const [dns, setDns] = useState<string>('');
+    const [routingRules, setRoutingRules] = useState<string>(defaultSettings.routingRules);
     const [showRoutingRulesModal, setShowRoutingRulesModal] = useState<boolean>(false);
     const [dataUsage, setDataUsage] = useState<boolean>();
     const [networkList, setNetworkList] = useState<DropdownItem[]>([
@@ -65,7 +65,7 @@ const useOptions = () => {
                 setIpData(withDefault(values.ipData, defaultSettings.ipData));
                 setDataUsage(withDefault(values.dataUsage, defaultSettings.dataUsage));
                 setHostIp(withDefault(values.hostIP, defaultSettings.hostIP));
-                setDns(withDefault(values.dns, dnsServers[0].value)||"");
+                setDns(withDefault(values.dns, dnsServers[0].value) || '');
                 setRoutingRules(withDefault(values.routingRules, defaultSettings.routingRules));
                 setLang(withDefault(values.lang, defaultSettings.lang));
                 setPlainDns(withDefault(values.plainDns, defaultSettings.plainDns));
