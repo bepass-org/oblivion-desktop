@@ -53,6 +53,7 @@ const spanish: Language = {
     settings: {
         title: 'Configuraciones de Warp',
         more: 'Más configuraciones',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: 'Habilitar Warp',
         method_gool: 'Gool',
@@ -148,7 +149,20 @@ const spanish: Language = {
         singbox_discord_bypass_desc: 'Bypass del filtrado de Discord',
         more_duties: 'Más responsabilidades',
         beta_release: 'Actualización Beta',
-        beta_release_desc: 'Mantente informado sobre versiones previas al lanzamiento'
+        beta_release_desc: 'Mantente informado sobre versiones previas al lanzamiento',
+        hook_connect_success: 'En Conexión Exitosa',
+        hook_connect_success_desc: 'Ejecutable a ejecutar cuando se establece la conexión',
+        hook_connect_fail: 'En Fallo de Conexión',
+        hook_connect_fail_desc: 'Ejecutable a ejecutar cuando falla la conexión',
+        hook_disconnect: 'En Desconexión',
+        hook_disconnect_desc: 'Ejecutable a ejecutar cuando se desconecta',
+        hook_connection_error: 'En Error de Conexión',
+        hook_connection_error_desc: 'Ejecutable a ejecutar cuando ocurre un error de conexión',
+        hook_args: 'Argumentos',
+        hook_args_desc: 'Argumentos opcionales de línea de comandos',
+        browse: 'Examinar',
+        hook_executable_placeholder: 'Ruta al ejecutable',
+        hook_args_placeholder: 'Argumentos opcionales de línea de comandos'
     },
     tabs: {
         home: 'Conectar',

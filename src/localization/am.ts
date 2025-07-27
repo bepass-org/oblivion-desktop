@@ -49,6 +49,7 @@ const amharic: Language = {
     settings: {
         title: 'የዋርፕ ቅንብሮች',
         more: 'ተጨማሪ ቅንብሮች',
+        hooks: 'ሁክስ',
         method_warp: 'ዋርፕ',
         method_warp_desc: 'ዋርፕን እንዲተካ ያስተካክሉ',
         method_gool: 'ጉል',
@@ -141,9 +142,22 @@ const amharic: Language = {
         singbox_udp_block_desc: 'የUDP ትራፊክን በፍጹም መንገድ መዝጋት',
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'የ Discord መከላከያን መዝገብ ማስፈታት',
-        more_duties: 'ተጨማሪ ዕርምጃዎች',
-        beta_release: 'እባብ እንቅስቃሴ',
-        beta_release_desc: 'ስለ እንቅስቃሴ ከፊት በፊት ማህበረሰብ መረጃ ማግኘት'
+        more_duties: 'Duties',
+        beta_release: 'Beta Update',
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'Կատարելի ֆայլի ուղին',
+        hook_args_placeholder: 'Ընտրովի հրամանային տողի պիտակներ'
     },
     tabs: {
         home: 'เชื่อมต่อ',

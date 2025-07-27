@@ -6,6 +6,7 @@ import RestoreModal from '../../components/Modal/Restore';
 import Tabs from '../../components/Tabs';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
+import HookInput from '../../components/HookInput';
 import { platform } from '../../lib/utils';
 
 export default function Options() {
@@ -46,7 +47,26 @@ export default function Options() {
         startMinimized,
         setStartMinimized,
         onClickStartMinimizedButton,
-        onKeyDownStartMinimizedButton
+        onKeyDownStartMinimizedButton,
+        hookConnectSuccess,
+        hookConnectSuccessArgs,
+        hookConnectFail,
+        hookConnectFailArgs,
+        hookDisconnect,
+        hookDisconnectArgs,
+        hookConnectionError,
+        hookConnectionErrorArgs,
+        onBrowseExecutable,
+        onHookExecutableChange,
+        onHookArgsChange,
+        setHookConnectSuccess,
+        setHookConnectSuccessArgs,
+        setHookConnectFail,
+        setHookConnectFailArgs,
+        setHookDisconnect,
+        setHookDisconnectArgs,
+        setHookConnectionError,
+        setHookConnectionErrorArgs
     } = useOptions();
 
     if (
@@ -57,7 +77,15 @@ export default function Options() {
         typeof forceClose === 'undefined' ||
         typeof soundEffect === 'undefined' ||
         typeof autoConnect === 'undefined' ||
-        typeof betaRelease === 'undefined'
+        typeof betaRelease === 'undefined' ||
+        typeof hookConnectSuccess === 'undefined' ||
+        typeof hookConnectSuccessArgs === 'undefined' ||
+        typeof hookConnectFail === 'undefined' ||
+        typeof hookConnectFailArgs === 'undefined' ||
+        typeof hookDisconnect === 'undefined' ||
+        typeof hookDisconnectArgs === 'undefined' ||
+        typeof hookConnectionError === 'undefined' ||
+        typeof hookConnectionErrorArgs === 'undefined'
     )
         return <div className='settings' />;
 
@@ -72,6 +100,14 @@ export default function Options() {
                 setStartMinimized={setStartMinimized}
                 setAutoConnect={setAutoConnect}
                 setShortcut={setShortcut}
+                setHookConnectSuccess={setHookConnectSuccess}
+                setHookConnectSuccessArgs={setHookConnectSuccessArgs}
+                setHookConnectFail={setHookConnectFail}
+                setHookConnectFailArgs={setHookConnectFailArgs}
+                setHookDisconnect={setHookDisconnect}
+                setHookDisconnectArgs={setHookDisconnectArgs}
+                setHookConnectionError={setHookConnectionError}
+                setHookConnectionErrorArgs={setHookConnectionErrorArgs}
                 title={appLang?.modal?.restore_title}
                 isOpen={showRestoreModal}
                 onClose={onCloseRestoreModal}
@@ -242,6 +278,132 @@ export default function Options() {
                             </div>
                             <div className='info'>{appLang?.settings?.force_close_desc}</div>
                         </div>
+                    </div>
+                    <div className='moreSettings'>
+                        <i className='material-icons'>&#xe313;</i>
+                        {appLang?.settings?.hooks}
+                    </div>
+                    <div className='settings' role='menu'>
+                        <HookInput
+                            label={
+                                appLang?.settings?.hook_connect_success || 'On Connection Success'
+                            }
+                            description={
+                                appLang?.settings?.hook_connect_success_desc ||
+                                'Executable to run when connection is established'
+                            }
+                            executableValue={hookConnectSuccess}
+                            argsValue={hookConnectSuccessArgs}
+                            onExecutableChange={(value) =>
+                                onHookExecutableChange('connectSuccess', value)
+                            }
+                            onArgsChange={(value) => onHookArgsChange('connectSuccess', value)}
+                            onBrowse={() => onBrowseExecutable('connectSuccess')}
+                            argsLabel={appLang?.settings?.hook_args || 'Arguments'}
+                            argsDescription={
+                                appLang?.settings?.hook_args_desc ||
+                                'Optional command line arguments'
+                            }
+                            browseLabel={appLang?.settings?.browse || 'Browse'}
+                            hookType='connectSuccess'
+                            executablePlaceholder={
+                                appLang?.settings?.hook_executable_placeholder ||
+                                'Path to executable'
+                            }
+                            argsPlaceholder={
+                                appLang?.settings?.hook_args_placeholder ||
+                                'Optional command line arguments'
+                            }
+                        />
+                        <HookInput
+                            label={appLang?.settings?.hook_connect_fail || 'On Connection Fail'}
+                            description={
+                                appLang?.settings?.hook_connect_fail_desc ||
+                                'Executable to run when connection fails'
+                            }
+                            executableValue={hookConnectFail}
+                            argsValue={hookConnectFailArgs}
+                            onExecutableChange={(value) =>
+                                onHookExecutableChange('connectFail', value)
+                            }
+                            onArgsChange={(value) => onHookArgsChange('connectFail', value)}
+                            onBrowse={() => onBrowseExecutable('connectFail')}
+                            argsLabel={appLang?.settings?.hook_args || 'Arguments'}
+                            argsDescription={
+                                appLang?.settings?.hook_args_desc ||
+                                'Optional command line arguments'
+                            }
+                            browseLabel={appLang?.settings?.browse || 'Browse'}
+                            hookType='connectFail'
+                            executablePlaceholder={
+                                appLang?.settings?.hook_executable_placeholder ||
+                                'Path to executable'
+                            }
+                            argsPlaceholder={
+                                appLang?.settings?.hook_args_placeholder ||
+                                'Optional command line arguments'
+                            }
+                        />
+                        <HookInput
+                            label={appLang?.settings?.hook_disconnect || 'On Disconnect'}
+                            description={
+                                appLang?.settings?.hook_disconnect_desc ||
+                                'Executable to run when disconnected'
+                            }
+                            executableValue={hookDisconnect}
+                            argsValue={hookDisconnectArgs}
+                            onExecutableChange={(value) =>
+                                onHookExecutableChange('disconnect', value)
+                            }
+                            onArgsChange={(value) => onHookArgsChange('disconnect', value)}
+                            onBrowse={() => onBrowseExecutable('disconnect')}
+                            argsLabel={appLang?.settings?.hook_args || 'Arguments'}
+                            argsDescription={
+                                appLang?.settings?.hook_args_desc ||
+                                'Optional command line arguments'
+                            }
+                            browseLabel={appLang?.settings?.browse || 'Browse'}
+                            hookType='disconnect'
+                            executablePlaceholder={
+                                appLang?.settings?.hook_executable_placeholder ||
+                                'Path to executable'
+                            }
+                            argsPlaceholder={
+                                appLang?.settings?.hook_args_placeholder ||
+                                'Optional command line arguments'
+                            }
+                        />
+                        <HookInput
+                            label={
+                                appLang?.settings?.hook_connection_error || 'On Connection Error'
+                            }
+                            description={
+                                appLang?.settings?.hook_connection_error_desc ||
+                                'Executable to run when connection error occurs'
+                            }
+                            executableValue={hookConnectionError}
+                            argsValue={hookConnectionErrorArgs}
+                            onExecutableChange={(value) =>
+                                onHookExecutableChange('connectionError', value)
+                            }
+                            onArgsChange={(value) => onHookArgsChange('connectionError', value)}
+                            onBrowse={() => onBrowseExecutable('connectionError')}
+                            argsLabel={appLang?.settings?.hook_args || 'Arguments'}
+                            argsDescription={
+                                appLang?.settings?.hook_args_desc ||
+                                'Optional command line arguments'
+                            }
+                            browseLabel={appLang?.settings?.browse || 'Browse'}
+                            hookType='connectionError'
+                            executablePlaceholder={
+                                appLang?.settings?.hook_executable_placeholder ||
+                                'Path to executable'
+                            }
+                            argsPlaceholder={
+                                appLang?.settings?.hook_args_placeholder ||
+                                'Optional command line arguments'
+                            }
+                        />
                     </div>
                     <div className='moreSettings'>
                         <i className='material-icons'>&#xe313;</i>

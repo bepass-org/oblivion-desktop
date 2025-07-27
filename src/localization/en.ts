@@ -52,6 +52,7 @@ const english: Language = {
     settings: {
         title: 'Warp Settings',
         more: 'More Settings',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: 'Enable Warp',
         method_gool: 'Gool',
@@ -146,7 +147,20 @@ const english: Language = {
         singbox_discord_bypass_desc: 'Bypass Discord filtering',
         more_duties: 'Duties',
         beta_release: 'Beta Update',
-        beta_release_desc: 'Stay informed about pre-release versions'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'Path to executable',
+        hook_args_placeholder: 'Optional command line arguments'
     },
     tabs: {
         home: 'Connect',

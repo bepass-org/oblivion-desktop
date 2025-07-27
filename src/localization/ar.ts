@@ -49,6 +49,7 @@ const arabic: Language = {
     settings: {
         title: 'إعدادات Warp',
         more: 'المزيد من الإعدادات',
+        hooks: 'هوك',
         method_warp: 'Warp',
         method_warp_desc: 'تمكين Warp',
         method_gool: 'Gool',
@@ -141,9 +142,22 @@ const arabic: Language = {
         singbox_udp_block_desc: 'حظر كامل لحركة مرور UDP',
         singbox_discord_bypass: 'ديزكورد',
         singbox_discord_bypass_desc: 'تجاوز حجب ديزكورد',
-        more_duties: 'المزيد من الواجبات',
-        beta_release: 'تحديث النسخة التجريبية',
-        beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'
+        more_duties: 'المهام',
+        beta_release: 'تحديث بيتا',
+        beta_release_desc: 'البقاء على اطلاع بالإصدارات التجريبية',
+        hook_connect_success: 'عند نجاح الاتصال',
+        hook_connect_success_desc: 'ملف تنفيذي للتشغيل عند إنشاء الاتصال',
+        hook_connect_fail: 'عند فشل الاتصال',
+        hook_connect_fail_desc: 'ملف تنفيذي للتشغيل عند فشل الاتصال',
+        hook_disconnect: 'عند قطع الاتصال',
+        hook_disconnect_desc: 'ملف تنفيذي للتشغيل عند قطع الاتصال',
+        hook_connection_error: 'عند خطأ الاتصال',
+        hook_connection_error_desc: 'ملف تنفيذي للتشغيل عند حدوث خطأ في الاتصال',
+        hook_args: 'معاملات',
+        hook_args_desc: 'معاملات سطر أوامر اختيارية',
+        browse: 'تصفح',
+        hook_executable_placeholder: 'مسار الملف التنفيذي',
+        hook_args_placeholder: 'معاملات سطر أوامر اختيارية'
     },
     tabs: {
         home: 'اتصال',

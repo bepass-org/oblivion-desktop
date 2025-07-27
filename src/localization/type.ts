@@ -49,6 +49,7 @@ export interface Toast {
 export interface Settings {
     title: string;
     more: string;
+    hooks: string;
     method_warp: string;
     method_warp_desc: string;
     method_gool: string;
@@ -144,6 +145,19 @@ export interface Settings {
     more_duties: string;
     beta_release: string;
     beta_release_desc: string;
+    hook_connect_success: string;
+    hook_connect_success_desc: string;
+    hook_connect_fail: string;
+    hook_connect_fail_desc: string;
+    hook_disconnect: string;
+    hook_disconnect_desc: string;
+    hook_connection_error: string;
+    hook_connection_error_desc: string;
+    hook_args: string;
+    hook_args_desc: string;
+    browse: string;
+    hook_executable_placeholder: string;
+    hook_args_placeholder: string;
 }
 
 export interface Tabs {

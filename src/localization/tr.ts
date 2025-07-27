@@ -53,6 +53,7 @@ const turkish: Language = {
     settings: {
         title: 'Warp Ayarları',
         more: 'Diğer Ayarlar',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: "Warp'ı etkinleştir",
         method_gool: 'Gool',
@@ -147,7 +148,20 @@ const turkish: Language = {
         singbox_discord_bypass_desc: 'Discord engellemesini aşma',
         more_duties: 'Daha fazla görev',
         beta_release: 'Beta Güncellemesi',
-        beta_release_desc: 'Önizleme sürümleri hakkında bilgi sahibi olun'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'Yürütülebilir dosyanın yolu',
+        hook_args_placeholder: 'Opsiyonel komut satırı argümanları'
     },
     tabs: {
         home: 'Bağlan',

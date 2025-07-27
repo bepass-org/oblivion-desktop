@@ -48,6 +48,18 @@ const configuration: webpack.Configuration = {
         path.join(webpackPaths.srcRendererPath, 'index.tsx')
     ],
 
+    resolve: {
+        alias: {
+            react: path.resolve(__dirname, '../../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../../node_modules/react-dom'),
+            'react/jsx-runtime': path.resolve(__dirname, '../../node_modules/react/jsx-runtime'),
+            'react/jsx-dev-runtime': path.resolve(
+                __dirname,
+                '../../node_modules/react/jsx-dev-runtime'
+            )
+        }
+    },
+
     output: {
         path: webpackPaths.distRendererPath,
         publicPath: '/',

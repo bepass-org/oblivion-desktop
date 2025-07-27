@@ -49,6 +49,7 @@ const chinese: Language = {
     settings: {
         title: 'Warp 设置',
         more: '更多设置',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: '启用 Warp',
         method_gool: 'Gool',
@@ -143,7 +144,20 @@ const chinese: Language = {
         singbox_discord_bypass_desc: '绕过 Discord 过滤',
         more_duties: '更多职责',
         beta_release: 'Beta 更新',
-        beta_release_desc: '了解预发布版本'
+        beta_release_desc: '了解预发布版本',
+        hook_connect_success: '连接成功时',
+        hook_connect_success_desc: '连接建立时运行的可执行文件',
+        hook_connect_fail: '连接失败时',
+        hook_connect_fail_desc: '连接失败时运行的可执行文件',
+        hook_disconnect: '断开连接时',
+        hook_disconnect_desc: '断开连接时运行的可执行文件',
+        hook_connection_error: '连接错误时',
+        hook_connection_error_desc: '发生连接错误时运行的可执行文件',
+        hook_args: '参数',
+        hook_args_desc: '可选命令行参数',
+        browse: '浏览',
+        hook_executable_placeholder: '可执行文件路径',
+        hook_args_placeholder: '可选命令行参数'
     },
     tabs: {
         home: '连接',

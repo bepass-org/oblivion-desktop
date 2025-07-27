@@ -502,6 +502,32 @@ class OblivionDesktop {
             this.state.mainWindow?.webContents.openDevTools();
         });
 
+        // Hook testing IPC handler
+        ipcMain.on('test-hook', async (event, hookType: string) => {
+            const { HookManager } = await import('./lib/hookManager');
+            try {
+                log.info(`Manual hook test requested: ${hookType}`);
+                await HookManager.debugExecuteHook(hookType as any);
+                event.reply('test-hook-result', { success: true, hookType });
+            } catch (error) {
+                log.error(`Manual hook test failed for ${hookType}:`, error);
+                event.reply('test-hook-result', { success: false, hookType, error: String(error) });
+            }
+        });
+
+        // Temporary test trigger - call testConnectionErrorHook from console
+        ipcMain.on('trigger-test-error', async (event) => {
+            try {
+                const { testConnectionErrorHook } = await import('./lib/wpHelper');
+                log.info('=== TRIGGERING TEST CONNECTION ERROR ===');
+                testConnectionErrorHook();
+                event.reply('test-result', 'Test error hook triggered');
+            } catch (error) {
+                log.error('Failed to trigger test error:', error);
+                event.reply('test-result', `Error: ${error}`);
+            }
+        });
+
         customEvent.on('tray-icon', (newStatus: string) => {
             if (!this.state.appIcon) return;
             if (newStatus.startsWith('connected') || newStatus === 'disconnected') {

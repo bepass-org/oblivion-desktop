@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
@@ -28,6 +28,14 @@ const useOptions = () => {
     const [soundEffect, setSoundEffect] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
+    const [hookConnectSuccess, setHookConnectSuccess] = useState<string>('');
+    const [hookConnectSuccessArgs, setHookConnectSuccessArgs] = useState<string>('');
+    const [hookConnectFail, setHookConnectFail] = useState<string>('');
+    const [hookConnectFailArgs, setHookConnectFailArgs] = useState<string>('');
+    const [hookDisconnect, setHookDisconnect] = useState<string>('');
+    const [hookDisconnectArgs, setHookDisconnectArgs] = useState<string>('');
+    const [hookConnectionError, setHookConnectionError] = useState<string>('');
+    const [hookConnectionErrorArgs, setHookConnectionErrorArgs] = useState<string>('');
 
     const appLang = useTranslate();
 
@@ -62,7 +70,15 @@ const useOptions = () => {
                 'shortcut',
                 'soundEffect',
                 'proxyMode',
-                'betaRelease'
+                'betaRelease',
+                'hookConnectSuccess',
+                'hookConnectSuccessArgs',
+                'hookConnectFail',
+                'hookConnectFailArgs',
+                'hookDisconnect',
+                'hookDisconnectArgs',
+                'hookConnectionError',
+                'hookConnectionErrorArgs'
             ])
             .then((values) => {
                 setTheme(
@@ -112,6 +128,46 @@ const useOptions = () => {
                     typeof values.betaRelease === 'undefined'
                         ? defaultSettings.betaRelease
                         : values.betaRelease
+                );
+                setHookConnectSuccess(
+                    typeof values.hookConnectSuccess === 'undefined'
+                        ? defaultSettings.hookConnectSuccess
+                        : values.hookConnectSuccess
+                );
+                setHookConnectSuccessArgs(
+                    typeof values.hookConnectSuccessArgs === 'undefined'
+                        ? defaultSettings.hookConnectSuccessArgs
+                        : values.hookConnectSuccessArgs
+                );
+                setHookConnectFail(
+                    typeof values.hookConnectFail === 'undefined'
+                        ? defaultSettings.hookConnectFail
+                        : values.hookConnectFail
+                );
+                setHookConnectFailArgs(
+                    typeof values.hookConnectFailArgs === 'undefined'
+                        ? defaultSettings.hookConnectFailArgs
+                        : values.hookConnectFailArgs
+                );
+                setHookDisconnect(
+                    typeof values.hookDisconnect === 'undefined'
+                        ? defaultSettings.hookDisconnect
+                        : values.hookDisconnect
+                );
+                setHookDisconnectArgs(
+                    typeof values.hookDisconnectArgs === 'undefined'
+                        ? defaultSettings.hookDisconnectArgs
+                        : values.hookDisconnectArgs
+                );
+                setHookConnectionError(
+                    typeof values.hookConnectionError === 'undefined'
+                        ? defaultSettings.hookConnectionError
+                        : values.hookConnectionError
+                );
+                setHookConnectionErrorArgs(
+                    typeof values.hookConnectionErrorArgs === 'undefined'
+                        ? defaultSettings.hookConnectionErrorArgs
+                        : values.hookConnectionErrorArgs
                 );
             })
             .catch((error) => {
@@ -204,6 +260,87 @@ const useOptions = () => {
 
     const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);
 
+    const onBrowseExecutable = useCallback(async (hookType: string) => {
+        try {
+            const result = await ipcRenderer.invoke('show-open-dialog', {
+                title: 'Select Executable',
+                buttonLabel: 'Select'
+            });
+
+            if (!result.canceled && result.filePaths.length > 0) {
+                const selectedPath = result.filePaths[0];
+                switch (hookType) {
+                    case 'connectSuccess':
+                        setHookConnectSuccess(selectedPath);
+                        settings.set('hookConnectSuccess', selectedPath);
+                        break;
+                    case 'connectFail':
+                        setHookConnectFail(selectedPath);
+                        settings.set('hookConnectFail', selectedPath);
+                        break;
+                    case 'disconnect':
+                        setHookDisconnect(selectedPath);
+                        settings.set('hookDisconnect', selectedPath);
+                        break;
+                    case 'connectionError':
+                        setHookConnectionError(selectedPath);
+                        settings.set('hookConnectionError', selectedPath);
+                        break;
+                    default:
+                        console.warn('Unknown hook type:', hookType);
+                }
+            }
+        } catch (error) {
+            console.error('Error selecting file:', error);
+        }
+    }, []);
+
+    const onHookExecutableChange = useCallback((hookType: string, value: string) => {
+        switch (hookType) {
+            case 'connectSuccess':
+                setHookConnectSuccess(value);
+                settings.set('hookConnectSuccess', value);
+                break;
+            case 'connectFail':
+                setHookConnectFail(value);
+                settings.set('hookConnectFail', value);
+                break;
+            case 'disconnect':
+                setHookDisconnect(value);
+                settings.set('hookDisconnect', value);
+                break;
+            case 'connectionError':
+                setHookConnectionError(value);
+                settings.set('hookConnectionError', value);
+                break;
+            default:
+                console.warn('Unknown hook type:', hookType);
+        }
+    }, []);
+
+    const onHookArgsChange = useCallback((hookType: string, value: string) => {
+        switch (hookType) {
+            case 'connectSuccess':
+                setHookConnectSuccessArgs(value);
+                settings.set('hookConnectSuccessArgs', value);
+                break;
+            case 'connectFail':
+                setHookConnectFailArgs(value);
+                settings.set('hookConnectFailArgs', value);
+                break;
+            case 'disconnect':
+                setHookDisconnectArgs(value);
+                settings.set('hookDisconnectArgs', value);
+                break;
+            case 'connectionError':
+                setHookConnectionErrorArgs(value);
+                settings.set('hookConnectionErrorArgs', value);
+                break;
+            default:
+                console.warn('Unknown hook type:', hookType);
+        }
+    }, []);
+
     return {
         theme,
         lang,
@@ -244,7 +381,26 @@ const useOptions = () => {
         startMinimized,
         setStartMinimized,
         onClickStartMinimizedButton,
-        onKeyDownStartMinimizedButton
+        onKeyDownStartMinimizedButton,
+        hookConnectSuccess,
+        hookConnectSuccessArgs,
+        hookConnectFail,
+        hookConnectFailArgs,
+        hookDisconnect,
+        hookDisconnectArgs,
+        hookConnectionError,
+        hookConnectionErrorArgs,
+        onBrowseExecutable,
+        onHookExecutableChange,
+        onHookArgsChange,
+        setHookConnectSuccess,
+        setHookConnectSuccessArgs,
+        setHookConnectFail,
+        setHookConnectFailArgs,
+        setHookDisconnect,
+        setHookDisconnectArgs,
+        setHookConnectionError,
+        setHookConnectionErrorArgs
     };
 };
 

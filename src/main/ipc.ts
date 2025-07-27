@@ -4,6 +4,7 @@ import { ipcMain } from 'electron';
 import './lib/wpManager';
 import './ipcListeners/log';
 import './ipcListeners/settings';
+import './ipcListeners/fileDialog';
 
 ipcMain.once('ipc-example', async (event, arg) => {
     event.reply('ipc-example', 'pong', arg);

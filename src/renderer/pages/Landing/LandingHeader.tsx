@@ -1,6 +1,6 @@
 import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { saveConfig } from '../../lib/inputSanitizer';
 import { Language } from '../../../localization/type';
 

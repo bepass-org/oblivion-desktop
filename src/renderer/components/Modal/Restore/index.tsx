@@ -12,6 +12,14 @@ interface RestoreModalProps {
     setAutoConnect: (value: boolean) => void;
     setForceClose: (value: boolean) => void;
     setShortcut: (value: boolean) => void;
+    setHookConnectSuccess?: (value: string) => void;
+    setHookConnectSuccessArgs?: (value: string) => void;
+    setHookConnectFail?: (value: string) => void;
+    setHookConnectFailArgs?: (value: string) => void;
+    setHookDisconnect?: (value: string) => void;
+    setHookDisconnectArgs?: (value: string) => void;
+    setHookConnectionError?: (value: string) => void;
+    setHookConnectionErrorArgs?: (value: string) => void;
 }
 
 export default function RestoreModal({
@@ -24,7 +32,15 @@ export default function RestoreModal({
     setStartMinimized,
     setAutoConnect,
     setForceClose,
-    setShortcut
+    setShortcut,
+    setHookConnectSuccess,
+    setHookConnectSuccessArgs,
+    setHookConnectFail,
+    setHookConnectFailArgs,
+    setHookDisconnect,
+    setHookDisconnectArgs,
+    setHookConnectionError,
+    setHookConnectionErrorArgs
 }: RestoreModalProps) {
     const { appLang, handleOnClose, onSaveModal, onCancelKeyDown, onConfirmKeyDown, showModal } =
         useRestoreModal({
@@ -36,7 +52,15 @@ export default function RestoreModal({
             setStartMinimized,
             setAutoConnect,
             setForceClose,
-            setShortcut
+            setShortcut,
+            setHookConnectSuccess,
+            setHookConnectSuccessArgs,
+            setHookConnectFail,
+            setHookConnectFailArgs,
+            setHookDisconnect,
+            setHookDisconnectArgs,
+            setHookConnectionError,
+            setHookConnectionErrorArgs
         });
 
     if (!isOpen) return null;

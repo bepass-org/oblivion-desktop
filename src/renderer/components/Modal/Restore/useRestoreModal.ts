@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
     defaultSettings,
     dnsServers,
@@ -26,6 +26,14 @@ interface RestoreModalProps {
     setAutoConnect: (value: boolean) => void;
     setForceClose: (value: boolean) => void;
     setShortcut: (value: boolean) => void;
+    setHookConnectSuccess?: (value: string) => void;
+    setHookConnectSuccessArgs?: (value: string) => void;
+    setHookConnectFail?: (value: string) => void;
+    setHookConnectFailArgs?: (value: string) => void;
+    setHookDisconnect?: (value: string) => void;
+    setHookDisconnectArgs?: (value: string) => void;
+    setHookConnectionError?: (value: string) => void;
+    setHookConnectionErrorArgs?: (value: string) => void;
 }
 
 const useRestoreModal = (props: RestoreModalProps) => {
@@ -38,7 +46,15 @@ const useRestoreModal = (props: RestoreModalProps) => {
         setStartMinimized,
         setAutoConnect,
         setForceClose,
-        setShortcut
+        setShortcut,
+        setHookConnectSuccess,
+        setHookConnectSuccessArgs,
+        setHookConnectFail,
+        setHookConnectFailArgs,
+        setHookDisconnect,
+        setHookDisconnectArgs,
+        setHookConnectionError,
+        setHookConnectionErrorArgs
     } = props;
     const detectingSystemTheme = useMemo(
         () => window?.matchMedia('(prefers-color-scheme: dark)')?.matches,
@@ -126,6 +142,23 @@ const useRestoreModal = (props: RestoreModalProps) => {
         await settings.set('betaRelease', defaultSettings.betaRelease);
         await settings.set('plainDns', defaultSettings.plainDns);
         await settings.set('DoH', defaultSettings.DoH);
+        await settings.set('hookConnectSuccess', defaultSettings.hookConnectSuccess);
+        await settings.set('hookConnectSuccessArgs', defaultSettings.hookConnectSuccessArgs);
+        await settings.set('hookConnectFail', defaultSettings.hookConnectFail);
+        await settings.set('hookConnectFailArgs', defaultSettings.hookConnectFailArgs);
+        await settings.set('hookDisconnect', defaultSettings.hookDisconnect);
+        await settings.set('hookDisconnectArgs', defaultSettings.hookDisconnectArgs);
+        await settings.set('hookConnectionError', defaultSettings.hookConnectionError);
+        await settings.set('hookConnectionErrorArgs', defaultSettings.hookConnectionErrorArgs);
+        // Reset hook states if setters are provided
+        setHookConnectSuccess?.(defaultSettings.hookConnectSuccess);
+        setHookConnectSuccessArgs?.(defaultSettings.hookConnectSuccessArgs);
+        setHookConnectFail?.(defaultSettings.hookConnectFail);
+        setHookConnectFailArgs?.(defaultSettings.hookConnectFailArgs);
+        setHookDisconnect?.(defaultSettings.hookDisconnect);
+        setHookDisconnectArgs?.(defaultSettings.hookDisconnectArgs);
+        setHookConnectionError?.(defaultSettings.hookConnectionError);
+        setHookConnectionErrorArgs?.(defaultSettings.hookConnectionErrorArgs);
         //
         ipcRenderer.sendMessage('wp-end');
         ipcRenderer.sendMessage('localization', defaultSettings.lang);
@@ -137,13 +170,23 @@ const useRestoreModal = (props: RestoreModalProps) => {
         }, 1500);
     }, [
         setForceClose,
-        setShortcut,
         setLang,
         setOpenAtLogin,
+        setStartMinimized,
         setAutoConnect,
         detectingSystemTheme,
         setTheme,
-        handleOnClose
+        handleOnClose,
+        setHookConnectSuccess,
+        setHookConnectSuccessArgs,
+        setHookConnectFail,
+        setHookConnectFailArgs,
+        setHookDisconnect,
+        setHookDisconnectArgs,
+        setHookConnectionError,
+        setHookConnectionErrorArgs,
+        appLang?.toast?.please_wait,
+        navigate
     ]);
 
     const onConfirmKeyDown = useButtonKeyDown(onSaveModal);

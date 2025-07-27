@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import Drawer from 'react-modern-drawer';
 import appIco from '../../../../assets/oblivion.png';
