@@ -52,6 +52,7 @@ const brazilianPortuguese: Language = {
     settings: {
         title: 'Configurações do Warp',
         more: 'Mais Configurações',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: 'Ativar Warp',
         method_gool: 'Gool',
@@ -146,7 +147,20 @@ const brazilianPortuguese: Language = {
         singbox_discord_bypass_desc: 'Ignorar o bloqueio do Discord',
         more_duties: 'Mais deveres',
         beta_release: 'Atualização Beta',
-        beta_release_desc: 'Fique informado sobre versões pré-lançamento'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'Caminho para o executável',
+        hook_args_placeholder: 'Argumentos opcionais da linha de comandos'
     },
     tabs: {
         home: 'Conectar',

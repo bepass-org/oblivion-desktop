@@ -50,6 +50,7 @@ const myanmar: Language = {
     settings: {
         title: 'Warp ဆက်တင်များ',
         more: 'ပိုပြီးဆက်တင်များ',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: 'Warp ကိုဖွင့်ပါ',
         method_gool: 'Gool',
@@ -146,7 +147,20 @@ const myanmar: Language = {
         singbox_discord_bypass_desc: 'Discord ဖျက်တားမှုကိုကျော်လွှားခြင်း',
         more_duties: 'ပိုမိုတာဝန်များ',
         beta_release: 'ဘီတာအပ်ဒိတ်',
-        beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'အကောင်အထည်ဖော်နိုင်သောလမ်',
+        hook_args_placeholder: 'အထောက်အကူပြု command line အကြောင်းအရာမျာ'
     },
     tabs: {
         home: 'ချိတ်ဆက်ပါ',

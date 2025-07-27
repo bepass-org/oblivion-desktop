@@ -52,6 +52,7 @@ const urdu: Language = {
     settings: {
         title: 'وارپ کی ترتیبات',
         more: 'مزید ترتیبات',
+        hooks: 'ہکس',
         method_warp: 'وارپ',
         method_warp_desc: 'وارپ فعال کریں',
         method_gool: 'گول',
@@ -147,7 +148,20 @@ const urdu: Language = {
         singbox_discord_bypass_desc: 'ڈسکارڈ کی فلٹرنگ کو عبور کریں',
         more_duties: 'مزید ذمہ داریاں',
         beta_release: 'بیٹا اپ ڈیٹ',
-        beta_release_desc: 'پری ریلیز ورژنز کے بارے میں آگاہ رہیں'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'قابل عمل کا راستہ',
+        hook_args_placeholder: 'آپشنل کمانڈ لائن آرگومنٹس'
     },
     tabs: {
         home: 'کنیکٹ',

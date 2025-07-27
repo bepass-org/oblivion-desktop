@@ -50,6 +50,7 @@ const persian: Language = {
     settings: {
         title: 'تنظیمات وارپ',
         more: 'سایر تنظیمات',
+        hooks: 'هوک‌ها',
         method_warp: 'وارپ',
         method_warp_desc: 'فعالسازی Warp',
         method_gool: 'گول',
@@ -145,7 +146,20 @@ const persian: Language = {
         singbox_discord_bypass_desc: 'دورزدن فیلترینگ دیسکورد',
         more_duties: 'وظایف',
         beta_release: 'بروزرسانی بتا',
-        beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'
+        beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار',
+        hook_connect_success: 'درصورت اتصال موفق',
+        hook_connect_success_desc: 'فایل اجرایی برای اجرا هنگام برقراری اتصال',
+        hook_connect_fail: 'درصورت خطا در اتصال',
+        hook_connect_fail_desc: 'فایل اجرایی برای اجرا هنگام شکست اتصال',
+        hook_disconnect: 'درصورت قطع اتصال',
+        hook_disconnect_desc: 'فایل اجرایی برای اجرا هنگام قطع اتصال',
+        hook_connection_error: 'درصورت خطا در اتصال برقرار',
+        hook_connection_error_desc: 'فایل اجرایی برای اجرا هنگام بروز خطا در اتصال',
+        hook_args: 'آرگومان‌ها',
+        hook_args_desc: 'آرگومان‌های اختیاری خط فرمان',
+        browse: 'انتخاب',
+        hook_executable_placeholder: 'مسیر فایل اجرایی',
+        hook_args_placeholder: 'آرگومان‌های اختیاری خط فرمان'
     },
     tabs: {
         home: 'اتصال',

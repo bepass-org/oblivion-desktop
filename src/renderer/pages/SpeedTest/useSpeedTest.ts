@@ -1,4 +1,4 @@
-import { ResultSummary } from '@cloudflare/speedtest';
+import { Results } from '@cloudflare/speedtest';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
@@ -8,7 +8,7 @@ const MB_CONVERSION = 1_000_000;
 
 export const useSpeedTest = () => {
     const appLang = useTranslate();
-    const [testResults, setTestResults] = useState<ResultSummary>();
+    const [testResults, setTestResults] = useState<Results>();
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [isFinished, setIsFinished] = useState<boolean>(false);
     const [testButtonText, setTestButtonText] = useState<string>('play_arrow');
@@ -87,12 +87,14 @@ export const useSpeedTest = () => {
         if (!testResults) return null;
 
         return {
-            download: testResults.download
-                ? (testResults.download / MB_CONVERSION).toFixed(2)
+            download: testResults.getDownloadBandwidth
+                ? ((testResults.getDownloadBandwidth() ?? 0) / MB_CONVERSION).toFixed(2)
                 : 'N/A',
-            upload: testResults.upload ? (testResults.upload / MB_CONVERSION).toFixed(2) : 'N/A',
-            latency: testResults.latency?.toFixed(2) ?? 'N/A',
-            jitter: testResults.jitter?.toFixed(2) ?? 'N/A'
+            upload: testResults.getUploadBandwidth
+                ? ((testResults.getUploadBandwidth() ?? 0) / MB_CONVERSION).toFixed(2)
+                : 'N/A',
+            latency: testResults.getDownLoadedLatency()?.toFixed(2) ?? 'N/A',
+            jitter: testResults.getDownLoadedJitter()?.toFixed(2) ?? 'N/A'
         };
     }, [testResults]);
 

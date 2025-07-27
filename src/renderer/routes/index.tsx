@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 import Landing from '../pages/Landing';
 import Settings from '../pages/Settings';
 import Options from '../pages/Options';

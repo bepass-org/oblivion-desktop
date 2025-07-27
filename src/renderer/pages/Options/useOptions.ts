@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
@@ -29,6 +29,14 @@ const useOptions = () => {
     const [soundEffect, setSoundEffect] = useState<boolean>(false);
     const [proxyMode, setProxyMode] = useState<string>('');
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
+    const [hookConnectSuccess, setHookConnectSuccess] = useState<string>('');
+    const [hookConnectSuccessArgs, setHookConnectSuccessArgs] = useState<string>('');
+    const [hookConnectFail, setHookConnectFail] = useState<string>('');
+    const [hookConnectFailArgs, setHookConnectFailArgs] = useState<string>('');
+    const [hookDisconnect, setHookDisconnect] = useState<string>('');
+    const [hookDisconnectArgs, setHookDisconnectArgs] = useState<string>('');
+    const [hookConnectionError, setHookConnectionError] = useState<string>('');
+    const [hookConnectionErrorArgs, setHookConnectionErrorArgs] = useState<string>('');
 
     const appLang = useTranslate();
 
@@ -63,7 +71,15 @@ const useOptions = () => {
                 'shortcut',
                 'soundEffect',
                 'proxyMode',
-                'betaRelease'
+                'betaRelease',
+                'hookConnectSuccess',
+                'hookConnectSuccessArgs',
+                'hookConnectFail',
+                'hookConnectFailArgs',
+                'hookDisconnect',
+                'hookDisconnectArgs',
+                'hookConnectionError',
+                'hookConnectionErrorArgs'
             ])
             .then((values) => {
                 setTheme(withDefault(values.theme, detectingSystemTheme ? 'dark' : 'light'));
@@ -79,6 +95,36 @@ const useOptions = () => {
                 setSoundEffect(withDefault(values.soundEffect, defaultSettings.soundEffect));
                 setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
                 setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));
+                setHookConnectSuccess(
+                    withDefault(values.hookConnectSuccess, defaultSettings.hookConnectSuccess)
+                );
+                setHookConnectSuccessArgs(
+                    withDefault(
+                        values.hookConnectSuccessArgs,
+                        defaultSettings.hookConnectSuccessArgs
+                    )
+                );
+                setHookConnectFail(
+                    withDefault(values.hookConnectFailArgs, defaultSettings.hookConnectFailArgs)
+                );
+                setHookConnectFailArgs(
+                    withDefault(values.hookConnectFailArgs, defaultSettings.hookConnectFailArgs)
+                );
+                setHookDisconnect(
+                    withDefault(values.hookDisconnect, defaultSettings.hookDisconnect)
+                );
+                setHookDisconnectArgs(
+                    withDefault(values.hookDisconnectArgs, defaultSettings.hookDisconnectArgs)
+                );
+                setHookConnectionError(
+                    withDefault(values.hookDisconnectArgs, defaultSettings.hookDisconnectArgs)
+                );
+                setHookConnectionErrorArgs(
+                    withDefault(
+                        values.hookConnectionErrorArgs,
+                        defaultSettings.hookConnectionErrorArgs
+                    )
+                );
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);
@@ -170,6 +216,87 @@ const useOptions = () => {
 
     const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);
 
+    const onBrowseExecutable = useCallback(async (hookType: string) => {
+        try {
+            const result = await ipcRenderer.invoke('show-open-dialog', {
+                title: 'Select Executable',
+                buttonLabel: 'Select'
+            });
+
+            if (!result.canceled && result.filePaths.length > 0) {
+                const selectedPath = result.filePaths[0];
+                switch (hookType) {
+                    case 'connectSuccess':
+                        setHookConnectSuccess(selectedPath);
+                        settings.set('hookConnectSuccess', selectedPath);
+                        break;
+                    case 'connectFail':
+                        setHookConnectFail(selectedPath);
+                        settings.set('hookConnectFail', selectedPath);
+                        break;
+                    case 'disconnect':
+                        setHookDisconnect(selectedPath);
+                        settings.set('hookDisconnect', selectedPath);
+                        break;
+                    case 'connectionError':
+                        setHookConnectionError(selectedPath);
+                        settings.set('hookConnectionError', selectedPath);
+                        break;
+                    default:
+                        console.warn('Unknown hook type:', hookType);
+                }
+            }
+        } catch (error) {
+            console.error('Error selecting file:', error);
+        }
+    }, []);
+
+    const onHookExecutableChange = useCallback((hookType: string, value: string) => {
+        switch (hookType) {
+            case 'connectSuccess':
+                setHookConnectSuccess(value);
+                settings.set('hookConnectSuccess', value);
+                break;
+            case 'connectFail':
+                setHookConnectFail(value);
+                settings.set('hookConnectFail', value);
+                break;
+            case 'disconnect':
+                setHookDisconnect(value);
+                settings.set('hookDisconnect', value);
+                break;
+            case 'connectionError':
+                setHookConnectionError(value);
+                settings.set('hookConnectionError', value);
+                break;
+            default:
+                console.warn('Unknown hook type:', hookType);
+        }
+    }, []);
+
+    const onHookArgsChange = useCallback((hookType: string, value: string) => {
+        switch (hookType) {
+            case 'connectSuccess':
+                setHookConnectSuccessArgs(value);
+                settings.set('hookConnectSuccessArgs', value);
+                break;
+            case 'connectFail':
+                setHookConnectFailArgs(value);
+                settings.set('hookConnectFailArgs', value);
+                break;
+            case 'disconnect':
+                setHookDisconnectArgs(value);
+                settings.set('hookDisconnectArgs', value);
+                break;
+            case 'connectionError':
+                setHookConnectionErrorArgs(value);
+                settings.set('hookConnectionErrorArgs', value);
+                break;
+            default:
+                console.warn('Unknown hook type:', hookType);
+        }
+    }, []);
+
     return {
         theme,
         lang,
@@ -210,7 +337,26 @@ const useOptions = () => {
         startMinimized,
         setStartMinimized,
         onClickStartMinimizedButton,
-        onKeyDownStartMinimizedButton
+        onKeyDownStartMinimizedButton,
+        hookConnectSuccess,
+        hookConnectSuccessArgs,
+        hookConnectFail,
+        hookConnectFailArgs,
+        hookDisconnect,
+        hookDisconnectArgs,
+        hookConnectionError,
+        hookConnectionErrorArgs,
+        onBrowseExecutable,
+        onHookExecutableChange,
+        onHookArgsChange,
+        setHookConnectSuccess,
+        setHookConnectSuccessArgs,
+        setHookConnectFail,
+        setHookConnectFailArgs,
+        setHookDisconnect,
+        setHookDisconnectArgs,
+        setHookConnectionError,
+        setHookConnectionErrorArgs
     };
 };
 

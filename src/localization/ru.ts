@@ -52,6 +52,7 @@ const russian: Language = {
     settings: {
         title: 'Настройки Warp',
         more: 'Дополнительные настройки',
+        hooks: 'Хуки',
         method_warp: 'Warp',
         method_warp_desc: 'Включить Warp',
         method_gool: 'Gool',
@@ -147,7 +148,21 @@ const russian: Language = {
         singbox_discord_bypass_desc: 'Обход фильтрации Discord',
         more_duties: 'Дополнительные обязанности',
         beta_release: 'Бета-обновление',
-        beta_release_desc: 'Будьте в курсе предварительных версий'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'При успешном подключении',
+        hook_connect_success_desc: 'Исполняемый файл для запуска при установке соединения',
+        hook_connect_fail: 'При неудачном подключении',
+        hook_connect_fail_desc: 'Исполняемый файл для запуска при сбое подключения',
+        hook_disconnect: 'При отключении',
+        hook_disconnect_desc: 'Исполняемый файл для запуска при отключении',
+        hook_connection_error: 'При ошибке соединения',
+        hook_connection_error_desc:
+            'Исполняемый файл для запуска при возникновении ошибки соединения',
+        hook_args: 'Аргументы',
+        hook_args_desc: 'Дополнительные аргументы командной строки',
+        browse: 'Обзор',
+        hook_executable_placeholder: 'Путь к исполняемому файлу',
+        hook_args_placeholder: 'Дополнительные аргументы командной строки'
     },
     tabs: {
         home: 'Связь',

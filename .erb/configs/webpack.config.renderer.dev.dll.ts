@@ -25,6 +25,18 @@ const configuration: webpack.Configuration = {
 
     externals: ['fsevents', 'crypto-browserify'],
 
+    resolve: {
+        alias: {
+            react: path.resolve(__dirname, '../../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../../node_modules/react-dom'),
+            'react/jsx-runtime': path.resolve(__dirname, '../../node_modules/react/jsx-runtime'),
+            'react/jsx-dev-runtime': path.resolve(
+                __dirname,
+                '../../node_modules/react/jsx-dev-runtime'
+            )
+        }
+    },
+
     /**
      * Use `module` from `webpack.config.renderer.dev.js`
      */

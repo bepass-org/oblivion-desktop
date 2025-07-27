@@ -6,6 +6,7 @@ import { spawn, exec } from 'child_process';
 import fs from 'fs';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
+import { HookManager } from './hookManager';
 import {
     defaultSettings,
     dnsServers,
@@ -438,6 +439,29 @@ class SingBoxManager {
     private handleConnectionFailure(): void {
         log.error(`Failed to establish connection after ${CONFIG.connection.maxRetries} attempts`);
         this.replyEvent(`${this.appLang?.log.error_failed_connection}`);
+
+        // Execute connection failure hook with context
+        (async () => {
+            try {
+                const [proxyMode, port, hostIP] = await Promise.all([
+                    settings.get('proxyMode'),
+                    settings.get('port'),
+                    settings.get('hostIP')
+                ]);
+
+                await HookManager.executeHook('connectFail', {
+                    proxyMode: proxyMode || 'unknown',
+                    port: port || 'unknown',
+                    hostIP: hostIP || 'unknown',
+                    retryAttempts: CONFIG.connection.maxRetries
+                });
+
+                log.debug('Connection failure hook executed successfully');
+            } catch (error) {
+                log.error('Failed to execute connectFail hook:', error);
+            }
+        })();
+
         ipcMain.emit('wp-end');
     }
 

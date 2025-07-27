@@ -15,6 +15,7 @@ import { defaultSettings } from '../../defaultSettings';
 import { customEvent } from './customEvent';
 import { showWpLogs } from '../dxConfig';
 import { getTranslate } from '../../localization';
+import { HookManager } from './hookManager';
 import {
     wpAssetPath,
     wpBinPath,
@@ -295,6 +296,30 @@ class WarpPlusManager {
                 this.playSoundEffect();
                 toast.remove('GUIDE');
 
+                // Execute connection success hook with context
+                (async () => {
+                    try {
+                        const [method, endpoint, location] = await Promise.all([
+                            settings.get('method'),
+                            settings.get('endpoint'),
+                            settings.get('location')
+                        ]);
+
+                        await HookManager.executeHook('connectSuccess', {
+                            proxyMode: state.settings.proxyMode,
+                            method: method || 'unknown',
+                            endpoint: endpoint || 'default',
+                            location: location || 'unknown',
+                            port: state.settings.port,
+                            hostIP: state.settings.hostIP
+                        });
+
+                        log.debug('Connection success hook executed successfully');
+                    } catch (error) {
+                        log.error('Failed to execute connectSuccess hook:', error);
+                    }
+                })();
+
                 if (
                     state.settings.ipData &&
                     state.settings.dataUsage &&
@@ -307,6 +332,19 @@ class WarpPlusManager {
             case ConnectionState.DISCONNECTED:
                 netStatsManager.stopMonitoring();
                 state.event?.reply('wp-end', true);
+
+                // Execute disconnect hook with context
+                HookManager.executeHook('disconnect', {
+                    proxyMode: state.settings.proxyMode,
+                    port: state.settings.port,
+                    hostIP: state.settings.hostIP
+                })
+                    .then(() => {
+                        log.debug('Disconnect hook executed successfully');
+                    })
+                    .catch((error) => {
+                        log.error('Failed to execute disconnect hook:', error);
+                    });
 
                 if (state.exitOnWpEnd) ipcMain.emit('exit');
                 customEvent.emit('tray-icon', 'disconnected');

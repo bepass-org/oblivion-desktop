@@ -52,6 +52,7 @@ const vietnamese: Language = {
     settings: {
         title: 'Cài đặt Warp',
         more: 'Thêm cài đặt',
+        hooks: 'Hooks',
         method_warp: 'Warp',
         method_warp_desc: 'Bật Warp',
         method_gool: 'Gool',
@@ -147,7 +148,20 @@ const vietnamese: Language = {
         singbox_discord_bypass_desc: 'Vượt qua bộ lọc Discord',
         more_duties: 'Nhiệm vụ thêm',
         beta_release: 'Cập nhật Beta',
-        beta_release_desc: 'Cập nhật thông tin về các phiên bản trước khi phát hành'
+        beta_release_desc: 'Stay informed about pre-release versions',
+        hook_connect_success: 'On Connection Success',
+        hook_connect_success_desc: 'Executable to run when connection is established',
+        hook_connect_fail: 'On Connection Fail',
+        hook_connect_fail_desc: 'Executable to run when connection fails',
+        hook_disconnect: 'On Disconnect',
+        hook_disconnect_desc: 'Executable to run when disconnected',
+        hook_connection_error: 'On Connection Error',
+        hook_connection_error_desc: 'Executable to run when connection error occurs',
+        hook_args: 'Arguments',
+        hook_args_desc: 'Optional command line arguments',
+        browse: 'Browse',
+        hook_executable_placeholder: 'Đường dẫn đến tệp thực thi',
+        hook_args_placeholder: 'Các đối số dòng lệnh tùy chọn'
     },
     tabs: {
         home: 'Kết nối',

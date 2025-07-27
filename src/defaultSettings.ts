@@ -48,6 +48,14 @@ export type settingsKeys =
     | 'plainDns'
     | 'DoH'
     | 'testUrl'
+    | 'hookConnectSuccess'
+    | 'hookConnectSuccessArgs'
+    | 'hookConnectFail'
+    | 'hookConnectFailArgs'
+    | 'hookDisconnect'
+    | 'hookDisconnectArgs'
+    | 'hookConnectionError'
+    | 'hookConnectionErrorArgs'
     | 'updaterVersion'
     | 'networkList';
 
@@ -103,7 +111,15 @@ export const defaultSettings = {
     plainDns: '',
     DoH: '',
     updaterVersion: null,
-    networkList: '[]'
+    networkList: '[]',
+    hookConnectSuccess: '',
+    hookConnectSuccessArgs: '',
+    hookConnectFail: '',
+    hookConnectFailArgs: '',
+    hookDisconnect: '',
+    hookDisconnectArgs: '',
+    hookConnectionError: '',
+    hookConnectionErrorArgs: ''
 };
 
 export const countries: DropdownItem[] = [

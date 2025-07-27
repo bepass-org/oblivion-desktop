@@ -1,4 +1,4 @@
-import { MemoryRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router';
 import { useEffect } from 'react';
 
 import 'assets/css/bootstrap.min.css';

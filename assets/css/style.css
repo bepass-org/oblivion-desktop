@@ -2501,3 +2501,72 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 .progressBar.red div {
     background: tomato;
 }
+
+/* Hook Input Styles */
+.hook-input-group {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    width: 100% !important;
+}
+
+.hook-executable-input,
+.hook-args-input {
+    flex: 1;
+    border: 1px solid #a1a1a1;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 14px;
+    font-family: 'shabnam';
+    background: transparent;
+    color: #4c4b4b;
+    transition: all 0.2s ease-in-out;
+}
+
+[data-bs-theme='dark'] .hook-executable-input,
+[data-bs-theme='dark'] .hook-args-input {
+    border-color: #dcdcdc;
+    color: #dcdcdc;
+}
+
+.hook-executable-input:focus,
+.hook-args-input:focus {
+    outline: none;
+    border-color: #ffa200;
+    box-shadow: 0 0 5px rgba(255, 162, 0, 0.3);
+}
+
+.hook-browse-button {
+    background: #ffa200;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: white;
+    font-size: 14px;
+    font-family: 'shabnam';
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+}
+
+.hook-browse-button:hover {
+    background: #e69200;
+}
+
+.hook-browse-button:active {
+    background: #cc8200;
+}
+
+/* Responsive adjustments for hook inputs */
+@media (max-width: 768px) {
+    .hook-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hook-browse-button {
+        align-self: flex-end;
+        width: auto;
+        min-width: 80px;
+    }
+}

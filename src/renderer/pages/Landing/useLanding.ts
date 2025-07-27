@@ -1,7 +1,7 @@
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { debounce } from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
