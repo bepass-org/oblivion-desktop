@@ -13,6 +13,7 @@ import {
 } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
+import { withDefault } from '../../lib/withDefault';
 
 const useOptions = () => {
     useGoBackOnEscape();
@@ -65,54 +66,19 @@ const useOptions = () => {
                 'betaRelease'
             ])
             .then((values) => {
-                setTheme(
-                    typeof values.theme === 'undefined'
-                        ? detectingSystemTheme
-                            ? 'dark'
-                            : 'light'
-                        : values.theme
-                );
-                setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
-                setOpenAtLogin(
-                    typeof values.openAtLogin === 'undefined'
-                        ? defaultSettings.openAtLogin
-                        : values.openAtLogin
-                );
-                setAutoConnect(
-                    typeof values.autoConnect === 'undefined'
-                        ? defaultSettings.autoConnect
-                        : values.autoConnect
-                );
+                setTheme(withDefault(values.theme, detectingSystemTheme ? 'dark' : 'light'));
+
+                setLang(withDefault(values.lang, getLanguageName()));
+                setOpenAtLogin(withDefault(values.openAtLogin, defaultSettings.openAtLogin));
+                setAutoConnect(withDefault(values.autoConnect, defaultSettings.autoConnect));
                 setStartMinimized(
-                    typeof values.startMinimized === 'undefined'
-                        ? defaultSettings.startMinimized
-                        : values.startMinimized
+                    withDefault(values.startMinimized, defaultSettings.startMinimized)
                 );
-                setForceClose(
-                    typeof values.forceClose === 'undefined'
-                        ? defaultSettings.forceClose
-                        : values.forceClose
-                );
-                setShortcut(
-                    typeof values.shortcut === 'undefined'
-                        ? defaultSettings.shortcut
-                        : values.shortcut
-                );
-                setSoundEffect(
-                    typeof values.soundEffect === 'undefined'
-                        ? defaultSettings.soundEffect
-                        : values.soundEffect
-                );
-                setProxyMode(
-                    typeof values.proxyMode === 'undefined'
-                        ? defaultSettings.proxyMode
-                        : values.proxyMode
-                );
-                setBetaRelease(
-                    typeof values.betaRelease === 'undefined'
-                        ? defaultSettings.betaRelease
-                        : values.betaRelease
-                );
+                setForceClose(withDefault(values.forceClose, defaultSettings.forceClose));
+                setShortcut(withDefault(values.shortcut, defaultSettings.shortcut));
+                setSoundEffect(withDefault(values.soundEffect, defaultSettings.soundEffect));
+                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
+                setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);

@@ -119,7 +119,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                                 : ''
                                                         )}
                                                         role='presentation'
-                                                        key={index}
+                                                        key={key}
                                                         onClick={() => {
                                                             setEndpointSuggestion(
                                                                 suggestion.ipv4[key]
@@ -146,7 +146,7 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                                             : ''
                                                     )}
                                                     role='presentation'
-                                                    key={index}
+                                                    key={key}
                                                     onClick={() => {
                                                         setEndpointSuggestion(suggestion.ipv6[key]);
                                                         //setShowSuggestion(false);

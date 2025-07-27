@@ -7,6 +7,7 @@ import { defaultToast } from '../../../lib/toasts';
 import { Profile } from '../../../pages/Scanner/useScanner';
 import { sanitizeProfileName, validEndpoint } from '../../../lib/inputSanitizer';
 import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
+import { withDefault } from '../../../lib/withDefault';
 
 type ProfileModalProps = {
     isOpen: boolean;
@@ -77,11 +78,7 @@ const useProfileModal = (props: ProfileModalProps) => {
 
     useEffect(() => {
         settings.get('profiles').then((value) => {
-            setProfilesInput(
-                typeof value === 'undefined'
-                    ? JSON.parse(defaultSettings.profiles)
-                    : JSON.parse(value)
-            );
+            setProfiles(JSON.parse(withDefault(value, defaultSettings.profiles)));
         });
     }, []);
 

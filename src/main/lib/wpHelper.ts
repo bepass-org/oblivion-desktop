@@ -5,6 +5,8 @@ import { removeDirIfExists } from './utils';
 import { getTranslate } from '../../localization';
 import { stuffPath } from '../../constants';
 import WarpPlusManager from './wpManager';
+import { typeIsUndefined } from '../../renderer/lib/isAnyUndefined';
+import { withDefault } from '../../renderer/lib/withDefault';
 //import { customEvent } from './customEvent';
 //import { getTranslateElectron } from '../../localization/electron';
 //import fs from 'fs';
@@ -43,7 +45,7 @@ export const getUserSettings = async () => {
         settings.get('plainDns'),
         settings.get('testUrl')
     ]);
-    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+    appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
 
     const finalDns =
         typeof dns === 'string' &&
@@ -75,7 +77,7 @@ export const getUserSettings = async () => {
             : ['--gool']),
         ...((typeof endpoint === 'string' &&
             (endpoint === '' || endpoint === defaultSettings.endpoint)) ||
-        typeof endpoint === 'undefined'
+        typeIsUndefined(endpoint)
             ? [
                   '--scan',
                   ...(typeof ipType === 'string' && ipType !== '' ? [ipType] : []),

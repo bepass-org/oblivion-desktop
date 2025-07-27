@@ -2,6 +2,7 @@ import { ipcRenderer, isDev } from './utils';
 import { defaultSettings } from '../../defaultSettings';
 import { settings } from './settings';
 import packageJsonData from '../../../package.json';
+import { withDefault } from './withDefault';
 
 const comparison = (localVersion: any, apiVersion: any) => {
     const parts1 = localVersion
@@ -35,8 +36,8 @@ export const checkNewUpdate = async (appVersion: string) => {
     try {
         isCheckingVersion = true;
         const betaRelease = await settings.get('betaRelease');
-        const isBetaVersionChecking =
-            typeof betaRelease === 'undefined' ? defaultSettings.betaRelease : betaRelease;
+        const isBetaVersionChecking = withDefault(betaRelease, defaultSettings.betaRelease);
+
         const response = await fetch(
             `https://api.github.com/repos/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases${isBetaVersionChecking ? '' : '/latest'}`
         );

@@ -7,6 +7,7 @@ import Tabs from '../../components/Tabs';
 import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 import { platform } from '../../lib/utils';
+import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 export default function Options() {
     const {
@@ -50,16 +51,19 @@ export default function Options() {
     } = useOptions();
 
     if (
-        typeof theme === 'undefined' ||
-        typeof lang === 'undefined' ||
-        typeof openAtLogin === 'undefined' ||
-        typeof startMinimized === 'undefined' ||
-        typeof forceClose === 'undefined' ||
-        typeof soundEffect === 'undefined' ||
-        typeof autoConnect === 'undefined' ||
-        typeof betaRelease === 'undefined'
-    )
+        isAnyUndefined(
+            theme,
+            lang,
+            openAtLogin,
+            startMinimized,
+            forceClose,
+            soundEffect,
+            autoConnect,
+            betaRelease
+        )
+    ) {
         return <div className='settings' />;
+    }
 
     return (
         <>

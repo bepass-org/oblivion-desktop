@@ -19,6 +19,8 @@ import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
 import { INetStats } from '../../../constants';
 import { isSystemDateValid } from '../../lib/systemDateValidator';
+import { withDefault } from '../../lib/withDefault';
+import { typeIsNotUndefined } from '../../lib/isAnyUndefined';
 
 export type IpConfig = {
     countryCode: string | boolean;
@@ -192,7 +194,7 @@ const useLanding = () => {
 
     const checkForUpdates = async () => {
         const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
-        if (typeof canCheckNewVer !== 'undefined' && canCheckNewVer === 'false') return;
+        if (typeIsNotUndefined(canCheckNewVer) && canCheckNewVer === 'false') return;
         try {
             const comparison = await checkNewUpdate(packageJsonData?.version);
             setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
@@ -231,36 +233,14 @@ const useLanding = () => {
                 'testUrl'
             ])
             .then((values) => {
-                setLang(typeof values.lang === 'undefined' ? getLanguageName() : values.lang);
-                setIpData(
-                    typeof values.ipData === 'undefined' ? defaultSettings.ipData : values.ipData
-                );
-                setMethod(
-                    typeof values.method === 'undefined' ? defaultSettings.method : values.method
-                );
-                setProxyMode(
-                    typeof values.proxyMode === 'undefined'
-                        ? defaultSettings.proxyMode
-                        : values.proxyMode
-                );
-                /*setShortcut(
-                    typeof values.shortcut === 'undefined'
-                        ? defaultSettings.shortcut
-                        : values.shortcut
-                );*/
-                setDataUsage(
-                    typeof values.dataUsage === 'undefined'
-                        ? defaultSettings.dataUsage
-                        : values.dataUsage
-                );
-                setBetaRelease(
-                    typeof values.betaRelease === 'undefined'
-                        ? defaultSettings.betaRelease
-                        : values.betaRelease
-                );
-                setTestUrl(
-                    typeof values.testUrl === 'undefined' ? defaultSettings.testUrl : values.testUrl
-                );
+                setLang(withDefault(values.lang, getLanguageName()));
+                setIpData(withDefault(values.ipData, defaultSettings.ipData));
+                setMethod(withDefault(values.method, defaultSettings.method));
+                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
+                // setShortcut(withDefault(values.shortcut, defaultSettings.shortcut)); // Optional if needed
+                setDataUsage(withDefault(values.dataUsage, defaultSettings.dataUsage));
+                setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));
+                setTestUrl(withDefault(values.testUrl, defaultSettings.testUrl));
             })
             .catch((error) => {
                 console.log('Error fetching settings:', error);
@@ -283,55 +263,73 @@ const useLanding = () => {
         handleResize();
 
         ipcRenderer.on('guide-toast', (message: any) => {
-            if (message === 'error_port_restart') {
-                loadingToast(appLang.log.error_port_restart);
-            } else if (message === 'sb_error_tun0') {
-                setIsLoading(false);
-                setIsConnected(false);
-                stopLoadingToast();
-                defaultToast(appLang.log.error_script_failed, 'GUIDE', 7000);
-            } else if (message === 'sb_preparing') {
-                loadingToast(appLang.status.preparing_rulesets);
-                setTimeout(function () {
+            switch (message) {
+                case 'error_port_restart':
+                    loadingToast(appLang.log.error_port_restart);
+                    break;
+
+                case 'sb_error_tun0':
+                    setIsLoading(false);
+                    setIsConnected(false);
                     stopLoadingToast();
-                }, 3000);
-            } else if (message === 'sb_download_failed') {
-                setIsLoading(false);
-                setIsConnected(false);
-                stopLoadingToast();
-                setTimeout(function () {
-                    defaultToast(
-                        appLang.status.downloading_rulesets_failed,
-                        'DOWNLOAD_FAILED',
-                        3000
+                    defaultToast(appLang.log.error_script_failed, 'GUIDE', 7000);
+                    break;
+
+                case 'sb_preparing':
+                    loadingToast(appLang.status.preparing_rulesets);
+                    setTimeout(() => {
+                        stopLoadingToast();
+                    }, 3000);
+                    break;
+
+                case 'sb_download_failed':
+                    setIsLoading(false);
+                    setIsConnected(false);
+                    stopLoadingToast();
+                    setTimeout(() => {
+                        defaultToast(
+                            appLang.status.downloading_rulesets_failed,
+                            'DOWNLOAD_FAILED',
+                            3000
+                        );
+                    }, 2000);
+                    break;
+
+                case 'sb_start_failed':
+                    stopLoadingToast();
+                    setIsLoading(false);
+                    setIsConnected(false);
+                    break;
+
+                case 'sb_stop_failed':
+                    setIsLoading(false);
+                    setIsConnected(true);
+                    break;
+
+                case 'sb_error_ipv6':
+                    stopLoadingToast();
+                    setIsLoading(false);
+                    setIsConnected(false);
+                    defaultToastWithHelp(
+                        appLang.log.error_singbox_ipv6_address,
+                        'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-the-set-ipv6-address:-Element-not-found-Error',
+                        appLang.toast.help_btn,
+                        'GUIDE'
                     );
-                }, 2000);
-            } else if (message === 'sb_start_failed') {
-                stopLoadingToast();
-                setIsLoading(false);
-                setIsConnected(false);
-            } else if (message === 'sb_stop_failed') {
-                setIsLoading(false);
-                setIsConnected(true);
-            } else if (message === 'sb_error_ipv6') {
-                stopLoadingToast();
-                setIsLoading(false);
-                setIsConnected(false);
-                defaultToastWithHelp(
-                    appLang.log.error_singbox_ipv6_address,
-                    'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-the-set-ipv6-address:-Element-not-found-Error',
-                    appLang.toast.help_btn,
-                    'GUIDE'
-                );
-            } else if (message === 'error_warp_identity') {
-                defaultToastWithHelp(
-                    appLang.log.error_warp_identity,
-                    'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-proxy-connection-issues-on-certain-networks',
-                    appLang.toast.help_btn,
-                    'GUIDE'
-                );
-            } else {
-                defaultToast(message, 'GUIDE', 7000);
+                    break;
+
+                case 'error_warp_identity':
+                    defaultToastWithHelp(
+                        appLang.log.error_warp_identity,
+                        'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-proxy-connection-issues-on-certain-networks',
+                        appLang.toast.help_btn,
+                        'GUIDE'
+                    );
+                    break;
+
+                default:
+                    defaultToast(message, 'GUIDE', 7000);
+                    break;
             }
         });
 
@@ -345,10 +343,12 @@ const useLanding = () => {
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
                 setPing(0);
+                return;
             }
             if (args.key === 'disconnect' && !isLoading) {
                 ipcRenderer.sendMessage('wp-end');
                 setIsLoading(true);
+                return;
             }
             if (args.key === 'changePage') {
                 navigate(args.msg);
@@ -392,7 +392,7 @@ const useLanding = () => {
         handleOnlineStatusChange();
 
         const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
-        setHasNewUpdate(typeof hasUpdate !== 'undefined' && hasUpdate === 'true' ? true : false);
+        setHasNewUpdate(typeIsNotUndefined(hasUpdate) && hasUpdate === 'true' ? true : false);
         if (!isLoading) {
             setTimeout(checkForUpdates, 10000);
         }
@@ -407,8 +407,7 @@ const useLanding = () => {
     }, []);
 
     useEffect(() => {
-        if (!isConnected) return;
-        if (!dataUsage) return;
+        if (!isConnected || !dataUsage) return;
         ipcRenderer.on('net-stats', (event: any) => {
             setNetStats((prevNetStats) => ({
                 ...prevNetStats,
@@ -472,33 +471,33 @@ const useLanding = () => {
     }, [method, ipInfo, appLang.status.keep_trying]);
 
     useEffect(() => {
-        if (isConnected) {
-            if (isLoading) {
-                setStatusText(`${appLang?.status?.disconnecting}`);
+        if (!isConnected) {
+            toast.remove('IRAN_IP');
+            setStatusText(isLoading ? appLang?.status?.connecting : appLang?.status?.disconnected);
+            return;
+        }
+
+        if (isLoading) {
+            setStatusText(appLang?.status?.disconnecting);
+            return;
+        }
+
+        setTimeout(checkForUpdates, 10000);
+
+        if (ipInfo?.countryCode) {
+            setStatusText(appLang?.status?.connected_confirm);
+            return;
+        }
+
+        if (ipData) {
+            if (proxyStatus !== 'none') {
+                setStatusText(appLang?.status?.ip_check);
+                getIpLocation();
             } else {
-                setTimeout(checkForUpdates, 10000);
-                if (ipInfo?.countryCode) {
-                    setStatusText(`${appLang?.status?.connected_confirm}`);
-                } else {
-                    if (ipData) {
-                        if (proxyStatus !== 'none') {
-                            setStatusText(`${appLang?.status?.ip_check}`);
-                            getIpLocation();
-                        } else {
-                            setStatusText(`${appLang?.status?.connected}`);
-                        }
-                    } else {
-                        setStatusText(`${appLang?.status?.connected}`);
-                    }
-                }
+                setStatusText(appLang?.status?.connected);
             }
         } else {
-            toast.remove('IRAN_IP');
-            if (isLoading) {
-                setStatusText(`${appLang?.status?.connecting}`);
-            } else {
-                setStatusText(`${appLang?.status?.disconnected}`);
-            }
+            setStatusText(appLang?.status?.connected);
         }
     }, [isLoading, isConnected, ipInfo, ipData, proxyStatus]);
 
