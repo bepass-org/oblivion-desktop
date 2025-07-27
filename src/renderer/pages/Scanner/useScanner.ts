@@ -10,6 +10,8 @@ import useTranslate from '../../../localization/useTranslate';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 import { DropdownItem } from '../../components/Dropdown';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
+import { withDefault } from '../../lib/withDefault';
+import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 export type Profile = {
     endpoint: string;
@@ -38,31 +40,13 @@ const useScanner = () => {
         settings
             .getMultiple(['endpoint', 'ipType', 'rtt', 'reserved', 'profiles', 'lang', 'proxyMode'])
             .then((values) => {
-                setEndpoint(
-                    typeof values.endpoint === 'undefined'
-                        ? defaultSettings.endpoint
-                        : values.endpoint
-                );
-                setIpType(
-                    typeof values.ipType === 'undefined' ? defaultSettings.ipType : values.ipType
-                );
-                setRtt(typeof values.rtt === 'undefined' ? defaultSettings.rtt : values.rtt);
-                setReserved(
-                    typeof values.reserved === 'undefined'
-                        ? defaultSettings.reserved
-                        : values.reserved
-                );
-                setProfiles(
-                    typeof values.profiles === 'undefined'
-                        ? JSON.parse(defaultSettings.profiles)
-                        : JSON.parse(values.profiles)
-                );
-                setLang(typeof values.lang === 'undefined' ? defaultSettings.lang : values.lang);
-                setProxyMode(
-                    typeof values.proxyMode === 'undefined'
-                        ? defaultSettings.proxyMode
-                        : values.proxyMode
-                );
+                setEndpoint(withDefault(values.endpoint, defaultSettings.endpoint));
+                setIpType(withDefault(values.ipType, defaultSettings.ipType));
+                setRtt(withDefault(values.rtt, defaultSettings.rtt));
+                setReserved(withDefault(values.reserved, defaultSettings.reserved));
+                setProfiles(JSON.parse(withDefault(values.profiles, defaultSettings.profiles)));
+                setLang(withDefault(values.lang, defaultSettings.lang));
+                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);
@@ -183,12 +167,7 @@ const useScanner = () => {
 
     const isDefaultEndpoint = useMemo(() => endpoint === defaultSettings.endpoint, [endpoint]);
 
-    const loading =
-        typeof endpoint === 'undefined' ||
-        typeof profiles === 'undefined' ||
-        typeof ipType === 'undefined' ||
-        typeof rtt === 'undefined' ||
-        typeof reserved === 'undefined';
+    const loading = isAnyUndefined(endpoint, profiles, ipType, rtt, reserved);
 
     return {
         endpoint,

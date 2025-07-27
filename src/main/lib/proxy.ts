@@ -9,6 +9,7 @@ import { shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
 //import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
+import { withDefault } from '../../renderer/lib/withDefault';
 
 const execPromise = promisify(exec);
 
@@ -346,7 +347,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     const port = (await settings.get('port')) || defaultSettings.port;
     const routingRules = await settings.get('routingRules');
     const lang = await settings.get('lang');
-    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+    appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
 
     if (!shouldProxySystem(proxyMode)) {
         log.info('skipping set system proxy');
@@ -491,7 +492,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
     const proxyMode = await settings.get('proxyMode');
     const method = (await settings.get('method')) || defaultSettings.method;
     const lang = await settings.get('lang');
-    appLang = getTranslate(String(typeof lang !== 'undefined' ? lang : defaultSettings.lang));
+    appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
 
     if (proxyMode === 'none') {
         log.info('skipping system proxy disable.');

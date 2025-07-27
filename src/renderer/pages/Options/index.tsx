@@ -8,6 +8,7 @@ import useOptions from './useOptions';
 import Dropdown from '../../components/Dropdown';
 import HookInput from '../../components/HookInput';
 import { platform } from '../../lib/utils';
+import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 export default function Options() {
     const {
@@ -70,24 +71,27 @@ export default function Options() {
     } = useOptions();
 
     if (
-        typeof theme === 'undefined' ||
-        typeof lang === 'undefined' ||
-        typeof openAtLogin === 'undefined' ||
-        typeof startMinimized === 'undefined' ||
-        typeof forceClose === 'undefined' ||
-        typeof soundEffect === 'undefined' ||
-        typeof autoConnect === 'undefined' ||
-        typeof betaRelease === 'undefined' ||
-        typeof hookConnectSuccess === 'undefined' ||
-        typeof hookConnectSuccessArgs === 'undefined' ||
-        typeof hookConnectFail === 'undefined' ||
-        typeof hookConnectFailArgs === 'undefined' ||
-        typeof hookDisconnect === 'undefined' ||
-        typeof hookDisconnectArgs === 'undefined' ||
-        typeof hookConnectionError === 'undefined' ||
-        typeof hookConnectionErrorArgs === 'undefined'
-    )
+        isAnyUndefined(
+            theme,
+            lang,
+            openAtLogin,
+            startMinimized,
+            forceClose,
+            soundEffect,
+            autoConnect,
+            betaRelease,
+            hookConnectSuccess,
+            hookConnectSuccessArgs,
+            hookConnectFail,
+            hookConnectFailArgs,
+            hookDisconnect,
+            hookDisconnectArgs,
+            hookConnectionError,
+            hookConnectionErrorArgs
+        )
+    ) {
         return <div className='settings' />;
+    }
 
     return (
         <>

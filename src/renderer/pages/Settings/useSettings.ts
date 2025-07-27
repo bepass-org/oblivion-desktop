@@ -9,6 +9,8 @@ import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { DropdownItem } from '../../components/Dropdown';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
+import { withDefault } from '../../lib/withDefault';
+import { isAnyUndefined, typeIsNotUndefined, typeIsUndefined } from '../../lib/isAnyUndefined';
 
 const useSettings = () => {
     const appLang = useTranslate();
@@ -30,25 +32,11 @@ const useSettings = () => {
         settings
             .getMultiple(['location', 'license', 'method', 'proxyMode', 'testUrl'])
             .then((values) => {
-                setLocation(
-                    typeof values.location === 'undefined'
-                        ? defaultSettings.location
-                        : values.location
-                );
-                setLicense(
-                    typeof values.license === 'undefined' ? defaultSettings.license : values.license
-                );
-                setMethod(
-                    typeof values.method === 'undefined' ? defaultSettings.method : values.method
-                );
-                setProxyMode(
-                    typeof values.proxyMode === 'undefined'
-                        ? defaultSettings.proxyMode
-                        : values.proxyMode
-                );
-                setTestUrl(
-                    typeof values.testUrl === 'undefined' ? defaultSettings.testUrl : values.testUrl
-                );
+                setLocation(withDefault(values.location, defaultSettings.location));
+                setLicense(withDefault(values.license, defaultSettings.license));
+                setMethod(withDefault(values.method, defaultSettings.method));
+                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
+                setTestUrl(withDefault(values.testUrl, defaultSettings.testUrl));
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);
@@ -115,13 +103,13 @@ const useSettings = () => {
         [appLang?.settings?.method_psiphon_location_auto]
     );
 
-    const methodIsWarp = useMemo(() => typeof method !== 'undefined' && method === '', [method]);
+    const methodIsWarp = useMemo(() => typeIsNotUndefined(method) && method === '', [method]);
     const methodIsGool = useMemo(
-        () => (typeof method !== 'undefined' && method === 'gool') || typeof method === 'undefined',
+        () => (typeIsNotUndefined(method) && method === 'gool') || typeIsUndefined(method),
         [method]
     );
     const methodIsPsiphon = useMemo(
-        () => typeof method !== 'undefined' && method === 'psiphon',
+        () => typeIsNotUndefined(method) && method === 'psiphon',
         [method]
     );
 
@@ -133,11 +121,7 @@ const useSettings = () => {
 
     const onKeyDownTestUrl = useButtonKeyDown(onOpenTestUrlModal);
 
-    const loading =
-        typeof location === 'undefined' ||
-        typeof license === 'undefined' ||
-        typeof testUrl === 'undefined' ||
-        typeof method === 'undefined';
+    const loading = isAnyUndefined(location, license, testUrl, method);
 
     return {
         location,

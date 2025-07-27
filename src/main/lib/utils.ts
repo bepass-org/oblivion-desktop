@@ -2,6 +2,11 @@ import fs from 'fs';
 import { app, ipcMain } from 'electron';
 import log from 'electron-log';
 import { defaultSettings, dnsServers } from '../../defaultSettings';
+import {
+    isAnyUndefined,
+    typeIsNotUndefined,
+    typeIsUndefined
+} from '../../renderer/lib/isAnyUndefined';
 
 export const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -56,14 +61,11 @@ export function removeDirIfExists(dirPath: string) {
 }
 
 export function shouldProxySystem(proxyMode: any) {
-    return (
-        typeof proxyMode === 'undefined' ||
-        (typeof proxyMode === 'string' && proxyMode === 'system')
-    );
+    return isAnyUndefined(proxyMode) || (typeof proxyMode === 'string' && proxyMode === 'system');
 }
 
 export function hasLicense(license: any) {
-    return typeof license !== 'undefined' && license !== '';
+    return typeIsNotUndefined(license) && license !== '';
 }
 
 export function checkRoutingRules(value: any) {
@@ -71,7 +73,7 @@ export function checkRoutingRules(value: any) {
 }
 
 export function checkEndpoint(endpoint: any) {
-    return typeof endpoint === 'undefined' ||
+    return typeIsUndefined(endpoint) ||
         (typeof endpoint === 'string' && endpoint === defaultSettings.endpoint)
         ? 'default'
         : 'custom';
@@ -128,7 +130,7 @@ export function checkGeoStatus(ip: any, site: any, block: any, nsfw: any) {
 }
 
 export function calculateMethod(method: any) {
-    if (typeof method === 'undefined') {
+    if (typeIsUndefined(method)) {
         return defaultSettings.method;
     }
     switch (method) {

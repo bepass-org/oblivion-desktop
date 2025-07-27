@@ -8,6 +8,7 @@ import LandingBody from './LandingBody';
 import Tabs from '../../components/Tabs';
 import ConfigHandler from '../../components/ConfigHandler';
 import DownloadProgressBar from './DownloadProgressBar';
+import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 export default function Landing() {
     const {
@@ -38,12 +39,9 @@ export default function Landing() {
         downloadProgress
     } = useLanding();
 
-    if (
-        typeof proxyMode === 'undefined' ||
-        typeof dataUsage === 'undefined' ||
-        typeof betaRelease === 'undefined'
-    )
+    if (isAnyUndefined(proxyMode, dataUsage, betaRelease)) {
         return <div className='homeScreen' />;
+    }
 
     return (
         <>

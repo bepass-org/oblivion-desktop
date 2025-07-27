@@ -1,13 +1,15 @@
+import { typeIsUndefined } from './isAnyUndefined';
+
 export const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
 export const toPersianNumber = (
     n: string | number | undefined,
     doNotConvertFloat = false
 ): string => {
-    if (typeof n === 'undefined') {
+    if (typeIsUndefined(n)) {
         return '';
     }
-    n = n.toString();
+    n = n?.toString() || '';
     if (doNotConvertFloat && n.includes('.')) {
         return n;
     }
