@@ -95,15 +95,36 @@ const useOptions = () => {
                 setSoundEffect(withDefault(values.soundEffect, defaultSettings.soundEffect));
                 setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
                 setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));
-                setHookConnectSuccess(withDefault(values.hookConnectSuccess, defaultSettings.hookConnectSuccess));
-                setHookConnectSuccessArgs(withDefault(values.hookConnectSuccessArgs, defaultSettings.hookConnectSuccessArgs));
-                setHookConnectFail(withDefault(values.hookConnectFailArgs, defaultSettings.hookConnectFailArgs));
-                setHookConnectFailArgs(withDefault(values.hookConnectFailArgs, defaultSettings.hookConnectFailArgs));
-                setHookDisconnect(withDefault(values.hookDisconnect, defaultSettings.hookDisconnect));
-                setHookDisconnectArgs(withDefault(values.hookDisconnectArgs, defaultSettings.hookDisconnectArgs));
-                setHookConnectionError(withDefault(values.hookDisconnectArgs, defaultSettings.hookDisconnectArgs));
-                setHookConnectionErrorArgs(withDefault(values.hookConnectionErrorArgs, defaultSettings.hookConnectionErrorArgs));
-
+                setHookConnectSuccess(
+                    withDefault(values.hookConnectSuccess, defaultSettings.hookConnectSuccess)
+                );
+                setHookConnectSuccessArgs(
+                    withDefault(
+                        values.hookConnectSuccessArgs,
+                        defaultSettings.hookConnectSuccessArgs
+                    )
+                );
+                setHookConnectFail(
+                    withDefault(values.hookConnectFailArgs, defaultSettings.hookConnectFailArgs)
+                );
+                setHookConnectFailArgs(
+                    withDefault(values.hookConnectFailArgs, defaultSettings.hookConnectFailArgs)
+                );
+                setHookDisconnect(
+                    withDefault(values.hookDisconnect, defaultSettings.hookDisconnect)
+                );
+                setHookDisconnectArgs(
+                    withDefault(values.hookDisconnectArgs, defaultSettings.hookDisconnectArgs)
+                );
+                setHookConnectionError(
+                    withDefault(values.hookDisconnectArgs, defaultSettings.hookDisconnectArgs)
+                );
+                setHookConnectionErrorArgs(
+                    withDefault(
+                        values.hookConnectionErrorArgs,
+                        defaultSettings.hookConnectionErrorArgs
+                    )
+                );
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);
