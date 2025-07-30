@@ -8,13 +8,8 @@ on:
             - '*'
 
 jobs:
-    publish:
-        runs-on: ${{ matrix.os }}
-
-        strategy:
-            matrix:
-                os: [ubuntu-22.04, ubuntu-24.04, windows-latest, macos-13, macos-14]
-
+    create-release:
+        runs-on: ubuntu-22.04
         steps:
             - name: Checkout git repo
               uses: actions/checkout@v4
@@ -32,6 +27,17 @@ jobs:
                   body_path: './release.md'
                   draft: true
 
+    publish:
+        needs: create-release
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-22.04, ubuntu-24.04, windows-latest, macos-13, macos-14]
+
+        steps:
+            - name: Checkout git repo
+              uses: actions/checkout@v4
+
             - name: Install Node and NPM
               uses: actions/setup-node@v4
               with:
@@ -48,33 +54,33 @@ jobs:
               shell: bash
 
             - name: Publish releases mac x64
+              if: matrix.os == 'macos-13'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'macos-13'
               run: npm exec electron-builder -- --mac dmg zip --x64 --publish onTagOrDraft
 
             - name: Publish releases mac arm64
+              if: matrix.os == 'macos-14'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'macos-14'
               run: npm exec electron-builder -- --mac dmg zip --arm64 --publish onTagOrDraft
 
             - name: Publish releases windows
+              if: matrix.os == 'windows-latest'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'windows-latest'
               run: npm exec electron-builder -- --publish onTagOrDraft
 
             - name: Publish releases GNU Linux x64
+              if: matrix.os == 'ubuntu-22.04'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'ubuntu-22.04'
               run: npm exec electron-builder -- --linux deb rpm tar.xz AppImage --x64 --publish onTagOrDraft
 
             - name: Publish releases GNU Linux arm64
+              if: matrix.os == 'ubuntu-24.04'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'ubuntu-24.04'
               run: npm exec electron-builder -- --linux deb rpm tar.xz AppImage --arm64 --publish onTagOrDraft
 
             - name: Delete unwanted files
