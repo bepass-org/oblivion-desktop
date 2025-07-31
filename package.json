@@ -104,7 +104,7 @@
         "react-dom": "^18.3.1",
         "react-hot-toast": "^2.5.2",
         "react-modern-drawer": "^1.4.0",
-        "react-router-dom": "^7.7.0",
+        "react-router": "^7.7.0",
         "react-swipe-component": "^3.0.0",
         "regedit": "^5.1.4",
         "serve-handler": "^6.1.5",
