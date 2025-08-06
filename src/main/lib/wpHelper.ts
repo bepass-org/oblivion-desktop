@@ -29,7 +29,8 @@ export const getUserSettings = async () => {
         lang,
         dns,
         plainDns,
-        testUrl
+        testUrl,
+        connectTimeout
     ] = await Promise.all([
         settings.get('endpoint'),
         settings.get('ipType'),
@@ -43,7 +44,8 @@ export const getUserSettings = async () => {
         settings.get('lang'),
         settings.get('dns'),
         settings.get('plainDns'),
-        settings.get('testUrl')
+        settings.get('testUrl'),
+        settings.get('connectTimeout')
     ]);
     appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
 
@@ -90,6 +92,7 @@ export const getUserSettings = async () => {
                       : defaultSettings.endpoint
               ]),
         ...(typeof reserved === 'boolean' && !reserved ? ['--reserved', '0,0,0'] : []),
+        ...(typeof connectTimeout === 'string' ? ['--connect-timeout', connectTimeout] : []),
         ...(finalDns !== '' ? ['--dns', finalDns] : [])
     ];
 };

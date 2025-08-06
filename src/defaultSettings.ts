@@ -49,7 +49,8 @@ export type settingsKeys =
     | 'DoH'
     | 'testUrl'
     | 'updaterVersion'
-    | 'networkList';
+    | 'networkList'
+    | 'connectTimeout';
 
 const date = new Date();
 const getTimeZone = date?.toString().toLowerCase();
@@ -103,7 +104,8 @@ export const defaultSettings = {
     plainDns: '',
     DoH: '',
     updaterVersion: null,
-    networkList: '[]'
+    networkList: '[]',
+    connectTimeout: '20s'
 };
 
 export const countries: DropdownItem[] = [
