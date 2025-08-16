@@ -93,7 +93,7 @@
     "dependencies": {
         "@cloudflare/speedtest": "^1.5.1",
         "@grpc/grpc-js": "^1.13.4",
-        "@grpc/proto-loader": "^0.7.15",
+        "@grpc/proto-loader": "^0.8.0",
         "axios": "^1.11.0",
         "classnames": "^2.5.1",
         "electron-log": "^5.4.2",
