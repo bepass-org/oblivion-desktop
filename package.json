@@ -102,7 +102,7 @@
         "node-aplay": "^1.0.3",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-hot-toast": "^2.5.2",
+        "react-hot-toast": "^2.6.0",
         "react-modern-drawer": "^1.4.0",
         "react-router-dom": "^7.6.3",
         "react-swipe-component": "^3.0.0",
