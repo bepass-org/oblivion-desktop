@@ -91,7 +91,7 @@
         }
     },
     "dependencies": {
-        "@cloudflare/speedtest": "^1.5.1",
+        "@cloudflare/speedtest": "^1.6.0",
         "@grpc/grpc-js": "^1.13.4",
         "@grpc/proto-loader": "^0.8.0",
         "axios": "^1.11.0",
