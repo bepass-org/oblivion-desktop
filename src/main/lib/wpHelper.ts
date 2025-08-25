@@ -92,7 +92,10 @@ export const getUserSettings = async () => {
                       : defaultSettings.endpoint
               ]),
         ...(typeof reserved === 'boolean' && !reserved ? ['--reserved', '0,0,0'] : []),
-        ...(typeof connectTimeout === 'string' ? ['--connect-timeout', connectTimeout] : []),
+        ...[
+            '--connect-timeout',
+            typeof connectTimeout === 'string' ? connectTimeout : defaultSettings.connectTimeout
+        ],
         ...(finalDns !== '' ? ['--dns', finalDns] : [])
     ];
 };
