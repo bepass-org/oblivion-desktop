@@ -105,7 +105,7 @@ export const defaultSettings = {
     DoH: '',
     updaterVersion: null,
     networkList: '[]',
-    connectTimeout: '30s'
+    connectTimeout: '60s'
 };
 
 export const countries: DropdownItem[] = [
