@@ -348,6 +348,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     const routingRules = await settings.get('routingRules');
     const lang = await settings.get('lang');
     appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
+    const isSocks = ['psiphon', 'masque'].includes(String(method));
 
     if (!shouldProxySystem(proxyMode)) {
         log.info('skipping set system proxy');
@@ -360,7 +361,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
         return new Promise<void>(async (resolve, reject) => {
             try {
                 let pacServeUrl = '';
-                if (method === 'psiphon') {
+                if (isSocks) {
                     await createPacScript(String(hostIP), String(port));
                     pacServeUrl = await servePacScript(Number(port) + 1);
                     log.info('PAC server URL:', pacServeUrl);
@@ -369,7 +370,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     {
                         ProxyServer: {
                             type: 'REG_SZ',
-                            value: `${method === 'psiphon' ? 'socks=' : ''}${hostIP.toString()}:${port.toString()}`
+                            value: `${isSocks ? 'socks=' : ''}${hostIP.toString()}:${port.toString()}`
                         },
                         ProxyOverride: {
                             type: 'REG_SZ',
@@ -377,7 +378,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                         },
                         AutoConfigURL: {
                             type: 'REG_SZ',
-                            value: `${method === 'psiphon' ? pacServeUrl + '/proxy.txt' : ''}`
+                            value: `${isSocks ? pacServeUrl + '/proxy.txt' : ''}`
                         },
                         ProxyEnable: {
                             type: 'REG_DWORD',
@@ -493,6 +494,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
     const method = (await settings.get('method')) || defaultSettings.method;
     const lang = await settings.get('lang');
     appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
+    const isSocks = ['psiphon', 'masque'].includes(String(method));
 
     if (proxyMode === 'none') {
         log.info('skipping system proxy disable.');
@@ -503,7 +505,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
 
     if (process.platform === 'win32') {
         return new Promise<void>(async (resolve, reject) => {
-            if (method === 'psiphon') killPacScriptServer();
+            if (isSocks) killPacScriptServer();
 
             try {
                 await windowsProxySettings(
