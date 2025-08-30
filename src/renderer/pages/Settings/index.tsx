@@ -16,6 +16,7 @@ export default function Settings() {
         method,
         methodIsGool,
         methodIsPsiphon,
+        methodIsMasque,
         methodIsWarp,
         onChangeLocation,
         onCloseLicenseModal,
@@ -25,6 +26,8 @@ export default function Settings() {
         onKeyDownGool,
         onKeyDownPsiphon,
         onKeyDownWarp,
+        onEnableMasque,
+        onKeyDownMasque,
         setLicense,
         showLicenseModal,
         loading,
@@ -57,7 +60,7 @@ export default function Settings() {
                 isOpen={showTestUrlModal}
                 onClose={onCloseTestUrlModal}
             />
-            <div className={classNames('myApp', 'normalPage')}>
+            <div className={classNames('myApp', 'normalPage', 'withScroll')}>
                 <div className='container'>
                     <Tabs active='settings' proxyMode={proxyMode} />
                     <div className='settings' role='menu'>
@@ -103,6 +106,27 @@ export default function Settings() {
                                     />
                                 </div>
                                 <div className='info'>{appLang?.settings?.method_gool_desc}</div>
+                            </div>
+                            <div
+                                role='button'
+                                className={classNames('item')}
+                                onClick={onEnableMasque}
+                                onKeyDown={onKeyDownMasque}
+                                tabIndex={0}
+                            >
+                                <label className='key' htmlFor='flex-switch-check-checked-masque'>
+                                    {appLang?.settings?.method_masque}
+                                </label>
+                                <div className='value' id='flex-switch-check-checked-masque'>
+                                    <div
+                                        tabIndex={-1}
+                                        className={classNames(
+                                            'switch',
+                                            methodIsMasque ? 'checked' : ''
+                                        )}
+                                    />
+                                </div>
+                                <div className='info'>{appLang?.settings?.method_masque_desc}</div>
                             </div>
                             <div
                                 role='button'

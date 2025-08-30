@@ -73,6 +73,14 @@ const useSettings = () => {
 
     const onKeyDownGool = useButtonKeyDown(onEnableGool);
 
+    const onEnableMasque = useCallback(() => {
+        setMethod('masque');
+        settings.set('method', 'masque');
+        settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
+    }, [isConnected, isLoading, appLang]);
+
+    const onKeyDownMasque = useButtonKeyDown(onEnableMasque);
+
     const onEnablePsiphon = useCallback(() => {
         //if (proxyMode !== 'tun') {
         setMethod('psiphon');
@@ -112,6 +120,10 @@ const useSettings = () => {
         () => typeIsNotUndefined(method) && method === 'psiphon',
         [method]
     );
+    const methodIsMasque = useMemo(
+        () => typeIsNotUndefined(method) && method === 'masque',
+        [method]
+    );
 
     const onCloseTestUrlModal = useCallback(() => {
         setShowTestUrlModal(false);
@@ -131,6 +143,7 @@ const useSettings = () => {
         methodIsWarp,
         methodIsGool,
         methodIsPsiphon,
+        methodIsMasque,
         appLang,
         loading,
         locationItems,
@@ -142,6 +155,8 @@ const useSettings = () => {
         onKeyDownWarp,
         onEnableGool,
         onKeyDownGool,
+        onEnableMasque,
+        onKeyDownMasque,
         onEnablePsiphon,
         onKeyDownPsiphon,
         onChangeLocation,
