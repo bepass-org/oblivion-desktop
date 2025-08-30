@@ -138,6 +138,8 @@ export function calculateMethod(method: any) {
             return 'gool';
         case 'psiphon':
             return 'psiphon';
+        case 'masque':
+            return 'masque';
         default:
             return 'warp';
     }

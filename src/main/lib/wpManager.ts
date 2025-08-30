@@ -26,7 +26,8 @@ import {
     isLinux,
     soundEffect,
     isWindows,
-    exclusionsPath
+    exclusionsPath,
+    mpPath
 } from '../../constants';
 
 // Types and Enums
@@ -230,26 +231,40 @@ class WarpPlusManager {
     }
 
     static async startWarpPlus() {
-        if (!fs.existsSync(wpBinPath)) {
-            state.event?.reply('guide-toast', state.appLang.log.error_wp_not_found);
-            state.event?.reply('wp-end', true);
-
-            if (fs.existsSync(wpAssetPath) && state.settings.restartCounter < 2) {
-                await settings.set('restartCounter', state.settings.restartCounter + 1);
-                if (isWindows) {
-                    this.addToExclusions();
-                } else {
-                    this.restartApp();
-                }
+        const method = (await settings.get('method')) || defaultSettings.method;
+        if (method === 'masque') {
+            if (!fs.existsSync(mpPath)) {
+                state.event?.reply('guide-toast', state.appLang.log.error_wp_not_found);
+                state.event?.reply('wp-end', true);
+                return;
             }
-            return;
+        } else {
+            if (!fs.existsSync(wpBinPath)) {
+                state.event?.reply('guide-toast', state.appLang.log.error_wp_not_found);
+                state.event?.reply('wp-end', true);
+
+                if (fs.existsSync(wpAssetPath) && state.settings.restartCounter < 2) {
+                    await settings.set('restartCounter', state.settings.restartCounter + 1);
+                    if (isWindows) {
+                        this.addToExclusions();
+                    } else {
+                        this.restartApp();
+                    }
+                }
+                return;
+            }
         }
 
         try {
             const args = await getUserSettings();
-            log.info('Starting WarpPlus process...');
-            log.info(`${wpBinPath} ${args.join(' ')}`);
-            state.child = spawn(wpBinPath, args, { cwd: workingDirPath });
+            log.info('Starting MasquePlus process...');
+            if (method === 'masque') {
+                log.info(`${mpPath} ${args.join(' ')}`);
+                state.child = spawn(mpPath, args, { cwd: workingDirPath });
+            } else {
+                log.info(`${wpBinPath} ${args.join(' ')}`);
+                state.child = spawn(wpBinPath, args, { cwd: workingDirPath });
+            }
             this.setupChildProcessHandlers();
         } catch (error) {
             log.error('Error starting WarpPlus:', error);

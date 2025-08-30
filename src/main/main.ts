@@ -55,6 +55,8 @@ import {
     isDarwin,
     isLinux,
     gtk4Paths,
+    usquePath,
+    usqueAssetPath,
     mpPath,
     mpAssetPath
 } from '../constants';
@@ -174,7 +176,7 @@ class OblivionDesktop {
     }
 
     private async cleanupOldFiles(): Promise<void> {
-        const filesToClean = [wpBinPath, helperPath, netStatsPath, mpPath];
+        const filesToClean = [wpBinPath, helperPath, netStatsPath, usquePath, mpPath];
         if (isWindows) {
             filesToClean.push(proxyResetPath);
         }
@@ -190,6 +192,7 @@ class OblivionDesktop {
             { src: wpAssetPath, dest: wpBinPath, name: 'wp' },
             { src: helperAssetPath, dest: helperPath, name: 'helper' },
             { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' },
+            { src: usqueAssetPath, dest: usquePath, name: 'usque' },
             { src: mpAssetPath, dest: mpPath, name: 'mp' }
         ];
         if (isWindows) {
