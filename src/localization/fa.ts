@@ -54,6 +54,8 @@ const persian: Language = {
         method_warp_desc: 'فعالسازی Warp',
         method_gool: 'گول',
         method_gool_desc: 'فعالسازی WarpInWarp',
+        method_masque: 'مسک',
+        method_masque_desc: 'فعالسازی Masque',
         method_psiphon: 'سایفون',
         method_psiphon_desc: 'فعالسازی Psiphon',
         method_psiphon_location: 'انتخاب کشور',

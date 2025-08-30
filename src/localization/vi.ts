@@ -56,6 +56,8 @@ const vietnamese: Language = {
         method_warp_desc: 'Bật Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Bật WarpInWarp',
+        method_masque: 'Masque',
+        method_masque_desc: 'Bật Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Bật Psiphon',
         method_psiphon_location: 'Quốc gia',

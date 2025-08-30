@@ -53,6 +53,8 @@ const chinese: Language = {
         method_warp_desc: '启用 Warp',
         method_gool: 'Gool',
         method_gool_desc: '启用 WarpInWarp',
+        method_masque: 'Masque',
+        method_masque_desc: '启用 Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: '启用 Psiphon',
         method_psiphon_location: '选择国家',

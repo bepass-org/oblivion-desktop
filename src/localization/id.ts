@@ -57,6 +57,8 @@ const indonesia: Language = {
         method_warp_desc: 'Aktifkan Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Aktifkan WarpInWarp',
+        method_masque: 'Masque',
+        method_masque_desc: 'Aktifkan Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Aktifkan Psiphon',
         method_psiphon_location: 'Negara',

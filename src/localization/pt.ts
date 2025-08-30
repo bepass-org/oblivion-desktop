@@ -56,6 +56,8 @@ const brazilianPortuguese: Language = {
         method_warp_desc: 'Ativar Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Ativar WarpInWarp',
+        method_masque: 'Masque',
+        method_masque_desc: 'Ativar Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Ativar Psiphon',
         method_psiphon_location: 'País',

@@ -53,6 +53,8 @@ const amharic: Language = {
         method_warp_desc: 'ዋርፕን እንዲተካ ያስተካክሉ',
         method_gool: 'ጉል',
         method_gool_desc: 'WarpInWarpን እንዲተካ ያስተካክሉ',
+        method_masque: 'ማስክ',
+        method_masque_desc: 'ማስክን እንዲሰራ ያንቀሳቅሱ',
         method_psiphon: 'ፒሲፎን',
         method_psiphon_desc: 'ፒሲፎንን እንዲተካ ያስተካክሉ',
         method_psiphon_location: 'ሀገር',

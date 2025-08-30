@@ -56,6 +56,8 @@ const russian: Language = {
         method_warp_desc: 'Включить Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Включить WarpInWarp',
+        method_masque: 'Маск',
+        method_masque_desc: 'Включить Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Включить Psiphon',
         method_psiphon_location: 'Страна',

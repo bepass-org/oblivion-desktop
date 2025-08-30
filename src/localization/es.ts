@@ -57,6 +57,8 @@ const spanish: Language = {
         method_warp_desc: 'Habilitar Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Habilitar WarpInWarp',
+        method_masque: 'Masque',
+        method_masque_desc: 'Habilitar Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Habilitar Psiphon',
         method_psiphon_location: 'País',

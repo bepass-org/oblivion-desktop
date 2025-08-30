@@ -51,6 +51,8 @@ export interface Settings {
     more: string;
     method_warp: string;
     method_warp_desc: string;
+    method_masque: string;
+    method_masque_desc: string;
     method_gool: string;
     method_gool_desc: string;
     method_psiphon: string;

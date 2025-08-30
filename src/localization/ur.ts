@@ -56,6 +56,8 @@ const urdu: Language = {
         method_warp_desc: 'وارپ فعال کریں',
         method_gool: 'گول',
         method_gool_desc: 'وارپ ان وارپ فعال کریں',
+        method_masque: 'ماسک',
+        method_masque_desc: 'ماسک فعال کریں',
         method_psiphon: 'سائفون',
         method_psiphon_desc: 'سائفون فعال کریں',
         method_psiphon_location: 'ملک',

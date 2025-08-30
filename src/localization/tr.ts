@@ -57,6 +57,8 @@ const turkish: Language = {
         method_warp_desc: "Warp'ı etkinleştir",
         method_gool: 'Gool',
         method_gool_desc: "WarpInWarp'ı etkinleştir",
+        method_masque: 'Masque',
+        method_masque_desc: "Masque'i etkinleştir",
         method_psiphon: 'Psiphon',
         method_psiphon_desc: "Psiphon'u etkinleştir",
         method_psiphon_location: 'Ülke',

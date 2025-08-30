@@ -53,6 +53,8 @@ const arabic: Language = {
         method_warp_desc: 'تمكين Warp',
         method_gool: 'Gool',
         method_gool_desc: 'تمكين WarpInWarp',
+        method_masque: 'ماسكي',
+        method_masque_desc: 'تمكين ماسكي',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'تمكين Psiphon',
         method_psiphon_location: 'البلد',

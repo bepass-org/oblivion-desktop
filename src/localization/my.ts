@@ -54,6 +54,8 @@ const myanmar: Language = {
         method_warp_desc: 'Warp ကိုဖွင့်ပါ',
         method_gool: 'Gool',
         method_gool_desc: 'WarpInWarp ကိုဖွင့်ပါ',
+        method_masque: 'Masque',
+        method_masque_desc: 'Masque ကို အသုံးပြုပါ',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Psiphon ကိုဖွင့်ပါ',
         method_psiphon_location: 'တိုင်းပြည်',
