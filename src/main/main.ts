@@ -54,7 +54,9 @@ import {
     isWindows,
     isDarwin,
     isLinux,
-    gtk4Paths
+    gtk4Paths,
+    mpPath,
+    mpAssetPath
 } from '../constants';
 import packageJsonData from '../../package.json';
 
@@ -172,7 +174,7 @@ class OblivionDesktop {
     }
 
     private async cleanupOldFiles(): Promise<void> {
-        const filesToClean = [wpBinPath, helperPath, netStatsPath];
+        const filesToClean = [wpBinPath, helperPath, netStatsPath, mpPath];
         if (isWindows) {
             filesToClean.push(proxyResetPath);
         }
@@ -187,7 +189,8 @@ class OblivionDesktop {
         const filePairs = [
             { src: wpAssetPath, dest: wpBinPath, name: 'wp' },
             { src: helperAssetPath, dest: helperPath, name: 'helper' },
-            { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' }
+            { src: netStatsAssetPath, dest: netStatsPath, name: 'netStats' },
+            { src: mpAssetPath, dest: mpPath, name: 'mp' }
         ];
         if (isWindows) {
             filePairs.push({ src: proxyResetAssetPath, dest: proxyResetPath, name: 'proxyReset' });
