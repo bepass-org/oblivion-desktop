@@ -5,7 +5,7 @@ import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit'
 import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import { defaultSettings } from '../../defaultSettings';
-import { shouldProxySystem } from './utils';
+import { isSocksProxy, shouldProxySystem } from './utils';
 import { createPacScript, killPacScriptServer, servePacScript } from './pacScript';
 //import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
@@ -348,7 +348,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
     const routingRules = await settings.get('routingRules');
     const lang = await settings.get('lang');
     appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
-    const isSocks = ['psiphon', 'masque'].includes(String(method));
+    const isSocks = isSocksProxy(String(method));
 
     if (!shouldProxySystem(proxyMode)) {
         log.info('skipping set system proxy');
@@ -494,7 +494,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
     const method = (await settings.get('method')) || defaultSettings.method;
     const lang = await settings.get('lang');
     appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
-    const isSocks = ['psiphon', 'masque'].includes(String(method));
+    const isSocks = isSocksProxy(String(method));
 
     if (proxyMode === 'none') {
         log.info('skipping system proxy disable.');

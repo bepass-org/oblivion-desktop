@@ -145,6 +145,20 @@ export function calculateMethod(method: any) {
     }
 }
 
+export function isSocksProxy(method: any) {
+    if (typeIsUndefined(method)) {
+        return defaultSettings.method;
+    }
+    switch (method) {
+        case 'psiphon':
+            return true;
+        case 'masque':
+            return true;
+        default:
+            return false;
+    }
+}
+
 export function checkIpType(value: any, endpoint: any) {
     if (checkEndpoint(endpoint) !== 'custom') {
         switch (value) {
