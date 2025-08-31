@@ -65,7 +65,6 @@ const useEndpointModal = (props: EndpointModalProps) => {
                 '162.159.192.1:4500'
             ],
             ipv6: [
-                '[2606:4700:d0::3cd7:73cc:615b:bf06]:4500',
                 '[2606:4700:d0::a29f:c001]:500',
                 '[2606:4700:d0::a29f:c001]:1701',
                 '[2606:4700:d0::a29f:c001]:4500',
@@ -89,7 +88,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
         loadingToast(appLang?.toast?.please_wait);
         try {
             const response = await fetch(
-                'https://raw.githubusercontent.com/ircfspace/endpoint/main/ip.json'
+                'https://raw.githubusercontent.com/ircfspace/endpoint/main/v2.json'
             );
             if (!response.ok) {
                 console.error('Failed to fetch Endpoints:', response.statusText);
