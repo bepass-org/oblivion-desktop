@@ -215,6 +215,8 @@ const indonesia: Language = {
             'Konfigurasi proxy tidak didukung pada sistem operasi Anda, tetapi Anda dapat menggunakan Warp Proxy secara manual.',
         error_configuring_proxy: (value) => `Kesalahan mengkonfigurasi proxy untuk ${value}!`,
         error_wp_not_found: 'File warp-plus tidak terletak di samping paket aplikasi!',
+        error_mp_not_found: 'File masque-plus tidak ditemukan di samping paket aplikasi!',
+        error_usque_not_found: 'File usque tidak ditemukan di samping paket aplikasi!',
         error_wp_exclusions:
             'Kemungkinan file warp-plus telah dikarantina karena pemberitahuan positif palsu dan deteksi yang salah oleh antivirus, yang menyebabkan masalah dengan kemampuan program untuk mengakses internet secara bebas.\nProgram dapat menambahkan file tersebut ke daftar pengecualian di beberapa antivirus jika izin akses diberikan. Haruskah ini dilakukan?',
         error_wp_stopped: 'File warp-plus mengalami masalah saat dijalankan!',

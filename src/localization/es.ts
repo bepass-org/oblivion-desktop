@@ -219,6 +219,10 @@ const spanish: Language = {
         error_configuring_proxy: (value) => `¡Error configurando el proxy para ${value}!`,
         error_wp_not_found:
             '¡El archivo warp-plus no está ubicado junto al paquete de la aplicación!',
+        error_mp_not_found:
+            '¡El archivo masque-plus no se encuentra junto al paquete de la aplicación!',
+        error_usque_not_found:
+            '¡El archivo usque no se encuentra junto al paquete de la aplicación!',
         error_wp_exclusions:
             'Es probable que el archivo warp-plus haya sido puesto en cuarentena debido a una alerta de falso positivo y una detección incorrecta por parte del antivirus, lo que ha provocado problemas con la capacidad del programa para acceder libremente a Internet.\nEl programa puede agregar el archivo mencionado a la lista de exclusiones en algunos antivirus si se otorgan permisos de acceso. ¿Se debe hacer esto?',
         error_wp_stopped: '¡El archivo warp-plus encontró un problema al ejecutarse!',

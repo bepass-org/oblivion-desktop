@@ -27,7 +27,8 @@ import {
     soundEffect,
     isWindows,
     exclusionsPath,
-    mpPath
+    mpPath,
+    usquePath
 } from '../../constants';
 
 // Types and Enums
@@ -234,7 +235,12 @@ class WarpPlusManager {
         const method = (await settings.get('method')) || defaultSettings.method;
         if (method === 'masque') {
             if (!fs.existsSync(mpPath)) {
-                state.event?.reply('guide-toast', state.appLang.log.error_wp_not_found);
+                state.event?.reply('guide-toast', state.appLang.log.error_mp_not_found);
+                state.event?.reply('wp-end', true);
+                return;
+            }
+            if (!fs.existsSync(usquePath)) {
+                state.event?.reply('guide-toast', state.appLang.log.error_usque_not_found);
                 state.event?.reply('wp-end', true);
                 return;
             }

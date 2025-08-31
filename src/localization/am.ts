@@ -206,6 +206,8 @@ const amharic: Language = {
             'ፕሮክሲ ቅንብር በስርዓትዎ ላይ አልተስፋፋም፣ ነገር ግን Warp Proxy በማንበብ ትጠቀሙ ይችላሉ።',
         error_configuring_proxy: (value) => `${value} ስለማይተስፋፋ፣ ፕሮክሲ ቅንብር ስህተት።`,
         error_wp_not_found: 'የwarp-plus ፋይል በፕሮግራም ፓኬጅ ባለማግኘት።',
+        error_mp_not_found: 'masque-plus ፋይል ከመተግበሪያ ጥቅም ጋር አልተገኘም!',
+        error_usque_not_found: 'usque ፋይል ከመተግበሪያ ጥቅም ጋር አልተገኘም!',
         error_wp_exclusions:
             'ፋይል ወርፕ-ፕላስ በተለምዶ ስለ ተሳሳተ ፋልስ ፖዚቲቭ ማስታወቂያ እና ትክክለኛ ተመን አንቲቫይሩስ ተመልከተ፣ ስለዚህም እትም ስለማንኛውም መሳሪያ ኢንተርኔትን ማግኘት በችግኝ እንደሆነ።\nእባኮትን ፕሮግራሙ ተወላጅ መንገድ ሲሰጠው ፋይሉን በአንቲቫይሩስ ተከታታይ ዝርዝሮች ላይ እንዲጨምር ማንበብ አለበት። እንዲሆን ይኖርብማል?',
         error_wp_stopped: 'የwarp-plus ፋይል ስህተት ተከሰተ ነው።',
