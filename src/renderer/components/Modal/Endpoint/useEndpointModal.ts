@@ -17,9 +17,10 @@ type EndpointModalProps = {
     profiles: Profile[];
 };
 
+type Method = keyof Suggestion;
 type Suggestion = {
-    ipv4: string[];
-    ipv6: string[];
+    warp: { ipv4: string[]; ipv6: string[] };
+    masque: { ipv4: string[]; ipv6: string[] };
 };
 
 const useEndpointModal = (props: EndpointModalProps) => {
@@ -32,41 +33,54 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const [showModal, setShowModal] = useState<boolean>(isOpen);
     const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
     const [scanResult, setScanResult] = useState<string>('');
+    const [method, setMethod] = useState<Method>('warp');
 
-    const removeDuplicates = (endpoints: Suggestion) => {
-        if (!endpoints?.ipv4 && !endpoints?.ipv6) {
-            return {
-                ipv4: [],
-                ipv6: []
-            };
-        }
-        const uniqueIpv4 = Array.from(new Set(endpoints.ipv4));
-        const uniqueIpv6 = Array.from(new Set(endpoints.ipv6));
+    const removeDuplicates = (endpoints: Suggestion): Suggestion => {
         return {
-            ipv4: uniqueIpv4,
-            ipv6: uniqueIpv6
+            warp: {
+                ipv4: Array.from(new Set(endpoints.warp?.ipv4 ?? [])),
+                ipv6: Array.from(new Set(endpoints.warp?.ipv6 ?? []))
+            },
+            masque: {
+                ipv4: Array.from(new Set(endpoints.masque?.ipv4 ?? [])),
+                ipv6: Array.from(new Set(endpoints.masque?.ipv6 ?? []))
+            }
         };
     };
 
     const defEndpoint = {
-        ipv4: [
-            '162.159.192.175:891',
-            '162.159.192.36:908',
-            '162.159.195.55:908',
-            '188.114.97.159:942',
-            '188.114.97.47:4233'
-        ],
-        ipv6: [
-            '[2606:4700:d1::27d0:ac63:30e2:5dfb]:864',
-            '[2606:4700:d1:0:4241:c24c:54ad:7920]:903',
-            '[2606:4700:d0:0:799c:392:47ed:bf4e]:955'
-        ]
+        warp: {
+            ipv4: [
+                '162.159.195.1:500',
+                '162.159.195.1:1701',
+                '162.159.195.1:2408',
+                '162.159.195.1:4500',
+                '162.159.193.3:500',
+                '162.159.193.3:1701',
+                '162.159.193.3:2408',
+                '162.159.193.3:4500',
+                '162.159.192.1:500',
+                '162.159.192.1:1701',
+                '162.159.192.1:2408',
+                '162.159.192.1:4500'
+            ],
+            ipv6: [
+                '[2606:4700:d0::3cd7:73cc:615b:bf06]:4500',
+                '[2606:4700:d0::a29f:c001]:500',
+                '[2606:4700:d0::a29f:c001]:1701',
+                '[2606:4700:d0::a29f:c001]:4500',
+                '[2606:4700:d0::a29f:c001]:2408'
+            ]
+        },
+        masque: {
+            ipv4: ['162.159.198.1:443', '162.159.198.2:443'],
+            ipv6: ['2606:4700:103::1', '2606:4700:103::2']
+        }
     };
-    const initSuggestion = useMemo(() => {
+    const initSuggestion: Suggestion = useMemo(() => {
         const storedSuggestion = localStorage?.getItem('OBLIVION_SUGGESTION');
-        let data = storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
-        data = removeDuplicates(data);
-        return data;
+        let data: Suggestion = storedSuggestion ? JSON.parse(storedSuggestion) : defEndpoint;
+        return removeDuplicates(data);
     }, []);
 
     const [suggestion, setSuggestion] = useState<Suggestion>(initSuggestion);
@@ -77,24 +91,32 @@ const useEndpointModal = (props: EndpointModalProps) => {
             const response = await fetch(
                 'https://raw.githubusercontent.com/ircfspace/endpoint/main/ip.json'
             );
-            if (response.ok) {
-                let data = await response.json();
-                if (data?.ipv4 && data?.ipv6) {
-                    data = removeDuplicates(data);
-                    setSuggestion(data);
-                    localStorage.setItem('OBLIVION_SUGGESTION', JSON.stringify(data));
-                }
-            } else {
+            if (!response.ok) {
                 console.error('Failed to fetch Endpoints:', response.statusText);
+                return;
+            }
+            const data = await response.json();
+            const normalized: Suggestion = {
+                warp: {
+                    ipv4: Array.from(new Set(data.warp?.ipv4 ?? [])),
+                    ipv6: Array.from(new Set(data.warp?.ipv6 ?? []))
+                },
+                masque: {
+                    ipv4: Array.from(new Set(data.masque?.ipv4 ?? [])),
+                    ipv6: Array.from(new Set(data.masque?.ipv6 ?? []))
+                }
+            };
+            setSuggestion(normalized);
+            try {
+                localStorage.setItem('OBLIVION_SUGGESTION', JSON.stringify(normalized));
+                console.log('Saved to localStorage');
+            } catch (e) {
+                console.error('Failed to save localStorage', e);
             }
         } catch (error) {
-            console.log('Failed to fetch Endpoints:', error);
+            console.log('Fetch error:', error);
         } finally {
-            if (openInEnd) {
-                setTimeout(() => {
-                    setShowSuggestion(true);
-                }, 1000);
-            }
+            if (openInEnd) setTimeout(() => setShowSuggestion(true), 1000);
             updaterRef.current?.classList.add('hidden');
             stopLoadingToast();
         }
@@ -103,6 +125,11 @@ const useEndpointModal = (props: EndpointModalProps) => {
     useEffect(() => {
         settings.get('scanResult').then((value) => {
             setScanResult(withDefault(value, defaultSettings.scanResult));
+        });
+
+        settings.get('method').then((value) => {
+            const checkMethod = withDefault(value, defaultSettings.method);
+            setMethod(checkMethod === 'masque' ? 'masque' : 'warp');
         });
 
         const handleClickOutside = (event: MouseEvent) => {
@@ -120,7 +147,7 @@ const useEndpointModal = (props: EndpointModalProps) => {
         setShowModal(isOpen);
 
         if (!isOpen) return;
-        if (suggestion?.ipv4?.length === defEndpoint.ipv4?.length) {
+        if (suggestion[method]?.ipv4?.length === defEndpoint[method]?.ipv4?.length) {
             fetchEndpoints(false);
         }
     }, [isOpen]);
@@ -187,7 +214,8 @@ const useEndpointModal = (props: EndpointModalProps) => {
         handleOnClose,
         setShowSuggestion,
         fetchEndpoints,
-        updaterRef
+        updaterRef,
+        method
     };
 };
 
