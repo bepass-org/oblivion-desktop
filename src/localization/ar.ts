@@ -53,6 +53,8 @@ const arabic: Language = {
         method_warp_desc: 'تمكين Warp',
         method_gool: 'Gool',
         method_gool_desc: 'تمكين WarpInWarp',
+        method_masque: 'ماسكي',
+        method_masque_desc: 'تمكين ماسكي',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'تمكين Psiphon',
         method_psiphon_location: 'البلد',
@@ -209,6 +211,8 @@ const arabic: Language = {
             'إعدادات البروكسي غير مدعومة في نظام التشغيل الخاص بك، ولكن يمكنك استخدام Warp Proxy يدويًا.',
         error_configuring_proxy: (value) => `حدث خطأ في تكوين البروكسي لـ ${value}!`,
         error_wp_not_found: 'ملف warp-plus غير موجود بجانب حزمة التطبيق!',
+        error_mp_not_found: 'ملف masque-plus غير موجود بجانب حزمة التطبيق!',
+        error_usque_not_found: 'ملف usque غير موجود بجانب حزمة التطبيق!',
         error_wp_exclusions:
             'من المحتمل أن يكون ملف warp-plus قد تم وضعه في الحجر الصحي بسبب تنبيه إيجابي كاذب واكتشاف خاطئ من قبل برنامج مكافحة الفيروسات، مما تسبب في مشاكل في قدرة البرنامج على الوصول إلى الإنترنت بحرية.\nيمكن للبرنامج إضافة الملف المذكور إلى قائمة الاستثناءات في بعض برامج مكافحة الفيروسات إذا تم منح إذن الوصول. هل يجب القيام بذلك؟',
         error_wp_stopped: 'واجه ملف warp-plus مشكلة في التشغيل!',

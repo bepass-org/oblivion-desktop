@@ -56,6 +56,8 @@ const russian: Language = {
         method_warp_desc: 'Включить Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Включить WarpInWarp',
+        method_masque: 'Маск',
+        method_masque_desc: 'Включить Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Включить Psiphon',
         method_psiphon_location: 'Страна',
@@ -215,6 +217,8 @@ const russian: Language = {
             'Конфигурация прокси-сервера не поддерживается в вашей операционной системе, но вы можете использовать Warp Proxy вручную.',
         error_configuring_proxy: (value) => `Ошибка настройки прокси-сервера для ${value}!`,
         error_wp_not_found: 'Файл warp-plus не находится рядом с пакетом приложения.',
+        error_mp_not_found: 'Файл masque-plus не найден рядом с пакетом приложения!',
+        error_usque_not_found: 'Файл usque не найден рядом с пакетом приложения!',
         error_wp_exclusions:
             'Файл warp-plus, вероятно, был помещен в карантин из-за ложного срабатывания и неправильного обнаружения антивирусом, что вызвало проблемы с доступом программы к интернету.\nПрограмма может добавить указанный файл в список исключений в некоторых антивирусах, если будет предоставлен доступ. Это должно быть сделано?',
         error_wp_stopped: 'Файл warp-plus столкнулся с проблемой при запуске!',

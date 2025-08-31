@@ -31,6 +31,7 @@ npm-debug.log.*
 
 log.txt
 warp-plus*.zip
+masque-plus*.zip
 assets/bin
 stuff
 ca.psiphon.PsiphonTunnel.tunnel-core

@@ -42,7 +42,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
         scanResult,
         showSuggestion,
         suggestion,
-        suggestionRef
+        suggestionRef,
+        method
     } = useEndpointModal({
         isOpen,
         onClose,
@@ -66,8 +67,8 @@ const EndpointModal: FC<EndpointModalProps> = ({
                         {title}
                         <div className='labels'>
                             {scanResult &&
-                                !suggestion.ipv4.includes(scanResult) &&
-                                !suggestion.ipv6.includes(scanResult) && (
+                                !suggestion[method]?.ipv4.includes(scanResult) &&
+                                !suggestion[method]?.ipv6.includes(scanResult) && (
                                     <>
                                         <div
                                             role='presentation'
@@ -99,61 +100,46 @@ const EndpointModal: FC<EndpointModalProps> = ({
                                     className={classNames(
                                         'dropDownInLabel',
                                         showSuggestion ? '' : 'hidden',
-                                        suggestion.ipv4.length > 0 && suggestion.ipv6.length > 0
+                                        suggestion[method]?.ipv4.length > 0 &&
+                                            suggestion[method].ipv6.length > 0
                                             ? 'splitter'
                                             : ''
                                     )}
                                     data-list={profiles.length > 0 ? 3 : 2}
                                 >
                                     <div className='split'>
-                                        {[...suggestion.ipv4.keys()]
-                                            .sort((a, b) => b - a)
+                                        {[...(suggestion[method]?.ipv4 ?? [])]
+                                            .sort((a, b) => b.localeCompare(a))
                                             .slice(0, 25)
-                                            .map((key, index) => (
-                                                <>
-                                                    <div
-                                                        className={classNames(
-                                                            'item',
-                                                            suggestion.ipv4[key] === endpointInput
-                                                                ? 'disabled'
-                                                                : ''
-                                                        )}
-                                                        role='presentation'
-                                                        key={key}
-                                                        onClick={() => {
-                                                            setEndpointSuggestion(
-                                                                suggestion.ipv4[key]
-                                                            );
-                                                            //setShowSuggestion(false);
-                                                        }}
-                                                    >
-                                                        #{index + 1}
-                                                        <small> IPv4</small>
-                                                    </div>
-                                                </>
-                                            ))}
-                                    </div>
-                                    <div className='split'>
-                                        {[...suggestion.ipv6.keys()]
-                                            .sort((a, b) => b - a)
-                                            .slice(0, 15)
-                                            .map((key, index) => (
+                                            .map((item, index) => (
                                                 <div
                                                     className={classNames(
                                                         'item',
-                                                        suggestion.ipv6[key] === endpointInput
-                                                            ? 'disabled'
-                                                            : ''
+                                                        item === endpointInput ? 'disabled' : ''
                                                     )}
                                                     role='presentation'
-                                                    key={key}
-                                                    onClick={() => {
-                                                        setEndpointSuggestion(suggestion.ipv6[key]);
-                                                        //setShowSuggestion(false);
-                                                    }}
+                                                    key={index}
+                                                    onClick={() => setEndpointSuggestion(item)}
                                                 >
-                                                    #{index + 1}
-                                                    <small> IPv6</small>
+                                                    #{index + 1} <small>IPv4</small>
+                                                </div>
+                                            ))}{' '}
+                                    </div>
+                                    <div className='split'>
+                                        {[...(suggestion[method]?.ipv6 ?? [])]
+                                            .sort((a, b) => b.localeCompare(a))
+                                            .slice(0, 15)
+                                            .map((item, index) => (
+                                                <div
+                                                    className={classNames(
+                                                        'item',
+                                                        item === endpointInput ? 'disabled' : ''
+                                                    )}
+                                                    role='presentation'
+                                                    key={index}
+                                                    onClick={() => setEndpointSuggestion(item)}
+                                                >
+                                                    #{index + 1} <small>IPv6</small>
                                                 </div>
                                             ))}
                                     </div>

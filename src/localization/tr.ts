@@ -57,6 +57,8 @@ const turkish: Language = {
         method_warp_desc: "Warp'ı etkinleştir",
         method_gool: 'Gool',
         method_gool_desc: "WarpInWarp'ı etkinleştir",
+        method_masque: 'Masque',
+        method_masque_desc: "Masque'i etkinleştir",
         method_psiphon: 'Psiphon',
         method_psiphon_desc: "Psiphon'u etkinleştir",
         method_psiphon_location: 'Ülke',
@@ -215,6 +217,8 @@ const turkish: Language = {
             'Proxy yapılandırması işletim sisteminizde desteklenmiyor, ancak manuel olarak Warp Proxy kullanabilirsiniz.',
         error_configuring_proxy: (value) => `${value} için proxy yapılandırılırken hata oluştu!`,
         error_wp_not_found: 'Warp-plus dosyası uygulama paketiyle birlikte yer almıyor!',
+        error_mp_not_found: 'masque-plus dosyası uygulama paketiyle birlikte bulunamadı!',
+        error_usque_not_found: 'usque dosyası uygulama paketiyle birlikte bulunamadı!',
         error_wp_exclusions:
             'warp-plus dosyasının yanlış pozitif bildirim ve antivirüs tarafından yanlış tespit nedeniyle karantinaya alındığı ve programın internet erişimini serbest bir şekilde sağlamakta sorunlara yol açtığı muhtemeldir.\nProgram, erişim izni verilirse, bu dosyayı bazı antivirüslerde hariç tutma listesine ekleyebilir. Bunu yapmak ister misiniz?',
         error_wp_stopped: 'warp-plus dosyası çalışırken bir sorunla karşılaştı!',

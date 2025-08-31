@@ -54,6 +54,8 @@ const persian: Language = {
         method_warp_desc: 'فعالسازی Warp',
         method_gool: 'گول',
         method_gool_desc: 'فعالسازی WarpInWarp',
+        method_masque: 'مسک',
+        method_masque_desc: 'فعالسازی Masque',
         method_psiphon: 'سایفون',
         method_psiphon_desc: 'فعالسازی Psiphon',
         method_psiphon_location: 'انتخاب کشور',
@@ -213,6 +215,8 @@ const persian: Language = {
             'پیکربندی پروکسی در سیستم عامل شما پشتیبانی نمی‌شود، اما می‌توانید به‌صورت دستی از پروکسی وارپ استفاده کنید.',
         error_configuring_proxy: (value) => `خطای پیکربندی پروکسی برای ${value}!`,
         error_wp_not_found: `فایل warp-plus در کنار بسته برنامه وجود ندارد!`,
+        error_mp_not_found: `فایل masque-plus در کنار بسته برنامه وجود ندارد!`,
+        error_usque_not_found: `فایل usque در کنار بسته برنامه وجود ندارد!`,
         error_wp_exclusions:
             'احتمالا فایل وارپ‌پلاس اشتباها به‌دلیل اعلان فالس پازیتیو و تشخیص اشتباه آنتی‌ویروس قرنطینه شده و عملکرد برنامه رو برای دسترسی آزاد به اینترنت دچار مشکل کرده.\nبرنامه می‌تونه درصورت اعطای سطح دسترسی، فایل مذکور رو در برخی‌از آنتی‌ویروس‌ها به لیست استثنائات اضافه کنه. انجام بشه؟',
         error_wp_stopped: `فایل warp-plus برای اجرا با مشکل مواجه است!`,

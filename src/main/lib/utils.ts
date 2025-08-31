@@ -138,8 +138,24 @@ export function calculateMethod(method: any) {
             return 'gool';
         case 'psiphon':
             return 'psiphon';
+        case 'masque':
+            return 'masque';
         default:
             return 'warp';
+    }
+}
+
+export function isSocksProxy(method: any) {
+    if (typeIsUndefined(method)) {
+        return defaultSettings.method;
+    }
+    switch (method) {
+        case 'psiphon':
+            return true;
+        case 'masque':
+            return true;
+        default:
+            return false;
     }
 }
 

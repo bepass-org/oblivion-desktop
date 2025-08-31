@@ -56,6 +56,8 @@ const english: Language = {
         method_warp_desc: 'Enable Warp',
         method_gool: 'Gool',
         method_gool_desc: 'Enable WarpInWarp',
+        method_masque: 'Masque',
+        method_masque_desc: 'Enable Masque',
         method_psiphon: 'Psiphon',
         method_psiphon_desc: 'Enable Psiphon',
         method_psiphon_location: 'Country',
@@ -213,6 +215,9 @@ const english: Language = {
             'Proxy configuration is not supported in your operating system, but you can use Warp Proxy manually.',
         error_configuring_proxy: (value) => `Failed to configure proxy for ${value}!`,
         error_wp_not_found: 'The warp-plus file is not located alongside the application package!',
+        error_mp_not_found:
+            'The masque-plus file is not located alongside the application package!',
+        error_usque_not_found: 'The usque file is not located alongside the application package!',
         error_wp_exclusions:
             'The warp-plus file has likely been quarantined due to a false positive alert and incorrect detection by the antivirus, causing issues with the program’s ability to access the internet freely.\nThe program can add the mentioned file to the exclusions list in certain antiviruses if access permission is granted. Should this be done?',
         error_wp_stopped: 'The warp-plus file has encountered an issue running!',
