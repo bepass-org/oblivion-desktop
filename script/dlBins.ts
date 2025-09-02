@@ -142,7 +142,8 @@ const masquePlusUrls: Record<string, Record<string, string>> = {
     },
     win32: {
         x64: masquePlusUrlBase + 'windows_amd64.zip',
-        arm64: masquePlusUrlBase + 'windows_arm64.zip'
+        arm64: masquePlusUrlBase + 'windows_arm64.zip',
+        ia32: masquePlusUrlBase + 'windows_amd64.zip' // This architecture is not supported, but it is listed to prevent errors
     },
     darwin: {
         x64: masquePlusUrlBase + 'darwin_amd64.zip',
