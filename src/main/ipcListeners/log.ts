@@ -20,7 +20,7 @@ import {
 } from '../lib/utils';
 import packageJsonData from '../../../package.json';
 import { binAssetPath, logPath } from '../../constants';
-import { wpVersion, helperVersion } from '../config';
+import { wpVersion, helperVersion, mpVersion } from '../config';
 
 export function readLogFile(value: string) {
     return new Promise((resolve, reject) => {
@@ -92,6 +92,7 @@ export const logMetadata = (osInfoVal: string) => {
             log.info(`at od: v${packageJsonData.version}`);
             log.info(`at wp: v${wpVersion}`);
             log.info(`at hp: v${helperVersion}`);
+            log.info(`at mp: v${mpVersion}`);
             log.info(`ls assets/bin: ${fs.readdirSync(binAssetPath)}`);
             log.info('method:', calculateMethod(data[0]));
             log.info('proxyMode:', checkProxyMode(data[1]));
