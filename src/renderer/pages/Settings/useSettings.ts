@@ -5,7 +5,7 @@ import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { countries, defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
-import { ipcRenderer } from '../../lib/utils';
+import { ipcRenderer, platform, arch } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { DropdownItem } from '../../components/Dropdown';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
@@ -166,7 +166,8 @@ const useSettings = () => {
         onCloseTestUrlModal,
         onKeyDownTestUrl,
         onOpenTestUrlModal,
-        showTestUrlModal
+        showTestUrlModal,
+        unsupportedArch: platform === 'win32' && arch === 'ia32'
     };
 };
 

@@ -1,4 +1,4 @@
-export const { ipcRenderer, platform, NODE_ENV, username } = window.electron;
+export const { ipcRenderer, platform, NODE_ENV, username, arch } = window.electron;
 
 export const isDev = () => window.electron.NODE_ENV === 'development';
 

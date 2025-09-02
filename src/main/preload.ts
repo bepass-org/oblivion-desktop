@@ -56,7 +56,8 @@ const electronHandler = {
     },
     NODE_ENV: process.env.NODE_ENV,
     platform: process.platform,
-    username: process.env.USER || process.env.USERNAME || null
+    username: process.env.USER || process.env.USERNAME || null,
+    arch: process.arch
 };
 
 //ipcRenderer.setMaxListeners(20);

@@ -38,7 +38,8 @@ export default function Settings() {
         onCloseTestUrlModal,
         onKeyDownTestUrl,
         onOpenTestUrlModal,
-        showTestUrlModal
+        showTestUrlModal,
+        unsupportedArch
     } = useSettings();
 
     if (loading) return <div className='settings' />;
@@ -109,7 +110,7 @@ export default function Settings() {
                             </div>
                             <div
                                 role='button'
-                                className={classNames('item')}
+                                className={classNames('item', unsupportedArch ? 'hidden' : '')}
                                 onClick={onEnableMasque}
                                 onKeyDown={onKeyDownMasque}
                                 tabIndex={0}
