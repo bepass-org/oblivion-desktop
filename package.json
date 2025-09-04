@@ -248,6 +248,7 @@
             "oneClick": false,
             "allowToChangeInstallationDirectory": true,
             "differentialPackage": false,
+            "perMachine": true,
             "createDesktopShortcut": true,
             "createStartMenuShortcut": true,
             "runAfterFinish": true,
