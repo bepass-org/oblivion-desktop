@@ -1,3 +1,13 @@
+## Pre-release RELEASE_TAG has been released for Windows, Linux & macOS.
+
+### Some software changes:
+
+- [x] Fixed some minor bugs
+
+#### To report issues or provide suggestions:
+
+https://github.com/bepass-org/oblivion-desktop/issues
+
 <div dir="rtl">
 
 ## نسخه پیش‌ازانتشار RELEASE_TAG برای ویندوز، لینوکس و مک منتشر شد.
@@ -11,16 +21,6 @@
 https://github.com/bepass-org/oblivion-desktop/issues
 
 </div>
-
-## Pre-release RELEASE_TAG has been released for Windows, Linux & macOS.
-
-### Some software changes:
-
-- [x] Fixed some minor bugs
-
-#### To report issues or provide suggestions:
-
-https://github.com/bepass-org/oblivion-desktop/issues
 
 <hr />
 
