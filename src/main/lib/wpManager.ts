@@ -265,14 +265,14 @@ class WarpPlusManager {
 
     static async startWarpPlus() {
         const method = (await settings.get('method')) || defaultSettings.method;
-        
+
         // Check if config.json exists, if not, create it by registering
         const configPath = path.join(workingDirPath, 'config.json');
         if (!fs.existsSync(configPath)) {
             log.info('Config file not found, registering device...');
             await this.registerDevice();
         }
-        
+
         if (method === 'masque') {
             if (!fs.existsSync(mpPath)) {
                 if (await this.handleMissingFile(mpAssetPath, state.appLang.log.error_mp_not_found))
@@ -458,9 +458,9 @@ class WarpPlusManager {
             }
 
             log.info('Running usque register to create config.json...');
-            
+
             // Run usque register with automatic ToS acceptance
-            const registerProcess = spawn(usqueBin, ['register'], { 
+            const registerProcess = spawn(usqueBin, ['register'], {
                 cwd: workingDirPath,
                 stdio: ['pipe', 'pipe', 'pipe']
             });
@@ -481,8 +481,10 @@ class WarpPlusManager {
             // Handle prompts automatically
             registerProcess.stdout?.on('data', (data) => {
                 const output = data.toString();
-                if (output.includes('Do you want to overwrite it? (y/n)') || 
-                    output.includes('Do you agree? (y/n)')) {
+                if (
+                    output.includes('Do you want to overwrite it? (y/n)') ||
+                    output.includes('Do you agree? (y/n)')
+                ) {
                     registerProcess.stdin?.write('y\n');
                 }
             });
