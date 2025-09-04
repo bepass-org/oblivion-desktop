@@ -5,6 +5,7 @@ import treeKill from 'tree-kill';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import fs from 'fs';
+import path from 'path';
 import sound from 'sound-play';
 import Aplay from 'node-aplay';
 import { isDev, removeFileIfExists, shouldProxySystem } from './utils';
@@ -264,6 +265,14 @@ class WarpPlusManager {
 
     static async startWarpPlus() {
         const method = (await settings.get('method')) || defaultSettings.method;
+        
+        // Check if config.json exists, if not, create it by registering
+        const configPath = path.join(workingDirPath, 'config.json');
+        if (!fs.existsSync(configPath)) {
+            log.info('Config file not found, registering device...');
+            await this.registerDevice();
+        }
+        
         if (method === 'masque') {
             if (!fs.existsSync(mpPath)) {
                 if (await this.handleMissingFile(mpAssetPath, state.appLang.log.error_mp_not_found))
@@ -437,6 +446,68 @@ class WarpPlusManager {
                 this.restartApp();
             });
         }
+    }
+
+    private static async registerDevice(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const usqueBin = path.join(workingDirPath, 'usque');
+            if (!fs.existsSync(usqueBin)) {
+                log.warn('usque binary not found, skipping registration');
+                resolve();
+                return;
+            }
+
+            log.info('Running usque register to create config.json...');
+            
+            // Run usque register with automatic ToS acceptance
+            const registerProcess = spawn(usqueBin, ['register'], { 
+                cwd: workingDirPath,
+                stdio: ['pipe', 'pipe', 'pipe']
+            });
+
+            let stdout = '';
+            let stderr = '';
+
+            registerProcess.stdout?.on('data', (data) => {
+                stdout += data.toString();
+                log.info(`Registration stdout: ${data.toString().trim()}`);
+            });
+
+            registerProcess.stderr?.on('data', (data) => {
+                stderr += data.toString();
+                log.info(`Registration stderr: ${data.toString().trim()}`);
+            });
+
+            // Handle prompts automatically
+            registerProcess.stdout?.on('data', (data) => {
+                const output = data.toString();
+                if (output.includes('Do you want to overwrite it? (y/n)') || 
+                    output.includes('Do you agree? (y/n)')) {
+                    registerProcess.stdin?.write('y\n');
+                }
+            });
+
+            registerProcess.on('close', (code) => {
+                if (code === 0) {
+                    log.info('Device registration successful');
+                    resolve();
+                } else {
+                    log.error(`Device registration failed with code ${code}: ${stderr}`);
+                    reject(new Error(`Registration failed: ${stderr}`));
+                }
+            });
+
+            registerProcess.on('error', (error) => {
+                log.error('Error during device registration:', error);
+                reject(error);
+            });
+
+            // Timeout after 30 seconds
+            setTimeout(() => {
+                registerProcess.kill();
+                reject(new Error('Registration timeout'));
+            }, 30000);
+        });
     }
 }
 

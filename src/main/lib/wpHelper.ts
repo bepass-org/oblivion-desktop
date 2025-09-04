@@ -62,7 +62,7 @@ export const getUserSettings = async () => {
     return [
         '--bind',
         `${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`,
-        /*...(typeof license === 'string' && license !== '' ? ['--key', license] : []),*/
+        ...(typeof license === 'string' && license !== '' ? ['--key', license] : []),
         ...(typeof testUrl === 'string' && testUrl !== '' && testUrl !== defaultSettings.testUrl
             ? ['--test-url', testUrl]
             : []),
