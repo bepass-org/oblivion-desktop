@@ -213,7 +213,7 @@ class SingBoxManager {
             try {
                 disableProxy(regeditVbsDirPath);
             } catch (error) {
-                //log.error('Error managing system proxy:', error);
+                log.error('Error managing system proxy:', error);
             }
 
             const command = this.platformHelper.start(helperPath);
@@ -242,6 +242,13 @@ class SingBoxManager {
                 ) {
                     customEvent.emit('tray-icon', 'disconnected');
                     reject(`${this.appLang?.log.error_canceled_by_user}`);
+                }
+                if (errorMessage.includes('command was found in the module')) {
+                    log.error(
+                        'The `Start-Process` command exists in the `Microsoft.PowerShell.Management` module, but PowerShell was unable to load this module.'
+                    );
+                    customEvent.emit('tray-icon', 'disconnected');
+                    reject('PowerShell module error detected.');
                 }
             });
 
