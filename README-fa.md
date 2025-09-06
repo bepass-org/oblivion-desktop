@@ -64,9 +64,10 @@ Cloudflare Warp فراهم می‌کند.
         <tr>
             <td>روش</td>
             <td>
-                :white_check_mark:  Warp & Warp+ <br>
-                :white_check_mark:  Gool<br>
-                :white_check_mark:  Cfon <small>(Psiphon)</small>
+                :white_check_mark:  وارپ<br>
+                :white_check_mark:  گول<br>
+                :white_check_mark:  سیفون <small>(سایفون)</small><br>
+                :white_check_mark:  مسک
             </td>
         </tr>
         <tr>
