@@ -18,7 +18,7 @@ export const createPacScript = async (hostIp: string, port: string | number) => 
         await fsPromises.mkdir(binPath, { recursive: true });
     }
     const routingRules = await settings.get('routingRules');
-    console.log(routingRules);
+    //console.log(routingRules);
     let domainRules = {};
     if (typeof routingRules === 'string' && routingRules !== '') {
         domainRules = routingRules
