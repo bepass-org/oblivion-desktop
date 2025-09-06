@@ -100,9 +100,14 @@ const useLanding = () => {
             const timeoutId = setTimeout(() => {
                 controller.abort();
             }, 5000);
-            const response = await fetch(String(testUrl), {
-                signal
-            });
+            const response = await fetch(
+                String(
+                    testUrl?.includes('connectivity') ? testUrl.replace('https', 'http') : testUrl
+                ),
+                {
+                    signal
+                }
+            );
             const data = await response.text();
             const parseLine = (key: string) =>
                 data
