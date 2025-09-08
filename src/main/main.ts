@@ -569,6 +569,12 @@ class OblivionDesktop {
                                     return;
                                 }
                                 log.info(`✅ Updater copied successfully: ${updaterPath}`);
+                                try {
+                                    fs.chmodSync(updaterPath, 0o755);
+                                    log.info('✅ Executable permissions applied to updater.');
+                                } catch (chmodErr) {
+                                    log.warn('⚠️ Failed to set executable permissions:', chmodErr);
+                                }
                                 fs.rm(downloadedPath, { force: true }, (unlinkErr) => {
                                     if (unlinkErr) {
                                         log.warn(
