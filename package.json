@@ -105,7 +105,6 @@
         "react-hot-toast": "^2.6.0",
         "react-modern-drawer": "^1.4.0",
         "react-router-dom": "^7.8.2",
-        "react-swipe-component": "^3.0.0",
         "regedit": "^5.1.4",
         "serve-handler": "^6.1.5",
         "sound-play": "^1.1.0",
@@ -317,10 +316,5 @@
             ".erb/dll/**"
         ],
         "logLevel": "quiet"
-    },
-    "overrides": {
-        "react-swipe-component": {
-            "react": "*"
-        }
     }
 }
