@@ -110,7 +110,7 @@
         "sound-play": "^1.1.0",
         "systeminformation": "^5.27.8",
         "tree-kill": "^1.2.2",
-        "zustand": "^4.5.7"
+        "zustand": "^5.0.8"
     },
     "devDependencies": {
         "@electron/notarize": "^2.5.0",
@@ -134,11 +134,11 @@
         "@typescript-eslint/parser": "^6.7.0",
         "chalk": "^4.1.2",
         "concurrently": "^9.2.1",
-        "cross-env": "^7.0.3",
+        "cross-env": "^10.0.0",
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.2",
         "decompress": "^4.2.1",
-        "detect-port": "^1.6.1",
+        "detect-port": "^2.1.0",
         "electron": "^38.0.0",
         "electron-builder": "^26.0.12",
         "electronmon": "^2.0.3",

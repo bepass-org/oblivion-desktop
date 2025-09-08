@@ -3,7 +3,7 @@
 import handler from 'serve-handler';
 import http from 'http';
 import { app } from 'electron';
-import detectPort from 'detect-port';
+import { detect } from 'detect-port';
 import path from 'path';
 import log from 'electron-log';
 import settings from 'electron-settings';
@@ -83,9 +83,9 @@ let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
 
 export const servePacScript = (port = 8087) => {
     return new Promise<string>((resolve, reject) => {
-        detectPort(port)
-            .then((_port) => {
-                if (port === _port) {
+        detect(port)
+            .then((realPort) => {
+                if (port === realPort) {
                     const pacPath = path.join(app.getPath('userData'), 'pac');
                     server = http.createServer((request, response) => {
                         return handler(request, response, {
@@ -97,8 +97,8 @@ export const servePacScript = (port = 8087) => {
                         resolve(`http://127.0.0.1:${port}`);
                     });
                 } else {
-                    log.info(`port: ${port} was occupied, trying port: ${_port}`);
-                    servePacScript(_port);
+                    log.info(`port: ${port} was occupied, trying port: ${realPort}`);
+                    servePacScript(realPort);
                 }
             })
             .catch((err) => {
