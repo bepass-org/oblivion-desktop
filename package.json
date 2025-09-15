@@ -139,7 +139,7 @@
         "css-minimizer-webpack-plugin": "^7.0.2",
         "decompress": "^4.2.1",
         "detect-port": "^2.1.0",
-        "electron": "^38.0.0",
+        "electron": "^38.1.0",
         "electron-builder": "^26.0.12",
         "electronmon": "^2.0.3",
         "eslint": "^8.49.0",
