@@ -88,7 +88,12 @@ const useEndpointModal = (props: EndpointModalProps) => {
         loadingToast(appLang?.toast?.please_wait);
         try {
             const response = await fetch(
-                'https://raw.githubusercontent.com/ircfspace/endpoint/main/v2.json'
+                'https://api.github.com/repos/ircfspace/endpoint/contents/v2.json',
+                {
+                    headers: {
+                        accept: 'application/vnd.github.raw+json'
+                    }
+                }
             );
             if (!response.ok) {
                 console.error('Failed to fetch Endpoints:', response.statusText);

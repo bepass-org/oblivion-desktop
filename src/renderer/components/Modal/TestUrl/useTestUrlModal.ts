@@ -50,7 +50,12 @@ const useTestUrlModal = (props: TestUrlModalProps) => {
         loadingToast(appLang?.toast?.please_wait);
         try {
             const response = await fetch(
-                'https://raw.githubusercontent.com/ircfspace/testUrl/refs/heads/main/url.json'
+                'https://api.github.com/repos/ircfspace/testUrl/contents/url.json',
+                {
+                    headers: {
+                        accept: 'application/vnd.github.raw+json'
+                    }
+                }
             );
             if (response.ok) {
                 const data = await response.json();
