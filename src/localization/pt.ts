@@ -147,6 +147,8 @@ const brazilianPortuguese: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Ignorar o bloqueio do Discord',
         more_duties: 'Mais deveres',
+        check_for_updates: "Verificar atualizações",
+        check_for_updates_desc: "Fique informado sobre novas atualizações e recursos",
         beta_release: 'Atualização Beta',
         beta_release_desc: 'Fique informado sobre versões pré-lançamento'
     },
@@ -191,7 +193,9 @@ const brazilianPortuguese: Language = {
         custom_dns_title: 'DNS personalizado',
         confirm: 'Confirmo',
         update: 'Atualizar',
-        cancel: 'Cancelar'
+        cancel: 'Cancelar',
+        yes: "Sim",
+        no: "Não"
     },
     log: {
         title: 'Log do Aplicativo',

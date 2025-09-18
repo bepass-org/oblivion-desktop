@@ -147,6 +147,8 @@ const myanmar: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Discord ဖျက်တားမှုကိုကျော်လွှားခြင်း',
         more_duties: 'ပိုမိုတာဝန်များ',
+        check_for_updates: "အပ်ဒိတ်များကို စစ်ဆေးပါ",
+        check_for_updates_desc: "အပ်ဒိတ်အသစ်များနှင့် အင်္ဂါရပ်အသစ်များကို အမြဲသိရှိထားပါ",
         beta_release: 'ဘီတာအပ်ဒိတ်',
         beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'
     },
@@ -191,7 +193,9 @@ const myanmar: Language = {
         custom_dns_title: 'စိတ်ကြိုက် DNS',
         confirm: 'ကန့်သတ်ပါ',
         update: 'အပ်ဒိတ်',
-        cancel: 'အနှိပ်ပါ'
+        cancel: 'အနှိပ်ပါ',
+        yes: "ဟုတ်ပါတယ်",
+        no: "မဟုတ်ပါ"
     },
     log: {
         title: 'အက်ပ်မှတ်တမ်း',

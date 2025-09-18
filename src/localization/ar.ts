@@ -144,6 +144,8 @@ const arabic: Language = {
         singbox_discord_bypass: 'ديزكورد',
         singbox_discord_bypass_desc: 'تجاوز حجب ديزكورد',
         more_duties: 'المزيد من الواجبات',
+        check_for_updates: "التحقق من التحديثات",
+        check_for_updates_desc: "ابقَ على اطلاع بالتحديثات والميزات الجديدة",
         beta_release: 'تحديث النسخة التجريبية',
         beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'
     },
@@ -187,7 +189,9 @@ const arabic: Language = {
         custom_dns_title: 'نظام أسماء النطاقات المخصص',
         confirm: 'أؤكد',
         update: 'تحديث',
-        cancel: 'إلغاء'
+        cancel: 'إلغاء',
+        yes: "نعم",
+        no: "لا"
     },
     log: {
         title: 'سجل التطبيق',

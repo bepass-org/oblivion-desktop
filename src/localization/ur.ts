@@ -148,6 +148,8 @@ const urdu: Language = {
         singbox_discord_bypass: 'ڈسکارڈ',
         singbox_discord_bypass_desc: 'ڈسکارڈ کی فلٹرنگ کو عبور کریں',
         more_duties: 'مزید ذمہ داریاں',
+        check_for_updates: "اپ ڈیٹس چیک کریں",
+        check_for_updates_desc: "نئی اپ ڈیٹس اور فیچرز سے باخبر رہیں",
         beta_release: 'بیٹا اپ ڈیٹ',
         beta_release_desc: 'پری ریلیز ورژنز کے بارے میں آگاہ رہیں'
     },
@@ -192,7 +194,9 @@ const urdu: Language = {
         custom_dns_title: 'حسب ضرورت DNS',
         confirm: 'میں تصدیق کرتا ہوں',
         update: 'اپڈیٹ',
-        cancel: 'منسوخ کریں'
+        cancel: 'منسوخ کریں',
+        yes: "جی ہاں",
+        no: "نہیں"
     },
     log: {
         title: 'ایپ لاگ',

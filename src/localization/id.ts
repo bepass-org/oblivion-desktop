@@ -148,6 +148,8 @@ const indonesia: Language = {
         singbox_discord_bypass: 'Membuka Blokir Discord',
         singbox_discord_bypass_desc: 'Melewati pemblokiran Discord',
         more_duties: 'Tugas lebih',
+        check_for_updates: "Periksa Pembaruan",
+        check_for_updates_desc: "Tetap terinformasi tentang pembaruan dan fitur baru",
         beta_release: 'Pembaruan Beta',
         beta_release_desc: 'Tetap terinformasi tentang versi pra-rilis'
     },
@@ -192,7 +194,9 @@ const indonesia: Language = {
         custom_dns_title: 'DNS Kustom',
         confirm: 'Saya mengerti',
         update: 'Perbarui',
-        cancel: 'Batalkan'
+        cancel: 'Batalkan',
+        yes: "Ya",
+        no: "Tidak"
     },
     log: {
         title: 'Log Aplikasi',

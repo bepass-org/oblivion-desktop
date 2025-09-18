@@ -148,6 +148,8 @@ const vietnamese: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Vượt qua bộ lọc Discord',
         more_duties: 'Nhiệm vụ thêm',
+        check_for_updates: "Kiểm tra cập nhật",
+        check_for_updates_desc: "Luôn cập nhật về các bản cập nhật và tính năng mới",
         beta_release: 'Cập nhật Beta',
         beta_release_desc: 'Cập nhật thông tin về các phiên bản trước khi phát hành'
     },
@@ -192,7 +194,9 @@ const vietnamese: Language = {
         custom_dns_title: 'DNS tùy chỉnh',
         confirm: 'Tôi xác nhận',
         update: 'Cập nhật',
-        cancel: 'Hủy'
+        cancel: 'Hủy',
+        yes: "Có",
+        no: "Không"
     },
     log: {
         title: 'Nhật ký ứng dụng',

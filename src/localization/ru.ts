@@ -148,6 +148,8 @@ const russian: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Обход фильтрации Discord',
         more_duties: 'Дополнительные обязанности',
+        check_for_updates: "Проверить обновления",
+        check_for_updates_desc: "Будьте в курсе новых обновлений и функций",
         beta_release: 'Бета-обновление',
         beta_release_desc: 'Будьте в курсе предварительных версий'
     },
@@ -192,7 +194,9 @@ const russian: Language = {
         custom_dns_title: 'Пользовательский DNS',
         confirm: 'Подтверждаю',
         update: 'Обновить',
-        cancel: 'Отмена'
+        cancel: 'Отмена',
+        yes: "Да",
+        no: "Нет"
     },
     log: {
         title: 'Журнал приложений',

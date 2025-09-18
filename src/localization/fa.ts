@@ -146,6 +146,8 @@ const persian: Language = {
         singbox_discord_bypass: 'دیسکورد',
         singbox_discord_bypass_desc: 'دورزدن فیلترینگ دیسکورد',
         more_duties: 'وظایف',
+        check_for_updates: "برسی بروزرسانی ها",
+        check_for_updates_desc: "اطلاع از بروزرسانی ها و قابلیت های جدید",
         beta_release: 'بروزرسانی بتا',
         beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'
     },
@@ -190,7 +192,9 @@ const persian: Language = {
             'حداکثر واحد انتقال یا MTU، به حداکثر اندازه بسته‌های داده اشاره دارد، که باید بین ۱۰۰۰ تا ۹۹۹۹ تنظیم شوند.',
         custom_dns_title: 'مقدار DNS',
         update: 'بروزرسانی',
-        cancel: 'انصراف'
+        cancel: 'انصراف',
+        yes: "بله",
+        no: "خیر"
     },
     log: {
         title: 'لاگ برنامه',

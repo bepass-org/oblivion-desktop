@@ -148,6 +148,8 @@ const turkish: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Discord engellemesini aşma',
         more_duties: 'Daha fazla görev',
+        check_for_updates: "Güncellemeleri Kontrol Et",
+        check_for_updates_desc: "Yeni güncellemeler ve özelliklerden haberdar olun",
         beta_release: 'Beta Güncellemesi',
         beta_release_desc: 'Önizleme sürümleri hakkında bilgi sahibi olun'
     },
@@ -192,7 +194,9 @@ const turkish: Language = {
         custom_dns_title: 'Özel DNS',
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
-        cancel: 'İptal'
+        cancel: 'İptal',
+        yes: "Evet",
+        no: "Hayır"
     },
     log: {
         title: 'Uygulama Günlüğü',

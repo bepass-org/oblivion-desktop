@@ -149,6 +149,8 @@ const spanish: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Bypass del filtrado de Discord',
         more_duties: 'Más responsabilidades',
+        check_for_updates: "Buscar actualizaciones",
+        check_for_updates_desc: "Mantente informado sobre nuevas actualizaciones y",
         beta_release: 'Actualización Beta',
         beta_release_desc: 'Mantente informado sobre versiones previas al lanzamiento'
     },
@@ -193,7 +195,9 @@ const spanish: Language = {
         custom_dns_title: 'DNS personalizado',
         confirm: 'Confirmo',
         update: 'Actualizar',
-        cancel: 'Cancelar'
+        cancel: 'Cancelar',
+        yes: "Sí",
+        no: "No"
     },
     log: {
         title: 'Registro de la Aplicación',

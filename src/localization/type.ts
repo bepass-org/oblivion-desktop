@@ -144,6 +144,8 @@ export interface Settings {
     singbox_discord_bypass: string;
     singbox_discord_bypass_desc: string;
     more_duties: string;
+    check_for_updates: string;
+    check_for_updates_desc: string;
     beta_release: string;
     beta_release_desc: string;
 }
@@ -186,6 +188,8 @@ export interface Modal {
     confirm: string;
     update: string;
     cancel: string;
+    yes: string;
+    no: string;
 }
 
 export interface Log {

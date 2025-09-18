@@ -144,6 +144,8 @@ const amharic: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'የ Discord መከላከያን መዝገብ ማስፈታት',
         more_duties: 'ተጨማሪ ዕርምጃዎች',
+        check_for_updates: "አዘምኖችን ያረጋግጡ",
+        check_for_updates_desc: "ስለ አዲስ አዘምኖች እና ባህሪያት ያውቁ",
         beta_release: 'እባብ እንቅስቃሴ',
         beta_release_desc: 'ስለ እንቅስቃሴ ከፊት በፊት ማህበረሰብ መረጃ ማግኘት'
     },
@@ -183,7 +185,9 @@ const amharic: Language = {
         custom_dns_title: 'የተለየ DNS',
         confirm: 'እባኮትን ይዘው',
         update: 'አዳዲስ ይደርሳሉ',
-        cancel: 'ተመካከተ'
+        cancel: 'ተመካከተ',
+        yes: "አዎን",
+        no: "አይ"
     },
     log: {
         title: 'አፕ ሎግ',

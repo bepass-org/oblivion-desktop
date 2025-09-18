@@ -144,6 +144,8 @@ const chinese: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: '绕过 Discord 过滤',
         more_duties: '更多职责',
+        check_for_updates: "检查更新",
+        check_for_updates_desc: "及时了解新的更新和功能",
         beta_release: 'Beta 更新',
         beta_release_desc: '了解预发布版本'
     },
@@ -184,7 +186,9 @@ const chinese: Language = {
         custom_dns_title: '自定义 DNS',
         confirm: '确认',
         update: '更新',
-        cancel: '取消'
+        cancel: '取消',
+        yes: "是",
+        no: "否"
     },
     log: {
         title: '应用日志',

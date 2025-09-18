@@ -147,6 +147,8 @@ const english: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Bypass Discord filtering',
         more_duties: 'Duties',
+        check_for_updates: "Check For Updates",
+        check_for_updates_desc: "Stay informed about new updates and features",
         beta_release: 'Beta Update',
         beta_release_desc: 'Stay informed about pre-release versions'
     },
@@ -191,7 +193,9 @@ const english: Language = {
         custom_dns_title: 'Custom DNS',
         confirm: 'I confirm',
         update: 'Update',
-        cancel: 'Cancel'
+        cancel: 'Cancel',
+        yes: "Yes",
+        no: "No"
     },
     log: {
         title: 'App Log',
