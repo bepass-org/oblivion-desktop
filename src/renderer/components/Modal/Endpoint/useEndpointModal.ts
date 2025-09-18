@@ -87,9 +87,6 @@ const useEndpointModal = (props: EndpointModalProps) => {
     const fetchEndpoints = async (openInEnd: boolean = true) => {
         loadingToast(appLang?.toast?.please_wait);
         try {
-            // const response = await fetch(
-            //     'https://raw.githubusercontent.com/ircfspace/endpoint/main/v2.json'
-            // );
             const response = await fetch(
                 'https://api.github.com/repos/ircfspace/endpoint/contents/v2.json',
                 {
