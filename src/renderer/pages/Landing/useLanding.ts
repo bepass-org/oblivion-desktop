@@ -373,7 +373,7 @@ const useLanding = () => {
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
 
-        if (!isLoading) ipcRenderer.sendMessage("check-update");
+        if (!isLoading) ipcRenderer.sendMessage('check-update');
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -458,7 +458,7 @@ const useLanding = () => {
             return;
         }
 
-        ipcRenderer.sendMessage("check-update");
+        ipcRenderer.sendMessage('check-update');
 
         if (ipInfo?.countryCode) {
             setStatusText(appLang?.status?.connected_confirm);

@@ -303,7 +303,6 @@ export function isIpBasedDoH(url: string): boolean {
     }
 }
 
-
 export function versionComparison(localVersion: any, apiVersion: any): boolean {
     const parts1 = localVersion
         .toLowerCase()
@@ -327,4 +326,4 @@ export function versionComparison(localVersion: any, apiVersion: any): boolean {
         }
     }
     return false;
-};
+}

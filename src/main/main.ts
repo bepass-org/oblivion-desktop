@@ -12,6 +12,7 @@ import {
     BrowserWindowConstructorOptions,
     Event,
     NativeImage,
+    Notification,
     MenuItemConstructorOptions,
     dialog
 } from 'electron';
@@ -98,6 +99,7 @@ interface WindowState {
     proxyMode: string | null;
     appLang: ReturnType<typeof getTranslate>;
     isFirstRun: boolean;
+    updateNotification: Notification | undefined;
     isCheckingForUpdates: boolean;
     checkForUpdatesIntervalId: NodeJS.Timeout | number | undefined;
     hasNewUpdate: boolean;
@@ -112,6 +114,7 @@ class OblivionDesktop {
         proxyMode: null,
         appLang: getTranslate('en'),
         isFirstRun: false,
+        updateNotification: undefined,
         isCheckingForUpdates: false,
         checkForUpdatesIntervalId: undefined,
         hasNewUpdate: false
@@ -139,7 +142,7 @@ class OblivionDesktop {
         await this.setupInitialConfiguration();
         this.setupIpcEvents();
         this.setupAppEvents();
-        this.setupCheckForUpdatesInterval();
+        this.setupCheckForUpdates();
         //this.handleShutdown();
     }
 
@@ -478,26 +481,36 @@ class OblivionDesktop {
     }
 
     private async checkForUpdates(downloadUpdate?: boolean) {
+        this.state.updateNotification?.show();
         if (isDev() || this.state.isCheckingForUpdates) return;
         try {
             this.state.isCheckingForUpdates = true;
             const betaRelease = await settings.get('betaRelease');
-            const isBetaVersionChecking = typeof betaRelease == 'undefined' ? defaultSettings.betaRelease : betaRelease;
+            const isBetaVersionChecking =
+                typeof betaRelease == 'undefined' ? defaultSettings.betaRelease : betaRelease;
 
             const response = await fetch(
                 `https://api.github.com/repos/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases${isBetaVersionChecking ? '' : '/latest'}`
             );
             if (response.ok) {
                 const data = await response.json();
-                const latestVersion = String(isBetaVersionChecking ? data?.[0]?.tag_name : data?.tag_name);
-                if (latestVersion && versionComparison(String(packageJsonData?.version), latestVersion)) {
+                const latestVersion = String(
+                    isBetaVersionChecking ? data?.[0]?.tag_name : data?.tag_name
+                );
+                if (
+                    latestVersion &&
+                    versionComparison(String(packageJsonData?.version), latestVersion)
+                ) {
+                    if (!this.state.hasNewUpdate) this.state.updateNotification?.show();
                     this.state.hasNewUpdate = true;
                     clearInterval(this.state.checkForUpdatesIntervalId);
                     customEvent.emit('tray-icon', this.state.connectionStatus);
                     this.state.mainWindow?.webContents.send('new-update');
                     if (!downloadUpdate) return;
                     if (!isWindows) {
-                        shell.openExternal(`https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/${latestVersion}#download`);
+                        shell.openExternal(
+                            `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/${latestVersion}#download`
+                        );
                         return;
                     }
                     try {
@@ -548,9 +561,14 @@ class OblivionDesktop {
                                         log.info(`✅ Updater copied successfully: ${updaterPath}`);
                                         try {
                                             fs.chmodSync(updaterPath, 0o755);
-                                            log.info('✅ Executable permissions applied to updater.');
+                                            log.info(
+                                                '✅ Executable permissions applied to updater.'
+                                            );
                                         } catch (chmodErr) {
-                                            log.warn('⚠️ Failed to set executable permissions:', chmodErr);
+                                            log.warn(
+                                                '⚠️ Failed to set executable permissions:',
+                                                chmodErr
+                                            );
                                         }
                                         fs.rm(downloadedPath, { force: true }, (unlinkErr) => {
                                             if (unlinkErr) {
@@ -584,7 +602,15 @@ class OblivionDesktop {
         }
     }
 
-    private setupCheckForUpdatesInterval(): void {
+    private setupCheckForUpdates(): void {
+        this.state.updateNotification = new Notification({
+            title: APP_TITLE,
+            body: this.state.appLang.toast.new_update_notification,
+            icon: this.getAssetPath('img/status/badge/connected-system.png')
+        });
+        this.state.updateNotification.on('click', () => {
+            this.checkForUpdates(true);
+        });
         clearInterval(this.state.checkForUpdatesIntervalId);
         if (this.state.hasNewUpdate) return;
         this.state.checkForUpdatesIntervalId = setInterval(
@@ -639,7 +665,9 @@ class OblivionDesktop {
             this.updateTrayMenu();
         });
 
-        ipcMain.on('check-update', async (_event, downloadUpdate?: boolean) => this.checkForUpdates(downloadUpdate));
+        ipcMain.on('check-update', async (_event, downloadUpdate?: boolean) =>
+            this.checkForUpdates(downloadUpdate)
+        );
     }
 
     private async downloadUpdate(
@@ -813,10 +841,7 @@ class OblivionDesktop {
             this.state.appIcon = new Tray(trayIcon);
             this.state.appIcon.setToolTip(APP_TITLE);
             this.state.appIcon.on('click', () => {
-                if (this.state.hasNewUpdate) {
-                    this.state.hasNewUpdate = false;
-                    customEvent.emit('tray-icon', this.state.connectionStatus);
-                }
+                customEvent.emit('tray-icon', this.state.connectionStatus);
                 this.redirectTo('');
             });
             /*this.state.appIcon.on('right-click', () => {

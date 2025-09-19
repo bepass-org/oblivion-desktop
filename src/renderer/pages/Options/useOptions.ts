@@ -165,7 +165,7 @@ const useOptions = () => {
     const onClickBetaReleaseButton = useCallback(async () => {
         setBetaRelease(!betaRelease);
         await settings.set('betaRelease', !betaRelease);
-        ipcRenderer.sendMessage("check-update");
+        ipcRenderer.sendMessage('check-update');
     }, [betaRelease]);
 
     const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);
