@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import Drawer from 'react-modern-drawer';
 import appIco from '../../../../assets/oblivion.png';
 import { Language } from '../../../localization/type';
+import { ipcRenderer } from '../../lib/utils';
 
 interface LandingDrawerProps {
     appLang: Language;
@@ -88,16 +89,15 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                         </Link>
                     </li>
                     <li className='divider' />
-                    <li className={hasNewUpdate ? '' : 'hidden'} role='presentation'>
+                    <li role='presentation'>
                         <a
-                            href={`https://github.com/bepass-org/oblivion-desktop/releases${betaRelease ? '' : '/latest'}#download`}
-                            target='_blank'
-                            rel='noreferrer'
-                            role='menuitem'
+                            onClick={() => {
+                                ipcRenderer.sendMessage('check-update', true);
+                            }}
                         >
                             <i className='material-icons'>&#xe923;</i>
                             <span>{appLang?.home?.drawer_update}</span>
-                            <div className='label label-warning label-xs'>
+                            <div className={hasNewUpdate ? 'label label-warning label-xs' : 'hidden'}>
                                 {appLang?.home?.drawer_update_label}
                             </div>
                         </a>
