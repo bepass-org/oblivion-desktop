@@ -42,6 +42,7 @@ const persian: Language = {
         config_added: 'کانفیگ به درستی اضافه شده و برای استفاده از آن باید بر روی اتصال بزنید.',
         profile_added: 'اندپوینت به درستی به پروفایل اضافه شد.',
         endpoint_added: 'اندپوینت به درستی جایگزین شد.',
+        new_update_notification: 'نسخهٔ جدیدی در دسترس است',
         new_update: 'نسخه جدیدی از برنامه در دسترس است. آن‌را دریافت و آماده نصب کنم؟',
         exit_pending:
             'برنامه درحال تکمیل فرایند خروج خود می‌باشد؛ برای اجرای مجدد آن کمی صبر کنید.',
@@ -146,8 +147,6 @@ const persian: Language = {
         singbox_discord_bypass: 'دیسکورد',
         singbox_discord_bypass_desc: 'دورزدن فیلترینگ دیسکورد',
         more_duties: 'وظایف',
-        check_for_updates: "برسی بروزرسانی ها",
-        check_for_updates_desc: "اطلاع از بروزرسانی ها و قابلیت های جدید",
         beta_release: 'بروزرسانی بتا',
         beta_release_desc: 'اطلاع از نسخه‌های پیش‌ازانتشار'
     },

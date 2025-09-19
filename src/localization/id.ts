@@ -44,6 +44,7 @@ const indonesia: Language = {
             'Konfigurasi telah berhasil ditambahkan, dan untuk menggunakannya, Anda harus mengklik koneksi.',
         profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.',
         endpoint_added: 'Endpoint berhasil diganti.',
+        new_update_notification: 'Versi baru tersedia',
         new_update:
             'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?',
         exit_pending:
@@ -148,8 +149,6 @@ const indonesia: Language = {
         singbox_discord_bypass: 'Membuka Blokir Discord',
         singbox_discord_bypass_desc: 'Melewati pemblokiran Discord',
         more_duties: 'Tugas lebih',
-        check_for_updates: "Periksa Pembaruan",
-        check_for_updates_desc: "Tetap terinformasi tentang pembaruan dan fitur baru",
         beta_release: 'Pembaruan Beta',
         beta_release_desc: 'Tetap terinformasi tentang versi pra-rilis'
     },

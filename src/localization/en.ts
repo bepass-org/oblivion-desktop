@@ -43,6 +43,7 @@ const english: Language = {
             'The configuration has been successfully added, and to use it, you must click on the connection.',
         profile_added: 'The endpoint has been successfully added to the profile.',
         endpoint_added: 'The endpoint was successfully replaced.',
+        new_update_notification: 'A new version is available',
         new_update:
             'A new version of the app is available. Would you like to download and prepare it for installation?',
         exit_pending:
@@ -147,8 +148,6 @@ const english: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Bypass Discord filtering',
         more_duties: 'Duties',
-        check_for_updates: "Check For Updates",
-        check_for_updates_desc: "Stay informed about new updates and features",
         beta_release: 'Beta Update',
         beta_release_desc: 'Stay informed about pre-release versions'
     },

@@ -43,6 +43,7 @@ const russian: Language = {
             'Конфигурация успешно добавлена, и для ее использования вам нужно нажать на подключение.',
         profile_added: 'Точка доступа успешно добавлена в профиль.',
         endpoint_added: 'Конечная точка успешно заменена.',
+        new_update_notification: 'Доступна новая версия',
         new_update:
             'Доступна новая версия приложения. Хотите скачать и подготовить её к установке?',
         exit_pending:
@@ -148,8 +149,6 @@ const russian: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Обход фильтрации Discord',
         more_duties: 'Дополнительные обязанности',
-        check_for_updates: "Проверить обновления",
-        check_for_updates_desc: "Будьте в курсе новых обновлений и функций",
         beta_release: 'Бета-обновление',
         beta_release_desc: 'Будьте в курсе предварительных версий'
     },

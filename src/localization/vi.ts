@@ -43,6 +43,7 @@ const vietnamese: Language = {
             'Cấu hình đã được thêm thành công, và để sử dụng nó, bạn phải nhấp vào kết nối.',
         profile_added: 'Điểm cuối đã được thêm thành công vào hồ sơ.',
         endpoint_added: 'Điểm cuối đã được thay thế thành công.',
+        new_update_notification: 'Phiên bản mới đã có sẵn',
         new_update:
             'Một phiên bản mới của ứng dụng có sẵn. Bạn có muốn tải xuống và chuẩn bị cài đặt không?',
         exit_pending:
@@ -148,8 +149,6 @@ const vietnamese: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Vượt qua bộ lọc Discord',
         more_duties: 'Nhiệm vụ thêm',
-        check_for_updates: "Kiểm tra cập nhật",
-        check_for_updates_desc: "Luôn cập nhật về các bản cập nhật và tính năng mới",
         beta_release: 'Cập nhật Beta',
         beta_release_desc: 'Cập nhật thông tin về các phiên bản trước khi phát hành'
     },

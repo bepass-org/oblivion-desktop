@@ -43,6 +43,7 @@ const brazilianPortuguese: Language = {
             'A configuração foi adicionada com sucesso, e para usá-la, você deve clicar na conexão.',
         profile_added: 'O ponto final foi adicionado com sucesso ao perfil.',
         endpoint_added: 'O endpoint foi substituído com sucesso.',
+        new_update_notification: 'Uma nova versão está disponível',
         new_update:
             'Uma nova versão do aplicativo está disponível. Você gostaria de baixá-la e prepará-la para instalação?',
         exit_pending:
@@ -147,8 +148,6 @@ const brazilianPortuguese: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Ignorar o bloqueio do Discord',
         more_duties: 'Mais deveres',
-        check_for_updates: "Verificar atualizações",
-        check_for_updates_desc: "Fique informado sobre novas atualizações e recursos",
         beta_release: 'Atualização Beta',
         beta_release_desc: 'Fique informado sobre versões pré-lançamento'
     },

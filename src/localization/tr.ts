@@ -44,6 +44,7 @@ const turkish: Language = {
             'Yapılandırma başarıyla eklendi ve kullanmak için bağlantıya tıklamanız gerekiyor.',
         profile_added: 'Uç nokta başarıyla profile eklendi.',
         endpoint_added: 'Uç nokta başarıyla değiştirildi.',
+        new_update_notification: 'Yeni bir sürüm mevcut',
         new_update:
             'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?',
         exit_pending:
@@ -148,8 +149,6 @@ const turkish: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Discord engellemesini aşma',
         more_duties: 'Daha fazla görev',
-        check_for_updates: "Güncellemeleri Kontrol Et",
-        check_for_updates_desc: "Yeni güncellemeler ve özelliklerden haberdar olun",
         beta_release: 'Beta Güncellemesi',
         beta_release_desc: 'Önizleme sürümleri hakkında bilgi sahibi olun'
     },

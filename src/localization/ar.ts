@@ -42,6 +42,7 @@ const arabic: Language = {
         config_added: 'تم إضافة الإعداد بنجاح، وللاستفادة منه يجب عليك النقر على الاتصال.',
         profile_added: 'تمت إضافة نقطة النهاية بنجاح إلى الملف الشخصي.',
         endpoint_added: 'تم استبدال نقطة النهاية بنجاح.',
+        new_update_notification: 'إصدار جديد متاح',
         new_update: 'إصدار جديد من التطبيق متاح. هل ترغب في تنزيله وتجهيزه للتثبيت؟',
         exit_pending: 'التطبيق يُنهي عملية الإغلاق؛ يرجى الانتظار قليلاً قبل تشغيله مرة أخرى.',
         help_btn: 'مساعدة'
@@ -144,8 +145,6 @@ const arabic: Language = {
         singbox_discord_bypass: 'ديزكورد',
         singbox_discord_bypass_desc: 'تجاوز حجب ديزكورد',
         more_duties: 'المزيد من الواجبات',
-        check_for_updates: "التحقق من التحديثات",
-        check_for_updates_desc: "ابقَ على اطلاع بالتحديثات والميزات الجديدة",
         beta_release: 'تحديث النسخة التجريبية',
         beta_release_desc: 'ابق على اطلاع حول الإصدارات قبل الإصدار'
     },

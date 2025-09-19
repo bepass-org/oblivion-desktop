@@ -42,6 +42,7 @@ const myanmar: Language = {
         config_added: 'အပ်ဒိတ် ပြောင်းလဲမှု ပြုလုပ်ခဲ့ပါသည်။',
         profile_added: 'နောက်ဆုံး လုပ်ဆောင်ထားသော End-point ၏ profile ဖွင့်နေပါသည်။',
         endpoint_added: 'Endpoint ရှင်းလင်းတယ်',
+        new_update_notification: 'အသစ်သောဗားရှင်းအသစ်ရနိုင်ပါပြီ',
         new_update: 'အပ်ဒိတ်အသစ်ရနိုင်ပါသည်။ ဒေါင်းလုပ်ပြီး ထည့်သွင်းရန် ပြင်ဆင်လိုပါသလား။',
         exit_pending:
             'အက်ပ်သည် ထွက်ခွာခြင်းလုပ်ငန်းစဉ်ကို ပြီးဆုံးနေသည်။ ထပ်မံဖွင့်ရန် မပြုမီ ခဏစောင့်ပေးပါ။',
@@ -147,8 +148,6 @@ const myanmar: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'Discord ဖျက်တားမှုကိုကျော်လွှားခြင်း',
         more_duties: 'ပိုမိုတာဝန်များ',
-        check_for_updates: "အပ်ဒိတ်များကို စစ်ဆေးပါ",
-        check_for_updates_desc: "အပ်ဒိတ်အသစ်များနှင့် အင်္ဂါရပ်အသစ်များကို အမြဲသိရှိထားပါ",
         beta_release: 'ဘီတာအပ်ဒိတ်',
         beta_release_desc: 'မပြန်ပေးမီဗားရှင်းများကိုအသိပေးချက်ရယူပါ'
     },

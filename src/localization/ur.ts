@@ -43,6 +43,7 @@ const urdu: Language = {
             'کنفیگریشن کامیابی سے شامل کر دی گئی ہے، اور اسے استعمال کرنے کے لیے آپ کو کنکشن پر کلک کرنا ہوگا۔',
         profile_added: 'اینڈپوائنٹ کامیابی سے پروفائل میں شامل کیا گیا۔',
         endpoint_added: 'اینڈ پوائنٹ کو کامیابی کے ساتھ تبدیل کر دیا گیا۔',
+        new_update_notification: 'نیا ورژن دستیاب ہے',
         new_update:
             'ایپ کا نیا ورژن دستیاب ہے۔ کیا آپ اسے ڈاؤن لوڈ کرکے انسٹالیشن کے لیے تیار کرنا چاہیں گے؟',
         exit_pending:
@@ -148,8 +149,6 @@ const urdu: Language = {
         singbox_discord_bypass: 'ڈسکارڈ',
         singbox_discord_bypass_desc: 'ڈسکارڈ کی فلٹرنگ کو عبور کریں',
         more_duties: 'مزید ذمہ داریاں',
-        check_for_updates: "اپ ڈیٹس چیک کریں",
-        check_for_updates_desc: "نئی اپ ڈیٹس اور فیچرز سے باخبر رہیں",
         beta_release: 'بیٹا اپ ڈیٹ',
         beta_release_desc: 'پری ریلیز ورژنز کے بارے میں آگاہ رہیں'
     },

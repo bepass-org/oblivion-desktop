@@ -42,6 +42,7 @@ const chinese: Language = {
         config_added: '配置已成功添加，要使用它，您必须点击连接。',
         profile_added: '端点已成功添加到个人资料中。',
         endpoint_added: '终端已成功替换。',
+        new_update_notification: '有新版本可用',
         new_update: '有新版本的应用可用。您想下载并准备安装吗？',
         exit_pending: '应用程序正在完成退出过程；请稍等片刻后再重新启动。',
         help_btn: '帮助'
@@ -144,8 +145,6 @@ const chinese: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: '绕过 Discord 过滤',
         more_duties: '更多职责',
-        check_for_updates: "检查更新",
-        check_for_updates_desc: "及时了解新的更新和功能",
         beta_release: 'Beta 更新',
         beta_release_desc: '了解预发布版本'
     },

@@ -41,6 +41,7 @@ export interface Toast {
     config_added: string;
     profile_added: string;
     endpoint_added: string;
+    new_update_notification: string;
     new_update: string;
     exit_pending: string;
     help_btn: string;
@@ -144,8 +145,6 @@ export interface Settings {
     singbox_discord_bypass: string;
     singbox_discord_bypass_desc: string;
     more_duties: string;
-    check_for_updates: string;
-    check_for_updates_desc: string;
     beta_release: string;
     beta_release_desc: string;
 }

@@ -42,6 +42,7 @@ const amharic: Language = {
         config_added: 'እንደምንም ቅኝት ሰጠውም!',
         profile_added: 'አዲስ ነባሪ አውታረ ስር ያሳዩ!',
         endpoint_added: 'ተስተካክለት አሳዩ፣ ያስተካከልል።',
+        new_update_notification: 'አዲስ ስሪት ተዘጋጅቷል',
         new_update: 'የመተግበሪያው አዲስ ስሪት ዝግጁ ነው። እንዲያው አውርዶ ለመግጠም ዝግጁ ይደረጋል?',
         exit_pending: 'መተግበሪያው የመውጣት ሂደቱን እየጨረሰ ነው፤ እባክዎ እንደገና ከመጀመሩ በፊት ጥቂት ጊዜ ይጠብቁ።',
         help_btn: 'እርዳታ'
@@ -144,8 +145,6 @@ const amharic: Language = {
         singbox_discord_bypass: 'Discord',
         singbox_discord_bypass_desc: 'የ Discord መከላከያን መዝገብ ማስፈታት',
         more_duties: 'ተጨማሪ ዕርምጃዎች',
-        check_for_updates: "አዘምኖችን ያረጋግጡ",
-        check_for_updates_desc: "ስለ አዲስ አዘምኖች እና ባህሪያት ያውቁ",
         beta_release: 'እባብ እንቅስቃሴ',
         beta_release_desc: 'ስለ እንቅስቃሴ ከፊት በፊት ማህበረሰብ መረጃ ማግኘት'
     },
