@@ -13,7 +13,6 @@ import {
     loadingToast,
     stopLoadingToast
 } from '../../lib/toasts';
-import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
@@ -197,32 +196,6 @@ const useLanding = () => {
         getIpLocation();
     };
 
-    const checkForUpdates = async () => {
-        const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
-        if (typeIsNotUndefined(canCheckNewVer) && canCheckNewVer === 'false') return;
-        try {
-            const comparison = await checkNewUpdate(packageJsonData?.version);
-            setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
-            localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
-            localStorage.setItem(
-                'OBLIVION_NEWUPDATE',
-                typeof comparison === 'boolean' ? (comparison ? 'true' : 'false') : 'false'
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const resetCheckUpdateFlag = () => {
-        return setInterval(
-            () => {
-                localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
-                setTimeout(checkForUpdates, 10000);
-            },
-            3 * 60 * 60 * 1000
-        );
-    };
-
     useEffect(() => {
         //ipcRenderer.clean();
 
@@ -360,6 +333,10 @@ const useLanding = () => {
             }
         });
 
+        ipcRenderer.on('new-update', (args: any) => {
+            setHasNewUpdate(true);
+        });
+
         ipcRenderer.on('download-progress', (args: any) => {
             setDownloadProgress(args);
         });
@@ -396,18 +373,12 @@ const useLanding = () => {
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
 
-        const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
-        setHasNewUpdate(typeIsNotUndefined(hasUpdate) && hasUpdate === 'true' ? true : false);
-        if (!isLoading) {
-            setTimeout(checkForUpdates, 10000);
-        }
-        const resetCheckUpdateIntervalId = resetCheckUpdateFlag();
+        if (!isLoading) ipcRenderer.sendMessage("check-update");
 
         return () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
-            clearInterval(resetCheckUpdateIntervalId);
         };
     }, []);
 
@@ -487,7 +458,7 @@ const useLanding = () => {
             return;
         }
 
-        setTimeout(checkForUpdates, 10000);
+        ipcRenderer.sendMessage("check-update");
 
         if (ipInfo?.countryCode) {
             setStatusText(appLang?.status?.connected_confirm);

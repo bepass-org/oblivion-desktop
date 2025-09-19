@@ -162,10 +162,10 @@ const useOptions = () => {
 
     const onKeyDownRestore = useButtonKeyDown(onClickRestore);
 
-    const onClickBetaReleaseButton = useCallback(() => {
+    const onClickBetaReleaseButton = useCallback(async () => {
         setBetaRelease(!betaRelease);
-        settings.set('betaRelease', !betaRelease);
-        localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
+        await settings.set('betaRelease', !betaRelease);
+        ipcRenderer.sendMessage("check-update");
     }, [betaRelease]);
 
     const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);
