@@ -43,8 +43,10 @@ const brazilianPortuguese: Language = {
             'A configuração foi adicionada com sucesso, e para usá-la, você deve clicar na conexão.',
         profile_added: 'O ponto final foi adicionado com sucesso ao perfil.',
         endpoint_added: 'O endpoint foi substituído com sucesso.',
+        new_update_notification: 'Uma nova versão está disponível',
         new_update:
             'Uma nova versão do aplicativo está disponível. Você gostaria de baixá-la e prepará-la para instalação?',
+        up_to_date: 'Você está usando a versão mais recente do aplicativo',
         exit_pending:
             'A aplicação está a concluir o processo de saída; por favor, aguarde um momento antes de a iniciar novamente.',
         help_btn: 'Ajuda'
@@ -191,7 +193,9 @@ const brazilianPortuguese: Language = {
         custom_dns_title: 'DNS personalizado',
         confirm: 'Confirmo',
         update: 'Atualizar',
-        cancel: 'Cancelar'
+        cancel: 'Cancelar',
+        yes: 'Sim',
+        no: 'Não'
     },
     log: {
         title: 'Log do Aplicativo',

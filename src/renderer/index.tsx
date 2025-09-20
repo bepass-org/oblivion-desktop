@@ -24,3 +24,4 @@ setTimeout(() => {
 
 // ! this needs to be executed for it to work so make sure you put in somewhere that gets executed (like useEffect)
 ipcRenderer.sendMessage('tray-menu');
+ipcRenderer.sendMessage('check-update');

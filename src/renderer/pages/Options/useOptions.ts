@@ -14,9 +14,12 @@ import {
 import useTranslate from '../../../localization/useTranslate';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 import { withDefault } from '../../lib/withDefault';
+import { useStore } from '../../store';
 
 const useOptions = () => {
     useGoBackOnEscape();
+
+    const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate } = useStore();
 
     const [theme, setTheme] = useState<string>();
     const [lang, setLang] = useState<string>('');
@@ -162,10 +165,13 @@ const useOptions = () => {
 
     const onKeyDownRestore = useButtonKeyDown(onClickRestore);
 
-    const onClickBetaReleaseButton = useCallback(() => {
+    const onClickBetaReleaseButton = useCallback(async () => {
         setBetaRelease(!betaRelease);
-        settings.set('betaRelease', !betaRelease);
-        localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
+        await settings.set('betaRelease', !betaRelease);
+        if (betaRelease != hasNewUpdate && !isCheckingForUpdates) {
+            setIsCheckingForUpdates(true);
+            ipcRenderer.sendMessage('check-update');
+        }
     }, [betaRelease]);
 
     const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);

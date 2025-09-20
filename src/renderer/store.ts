@@ -6,6 +6,10 @@ export interface IStore {
     setIsConnected: (bool: boolean) => void;
     isLoading: boolean;
     setIsLoading: (bool: boolean) => void;
+    isCheckingForUpdates: boolean;
+    setIsCheckingForUpdates: (bool: boolean) => void;
+    hasNewUpdate: boolean;
+    setHasNewUpdate: (bool: boolean) => void;
     statusText: string;
     setStatusText: (status: string) => void;
     proxyStatus: string;
@@ -18,6 +22,10 @@ export const useStore = create<IStore>((set) => ({
     setIsConnected: (bool: boolean) => set(() => ({ isConnected: bool })),
     isLoading: false,
     setIsLoading: (bool: boolean) => set(() => ({ isLoading: bool })),
+    isCheckingForUpdates: false,
+    setIsCheckingForUpdates: (bool: boolean) => set(() => ({ isCheckingForUpdates: bool })),
+    hasNewUpdate: false,
+    setHasNewUpdate: (bool: boolean) => set(() => ({ hasNewUpdate: bool })),
     statusText: appLang.status.disconnected,
     setStatusText: (status: string) => set(() => ({ statusText: status })),
     proxyStatus: '',

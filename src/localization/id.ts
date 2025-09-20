@@ -44,8 +44,10 @@ const indonesia: Language = {
             'Konfigurasi telah berhasil ditambahkan, dan untuk menggunakannya, Anda harus mengklik koneksi.',
         profile_added: 'Titik akhir telah berhasil ditambahkan ke profil.',
         endpoint_added: 'Endpoint berhasil diganti.',
+        new_update_notification: 'Versi baru tersedia',
         new_update:
             'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?',
+        up_to_date: 'Anda sedang menggunakan versi terbaru aplikasi ini',
         exit_pending:
             'Aplikasi sedang menyelesaikan proses keluar; harap tunggu sebentar sebelum membukanya kembali.',
         help_btn: 'Bantuan'
@@ -192,7 +194,9 @@ const indonesia: Language = {
         custom_dns_title: 'DNS Kustom',
         confirm: 'Saya mengerti',
         update: 'Perbarui',
-        cancel: 'Batalkan'
+        cancel: 'Batalkan',
+        yes: 'Ya',
+        no: 'Tidak'
     },
     log: {
         title: 'Log Aplikasi',
