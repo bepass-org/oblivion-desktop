@@ -75,6 +75,7 @@ const useLanding = () => {
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
+    const [isCheckingForUpdates, setIsCheckingForUpdates] = useState<boolean>(false);
     const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
     const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
@@ -334,6 +335,7 @@ const useLanding = () => {
         });
 
         ipcRenderer.on('new-update', (args: any) => {
+            setIsCheckingForUpdates(false);
             setHasNewUpdate(true);
         });
 
@@ -520,6 +522,8 @@ const useLanding = () => {
         statusText,
         ipInfo,
         ping,
+        setIsCheckingForUpdates,
+        isCheckingForUpdates,
         hasNewUpdate,
         drawerIsOpen,
         lang,

@@ -10,6 +10,8 @@ interface LandingDrawerProps {
     appLang: Language;
     drawerIsOpen: boolean;
     lang?: string;
+    isCheckingForUpdates: boolean;
+    setIsCheckingForUpdates: (value: boolean) => void;
     hasNewUpdate: boolean;
     toggleDrawer: () => void;
     appVersion: string;
@@ -20,6 +22,8 @@ interface LandingDrawerProps {
 const LandingDrawer: FC<LandingDrawerProps> = ({
     appLang,
     drawerIsOpen,
+    isCheckingForUpdates,
+    setIsCheckingForUpdates,
     hasNewUpdate,
     lang,
     toggleDrawer,
@@ -92,12 +96,15 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                     <li role='presentation'>
                         <a
                             onClick={() => {
+                                if (isCheckingForUpdates) return;
+                                setIsCheckingForUpdates(true);
                                 ipcRenderer.sendMessage('check-update', true);
                             }}
                         >
                             <i className='material-icons'>&#xe923;</i>
                             <span>{appLang?.home?.drawer_update}</span>
-                            <div className={hasNewUpdate ? 'label label-warning label-xs' : 'hidden'}>
+                            <div className={isCheckingForUpdates ? 'loader' : 'hidden'} />
+                            <div className={isCheckingForUpdates && hasNewUpdate ? 'label label-warning label-xs' : 'hidden'}>
                                 {appLang?.home?.drawer_update_label}
                             </div>
                         </a>

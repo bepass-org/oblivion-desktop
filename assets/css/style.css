@@ -2121,6 +2121,60 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     float: right;
 }
 
+.drawer .loader {
+    float: left;
+    position: relative;
+    width: 8px;
+    height: 8px;
+    margin: 6px;
+    border-radius: 4px;
+    background-color: #ffa200;
+    color: #ffa200;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+
+.drawer .loader::before,
+.drawer .loader::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.drawer .loader::before {
+    left: -12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #ffa200;
+    color: #ffa200;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 0s;
+}
+
+.drawer .loader::after {
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #ffa200;
+    color: #ffa200;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
+    0% {
+        background-color: #ffa200;
+    }
+
+    50%,
+    100% {
+        background-color: #ffa20033;
+    }
+}
+
 .drawer .appVersion {
     float: right;
     width: 100%;

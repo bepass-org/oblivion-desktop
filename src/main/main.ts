@@ -840,7 +840,6 @@ class OblivionDesktop {
             this.state.appIcon = new Tray(trayIcon);
             this.state.appIcon.setToolTip(APP_TITLE);
             this.state.appIcon.on('click', () => {
-                customEvent.emit('tray-icon', this.state.connectionStatus);
                 this.redirectTo('');
             });
             /*this.state.appIcon.on('right-click', () => {
