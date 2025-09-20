@@ -46,6 +46,7 @@ const vietnamese: Language = {
         new_update_notification: 'Phiên bản mới đã có sẵn',
         new_update:
             'Một phiên bản mới của ứng dụng có sẵn. Bạn có muốn tải xuống và chuẩn bị cài đặt không?',
+        up_to_date: 'Bạn đang dùng phiên bản mới nhất của ứng dụng',
         exit_pending:
             'Ứng dụng đang hoàn tất quá trình thoát; vui lòng đợi một chút trước khi khởi chạy lại.',
         help_btn: 'Trợ giúp'

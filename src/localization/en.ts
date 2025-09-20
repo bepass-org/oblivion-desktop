@@ -46,6 +46,7 @@ const english: Language = {
         new_update_notification: 'A new version is available',
         new_update:
             'A new version of the app is available. Would you like to download and prepare it for installation?',
+        up_to_date: "You're running the newest version of the app",
         exit_pending:
             'The application is completing its exit process; please wait a moment before launching it again.',
         help_btn: 'Help'

@@ -506,7 +506,7 @@ class OblivionDesktop {
                     this.resetCheckForUpdatesInterval();
                     customEvent.emit('tray-icon', this.state.connectionStatus);
                 }
-                if (hasNewUpdate) {
+                if (this.state.hasNewUpdate) {
                     if (hasNewUpdateState) this.state.updateNotification?.show();
                     if (!downloadUpdate) return;
                     if (!isWindows) {
@@ -591,6 +591,13 @@ class OblivionDesktop {
                     } catch (error) {
                         log.error('Failure in update process:', error);
                     }
+                } else if (downloadUpdate) {
+                    await dialog.showMessageBox({
+                        type: 'info',
+                        title: APP_TITLE,
+                        defaultId: 0,
+                        message: this.state.appLang.toast.up_to_date
+                    });
                 }
             } else {
                 console.log('Failed to fetch release version:', response.statusText);

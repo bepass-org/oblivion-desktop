@@ -47,6 +47,7 @@ const indonesia: Language = {
         new_update_notification: 'Versi baru tersedia',
         new_update:
             'Versi baru aplikasi tersedia. Apakah Anda ingin mengunduh dan menyiapkannya untuk instalasi?',
+        up_to_date: 'Anda sedang menggunakan versi terbaru aplikasi ini',
         exit_pending:
             'Aplikasi sedang menyelesaikan proses keluar; harap tunggu sebentar sebelum membukanya kembali.',
         help_btn: 'Bantuan'

@@ -44,6 +44,7 @@ const amharic: Language = {
         endpoint_added: 'ተስተካክለት አሳዩ፣ ያስተካከልል።',
         new_update_notification: 'አዲስ ስሪት ተዘጋጅቷል',
         new_update: 'የመተግበሪያው አዲስ ስሪት ዝግጁ ነው። እንዲያው አውርዶ ለመግጠም ዝግጁ ይደረጋል?',
+        up_to_date: 'እትሙ የመተግበሪያውን አዲስ ስሪት እየጠቀሙ ነው',
         exit_pending: 'መተግበሪያው የመውጣት ሂደቱን እየጨረሰ ነው፤ እባክዎ እንደገና ከመጀመሩ በፊት ጥቂት ጊዜ ይጠብቁ።',
         help_btn: 'እርዳታ'
     },

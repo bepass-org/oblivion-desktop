@@ -44,6 +44,7 @@ const chinese: Language = {
         endpoint_added: '终端已成功替换。',
         new_update_notification: '有新版本可用',
         new_update: '有新版本的应用可用。您想下载并准备安装吗？',
+        up_to_date: '您正在使用最新版本的应用程序',
         exit_pending: '应用程序正在完成退出过程；请稍等片刻后再重新启动。',
         help_btn: '帮助'
     },

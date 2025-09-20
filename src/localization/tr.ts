@@ -47,6 +47,7 @@ const turkish: Language = {
         new_update_notification: 'Yeni bir sürüm mevcut',
         new_update:
             'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?',
+        up_to_date: 'Uygulamanın en yeni sürümünü kullanıyorsunuz',
         exit_pending:
             'Uygulama çıkış sürecini tamamlıyor; lütfen tekrar başlatmadan önce bir süre bekleyin.',
         help_btn: 'Yardım'
