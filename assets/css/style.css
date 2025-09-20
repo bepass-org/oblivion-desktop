@@ -2134,9 +2134,13 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     animation-delay: 0.5s;
 }
 
+[dir='ltr'] .drawer .loader {
+    float: right;
+}
+
 .drawer .loader::before,
 .drawer .loader::after {
-    content: "";
+    content: '';
     display: inline-block;
     position: absolute;
     top: 0;

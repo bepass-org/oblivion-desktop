@@ -104,7 +104,13 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                             <i className='material-icons'>&#xe923;</i>
                             <span>{appLang?.home?.drawer_update}</span>
                             <div className={isCheckingForUpdates ? 'loader' : 'hidden'} />
-                            <div className={isCheckingForUpdates && hasNewUpdate ? 'label label-warning label-xs' : 'hidden'}>
+                            <div
+                                className={
+                                    !isCheckingForUpdates && hasNewUpdate
+                                        ? 'label label-warning label-xs'
+                                        : 'hidden'
+                                }
+                            >
                                 {appLang?.home?.drawer_update_label}
                             </div>
                         </a>

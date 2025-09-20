@@ -52,6 +52,10 @@ const useLanding = () => {
         setIsConnected,
         isLoading,
         setIsLoading,
+        isCheckingForUpdates,
+        setIsCheckingForUpdates,
+        hasNewUpdate,
+        setHasNewUpdate,
         statusText,
         setStatusText,
         proxyStatus,
@@ -75,8 +79,6 @@ const useLanding = () => {
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
-    const [isCheckingForUpdates, setIsCheckingForUpdates] = useState<boolean>(false);
-    const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
     const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
         status: 'pending',
@@ -334,9 +336,9 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('new-update', (args: any) => {
+        ipcRenderer.on('new-update', (HasNewUpdate: any) => {
             setIsCheckingForUpdates(false);
-            setHasNewUpdate(true);
+            setHasNewUpdate(HasNewUpdate);
         });
 
         ipcRenderer.on('download-progress', (args: any) => {
@@ -374,8 +376,6 @@ const useLanding = () => {
         window.addEventListener('online', handleOnlineStatusChange);
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
-
-        if (!isLoading) ipcRenderer.sendMessage('check-update');
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -460,7 +460,7 @@ const useLanding = () => {
             return;
         }
 
-        ipcRenderer.sendMessage('check-update');
+        if (!hasNewUpdate && !isCheckingForUpdates) ipcRenderer.sendMessage('check-update');
 
         if (ipInfo?.countryCode) {
             setStatusText(appLang?.status?.connected_confirm);

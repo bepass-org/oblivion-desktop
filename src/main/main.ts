@@ -101,7 +101,7 @@ interface WindowState {
     isFirstRun: boolean;
     updateNotification: Notification | undefined;
     isCheckingForUpdates: boolean;
-    checkForUpdatesIntervalId: NodeJS.Timeout | number | undefined;
+    checkForUpdatesIntervalId: NodeJS.Timeout | undefined;
     hasNewUpdate: boolean;
 }
 
@@ -496,15 +496,18 @@ class OblivionDesktop {
                 const latestVersion = String(
                     isBetaVersionChecking ? data?.[0]?.tag_name : data?.tag_name
                 );
-                if (
-                    latestVersion &&
-                    versionComparison(String(packageJsonData?.version), latestVersion)
-                ) {
-                    if (!this.state.hasNewUpdate) this.state.updateNotification?.show();
-                    this.state.hasNewUpdate = true;
-                    clearInterval(this.state.checkForUpdatesIntervalId);
+                const hasNewUpdate =
+                    latestVersion != null &&
+                    versionComparison(String(packageJsonData?.version), latestVersion);
+                const hasNewUpdateState = hasNewUpdate != this.state.hasNewUpdate;
+                this.state.hasNewUpdate = hasNewUpdate;
+
+                if (hasNewUpdateState) {
+                    this.resetCheckForUpdatesInterval();
                     customEvent.emit('tray-icon', this.state.connectionStatus);
-                    this.state.mainWindow?.webContents.send('new-update');
+                }
+                if (hasNewUpdate) {
+                    if (hasNewUpdateState) this.state.updateNotification?.show();
                     if (!downloadUpdate) return;
                     if (!isWindows) {
                         shell.openExternal(
@@ -598,24 +601,30 @@ class OblivionDesktop {
             return false;
         } finally {
             this.state.isCheckingForUpdates = false;
+            this.state.mainWindow?.webContents.send('new-update', this.state.hasNewUpdate);
         }
+    }
+
+    private resetCheckForUpdatesInterval(): void {
+        clearInterval(this.state.checkForUpdatesIntervalId);
+        this.state.checkForUpdatesIntervalId = undefined;
+        if (this.state.hasNewUpdate) return;
+        this.state.checkForUpdatesIntervalId = setInterval(
+            this.checkForUpdates,
+            3 * 60 * 60 * 1_000
+        );
     }
 
     private setupCheckForUpdates(): void {
         this.state.updateNotification = new Notification({
             title: APP_TITLE,
             body: this.state.appLang.toast.new_update_notification,
-            icon: this.getAssetPath('img/status/badge/connected-system.png')
+            icon: this.getAssetPath('oblivion.png')
         });
         this.state.updateNotification.on('click', () => {
             this.checkForUpdates(true);
         });
-        clearInterval(this.state.checkForUpdatesIntervalId);
-        if (this.state.hasNewUpdate) return;
-        this.state.checkForUpdatesIntervalId = setInterval(
-            this.checkForUpdates,
-            3 * 60 * 60 * 1_000
-        );
+        this.resetCheckForUpdatesInterval();
     }
 
     private setupIpcEvents(): void {

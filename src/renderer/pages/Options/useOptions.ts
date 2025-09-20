@@ -14,9 +14,12 @@ import {
 import useTranslate from '../../../localization/useTranslate';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
 import { withDefault } from '../../lib/withDefault';
+import { useStore } from '../../store';
 
 const useOptions = () => {
     useGoBackOnEscape();
+
+    const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate } = useStore();
 
     const [theme, setTheme] = useState<string>();
     const [lang, setLang] = useState<string>('');
@@ -165,7 +168,10 @@ const useOptions = () => {
     const onClickBetaReleaseButton = useCallback(async () => {
         setBetaRelease(!betaRelease);
         await settings.set('betaRelease', !betaRelease);
-        ipcRenderer.sendMessage('check-update');
+        if (betaRelease != hasNewUpdate && !isCheckingForUpdates) {
+            setIsCheckingForUpdates(true);
+            ipcRenderer.sendMessage('check-update');
+        }
     }, [betaRelease]);
 
     const onKeyDownBetaReleaseButton = useButtonKeyDown(onClickBetaReleaseButton);
