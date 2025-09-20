@@ -189,8 +189,8 @@ const arabic: Language = {
         confirm: 'أؤكد',
         update: 'تحديث',
         cancel: 'إلغاء',
-        yes: "نعم",
-        no: "لا"
+        yes: 'نعم',
+        no: 'لا'
     },
     log: {
         title: 'سجل التطبيق',

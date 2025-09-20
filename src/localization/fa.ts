@@ -192,8 +192,8 @@ const persian: Language = {
         custom_dns_title: 'مقدار DNS',
         update: 'بروزرسانی',
         cancel: 'انصراف',
-        yes: "بله",
-        no: "خیر"
+        yes: 'بله',
+        no: 'خیر'
     },
     log: {
         title: 'لاگ برنامه',

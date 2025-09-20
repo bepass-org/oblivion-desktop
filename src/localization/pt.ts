@@ -193,8 +193,8 @@ const brazilianPortuguese: Language = {
         confirm: 'Confirmo',
         update: 'Atualizar',
         cancel: 'Cancelar',
-        yes: "Sim",
-        no: "Não"
+        yes: 'Sim',
+        no: 'Não'
     },
     log: {
         title: 'Log do Aplicativo',

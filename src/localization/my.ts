@@ -193,8 +193,8 @@ const myanmar: Language = {
         confirm: 'ကန့်သတ်ပါ',
         update: 'အပ်ဒိတ်',
         cancel: 'အနှိပ်ပါ',
-        yes: "ဟုတ်ပါတယ်",
-        no: "မဟုတ်ပါ"
+        yes: 'ဟုတ်ပါတယ်',
+        no: 'မဟုတ်ပါ'
     },
     log: {
         title: 'အက်ပ်မှတ်တမ်း',

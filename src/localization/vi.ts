@@ -194,8 +194,8 @@ const vietnamese: Language = {
         confirm: 'Tôi xác nhận',
         update: 'Cập nhật',
         cancel: 'Hủy',
-        yes: "Có",
-        no: "Không"
+        yes: 'Có',
+        no: 'Không'
     },
     log: {
         title: 'Nhật ký ứng dụng',

@@ -186,8 +186,8 @@ const chinese: Language = {
         confirm: '确认',
         update: '更新',
         cancel: '取消',
-        yes: "是",
-        no: "否"
+        yes: '是',
+        no: '否'
     },
     log: {
         title: '应用日志',

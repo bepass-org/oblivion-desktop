@@ -194,8 +194,8 @@ const indonesia: Language = {
         confirm: 'Saya mengerti',
         update: 'Perbarui',
         cancel: 'Batalkan',
-        yes: "Ya",
-        no: "Tidak"
+        yes: 'Ya',
+        no: 'Tidak'
     },
     log: {
         title: 'Log Aplikasi',

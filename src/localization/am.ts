@@ -185,8 +185,8 @@ const amharic: Language = {
         confirm: 'እባኮትን ይዘው',
         update: 'አዳዲስ ይደርሳሉ',
         cancel: 'ተመካከተ',
-        yes: "አዎን",
-        no: "አይ"
+        yes: 'አዎን',
+        no: 'አይ'
     },
     log: {
         title: 'አፕ ሎግ',

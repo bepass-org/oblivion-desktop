@@ -194,8 +194,8 @@ const russian: Language = {
         confirm: 'Подтверждаю',
         update: 'Обновить',
         cancel: 'Отмена',
-        yes: "Да",
-        no: "Нет"
+        yes: 'Да',
+        no: 'Нет'
     },
     log: {
         title: 'Журнал приложений',

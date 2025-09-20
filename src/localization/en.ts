@@ -193,8 +193,8 @@ const english: Language = {
         confirm: 'I confirm',
         update: 'Update',
         cancel: 'Cancel',
-        yes: "Yes",
-        no: "No"
+        yes: 'Yes',
+        no: 'No'
     },
     log: {
         title: 'App Log',

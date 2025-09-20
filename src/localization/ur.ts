@@ -194,8 +194,8 @@ const urdu: Language = {
         confirm: 'میں تصدیق کرتا ہوں',
         update: 'اپڈیٹ',
         cancel: 'منسوخ کریں',
-        yes: "جی ہاں",
-        no: "نہیں"
+        yes: 'جی ہاں',
+        no: 'نہیں'
     },
     log: {
         title: 'ایپ لاگ',

@@ -194,8 +194,8 @@ const turkish: Language = {
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
         cancel: 'İptal',
-        yes: "Evet",
-        no: "Hayır"
+        yes: 'Evet',
+        no: 'Hayır'
     },
     log: {
         title: 'Uygulama Günlüğü',

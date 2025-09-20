@@ -195,8 +195,8 @@ const spanish: Language = {
         confirm: 'Confirmo',
         update: 'Actualizar',
         cancel: 'Cancelar',
-        yes: "Sí",
-        no: "No"
+        yes: 'Sí',
+        no: 'No'
     },
     log: {
         title: 'Registro de la Aplicación',
