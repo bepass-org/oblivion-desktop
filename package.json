@@ -163,7 +163,7 @@
         "prettier": "^3.6.2",
         "react-refresh": "^0.17.0",
         "rimraf": "^6.0.1",
-        "sass": "^1.92.1",
+        "sass": "^1.93.0",
         "sass-loader": "^16.0.5",
         "style-loader": "^4.0.0",
         "terser-webpack-plugin": "^5.3.14",
