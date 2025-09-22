@@ -124,7 +124,7 @@
         "@types/electron": "^1.6.12",
         "@types/jest": "^30.0.0",
         "@types/lodash": "^4.17.20",
-        "@types/node": "^24.5.0",
+        "@types/node": "^24.5.2",
         "@types/react": "^19.1.13",
         "@types/react-dom": "^19.1.9",
         "@types/serve-handler": "^6.1.4",
