@@ -1930,7 +1930,6 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 }
 
 @media (min-width: 1050px) {
-    .navMenu,
     .tabs.inHome,
     .drawerOverlay {
         display: none !important;

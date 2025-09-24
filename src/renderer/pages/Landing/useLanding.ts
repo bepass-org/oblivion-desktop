@@ -338,7 +338,6 @@ const useLanding = () => {
 
         ipcRenderer.on('new-update', (HasNewUpdate: any) => {
             setIsCheckingForUpdates(false);
-            setDrawerIsOpen(false);
             setHasNewUpdate(HasNewUpdate);
         });
 
