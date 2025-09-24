@@ -482,7 +482,7 @@ class OblivionDesktop {
     }
 
     private async checkForUpdates(downloadUpdate?: boolean) {
-        if ( isDev() ) return;
+        if (isDev()) return;
         if (this.state.isCheckingForUpdates) return;
         try {
             this.state.isCheckingForUpdates = true;
