@@ -44,8 +44,10 @@ const turkish: Language = {
             'Yapılandırma başarıyla eklendi ve kullanmak için bağlantıya tıklamanız gerekiyor.',
         profile_added: 'Uç nokta başarıyla profile eklendi.',
         endpoint_added: 'Uç nokta başarıyla değiştirildi.',
+        new_update_notification: 'Yeni bir sürüm mevcut',
         new_update:
             'Uygulamanın yeni bir sürümü mevcut. İndirmek ve kuruluma hazırlamak ister misiniz?',
+        up_to_date: 'Uygulamanın en yeni sürümünü kullanıyorsunuz',
         exit_pending:
             'Uygulama çıkış sürecini tamamlıyor; lütfen tekrar başlatmadan önce bir süre bekleyin.',
         help_btn: 'Yardım'
@@ -192,7 +194,9 @@ const turkish: Language = {
         custom_dns_title: 'Özel DNS',
         confirm: 'Onaylıyorum',
         update: 'Güncelle',
-        cancel: 'İptal'
+        cancel: 'İptal',
+        yes: 'Evet',
+        no: 'Hayır'
     },
     log: {
         title: 'Uygulama Günlüğü',

@@ -41,7 +41,9 @@ export interface Toast {
     config_added: string;
     profile_added: string;
     endpoint_added: string;
+    new_update_notification: string;
     new_update: string;
+    up_to_date: string;
     exit_pending: string;
     help_btn: string;
 }
@@ -186,6 +188,8 @@ export interface Modal {
     confirm: string;
     update: string;
     cancel: string;
+    yes: string;
+    no: string;
 }
 
 export interface Log {

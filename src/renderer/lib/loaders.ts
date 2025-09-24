@@ -3,12 +3,6 @@ import { defaultSettings } from '../../defaultSettings';
 import { settings } from './settings';
 import { typeIsUndefined } from './isAnyUndefined';
 
-export const clearUpdateNotifOnStartup = () => {
-    if (typeof window === 'undefined') return;
-    localStorage?.removeItem('OBLIVION_CHECKUPDATE');
-    localStorage?.removeItem('OBLIVION_NEWUPDATE');
-};
-
 const detectingSystemTheme =
     typeof window !== 'undefined'
         ? window.matchMedia('(prefers-color-scheme: dark)').matches

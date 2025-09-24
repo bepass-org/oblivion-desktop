@@ -13,7 +13,6 @@ import {
     loadingToast,
     stopLoadingToast
 } from '../../lib/toasts';
-import { checkNewUpdate } from '../../lib/checkNewUpdate';
 import packageJsonData from '../../../../package.json';
 import { getLanguageName } from '../../../localization';
 import useTranslate from '../../../localization/useTranslate';
@@ -53,6 +52,10 @@ const useLanding = () => {
         setIsConnected,
         isLoading,
         setIsLoading,
+        isCheckingForUpdates,
+        setIsCheckingForUpdates,
+        hasNewUpdate,
+        setHasNewUpdate,
         statusText,
         setStatusText,
         proxyStatus,
@@ -76,7 +79,6 @@ const useLanding = () => {
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
-    const [hasNewUpdate, setHasNewUpdate] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
     const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
         status: 'pending',
@@ -195,32 +197,6 @@ const useLanding = () => {
             return;
         }
         getIpLocation();
-    };
-
-    const checkForUpdates = async () => {
-        const canCheckNewVer = localStorage?.getItem('OBLIVION_CHECKUPDATE');
-        if (typeIsNotUndefined(canCheckNewVer) && canCheckNewVer === 'false') return;
-        try {
-            const comparison = await checkNewUpdate(packageJsonData?.version);
-            setHasNewUpdate(typeof comparison === 'boolean' ? comparison : false);
-            localStorage.setItem('OBLIVION_CHECKUPDATE', 'false');
-            localStorage.setItem(
-                'OBLIVION_NEWUPDATE',
-                typeof comparison === 'boolean' ? (comparison ? 'true' : 'false') : 'false'
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const resetCheckUpdateFlag = () => {
-        return setInterval(
-            () => {
-                localStorage.setItem('OBLIVION_CHECKUPDATE', 'true');
-                setTimeout(checkForUpdates, 10000);
-            },
-            3 * 60 * 60 * 1000
-        );
     };
 
     useEffect(() => {
@@ -360,6 +336,12 @@ const useLanding = () => {
             }
         });
 
+        ipcRenderer.on('new-update', (HasNewUpdate: any) => {
+            setIsCheckingForUpdates(false);
+            setDrawerIsOpen(false);
+            setHasNewUpdate(HasNewUpdate);
+        });
+
         ipcRenderer.on('download-progress', (args: any) => {
             setDownloadProgress(args);
         });
@@ -396,18 +378,10 @@ const useLanding = () => {
         window.addEventListener('offline', handleOnlineStatusChange);
         handleOnlineStatusChange();
 
-        const hasUpdate = localStorage?.getItem('OBLIVION_NEWUPDATE');
-        setHasNewUpdate(typeIsNotUndefined(hasUpdate) && hasUpdate === 'true' ? true : false);
-        if (!isLoading) {
-            setTimeout(checkForUpdates, 10000);
-        }
-        const resetCheckUpdateIntervalId = resetCheckUpdateFlag();
-
         return () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
-            clearInterval(resetCheckUpdateIntervalId);
         };
     }, []);
 
@@ -487,7 +461,7 @@ const useLanding = () => {
             return;
         }
 
-        setTimeout(checkForUpdates, 10000);
+        if (!hasNewUpdate && !isCheckingForUpdates) ipcRenderer.sendMessage('check-update');
 
         if (ipInfo?.countryCode) {
             setStatusText(appLang?.status?.connected_confirm);
@@ -549,6 +523,8 @@ const useLanding = () => {
         statusText,
         ipInfo,
         ping,
+        setIsCheckingForUpdates,
+        isCheckingForUpdates,
         hasNewUpdate,
         drawerIsOpen,
         lang,

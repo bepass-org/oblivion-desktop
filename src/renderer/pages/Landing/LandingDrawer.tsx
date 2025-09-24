@@ -4,11 +4,14 @@ import { Link } from 'react-router';
 import Drawer from 'react-modern-drawer';
 import appIco from '../../../../assets/oblivion.png';
 import { Language } from '../../../localization/type';
+import { ipcRenderer } from '../../lib/utils';
 
 interface LandingDrawerProps {
     appLang: Language;
     drawerIsOpen: boolean;
     lang?: string;
+    isCheckingForUpdates: boolean;
+    setIsCheckingForUpdates: (value: boolean) => void;
     hasNewUpdate: boolean;
     toggleDrawer: () => void;
     appVersion: string;
@@ -19,6 +22,8 @@ interface LandingDrawerProps {
 const LandingDrawer: FC<LandingDrawerProps> = ({
     appLang,
     drawerIsOpen,
+    isCheckingForUpdates,
+    setIsCheckingForUpdates,
     hasNewUpdate,
     lang,
     toggleDrawer,
@@ -88,16 +93,24 @@ const LandingDrawer: FC<LandingDrawerProps> = ({
                         </Link>
                     </li>
                     <li className='divider' />
-                    <li className={hasNewUpdate ? '' : 'hidden'} role='presentation'>
+                    <li role='presentation'>
                         <a
-                            href={`https://github.com/bepass-org/oblivion-desktop/releases${betaRelease ? '' : '/latest'}#download`}
-                            target='_blank'
-                            rel='noreferrer'
-                            role='menuitem'
+                            onClick={() => {
+                                if (isCheckingForUpdates) return;
+                                setIsCheckingForUpdates(true);
+                                ipcRenderer.sendMessage('check-update', true);
+                            }}
                         >
                             <i className='material-icons'>&#xe923;</i>
                             <span>{appLang?.home?.drawer_update}</span>
-                            <div className='label label-warning label-xs'>
+                            <div className={isCheckingForUpdates ? 'loader' : 'hidden'} />
+                            <div
+                                className={
+                                    !isCheckingForUpdates && hasNewUpdate
+                                        ? 'label label-warning label-xs'
+                                        : 'hidden'
+                                }
+                            >
                                 {appLang?.home?.drawer_update_label}
                             </div>
                         </a>

@@ -22,6 +22,8 @@ export default function Landing() {
         handleOnClickPing,
         handleOnSwipedLeft,
         handleOnSwipedRight,
+        setIsCheckingForUpdates,
+        isCheckingForUpdates,
         hasNewUpdate,
         ipInfo,
         isConnected,
@@ -59,6 +61,8 @@ export default function Landing() {
                 drawerIsOpen={drawerIsOpen}
                 lang={lang}
                 toggleDrawer={toggleDrawer}
+                setIsCheckingForUpdates={setIsCheckingForUpdates}
+                isCheckingForUpdates={isCheckingForUpdates}
                 hasNewUpdate={hasNewUpdate}
                 appVersion={appVersion}
                 proxyMode={proxyMode}
