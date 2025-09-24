@@ -482,7 +482,8 @@ class OblivionDesktop {
     }
 
     private async checkForUpdates(downloadUpdate?: boolean) {
-        if (isDev() || this.state.isCheckingForUpdates) return;
+        if ( isDev() ) return;
+        if (this.state.isCheckingForUpdates) return;
         try {
             this.state.isCheckingForUpdates = true;
             const betaRelease = await settings.get('betaRelease');
