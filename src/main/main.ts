@@ -489,7 +489,7 @@ class OblivionDesktop {
                 typeof betaRelease == 'undefined' ? defaultSettings.betaRelease : betaRelease;
 
             const response = await fetch(
-                `https://api.github.com/repos/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases${isBetaVersionChecking ? '' : '/latest'}`
+                `https://api.github.com/repos/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases${isBetaVersionChecking ? '?per_page=1' : '/latest'}`
             );
             if (response.ok) {
                 const data = await response.json();
