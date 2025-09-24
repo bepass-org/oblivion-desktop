@@ -336,6 +336,7 @@ const useLanding = () => {
         ipcRenderer.on('new-update', (HasNewUpdate: any) => {
             setIsCheckingForUpdates(false);
             setHasNewUpdate(HasNewUpdate);
+            handleResize();
         });
 
         ipcRenderer.on('download-progress', (args: any) => {
