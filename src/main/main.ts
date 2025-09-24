@@ -23,7 +23,8 @@ import log from 'electron-log';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
-import { spawn } from 'child_process';
+//import { spawn } from 'child_process';
+import sudo from 'sudo-prompt';
 import https from 'https';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
 import { networkInterfaces } from 'systeminformation';
@@ -526,13 +527,28 @@ class OblivionDesktop {
                         if (result.response === 1) {
                             const launchUpdater = (filePath: string) => {
                                 setTimeout(() => {
-                                    const child = spawn(filePath, [], {
-                                        detached: true,
-                                        stdio: 'ignore'
+                                    const options = {
+                                        name: 'Oblivion Desktop'
+                                    };
+                                    sudo.exec(`"${filePath}"`, options, (error, stdout, stderr) => {
+                                        if (error) {
+                                            if (
+                                                error.message.includes(
+                                                    'User did not grant permission'
+                                                )
+                                            ) {
+                                                log.warn('⚠️ UAC prompt not shown or denied.');
+                                                shell.openExternal(
+                                                    `https://github.com/${packageJsonData.build.publish.owner}/${packageJsonData.build.publish.repo}/releases/latest#download`
+                                                );
+                                            } else {
+                                                log.error('⚠️ Updater failed:', error);
+                                            }
+                                            return;
+                                        }
+                                        log.info('✅ Updater executed successfully with sudo.');
+                                        this.exitProcess();
                                     });
-                                    child.unref();
-                                    log.info('✅ Updater executed successfully.');
-                                    this.exitProcess();
                                 }, 2500);
                             };
 
