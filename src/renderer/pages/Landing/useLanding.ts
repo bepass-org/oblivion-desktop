@@ -235,11 +235,8 @@ const useLanding = () => {
         toast.remove('COPIED');
 
         const handleResize = () => {
-            if (window.innerWidth > 1049) {
-                setTimeout(() => setDrawerIsOpen(true), 300);
-            } else {
-                setTimeout(() => setDrawerIsOpen(false), 300);
-            }
+            const isFull = window?.innerWidth > 1049;
+            setTimeout(() => setDrawerIsOpen(isFull), 300);
         };
         handleResize();
 
