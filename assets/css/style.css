@@ -2124,9 +2124,10 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 .drawer .loader {
     float: left;
     position: relative;
-    width: 8px;
-    height: 8px;
-    margin: 6px;
+    width: 7px;
+    height: 7px;
+    margin-top: 8px;
+    margin-inline-end: 9px;
     border-radius: 4px;
     background-color: #ffa200;
     color: #ffa200;
@@ -2147,9 +2148,9 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 }
 
 .drawer .loader::before {
-    left: -12px;
-    width: 8px;
-    height: 8px;
+    left: -10px;
+    width: 7px;
+    height: 7px;
     border-radius: 4px;
     background-color: #ffa200;
     color: #ffa200;
@@ -2158,9 +2159,9 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
 }
 
 .drawer .loader::after {
-    left: 12px;
-    width: 8px;
-    height: 8px;
+    left: 10px;
+    width: 7px;
+    height: 7px;
     border-radius: 4px;
     background-color: #ffa200;
     color: #ffa200;
@@ -2172,7 +2173,6 @@ html:not([lang='fa'])[data-bs-theme='dark'] .splashScreen .splashScreenImg {
     0% {
         background-color: #ffa200;
     }
-
     50%,
     100% {
         background-color: #ffa20033;
