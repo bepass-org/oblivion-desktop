@@ -287,17 +287,18 @@ class WarpPlusManager {
 
         try {
             const args = await getUserSettings();
-            log.info('Starting MasquePlus process...');
             if (method === 'masque') {
+                log.info('Starting MasquePlus process ...');
                 log.info(`${mpPath} ${args.join(' ')}`);
                 state.child = spawn(mpPath, args, { cwd: workingDirPath });
             } else {
+                log.info('Starting WarpPlus process ...');
                 log.info(`${wpBinPath} ${args.join(' ')}`);
                 state.child = spawn(wpBinPath, args, { cwd: workingDirPath });
             }
             this.setupChildProcessHandlers();
         } catch (error) {
-            log.error('Error starting WarpPlus:', error);
+            log.error('Error while starting Core:', error);
             this.handleStartupError();
         }
     }
