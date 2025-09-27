@@ -67,8 +67,10 @@ const useLanding = () => {
     });
 
     const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
-    const toggleDrawer = () => {
-        setDrawerIsOpen((prevState) => !prevState);
+    const toggleDrawer = (newState?: boolean) => {
+        const isFull = window?.innerWidth > 1049;
+        if (!isFull)
+            setDrawerIsOpen(typeof newState == 'boolean' ? newState : (prevState) => !prevState);
     };
 
     const [lang, setLang] = useState<string>();
@@ -230,7 +232,7 @@ const useLanding = () => {
         cachedIpInfo = null;
 
         onEscapeKeyPressed(() => {
-            setDrawerIsOpen(false);
+            toggleDrawer(false);
         });
         toast.remove('COPIED');
 
@@ -336,10 +338,10 @@ const useLanding = () => {
         ipcRenderer.on('new-update', (HasNewUpdate: any) => {
             setIsCheckingForUpdates(false);
             setHasNewUpdate(HasNewUpdate);
-            handleResize();
         });
 
         ipcRenderer.on('download-progress', (args: any) => {
+            if (downloadProgress.percent == 0) toggleDrawer(false);
             setDownloadProgress(args);
         });
 
