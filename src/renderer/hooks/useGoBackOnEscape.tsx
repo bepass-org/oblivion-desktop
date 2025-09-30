@@ -6,8 +6,12 @@ export default function useGoBackOnEscape() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        onEscapeKeyPressed(() => {
+        const onEscapeKeyPressedHandler = onEscapeKeyPressed(() => {
             navigate(-1);
         });
-    });
+
+        return () => {
+            window.removeEventListener('keydown', onEscapeKeyPressedHandler);
+        };
+    }, []);
 }
