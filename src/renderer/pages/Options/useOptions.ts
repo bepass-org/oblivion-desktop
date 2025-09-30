@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
@@ -17,8 +16,6 @@ import { withDefault } from '../../lib/withDefault';
 import { useStore } from '../../store';
 
 const useOptions = () => {
-    useGoBackOnEscape();
-
     const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate } = useStore();
 
     const [theme, setTheme] = useState<string>();

@@ -9,7 +9,6 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router';
 import { ipcRenderer, username } from '../../lib/utils';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { defaultToast } from '../../lib/toasts';
 import useTranslate from '../../../localization/useTranslate';
 
@@ -61,8 +60,6 @@ const useDebug = () => {
             });
         }
     }, [log]);
-
-    useGoBackOnEscape();
 
     const userFlag = '<USERNAME>';
     ipcRenderer.on('get-logs', (data) => {

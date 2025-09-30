@@ -231,7 +231,7 @@ const useLanding = () => {
 
         cachedIpInfo = null;
 
-        onEscapeKeyPressed(() => {
+        const onEscapeKeyPressedHandler = onEscapeKeyPressed(() => {
             toggleDrawer(false);
         });
         toast.remove('COPIED');
@@ -378,6 +378,7 @@ const useLanding = () => {
         handleOnlineStatusChange();
 
         return () => {
+            window.removeEventListener('keydown', onEscapeKeyPressedHandler);
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);

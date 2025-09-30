@@ -6,15 +6,12 @@ import packageJsonData from '../../../../package.json';
 import gitHubMark from '../../../../assets/img/github-mark.png';
 import ircf from '../../../../assets/img/ircf.png';
 import twitter from '../../../../assets/img/twitter.png';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 
 export default function About() {
     const appLang = useTranslate();
     const navigate = useNavigate();
-
-    useGoBackOnEscape();
 
     useEffect(() => {
         ipcRenderer.on('tray-menu', (args: any) => {

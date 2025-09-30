@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useStore } from '../../store';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { countries, defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
@@ -25,8 +24,6 @@ const useSettings = () => {
     const [showTestUrlModal, setShowTestUrlModal] = useState<boolean>(false);
 
     const navigate = useNavigate();
-
-    useGoBackOnEscape();
 
     useEffect(() => {
         settings

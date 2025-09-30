@@ -1,6 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
@@ -17,8 +16,6 @@ import { typeIsNotUndefined } from '../../lib/isAnyUndefined';
 const useOptions = () => {
     const { isConnected, isLoading } = useStore();
     const [lang, setLang] = useState<string>('');
-
-    useGoBackOnEscape();
 
     // TODO rename to networkConfiguration
     const [proxyMode, setProxyMode] = useState<string>('');
