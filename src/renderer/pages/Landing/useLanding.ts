@@ -8,7 +8,6 @@ import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer, onEscapeKeyPressed } from '../../lib/utils';
 import {
     defaultToast,
-    defaultToastWithHelp,
     defaultToastWithSubmitButton,
     loadingToast,
     stopLoadingToast
@@ -26,7 +25,7 @@ export type IpConfig = {
     ip: string;
 };
 
-type DownloadProgress = {
+export type DownloadProgress = {
     status: string;
     percent: number;
 };
@@ -55,7 +54,7 @@ const useLanding = () => {
         isCheckingForUpdates,
         setIsCheckingForUpdates,
         hasNewUpdate,
-        setHasNewUpdate,
+        downloadProgress,
         statusText,
         setStatusText,
         proxyStatus,
@@ -82,10 +81,6 @@ const useLanding = () => {
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
-    const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
-        status: 'pending',
-        percent: 0
-    });
 
     const navigate = useNavigate();
 
@@ -242,77 +237,6 @@ const useLanding = () => {
         };
         handleResize();
 
-        ipcRenderer.on('guide-toast', (message: any) => {
-            switch (message) {
-                case 'error_port_restart':
-                    loadingToast(appLang.log.error_port_restart);
-                    break;
-
-                case 'sb_error_tun0':
-                    setIsLoading(false);
-                    setIsConnected(false);
-                    stopLoadingToast();
-                    defaultToast(appLang.log.error_script_failed, 'GUIDE', 7000);
-                    break;
-
-                case 'sb_preparing':
-                    loadingToast(appLang.status.preparing_rulesets);
-                    setTimeout(() => {
-                        stopLoadingToast();
-                    }, 3000);
-                    break;
-
-                case 'sb_download_failed':
-                    setIsLoading(false);
-                    setIsConnected(false);
-                    stopLoadingToast();
-                    setTimeout(() => {
-                        defaultToast(
-                            appLang.status.downloading_rulesets_failed,
-                            'DOWNLOAD_FAILED',
-                            3000
-                        );
-                    }, 2000);
-                    break;
-
-                case 'sb_start_failed':
-                    stopLoadingToast();
-                    setIsLoading(false);
-                    setIsConnected(false);
-                    break;
-
-                case 'sb_stop_failed':
-                    setIsLoading(false);
-                    setIsConnected(true);
-                    break;
-
-                case 'sb_error_ipv6':
-                    stopLoadingToast();
-                    setIsLoading(false);
-                    setIsConnected(false);
-                    defaultToastWithHelp(
-                        appLang.log.error_singbox_ipv6_address,
-                        'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-the-set-ipv6-address:-Element-not-found-Error',
-                        appLang.toast.help_btn,
-                        'GUIDE'
-                    );
-                    break;
-
-                case 'error_warp_identity':
-                    defaultToastWithHelp(
-                        appLang.log.error_warp_identity,
-                        'https://github.com/bepass-org/oblivion-desktop/wiki/Fixing-proxy-connection-issues-on-certain-networks',
-                        appLang.toast.help_btn,
-                        'GUIDE'
-                    );
-                    break;
-
-                default:
-                    defaultToast(message, 'GUIDE', 7000);
-                    break;
-            }
-        });
-
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'connect' && !isLoading) {
                 setIpInfo({
@@ -335,33 +259,16 @@ const useLanding = () => {
             }
         });
 
-        ipcRenderer.on('new-update', (HasNewUpdate: any) => {
-            setIsCheckingForUpdates(false);
-            setHasNewUpdate(HasNewUpdate);
-        });
-
-        ipcRenderer.on('download-progress', (args: any) => {
-            if (downloadProgress.percent == 0) toggleDrawer(false);
-            setDownloadProgress(args);
-        });
-
-        ipcRenderer.on('wp-start', (ok: any) => {
+        const onWPEnd = (ok: any) => {
             if (ok) {
-                setIsLoading(false);
-                setIsConnected(true);
-            }
-        });
-
-        ipcRenderer.on('wp-end', (ok: any) => {
-            if (ok) {
-                setIsConnected(false);
-                setIsLoading(false);
                 setIpInfo({
                     countryCode: false,
                     ip: ''
                 });
             }
-        });
+        }
+
+        ipcRenderer.on('wp-end', onWPEnd);
 
         const handleOnlineStatusChange = debounce(() => {
             if (navigator.onLine) {
@@ -378,12 +285,28 @@ const useLanding = () => {
         handleOnlineStatusChange();
 
         return () => {
+            ipcRenderer.removeListener('wp-end', onWPEnd);
             window.removeEventListener('keydown', onEscapeKeyPressedHandler);
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
         };
     }, []);
+
+    useEffect(() => {
+        if (drawerIsOpen && downloadProgress.percent == 0) {
+            const onDownloadProgress = (args: any) => {
+                toggleDrawer(false);
+                ipcRenderer.removeListener('download-progress', onDownloadProgress);
+            }
+
+            ipcRenderer.on('download-progress', onDownloadProgress);
+
+            return () => {
+                ipcRenderer.removeListener('download-progress', onDownloadProgress);
+            }
+        }
+    }, [drawerIsOpen]);
 
     useEffect(() => {
         if (!isConnected || !dataUsage) return;
@@ -397,6 +320,10 @@ const useLanding = () => {
                 totalUsage: event?.totalUsage
             }));
         });
+
+        return () => {
+            ipcRenderer.removeAllListeners('net-stats');
+        }
     }, [dataUsage, isConnected]);
 
     const ipToast = () => {
