@@ -7,7 +7,7 @@ export default function useGoBackOnEscape() {
 
     useEffect(() => {
         const onEscapeKeyPressedHandler = onEscapeKeyPressed(() => {
-            navigate("/");
+            navigate('/');
         });
 
         return () => {

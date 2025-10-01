@@ -52,7 +52,7 @@ export const useSpeedTest = () => {
                 ipcRenderer.sendMessage('speed-test', 'pause');
             }
             ipcRenderer.removeAllListeners('speed-test');
-        }
+        };
     }, [appLang?.toast?.offline]);
 
     const checkServerAvailability = useCallback(async () => {

@@ -1,10 +1,9 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { countries, defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
-import { ipcRenderer, platform, arch } from '../../lib/utils';
+import { platform, arch } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { DropdownItem } from '../../components/Dropdown';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
@@ -23,8 +22,6 @@ const useSettings = () => {
     const [testUrl, setTestUrl] = useState<string>();
     const [showTestUrlModal, setShowTestUrlModal] = useState<boolean>(false);
 
-    const navigate = useNavigate();
-
     useEffect(() => {
         settings
             .getMultiple(['location', 'license', 'method', 'proxyMode', 'testUrl'])
@@ -38,12 +35,6 @@ const useSettings = () => {
             .catch((error) => {
                 console.error('Error fetching settings:', error);
             });
-
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
     }, []);
 
     const onCloseLicenseModal = useCallback(() => {

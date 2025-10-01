@@ -1,7 +1,6 @@
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { debounce } from 'lodash';
-import { useNavigate } from 'react-router';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
@@ -18,7 +17,6 @@ import useTranslate from '../../../localization/useTranslate';
 import { INetStats } from '../../../constants';
 import { isSystemDateValid } from '../../lib/systemDateValidator';
 import { withDefault } from '../../lib/withDefault';
-import { typeIsNotUndefined } from '../../lib/isAnyUndefined';
 
 export type IpConfig = {
     countryCode: string | boolean;
@@ -48,7 +46,6 @@ const useLanding = () => {
     const appLang = useTranslate();
     const {
         isConnected,
-        setIsConnected,
         isLoading,
         setIsLoading,
         isCheckingForUpdates,
@@ -81,8 +78,6 @@ const useLanding = () => {
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
     const [testUrl, setTestUrl] = useState<string>();
-
-    const navigate = useNavigate();
 
     const getIpLocation = async () => {
         if (isFetching || isLoading || !isConnected) return;
@@ -237,28 +232,6 @@ const useLanding = () => {
         };
         handleResize();
 
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'connect' && !isLoading) {
-                setIpInfo({
-                    countryCode: false,
-                    ip: ''
-                });
-                setProxyStatus(proxyMode);
-                ipcRenderer.sendMessage('wp-start');
-                setIsLoading(true);
-                setPing(0);
-                return;
-            }
-            if (args.key === 'disconnect' && !isLoading) {
-                ipcRenderer.sendMessage('wp-end');
-                setIsLoading(true);
-                return;
-            }
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
-
         const onWPEnd = (ok: any) => {
             if (ok) {
                 setIpInfo({
@@ -266,7 +239,7 @@ const useLanding = () => {
                     ip: ''
                 });
             }
-        }
+        };
 
         ipcRenderer.on('wp-end', onWPEnd);
 
@@ -298,13 +271,13 @@ const useLanding = () => {
             const onDownloadProgress = (args: any) => {
                 toggleDrawer(false);
                 ipcRenderer.removeListener('download-progress', onDownloadProgress);
-            }
+            };
 
             ipcRenderer.on('download-progress', onDownloadProgress);
 
             return () => {
                 ipcRenderer.removeListener('download-progress', onDownloadProgress);
-            }
+            };
         }
     }, [drawerIsOpen]);
 
@@ -323,7 +296,7 @@ const useLanding = () => {
 
         return () => {
             ipcRenderer.removeAllListeners('net-stats');
-        }
+        };
     }, [dataUsage, isConnected]);
 
     const ipToast = () => {

@@ -4,7 +4,13 @@ import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 //import toast from 'react-hot-toast';
-import { defaultToast, defaultToastWithHelp, loadingToast, settingsHaveChangedToast, stopLoadingToast } from '../../lib/toasts';
+import {
+    defaultToast,
+    defaultToastWithHelp,
+    loadingToast,
+    settingsHaveChangedToast,
+    stopLoadingToast
+} from '../../lib/toasts';
 import { defaultSettings, dnsServers } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
@@ -21,7 +27,8 @@ const useOptions = () => {
         setIsLoading,
         setIsCheckingForUpdates,
         setHasNewUpdate,
-        setDownloadProgress
+        setDownloadProgress,
+        setProxyStatus
     } = useStore();
     const [lang, setLang] = useState<string>('');
 
@@ -105,7 +112,16 @@ const useOptions = () => {
             });
 
         ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
+            if (args.key === 'connect' && !isLoading) {
+                setProxyStatus(proxyMode);
+                ipcRenderer.sendMessage('wp-start');
+                setIsLoading(true);
+                return;
+            } else if (args.key === 'disconnect' && !isLoading) {
+                ipcRenderer.sendMessage('wp-end');
+                setIsLoading(true);
+                return;
+            } else if (args.key === 'changePage') {
                 navigate(args.msg);
             }
         });
@@ -209,13 +225,14 @@ const useOptions = () => {
         });
 
         return () => {
+            ipcRenderer.removeAllListeners('tray-menu');
             ipcRenderer.removeAllListeners('change-proxy-mode');
             ipcRenderer.removeAllListeners('guide-toast');
             ipcRenderer.removeAllListeners('new-update');
             ipcRenderer.removeAllListeners('download-progress');
             ipcRenderer.removeAllListeners('wp-start');
             ipcRenderer.removeAllListeners('wp-end');
-        }
+        };
     }, []);
 
     const filteredNetworkList: DropdownItem[] = useMemo(() => {

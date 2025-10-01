@@ -9,13 +9,8 @@ import Network from '../pages/Network';
 import Speed from '../pages/SpeedTest';
 import SingBox from '../pages/SingBox';
 import { GlobalProvider } from '../context/GlobalContext';
-import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
-import { openDevtoolsOnCtrlShiftI } from '../lib/dx';
 
 const AppRoutes = () => {
-    openDevtoolsOnCtrlShiftI();
-    useGoBackOnEscape();
-
     return (
         <GlobalProvider>
             <Routes>

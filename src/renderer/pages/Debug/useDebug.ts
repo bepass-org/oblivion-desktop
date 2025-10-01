@@ -7,7 +7,6 @@ import {
     useRef,
     useState
 } from 'react';
-import { useNavigate } from 'react-router';
 import { ipcRenderer, username } from '../../lib/utils';
 import { defaultToast } from '../../lib/toasts';
 import useTranslate from '../../../localization/useTranslate';
@@ -16,7 +15,6 @@ const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const logRef = useRef<HTMLParagraphElement>(null);
     const appLang = useTranslate();
-    const navigate = useNavigate();
 
     const initAutoScroll = useMemo(
         () =>
@@ -28,12 +26,6 @@ const useDebug = () => {
     const [autoScroll, setAutoScroll] = useState<boolean>(initAutoScroll === '1');
 
     useEffect(() => {
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
-
         const userFlag = '<USERNAME>';
         ipcRenderer.on('get-logs', (data) => {
             let logs = String(data);
@@ -52,7 +44,7 @@ const useDebug = () => {
         return () => {
             ipcRenderer.removeAllListeners('get-logs');
             clearInterval(intervalId);
-        }
+        };
     }, []);
 
     useEffect(() => {

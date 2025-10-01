@@ -1,26 +1,13 @@
 import classNames from 'classnames';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import Nav from '../../components/Nav';
 import packageJsonData from '../../../../package.json';
 import gitHubMark from '../../../../assets/img/github-mark.png';
 import ircf from '../../../../assets/img/ircf.png';
 import twitter from '../../../../assets/img/twitter.png';
-import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 
 export default function About() {
     const appLang = useTranslate();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
-    }, []);
-
     return (
         <>
             <Nav title={appLang?.about?.title} />

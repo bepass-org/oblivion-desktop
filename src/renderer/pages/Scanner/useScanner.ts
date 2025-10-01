@@ -1,10 +1,8 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { settingsHaveChangedToast } from '../../lib/toasts';
-import { ipcRenderer } from '../../lib/utils';
 import useTranslate from '../../../localization/useTranslate';
 import { toPersianNumber } from '../../lib/toPersianNumber';
 import { DropdownItem } from '../../components/Dropdown';
@@ -31,8 +29,6 @@ const useScanner = () => {
     const [lang, setLang] = useState<string>('');
     const [proxyMode, setProxyMode] = useState<string>('');
 
-    const navigate = useNavigate();
-
     useEffect(() => {
         settings
             .getMultiple(['endpoint', 'ipType', 'rtt', 'reserved', 'profiles', 'lang', 'proxyMode'])
@@ -48,12 +44,6 @@ const useScanner = () => {
             .catch((error) => {
                 console.error('Error fetching settings:', error);
             });
-
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
     }, []);
 
     const onCloseEndpointModal = useCallback(() => {

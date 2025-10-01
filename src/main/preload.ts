@@ -46,6 +46,9 @@ const electronHandler = {
         removeAllListeners(channel: Channels) {
             ipcRenderer.removeAllListeners(channel);
         },
+        invoke(channel: Channels, ...args: unknown[]) {
+            return ipcRenderer.invoke(channel, ...args);
+        },
         clean() {
             ipcRenderer.removeAllListeners('settings');
             ipcRenderer.removeAllListeners('guide-toast');
