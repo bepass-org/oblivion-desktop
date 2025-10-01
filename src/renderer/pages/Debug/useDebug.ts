@@ -33,13 +33,26 @@ const useDebug = () => {
                 navigate(args.msg);
             }
         });
+
+        const userFlag = '<USERNAME>';
+        ipcRenderer.on('get-logs', (data) => {
+            let logs = String(data);
+            logs = logs.replaceAll(username || '', userFlag);
+            logs = logs.replaceAll(/\\\\/g, '\\');
+            setLog(logs);
+        });
+
         // asking for log every 1.5sec
         ipcRenderer.sendMessage('get-logs');
         const intervalId = setInterval(() => {
             ipcRenderer.sendMessage('get-logs');
         }, 1500);
-        // Cleanup function to clear the interval
-        return () => clearInterval(intervalId);
+
+        // Cleanup
+        return () => {
+            ipcRenderer.removeAllListeners('get-logs');
+            clearInterval(intervalId);
+        }
     }, []);
 
     useEffect(() => {
@@ -60,14 +73,6 @@ const useDebug = () => {
             });
         }
     }, [log]);
-
-    const userFlag = '<USERNAME>';
-    ipcRenderer.on('get-logs', (data) => {
-        let logs = String(data);
-        logs = logs.replaceAll(username || '', userFlag);
-        logs = logs.replaceAll(/\\\\/g, '\\');
-        setLog(logs);
-    });
 
     const handleCopy = useCallback(
         (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLDivElement>) => {

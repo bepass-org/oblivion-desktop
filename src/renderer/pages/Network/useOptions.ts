@@ -101,6 +101,14 @@ const useOptions = () => {
                 navigate(args.msg);
             }
         });
+
+        ipcRenderer.on('change-proxy-mode', (value: any) => {
+            onChangeProxyMode(value);
+        });
+
+        return () => {
+            ipcRenderer.removeAllListeners('change-proxy-mode');
+        }
     }, []);
 
     const filteredNetworkList: DropdownItem[] = useMemo(() => {
