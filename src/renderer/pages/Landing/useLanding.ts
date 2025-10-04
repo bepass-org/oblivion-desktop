@@ -232,16 +232,14 @@ const useLanding = () => {
         };
         handleResize();
 
-        const onWPEnd = (ok: any) => {
+        const onWPEnd = ipcRenderer.on('wp-end', (ok: any) => {
             if (ok) {
                 setIpInfo({
                     countryCode: false,
                     ip: ''
                 });
             }
-        };
-
-        ipcRenderer.on('wp-end', onWPEnd);
+        });
 
         const handleOnlineStatusChange = debounce(() => {
             if (navigator.onLine) {
@@ -268,12 +266,9 @@ const useLanding = () => {
 
     useEffect(() => {
         if (drawerIsOpen && downloadProgress.percent == 0) {
-            const onDownloadProgress = (args: any) => {
+            const onDownloadProgress = ipcRenderer.once('download-progress', (args: any) => {
                 toggleDrawer(false);
-                ipcRenderer.removeListener('download-progress', onDownloadProgress);
-            };
-
-            ipcRenderer.on('download-progress', onDownloadProgress);
+            });
 
             return () => {
                 ipcRenderer.removeListener('download-progress', onDownloadProgress);
