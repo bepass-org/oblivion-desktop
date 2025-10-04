@@ -1,5 +1,4 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import useTranslate from '../../../localization/useTranslate';
 import {
@@ -20,7 +19,6 @@ type SettingsState = {
 };
 
 const useSingBox = () => {
-    useGoBackOnEscape();
     const appLang = useTranslate();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
 

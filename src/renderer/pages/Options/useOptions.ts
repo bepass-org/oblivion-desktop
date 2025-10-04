@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
@@ -17,8 +16,6 @@ import { withDefault } from '../../lib/withDefault';
 import { useStore } from '../../store';
 
 const useOptions = () => {
-    useGoBackOnEscape();
-
     const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate } = useStore();
 
     const [theme, setTheme] = useState<string>();
@@ -39,8 +36,6 @@ const useOptions = () => {
     const { targetId } = state || {};
     const langRef = useRef<HTMLDivElement>(null);
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(function () {
@@ -86,12 +81,6 @@ const useOptions = () => {
             .catch((error) => {
                 console.error('Error fetching settings:', error);
             });
-
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
     }, []);
 
     const onCloseRestoreModal = useCallback(() => {

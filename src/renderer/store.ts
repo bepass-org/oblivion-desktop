@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { getTranslate } from '../localization';
+import { DownloadProgress } from './pages/Landing/useLanding';
 
 export interface IStore {
     isConnected: boolean;
@@ -10,6 +11,8 @@ export interface IStore {
     setIsCheckingForUpdates: (bool: boolean) => void;
     hasNewUpdate: boolean;
     setHasNewUpdate: (bool: boolean) => void;
+    downloadProgress: DownloadProgress;
+    setDownloadProgress: (status: DownloadProgress) => void;
     statusText: string;
     setStatusText: (status: string) => void;
     proxyStatus: string;
@@ -26,6 +29,11 @@ export const useStore = create<IStore>((set) => ({
     setIsCheckingForUpdates: (bool: boolean) => set(() => ({ isCheckingForUpdates: bool })),
     hasNewUpdate: false,
     setHasNewUpdate: (bool: boolean) => set(() => ({ hasNewUpdate: bool })),
+    downloadProgress: {
+        status: 'pending',
+        percent: 0
+    },
+    setDownloadProgress: (status: DownloadProgress) => set(() => ({ downloadProgress: status })),
     statusText: appLang.status.disconnected,
     setStatusText: (status: string) => set(() => ({ statusText: status })),
     proxyStatus: '',

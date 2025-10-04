@@ -7,9 +7,7 @@ import {
     useRef,
     useState
 } from 'react';
-import { useNavigate } from 'react-router';
 import { ipcRenderer, username } from '../../lib/utils';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { defaultToast } from '../../lib/toasts';
 import useTranslate from '../../../localization/useTranslate';
 
@@ -17,7 +15,6 @@ const useDebug = () => {
     const [log, setLog] = useState<string>('');
     const logRef = useRef<HTMLParagraphElement>(null);
     const appLang = useTranslate();
-    const navigate = useNavigate();
 
     const initAutoScroll = useMemo(
         () =>
@@ -29,18 +26,25 @@ const useDebug = () => {
     const [autoScroll, setAutoScroll] = useState<boolean>(initAutoScroll === '1');
 
     useEffect(() => {
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
+        const userFlag = '<USERNAME>';
+        ipcRenderer.on('get-logs', (data) => {
+            let logs = String(data);
+            logs = logs.replaceAll(username || '', userFlag);
+            logs = logs.replaceAll(/\\\\/g, '\\');
+            setLog(logs);
         });
+
         // asking for log every 1.5sec
         ipcRenderer.sendMessage('get-logs');
         const intervalId = setInterval(() => {
             ipcRenderer.sendMessage('get-logs');
         }, 1500);
-        // Cleanup function to clear the interval
-        return () => clearInterval(intervalId);
+
+        // Cleanup
+        return () => {
+            ipcRenderer.removeAllListeners('get-logs');
+            clearInterval(intervalId);
+        };
     }, []);
 
     useEffect(() => {
@@ -61,16 +65,6 @@ const useDebug = () => {
             });
         }
     }, [log]);
-
-    useGoBackOnEscape();
-
-    const userFlag = '<USERNAME>';
-    ipcRenderer.on('get-logs', (data) => {
-        let logs = String(data);
-        logs = logs.replaceAll(username || '', userFlag);
-        logs = logs.replaceAll(/\\\\/g, '\\');
-        setLog(logs);
-    });
 
     const handleCopy = useCallback(
         (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLDivElement>) => {

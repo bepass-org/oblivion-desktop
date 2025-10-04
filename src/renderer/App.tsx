@@ -9,14 +9,12 @@ import 'assets/css/noto.css';
 import 'assets/css/style.css';
 
 import SplashScreen from './pages/SplashScreen';
-import { openDevtoolsOnCtrlShiftI } from './lib/dx';
 import { loadLang, loadTheme, loadSettings } from './lib/loaders';
 import { getIspName } from './lib/getIspName';
 import AppRoutes from './routes';
 
 export default function App() {
     useEffect(() => {
-        openDevtoolsOnCtrlShiftI();
         loadTheme();
         loadLang();
         loadSettings();
