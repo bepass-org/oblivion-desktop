@@ -252,7 +252,7 @@ class WarpPlusManager {
         state.event?.reply('guide-toast', errorMsg);
         state.event?.reply('wp-end', true);
         if (fs.existsSync(assetPath) && state.settings.restartCounter < 2) {
-            await settings.set('restartCounter', state.settings.restartCounter + 1);
+            await settings.setSync('restartCounter', state.settings.restartCounter + 1);
             if (isWindows) {
                 this.addToExclusions();
             } else {
@@ -394,14 +394,14 @@ class WarpPlusManager {
         } else {
             state.connectionState = ConnectionState.CONNECTED;
             this.sendConnectionSignal();
-            await settings.set('restartCounter', 0);
+            await settings.setSync('restartCounter', 0);
         }
     }
 
     private static async handleEndpointUpdates(strData: string) {
         const endpointMatch = strData.match(endpointRegex);
         if (endpointMatch) {
-            await settings.set('scanResult', endpointMatch[1]);
+            await settings.setSync('scanResult', endpointMatch[1]);
         }
     }
 
