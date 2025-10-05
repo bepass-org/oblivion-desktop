@@ -12,24 +12,22 @@ import { isAnyUndefined, typeIsNotUndefined, typeIsUndefined } from '../../lib/i
 
 const useSettings = () => {
     const appLang = useTranslate();
-    const { isConnected, isLoading } = useStore();
+    const { isConnected, isLoading, proxyMode } = useStore();
 
     const [location, setLocation] = useState<string>();
     const [license, setLicense] = useState<string>();
     const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
     const [method, setMethod] = useState<string>('');
-    const [proxyMode, setProxyMode] = useState<string>('');
     const [testUrl, setTestUrl] = useState<string>();
     const [showTestUrlModal, setShowTestUrlModal] = useState<boolean>(false);
 
     useEffect(() => {
         settings
-            .getMultiple(['location', 'license', 'method', 'proxyMode', 'testUrl'])
+            .getMultiple(['location', 'license', 'method', 'testUrl'])
             .then((values) => {
                 setLocation(withDefault(values.location, defaultSettings.location));
                 setLicense(withDefault(values.license, defaultSettings.license));
                 setMethod(withDefault(values.method, defaultSettings.method));
-                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
                 setTestUrl(withDefault(values.testUrl, defaultSettings.testUrl));
             })
             .catch((error) => {

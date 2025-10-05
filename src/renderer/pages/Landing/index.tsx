@@ -80,7 +80,6 @@ export default function Landing() {
                 isLoading={isLoading}
                 onSubmit={onSubmit}
                 ping={ping}
-                proxyMode={proxyMode}
                 statusText={statusText}
                 proxyStatus={proxyStatus}
                 appVersion={appVersion}

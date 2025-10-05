@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Toaster } from 'react-hot-toast';
+import useOptions from './useOptions';
 import Nav from '../../components/Nav';
 import PortModal from '../../components/Modal/Port';
 import Tabs from '../../components/Tabs';
@@ -8,7 +9,6 @@ import Dropdown, { DropdownItem } from '../../components/Dropdown';
 import { dnsServers } from '../../../defaultSettings';
 //import { platform } from '../../lib/utils';
 import DnsModal from '../../components/Modal/DNS';
-import { useOptionsContext } from '../../context/GlobalContext';
 import { isAnyUndefined } from '../../lib/isAnyUndefined';
 
 const proxyModes: DropdownItem[] = [
@@ -32,6 +32,7 @@ export default function Network() {
         dns,
         setPort,
         setRoutingRules,
+        setShowRoutingRulesModal,
         handleCheckIpDataOnClick,
         handleCheckIpDataOnKeyDown,
         handleDataUsageOnClick,
@@ -63,7 +64,7 @@ export default function Network() {
         cleanDns,
         setCustomDns,
         setShowDnsModal
-    } = useOptionsContext();
+    } = useOptions();
 
     if (isAnyUndefined(ipData, port, proxyMode, dns, routingRules, dataUsage)) {
         return <div className='settings' />;
@@ -237,6 +238,7 @@ export default function Network() {
                 setRoutingRules={setRoutingRules}
                 title={appLang?.settings?.routing_rules}
                 isOpen={showRoutingRulesModal}
+                setIsOpen={setShowRoutingRulesModal}
                 onClose={onCloseRoutingRulesModal}
             />
             <Toaster

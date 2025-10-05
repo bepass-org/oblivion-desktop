@@ -23,11 +23,6 @@ export type IpConfig = {
     ip: string;
 };
 
-export type DownloadProgress = {
-    status: string;
-    percent: number;
-};
-
 let isFetching = false;
 let cachedIpInfo: IpConfig | null = null;
 let lastFetchTime = 0;
@@ -55,7 +50,8 @@ const useLanding = () => {
         statusText,
         setStatusText,
         proxyStatus,
-        setProxyStatus
+        setProxyStatus,
+        proxyMode
     } = useStore();
     const [ipInfo, setIpInfo] = useState<IpConfig>({
         countryCode: false,
@@ -73,7 +69,6 @@ const useLanding = () => {
     const [ipData, setIpData] = useState<boolean>();
     const [method, setMethod] = useState<string>('');
     const [ping, setPing] = useState<number>(0);
-    const [proxyMode, setProxyMode] = useState<string>('');
     const [netStats, setNetStats] = useState<INetStats>(defaultNetStats);
     const [dataUsage, setDataUsage] = useState<boolean>(false);
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
@@ -199,7 +194,6 @@ const useLanding = () => {
                 'lang',
                 'ipData',
                 'method',
-                'proxyMode',
                 //'shortcut',
                 'dataUsage',
                 'betaRelease',
@@ -209,7 +203,6 @@ const useLanding = () => {
                 setLang(withDefault(values.lang, getLanguageName()));
                 setIpData(withDefault(values.ipData, defaultSettings.ipData));
                 setMethod(withDefault(values.method, defaultSettings.method));
-                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
                 // setShortcut(withDefault(values.shortcut, defaultSettings.shortcut)); // Optional if needed
                 setDataUsage(withDefault(values.dataUsage, defaultSettings.dataUsage));
                 setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));

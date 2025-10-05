@@ -3,33 +3,23 @@ import { settings } from '../../../lib/settings';
 import useTranslate from '../../../../localization/useTranslate';
 import { useStore } from '../../../store';
 import { settingsHaveChangedToast } from '../../../lib/toasts';
-import { defaultSettings, defaultRoutingRules } from '../../../../defaultSettings';
+import { defaultRoutingRules } from '../../../../defaultSettings';
 import useButtonKeyDown from '../../../hooks/useButtonKeyDown';
-import { withDefault } from '../../../lib/withDefault';
 
 interface RoutingRulesModalProps {
-    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
     onClose: () => void;
     routingRules: string;
     setRoutingRules: (value: string) => void;
 }
 
 const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
-    const { isConnected, isLoading } = useStore();
-    const { isOpen, onClose, routingRules, setRoutingRules } = props;
+    const { isConnected, isLoading, proxyMode } = useStore();
+    const { setIsOpen, onClose, routingRules, setRoutingRules } = props;
     const [routingRulesInput, setRoutingRulesInput] = useState<string>(routingRules);
-    const [showModal, setShowModal] = useState<boolean>(isOpen);
-    const [proxyMode, setProxyMode] = useState<string>('');
-
-    useEffect(() => {
-        (setShowModal(isOpen), [isOpen]);
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(withDefault(value, defaultSettings.proxyMode));
-        });
-    });
 
     const handleOnClose = useCallback(() => {
-        setShowModal(false);
+        setIsOpen(false);
         setTimeout(onClose, 300);
     }, [onClose]);
 
@@ -133,7 +123,6 @@ const useRoutingRulesModal = (props: RoutingRulesModalProps) => {
         onSaveModal,
         onUpdateKeyDown,
         routingRulesInput,
-        showModal,
         proxyMode
     };
 };

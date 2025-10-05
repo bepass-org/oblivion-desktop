@@ -16,7 +16,7 @@ export type Profile = {
 };
 
 const useScanner = () => {
-    const { isConnected, isLoading } = useStore();
+    const { isConnected, isLoading, proxyMode } = useStore();
     const appLang = useTranslate();
 
     const [endpoint, setEndpoint] = useState<string>();
@@ -27,11 +27,10 @@ const useScanner = () => {
     const [rtt, setRtt] = useState<string>();
     const [reserved, setReserved] = useState<boolean>();
     const [lang, setLang] = useState<string>('');
-    const [proxyMode, setProxyMode] = useState<string>('');
 
     useEffect(() => {
         settings
-            .getMultiple(['endpoint', 'ipType', 'rtt', 'reserved', 'profiles', 'lang', 'proxyMode'])
+            .getMultiple(['endpoint', 'ipType', 'rtt', 'reserved', 'profiles', 'lang'])
             .then((values) => {
                 setEndpoint(withDefault(values.endpoint, defaultSettings.endpoint));
                 setIpType(withDefault(values.ipType, defaultSettings.ipType));
@@ -39,7 +38,6 @@ const useScanner = () => {
                 setReserved(withDefault(values.reserved, defaultSettings.reserved));
                 setProfiles(JSON.parse(withDefault(values.profiles, defaultSettings.profiles)));
                 setLang(withDefault(values.lang, defaultSettings.lang));
-                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);

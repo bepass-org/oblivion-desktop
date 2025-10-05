@@ -5,6 +5,7 @@ import Textarea from '../../Textarea';
 interface RoutingRulesModalProps {
     title: string;
     isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
     onClose: () => void;
     routingRules: string;
     setRoutingRules: (value: string) => void;
@@ -13,6 +14,7 @@ interface RoutingRulesModalProps {
 export default function RoutingRulesModal({
     title,
     isOpen,
+    setIsOpen,
     onClose,
     routingRules,
     setRoutingRules
@@ -27,10 +29,9 @@ export default function RoutingRulesModal({
         onSaveModal,
         onUpdateKeyDown,
         routingRulesInput,
-        showModal,
         proxyMode
     } = useRoutingRulesModal({
-        isOpen,
+        setIsOpen,
         onClose,
         routingRules,
         setRoutingRules
@@ -39,7 +40,7 @@ export default function RoutingRulesModal({
     if (!isOpen) return <></>;
 
     return (
-        <div className={classNames('dialog', !showModal ? 'no-opacity' : '')}>
+        <div className={classNames('dialog', !isOpen ? 'no-opacity' : '')}>
             <div className='dialogBg' onClick={handleOnClose} role='presentation' />
             <div className='dialogBox'>
                 <div className='container'>

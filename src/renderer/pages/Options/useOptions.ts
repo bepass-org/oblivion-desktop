@@ -16,7 +16,7 @@ import { withDefault } from '../../lib/withDefault';
 import { useStore } from '../../store';
 
 const useOptions = () => {
-    const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate } = useStore();
+    const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate, proxyMode } = useStore();
 
     const [theme, setTheme] = useState<string>();
     const [lang, setLang] = useState<string>('');
@@ -27,7 +27,6 @@ const useOptions = () => {
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [soundEffect, setSoundEffect] = useState<boolean>(false);
-    const [proxyMode, setProxyMode] = useState<string>('');
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
 
     const appLang = useTranslate();
@@ -60,7 +59,6 @@ const useOptions = () => {
                 'forceClose',
                 'shortcut',
                 'soundEffect',
-                'proxyMode',
                 'betaRelease'
             ])
             .then((values) => {
@@ -75,7 +73,6 @@ const useOptions = () => {
                 setForceClose(withDefault(values.forceClose, defaultSettings.forceClose));
                 setShortcut(withDefault(values.shortcut, defaultSettings.shortcut));
                 setSoundEffect(withDefault(values.soundEffect, defaultSettings.soundEffect));
-                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
                 setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));
             })
             .catch((error) => {
