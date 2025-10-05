@@ -28,20 +28,20 @@ export default function globalEvents() {
         setProxyMode
     } = useStore();
 
-    settings
-        .get('proxyMode')
-        .catch(() => undefined)
-        .then((value) => withDefault(value, defaultSettings.proxyMode))
-        .then((value) => {
-            setProxyStatus(value);
-            setProxyMode(value);
-        });
-
     const appLang = useTranslate();
 
     const navigate = useNavigate();
 
     useEffect(() => {
+        settings
+            .get('proxyMode')
+            .catch(() => undefined)
+            .then((value) => withDefault(value, defaultSettings.proxyMode))
+            .then((value) => {
+                setProxyStatus(value);
+                setProxyMode(value);
+            });
+
         ipcRenderer.on('tray-menu', (args: any) => {
             if (args.key === 'connect' && !isLoading) {
                 setProxyStatus(proxyMode);
