@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import { defaultSettings } from '../../../defaultSettings';
 import { ipcRenderer } from '../../lib/utils';
@@ -17,9 +16,7 @@ import { withDefault } from '../../lib/withDefault';
 import { useStore } from '../../store';
 
 const useOptions = () => {
-    useGoBackOnEscape();
-
-    const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate } = useStore();
+    const { isCheckingForUpdates, setIsCheckingForUpdates, hasNewUpdate, proxyMode } = useStore();
 
     const [theme, setTheme] = useState<string>();
     const [lang, setLang] = useState<string>('');
@@ -30,7 +27,6 @@ const useOptions = () => {
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
     const [shortcut, setShortcut] = useState<boolean>(false);
     const [soundEffect, setSoundEffect] = useState<boolean>(false);
-    const [proxyMode, setProxyMode] = useState<string>('');
     const [betaRelease, setBetaRelease] = useState<boolean>(false);
 
     const appLang = useTranslate();
@@ -39,8 +35,6 @@ const useOptions = () => {
     const { targetId } = state || {};
     const langRef = useRef<HTMLDivElement>(null);
     const detectingSystemTheme = window?.matchMedia('(prefers-color-scheme: dark)')?.matches;
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(function () {
@@ -65,7 +59,6 @@ const useOptions = () => {
                 'forceClose',
                 'shortcut',
                 'soundEffect',
-                'proxyMode',
                 'betaRelease'
             ])
             .then((values) => {
@@ -80,18 +73,11 @@ const useOptions = () => {
                 setForceClose(withDefault(values.forceClose, defaultSettings.forceClose));
                 setShortcut(withDefault(values.shortcut, defaultSettings.shortcut));
                 setSoundEffect(withDefault(values.soundEffect, defaultSettings.soundEffect));
-                setProxyMode(withDefault(values.proxyMode, defaultSettings.proxyMode));
                 setBetaRelease(withDefault(values.betaRelease, defaultSettings.betaRelease));
             })
             .catch((error) => {
                 console.error('Error fetching settings:', error);
             });
-
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
     }, []);
 
     const onCloseRestoreModal = useCallback(() => {

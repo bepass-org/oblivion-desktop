@@ -24,27 +24,35 @@ export type Channels =
 
 const electronHandler = {
     ipcRenderer: {
-        sendMessage(channel: Channels, ...args: unknown[]) {
+        sendMessage(channel: Channels, ...args: any[]) {
             ipcRenderer.send(channel, ...args);
         },
-        on(channel: Channels, func: (...args: unknown[]) => void) {
-            const subscription = (_event: IpcRendererEvent, ...args: unknown[]) => func(...args);
+        on(
+            channel: Channels,
+            func: (...args: any[]) => void
+        ): (_event: Electron.IpcRendererEvent, ...args: any[]) => void {
+            const subscription = (_event: IpcRendererEvent, ...args: any[]) => func(...args);
             ipcRenderer.on(channel, subscription);
-            //console.log(`Adding listener for ${channel}`);
 
-            return () => {
-                ipcRenderer.removeListener(channel, subscription);
-                //console.log(`Removed listener for ${channel}`);
-            };
+            return subscription;
         },
-        once(channel: Channels, func: (...args: unknown[]) => void) {
-            ipcRenderer.once(channel, (_event, ...args) => func(...args));
+        once(
+            channel: Channels,
+            func: (...args: any[]) => void
+        ): (_event: Electron.IpcRendererEvent, ...args: any[]) => void {
+            const subscription = (_event: IpcRendererEvent, ...args: any[]) => func(...args);
+            ipcRenderer.once(channel, subscription);
+
+            return subscription;
         },
-        removeListener(channel: Channels, func: (...args: unknown[]) => void) {
+        removeListener(channel: Channels, func: (...args: any[]) => void) {
             ipcRenderer.removeListener(channel, func);
         },
         removeAllListeners(channel: Channels) {
             ipcRenderer.removeAllListeners(channel);
+        },
+        invoke(channel: Channels, ...args: any[]) {
+            return ipcRenderer.invoke(channel, ...args);
         },
         clean() {
             ipcRenderer.removeAllListeners('settings');

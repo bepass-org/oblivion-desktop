@@ -12,7 +12,6 @@ interface LandingBodyProps {
     isLoading: boolean;
     ipInfo: IpConfig;
     ipData?: boolean;
-    proxyMode: string;
     ping: number;
     statusText: string;
     onSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -38,7 +37,6 @@ const LandingBody: FC<LandingBodyProps> = ({
     isLoading,
     onSubmit,
     ping,
-    proxyMode,
     statusText,
     proxyStatus,
     appVersion,
@@ -90,12 +88,7 @@ const LandingBody: FC<LandingBodyProps> = ({
                         className={classNames(
                             'inFoot',
                             'withIp',
-                            isConnected &&
-                                !isLoading &&
-                                proxyMode !== 'none' &&
-                                proxyStatus !== 'none' &&
-                                proxyMode !== '' &&
-                                ipData
+                            isConnected && !isLoading && proxyStatus !== 'none' && ipData
                                 ? 'active'
                                 : ''
                         )}

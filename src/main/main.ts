@@ -598,7 +598,7 @@ class OblivionDesktop {
                                             } else {
                                                 log.info('✅ Old updater file deleted.');
                                             }
-                                            settings.set('updaterVersion', latestVersion);
+                                            settings.setSync('updaterVersion', latestVersion);
                                             launchUpdater(updaterPath);
                                         });
                                     });
@@ -1179,7 +1179,7 @@ class OblivionDesktop {
         const getList = interfaces
             .filter((i) => i.ip4 && !i.internal && !i.ip4.startsWith('169.254.'))
             .map((i) => i.ip4);
-        await settings.set('networkList', JSON.stringify(getList));
+        await settings.setSync('networkList', JSON.stringify(getList));
         return getList;
     }
 

@@ -46,6 +46,13 @@ export const useSpeedTest = () => {
             }
             setTestResults(data);
         });
+
+        return () => {
+            if (isRunning) {
+                ipcRenderer.sendMessage('speed-test', 'pause');
+            }
+            ipcRenderer.removeAllListeners('speed-test');
+        };
     }, [appLang?.toast?.offline]);
 
     const checkServerAvailability = useCallback(async () => {

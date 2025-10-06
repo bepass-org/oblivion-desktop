@@ -17,6 +17,7 @@ export default function SingBox() {
     const {
         appLang,
         settingsState,
+        proxyMode,
         handleToggleSetting,
         handleSelectChange,
         handleKeyDown,
@@ -38,8 +39,7 @@ export default function SingBox() {
         singBoxSniff: sniff,
         singBoxAddrType: addrType,
         singBoxUdpBlock: udpBlock,
-        singBoxDiscordBypass: discordBypass,
-        proxyMode
+        singBoxDiscordBypass: discordBypass
     } = settingsState;
 
     if (

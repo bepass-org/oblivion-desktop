@@ -1,22 +1,22 @@
 // improves developer experience
 
+import { useEffect } from 'react';
 import { ipcRenderer } from './utils';
 
 export const openDevtoolsOnCtrlShiftI = () => {
-    // open devtools on dev environment by ctrl+shift+i
-    let keysDown: any = {};
-    window.addEventListener('keydown', function (event) {
-        keysDown[event.keyCode] = true;
-        // Check if Ctrl, Shift, and I keys are down at the same time
-        if (keysDown[17] && keysDown[16] && keysDown[73]) {
-            ipcRenderer.sendMessage('open-devtools');
-            setTimeout(() => {
-                keysDown = {};
-            }, 0);
+    useEffect(() => {
+        // open devtools on dev environment by ctrl+shift+i
+        function onKeyDown(event: KeyboardEvent) {
+            // Check if Ctrl, Shift, and I keys are down at the same time
+            if (event.ctrlKey && event.shiftKey && event.code == 'KeyI') {
+                ipcRenderer.sendMessage('open-devtools');
+            }
         }
-    });
 
-    window.addEventListener('keyup', function (event) {
-        delete keysDown[event.keyCode];
-    });
+        window.addEventListener('keydown', onKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', onKeyDown);
+        };
+    }, []);
 };

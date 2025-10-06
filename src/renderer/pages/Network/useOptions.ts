@@ -1,6 +1,4 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { useStore } from '../../store';
 import { settings } from '../../lib/settings';
 import { toPersianNumber } from '../../lib/toPersianNumber';
@@ -15,13 +13,9 @@ import { withDefault } from '../../lib/withDefault';
 import { typeIsNotUndefined } from '../../lib/isAnyUndefined';
 
 const useOptions = () => {
-    const { isConnected, isLoading } = useStore();
+    const { isConnected, isLoading, proxyMode, setProxyMode } = useStore();
     const [lang, setLang] = useState<string>('');
 
-    useGoBackOnEscape();
-
-    // TODO rename to networkConfiguration
-    const [proxyMode, setProxyMode] = useState<string>('');
     //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
     const [port, setPort] = useState<number>(defaultSettings.port);
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
@@ -40,14 +34,11 @@ const useOptions = () => {
     const [plainDns, setPlainDns] = useState<string>();
     const [doh, setDoh] = useState<string>();
 
-    const navigate = useNavigate();
-
     useEffect(() => {
         settings
             .getMultiple([
                 'ipData',
                 'port',
-                'proxyMode',
                 'dns',
                 'routingRules',
                 'lang',
@@ -59,9 +50,7 @@ const useOptions = () => {
                 'networkList'
             ])
             .then((values) => {
-                const checkProxy = withDefault(values.proxyMode, defaultSettings.proxyMode);
                 setPort(withDefault(values.port, defaultSettings.port));
-                setProxyMode(checkProxy);
                 setIpData(withDefault(values.ipData, defaultSettings.ipData));
                 setDataUsage(withDefault(values.dataUsage, defaultSettings.dataUsage));
                 setHostIp(withDefault(values.hostIP, defaultSettings.hostIP));
@@ -88,7 +77,7 @@ const useOptions = () => {
                         }
                     });
                 }
-                if (checkProxy === 'none') {
+                if (proxyMode === 'none') {
                     setIpData(false);
                     settings.set('ipData', false);
                     setDataUsage(false);
@@ -98,12 +87,6 @@ const useOptions = () => {
             .catch((error) => {
                 console.error('Error fetching settings:', error);
             });
-
-        ipcRenderer.on('tray-menu', (args: any) => {
-            if (args.key === 'changePage') {
-                navigate(args.msg);
-            }
-        });
     }, []);
 
     const filteredNetworkList: DropdownItem[] = useMemo(() => {
@@ -153,8 +136,8 @@ const useOptions = () => {
     }, []);
 
     const onChangeProxyMode = useCallback(
-        (input: ChangeEvent<HTMLSelectElement> | string) => {
-            const value = typeof input === 'string' ? input : input.target.value;
+        (input: ChangeEvent<HTMLSelectElement>) => {
+            const { value } = input.target;
             //if (proxyMode === value) return;
 
             setProxyMode(value);
@@ -298,6 +281,7 @@ const useOptions = () => {
         dataUsage,
         setPort,
         setRoutingRules,
+        setShowRoutingRulesModal,
         countRoutingRules,
         onClosePortModal,
         onCloseRoutingRulesModal,

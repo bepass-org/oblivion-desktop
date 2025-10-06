@@ -1,5 +1,4 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import useGoBackOnEscape from '../../hooks/useGoBackOnEscape';
 import { settings } from '../../lib/settings';
 import useTranslate from '../../../localization/useTranslate';
 import {
@@ -12,6 +11,7 @@ import {
     settingsKeys
 } from '../../../defaultSettings';
 import useButtonKeyDown from '../../hooks/useButtonKeyDown';
+import { useStore } from '../../store';
 
 type SettingValue = string | number | boolean | null;
 
@@ -20,7 +20,7 @@ type SettingsState = {
 };
 
 const useSingBox = () => {
-    useGoBackOnEscape();
+    const { proxyMode } = useStore();
     const appLang = useTranslate();
     const [showPortModal, setShowPortModal] = useState<boolean>(false);
 
@@ -49,7 +49,6 @@ const useSingBox = () => {
                 const keysToFetch: settingsKeys[] = [
                     'closeHelper',
                     'singBoxMTU',
-                    'proxyMode',
                     'singBoxGeoIp',
                     'singBoxGeoSite',
                     'singBoxGeoBlock',
@@ -124,6 +123,7 @@ const useSingBox = () => {
         appLang,
         settingsState,
         setSettingsState,
+        proxyMode,
         handleToggleSetting,
         handleSelectChange,
         handleKeyDown,
