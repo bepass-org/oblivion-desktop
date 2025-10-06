@@ -8,7 +8,7 @@ import {
     settingsHaveChangedToast,
     stopLoadingToast
 } from './toasts';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import useTranslate from '../../localization/useTranslate';
 import { settings } from './settings';
 import { withDefault } from './withDefault';
