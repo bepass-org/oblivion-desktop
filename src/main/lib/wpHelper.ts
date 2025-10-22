@@ -55,7 +55,7 @@ export const getUserSettings = async () => {
         typeof plainDns === 'string' &&
         plainDns !== ''
             ? plainDns
-            : typeof dns === 'string' && dns !== '' && dns !== '1.1.1.1' && dns !== 'custom'
+            : typeof dns === 'string' && dns !== 'custom' && dns !== 'local'
               ? dns
               : '';
 

@@ -32,51 +32,81 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                   output: sbLogPath
               };
 
+    const DoHDns = new URL(config.DoHDns);
+
     const configuration = {
         log: logConfig,
         dns: {
             independent_cache: true,
             strategy: 'prefer_ipv4',
+            final: 'dns-remote',
             servers: [
                 {
                     tag: 'dns-remote',
-                    address: config.DoHDns,
+                    type: 'https',
+                    server: DoHDns.hostname,
+                    server_port: DoHDns.port === '' ? 443 : DoHDns.port,
+                    path: DoHDns.pathname,
                     detour: 'proxy',
-                    ...(!isIpBasedDoH(config.DoHDns) && { address_resolver: 'dns-cf' })
+                    ...(!isIpBasedDoH(config.DoHDns) && { domain_resolver: 'dns-cf' })
                 },
                 {
                     tag: 'dns-direct',
-                    address: config.plainDns,
+                    ...(config.plainDns === '' ? {
+                        type: 'local',
+                    } : {
+                        type: 'udp',
+                        server: config.plainDns
+                    }),
                     detour: 'direct'
                 },
                 ...(!isIpBasedDoH(config.DoHDns)
                     ? [
                           {
                               tag: 'dns-cf',
-                              address: '1.1.1.1',
-                              detour: 'direct'
+                              type: 'udp',
+                              server: '1.1.1.1',
+                              detour: 'proxy'
                           }
                       ]
                     : []),
                 {
-                    tag: 'dns-block',
-                    address: 'rcode://success'
+                    tag: 'dns-hosts',
+                    type: 'hosts'
                 }
             ],
             rules: [
+                ...(domainSetException.length > 0
+                    ? [
+                          {
+                              action: 'route',
+                              domain: domainSetException,
+                              outbound: 'dns-remote'
+                          }
+                      ]
+                    : []),
                 {
-                    outbound: 'block',
-                    server: 'dns-block',
-                    disable_cache: true
+                    server: 'dns-hosts',
+                    ip_accept_any: true
                 },
-                {
-                    outbound: 'direct',
-                    server: 'dns-direct'
-                },
-                {
-                    outbound: 'proxy',
-                    server: 'dns-remote'
-                }
+                ...(domainSetDirect.length > 0
+                    ? [
+                          {
+                              action: 'route',
+                              domain: domainSetDirect,
+                              server: 'dns-direct'
+                          }
+                      ]
+                    : []),
+                ...(rulesConfig.domainSuffixSet.length > 0
+                    ? [
+                          {
+                              action: 'route',
+                              domain_suffix: rulesConfig.domainSuffixSet,
+                              server: 'dns-direct'
+                          }
+                      ]
+                    : [])
             ]
         },
         inbounds: [
@@ -107,24 +137,27 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
             },
             {
                 type: 'direct',
-                tag: 'direct'
-            },
-            {
-                type: 'block',
-                tag: 'block'
-            },
-            {
-                type: 'dns',
-                tag: 'dns-out'
+                tag: 'direct',
+                domain_resolver: 'dns-direct'
             }
         ],
         route: {
             rules: [
-                { protocol: 'dns', outbound: 'dns-out' },
-                { ip_is_private: true, outbound: 'direct' },
+                {
+                    action: 'sniff'
+                },
+                {
+                    protocol: 'dns',
+                    action: 'hijack-dns'
+                },
+                {
+                    action: 'resolve'
+                },
+                { action: 'route', ip_is_private: true, outbound: 'direct' },
                 ...(config.socksIp
                     ? [
                           {
+                              action: 'route',
                               ip_cidr: [
                                   config.socksIp === '0.0.0.0'
                                       ? '0.0.0.0/0'
@@ -137,10 +170,12 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(config.discordBypass
                     ? [
                           {
+                              action: 'route',
                               domain: ['full:updates.discord.com'],
                               outbound: 'proxy'
                           },
                           {
+                              action: 'route',
                               process_name: [
                                   'Discord' + (isWindows ? '.exe' : ''),
                                   'discord' + (isWindows ? '.exe' : '')
@@ -149,6 +184,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               outbound: 'direct'
                           },
                           {
+                              action: 'route',
                               domain: [
                                   'full:discord.com',
                                   'full:*.discord.com',
@@ -164,6 +200,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
 
                 // Universal required ports for all platforms
                 {
+                    action: 'route',
                     port: [
                         123, // NTP (Network Time Protocol) for system time sync
                         1900, // SSDP (Simple Service Discovery Protocol) for device discovery
@@ -176,6 +213,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(isWindows
                     ? [
                           {
+                              action: 'route',
                               network: 'udp',
                               port: [
                                   123, // The NTP port uses UDP and UDP may be blocked by the user
@@ -189,6 +227,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               outbound: 'direct'
                           },
                           {
+                              action: 'route',
                               network: 'tcp',
                               port: [
                                   445, // SMB (Server Message Block) for file sharing
@@ -205,6 +244,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(isDarwin
                     ? [
                           {
+                              action: 'route',
                               network: 'tcp',
                               port: [
                                   631, // IPP (Internet Printing Protocol)
@@ -217,6 +257,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               outbound: 'direct'
                           },
                           {
+                              action: 'route',
                               network: 'udp',
                               port: [
                                   514, // Syslog for system logging
@@ -232,6 +273,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(isLinux
                     ? [
                           {
+                              action: 'route',
                               network: 'tcp',
                               port: [
                                   111, // Portmapper/RPC for service registration
@@ -241,6 +283,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                               outbound: 'direct'
                           },
                           {
+                              action: 'route',
                               network: 'udp',
                               port: [
                                   68, // DHCP client
@@ -253,6 +296,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                     : []),
 
                 {
+                    action: 'route',
                     domain: [
                         'full:time.windows.com',
                         'full:*.pool.ntp.org',
@@ -269,8 +313,8 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(config.udpBlock
                     ? [
                           {
-                              network: 'udp',
-                              outbound: 'block'
+                              action: 'reject',
+                              network: 'udp'
                           }
                       ]
                     : []),
@@ -278,6 +322,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(geoConfig.geoBlock
                     ? [
                           {
+                              action: 'reject',
                               rule_set: [
                                   'geosite-category-ads-all',
                                   'geosite-malware',
@@ -285,22 +330,22 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                                   'geosite-cryptominers',
                                   'geoip-malware',
                                   'geoip-phishing'
-                              ],
-                              outbound: 'block'
+                              ]
                           }
                       ]
                     : []),
                 ...(geoConfig.geoNSFW
                     ? [
                           {
-                              rule_set: 'geosite-nsfw',
-                              outbound: 'block'
+                              action: 'reject',
+                              rule_set: 'geosite-nsfw'
                           }
                       ]
                     : []),
                 ...(rulesConfig.ipSet.length > 0
                     ? [
                           {
+                              action: 'route',
                               ip_cidr: rulesConfig.ipSet,
                               outbound: 'direct'
                           }
@@ -309,6 +354,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(domainSetException.length > 0
                     ? [
                           {
+                              action: 'route',
                               domain: domainSetException,
                               outbound: 'proxy'
                           }
@@ -317,6 +363,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(domainSetDirect.length > 0
                     ? [
                           {
+                              action: 'route',
                               domain: domainSetDirect,
                               outbound: 'direct'
                           }
@@ -325,6 +372,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(rulesConfig.domainSuffixSet.length > 0
                     ? [
                           {
+                              action: 'route',
                               domain_suffix: rulesConfig.domainSuffixSet,
                               outbound: 'direct'
                           }
@@ -333,6 +381,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(rulesConfig.processSet.length > 0
                     ? [
                           {
+                              action: 'route',
                               process_name: rulesConfig.processSet,
                               outbound: 'direct'
                           }
@@ -341,6 +390,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(geoConfig.geoIp !== 'none'
                     ? [
                           {
+                              action: 'route',
                               rule_set: `geoip-${geoConfig.geoIp}`,
                               outbound: 'direct'
                           }
@@ -349,6 +399,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 ...(geoConfig.geoSite !== 'none'
                     ? [
                           {
+                              action: 'route',
                               rule_set: `geosite-${geoConfig.geoSite}`,
                               outbound: 'direct'
                           }
@@ -443,6 +494,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                       ]
                   }
                 : undefined),
+            default_domain_resolver: 'dns-direct',
             final: 'proxy',
             auto_detect_interface: true
         },
