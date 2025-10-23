@@ -360,8 +360,9 @@ class SingBoxManager {
 
     private getDoHDns(dns: any, doh: any): string {
         if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
-        if ((dns === 'custom' || dns === 'local') && doh === '') return `https://${dnsServers[0].value}/dns-query`;
-        return (dns === 'custom' || dns === 'local') ? doh : `https://${dns}/dns-query`;
+        if ((dns === 'custom' || dns === 'local') && doh === '')
+            return `https://${dnsServers[0].value}/dns-query`;
+        return dns === 'custom' || dns === 'local' ? doh : `https://${dns}/dns-query`;
     }
 
     private getTunAddr(addrType: any): string[] {

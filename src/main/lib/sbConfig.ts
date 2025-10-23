@@ -52,12 +52,14 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                 },
                 {
                     tag: 'dns-direct',
-                    ...(config.plainDns === '' ? {
-                        type: 'local',
-                    } : {
-                        type: 'udp',
-                        server: config.plainDns
-                    }),
+                    ...(config.plainDns === ''
+                        ? {
+                              type: 'local'
+                          }
+                        : {
+                              type: 'udp',
+                              server: config.plainDns
+                          }),
                     detour: 'direct'
                 },
                 ...(!isIpBasedDoH(config.DoHDns)
