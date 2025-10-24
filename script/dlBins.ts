@@ -74,7 +74,7 @@ async function dlUnzipMove(url: string, binPath: string, zipFileName: string) {
 }
 
 const warpPlusUrlBase = `https://github.com/bepass-org/warp-plus/releases/download/v${wpVersion}/warp-plus_`;
-const helperUrlBase = `https://github.com/ShadowZagrosDev/oblivion-helper/releases/download/v${helperVersion}/oblivion-helper-`;
+const helperUrlBase = `https://github.com/Dr-Bad/oblivion-helper/releases/download/v${helperVersion}/oblivion-helper-`;
 const netStatsUrlBase = `https://github.com/ShadowZagrosDev/Zag-NetStats/releases/download/v${netStatsVersion}/zag-netStats-`;
 const proxyResetUrlBase = `https://github.com/ircfspace/proxyReset/releases/download/v${proxyResetVersion}/proxy-reset-`;
 const masquePlusUrlBase = `https://github.com/ircfspace/masque-plus/releases/download/v${mpVersion}/masque-plus-`;
