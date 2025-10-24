@@ -50,14 +50,13 @@ export const getUserSettings = async () => {
     appLang = getTranslate(String(withDefault(lang, defaultSettings.lang)));
 
     const finalDns =
-        typeof dns === 'string' &&
-        dns === 'custom' &&
-        typeof plainDns === 'string' &&
-        plainDns !== ''
-            ? plainDns
-            : typeof dns === 'string' && dns !== '' && dns !== '1.1.1.1' && dns !== 'custom'
-              ? dns
-              : '';
+        typeof dns !== 'string' || dns === 'local'
+            ? ''
+            : dns === 'custom'
+              ? typeof plainDns === 'string'
+                  ? plainDns
+                  : ''
+              : dns;
 
     return [
         '--bind',

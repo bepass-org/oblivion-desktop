@@ -353,14 +353,16 @@ class SingBoxManager {
 
     private getPlainDns(dns: any, plainDns: any): string {
         if (typeof dns !== 'string') return dnsServers[0].value;
+        if (dns === 'local') return '';
         if (dns === 'custom' && plainDns === '') return dnsServers[0].value;
         return dns === 'custom' ? plainDns : dns;
     }
 
     private getDoHDns(dns: any, doh: any): string {
         if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
-        if (dns === 'custom' && doh === '') return `https://${dnsServers[0].value}/dns-query`;
-        return dns === 'custom' ? doh : `https://${dns}/dns-query`;
+        if ((dns === 'custom' || dns === 'local') && doh === '')
+            return `https://${dnsServers[0].value}/dns-query`;
+        return dns === 'custom' || dns === 'local' ? doh : `https://${dns}/dns-query`;
     }
 
     private getTunAddr(addrType: any): string[] {
