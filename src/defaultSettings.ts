@@ -162,6 +162,7 @@ export const dnsServers: DropdownItem[] = [
     { value: '1.1.1.1', label: 'Cloudflare' },
     { value: '1.1.1.2', label: 'Cloudflare Security' },
     { value: '1.1.1.3', label: 'Cloudflare Family' },
+    { value: 'local', label: 'Local Resolver' },
     { value: 'custom', label: 'Custom' }
 ];
 
