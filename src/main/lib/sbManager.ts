@@ -297,7 +297,7 @@ class SingBoxManager {
             address,
             endpoint,
             plainDns,
-            doh,
+            DoH,
             singBoxUdpBlock,
             singBoxDiscordBypass
         ] = await Promise.all([
@@ -325,7 +325,7 @@ class SingBoxManager {
             tunSniff: this.getSettingOrDefault(sniff, defaultSettings.singBoxSniff),
             tunAddr: this.getTunAddr(address),
             plainDns: this.getPlainDns(dns, plainDns),
-            DoHDns: this.getDoHDns(dns, doh),
+            DoHDns: this.getDoHDns(dns, DoH),
             tunEndpoint: this.getSettingOrDefault(endpoint, defaultSettings.endpoint),
             udpBlock: this.getSettingOrDefault(singBoxUdpBlock, defaultSettings.singBoxUdpBlock),
             discordBypass: this.getSettingOrDefault(
@@ -360,9 +360,9 @@ class SingBoxManager {
 
     private getDoHDns(dns: any, doh: any): string {
         if (typeof dns !== 'string') return `https://${dnsServers[0].value}/dns-query`;
-        if ((dns === 'custom' || dns === 'local') && doh === '')
+        if (dns === 'local' || (dns === 'custom' && (typeof doh !== 'string' || doh === '')))
             return `https://${dnsServers[0].value}/dns-query`;
-        return dns === 'custom' || dns === 'local' ? doh : `https://${dns}/dns-query`;
+        return dns === 'custom' ? doh : `https://${dns}/dns-query`;
     }
 
     private getTunAddr(addrType: any): string[] {
