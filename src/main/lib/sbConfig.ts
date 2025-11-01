@@ -83,7 +83,7 @@ export function createSbConfig(config: IConfig, geoConfig: IGeoConfig, rulesConf
                           {
                               action: 'route',
                               domain: domainSetException,
-                              outbound: 'dns-remote'
+                              server: 'dns-remote'
                           }
                       ]
                     : []),
