@@ -204,7 +204,7 @@ const useOptions = () => {
             setDns('custom');
             await settings.set('plainDns', newPlainDns);
             await settings.set('DoH', newDoh);
-            await settings.set('dns', dnsServers[3].value);
+            await settings.set('dns', 'custom');
             settingsHaveChangedToast({ ...{ isConnected, isLoading, appLang } });
         },
         [isConnected, isLoading, appLang]
