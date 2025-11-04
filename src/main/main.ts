@@ -23,7 +23,6 @@ import log from 'electron-log';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 //import debug from 'electron-debug';
 import { rimrafSync } from 'rimraf';
-//import { spawn } from 'child_process';
 import sudo from 'sudo-prompt';
 import https from 'https';
 import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
@@ -60,9 +59,11 @@ import {
     usquePath,
     usqueAssetPath,
     mpPath,
-    mpAssetPath
+    mpAssetPath,
+    workingDirPath
 } from '../constants';
 import packageJsonData from '../../package.json';
+import { spawnSync } from 'child_process';
 
 const APP_TITLE = `Oblivion Desktop${isDev() ? ' ᴅᴇᴠ' : ''}`;
 const WINDOW_DIMENSIONS = {
@@ -139,6 +140,14 @@ class OblivionDesktop {
             app.exit(0);
             return;
         }
+
+        try {
+            if (!existsSync(path.join(workingDirPath, 'config.json'))) {
+                spawnSync(usquePath, ['register', '-a', '-n', 'masque-plus'], {
+                    cwd: workingDirPath
+                });
+            }
+        } catch {}
 
         await this.setupInitialConfiguration();
         this.setupIpcEvents();
