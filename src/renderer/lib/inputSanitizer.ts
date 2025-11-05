@@ -16,7 +16,7 @@ type ConfigType =
           endpoint: string;
       }
     | {
-          method: 'warp' | 'psiphon' | 'gool';
+          method: 'warp' | 'psiphon' | 'gool' | 'masque';
           endpoint: string;
           location: string;
           license: string;
@@ -183,9 +183,10 @@ export const parseEndpointConfig = (pastedText: string): ConfigType | null => {
 };
 
 export const parseConnectionConfig = (pastedText: string): ConfigType | null => {
-    const match = /^oblivion:\/\/(warp|psiphon|gool)@([^?]*)\??(.*)$/i.exec(pastedText);
+    const match = /^oblivion:\/\/(warp|psiphon|gool|masque)@([^?]*)\??(.*)$/i.exec(pastedText);
     if (!match) return null;
-    const method: 'warp' | 'psiphon' | 'gool' = (match[1] as any) || defaultSettings.method;
+    const method: 'warp' | 'psiphon' | 'gool' | 'masque' =
+        (match[1] as any) || defaultSettings.method;
     const endpoint = match[2] || defaultSettings.endpoint;
     const params = match[3] ? new URLSearchParams(match[3]) : new URLSearchParams();
     const location = validateCountry(params?.get('location') || '', method);
