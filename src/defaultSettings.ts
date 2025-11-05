@@ -251,5 +251,6 @@ export const defaultRoutingRules: { type: string; value: string }[] = [
     { type: 'domain', value: 'bargheman.com' },
     { type: 'domain', value: 'digikala.com' },
     { type: 'domain', value: 'web.whatsapp.com' },
-    { type: 'domain', value: 'aparat.com' }
+    { type: 'domain', value: 'aparat.com' },
+    { type: 'domain', value: 'chatgpt.com' }
 ];
