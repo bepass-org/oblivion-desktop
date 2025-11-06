@@ -78,7 +78,7 @@ async function removeStartupProxyReset(): Promise<void> {
         if (existingValue === undefined) {
             return;
         }
-        await regedit.deleteKey([path.join(registryPath, valueName)]);
+        await (regedit as any).deleteValue([path.join(registryPath, valueName)]);
         log.info('Proxy reset script removed.');
     } catch (err) {
         console.error('Failed to remove proxy reset:', err);

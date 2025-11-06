@@ -25,7 +25,6 @@ import log from 'electron-log';
 import { rimrafSync } from 'rimraf';
 import sudo from 'sudo-prompt';
 import https from 'https';
-import regeditModule, { RegistryPutItem, promisified as regedit } from 'regedit';
 import { networkInterfaces } from 'systeminformation';
 import MenuBuilder from './menu';
 import { exitTheApp, isDev, isDebug, versionComparison } from './lib/utils';
@@ -48,7 +47,6 @@ import {
     singBoxManager,
     downloadedPath,
     updaterPath,
-    regeditVbsDirPath,
     windowPosition,
     proxyResetPath,
     proxyResetAssetPath,
