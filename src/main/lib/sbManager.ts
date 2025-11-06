@@ -2,7 +2,7 @@ import { ipcMain, IpcMainEvent } from 'electron';
 import log from 'electron-log';
 import settings from 'electron-settings';
 
-import { spawn, exec } from 'child_process';
+import { spawn, execSync } from 'child_process';
 import fs from 'fs';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
@@ -124,18 +124,32 @@ class SingBoxManager {
     }
 
     public async stopHelper(): Promise<void> {
-        if (!(await this.isProcessRunning(helperFileName))) return;
+        if (!this.isProcessRunning(helperFileName)) return;
 
         log.info('Stopping Oblivion-Helper...');
-        this.helperClient.Exit({}, () => {});
+        this.helperClient.Exit({}, (err: GrpcError) => {
+            if (err) {
+                const messagePart = err.message.substring(err.message.indexOf(':') + 1).trim();
+                const errorCodeLabel = mapGrpcErrorCodeToLabel(err.code);
+                const errorMessage = `Helper Error: [${errorCodeLabel}] ${messagePart}`;
+                log.error(errorMessage);
+            }
+        });
         await this.delay(CONFIG.delays.statusMonitor);
     }
 
     public async stopHelperOnStart(): Promise<void> {
-        if (!(await this.isProcessRunning(helperFileName))) return;
+        if (!this.isProcessRunning(helperFileName)) return;
 
         log.info('Stopping Oblivion-Helper on startup...');
-        this.helperClient.Exit({}, () => {});
+        this.helperClient.Exit({}, (err: GrpcError) => {
+            if (err) {
+                const messagePart = err.message.substring(err.message.indexOf(':') + 1).trim();
+                const errorCodeLabel = mapGrpcErrorCodeToLabel(err.code);
+                const errorMessage = `Helper Error: [${errorCodeLabel}] ${messagePart}`;
+                log.error(errorMessage);
+            }
+        });
         await this.delay(CONFIG.delays.statusMonitor * 2);
         this.isListeningToHelper = false;
     }
@@ -198,7 +212,7 @@ class SingBoxManager {
     }
 
     private async ensureHelperIsRunning(): Promise<boolean> {
-        return (await this.isProcessRunning(helperFileName)) || this.startHelper();
+        return this.isProcessRunning(helperFileName) || this.startHelper();
     }
 
     private async startHelper(): Promise<boolean> {
@@ -460,16 +474,11 @@ class SingBoxManager {
         this.event?.reply('guide-toast', message);
     }
 
-    private isProcessRunning(processName: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            exec(this.platformHelper.running(processName).command, (err, stdout) => {
-                if (err) {
-                    reject(err.message);
-                    return;
-                }
-                resolve(stdout.toLowerCase().includes(processName.toLowerCase()));
-            });
-        });
+    private isProcessRunning(processName: string): boolean {
+        return execSync(this.platformHelper.running(processName).command)
+            .toString('utf-8')
+            .toLowerCase()
+            .includes(processName.toLowerCase());
     }
 
     private async executeGrpcCall<T>(method: GrpcMethod, request: any): Promise<boolean> {
