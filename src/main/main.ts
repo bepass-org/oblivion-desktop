@@ -1156,32 +1156,6 @@ class OblivionDesktop {
         }
     }*/
 
-    private async registerStartupProxyReset(): Promise<void> {
-        if (!isWindows) return;
-        const appPath = `"${proxyResetPath}"`;
-        const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
-        const valueName = 'OblivionProxyReset';
-        try {
-            regeditModule.setExternalVBSLocation(regeditVbsDirPath);
-            const result = await regedit.list([registryPath]);
-            const existingValue = result[registryPath]?.values?.[valueName]?.value;
-            if (existingValue === appPath) {
-                //log.info('Proxy reset script already registered in startup.');
-                return;
-            }
-            const values: RegistryPutItem = {
-                [valueName]: {
-                    value: appPath,
-                    type: 'REG_SZ'
-                }
-            };
-            await regedit.putValue({ [registryPath]: values });
-            log.info('Proxy reset script registered in startup.');
-        } catch (err) {
-            console.error('Failed to register proxy reset:', err);
-        }
-    }
-
     private async getNetworkList() {
         const netData = await networkInterfaces();
         const interfaces = Array.isArray(netData) ? netData : netData ? [netData] : [];
@@ -1214,7 +1188,6 @@ class OblivionDesktop {
                 await this.setupMetaData();
                 await this.getNetworkList();
                 //await this.exitStrategy();
-                await this.registerStartupProxyReset();
                 log.info('od is ready!');
             } catch (error) {
                 log.error('Error during app ready handling:', error);

@@ -10,6 +10,8 @@ import { createPacScript, killPacScriptServer, servePacScript } from './pacScrip
 //import { getTranslateElectron } from '../../localization/electron';
 import { getTranslate } from '../../localization';
 import { withDefault } from '../../renderer/lib/withDefault';
+import { isWindows, proxyResetPath, regeditVbsDirPath } from '../../constants';
+import path from 'path';
 
 const execPromise = promisify(exec);
 
@@ -38,6 +40,50 @@ const setRoutingRules = (value: any) => {
 
 // TODO reset to prev proxy settings on disable
 // TODO refactor (move each os functions to it's own file)
+
+async function registerStartupProxyReset(): Promise<void> {
+    if (!isWindows) return;
+    const appPath = `"${proxyResetPath}"`;
+    const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
+    const valueName = 'OblivionProxyReset';
+    try {
+        regeditModule.setExternalVBSLocation(regeditVbsDirPath);
+        const result = await regedit.list([registryPath]);
+        const existingValue = result[registryPath]?.values?.[valueName]?.value;
+        if (existingValue === appPath) {
+            //log.info('Proxy reset script already registered in startup.');
+            return;
+        }
+        const values: RegistryPutItem = {
+            [valueName]: {
+                value: appPath,
+                type: 'REG_SZ'
+            }
+        };
+        await regedit.putValue({ [registryPath]: values });
+        log.info('Proxy reset script registered in startup.');
+    } catch (err) {
+        console.error('Failed to register proxy reset:', err);
+    }
+}
+
+async function removeStartupProxyReset(): Promise<void> {
+    if (!isWindows) return;
+    const registryPath = `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`;
+    const valueName = 'OblivionProxyReset';
+    try {
+        regeditModule.setExternalVBSLocation(regeditVbsDirPath);
+        const result = await regedit.list([registryPath]);
+        const existingValue = result[registryPath]?.values?.[valueName]?.value;
+        if (existingValue === undefined) {
+            return;
+        }
+        await regedit.deleteKey([path.join(registryPath, valueName)]);
+        log.info('Proxy reset script removed.');
+    } catch (err) {
+        console.error('Failed to remove proxy reset:', err);
+    }
+}
 
 // tweaking windows proxy settings using regedit
 const windowsProxySettings = (config: RegistryPutItem, regeditVbsDirPath: string) => {
@@ -366,6 +412,7 @@ export const enableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMainE
                     pacServeUrl = await servePacScript(Number(port) + 1);
                     log.info('PAC server URL:', pacServeUrl);
                 }
+                await registerStartupProxyReset();
                 await windowsProxySettings(
                     {
                         ProxyServer: {
@@ -517,6 +564,7 @@ export const disableProxy = async (regeditVbsDirPath: string, ipcEvent?: IpcMain
                     },
                     regeditVbsDirPath
                 );
+                await removeStartupProxyReset();
                 log.info('system proxy has been disabled on your system.');
                 resolve();
             } catch (error) {
