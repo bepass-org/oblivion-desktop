@@ -92,7 +92,7 @@
     },
     "dependencies": {
         "@cloudflare/speedtest": "^1.7.0",
-        "@grpc/grpc-js": "^1.14.0",
+        "@grpc/grpc-js": "^1.14.1",
         "@grpc/proto-loader": "^0.8.0",
         "axios": "^1.13.2",
         "classnames": "^2.5.1",
@@ -140,7 +140,7 @@
         "css-minimizer-webpack-plugin": "^7.0.2",
         "decompress": "^4.2.1",
         "detect-port": "^2.1.0",
-        "electron": "^39.1.0",
+        "electron": "^39.1.1",
         "electron-builder": "^26.0.12",
         "electronmon": "^2.0.4",
         "eslint": "^8.49.0",
