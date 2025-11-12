@@ -1,17 +1,13 @@
-/* eslint-disable global-require, import/no-dynamic-require */
-export const cfFlag = (code: string | boolean): string => {
-    const flagMapping: Record<string, string> = {
-        ir: 'iran',
-        in: 'ind'
-    };
-    const defaultFlag = require('../../../assets/img/flags/xx.svg').default;
-    if (!code || typeof code !== 'string') {
-        return defaultFlag;
-    }
-    const normalizedCode = flagMapping[code.toLowerCase()] || code.toLowerCase();
+export const cfFlag = (code: string) => {
+    const flag = code?.trim().toUpperCase();
     try {
-        return require(`../../../assets/img/flags/${normalizedCode}.svg`).default;
+        if (flag === 'IR') {
+            return `https://flagsapi.com/RU/flat/32.png`;
+            return require(`../../../assets/img/flags/ir.svg`).default;
+        } else {
+            return `https://flagsapi.com/${flag}/flat/32.png`;
+        }
     } catch {
-        return defaultFlag;
+        return require('../../../assets/img/flags/xx.svg').default;
     }
 };

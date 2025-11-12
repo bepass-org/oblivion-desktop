@@ -563,6 +563,9 @@ html[data-bs-theme='dark'] .homeScreen .inFoot small {
     margin: 1px 0 0 7px;
     object-fit: cover;
 }
+.homeScreen .inFoot .item img[src*="flagsapi"] {
+    object-fit: none;
+}
 
 .homeScreen .inFoot .item img[alt='false Flag'],
 .homeScreen .inFoot .item img[alt='xx Flag'] {
