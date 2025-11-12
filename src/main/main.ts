@@ -77,6 +77,10 @@ if (isLinux) {
     //app.commandLine.appendSwitch('no-sandbox');
 }
 
+if (isWindows) {
+    app.setAppUserModelId(packageJsonData.build.appId);
+}
+
 process.on('uncaughtException', (err) => {
     log.error('Uncaught Exception:', err);
 });
