@@ -194,8 +194,20 @@ const enableGnomeProxy = async (ip: string, port: string, routingRules: any): Pr
 const disableGNOMEProxy = async (): Promise<void> => {
     try {
         await execPromise(`gsettings set org.gnome.system.proxy mode 'none'`);
-        await execPromise(`gsettings set org.gnome.system.proxy.socks host ${oldProxyHost}`);
-        await execPromise(`gsettings set org.gnome.system.proxy.socks port ${oldProxyPort}`);
+
+        const hostValueRaw = oldProxyHost.trim();
+        const hostValue = hostValueRaw === '' ? "''" : hostValueRaw;
+
+        const portValueRaw = oldProxyPort.trim();
+        const portToken = portValueRaw.split(' ').pop();
+        const portValue = portToken && portToken !== '' ? portToken : '0';
+
+        await execPromise(
+            `gsettings set org.gnome.system.proxy.socks host ${hostValue}`
+        );
+        await execPromise(
+            `gsettings set org.gnome.system.proxy.socks port ${portValue}`
+        );
 
         log.info('Proxy settings disabled for GNOME');
     } catch (err) {
