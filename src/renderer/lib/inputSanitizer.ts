@@ -30,14 +30,13 @@ const isIPv6 = (address: string) => /^[0-9a-fA-F:]+$/.test(address);
 const VALID_COUNTRIES = countries.map((c) => c.value);
 
 export const sanitizeProfileName = (name: string): string => {
-    name = name.trim();
-    name = name.replace(/[^a-zA-Z0-9-_ ]/g, '');
-    name = name.replace(/@/g, '');
-    name = name.replace(/[?&]/g, '');
-    if (name.length > 10) {
-        name = name.slice(0, 10);
-    }
-    return name;
+    const sanitized = name
+        .trim()
+        .replace(/[^a-zA-Z0-9-_ ]/g, '')
+        .replace(/[@?&]/g, '')
+        .substring(0, 10);
+
+    return sanitized;
 };
 
 export const validEndpoint = (value: string) => {
@@ -91,19 +90,26 @@ export const validateTestUrl = (url: string): string => {
     if (!url || typeof url !== 'string') {
         return defaultSettings.testUrl;
     }
-    url = url.trim();
-    if (url === '') {
+
+    const trimmedUrl = url.trim();
+    if (!trimmedUrl) return defaultSettings.testUrl;
+
+    try {
+        let testUrl = trimmedUrl;
+
+        if (!testUrl.startsWith('http://') && !testUrl.startsWith('https://')) {
+            testUrl = 'https://' + testUrl;
+        }
+
+        if (!testUrl.endsWith('/cdn-cgi/trace')) {
+            testUrl = testUrl.replace(/\/+$/, '') + '/cdn-cgi/trace';
+        }
+
+        new URL(testUrl);
+        return testUrl;
+    } catch {
         return defaultSettings.testUrl;
     }
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url;
-    }
-    if (!url.endsWith('/cdn-cgi/trace')) {
-        url = url.replace(/\/$/, '');
-        url += '/cdn-cgi/trace';
-    }
-    url = url.replace(/\/$/, '');
-    return url;
 };
 
 export const determineIpType = (endpoint: string, ipType: string): '' | 'v4' | 'v6' => {
