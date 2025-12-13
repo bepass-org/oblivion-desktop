@@ -4,6 +4,7 @@ import settings from 'electron-settings';
 
 import { spawn, execSync } from 'child_process';
 import fs from 'fs';
+import net from 'net';
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
 import {
@@ -234,10 +235,62 @@ class SingBoxManager {
             const helperProcess = spawn(command.command, command.args, {
                 cwd: workingDirPath
             });
+            let isSettled = false;
+
+            const safeResolve = () => {
+                if (isSettled) return;
+                isSettled = true;
+                resolve(true);
+            };
+
+            const safeReject = (reason: string) => {
+                if (isSettled) return;
+                isSettled = true;
+                reject(reason);
+            };
+
+            let linuxTcpCheckTimer: NodeJS.Timeout | null = null;
+
+            const clearLinuxTimer = () => {
+                if (linuxTcpCheckTimer) {
+                    clearTimeout(linuxTcpCheckTimer);
+                    linuxTcpCheckTimer = null;
+                }
+            };
+
+            const scheduleLinuxTcpCheck = (attempt = 1) => {
+                if (!isLinux || isSettled) return;
+                const maxAttempts = CONFIG.connection.maxRetries;
+                const [host, portStr] = CONFIG.connection.grpcEndpoint.split(':');
+                const port = Number(portStr) || 50051;
+                linuxTcpCheckTimer = setTimeout(() => {
+                    if (isSettled) return;
+                    const socket = net.createConnection({ host, port }, () => {
+                        socket.destroy();
+                        safeResolve();
+                    });
+                    socket.on('error', () => {
+                        socket.destroy();
+                        if (attempt >= maxAttempts) {
+                            log.error(
+                                `Helper did not open gRPC port ${host}:${port} after ${maxAttempts} attempts`
+                            );
+                            safeReject('Helper failed to start in time');
+                            return;
+                        }
+                        scheduleLinuxTcpCheck(attempt + 1);
+                    });
+                }, CONFIG.delays.connectionCheck);
+            };
+
+            if (isLinux) {
+                scheduleLinuxTcpCheck();
+            }
 
             helperProcess.stdout?.on('data', (data: Buffer) => {
                 if (isLinux && data.toString().includes('Server started on')) {
-                    resolve(true);
+                    clearLinuxTimer();
+                    safeResolve();
                 }
             });
 
@@ -255,20 +308,46 @@ class SingBoxManager {
                     errorMessage.includes('not authorized')
                 ) {
                     customEvent.emit('tray-icon', 'disconnected');
-                    reject(`${this.appLang?.log.error_canceled_by_user}`);
+                    clearLinuxTimer();
+                    safeReject(`${this.appLang?.log.error_canceled_by_user}`);
                 }
                 if (errorMessage.includes('command was found in the module')) {
                     log.error(
                         'The `Start-Process` command exists in the `Microsoft.PowerShell.Management` module, but PowerShell was unable to load this module.'
                     );
                     customEvent.emit('tray-icon', 'disconnected');
-                    reject('PowerShell module error detected.');
+                    clearLinuxTimer();
+                    safeReject('PowerShell module error detected.');
                 }
             });
 
+            helperProcess.on('error', (err) => {
+                log.error('Failed to start Oblivion-Helper process:', err);
+                clearLinuxTimer();
+                safeReject('Failed to start Oblivion-Helper process');
+            });
+
             helperProcess.on('close', async (code) => {
+                clearLinuxTimer();
                 if (!isLinux && code === 0) {
-                    resolve(true);
+                    safeResolve();
+                    return;
+                }
+                if (!isLinux && code !== 0) {
+                    safeReject(`Helper process exited with code ${code}`);
+                    return;
+                }
+                if (isLinux && !isSettled) {
+                    try {
+                        if (this.isProcessRunning(helperFileName)) {
+                            safeResolve();
+                        } else {
+                            safeReject(`Helper process exited with code ${code}`);
+                        }
+                    } catch (error) {
+                        log.error('Error while checking helper process status:', error);
+                        safeReject('Helper process failed to start');
+                    }
                 }
             });
         });
