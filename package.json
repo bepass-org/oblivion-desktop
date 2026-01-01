@@ -137,7 +137,7 @@
         "concurrently": "^9.2.1",
         "cross-env": "^10.1.0",
         "css-loader": "^7.1.2",
-        "css-minimizer-webpack-plugin": "^7.0.3",
+        "css-minimizer-webpack-plugin": "^7.0.4",
         "decompress": "^4.2.1",
         "detect-port": "^2.1.0",
         "electron": "^39.2.6",
